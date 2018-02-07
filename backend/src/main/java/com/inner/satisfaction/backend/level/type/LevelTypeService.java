@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 public class LevelTypeService extends BaseService<LevelType> {
 
   protected LevelTypeService(
-      LevelTypeRepository levelTypeRepository) {
-    super(levelTypeRepository);
+      LevelTypeRepository levelTypeRepository,
+      LevelTypeValidation levelTypeValidation) {
+    super(levelTypeRepository, levelTypeValidation);
   }
 }

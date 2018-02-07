@@ -7,9 +7,12 @@ import org.springframework.data.domain.Pageable;
 public abstract class BaseService <E extends BaseEntity> {
 
   private final BaseRepository<E> baseRepository;
+  private final BaseEntityValidation<E> baseEntityValidation;
 
-  protected BaseService(BaseRepository<E> baseRepository) {
+  protected BaseService(BaseRepository<E> baseRepository,
+      BaseEntityValidation<E> baseEntityValidation) {
     this.baseRepository = baseRepository;
+    this.baseEntityValidation = baseEntityValidation;
   }
 
   public List<E> findAll() {
@@ -25,6 +28,7 @@ public abstract class BaseService <E extends BaseEntity> {
   }
 
   public E save(E e) {
+    baseEntityValidation.isValidToSave(e);
     return baseRepository.save(e);
   }
 }
