@@ -3,6 +3,34 @@
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <!--Table Company and Its Basic Data Population-->
+  <changeSet id="01-0" author="mohsin.kerai">
+    <createTable tableName="company"
+      remarks="A table to store level types, a level type can be Regional, Southern, National, Jamatkhana">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false" unique="false"/>
+      </column>
+    </createTable>
+    <insert
+      tableName="company">
+      <column name="id" value="1" />
+      <column name="name" value="National Council"/>
+    </insert>
+    <insert
+      tableName="company">
+      <column name="id" value="2" />
+      <column name="name" value="Estate Office"/>
+    </insert>
+    <insert
+      tableName="company">
+      <column name="id" value="3" />
+      <column name="name" value="AKDN"/>
+    </insert>
+  </changeSet>
+  <!--Table LevelType and Its Basic Data Population-->
   <changeSet id="01-1" author="mohsin.kerai">
     <createTable tableName="level_type"
       remarks="A table to store level types, a level type can be Regional, Southern, National, Jamatkhana">
@@ -34,6 +62,7 @@
       <column name="name" value="Jamatkhana"/>
     </insert>
   </changeSet>
+  <!--Table level and Its Basic Data Population-->
   <changeSet id="01-2" author="mohsin.kerai">
     <createTable tableName="level"
       remarks="A table to store actual levels, Council for Pakistan, Southern Council">
@@ -55,6 +84,9 @@
       <column name="address" type="varchar(255)">
         <constraints nullable="true" unique="false"/>
       </column>
+      <column name="company_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
     </createTable>
     <insert
       tableName="level">
@@ -63,6 +95,7 @@
       <column name="full_name" value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Pakistan"/>
       <column name="short_code" value="PK"/>
       <column name="address" value="Opp. Garden Jamatkhana, Britto Road, Garden East"/>
+      <column name="company_id" value="1"/>
     </insert>
     <insert
       tableName="level">
@@ -71,14 +104,40 @@
       <column name="full_name" value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Southern Region"/>
       <column name="short_code" value="SO"/>
       <column name="address" value="Opp. Garden Jamatkhana, Britto Road, Garden East"/>
+      <column name="company_id" value="1"/>
     </insert>
     <insert
       tableName="level">
-      <column name="level_type_id" value="2"/>
+      <column name="level_type_id" value="3"/>
       <column name="name" value="Karimabad"/>
       <column name="full_name" value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Karimabad"/>
-      <column name="short_code" value="03"/>
+      <column name="short_code" value="SO.03"/>
       <column name="address" value="Room # 1, Karimabad Jamatkhana Karachi"/>
+      <column name="company_id" value="1"/>
     </insert>
+    <insert
+      tableName="level">
+      <column name="level_type_id" value="4"/>
+      <column name="name" value="Karimabad Jamatkhana"/>
+      <column name="full_name" value="Karimabad Jamatkhana"/>
+      <column name="short_code" value="SO.03.03"/>
+      <column name="address" value="Room # 1, Karimabad Jamatkhana Karachi"/>
+      <column name="company_id" value="2"/>
+    </insert>
+  </changeSet>
+  <!--Table Level_Active and Its Basic Data Population-->
+  <changeSet id="01-3" author="mohsin.kerai">
+    <createTable tableName="level_active"
+      remarks="A table to store active levels, Council for Pakistan, Southern Council, Active level is a virtuality on levels">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="level_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="level_active_parent_id" type="varchar(255)">
+        <constraints nullable="false" unique="false"/>
+      </column>
+    </createTable>
   </changeSet>
 </databaseChangeLog>
