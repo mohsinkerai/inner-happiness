@@ -3,7 +3,7 @@
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-  <!--Table Company and Its Basic Data Population-->
+  <!--Table Cycle and Its Basic Data Population-->
   <changeSet id="01-0" author="mohsin.kerai">
     <createTable tableName="company"
       remarks="A table to store level types, a level type can be Regional, Southern, National, Jamatkhana">
@@ -136,6 +136,34 @@
         <constraints nullable="false"/>
       </column>
       <column name="level_active_parent_id" type="varchar(255)">
+        <constraints nullable="false" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="01-4" author="mohsin.kerai">
+    <createTable tableName="position"
+      remarks="Stores Positions Available at Any Levels, Lets say President, Chairman, Sec, Hon. Sec, It Consultant">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="01-5" author="mohsin.kerai">
+    <createTable tableName="cycle"
+      remarks="Cycles Available, Lets say Cycle 2018-2019">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="start_date" type="timestamp">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="end_date" type="timestamp">
         <constraints nullable="false" unique="false"/>
       </column>
     </createTable>

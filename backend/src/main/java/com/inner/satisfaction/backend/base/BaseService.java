@@ -27,8 +27,13 @@ public abstract class BaseService <E extends BaseEntity> {
     return baseRepository.findOne(id);
   }
 
-  public E save(E e) {
+  public E save(Long companyId, E e) {
     baseEntityValidation.isValidToSave(e);
     return baseRepository.save(e);
+  }
+
+  public void delete(Long companyId, E e) {
+    baseEntityValidation.isValidToDelete(e);
+    baseRepository.delete(e);
   }
 }

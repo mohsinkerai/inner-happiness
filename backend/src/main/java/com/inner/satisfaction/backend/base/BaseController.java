@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +50,17 @@ public abstract class BaseController<E extends BaseEntity> {
 
   @PostMapping("")
   @ResponseStatus(HttpStatus.OK)
-  public E save(E e) {
-    return baseService.save(e);
+  public E save(Long companyId, E e) {
+    return baseService.save(companyId, e);
+  }
+
+  @DeleteMapping("{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(
+      @PathVariable("companyId") Long companyId,
+      @PathVariable("entityId") Long entityId
+  ) {
+    E e = baseService.findOne(entityId);
+    baseService.delete(companyId, e);
   }
 }
