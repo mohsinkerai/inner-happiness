@@ -20,8 +20,8 @@
     </createTable>
     <insert tableName="position_on_active_level">
       <column name="id" value="1"/>
-      <column name="position_id" value="1"/>
-      <column name="level_active_id" value="Pakistan"/>
+      <column name="position_id" value="1"/> <!-- President -->
+      <column name="level_active_id" value="1"/> <!-- National Council -->
     </insert>
   </changeSet>
 </databaseChangeLog>
