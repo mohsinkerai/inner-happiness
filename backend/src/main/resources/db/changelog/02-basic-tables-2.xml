@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+  <changeSet id="02-01" author="mohsin.kerai">
+    <createTable tableName="position_on_active_level"
+      remarks="A table to store active position w.r.t level, lets say President Exist in National Council and Chairman in Health Board">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="position_id" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="level_active_id" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+    <insert tableName="position_on_active_level">
+      <column name="id" value="1"/>
+      <column name="position_id" value="1"/>
+      <column name="level_active_id" value="Pakistan"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>
