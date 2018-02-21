@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Entity
 /**
- * Represents All Person that are available on Particular Active Level
+ * Represents All Relation that are available on Particular Active Level
  */
 public class PositionOnActiveLevel extends BaseEntity {
 
