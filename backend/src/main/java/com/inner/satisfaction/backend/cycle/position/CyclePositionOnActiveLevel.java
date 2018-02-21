@@ -11,6 +11,7 @@ public class CyclePositionOnActiveLevel extends BaseEntity {
   private int minCount;
   private int desired;
   private int maxCount;
+  private int nominations;
 
   private Long cycleId;
   private Long positionOnActiveLevelId;
