@@ -26,5 +26,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public bool PlantToRelocate { get; set; }
         public string RelocateLocation { get; set; }
         public DateTime RelocationDateTime { get; set; }
+        public string PassportNumber { get; set; }
+        public string Image { get; set; }
     }
 }
