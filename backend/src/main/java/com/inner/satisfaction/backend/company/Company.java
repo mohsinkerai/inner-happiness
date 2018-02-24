@@ -1,4 +1,4 @@
-package com.inner.satisfaction.backend.level;
+package com.inner.satisfaction.backend.company;
 
 import com.inner.satisfaction.backend.base.BaseEntity;
 import javax.persistence.Entity;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Level extends BaseEntity{
+public class Company extends BaseEntity{
 
   private String name;
   private String fullName;
@@ -14,5 +14,4 @@ public class Level extends BaseEntity{
   private String address;
 
   private int levelTypeId;
-  private Long companyId;
 }

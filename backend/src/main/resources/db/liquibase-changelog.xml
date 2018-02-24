@@ -5,6 +5,8 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
   <include file="changelog/01-basic-tables.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/02-basic-tables.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/03-basic-tables.xml" relativeToChangelogFile="true"/>
   <!--<include file="changelog/02-insert-data-authors.xml" relativeToChangelogFile="true"/>-->
   <!--<include file="changelog/02-insert-data-books.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>
