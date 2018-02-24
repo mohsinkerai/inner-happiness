@@ -4,14 +4,14 @@ spring:
   datasource:
     db: inner_satisfaction
     url: jdbc:mysql://localhost:3306/${spring.datasource.db}?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-    username: root
-    password:
+    username: mohsin.kerai
+    password: 123
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
-    generate-ddl: true
+    generate-ddl: false
     hibernate.ddl-auto: none
 logging:
   file: app.log
