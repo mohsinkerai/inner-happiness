@@ -1,5 +1,3 @@
-using System;
-
 namespace AMS.frontend.web.Models
 {
     public class ErrorViewModel
