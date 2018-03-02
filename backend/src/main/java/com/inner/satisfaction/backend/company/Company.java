@@ -9,9 +9,4 @@ import lombok.Data;
 public class Company extends BaseEntity{
 
   private String name;
-  private String fullName;
-  private String shortCode;
-  private String address;
-
-  private int levelTypeId;
 }

@@ -1,106 +1,131 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.ModuleTitle = "Home";
+    ViewBag.PageTitle = "Dashboard";
 }
-
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+<!--Begin::Section-->
+<div class="m-portlet">
+    <div class="m-portlet__body  m-portlet__body--no-padding">
+        <div class="row m-row--no-padding m-row--col-separator-xl">
+            <div class="col-xl-4">
+                <!--begin:: Widgets/Stats2-1 -->
+                <div class="m-widget1">
+                    <div class="m-widget1__item">
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col">
+                                <h3 class="m-widget1__title">
+                                    Total Withdrawal
+                                </h3>
+                                <span class="m-widget1__desc">
+                                    Withdrawal of all employees (current month)
+                                </span>
+                            </div>
+                            <div class="col m--align-right">
+                                <span class="m-widget1__number m--font-brand">
+                                    +$17,800
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-widget1__item">
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col">
+                                <h3 class="m-widget1__title">
+                                    Fees
+                                </h3>
+                                <span class="m-widget1__desc">
+                                    Total Transaction Fee (to be paid)
+                                </span>
+                            </div>
+                            <div class="col m--align-right">
+                                <span class="m-widget1__number m--font-danger">
+                                    +1,800
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-widget1__item">
+                        <div class="row m-row--no-padding align-items-center">
+                            <div class="col">
+                                <h3 class="m-widget1__title">
+                                    Growth
+                                </h3>
+                                @*<span class="m-widget1__desc">
+                                    System bugs and issues
+                                </span>*@
+                            </div>
+                            <div class="col m--align-right">
+                                <span class="m-widget1__number m--font-success">
+                                    -27,49%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end:: Widgets/Stats2-1 -->
             </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+            <div class="col-xl-4">
+                <!--begin:: Widgets/Daily Sales-->
+                <div class="m-widget14">
+                    <div class="m-widget14__header m--margin-bottom-30">
+                        <h3 class="m-widget14__title">
+                            Daily Withdrawal
+                        </h3>
+                        <span class="m-widget14__desc">
+                            Check out each collumn for more details
+                        </span>
+                    </div>
+                    <div class="m-widget14__chart" style="height:120px;">
+                        <canvas id="m_chart_daily_sales"></canvas>
+                    </div>
+                </div>
+                <!--end:: Widgets/Daily Sales-->
             </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Package Management" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Bring in libraries from NuGet and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner4.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+            <div class="col-xl-4">
+                <!--begin:: Widgets/Profit Share-->
+                <div class="m-widget14">
+                    <div class="m-widget14__header">
+                        <h3 class="m-widget14__title">
+                            Fee Distribution
+                        </h3>
+                        <span class="m-widget14__desc">
+                            Fee Distribution between employer and employees
+                        </span>
+                    </div>
+                    <div class="row  align-items-center">
+                        <div class="col">
+                            <div id="m_chart_profit_share" class="m-widget14__chart" style="height: 160px">
+                                <div class="m-widget14__stat">
+                                    100
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="m-widget14__legends">
+                                <div class="m-widget14__legend">
+                                    <span class="m-widget14__legend-bullet m--bg-accent"></span>
+                                    <span class="m-widget14__legend-text">
+                                        50% Employer
+                                    </span>
+                                </div>
+                                <div class="m-widget14__legend">
+                                    <span class="m-widget14__legend-bullet m--bg-warning"></span>
+                                    <span class="m-widget14__legend-text">
+                                        30% Employee
+                                    </span>
+                                </div>
+                                <div class="m-widget14__legend">
+                                    <span class="m-widget14__legend-bullet m--bg-brand"></span>
+                                    <span class="m-widget14__legend-text">
+                                        20% Discount
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end:: Widgets/Profit Share-->
             </div>
         </div>
     </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
 </div>
-
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>
-</div>
+<!--End::Section-->

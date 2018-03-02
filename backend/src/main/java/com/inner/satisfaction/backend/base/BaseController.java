@@ -3,18 +3,22 @@ package com.inner.satisfaction.backend.base;
 import com.inner.satisfaction.backend.level.Level;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 public abstract class BaseController<E extends BaseEntity> {
 
-  public static final String PREFIX = "company/{companyId}/";
+  public static final String PREFIX = "";
+  public static final String ROOT = "";
+  public static final String ONE = ROOT + "one/{id}";
+  public static final String ALL = ROOT + "all";
 
   private final BaseService<E> baseService;
 
@@ -22,45 +26,42 @@ public abstract class BaseController<E extends BaseEntity> {
     this.baseService = baseService;
   }
 
-  @RequestMapping("{id}")
-  public ResponseEntity<E> findOne(
-      @PathVariable("companyId") Long companyId,
+  @RequestMapping(ONE)
+  public E findOne(
       @PathVariable("id") Long entityId
   ) {
     E entity = baseService.findOne(entityId);
-    return ResponseEntity.ok(entity);
+    return entity;
   }
 
-  @PostMapping("{id}")
-  public ResponseEntity<E> putSave(
-      @PathVariable("companyId") Long companyId,
-      @PathVariable("id") Long entityId
-  ) {
-    E entity = baseService.findOne(entityId);
-    return ResponseEntity.ok(entity);
-  }
-
-  @GetMapping("")
+  @PostMapping(ONE)
   @ResponseStatus(HttpStatus.CREATED)
-  public List<E> findAll(
-      @PathVariable("companyId") Long companyId
+  public E putSave(
+      @PathVariable("id")Long id,
+      E e
   ) {
+    e.setId(id);
+    return save(e);
+  }
+
+  @GetMapping(value = ALL)
+  @ResponseStatus(HttpStatus.OK)
+  public List<E> findAll() {
     return baseService.findAll();
   }
 
-  @PostMapping("")
+  @PostMapping(ROOT)
   @ResponseStatus(HttpStatus.OK)
-  public E save(Long companyId, E e) {
-    return baseService.save(companyId, e);
+  public E save(@RequestBody E e) {
+    return baseService.save(e);
   }
 
-  @DeleteMapping("{id}")
+  @DeleteMapping(ONE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(
-      @PathVariable("companyId") Long companyId,
-      @PathVariable("entityId") Long entityId
+      Long entityId
   ) {
     E e = baseService.findOne(entityId);
-    baseService.delete(companyId, e);
+    baseService.delete(e);
   }
 }

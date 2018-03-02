@@ -47,6 +47,47 @@
     </insert>
   </changeSet>
   <changeSet id="03-05" author="mohsin.kerai">
+    <insert tableName="position_on_active_level">
+      <column name="id" value="2"/>
+      <column name="position_id" value="2"/> <!-- Member Finance -->
+      <column name="level_active_id" value="1"/> <!-- National Council -->
+    </insert>
+    <insert tableName="cycle_position_on_active_level">
+      <column name="id" value="2"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_active_level_id" value="2"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="person">
+      <column name="id" value="3"/>
+      <column name="name" value="Naveed Tejani"/>
+      <column name="date_of_birth" value="1989-11-07"/>
+    </insert>
+    <insert tableName="person">
+      <column name="id" value="4"/>
+      <column name="name" value="Amsal Akber"/>
+      <column name="date_of_birth" value="1995-05-13"/>
+    </insert>
+    <insert tableName="cpal_nomination">
+      <column name="id" value="2"/>
+      <column name="person_id" value="2"/>
+      <column name="cpal_id" value="2"/>
+    </insert>
+    <insert tableName="cpal_nomination">
+      <column name="id" value="3"/>
+      <column name="person_id" value="3"/>
+      <column name="cpal_id" value="2"/>
+    </insert>
+    <insert tableName="cpal_nomination">
+      <column name="id" value="4"/>
+      <column name="person_id" value="4"/>
+      <column name="cpal_id" value="2"/>
+    </insert>
+  </changeSet>
+  <changeSet id="03-06" author="mohsin.kerai">
     <createTable tableName="pal_rules"
       remarks="Award of Position, lets say Who Becomes President">
       <column name="id" type="bigint" autoIncrement="true">
