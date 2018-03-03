@@ -2,16 +2,14 @@
 
 $(document).ready(function () {
     $(".input-validation-error").parents(".form-group").addClass("has-danger");
-    if (typeof $.select2 !== "undefined") {
-        $(".m-select2")
-            .each(function() {
-                var placeholder = $(this).attr("placeholder");
-                $(this)
-                    .select2({
-                        placeholder: placeholder
-                    });
-            });
-    }
+    $(".m-select2")
+        .each(function () {
+            var placeholder = $(this).attr("placeholder");
+            $(this)
+                .select2({
+                    placeholder: placeholder
+                });
+        });
 });
 
 function toggleNotMe() {
