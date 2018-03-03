@@ -39,10 +39,20 @@ namespace AMS.frontend.web.Controllers
                     Response.Cookies.Delete(CookieNames.Company);
                 }
 
+                //todo by aa - call login api
+
                 return RedirectToAction(ActionNames.Index, ControllerNames.Home);
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Reset(LoginModel model)
+        {
+            //todo by aa - call forget password api
+
+            return Json("Success");
         }
     }
 }
