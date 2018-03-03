@@ -19,4 +19,11 @@ public class PersonTest extends AbstractIntegrationTest {
         .andExpect(status().is2xxSuccessful())
         .andExpect(jsonPath("$.[*]", hasSize(4)));
   }
+
+  @Test
+  public void shouldFindByCnic() throws Exception {
+    mockMvc.perform(get("/person/search/cnic?value=42101-1111111-1").contentType(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().is2xxSuccessful());
+  }
 }

@@ -10,6 +10,7 @@ import lombok.Data;
 public class Person extends BaseEntity{
 
   private String name;
+  private String cnic;
   private String email;
   private Timestamp dateOfBirth;
 }
