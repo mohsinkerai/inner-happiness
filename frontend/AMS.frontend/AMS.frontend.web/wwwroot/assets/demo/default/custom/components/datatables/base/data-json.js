@@ -10,7 +10,7 @@ var DatatableJsonRemoteDemo = function () {
 			// datasource definition
 			data: {
 				type: 'remote',
-				source: 'http://keenthemes.com/metronic/preview/inc/api/datatables/datasource/default.json',
+				source: 'https://keenthemes.com/metronic/preview/inc/api/datatables/datasource/default.json',
 				pageSize: 10,
 			},
 

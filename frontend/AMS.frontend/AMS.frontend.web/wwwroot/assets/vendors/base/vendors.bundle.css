@@ -4590,8 +4590,8 @@ select.selectpicker {
   font-family: "summernote";
   font-style: normal;
   font-weight: normal;
-  src: url("fonts/summernote/summernote.eot?0d0d5fac99cc8774d89eb08b1a8323c4");
-  src: url("fonts/summernote/summernote.eot?#iefix") format("embedded-opentype"), url("fonts/summernote/summernote.woff?0d0d5fac99cc8774d89eb08b1a8323c4") format("woff"), url("fonts/summernote/summernote.ttf?0d0d5fac99cc8774d89eb08b1a8323c4") format("truetype"); }
+  src: url("fonts/summernote/summernote.eot?e557617934c52ea068954af79ed7c221");
+  src: url("fonts/summernote/summernote.eot?#iefix") format("embedded-opentype"), url("fonts/summernote/summernote.woff?e557617934c52ea068954af79ed7c221") format("woff"), url("fonts/summernote/summernote.ttf?e557617934c52ea068954af79ed7c221") format("truetype"); }
 
 [class^="note-icon-"]:before, [class*=" note-icon-"]:before {
   display: inline-block;
@@ -4826,6 +4826,7 @@ select.selectpicker {
   padding: 10px;
   overflow: auto;
   color: #000;
+  word-wrap: break-word;
   background-color: #fff; }
 
 .note-editor.note-frame .note-editing-area .note-editable[contenteditable="false"] {
@@ -4897,6 +4898,10 @@ select.selectpicker {
 .note-popover.popover .arrow {
   left: 20px !important; }
 
+.note-toolbar {
+  position: relative;
+  z-index: 500; }
+
 .note-popover .popover-content, .panel-heading.note-toolbar {
   padding: 0 0 5px 5px;
   margin: 0; }
@@ -4934,7 +4939,12 @@ select.selectpicker {
   height: 1em;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIjd6vvD2f9LKLW+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKwNDEVT0AAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC") repeat; }
 
-.note-popover .popover-content .note-style h1, .panel-heading.note-toolbar .note-style h1, .note-popover .popover-content .note-style h2, .panel-heading.note-toolbar .note-style h2, .note-popover .popover-content .note-style h3, .panel-heading.note-toolbar .note-style h3, .note-popover .popover-content .note-style h4, .panel-heading.note-toolbar .note-style h4, .note-popover .popover-content .note-style h5, .panel-heading.note-toolbar .note-style h5, .note-popover .popover-content .note-style h6, .panel-heading.note-toolbar .note-style h6, .note-popover .popover-content .note-style blockquote, .panel-heading.note-toolbar .note-style blockquote {
+.note-popover .popover-content .note-style .dropdown-style blockquote, .panel-heading.note-toolbar .note-style .dropdown-style blockquote, .note-popover .popover-content .note-style .dropdown-style pre, .panel-heading.note-toolbar .note-style .dropdown-style pre {
+  padding: 5px 10px;
+  margin: 0; }
+
+.note-popover .popover-content .note-style .dropdown-style h1, .panel-heading.note-toolbar .note-style .dropdown-style h1, .note-popover .popover-content .note-style .dropdown-style h2, .panel-heading.note-toolbar .note-style .dropdown-style h2, .note-popover .popover-content .note-style .dropdown-style h3, .panel-heading.note-toolbar .note-style .dropdown-style h3, .note-popover .popover-content .note-style .dropdown-style h4, .panel-heading.note-toolbar .note-style .dropdown-style h4, .note-popover .popover-content .note-style .dropdown-style h5, .panel-heading.note-toolbar .note-style .dropdown-style h5, .note-popover .popover-content .note-style .dropdown-style h6, .panel-heading.note-toolbar .note-style .dropdown-style h6, .note-popover .popover-content .note-style .dropdown-style p, .panel-heading.note-toolbar .note-style .dropdown-style p {
+  padding: 0;
   margin: 0; }
 
 .note-popover .popover-content .note-color .dropdown-toggle, .panel-heading.note-toolbar .note-color .dropdown-toggle {

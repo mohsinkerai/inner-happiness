@@ -12699,11 +12699,11 @@ return Popper;
 //# sourceMappingURL=popper.js.map
 
 /*!
-  * Bootstrap v4.0.0-beta.2 (https://getbootstrap.com)
-  * Copyright 2011-2017 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Bootstrap v4.0.0 (https://getbootstrap.com)
+  * Copyright 2011-2018 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
-var bootstrap=function(t,e,n){"use strict";function i(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}e=e&&e.hasOwnProperty("default")?e.default:e,n=n&&n.hasOwnProperty("default")?n.default:n;var s=function(){function t(t){return{}.toString.call(t).match(/\s([a-zA-Z]+)/)[1].toLowerCase()}function n(){return{bindType:r.end,delegateType:r.end,handle:function(t){if(e(t.target).is(this))return t.handleObj.handler.apply(this,arguments)}}}function i(){if(window.QUnit)return!1;var t=document.createElement("bootstrap");for(var e in o)if("undefined"!=typeof t.style[e])return{end:o[e]};return!1}function s(t){var n=this,i=!1;return e(this).one(a.TRANSITION_END,function(){i=!0}),setTimeout(function(){i||a.triggerTransitionEnd(n)},t),this}var r=!1,o={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"},a={TRANSITION_END:"bsTransitionEnd",getUID:function(t){do{t+=~~(1e6*Math.random())}while(document.getElementById(t));return t},getSelectorFromElement:function(t){var n=t.getAttribute("data-target");n&&"#"!==n||(n=t.getAttribute("href")||"");try{return e(document).find(n).length>0?n:null}catch(t){return null}},reflow:function(t){return t.offsetHeight},triggerTransitionEnd:function(t){e(t).trigger(r.end)},supportsTransitionEnd:function(){return Boolean(r)},isElement:function(t){return(t[0]||t).nodeType},typeCheckConfig:function(e,n,i){for(var s in i)if(Object.prototype.hasOwnProperty.call(i,s)){var r=i[s],o=n[s],l=o&&a.isElement(o)?"element":t(o);if(!new RegExp(r).test(l))throw new Error(e.toUpperCase()+': Option "'+s+'" provided type "'+l+'" but expected type "'+r+'".')}}};return r=i(),e.fn.emulateTransitionEnd=s,a.supportsTransitionEnd()&&(e.event.special[a.TRANSITION_END]=n()),a}(),r=function(t,e,n){return e&&i(t.prototype,e),n&&i(t,n),t},o=function(t,e){t.prototype=Object.create(e.prototype),t.prototype.constructor=t,t.__proto__=e},a=function(){var t="alert",n=e.fn[t],i={CLOSE:"close.bs.alert",CLOSED:"closed.bs.alert",CLICK_DATA_API:"click.bs.alert.data-api"},o={ALERT:"alert",FADE:"fade",SHOW:"show"},a=function(){function t(t){this._element=t}var n=t.prototype;return n.close=function(t){t=t||this._element;var e=this._getRootElement(t);this._triggerCloseEvent(e).isDefaultPrevented()||this._removeElement(e)},n.dispose=function(){e.removeData(this._element,"bs.alert"),this._element=null},n._getRootElement=function(t){var n=s.getSelectorFromElement(t),i=!1;return n&&(i=e(n)[0]),i||(i=e(t).closest("."+o.ALERT)[0]),i},n._triggerCloseEvent=function(t){var n=e.Event(i.CLOSE);return e(t).trigger(n),n},n._removeElement=function(t){var n=this;e(t).removeClass(o.SHOW),s.supportsTransitionEnd()&&e(t).hasClass(o.FADE)?e(t).one(s.TRANSITION_END,function(e){return n._destroyElement(t,e)}).emulateTransitionEnd(150):this._destroyElement(t)},n._destroyElement=function(t){e(t).detach().trigger(i.CLOSED).remove()},t._jQueryInterface=function(n){return this.each(function(){var i=e(this),s=i.data("bs.alert");s||(s=new t(this),i.data("bs.alert",s)),"close"===n&&s[n](this)})},t._handleDismiss=function(t){return function(e){e&&e.preventDefault(),t.close(this)}},r(t,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}}]),t}();return e(document).on(i.CLICK_DATA_API,{DISMISS:'[data-dismiss="alert"]'}.DISMISS,a._handleDismiss(new a)),e.fn[t]=a._jQueryInterface,e.fn[t].Constructor=a,e.fn[t].noConflict=function(){return e.fn[t]=n,a._jQueryInterface},a}(),l=function(){var t="button",n=e.fn[t],i={ACTIVE:"active",BUTTON:"btn",FOCUS:"focus"},s={DATA_TOGGLE_CARROT:'[data-toggle^="button"]',DATA_TOGGLE:'[data-toggle="buttons"]',INPUT:"input",ACTIVE:".active",BUTTON:".btn"},o={CLICK_DATA_API:"click.bs.button.data-api",FOCUS_BLUR_DATA_API:"focus.bs.button.data-api blur.bs.button.data-api"},a=function(){function t(t){this._element=t}var n=t.prototype;return n.toggle=function(){var t=!0,n=!0,r=e(this._element).closest(s.DATA_TOGGLE)[0];if(r){var o=e(this._element).find(s.INPUT)[0];if(o){if("radio"===o.type)if(o.checked&&e(this._element).hasClass(i.ACTIVE))t=!1;else{var a=e(r).find(s.ACTIVE)[0];a&&e(a).removeClass(i.ACTIVE)}if(t){if(o.hasAttribute("disabled")||r.hasAttribute("disabled")||o.classList.contains("disabled")||r.classList.contains("disabled"))return;o.checked=!e(this._element).hasClass(i.ACTIVE),e(o).trigger("change")}o.focus(),n=!1}}n&&this._element.setAttribute("aria-pressed",!e(this._element).hasClass(i.ACTIVE)),t&&e(this._element).toggleClass(i.ACTIVE)},n.dispose=function(){e.removeData(this._element,"bs.button"),this._element=null},t._jQueryInterface=function(n){return this.each(function(){var i=e(this).data("bs.button");i||(i=new t(this),e(this).data("bs.button",i)),"toggle"===n&&i[n]()})},r(t,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}}]),t}();return e(document).on(o.CLICK_DATA_API,s.DATA_TOGGLE_CARROT,function(t){t.preventDefault();var n=t.target;e(n).hasClass(i.BUTTON)||(n=e(n).closest(s.BUTTON)),a._jQueryInterface.call(e(n),"toggle")}).on(o.FOCUS_BLUR_DATA_API,s.DATA_TOGGLE_CARROT,function(t){var n=e(t.target).closest(s.BUTTON)[0];e(n).toggleClass(i.FOCUS,/^focus(in)?$/.test(t.type))}),e.fn[t]=a._jQueryInterface,e.fn[t].Constructor=a,e.fn[t].noConflict=function(){return e.fn[t]=n,a._jQueryInterface},a}(),h=function(){var t="carousel",n="bs.carousel",i="."+n,o=e.fn[t],a={interval:5e3,keyboard:!0,slide:!1,pause:"hover",wrap:!0},l={interval:"(number|boolean)",keyboard:"boolean",slide:"(boolean|string)",pause:"(string|boolean)",wrap:"boolean"},h={NEXT:"next",PREV:"prev",LEFT:"left",RIGHT:"right"},c={SLIDE:"slide"+i,SLID:"slid"+i,KEYDOWN:"keydown"+i,MOUSEENTER:"mouseenter"+i,MOUSELEAVE:"mouseleave"+i,TOUCHEND:"touchend"+i,LOAD_DATA_API:"load.bs.carousel.data-api",CLICK_DATA_API:"click.bs.carousel.data-api"},u={CAROUSEL:"carousel",ACTIVE:"active",SLIDE:"slide",RIGHT:"carousel-item-right",LEFT:"carousel-item-left",NEXT:"carousel-item-next",PREV:"carousel-item-prev",ITEM:"carousel-item"},d={ACTIVE:".active",ACTIVE_ITEM:".active.carousel-item",ITEM:".carousel-item",NEXT_PREV:".carousel-item-next, .carousel-item-prev",INDICATORS:".carousel-indicators",DATA_SLIDE:"[data-slide], [data-slide-to]",DATA_RIDE:'[data-ride="carousel"]'},f=function(){function o(t,n){this._items=null,this._interval=null,this._activeElement=null,this._isPaused=!1,this._isSliding=!1,this.touchTimeout=null,this._config=this._getConfig(n),this._element=e(t)[0],this._indicatorsElement=e(this._element).find(d.INDICATORS)[0],this._addEventListeners()}var f=o.prototype;return f.next=function(){this._isSliding||this._slide(h.NEXT)},f.nextWhenVisible=function(){!document.hidden&&e(this._element).is(":visible")&&"hidden"!==e(this._element).css("visibility")&&this.next()},f.prev=function(){this._isSliding||this._slide(h.PREV)},f.pause=function(t){t||(this._isPaused=!0),e(this._element).find(d.NEXT_PREV)[0]&&s.supportsTransitionEnd()&&(s.triggerTransitionEnd(this._element),this.cycle(!0)),clearInterval(this._interval),this._interval=null},f.cycle=function(t){t||(this._isPaused=!1),this._interval&&(clearInterval(this._interval),this._interval=null),this._config.interval&&!this._isPaused&&(this._interval=setInterval((document.visibilityState?this.nextWhenVisible:this.next).bind(this),this._config.interval))},f.to=function(t){var n=this;this._activeElement=e(this._element).find(d.ACTIVE_ITEM)[0];var i=this._getItemIndex(this._activeElement);if(!(t>this._items.length-1||t<0))if(this._isSliding)e(this._element).one(c.SLID,function(){return n.to(t)});else{if(i===t)return this.pause(),void this.cycle();var s=t>i?h.NEXT:h.PREV;this._slide(s,this._items[t])}},f.dispose=function(){e(this._element).off(i),e.removeData(this._element,n),this._items=null,this._config=null,this._element=null,this._interval=null,this._isPaused=null,this._isSliding=null,this._activeElement=null,this._indicatorsElement=null},f._getConfig=function(n){return n=e.extend({},a,n),s.typeCheckConfig(t,n,l),n},f._addEventListeners=function(){var t=this;this._config.keyboard&&e(this._element).on(c.KEYDOWN,function(e){return t._keydown(e)}),"hover"===this._config.pause&&(e(this._element).on(c.MOUSEENTER,function(e){return t.pause(e)}).on(c.MOUSELEAVE,function(e){return t.cycle(e)}),"ontouchstart"in document.documentElement&&e(this._element).on(c.TOUCHEND,function(){t.pause(),t.touchTimeout&&clearTimeout(t.touchTimeout),t.touchTimeout=setTimeout(function(e){return t.cycle(e)},500+t._config.interval)}))},f._keydown=function(t){if(!/input|textarea/i.test(t.target.tagName))switch(t.which){case 37:t.preventDefault(),this.prev();break;case 39:t.preventDefault(),this.next();break;default:return}},f._getItemIndex=function(t){return this._items=e.makeArray(e(t).parent().find(d.ITEM)),this._items.indexOf(t)},f._getItemByDirection=function(t,e){var n=t===h.NEXT,i=t===h.PREV,s=this._getItemIndex(e),r=this._items.length-1;if((i&&0===s||n&&s===r)&&!this._config.wrap)return e;var o=(s+(t===h.PREV?-1:1))%this._items.length;return-1===o?this._items[this._items.length-1]:this._items[o]},f._triggerSlideEvent=function(t,n){var i=this._getItemIndex(t),s=this._getItemIndex(e(this._element).find(d.ACTIVE_ITEM)[0]),r=e.Event(c.SLIDE,{relatedTarget:t,direction:n,from:s,to:i});return e(this._element).trigger(r),r},f._setActiveIndicatorElement=function(t){if(this._indicatorsElement){e(this._indicatorsElement).find(d.ACTIVE).removeClass(u.ACTIVE);var n=this._indicatorsElement.children[this._getItemIndex(t)];n&&e(n).addClass(u.ACTIVE)}},f._slide=function(t,n){var i,r,o,a=this,l=e(this._element).find(d.ACTIVE_ITEM)[0],f=this._getItemIndex(l),_=n||l&&this._getItemByDirection(t,l),g=this._getItemIndex(_),m=Boolean(this._interval);if(t===h.NEXT?(i=u.LEFT,r=u.NEXT,o=h.LEFT):(i=u.RIGHT,r=u.PREV,o=h.RIGHT),_&&e(_).hasClass(u.ACTIVE))this._isSliding=!1;else if(!this._triggerSlideEvent(_,o).isDefaultPrevented()&&l&&_){this._isSliding=!0,m&&this.pause(),this._setActiveIndicatorElement(_);var p=e.Event(c.SLID,{relatedTarget:_,direction:o,from:f,to:g});s.supportsTransitionEnd()&&e(this._element).hasClass(u.SLIDE)?(e(_).addClass(r),s.reflow(_),e(l).addClass(i),e(_).addClass(i),e(l).one(s.TRANSITION_END,function(){e(_).removeClass(i+" "+r).addClass(u.ACTIVE),e(l).removeClass(u.ACTIVE+" "+r+" "+i),a._isSliding=!1,setTimeout(function(){return e(a._element).trigger(p)},0)}).emulateTransitionEnd(600)):(e(l).removeClass(u.ACTIVE),e(_).addClass(u.ACTIVE),this._isSliding=!1,e(this._element).trigger(p)),m&&this.cycle()}},o._jQueryInterface=function(t){return this.each(function(){var i=e(this).data(n),s=e.extend({},a,e(this).data());"object"==typeof t&&e.extend(s,t);var r="string"==typeof t?t:s.slide;if(i||(i=new o(this,s),e(this).data(n,i)),"number"==typeof t)i.to(t);else if("string"==typeof r){if("undefined"==typeof i[r])throw new Error('No method named "'+r+'"');i[r]()}else s.interval&&(i.pause(),i.cycle())})},o._dataApiClickHandler=function(t){var i=s.getSelectorFromElement(this);if(i){var r=e(i)[0];if(r&&e(r).hasClass(u.CAROUSEL)){var a=e.extend({},e(r).data(),e(this).data()),l=this.getAttribute("data-slide-to");l&&(a.interval=!1),o._jQueryInterface.call(e(r),a),l&&e(r).data(n).to(l),t.preventDefault()}}},r(o,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}},{key:"Default",get:function(){return a}}]),o}();return e(document).on(c.CLICK_DATA_API,d.DATA_SLIDE,f._dataApiClickHandler),e(window).on(c.LOAD_DATA_API,function(){e(d.DATA_RIDE).each(function(){var t=e(this);f._jQueryInterface.call(t,t.data())})}),e.fn[t]=f._jQueryInterface,e.fn[t].Constructor=f,e.fn[t].noConflict=function(){return e.fn[t]=o,f._jQueryInterface},f}(),c=function(){var t="collapse",n="bs.collapse",i=e.fn[t],o={toggle:!0,parent:""},a={toggle:"boolean",parent:"(string|element)"},l={SHOW:"show.bs.collapse",SHOWN:"shown.bs.collapse",HIDE:"hide.bs.collapse",HIDDEN:"hidden.bs.collapse",CLICK_DATA_API:"click.bs.collapse.data-api"},h={SHOW:"show",COLLAPSE:"collapse",COLLAPSING:"collapsing",COLLAPSED:"collapsed"},c={WIDTH:"width",HEIGHT:"height"},u={ACTIVES:".show, .collapsing",DATA_TOGGLE:'[data-toggle="collapse"]'},d=function(){function i(t,n){this._isTransitioning=!1,this._element=t,this._config=this._getConfig(n),this._triggerArray=e.makeArray(e('[data-toggle="collapse"][href="#'+t.id+'"],[data-toggle="collapse"][data-target="#'+t.id+'"]'));for(var i=e(u.DATA_TOGGLE),r=0;r<i.length;r++){var o=i[r],a=s.getSelectorFromElement(o);null!==a&&e(a).filter(t).length>0&&this._triggerArray.push(o)}this._parent=this._config.parent?this._getParent():null,this._config.parent||this._addAriaAndCollapsedClass(this._element,this._triggerArray),this._config.toggle&&this.toggle()}var d=i.prototype;return d.toggle=function(){e(this._element).hasClass(h.SHOW)?this.hide():this.show()},d.show=function(){var t=this;if(!this._isTransitioning&&!e(this._element).hasClass(h.SHOW)){var r,o;if(this._parent&&((r=e.makeArray(e(this._parent).children().children(u.ACTIVES))).length||(r=null)),!(r&&(o=e(r).data(n))&&o._isTransitioning)){var a=e.Event(l.SHOW);if(e(this._element).trigger(a),!a.isDefaultPrevented()){r&&(i._jQueryInterface.call(e(r),"hide"),o||e(r).data(n,null));var c=this._getDimension();e(this._element).removeClass(h.COLLAPSE).addClass(h.COLLAPSING),this._element.style[c]=0,this._triggerArray.length&&e(this._triggerArray).removeClass(h.COLLAPSED).attr("aria-expanded",!0),this.setTransitioning(!0);var d=function(){e(t._element).removeClass(h.COLLAPSING).addClass(h.COLLAPSE).addClass(h.SHOW),t._element.style[c]="",t.setTransitioning(!1),e(t._element).trigger(l.SHOWN)};if(s.supportsTransitionEnd()){var f="scroll"+(c[0].toUpperCase()+c.slice(1));e(this._element).one(s.TRANSITION_END,d).emulateTransitionEnd(600),this._element.style[c]=this._element[f]+"px"}else d()}}}},d.hide=function(){var t=this;if(!this._isTransitioning&&e(this._element).hasClass(h.SHOW)){var n=e.Event(l.HIDE);if(e(this._element).trigger(n),!n.isDefaultPrevented()){var i=this._getDimension();if(this._element.style[i]=this._element.getBoundingClientRect()[i]+"px",s.reflow(this._element),e(this._element).addClass(h.COLLAPSING).removeClass(h.COLLAPSE).removeClass(h.SHOW),this._triggerArray.length)for(var r=0;r<this._triggerArray.length;r++){var o=this._triggerArray[r],a=s.getSelectorFromElement(o);null!==a&&(e(a).hasClass(h.SHOW)||e(o).addClass(h.COLLAPSED).attr("aria-expanded",!1))}this.setTransitioning(!0);var c=function(){t.setTransitioning(!1),e(t._element).removeClass(h.COLLAPSING).addClass(h.COLLAPSE).trigger(l.HIDDEN)};this._element.style[i]="",s.supportsTransitionEnd()?e(this._element).one(s.TRANSITION_END,c).emulateTransitionEnd(600):c()}}},d.setTransitioning=function(t){this._isTransitioning=t},d.dispose=function(){e.removeData(this._element,n),this._config=null,this._parent=null,this._element=null,this._triggerArray=null,this._isTransitioning=null},d._getConfig=function(n){return n=e.extend({},o,n),n.toggle=Boolean(n.toggle),s.typeCheckConfig(t,n,a),n},d._getDimension=function(){return e(this._element).hasClass(c.WIDTH)?c.WIDTH:c.HEIGHT},d._getParent=function(){var t=this,n=null;s.isElement(this._config.parent)?(n=this._config.parent,"undefined"!=typeof this._config.parent.jquery&&(n=this._config.parent[0])):n=e(this._config.parent)[0];var r='[data-toggle="collapse"][data-parent="'+this._config.parent+'"]';return e(n).find(r).each(function(e,n){t._addAriaAndCollapsedClass(i._getTargetFromElement(n),[n])}),n},d._addAriaAndCollapsedClass=function(t,n){if(t){var i=e(t).hasClass(h.SHOW);n.length&&e(n).toggleClass(h.COLLAPSED,!i).attr("aria-expanded",i)}},i._getTargetFromElement=function(t){var n=s.getSelectorFromElement(t);return n?e(n)[0]:null},i._jQueryInterface=function(t){return this.each(function(){var s=e(this),r=s.data(n),a=e.extend({},o,s.data(),"object"==typeof t&&t);if(!r&&a.toggle&&/show|hide/.test(t)&&(a.toggle=!1),r||(r=new i(this,a),s.data(n,r)),"string"==typeof t){if("undefined"==typeof r[t])throw new Error('No method named "'+t+'"');r[t]()}})},r(i,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}},{key:"Default",get:function(){return o}}]),i}();return e(document).on(l.CLICK_DATA_API,u.DATA_TOGGLE,function(t){"A"===t.currentTarget.tagName&&t.preventDefault();var i=e(this),r=s.getSelectorFromElement(this);e(r).each(function(){var t=e(this),s=t.data(n)?"toggle":i.data();d._jQueryInterface.call(t,s)})}),e.fn[t]=d._jQueryInterface,e.fn[t].Constructor=d,e.fn[t].noConflict=function(){return e.fn[t]=i,d._jQueryInterface},d}(),u=function(){if("undefined"==typeof n)throw new Error("Bootstrap dropdown require Popper.js (https://popper.js.org)");var t="dropdown",i="bs.dropdown",o="."+i,a=e.fn[t],l=new RegExp("38|40|27"),h={HIDE:"hide"+o,HIDDEN:"hidden"+o,SHOW:"show"+o,SHOWN:"shown"+o,CLICK:"click"+o,CLICK_DATA_API:"click.bs.dropdown.data-api",KEYDOWN_DATA_API:"keydown.bs.dropdown.data-api",KEYUP_DATA_API:"keyup.bs.dropdown.data-api"},c={DISABLED:"disabled",SHOW:"show",DROPUP:"dropup",MENURIGHT:"dropdown-menu-right",MENULEFT:"dropdown-menu-left"},u={DATA_TOGGLE:'[data-toggle="dropdown"]',FORM_CHILD:".dropdown form",MENU:".dropdown-menu",NAVBAR_NAV:".navbar-nav",VISIBLE_ITEMS:".dropdown-menu .dropdown-item:not(.disabled)"},d={TOP:"top-start",TOPEND:"top-end",BOTTOM:"bottom-start",BOTTOMEND:"bottom-end"},f={offset:0,flip:!0},_={offset:"(number|string|function)",flip:"boolean"},g=function(){function a(t,e){this._element=t,this._popper=null,this._config=this._getConfig(e),this._menu=this._getMenuElement(),this._inNavbar=this._detectNavbar(),this._addEventListeners()}var g=a.prototype;return g.toggle=function(){if(!this._element.disabled&&!e(this._element).hasClass(c.DISABLED)){var t=a._getParentFromElement(this._element),i=e(this._menu).hasClass(c.SHOW);if(a._clearMenus(),!i){var s={relatedTarget:this._element},r=e.Event(h.SHOW,s);if(e(t).trigger(r),!r.isDefaultPrevented()){var o=this._element;e(t).hasClass(c.DROPUP)&&(e(this._menu).hasClass(c.MENULEFT)||e(this._menu).hasClass(c.MENURIGHT))&&(o=t),this._popper=new n(o,this._menu,this._getPopperConfig()),"ontouchstart"in document.documentElement&&!e(t).closest(u.NAVBAR_NAV).length&&e("body").children().on("mouseover",null,e.noop),this._element.focus(),this._element.setAttribute("aria-expanded",!0),e(this._menu).toggleClass(c.SHOW),e(t).toggleClass(c.SHOW).trigger(e.Event(h.SHOWN,s))}}}},g.dispose=function(){e.removeData(this._element,i),e(this._element).off(o),this._element=null,this._menu=null,null!==this._popper&&this._popper.destroy(),this._popper=null},g.update=function(){this._inNavbar=this._detectNavbar(),null!==this._popper&&this._popper.scheduleUpdate()},g._addEventListeners=function(){var t=this;e(this._element).on(h.CLICK,function(e){e.preventDefault(),e.stopPropagation(),t.toggle()})},g._getConfig=function(n){return n=e.extend({},this.constructor.Default,e(this._element).data(),n),s.typeCheckConfig(t,n,this.constructor.DefaultType),n},g._getMenuElement=function(){if(!this._menu){var t=a._getParentFromElement(this._element);this._menu=e(t).find(u.MENU)[0]}return this._menu},g._getPlacement=function(){var t=e(this._element).parent(),n=d.BOTTOM;return t.hasClass(c.DROPUP)?(n=d.TOP,e(this._menu).hasClass(c.MENURIGHT)&&(n=d.TOPEND)):e(this._menu).hasClass(c.MENURIGHT)&&(n=d.BOTTOMEND),n},g._detectNavbar=function(){return e(this._element).closest(".navbar").length>0},g._getPopperConfig=function(){var t=this,n={};"function"==typeof this._config.offset?n.fn=function(n){return n.offsets=e.extend({},n.offsets,t._config.offset(n.offsets)||{}),n}:n.offset=this._config.offset;var i={placement:this._getPlacement(),modifiers:{offset:n,flip:{enabled:this._config.flip}}};return this._inNavbar&&(i.modifiers.applyStyle={enabled:!this._inNavbar}),i},a._jQueryInterface=function(t){return this.each(function(){var n=e(this).data(i),s="object"==typeof t?t:null;if(n||(n=new a(this,s),e(this).data(i,n)),"string"==typeof t){if("undefined"==typeof n[t])throw new Error('No method named "'+t+'"');n[t]()}})},a._clearMenus=function(t){if(!t||3!==t.which&&("keyup"!==t.type||9===t.which))for(var n=e.makeArray(e(u.DATA_TOGGLE)),s=0;s<n.length;s++){var r=a._getParentFromElement(n[s]),o=e(n[s]).data(i),l={relatedTarget:n[s]};if(o){var d=o._menu;if(e(r).hasClass(c.SHOW)&&!(t&&("click"===t.type&&/input|textarea/i.test(t.target.tagName)||"keyup"===t.type&&9===t.which)&&e.contains(r,t.target))){var f=e.Event(h.HIDE,l);e(r).trigger(f),f.isDefaultPrevented()||("ontouchstart"in document.documentElement&&e("body").children().off("mouseover",null,e.noop),n[s].setAttribute("aria-expanded","false"),e(d).removeClass(c.SHOW),e(r).removeClass(c.SHOW).trigger(e.Event(h.HIDDEN,l)))}}}},a._getParentFromElement=function(t){var n,i=s.getSelectorFromElement(t);return i&&(n=e(i)[0]),n||t.parentNode},a._dataApiKeydownHandler=function(t){if(!(!l.test(t.which)||/button/i.test(t.target.tagName)&&32===t.which||/input|textarea/i.test(t.target.tagName)||(t.preventDefault(),t.stopPropagation(),this.disabled||e(this).hasClass(c.DISABLED)))){var n=a._getParentFromElement(this),i=e(n).hasClass(c.SHOW);if((i||27===t.which&&32===t.which)&&(!i||27!==t.which&&32!==t.which)){var s=e(n).find(u.VISIBLE_ITEMS).get();if(s.length){var r=s.indexOf(t.target);38===t.which&&r>0&&r--,40===t.which&&r<s.length-1&&r++,r<0&&(r=0),s[r].focus()}}else{if(27===t.which){var o=e(n).find(u.DATA_TOGGLE)[0];e(o).trigger("focus")}e(this).trigger("click")}}},r(a,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}},{key:"Default",get:function(){return f}},{key:"DefaultType",get:function(){return _}}]),a}();return e(document).on(h.KEYDOWN_DATA_API,u.DATA_TOGGLE,g._dataApiKeydownHandler).on(h.KEYDOWN_DATA_API,u.MENU,g._dataApiKeydownHandler).on(h.CLICK_DATA_API+" "+h.KEYUP_DATA_API,g._clearMenus).on(h.CLICK_DATA_API,u.DATA_TOGGLE,function(t){t.preventDefault(),t.stopPropagation(),g._jQueryInterface.call(e(this),"toggle")}).on(h.CLICK_DATA_API,u.FORM_CHILD,function(t){t.stopPropagation()}),e.fn[t]=g._jQueryInterface,e.fn[t].Constructor=g,e.fn[t].noConflict=function(){return e.fn[t]=a,g._jQueryInterface},g}(),d=function(){var t="modal",n=".bs.modal",i=e.fn[t],o={backdrop:!0,keyboard:!0,focus:!0,show:!0},a={backdrop:"(boolean|string)",keyboard:"boolean",focus:"boolean",show:"boolean"},l={HIDE:"hide.bs.modal",HIDDEN:"hidden.bs.modal",SHOW:"show.bs.modal",SHOWN:"shown.bs.modal",FOCUSIN:"focusin.bs.modal",RESIZE:"resize.bs.modal",CLICK_DISMISS:"click.dismiss.bs.modal",KEYDOWN_DISMISS:"keydown.dismiss.bs.modal",MOUSEUP_DISMISS:"mouseup.dismiss.bs.modal",MOUSEDOWN_DISMISS:"mousedown.dismiss.bs.modal",CLICK_DATA_API:"click.bs.modal.data-api"},h={SCROLLBAR_MEASURER:"modal-scrollbar-measure",BACKDROP:"modal-backdrop",OPEN:"modal-open",FADE:"fade",SHOW:"show"},c={DIALOG:".modal-dialog",DATA_TOGGLE:'[data-toggle="modal"]',DATA_DISMISS:'[data-dismiss="modal"]',FIXED_CONTENT:".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",STICKY_CONTENT:".sticky-top",NAVBAR_TOGGLER:".navbar-toggler"},u=function(){function i(t,n){this._config=this._getConfig(n),this._element=t,this._dialog=e(t).find(c.DIALOG)[0],this._backdrop=null,this._isShown=!1,this._isBodyOverflowing=!1,this._ignoreBackdropClick=!1,this._originalBodyPadding=0,this._scrollbarWidth=0}var u=i.prototype;return u.toggle=function(t){return this._isShown?this.hide():this.show(t)},u.show=function(t){var n=this;if(!this._isTransitioning&&!this._isShown){s.supportsTransitionEnd()&&e(this._element).hasClass(h.FADE)&&(this._isTransitioning=!0);var i=e.Event(l.SHOW,{relatedTarget:t});e(this._element).trigger(i),this._isShown||i.isDefaultPrevented()||(this._isShown=!0,this._checkScrollbar(),this._setScrollbar(),this._adjustDialog(),e(document.body).addClass(h.OPEN),this._setEscapeEvent(),this._setResizeEvent(),e(this._element).on(l.CLICK_DISMISS,c.DATA_DISMISS,function(t){return n.hide(t)}),e(this._dialog).on(l.MOUSEDOWN_DISMISS,function(){e(n._element).one(l.MOUSEUP_DISMISS,function(t){e(t.target).is(n._element)&&(n._ignoreBackdropClick=!0)})}),this._showBackdrop(function(){return n._showElement(t)}))}},u.hide=function(t){var n=this;if(t&&t.preventDefault(),!this._isTransitioning&&this._isShown){var i=e.Event(l.HIDE);if(e(this._element).trigger(i),this._isShown&&!i.isDefaultPrevented()){this._isShown=!1;var r=s.supportsTransitionEnd()&&e(this._element).hasClass(h.FADE);r&&(this._isTransitioning=!0),this._setEscapeEvent(),this._setResizeEvent(),e(document).off(l.FOCUSIN),e(this._element).removeClass(h.SHOW),e(this._element).off(l.CLICK_DISMISS),e(this._dialog).off(l.MOUSEDOWN_DISMISS),r?e(this._element).one(s.TRANSITION_END,function(t){return n._hideModal(t)}).emulateTransitionEnd(300):this._hideModal()}}},u.dispose=function(){e.removeData(this._element,"bs.modal"),e(window,document,this._element,this._backdrop).off(n),this._config=null,this._element=null,this._dialog=null,this._backdrop=null,this._isShown=null,this._isBodyOverflowing=null,this._ignoreBackdropClick=null,this._scrollbarWidth=null},u.handleUpdate=function(){this._adjustDialog()},u._getConfig=function(n){return n=e.extend({},o,n),s.typeCheckConfig(t,n,a),n},u._showElement=function(t){var n=this,i=s.supportsTransitionEnd()&&e(this._element).hasClass(h.FADE);this._element.parentNode&&this._element.parentNode.nodeType===Node.ELEMENT_NODE||document.body.appendChild(this._element),this._element.style.display="block",this._element.removeAttribute("aria-hidden"),this._element.scrollTop=0,i&&s.reflow(this._element),e(this._element).addClass(h.SHOW),this._config.focus&&this._enforceFocus();var r=e.Event(l.SHOWN,{relatedTarget:t}),o=function(){n._config.focus&&n._element.focus(),n._isTransitioning=!1,e(n._element).trigger(r)};i?e(this._dialog).one(s.TRANSITION_END,o).emulateTransitionEnd(300):o()},u._enforceFocus=function(){var t=this;e(document).off(l.FOCUSIN).on(l.FOCUSIN,function(n){document===n.target||t._element===n.target||e(t._element).has(n.target).length||t._element.focus()})},u._setEscapeEvent=function(){var t=this;this._isShown&&this._config.keyboard?e(this._element).on(l.KEYDOWN_DISMISS,function(e){27===e.which&&(e.preventDefault(),t.hide())}):this._isShown||e(this._element).off(l.KEYDOWN_DISMISS)},u._setResizeEvent=function(){var t=this;this._isShown?e(window).on(l.RESIZE,function(e){return t.handleUpdate(e)}):e(window).off(l.RESIZE)},u._hideModal=function(){var t=this;this._element.style.display="none",this._element.setAttribute("aria-hidden",!0),this._isTransitioning=!1,this._showBackdrop(function(){e(document.body).removeClass(h.OPEN),t._resetAdjustments(),t._resetScrollbar(),e(t._element).trigger(l.HIDDEN)})},u._removeBackdrop=function(){this._backdrop&&(e(this._backdrop).remove(),this._backdrop=null)},u._showBackdrop=function(t){var n=this,i=e(this._element).hasClass(h.FADE)?h.FADE:"";if(this._isShown&&this._config.backdrop){var r=s.supportsTransitionEnd()&&i;if(this._backdrop=document.createElement("div"),this._backdrop.className=h.BACKDROP,i&&e(this._backdrop).addClass(i),e(this._backdrop).appendTo(document.body),e(this._element).on(l.CLICK_DISMISS,function(t){n._ignoreBackdropClick?n._ignoreBackdropClick=!1:t.target===t.currentTarget&&("static"===n._config.backdrop?n._element.focus():n.hide())}),r&&s.reflow(this._backdrop),e(this._backdrop).addClass(h.SHOW),!t)return;if(!r)return void t();e(this._backdrop).one(s.TRANSITION_END,t).emulateTransitionEnd(150)}else if(!this._isShown&&this._backdrop){e(this._backdrop).removeClass(h.SHOW);var o=function(){n._removeBackdrop(),t&&t()};s.supportsTransitionEnd()&&e(this._element).hasClass(h.FADE)?e(this._backdrop).one(s.TRANSITION_END,o).emulateTransitionEnd(150):o()}else t&&t()},u._adjustDialog=function(){var t=this._element.scrollHeight>document.documentElement.clientHeight;!this._isBodyOverflowing&&t&&(this._element.style.paddingLeft=this._scrollbarWidth+"px"),this._isBodyOverflowing&&!t&&(this._element.style.paddingRight=this._scrollbarWidth+"px")},u._resetAdjustments=function(){this._element.style.paddingLeft="",this._element.style.paddingRight=""},u._checkScrollbar=function(){var t=document.body.getBoundingClientRect();this._isBodyOverflowing=t.left+t.right<window.innerWidth,this._scrollbarWidth=this._getScrollbarWidth()},u._setScrollbar=function(){var t=this;if(this._isBodyOverflowing){e(c.FIXED_CONTENT).each(function(n,i){var s=e(i)[0].style.paddingRight,r=e(i).css("padding-right");e(i).data("padding-right",s).css("padding-right",parseFloat(r)+t._scrollbarWidth+"px")}),e(c.STICKY_CONTENT).each(function(n,i){var s=e(i)[0].style.marginRight,r=e(i).css("margin-right");e(i).data("margin-right",s).css("margin-right",parseFloat(r)-t._scrollbarWidth+"px")}),e(c.NAVBAR_TOGGLER).each(function(n,i){var s=e(i)[0].style.marginRight,r=e(i).css("margin-right");e(i).data("margin-right",s).css("margin-right",parseFloat(r)+t._scrollbarWidth+"px")});var n=document.body.style.paddingRight,i=e("body").css("padding-right");e("body").data("padding-right",n).css("padding-right",parseFloat(i)+this._scrollbarWidth+"px")}},u._resetScrollbar=function(){e(c.FIXED_CONTENT).each(function(t,n){var i=e(n).data("padding-right");"undefined"!=typeof i&&e(n).css("padding-right",i).removeData("padding-right")}),e(c.STICKY_CONTENT+", "+c.NAVBAR_TOGGLER).each(function(t,n){var i=e(n).data("margin-right");"undefined"!=typeof i&&e(n).css("margin-right",i).removeData("margin-right")});var t=e("body").data("padding-right");"undefined"!=typeof t&&e("body").css("padding-right",t).removeData("padding-right")},u._getScrollbarWidth=function(){var t=document.createElement("div");t.className=h.SCROLLBAR_MEASURER,document.body.appendChild(t);var e=t.getBoundingClientRect().width-t.clientWidth;return document.body.removeChild(t),e},i._jQueryInterface=function(t,n){return this.each(function(){var s=e(this).data("bs.modal"),r=e.extend({},i.Default,e(this).data(),"object"==typeof t&&t);if(s||(s=new i(this,r),e(this).data("bs.modal",s)),"string"==typeof t){if("undefined"==typeof s[t])throw new Error('No method named "'+t+'"');s[t](n)}else r.show&&s.show(n)})},r(i,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}},{key:"Default",get:function(){return o}}]),i}();return e(document).on(l.CLICK_DATA_API,c.DATA_TOGGLE,function(t){var n,i=this,r=s.getSelectorFromElement(this);r&&(n=e(r)[0]);var o=e(n).data("bs.modal")?"toggle":e.extend({},e(n).data(),e(this).data());"A"!==this.tagName&&"AREA"!==this.tagName||t.preventDefault();var a=e(n).one(l.SHOW,function(t){t.isDefaultPrevented()||a.one(l.HIDDEN,function(){e(i).is(":visible")&&i.focus()})});u._jQueryInterface.call(e(n),o,this)}),e.fn[t]=u._jQueryInterface,e.fn[t].Constructor=u,e.fn[t].noConflict=function(){return e.fn[t]=i,u._jQueryInterface},u}(),f=function(){if("undefined"==typeof n)throw new Error("Bootstrap tooltips require Popper.js (https://popper.js.org)");var t="tooltip",i=".bs.tooltip",o=e.fn[t],a=new RegExp("(^|\\s)bs-tooltip\\S+","g"),l={animation:"boolean",template:"string",title:"(string|element|function)",trigger:"string",delay:"(number|object)",html:"boolean",selector:"(string|boolean)",placement:"(string|function)",offset:"(number|string)",container:"(string|element|boolean)",fallbackPlacement:"(string|array)"},h={AUTO:"auto",TOP:"top",RIGHT:"right",BOTTOM:"bottom",LEFT:"left"},c={animation:!0,template:'<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,selector:!1,placement:"top",offset:0,container:!1,fallbackPlacement:"flip"},u={SHOW:"show",OUT:"out"},d={HIDE:"hide"+i,HIDDEN:"hidden"+i,SHOW:"show"+i,SHOWN:"shown"+i,INSERTED:"inserted"+i,CLICK:"click"+i,FOCUSIN:"focusin"+i,FOCUSOUT:"focusout"+i,MOUSEENTER:"mouseenter"+i,MOUSELEAVE:"mouseleave"+i},f={FADE:"fade",SHOW:"show"},_={TOOLTIP:".tooltip",TOOLTIP_INNER:".tooltip-inner",ARROW:".arrow"},g={HOVER:"hover",FOCUS:"focus",CLICK:"click",MANUAL:"manual"},m=function(){function o(t,e){this._isEnabled=!0,this._timeout=0,this._hoverState="",this._activeTrigger={},this._popper=null,this.element=t,this.config=this._getConfig(e),this.tip=null,this._setListeners()}var m=o.prototype;return m.enable=function(){this._isEnabled=!0},m.disable=function(){this._isEnabled=!1},m.toggleEnabled=function(){this._isEnabled=!this._isEnabled},m.toggle=function(t){if(this._isEnabled)if(t){var n=this.constructor.DATA_KEY,i=e(t.currentTarget).data(n);i||(i=new this.constructor(t.currentTarget,this._getDelegateConfig()),e(t.currentTarget).data(n,i)),i._activeTrigger.click=!i._activeTrigger.click,i._isWithActiveTrigger()?i._enter(null,i):i._leave(null,i)}else{if(e(this.getTipElement()).hasClass(f.SHOW))return void this._leave(null,this);this._enter(null,this)}},m.dispose=function(){clearTimeout(this._timeout),e.removeData(this.element,this.constructor.DATA_KEY),e(this.element).off(this.constructor.EVENT_KEY),e(this.element).closest(".modal").off("hide.bs.modal"),this.tip&&e(this.tip).remove(),this._isEnabled=null,this._timeout=null,this._hoverState=null,this._activeTrigger=null,null!==this._popper&&this._popper.destroy(),this._popper=null,this.element=null,this.config=null,this.tip=null},m.show=function(){var t=this;if("none"===e(this.element).css("display"))throw new Error("Please use show on visible elements");var i=e.Event(this.constructor.Event.SHOW);if(this.isWithContent()&&this._isEnabled){e(this.element).trigger(i);var r=e.contains(this.element.ownerDocument.documentElement,this.element);if(i.isDefaultPrevented()||!r)return;var a=this.getTipElement(),l=s.getUID(this.constructor.NAME);a.setAttribute("id",l),this.element.setAttribute("aria-describedby",l),this.setContent(),this.config.animation&&e(a).addClass(f.FADE);var h="function"==typeof this.config.placement?this.config.placement.call(this,a,this.element):this.config.placement,c=this._getAttachment(h);this.addAttachmentClass(c);var d=!1===this.config.container?document.body:e(this.config.container);e(a).data(this.constructor.DATA_KEY,this),e.contains(this.element.ownerDocument.documentElement,this.tip)||e(a).appendTo(d),e(this.element).trigger(this.constructor.Event.INSERTED),this._popper=new n(this.element,a,{placement:c,modifiers:{offset:{offset:this.config.offset},flip:{behavior:this.config.fallbackPlacement},arrow:{element:_.ARROW}},onCreate:function(e){e.originalPlacement!==e.placement&&t._handlePopperPlacementChange(e)},onUpdate:function(e){t._handlePopperPlacementChange(e)}}),e(a).addClass(f.SHOW),"ontouchstart"in document.documentElement&&e("body").children().on("mouseover",null,e.noop);var g=function(){t.config.animation&&t._fixTransition();var n=t._hoverState;t._hoverState=null,e(t.element).trigger(t.constructor.Event.SHOWN),n===u.OUT&&t._leave(null,t)};s.supportsTransitionEnd()&&e(this.tip).hasClass(f.FADE)?e(this.tip).one(s.TRANSITION_END,g).emulateTransitionEnd(o._TRANSITION_DURATION):g()}},m.hide=function(t){var n=this,i=this.getTipElement(),r=e.Event(this.constructor.Event.HIDE),o=function(){n._hoverState!==u.SHOW&&i.parentNode&&i.parentNode.removeChild(i),n._cleanTipClass(),n.element.removeAttribute("aria-describedby"),e(n.element).trigger(n.constructor.Event.HIDDEN),null!==n._popper&&n._popper.destroy(),t&&t()};e(this.element).trigger(r),r.isDefaultPrevented()||(e(i).removeClass(f.SHOW),"ontouchstart"in document.documentElement&&e("body").children().off("mouseover",null,e.noop),this._activeTrigger[g.CLICK]=!1,this._activeTrigger[g.FOCUS]=!1,this._activeTrigger[g.HOVER]=!1,s.supportsTransitionEnd()&&e(this.tip).hasClass(f.FADE)?e(i).one(s.TRANSITION_END,o).emulateTransitionEnd(150):o(),this._hoverState="")},m.update=function(){null!==this._popper&&this._popper.scheduleUpdate()},m.isWithContent=function(){return Boolean(this.getTitle())},m.addAttachmentClass=function(t){e(this.getTipElement()).addClass("bs-tooltip-"+t)},m.getTipElement=function(){return this.tip=this.tip||e(this.config.template)[0],this.tip},m.setContent=function(){var t=e(this.getTipElement());this.setElementContent(t.find(_.TOOLTIP_INNER),this.getTitle()),t.removeClass(f.FADE+" "+f.SHOW)},m.setElementContent=function(t,n){var i=this.config.html;"object"==typeof n&&(n.nodeType||n.jquery)?i?e(n).parent().is(t)||t.empty().append(n):t.text(e(n).text()):t[i?"html":"text"](n)},m.getTitle=function(){var t=this.element.getAttribute("data-original-title");return t||(t="function"==typeof this.config.title?this.config.title.call(this.element):this.config.title),t},m._getAttachment=function(t){return h[t.toUpperCase()]},m._setListeners=function(){var t=this;this.config.trigger.split(" ").forEach(function(n){if("click"===n)e(t.element).on(t.constructor.Event.CLICK,t.config.selector,function(e){return t.toggle(e)});else if(n!==g.MANUAL){var i=n===g.HOVER?t.constructor.Event.MOUSEENTER:t.constructor.Event.FOCUSIN,s=n===g.HOVER?t.constructor.Event.MOUSELEAVE:t.constructor.Event.FOCUSOUT;e(t.element).on(i,t.config.selector,function(e){return t._enter(e)}).on(s,t.config.selector,function(e){return t._leave(e)})}e(t.element).closest(".modal").on("hide.bs.modal",function(){return t.hide()})}),this.config.selector?this.config=e.extend({},this.config,{trigger:"manual",selector:""}):this._fixTitle()},m._fixTitle=function(){var t=typeof this.element.getAttribute("data-original-title");(this.element.getAttribute("title")||"string"!==t)&&(this.element.setAttribute("data-original-title",this.element.getAttribute("title")||""),this.element.setAttribute("title",""))},m._enter=function(t,n){var i=this.constructor.DATA_KEY;(n=n||e(t.currentTarget).data(i))||(n=new this.constructor(t.currentTarget,this._getDelegateConfig()),e(t.currentTarget).data(i,n)),t&&(n._activeTrigger["focusin"===t.type?g.FOCUS:g.HOVER]=!0),e(n.getTipElement()).hasClass(f.SHOW)||n._hoverState===u.SHOW?n._hoverState=u.SHOW:(clearTimeout(n._timeout),n._hoverState=u.SHOW,n.config.delay&&n.config.delay.show?n._timeout=setTimeout(function(){n._hoverState===u.SHOW&&n.show()},n.config.delay.show):n.show())},m._leave=function(t,n){var i=this.constructor.DATA_KEY;(n=n||e(t.currentTarget).data(i))||(n=new this.constructor(t.currentTarget,this._getDelegateConfig()),e(t.currentTarget).data(i,n)),t&&(n._activeTrigger["focusout"===t.type?g.FOCUS:g.HOVER]=!1),n._isWithActiveTrigger()||(clearTimeout(n._timeout),n._hoverState=u.OUT,n.config.delay&&n.config.delay.hide?n._timeout=setTimeout(function(){n._hoverState===u.OUT&&n.hide()},n.config.delay.hide):n.hide())},m._isWithActiveTrigger=function(){for(var t in this._activeTrigger)if(this._activeTrigger[t])return!0;return!1},m._getConfig=function(n){return"number"==typeof(n=e.extend({},this.constructor.Default,e(this.element).data(),n)).delay&&(n.delay={show:n.delay,hide:n.delay}),"number"==typeof n.title&&(n.title=n.title.toString()),"number"==typeof n.content&&(n.content=n.content.toString()),s.typeCheckConfig(t,n,this.constructor.DefaultType),n},m._getDelegateConfig=function(){var t={};if(this.config)for(var e in this.config)this.constructor.Default[e]!==this.config[e]&&(t[e]=this.config[e]);return t},m._cleanTipClass=function(){var t=e(this.getTipElement()),n=t.attr("class").match(a);null!==n&&n.length>0&&t.removeClass(n.join(""))},m._handlePopperPlacementChange=function(t){this._cleanTipClass(),this.addAttachmentClass(this._getAttachment(t.placement))},m._fixTransition=function(){var t=this.getTipElement(),n=this.config.animation;null===t.getAttribute("x-placement")&&(e(t).removeClass(f.FADE),this.config.animation=!1,this.hide(),this.show(),this.config.animation=n)},o._jQueryInterface=function(t){return this.each(function(){var n=e(this).data("bs.tooltip"),i="object"==typeof t&&t;if((n||!/dispose|hide/.test(t))&&(n||(n=new o(this,i),e(this).data("bs.tooltip",n)),"string"==typeof t)){if("undefined"==typeof n[t])throw new Error('No method named "'+t+'"');n[t]()}})},r(o,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}},{key:"Default",get:function(){return c}},{key:"NAME",get:function(){return t}},{key:"DATA_KEY",get:function(){return"bs.tooltip"}},{key:"Event",get:function(){return d}},{key:"EVENT_KEY",get:function(){return i}},{key:"DefaultType",get:function(){return l}}]),o}();return e.fn[t]=m._jQueryInterface,e.fn[t].Constructor=m,e.fn[t].noConflict=function(){return e.fn[t]=o,m._jQueryInterface},m}(),_=function(){var t="popover",n=".bs.popover",i=e.fn[t],s=new RegExp("(^|\\s)bs-popover\\S+","g"),a=e.extend({},f.Default,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'}),l=e.extend({},f.DefaultType,{content:"(string|element|function)"}),h={FADE:"fade",SHOW:"show"},c={TITLE:".popover-header",CONTENT:".popover-body"},u={HIDE:"hide"+n,HIDDEN:"hidden"+n,SHOW:"show"+n,SHOWN:"shown"+n,INSERTED:"inserted"+n,CLICK:"click"+n,FOCUSIN:"focusin"+n,FOCUSOUT:"focusout"+n,MOUSEENTER:"mouseenter"+n,MOUSELEAVE:"mouseleave"+n},d=function(i){function d(){return i.apply(this,arguments)||this}o(d,i);var f=d.prototype;return f.isWithContent=function(){return this.getTitle()||this._getContent()},f.addAttachmentClass=function(t){e(this.getTipElement()).addClass("bs-popover-"+t)},f.getTipElement=function(){return this.tip=this.tip||e(this.config.template)[0],this.tip},f.setContent=function(){var t=e(this.getTipElement());this.setElementContent(t.find(c.TITLE),this.getTitle()),this.setElementContent(t.find(c.CONTENT),this._getContent()),t.removeClass(h.FADE+" "+h.SHOW)},f._getContent=function(){return this.element.getAttribute("data-content")||("function"==typeof this.config.content?this.config.content.call(this.element):this.config.content)},f._cleanTipClass=function(){var t=e(this.getTipElement()),n=t.attr("class").match(s);null!==n&&n.length>0&&t.removeClass(n.join(""))},d._jQueryInterface=function(t){return this.each(function(){var n=e(this).data("bs.popover"),i="object"==typeof t?t:null;if((n||!/destroy|hide/.test(t))&&(n||(n=new d(this,i),e(this).data("bs.popover",n)),"string"==typeof t)){if("undefined"==typeof n[t])throw new Error('No method named "'+t+'"');n[t]()}})},r(d,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}},{key:"Default",get:function(){return a}},{key:"NAME",get:function(){return t}},{key:"DATA_KEY",get:function(){return"bs.popover"}},{key:"Event",get:function(){return u}},{key:"EVENT_KEY",get:function(){return n}},{key:"DefaultType",get:function(){return l}}]),d}(f);return e.fn[t]=d._jQueryInterface,e.fn[t].Constructor=d,e.fn[t].noConflict=function(){return e.fn[t]=i,d._jQueryInterface},d}(),g=function(){var t="scrollspy",n=e.fn[t],i={offset:10,method:"auto",target:""},o={offset:"number",method:"string",target:"(string|element)"},a={ACTIVATE:"activate.bs.scrollspy",SCROLL:"scroll.bs.scrollspy",LOAD_DATA_API:"load.bs.scrollspy.data-api"},l={DROPDOWN_ITEM:"dropdown-item",DROPDOWN_MENU:"dropdown-menu",ACTIVE:"active"},h={DATA_SPY:'[data-spy="scroll"]',ACTIVE:".active",NAV_LIST_GROUP:".nav, .list-group",NAV_LINKS:".nav-link",NAV_ITEMS:".nav-item",LIST_ITEMS:".list-group-item",DROPDOWN:".dropdown",DROPDOWN_ITEMS:".dropdown-item",DROPDOWN_TOGGLE:".dropdown-toggle"},c={OFFSET:"offset",POSITION:"position"},u=function(){function n(t,n){var i=this;this._element=t,this._scrollElement="BODY"===t.tagName?window:t,this._config=this._getConfig(n),this._selector=this._config.target+" "+h.NAV_LINKS+","+this._config.target+" "+h.LIST_ITEMS+","+this._config.target+" "+h.DROPDOWN_ITEMS,this._offsets=[],this._targets=[],this._activeTarget=null,this._scrollHeight=0,e(this._scrollElement).on(a.SCROLL,function(t){return i._process(t)}),this.refresh(),this._process()}var u=n.prototype;return u.refresh=function(){var t=this,n=this._scrollElement!==this._scrollElement.window?c.POSITION:c.OFFSET,i="auto"===this._config.method?n:this._config.method,r=i===c.POSITION?this._getScrollTop():0;this._offsets=[],this._targets=[],this._scrollHeight=this._getScrollHeight(),e.makeArray(e(this._selector)).map(function(t){var n,o=s.getSelectorFromElement(t);if(o&&(n=e(o)[0]),n){var a=n.getBoundingClientRect();if(a.width||a.height)return[e(n)[i]().top+r,o]}return null}).filter(function(t){return t}).sort(function(t,e){return t[0]-e[0]}).forEach(function(e){t._offsets.push(e[0]),t._targets.push(e[1])})},u.dispose=function(){e.removeData(this._element,"bs.scrollspy"),e(this._scrollElement).off(".bs.scrollspy"),this._element=null,this._scrollElement=null,this._config=null,this._selector=null,this._offsets=null,this._targets=null,this._activeTarget=null,this._scrollHeight=null},u._getConfig=function(n){if("string"!=typeof(n=e.extend({},i,n)).target){var r=e(n.target).attr("id");r||(r=s.getUID(t),e(n.target).attr("id",r)),n.target="#"+r}return s.typeCheckConfig(t,n,o),n},u._getScrollTop=function(){return this._scrollElement===window?this._scrollElement.pageYOffset:this._scrollElement.scrollTop},u._getScrollHeight=function(){return this._scrollElement.scrollHeight||Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},u._getOffsetHeight=function(){return this._scrollElement===window?window.innerHeight:this._scrollElement.getBoundingClientRect().height},u._process=function(){var t=this._getScrollTop()+this._config.offset,e=this._getScrollHeight(),n=this._config.offset+e-this._getOffsetHeight();if(this._scrollHeight!==e&&this.refresh(),t>=n){var i=this._targets[this._targets.length-1];this._activeTarget!==i&&this._activate(i)}else{if(this._activeTarget&&t<this._offsets[0]&&this._offsets[0]>0)return this._activeTarget=null,void this._clear();for(var s=this._offsets.length;s--;)this._activeTarget!==this._targets[s]&&t>=this._offsets[s]&&("undefined"==typeof this._offsets[s+1]||t<this._offsets[s+1])&&this._activate(this._targets[s])}},u._activate=function(t){this._activeTarget=t,this._clear();var n=this._selector.split(",");n=n.map(function(e){return e+'[data-target="'+t+'"],'+e+'[href="'+t+'"]'});var i=e(n.join(","));i.hasClass(l.DROPDOWN_ITEM)?(i.closest(h.DROPDOWN).find(h.DROPDOWN_TOGGLE).addClass(l.ACTIVE),i.addClass(l.ACTIVE)):(i.addClass(l.ACTIVE),i.parents(h.NAV_LIST_GROUP).prev(h.NAV_LINKS+", "+h.LIST_ITEMS).addClass(l.ACTIVE),i.parents(h.NAV_LIST_GROUP).prev(h.NAV_ITEMS).children(h.NAV_LINKS).addClass(l.ACTIVE)),e(this._scrollElement).trigger(a.ACTIVATE,{relatedTarget:t})},u._clear=function(){e(this._selector).filter(h.ACTIVE).removeClass(l.ACTIVE)},n._jQueryInterface=function(t){return this.each(function(){var i=e(this).data("bs.scrollspy"),s="object"==typeof t&&t;if(i||(i=new n(this,s),e(this).data("bs.scrollspy",i)),"string"==typeof t){if("undefined"==typeof i[t])throw new Error('No method named "'+t+'"');i[t]()}})},r(n,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}},{key:"Default",get:function(){return i}}]),n}();return e(window).on(a.LOAD_DATA_API,function(){for(var t=e.makeArray(e(h.DATA_SPY)),n=t.length;n--;){var i=e(t[n]);u._jQueryInterface.call(i,i.data())}}),e.fn[t]=u._jQueryInterface,e.fn[t].Constructor=u,e.fn[t].noConflict=function(){return e.fn[t]=n,u._jQueryInterface},u}(),m=function(){var t=e.fn.tab,n={HIDE:"hide.bs.tab",HIDDEN:"hidden.bs.tab",SHOW:"show.bs.tab",SHOWN:"shown.bs.tab",CLICK_DATA_API:"click.bs.tab.data-api"},i={DROPDOWN_MENU:"dropdown-menu",ACTIVE:"active",DISABLED:"disabled",FADE:"fade",SHOW:"show"},o={DROPDOWN:".dropdown",NAV_LIST_GROUP:".nav, .list-group",ACTIVE:".active",ACTIVE_UL:"> li > .active",DATA_TOGGLE:'[data-toggle="tab"], [data-toggle="pill"], [data-toggle="list"]',DROPDOWN_TOGGLE:".dropdown-toggle",DROPDOWN_ACTIVE_CHILD:"> .dropdown-menu .active"},a=function(){function t(t){this._element=t}var a=t.prototype;return a.show=function(){var t=this;if(!(this._element.parentNode&&this._element.parentNode.nodeType===Node.ELEMENT_NODE&&e(this._element).hasClass(i.ACTIVE)||e(this._element).hasClass(i.DISABLED))){var r,a,l=e(this._element).closest(o.NAV_LIST_GROUP)[0],h=s.getSelectorFromElement(this._element);if(l){var c="UL"===l.nodeName?o.ACTIVE_UL:o.ACTIVE;a=e.makeArray(e(l).find(c)),a=a[a.length-1]}var u=e.Event(n.HIDE,{relatedTarget:this._element}),d=e.Event(n.SHOW,{relatedTarget:a});if(a&&e(a).trigger(u),e(this._element).trigger(d),!d.isDefaultPrevented()&&!u.isDefaultPrevented()){h&&(r=e(h)[0]),this._activate(this._element,l);var f=function(){var i=e.Event(n.HIDDEN,{relatedTarget:t._element}),s=e.Event(n.SHOWN,{relatedTarget:a});e(a).trigger(i),e(t._element).trigger(s)};r?this._activate(r,r.parentNode,f):f()}}},a.dispose=function(){e.removeData(this._element,"bs.tab"),this._element=null},a._activate=function(t,n,r){var a,l=this,h=(a="UL"===n.nodeName?e(n).find(o.ACTIVE_UL):e(n).children(o.ACTIVE))[0],c=r&&s.supportsTransitionEnd()&&h&&e(h).hasClass(i.FADE),u=function(){return l._transitionComplete(t,h,c,r)};h&&c?e(h).one(s.TRANSITION_END,u).emulateTransitionEnd(150):u(),h&&e(h).removeClass(i.SHOW)},a._transitionComplete=function(t,n,r,a){if(n){e(n).removeClass(i.ACTIVE);var l=e(n.parentNode).find(o.DROPDOWN_ACTIVE_CHILD)[0];l&&e(l).removeClass(i.ACTIVE),"tab"===n.getAttribute("role")&&n.setAttribute("aria-selected",!1)}if(e(t).addClass(i.ACTIVE),"tab"===t.getAttribute("role")&&t.setAttribute("aria-selected",!0),r?(s.reflow(t),e(t).addClass(i.SHOW)):e(t).removeClass(i.FADE),t.parentNode&&e(t.parentNode).hasClass(i.DROPDOWN_MENU)){var h=e(t).closest(o.DROPDOWN)[0];h&&e(h).find(o.DROPDOWN_TOGGLE).addClass(i.ACTIVE),t.setAttribute("aria-expanded",!0)}a&&a()},t._jQueryInterface=function(n){return this.each(function(){var i=e(this),s=i.data("bs.tab");if(s||(s=new t(this),i.data("bs.tab",s)),"string"==typeof n){if("undefined"==typeof s[n])throw new Error('No method named "'+n+'"');s[n]()}})},r(t,null,[{key:"VERSION",get:function(){return"4.0.0-beta.2"}}]),t}();return e(document).on(n.CLICK_DATA_API,o.DATA_TOGGLE,function(t){t.preventDefault(),a._jQueryInterface.call(e(this),"show")}),e.fn.tab=a._jQueryInterface,e.fn.tab.Constructor=a,e.fn.tab.noConflict=function(){return e.fn.tab=t,a._jQueryInterface},a}();return function(){if("undefined"==typeof e)throw new Error("Bootstrap's JavaScript requires jQuery. jQuery must be included before Bootstrap's JavaScript.");var t=e.fn.jquery.split(" ")[0].split(".");if(t[0]<2&&t[1]<9||1===t[0]&&9===t[1]&&t[2]<1||t[0]>=4)throw new Error("Bootstrap's JavaScript requires at least jQuery v1.9.1 but less than v4.0.0")}(),t.Util=s,t.Alert=a,t.Button=l,t.Carousel=h,t.Collapse=c,t.Dropdown=u,t.Modal=d,t.Popover=_,t.Scrollspy=g,t.Tab=m,t.Tooltip=f,t}({},$,Popper);
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports,require("jquery"),require("popper.js")):"function"==typeof define&&define.amd?define(["exports","jquery","popper.js"],e):e(t.bootstrap={},t.jQuery,t.Popper)}(this,function(t,e,n){"use strict";function i(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}function s(t,e,n){return e&&i(t.prototype,e),n&&i(t,n),t}function r(){return(r=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var i in n)Object.prototype.hasOwnProperty.call(n,i)&&(t[i]=n[i])}return t}).apply(this,arguments)}e=e&&e.hasOwnProperty("default")?e.default:e,n=n&&n.hasOwnProperty("default")?n.default:n;var o,a,l,h,c,u,f,d,_,g,p,m,v,E,T,y,C,I,A,b,D,S,w,N,O,k,P=function(t){var e=!1;function n(e){var n=this,s=!1;return t(this).one(i.TRANSITION_END,function(){s=!0}),setTimeout(function(){s||i.triggerTransitionEnd(n)},e),this}var i={TRANSITION_END:"bsTransitionEnd",getUID:function(t){do{t+=~~(1e6*Math.random())}while(document.getElementById(t));return t},getSelectorFromElement:function(e){var n,i=e.getAttribute("data-target");i&&"#"!==i||(i=e.getAttribute("href")||""),"#"===i.charAt(0)&&(n=i,i=n="function"==typeof t.escapeSelector?t.escapeSelector(n).substr(1):n.replace(/(:|\.|\[|\]|,|=|@)/g,"\\$1"));try{return t(document).find(i).length>0?i:null}catch(t){return null}},reflow:function(t){return t.offsetHeight},triggerTransitionEnd:function(n){t(n).trigger(e.end)},supportsTransitionEnd:function(){return Boolean(e)},isElement:function(t){return(t[0]||t).nodeType},typeCheckConfig:function(t,e,n){for(var s in n)if(Object.prototype.hasOwnProperty.call(n,s)){var r=n[s],o=e[s],a=o&&i.isElement(o)?"element":(l=o,{}.toString.call(l).match(/\s([a-zA-Z]+)/)[1].toLowerCase());if(!new RegExp(r).test(a))throw new Error(t.toUpperCase()+': Option "'+s+'" provided type "'+a+'" but expected type "'+r+'".')}var l}};return e=("undefined"==typeof window||!window.QUnit)&&{end:"transitionend"},t.fn.emulateTransitionEnd=n,i.supportsTransitionEnd()&&(t.event.special[i.TRANSITION_END]={bindType:e.end,delegateType:e.end,handle:function(e){if(t(e.target).is(this))return e.handleObj.handler.apply(this,arguments)}}),i}(e),L=(a="alert",h="."+(l="bs.alert"),c=(o=e).fn[a],u={CLOSE:"close"+h,CLOSED:"closed"+h,CLICK_DATA_API:"click"+h+".data-api"},f="alert",d="fade",_="show",g=function(){function t(t){this._element=t}var e=t.prototype;return e.close=function(t){t=t||this._element;var e=this._getRootElement(t);this._triggerCloseEvent(e).isDefaultPrevented()||this._removeElement(e)},e.dispose=function(){o.removeData(this._element,l),this._element=null},e._getRootElement=function(t){var e=P.getSelectorFromElement(t),n=!1;return e&&(n=o(e)[0]),n||(n=o(t).closest("."+f)[0]),n},e._triggerCloseEvent=function(t){var e=o.Event(u.CLOSE);return o(t).trigger(e),e},e._removeElement=function(t){var e=this;o(t).removeClass(_),P.supportsTransitionEnd()&&o(t).hasClass(d)?o(t).one(P.TRANSITION_END,function(n){return e._destroyElement(t,n)}).emulateTransitionEnd(150):this._destroyElement(t)},e._destroyElement=function(t){o(t).detach().trigger(u.CLOSED).remove()},t._jQueryInterface=function(e){return this.each(function(){var n=o(this),i=n.data(l);i||(i=new t(this),n.data(l,i)),"close"===e&&i[e](this)})},t._handleDismiss=function(t){return function(e){e&&e.preventDefault(),t.close(this)}},s(t,null,[{key:"VERSION",get:function(){return"4.0.0"}}]),t}(),o(document).on(u.CLICK_DATA_API,'[data-dismiss="alert"]',g._handleDismiss(new g)),o.fn[a]=g._jQueryInterface,o.fn[a].Constructor=g,o.fn[a].noConflict=function(){return o.fn[a]=c,g._jQueryInterface},g),R=(m="button",E="."+(v="bs.button"),T=".data-api",y=(p=e).fn[m],C="active",I="btn",A="focus",b='[data-toggle^="button"]',D='[data-toggle="buttons"]',S="input",w=".active",N=".btn",O={CLICK_DATA_API:"click"+E+T,FOCUS_BLUR_DATA_API:"focus"+E+T+" blur"+E+T},k=function(){function t(t){this._element=t}var e=t.prototype;return e.toggle=function(){var t=!0,e=!0,n=p(this._element).closest(D)[0];if(n){var i=p(this._element).find(S)[0];if(i){if("radio"===i.type)if(i.checked&&p(this._element).hasClass(C))t=!1;else{var s=p(n).find(w)[0];s&&p(s).removeClass(C)}if(t){if(i.hasAttribute("disabled")||n.hasAttribute("disabled")||i.classList.contains("disabled")||n.classList.contains("disabled"))return;i.checked=!p(this._element).hasClass(C),p(i).trigger("change")}i.focus(),e=!1}}e&&this._element.setAttribute("aria-pressed",!p(this._element).hasClass(C)),t&&p(this._element).toggleClass(C)},e.dispose=function(){p.removeData(this._element,v),this._element=null},t._jQueryInterface=function(e){return this.each(function(){var n=p(this).data(v);n||(n=new t(this),p(this).data(v,n)),"toggle"===e&&n[e]()})},s(t,null,[{key:"VERSION",get:function(){return"4.0.0"}}]),t}(),p(document).on(O.CLICK_DATA_API,b,function(t){t.preventDefault();var e=t.target;p(e).hasClass(I)||(e=p(e).closest(N)),k._jQueryInterface.call(p(e),"toggle")}).on(O.FOCUS_BLUR_DATA_API,b,function(t){var e=p(t.target).closest(N)[0];p(e).toggleClass(A,/^focus(in)?$/.test(t.type))}),p.fn[m]=k._jQueryInterface,p.fn[m].Constructor=k,p.fn[m].noConflict=function(){return p.fn[m]=y,k._jQueryInterface},k),j=function(t){var e="carousel",n="bs.carousel",i="."+n,o=t.fn[e],a={interval:5e3,keyboard:!0,slide:!1,pause:"hover",wrap:!0},l={interval:"(number|boolean)",keyboard:"boolean",slide:"(boolean|string)",pause:"(string|boolean)",wrap:"boolean"},h="next",c="prev",u="left",f="right",d={SLIDE:"slide"+i,SLID:"slid"+i,KEYDOWN:"keydown"+i,MOUSEENTER:"mouseenter"+i,MOUSELEAVE:"mouseleave"+i,TOUCHEND:"touchend"+i,LOAD_DATA_API:"load"+i+".data-api",CLICK_DATA_API:"click"+i+".data-api"},_="carousel",g="active",p="slide",m="carousel-item-right",v="carousel-item-left",E="carousel-item-next",T="carousel-item-prev",y={ACTIVE:".active",ACTIVE_ITEM:".active.carousel-item",ITEM:".carousel-item",NEXT_PREV:".carousel-item-next, .carousel-item-prev",INDICATORS:".carousel-indicators",DATA_SLIDE:"[data-slide], [data-slide-to]",DATA_RIDE:'[data-ride="carousel"]'},C=function(){function o(e,n){this._items=null,this._interval=null,this._activeElement=null,this._isPaused=!1,this._isSliding=!1,this.touchTimeout=null,this._config=this._getConfig(n),this._element=t(e)[0],this._indicatorsElement=t(this._element).find(y.INDICATORS)[0],this._addEventListeners()}var C=o.prototype;return C.next=function(){this._isSliding||this._slide(h)},C.nextWhenVisible=function(){!document.hidden&&t(this._element).is(":visible")&&"hidden"!==t(this._element).css("visibility")&&this.next()},C.prev=function(){this._isSliding||this._slide(c)},C.pause=function(e){e||(this._isPaused=!0),t(this._element).find(y.NEXT_PREV)[0]&&P.supportsTransitionEnd()&&(P.triggerTransitionEnd(this._element),this.cycle(!0)),clearInterval(this._interval),this._interval=null},C.cycle=function(t){t||(this._isPaused=!1),this._interval&&(clearInterval(this._interval),this._interval=null),this._config.interval&&!this._isPaused&&(this._interval=setInterval((document.visibilityState?this.nextWhenVisible:this.next).bind(this),this._config.interval))},C.to=function(e){var n=this;this._activeElement=t(this._element).find(y.ACTIVE_ITEM)[0];var i=this._getItemIndex(this._activeElement);if(!(e>this._items.length-1||e<0))if(this._isSliding)t(this._element).one(d.SLID,function(){return n.to(e)});else{if(i===e)return this.pause(),void this.cycle();var s=e>i?h:c;this._slide(s,this._items[e])}},C.dispose=function(){t(this._element).off(i),t.removeData(this._element,n),this._items=null,this._config=null,this._element=null,this._interval=null,this._isPaused=null,this._isSliding=null,this._activeElement=null,this._indicatorsElement=null},C._getConfig=function(t){return t=r({},a,t),P.typeCheckConfig(e,t,l),t},C._addEventListeners=function(){var e=this;this._config.keyboard&&t(this._element).on(d.KEYDOWN,function(t){return e._keydown(t)}),"hover"===this._config.pause&&(t(this._element).on(d.MOUSEENTER,function(t){return e.pause(t)}).on(d.MOUSELEAVE,function(t){return e.cycle(t)}),"ontouchstart"in document.documentElement&&t(this._element).on(d.TOUCHEND,function(){e.pause(),e.touchTimeout&&clearTimeout(e.touchTimeout),e.touchTimeout=setTimeout(function(t){return e.cycle(t)},500+e._config.interval)}))},C._keydown=function(t){if(!/input|textarea/i.test(t.target.tagName))switch(t.which){case 37:t.preventDefault(),this.prev();break;case 39:t.preventDefault(),this.next()}},C._getItemIndex=function(e){return this._items=t.makeArray(t(e).parent().find(y.ITEM)),this._items.indexOf(e)},C._getItemByDirection=function(t,e){var n=t===h,i=t===c,s=this._getItemIndex(e),r=this._items.length-1;if((i&&0===s||n&&s===r)&&!this._config.wrap)return e;var o=(s+(t===c?-1:1))%this._items.length;return-1===o?this._items[this._items.length-1]:this._items[o]},C._triggerSlideEvent=function(e,n){var i=this._getItemIndex(e),s=this._getItemIndex(t(this._element).find(y.ACTIVE_ITEM)[0]),r=t.Event(d.SLIDE,{relatedTarget:e,direction:n,from:s,to:i});return t(this._element).trigger(r),r},C._setActiveIndicatorElement=function(e){if(this._indicatorsElement){t(this._indicatorsElement).find(y.ACTIVE).removeClass(g);var n=this._indicatorsElement.children[this._getItemIndex(e)];n&&t(n).addClass(g)}},C._slide=function(e,n){var i,s,r,o=this,a=t(this._element).find(y.ACTIVE_ITEM)[0],l=this._getItemIndex(a),c=n||a&&this._getItemByDirection(e,a),_=this._getItemIndex(c),C=Boolean(this._interval);if(e===h?(i=v,s=E,r=u):(i=m,s=T,r=f),c&&t(c).hasClass(g))this._isSliding=!1;else if(!this._triggerSlideEvent(c,r).isDefaultPrevented()&&a&&c){this._isSliding=!0,C&&this.pause(),this._setActiveIndicatorElement(c);var I=t.Event(d.SLID,{relatedTarget:c,direction:r,from:l,to:_});P.supportsTransitionEnd()&&t(this._element).hasClass(p)?(t(c).addClass(s),P.reflow(c),t(a).addClass(i),t(c).addClass(i),t(a).one(P.TRANSITION_END,function(){t(c).removeClass(i+" "+s).addClass(g),t(a).removeClass(g+" "+s+" "+i),o._isSliding=!1,setTimeout(function(){return t(o._element).trigger(I)},0)}).emulateTransitionEnd(600)):(t(a).removeClass(g),t(c).addClass(g),this._isSliding=!1,t(this._element).trigger(I)),C&&this.cycle()}},o._jQueryInterface=function(e){return this.each(function(){var i=t(this).data(n),s=r({},a,t(this).data());"object"==typeof e&&(s=r({},s,e));var l="string"==typeof e?e:s.slide;if(i||(i=new o(this,s),t(this).data(n,i)),"number"==typeof e)i.to(e);else if("string"==typeof l){if("undefined"==typeof i[l])throw new TypeError('No method named "'+l+'"');i[l]()}else s.interval&&(i.pause(),i.cycle())})},o._dataApiClickHandler=function(e){var i=P.getSelectorFromElement(this);if(i){var s=t(i)[0];if(s&&t(s).hasClass(_)){var a=r({},t(s).data(),t(this).data()),l=this.getAttribute("data-slide-to");l&&(a.interval=!1),o._jQueryInterface.call(t(s),a),l&&t(s).data(n).to(l),e.preventDefault()}}},s(o,null,[{key:"VERSION",get:function(){return"4.0.0"}},{key:"Default",get:function(){return a}}]),o}();return t(document).on(d.CLICK_DATA_API,y.DATA_SLIDE,C._dataApiClickHandler),t(window).on(d.LOAD_DATA_API,function(){t(y.DATA_RIDE).each(function(){var e=t(this);C._jQueryInterface.call(e,e.data())})}),t.fn[e]=C._jQueryInterface,t.fn[e].Constructor=C,t.fn[e].noConflict=function(){return t.fn[e]=o,C._jQueryInterface},C}(e),H=function(t){var e="collapse",n="bs.collapse",i="."+n,o=t.fn[e],a={toggle:!0,parent:""},l={toggle:"boolean",parent:"(string|element)"},h={SHOW:"show"+i,SHOWN:"shown"+i,HIDE:"hide"+i,HIDDEN:"hidden"+i,CLICK_DATA_API:"click"+i+".data-api"},c="show",u="collapse",f="collapsing",d="collapsed",_="width",g="height",p={ACTIVES:".show, .collapsing",DATA_TOGGLE:'[data-toggle="collapse"]'},m=function(){function i(e,n){this._isTransitioning=!1,this._element=e,this._config=this._getConfig(n),this._triggerArray=t.makeArray(t('[data-toggle="collapse"][href="#'+e.id+'"],[data-toggle="collapse"][data-target="#'+e.id+'"]'));for(var i=t(p.DATA_TOGGLE),s=0;s<i.length;s++){var r=i[s],o=P.getSelectorFromElement(r);null!==o&&t(o).filter(e).length>0&&(this._selector=o,this._triggerArray.push(r))}this._parent=this._config.parent?this._getParent():null,this._config.parent||this._addAriaAndCollapsedClass(this._element,this._triggerArray),this._config.toggle&&this.toggle()}var o=i.prototype;return o.toggle=function(){t(this._element).hasClass(c)?this.hide():this.show()},o.show=function(){var e,s,r=this;if(!this._isTransitioning&&!t(this._element).hasClass(c)&&(this._parent&&0===(e=t.makeArray(t(this._parent).find(p.ACTIVES).filter('[data-parent="'+this._config.parent+'"]'))).length&&(e=null),!(e&&(s=t(e).not(this._selector).data(n))&&s._isTransitioning))){var o=t.Event(h.SHOW);if(t(this._element).trigger(o),!o.isDefaultPrevented()){e&&(i._jQueryInterface.call(t(e).not(this._selector),"hide"),s||t(e).data(n,null));var a=this._getDimension();t(this._element).removeClass(u).addClass(f),this._element.style[a]=0,this._triggerArray.length>0&&t(this._triggerArray).removeClass(d).attr("aria-expanded",!0),this.setTransitioning(!0);var l=function(){t(r._element).removeClass(f).addClass(u).addClass(c),r._element.style[a]="",r.setTransitioning(!1),t(r._element).trigger(h.SHOWN)};if(P.supportsTransitionEnd()){var _="scroll"+(a[0].toUpperCase()+a.slice(1));t(this._element).one(P.TRANSITION_END,l).emulateTransitionEnd(600),this._element.style[a]=this._element[_]+"px"}else l()}}},o.hide=function(){var e=this;if(!this._isTransitioning&&t(this._element).hasClass(c)){var n=t.Event(h.HIDE);if(t(this._element).trigger(n),!n.isDefaultPrevented()){var i=this._getDimension();if(this._element.style[i]=this._element.getBoundingClientRect()[i]+"px",P.reflow(this._element),t(this._element).addClass(f).removeClass(u).removeClass(c),this._triggerArray.length>0)for(var s=0;s<this._triggerArray.length;s++){var r=this._triggerArray[s],o=P.getSelectorFromElement(r);if(null!==o)t(o).hasClass(c)||t(r).addClass(d).attr("aria-expanded",!1)}this.setTransitioning(!0);var a=function(){e.setTransitioning(!1),t(e._element).removeClass(f).addClass(u).trigger(h.HIDDEN)};this._element.style[i]="",P.supportsTransitionEnd()?t(this._element).one(P.TRANSITION_END,a).emulateTransitionEnd(600):a()}}},o.setTransitioning=function(t){this._isTransitioning=t},o.dispose=function(){t.removeData(this._element,n),this._config=null,this._parent=null,this._element=null,this._triggerArray=null,this._isTransitioning=null},o._getConfig=function(t){return(t=r({},a,t)).toggle=Boolean(t.toggle),P.typeCheckConfig(e,t,l),t},o._getDimension=function(){return t(this._element).hasClass(_)?_:g},o._getParent=function(){var e=this,n=null;P.isElement(this._config.parent)?(n=this._config.parent,"undefined"!=typeof this._config.parent.jquery&&(n=this._config.parent[0])):n=t(this._config.parent)[0];var s='[data-toggle="collapse"][data-parent="'+this._config.parent+'"]';return t(n).find(s).each(function(t,n){e._addAriaAndCollapsedClass(i._getTargetFromElement(n),[n])}),n},o._addAriaAndCollapsedClass=function(e,n){if(e){var i=t(e).hasClass(c);n.length>0&&t(n).toggleClass(d,!i).attr("aria-expanded",i)}},i._getTargetFromElement=function(e){var n=P.getSelectorFromElement(e);return n?t(n)[0]:null},i._jQueryInterface=function(e){return this.each(function(){var s=t(this),o=s.data(n),l=r({},a,s.data(),"object"==typeof e&&e);if(!o&&l.toggle&&/show|hide/.test(e)&&(l.toggle=!1),o||(o=new i(this,l),s.data(n,o)),"string"==typeof e){if("undefined"==typeof o[e])throw new TypeError('No method named "'+e+'"');o[e]()}})},s(i,null,[{key:"VERSION",get:function(){return"4.0.0"}},{key:"Default",get:function(){return a}}]),i}();return t(document).on(h.CLICK_DATA_API,p.DATA_TOGGLE,function(e){"A"===e.currentTarget.tagName&&e.preventDefault();var i=t(this),s=P.getSelectorFromElement(this);t(s).each(function(){var e=t(this),s=e.data(n)?"toggle":i.data();m._jQueryInterface.call(e,s)})}),t.fn[e]=m._jQueryInterface,t.fn[e].Constructor=m,t.fn[e].noConflict=function(){return t.fn[e]=o,m._jQueryInterface},m}(e),W=function(t){var e="dropdown",i="bs.dropdown",o="."+i,a=".data-api",l=t.fn[e],h=new RegExp("38|40|27"),c={HIDE:"hide"+o,HIDDEN:"hidden"+o,SHOW:"show"+o,SHOWN:"shown"+o,CLICK:"click"+o,CLICK_DATA_API:"click"+o+a,KEYDOWN_DATA_API:"keydown"+o+a,KEYUP_DATA_API:"keyup"+o+a},u="disabled",f="show",d="dropup",_="dropright",g="dropleft",p="dropdown-menu-right",m="dropdown-menu-left",v="position-static",E='[data-toggle="dropdown"]',T=".dropdown form",y=".dropdown-menu",C=".navbar-nav",I=".dropdown-menu .dropdown-item:not(.disabled)",A="top-start",b="top-end",D="bottom-start",S="bottom-end",w="right-start",N="left-start",O={offset:0,flip:!0,boundary:"scrollParent"},k={offset:"(number|string|function)",flip:"boolean",boundary:"(string|element)"},L=function(){function a(t,e){this._element=t,this._popper=null,this._config=this._getConfig(e),this._menu=this._getMenuElement(),this._inNavbar=this._detectNavbar(),this._addEventListeners()}var l=a.prototype;return l.toggle=function(){if(!this._element.disabled&&!t(this._element).hasClass(u)){var e=a._getParentFromElement(this._element),i=t(this._menu).hasClass(f);if(a._clearMenus(),!i){var s={relatedTarget:this._element},r=t.Event(c.SHOW,s);if(t(e).trigger(r),!r.isDefaultPrevented()){if(!this._inNavbar){if("undefined"==typeof n)throw new TypeError("Bootstrap dropdown require Popper.js (https://popper.js.org)");var o=this._element;t(e).hasClass(d)&&(t(this._menu).hasClass(m)||t(this._menu).hasClass(p))&&(o=e),"scrollParent"!==this._config.boundary&&t(e).addClass(v),this._popper=new n(o,this._menu,this._getPopperConfig())}"ontouchstart"in document.documentElement&&0===t(e).closest(C).length&&t("body").children().on("mouseover",null,t.noop),this._element.focus(),this._element.setAttribute("aria-expanded",!0),t(this._menu).toggleClass(f),t(e).toggleClass(f).trigger(t.Event(c.SHOWN,s))}}}},l.dispose=function(){t.removeData(this._element,i),t(this._element).off(o),this._element=null,this._menu=null,null!==this._popper&&(this._popper.destroy(),this._popper=null)},l.update=function(){this._inNavbar=this._detectNavbar(),null!==this._popper&&this._popper.scheduleUpdate()},l._addEventListeners=function(){var e=this;t(this._element).on(c.CLICK,function(t){t.preventDefault(),t.stopPropagation(),e.toggle()})},l._getConfig=function(n){return n=r({},this.constructor.Default,t(this._element).data(),n),P.typeCheckConfig(e,n,this.constructor.DefaultType),n},l._getMenuElement=function(){if(!this._menu){var e=a._getParentFromElement(this._element);this._menu=t(e).find(y)[0]}return this._menu},l._getPlacement=function(){var e=t(this._element).parent(),n=D;return e.hasClass(d)?(n=A,t(this._menu).hasClass(p)&&(n=b)):e.hasClass(_)?n=w:e.hasClass(g)?n=N:t(this._menu).hasClass(p)&&(n=S),n},l._detectNavbar=function(){return t(this._element).closest(".navbar").length>0},l._getPopperConfig=function(){var t=this,e={};return"function"==typeof this._config.offset?e.fn=function(e){return e.offsets=r({},e.offsets,t._config.offset(e.offsets)||{}),e}:e.offset=this._config.offset,{placement:this._getPlacement(),modifiers:{offset:e,flip:{enabled:this._config.flip},preventOverflow:{boundariesElement:this._config.boundary}}}},a._jQueryInterface=function(e){return this.each(function(){var n=t(this).data(i);if(n||(n=new a(this,"object"==typeof e?e:null),t(this).data(i,n)),"string"==typeof e){if("undefined"==typeof n[e])throw new TypeError('No method named "'+e+'"');n[e]()}})},a._clearMenus=function(e){if(!e||3!==e.which&&("keyup"!==e.type||9===e.which))for(var n=t.makeArray(t(E)),s=0;s<n.length;s++){var r=a._getParentFromElement(n[s]),o=t(n[s]).data(i),l={relatedTarget:n[s]};if(o){var h=o._menu;if(t(r).hasClass(f)&&!(e&&("click"===e.type&&/input|textarea/i.test(e.target.tagName)||"keyup"===e.type&&9===e.which)&&t.contains(r,e.target))){var u=t.Event(c.HIDE,l);t(r).trigger(u),u.isDefaultPrevented()||("ontouchstart"in document.documentElement&&t("body").children().off("mouseover",null,t.noop),n[s].setAttribute("aria-expanded","false"),t(h).removeClass(f),t(r).removeClass(f).trigger(t.Event(c.HIDDEN,l)))}}}},a._getParentFromElement=function(e){var n,i=P.getSelectorFromElement(e);return i&&(n=t(i)[0]),n||e.parentNode},a._dataApiKeydownHandler=function(e){if((/input|textarea/i.test(e.target.tagName)?!(32===e.which||27!==e.which&&(40!==e.which&&38!==e.which||t(e.target).closest(y).length)):h.test(e.which))&&(e.preventDefault(),e.stopPropagation(),!this.disabled&&!t(this).hasClass(u))){var n=a._getParentFromElement(this),i=t(n).hasClass(f);if((i||27===e.which&&32===e.which)&&(!i||27!==e.which&&32!==e.which)){var s=t(n).find(I).get();if(0!==s.length){var r=s.indexOf(e.target);38===e.which&&r>0&&r--,40===e.which&&r<s.length-1&&r++,r<0&&(r=0),s[r].focus()}}else{if(27===e.which){var o=t(n).find(E)[0];t(o).trigger("focus")}t(this).trigger("click")}}},s(a,null,[{key:"VERSION",get:function(){return"4.0.0"}},{key:"Default",get:function(){return O}},{key:"DefaultType",get:function(){return k}}]),a}();return t(document).on(c.KEYDOWN_DATA_API,E,L._dataApiKeydownHandler).on(c.KEYDOWN_DATA_API,y,L._dataApiKeydownHandler).on(c.CLICK_DATA_API+" "+c.KEYUP_DATA_API,L._clearMenus).on(c.CLICK_DATA_API,E,function(e){e.preventDefault(),e.stopPropagation(),L._jQueryInterface.call(t(this),"toggle")}).on(c.CLICK_DATA_API,T,function(t){t.stopPropagation()}),t.fn[e]=L._jQueryInterface,t.fn[e].Constructor=L,t.fn[e].noConflict=function(){return t.fn[e]=l,L._jQueryInterface},L}(e),M=function(t){var e="modal",n="bs.modal",i="."+n,o=t.fn.modal,a={backdrop:!0,keyboard:!0,focus:!0,show:!0},l={backdrop:"(boolean|string)",keyboard:"boolean",focus:"boolean",show:"boolean"},h={HIDE:"hide"+i,HIDDEN:"hidden"+i,SHOW:"show"+i,SHOWN:"shown"+i,FOCUSIN:"focusin"+i,RESIZE:"resize"+i,CLICK_DISMISS:"click.dismiss"+i,KEYDOWN_DISMISS:"keydown.dismiss"+i,MOUSEUP_DISMISS:"mouseup.dismiss"+i,MOUSEDOWN_DISMISS:"mousedown.dismiss"+i,CLICK_DATA_API:"click"+i+".data-api"},c="modal-scrollbar-measure",u="modal-backdrop",f="modal-open",d="fade",_="show",g={DIALOG:".modal-dialog",DATA_TOGGLE:'[data-toggle="modal"]',DATA_DISMISS:'[data-dismiss="modal"]',FIXED_CONTENT:".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",STICKY_CONTENT:".sticky-top",NAVBAR_TOGGLER:".navbar-toggler"},p=function(){function o(e,n){this._config=this._getConfig(n),this._element=e,this._dialog=t(e).find(g.DIALOG)[0],this._backdrop=null,this._isShown=!1,this._isBodyOverflowing=!1,this._ignoreBackdropClick=!1,this._originalBodyPadding=0,this._scrollbarWidth=0}var p=o.prototype;return p.toggle=function(t){return this._isShown?this.hide():this.show(t)},p.show=function(e){var n=this;if(!this._isTransitioning&&!this._isShown){P.supportsTransitionEnd()&&t(this._element).hasClass(d)&&(this._isTransitioning=!0);var i=t.Event(h.SHOW,{relatedTarget:e});t(this._element).trigger(i),this._isShown||i.isDefaultPrevented()||(this._isShown=!0,this._checkScrollbar(),this._setScrollbar(),this._adjustDialog(),t(document.body).addClass(f),this._setEscapeEvent(),this._setResizeEvent(),t(this._element).on(h.CLICK_DISMISS,g.DATA_DISMISS,function(t){return n.hide(t)}),t(this._dialog).on(h.MOUSEDOWN_DISMISS,function(){t(n._element).one(h.MOUSEUP_DISMISS,function(e){t(e.target).is(n._element)&&(n._ignoreBackdropClick=!0)})}),this._showBackdrop(function(){return n._showElement(e)}))}},p.hide=function(e){var n=this;if(e&&e.preventDefault(),!this._isTransitioning&&this._isShown){var i=t.Event(h.HIDE);if(t(this._element).trigger(i),this._isShown&&!i.isDefaultPrevented()){this._isShown=!1;var s=P.supportsTransitionEnd()&&t(this._element).hasClass(d);s&&(this._isTransitioning=!0),this._setEscapeEvent(),this._setResizeEvent(),t(document).off(h.FOCUSIN),t(this._element).removeClass(_),t(this._element).off(h.CLICK_DISMISS),t(this._dialog).off(h.MOUSEDOWN_DISMISS),s?t(this._element).one(P.TRANSITION_END,function(t){return n._hideModal(t)}).emulateTransitionEnd(300):this._hideModal()}}},p.dispose=function(){t.removeData(this._element,n),t(window,document,this._element,this._backdrop).off(i),this._config=null,this._element=null,this._dialog=null,this._backdrop=null,this._isShown=null,this._isBodyOverflowing=null,this._ignoreBackdropClick=null,this._scrollbarWidth=null},p.handleUpdate=function(){this._adjustDialog()},p._getConfig=function(t){return t=r({},a,t),P.typeCheckConfig(e,t,l),t},p._showElement=function(e){var n=this,i=P.supportsTransitionEnd()&&t(this._element).hasClass(d);this._element.parentNode&&this._element.parentNode.nodeType===Node.ELEMENT_NODE||document.body.appendChild(this._element),this._element.style.display="block",this._element.removeAttribute("aria-hidden"),this._element.scrollTop=0,i&&P.reflow(this._element),t(this._element).addClass(_),this._config.focus&&this._enforceFocus();var s=t.Event(h.SHOWN,{relatedTarget:e}),r=function(){n._config.focus&&n._element.focus(),n._isTransitioning=!1,t(n._element).trigger(s)};i?t(this._dialog).one(P.TRANSITION_END,r).emulateTransitionEnd(300):r()},p._enforceFocus=function(){var e=this;t(document).off(h.FOCUSIN).on(h.FOCUSIN,function(n){document!==n.target&&e._element!==n.target&&0===t(e._element).has(n.target).length&&e._element.focus()})},p._setEscapeEvent=function(){var e=this;this._isShown&&this._config.keyboard?t(this._element).on(h.KEYDOWN_DISMISS,function(t){27===t.which&&(t.preventDefault(),e.hide())}):this._isShown||t(this._element).off(h.KEYDOWN_DISMISS)},p._setResizeEvent=function(){var e=this;this._isShown?t(window).on(h.RESIZE,function(t){return e.handleUpdate(t)}):t(window).off(h.RESIZE)},p._hideModal=function(){var e=this;this._element.style.display="none",this._element.setAttribute("aria-hidden",!0),this._isTransitioning=!1,this._showBackdrop(function(){t(document.body).removeClass(f),e._resetAdjustments(),e._resetScrollbar(),t(e._element).trigger(h.HIDDEN)})},p._removeBackdrop=function(){this._backdrop&&(t(this._backdrop).remove(),this._backdrop=null)},p._showBackdrop=function(e){var n=this,i=t(this._element).hasClass(d)?d:"";if(this._isShown&&this._config.backdrop){var s=P.supportsTransitionEnd()&&i;if(this._backdrop=document.createElement("div"),this._backdrop.className=u,i&&t(this._backdrop).addClass(i),t(this._backdrop).appendTo(document.body),t(this._element).on(h.CLICK_DISMISS,function(t){n._ignoreBackdropClick?n._ignoreBackdropClick=!1:t.target===t.currentTarget&&("static"===n._config.backdrop?n._element.focus():n.hide())}),s&&P.reflow(this._backdrop),t(this._backdrop).addClass(_),!e)return;if(!s)return void e();t(this._backdrop).one(P.TRANSITION_END,e).emulateTransitionEnd(150)}else if(!this._isShown&&this._backdrop){t(this._backdrop).removeClass(_);var r=function(){n._removeBackdrop(),e&&e()};P.supportsTransitionEnd()&&t(this._element).hasClass(d)?t(this._backdrop).one(P.TRANSITION_END,r).emulateTransitionEnd(150):r()}else e&&e()},p._adjustDialog=function(){var t=this._element.scrollHeight>document.documentElement.clientHeight;!this._isBodyOverflowing&&t&&(this._element.style.paddingLeft=this._scrollbarWidth+"px"),this._isBodyOverflowing&&!t&&(this._element.style.paddingRight=this._scrollbarWidth+"px")},p._resetAdjustments=function(){this._element.style.paddingLeft="",this._element.style.paddingRight=""},p._checkScrollbar=function(){var t=document.body.getBoundingClientRect();this._isBodyOverflowing=t.left+t.right<window.innerWidth,this._scrollbarWidth=this._getScrollbarWidth()},p._setScrollbar=function(){var e=this;if(this._isBodyOverflowing){t(g.FIXED_CONTENT).each(function(n,i){var s=t(i)[0].style.paddingRight,r=t(i).css("padding-right");t(i).data("padding-right",s).css("padding-right",parseFloat(r)+e._scrollbarWidth+"px")}),t(g.STICKY_CONTENT).each(function(n,i){var s=t(i)[0].style.marginRight,r=t(i).css("margin-right");t(i).data("margin-right",s).css("margin-right",parseFloat(r)-e._scrollbarWidth+"px")}),t(g.NAVBAR_TOGGLER).each(function(n,i){var s=t(i)[0].style.marginRight,r=t(i).css("margin-right");t(i).data("margin-right",s).css("margin-right",parseFloat(r)+e._scrollbarWidth+"px")});var n=document.body.style.paddingRight,i=t("body").css("padding-right");t("body").data("padding-right",n).css("padding-right",parseFloat(i)+this._scrollbarWidth+"px")}},p._resetScrollbar=function(){t(g.FIXED_CONTENT).each(function(e,n){var i=t(n).data("padding-right");"undefined"!=typeof i&&t(n).css("padding-right",i).removeData("padding-right")}),t(g.STICKY_CONTENT+", "+g.NAVBAR_TOGGLER).each(function(e,n){var i=t(n).data("margin-right");"undefined"!=typeof i&&t(n).css("margin-right",i).removeData("margin-right")});var e=t("body").data("padding-right");"undefined"!=typeof e&&t("body").css("padding-right",e).removeData("padding-right")},p._getScrollbarWidth=function(){var t=document.createElement("div");t.className=c,document.body.appendChild(t);var e=t.getBoundingClientRect().width-t.clientWidth;return document.body.removeChild(t),e},o._jQueryInterface=function(e,i){return this.each(function(){var s=t(this).data(n),a=r({},o.Default,t(this).data(),"object"==typeof e&&e);if(s||(s=new o(this,a),t(this).data(n,s)),"string"==typeof e){if("undefined"==typeof s[e])throw new TypeError('No method named "'+e+'"');s[e](i)}else a.show&&s.show(i)})},s(o,null,[{key:"VERSION",get:function(){return"4.0.0"}},{key:"Default",get:function(){return a}}]),o}();return t(document).on(h.CLICK_DATA_API,g.DATA_TOGGLE,function(e){var i,s=this,o=P.getSelectorFromElement(this);o&&(i=t(o)[0]);var a=t(i).data(n)?"toggle":r({},t(i).data(),t(this).data());"A"!==this.tagName&&"AREA"!==this.tagName||e.preventDefault();var l=t(i).one(h.SHOW,function(e){e.isDefaultPrevented()||l.one(h.HIDDEN,function(){t(s).is(":visible")&&s.focus()})});p._jQueryInterface.call(t(i),a,this)}),t.fn.modal=p._jQueryInterface,t.fn.modal.Constructor=p,t.fn.modal.noConflict=function(){return t.fn.modal=o,p._jQueryInterface},p}(e),U=function(t){var e="tooltip",i="bs.tooltip",o="."+i,a=t.fn[e],l=new RegExp("(^|\\s)bs-tooltip\\S+","g"),h={animation:"boolean",template:"string",title:"(string|element|function)",trigger:"string",delay:"(number|object)",html:"boolean",selector:"(string|boolean)",placement:"(string|function)",offset:"(number|string)",container:"(string|element|boolean)",fallbackPlacement:"(string|array)",boundary:"(string|element)"},c={AUTO:"auto",TOP:"top",RIGHT:"right",BOTTOM:"bottom",LEFT:"left"},u={animation:!0,template:'<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,selector:!1,placement:"top",offset:0,container:!1,fallbackPlacement:"flip",boundary:"scrollParent"},f="show",d="out",_={HIDE:"hide"+o,HIDDEN:"hidden"+o,SHOW:"show"+o,SHOWN:"shown"+o,INSERTED:"inserted"+o,CLICK:"click"+o,FOCUSIN:"focusin"+o,FOCUSOUT:"focusout"+o,MOUSEENTER:"mouseenter"+o,MOUSELEAVE:"mouseleave"+o},g="fade",p="show",m=".tooltip-inner",v=".arrow",E="hover",T="focus",y="click",C="manual",I=function(){function a(t,e){if("undefined"==typeof n)throw new TypeError("Bootstrap tooltips require Popper.js (https://popper.js.org)");this._isEnabled=!0,this._timeout=0,this._hoverState="",this._activeTrigger={},this._popper=null,this.element=t,this.config=this._getConfig(e),this.tip=null,this._setListeners()}var I=a.prototype;return I.enable=function(){this._isEnabled=!0},I.disable=function(){this._isEnabled=!1},I.toggleEnabled=function(){this._isEnabled=!this._isEnabled},I.toggle=function(e){if(this._isEnabled)if(e){var n=this.constructor.DATA_KEY,i=t(e.currentTarget).data(n);i||(i=new this.constructor(e.currentTarget,this._getDelegateConfig()),t(e.currentTarget).data(n,i)),i._activeTrigger.click=!i._activeTrigger.click,i._isWithActiveTrigger()?i._enter(null,i):i._leave(null,i)}else{if(t(this.getTipElement()).hasClass(p))return void this._leave(null,this);this._enter(null,this)}},I.dispose=function(){clearTimeout(this._timeout),t.removeData(this.element,this.constructor.DATA_KEY),t(this.element).off(this.constructor.EVENT_KEY),t(this.element).closest(".modal").off("hide.bs.modal"),this.tip&&t(this.tip).remove(),this._isEnabled=null,this._timeout=null,this._hoverState=null,this._activeTrigger=null,null!==this._popper&&this._popper.destroy(),this._popper=null,this.element=null,this.config=null,this.tip=null},I.show=function(){var e=this;if("none"===t(this.element).css("display"))throw new Error("Please use show on visible elements");var i=t.Event(this.constructor.Event.SHOW);if(this.isWithContent()&&this._isEnabled){t(this.element).trigger(i);var s=t.contains(this.element.ownerDocument.documentElement,this.element);if(i.isDefaultPrevented()||!s)return;var r=this.getTipElement(),o=P.getUID(this.constructor.NAME);r.setAttribute("id",o),this.element.setAttribute("aria-describedby",o),this.setContent(),this.config.animation&&t(r).addClass(g);var l="function"==typeof this.config.placement?this.config.placement.call(this,r,this.element):this.config.placement,h=this._getAttachment(l);this.addAttachmentClass(h);var c=!1===this.config.container?document.body:t(this.config.container);t(r).data(this.constructor.DATA_KEY,this),t.contains(this.element.ownerDocument.documentElement,this.tip)||t(r).appendTo(c),t(this.element).trigger(this.constructor.Event.INSERTED),this._popper=new n(this.element,r,{placement:h,modifiers:{offset:{offset:this.config.offset},flip:{behavior:this.config.fallbackPlacement},arrow:{element:v},preventOverflow:{boundariesElement:this.config.boundary}},onCreate:function(t){t.originalPlacement!==t.placement&&e._handlePopperPlacementChange(t)},onUpdate:function(t){e._handlePopperPlacementChange(t)}}),t(r).addClass(p),"ontouchstart"in document.documentElement&&t("body").children().on("mouseover",null,t.noop);var u=function(){e.config.animation&&e._fixTransition();var n=e._hoverState;e._hoverState=null,t(e.element).trigger(e.constructor.Event.SHOWN),n===d&&e._leave(null,e)};P.supportsTransitionEnd()&&t(this.tip).hasClass(g)?t(this.tip).one(P.TRANSITION_END,u).emulateTransitionEnd(a._TRANSITION_DURATION):u()}},I.hide=function(e){var n=this,i=this.getTipElement(),s=t.Event(this.constructor.Event.HIDE),r=function(){n._hoverState!==f&&i.parentNode&&i.parentNode.removeChild(i),n._cleanTipClass(),n.element.removeAttribute("aria-describedby"),t(n.element).trigger(n.constructor.Event.HIDDEN),null!==n._popper&&n._popper.destroy(),e&&e()};t(this.element).trigger(s),s.isDefaultPrevented()||(t(i).removeClass(p),"ontouchstart"in document.documentElement&&t("body").children().off("mouseover",null,t.noop),this._activeTrigger[y]=!1,this._activeTrigger[T]=!1,this._activeTrigger[E]=!1,P.supportsTransitionEnd()&&t(this.tip).hasClass(g)?t(i).one(P.TRANSITION_END,r).emulateTransitionEnd(150):r(),this._hoverState="")},I.update=function(){null!==this._popper&&this._popper.scheduleUpdate()},I.isWithContent=function(){return Boolean(this.getTitle())},I.addAttachmentClass=function(e){t(this.getTipElement()).addClass("bs-tooltip-"+e)},I.getTipElement=function(){return this.tip=this.tip||t(this.config.template)[0],this.tip},I.setContent=function(){var e=t(this.getTipElement());this.setElementContent(e.find(m),this.getTitle()),e.removeClass(g+" "+p)},I.setElementContent=function(e,n){var i=this.config.html;"object"==typeof n&&(n.nodeType||n.jquery)?i?t(n).parent().is(e)||e.empty().append(n):e.text(t(n).text()):e[i?"html":"text"](n)},I.getTitle=function(){var t=this.element.getAttribute("data-original-title");return t||(t="function"==typeof this.config.title?this.config.title.call(this.element):this.config.title),t},I._getAttachment=function(t){return c[t.toUpperCase()]},I._setListeners=function(){var e=this;this.config.trigger.split(" ").forEach(function(n){if("click"===n)t(e.element).on(e.constructor.Event.CLICK,e.config.selector,function(t){return e.toggle(t)});else if(n!==C){var i=n===E?e.constructor.Event.MOUSEENTER:e.constructor.Event.FOCUSIN,s=n===E?e.constructor.Event.MOUSELEAVE:e.constructor.Event.FOCUSOUT;t(e.element).on(i,e.config.selector,function(t){return e._enter(t)}).on(s,e.config.selector,function(t){return e._leave(t)})}t(e.element).closest(".modal").on("hide.bs.modal",function(){return e.hide()})}),this.config.selector?this.config=r({},this.config,{trigger:"manual",selector:""}):this._fixTitle()},I._fixTitle=function(){var t=typeof this.element.getAttribute("data-original-title");(this.element.getAttribute("title")||"string"!==t)&&(this.element.setAttribute("data-original-title",this.element.getAttribute("title")||""),this.element.setAttribute("title",""))},I._enter=function(e,n){var i=this.constructor.DATA_KEY;(n=n||t(e.currentTarget).data(i))||(n=new this.constructor(e.currentTarget,this._getDelegateConfig()),t(e.currentTarget).data(i,n)),e&&(n._activeTrigger["focusin"===e.type?T:E]=!0),t(n.getTipElement()).hasClass(p)||n._hoverState===f?n._hoverState=f:(clearTimeout(n._timeout),n._hoverState=f,n.config.delay&&n.config.delay.show?n._timeout=setTimeout(function(){n._hoverState===f&&n.show()},n.config.delay.show):n.show())},I._leave=function(e,n){var i=this.constructor.DATA_KEY;(n=n||t(e.currentTarget).data(i))||(n=new this.constructor(e.currentTarget,this._getDelegateConfig()),t(e.currentTarget).data(i,n)),e&&(n._activeTrigger["focusout"===e.type?T:E]=!1),n._isWithActiveTrigger()||(clearTimeout(n._timeout),n._hoverState=d,n.config.delay&&n.config.delay.hide?n._timeout=setTimeout(function(){n._hoverState===d&&n.hide()},n.config.delay.hide):n.hide())},I._isWithActiveTrigger=function(){for(var t in this._activeTrigger)if(this._activeTrigger[t])return!0;return!1},I._getConfig=function(n){return"number"==typeof(n=r({},this.constructor.Default,t(this.element).data(),n)).delay&&(n.delay={show:n.delay,hide:n.delay}),"number"==typeof n.title&&(n.title=n.title.toString()),"number"==typeof n.content&&(n.content=n.content.toString()),P.typeCheckConfig(e,n,this.constructor.DefaultType),n},I._getDelegateConfig=function(){var t={};if(this.config)for(var e in this.config)this.constructor.Default[e]!==this.config[e]&&(t[e]=this.config[e]);return t},I._cleanTipClass=function(){var e=t(this.getTipElement()),n=e.attr("class").match(l);null!==n&&n.length>0&&e.removeClass(n.join(""))},I._handlePopperPlacementChange=function(t){this._cleanTipClass(),this.addAttachmentClass(this._getAttachment(t.placement))},I._fixTransition=function(){var e=this.getTipElement(),n=this.config.animation;null===e.getAttribute("x-placement")&&(t(e).removeClass(g),this.config.animation=!1,this.hide(),this.show(),this.config.animation=n)},a._jQueryInterface=function(e){return this.each(function(){var n=t(this).data(i),s="object"==typeof e&&e;if((n||!/dispose|hide/.test(e))&&(n||(n=new a(this,s),t(this).data(i,n)),"string"==typeof e)){if("undefined"==typeof n[e])throw new TypeError('No method named "'+e+'"');n[e]()}})},s(a,null,[{key:"VERSION",get:function(){return"4.0.0"}},{key:"Default",get:function(){return u}},{key:"NAME",get:function(){return e}},{key:"DATA_KEY",get:function(){return i}},{key:"Event",get:function(){return _}},{key:"EVENT_KEY",get:function(){return o}},{key:"DefaultType",get:function(){return h}}]),a}();return t.fn[e]=I._jQueryInterface,t.fn[e].Constructor=I,t.fn[e].noConflict=function(){return t.fn[e]=a,I._jQueryInterface},I}(e),x=function(t){var e="popover",n="bs.popover",i="."+n,o=t.fn[e],a=new RegExp("(^|\\s)bs-popover\\S+","g"),l=r({},U.Default,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'}),h=r({},U.DefaultType,{content:"(string|element|function)"}),c="fade",u="show",f=".popover-header",d=".popover-body",_={HIDE:"hide"+i,HIDDEN:"hidden"+i,SHOW:"show"+i,SHOWN:"shown"+i,INSERTED:"inserted"+i,CLICK:"click"+i,FOCUSIN:"focusin"+i,FOCUSOUT:"focusout"+i,MOUSEENTER:"mouseenter"+i,MOUSELEAVE:"mouseleave"+i},g=function(r){var o,g;function p(){return r.apply(this,arguments)||this}g=r,(o=p).prototype=Object.create(g.prototype),o.prototype.constructor=o,o.__proto__=g;var m=p.prototype;return m.isWithContent=function(){return this.getTitle()||this._getContent()},m.addAttachmentClass=function(e){t(this.getTipElement()).addClass("bs-popover-"+e)},m.getTipElement=function(){return this.tip=this.tip||t(this.config.template)[0],this.tip},m.setContent=function(){var e=t(this.getTipElement());this.setElementContent(e.find(f),this.getTitle());var n=this._getContent();"function"==typeof n&&(n=n.call(this.element)),this.setElementContent(e.find(d),n),e.removeClass(c+" "+u)},m._getContent=function(){return this.element.getAttribute("data-content")||this.config.content},m._cleanTipClass=function(){var e=t(this.getTipElement()),n=e.attr("class").match(a);null!==n&&n.length>0&&e.removeClass(n.join(""))},p._jQueryInterface=function(e){return this.each(function(){var i=t(this).data(n),s="object"==typeof e?e:null;if((i||!/destroy|hide/.test(e))&&(i||(i=new p(this,s),t(this).data(n,i)),"string"==typeof e)){if("undefined"==typeof i[e])throw new TypeError('No method named "'+e+'"');i[e]()}})},s(p,null,[{key:"VERSION",get:function(){return"4.0.0"}},{key:"Default",get:function(){return l}},{key:"NAME",get:function(){return e}},{key:"DATA_KEY",get:function(){return n}},{key:"Event",get:function(){return _}},{key:"EVENT_KEY",get:function(){return i}},{key:"DefaultType",get:function(){return h}}]),p}(U);return t.fn[e]=g._jQueryInterface,t.fn[e].Constructor=g,t.fn[e].noConflict=function(){return t.fn[e]=o,g._jQueryInterface},g}(e),K=function(t){var e="scrollspy",n="bs.scrollspy",i="."+n,o=t.fn[e],a={offset:10,method:"auto",target:""},l={offset:"number",method:"string",target:"(string|element)"},h={ACTIVATE:"activate"+i,SCROLL:"scroll"+i,LOAD_DATA_API:"load"+i+".data-api"},c="dropdown-item",u="active",f={DATA_SPY:'[data-spy="scroll"]',ACTIVE:".active",NAV_LIST_GROUP:".nav, .list-group",NAV_LINKS:".nav-link",NAV_ITEMS:".nav-item",LIST_ITEMS:".list-group-item",DROPDOWN:".dropdown",DROPDOWN_ITEMS:".dropdown-item",DROPDOWN_TOGGLE:".dropdown-toggle"},d="offset",_="position",g=function(){function o(e,n){var i=this;this._element=e,this._scrollElement="BODY"===e.tagName?window:e,this._config=this._getConfig(n),this._selector=this._config.target+" "+f.NAV_LINKS+","+this._config.target+" "+f.LIST_ITEMS+","+this._config.target+" "+f.DROPDOWN_ITEMS,this._offsets=[],this._targets=[],this._activeTarget=null,this._scrollHeight=0,t(this._scrollElement).on(h.SCROLL,function(t){return i._process(t)}),this.refresh(),this._process()}var g=o.prototype;return g.refresh=function(){var e=this,n=this._scrollElement===this._scrollElement.window?d:_,i="auto"===this._config.method?n:this._config.method,s=i===_?this._getScrollTop():0;this._offsets=[],this._targets=[],this._scrollHeight=this._getScrollHeight(),t.makeArray(t(this._selector)).map(function(e){var n,r=P.getSelectorFromElement(e);if(r&&(n=t(r)[0]),n){var o=n.getBoundingClientRect();if(o.width||o.height)return[t(n)[i]().top+s,r]}return null}).filter(function(t){return t}).sort(function(t,e){return t[0]-e[0]}).forEach(function(t){e._offsets.push(t[0]),e._targets.push(t[1])})},g.dispose=function(){t.removeData(this._element,n),t(this._scrollElement).off(i),this._element=null,this._scrollElement=null,this._config=null,this._selector=null,this._offsets=null,this._targets=null,this._activeTarget=null,this._scrollHeight=null},g._getConfig=function(n){if("string"!=typeof(n=r({},a,n)).target){var i=t(n.target).attr("id");i||(i=P.getUID(e),t(n.target).attr("id",i)),n.target="#"+i}return P.typeCheckConfig(e,n,l),n},g._getScrollTop=function(){return this._scrollElement===window?this._scrollElement.pageYOffset:this._scrollElement.scrollTop},g._getScrollHeight=function(){return this._scrollElement.scrollHeight||Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},g._getOffsetHeight=function(){return this._scrollElement===window?window.innerHeight:this._scrollElement.getBoundingClientRect().height},g._process=function(){var t=this._getScrollTop()+this._config.offset,e=this._getScrollHeight(),n=this._config.offset+e-this._getOffsetHeight();if(this._scrollHeight!==e&&this.refresh(),t>=n){var i=this._targets[this._targets.length-1];this._activeTarget!==i&&this._activate(i)}else{if(this._activeTarget&&t<this._offsets[0]&&this._offsets[0]>0)return this._activeTarget=null,void this._clear();for(var s=this._offsets.length;s--;){this._activeTarget!==this._targets[s]&&t>=this._offsets[s]&&("undefined"==typeof this._offsets[s+1]||t<this._offsets[s+1])&&this._activate(this._targets[s])}}},g._activate=function(e){this._activeTarget=e,this._clear();var n=this._selector.split(",");n=n.map(function(t){return t+'[data-target="'+e+'"],'+t+'[href="'+e+'"]'});var i=t(n.join(","));i.hasClass(c)?(i.closest(f.DROPDOWN).find(f.DROPDOWN_TOGGLE).addClass(u),i.addClass(u)):(i.addClass(u),i.parents(f.NAV_LIST_GROUP).prev(f.NAV_LINKS+", "+f.LIST_ITEMS).addClass(u),i.parents(f.NAV_LIST_GROUP).prev(f.NAV_ITEMS).children(f.NAV_LINKS).addClass(u)),t(this._scrollElement).trigger(h.ACTIVATE,{relatedTarget:e})},g._clear=function(){t(this._selector).filter(f.ACTIVE).removeClass(u)},o._jQueryInterface=function(e){return this.each(function(){var i=t(this).data(n);if(i||(i=new o(this,"object"==typeof e&&e),t(this).data(n,i)),"string"==typeof e){if("undefined"==typeof i[e])throw new TypeError('No method named "'+e+'"');i[e]()}})},s(o,null,[{key:"VERSION",get:function(){return"4.0.0"}},{key:"Default",get:function(){return a}}]),o}();return t(window).on(h.LOAD_DATA_API,function(){for(var e=t.makeArray(t(f.DATA_SPY)),n=e.length;n--;){var i=t(e[n]);g._jQueryInterface.call(i,i.data())}}),t.fn[e]=g._jQueryInterface,t.fn[e].Constructor=g,t.fn[e].noConflict=function(){return t.fn[e]=o,g._jQueryInterface},g}(e),V=function(t){var e="bs.tab",n="."+e,i=t.fn.tab,r={HIDE:"hide"+n,HIDDEN:"hidden"+n,SHOW:"show"+n,SHOWN:"shown"+n,CLICK_DATA_API:"click.bs.tab.data-api"},o="dropdown-menu",a="active",l="disabled",h="fade",c="show",u=".dropdown",f=".nav, .list-group",d=".active",_="> li > .active",g='[data-toggle="tab"], [data-toggle="pill"], [data-toggle="list"]',p=".dropdown-toggle",m="> .dropdown-menu .active",v=function(){function n(t){this._element=t}var i=n.prototype;return i.show=function(){var e=this;if(!(this._element.parentNode&&this._element.parentNode.nodeType===Node.ELEMENT_NODE&&t(this._element).hasClass(a)||t(this._element).hasClass(l))){var n,i,s=t(this._element).closest(f)[0],o=P.getSelectorFromElement(this._element);if(s){var h="UL"===s.nodeName?_:d;i=(i=t.makeArray(t(s).find(h)))[i.length-1]}var c=t.Event(r.HIDE,{relatedTarget:this._element}),u=t.Event(r.SHOW,{relatedTarget:i});if(i&&t(i).trigger(c),t(this._element).trigger(u),!u.isDefaultPrevented()&&!c.isDefaultPrevented()){o&&(n=t(o)[0]),this._activate(this._element,s);var g=function(){var n=t.Event(r.HIDDEN,{relatedTarget:e._element}),s=t.Event(r.SHOWN,{relatedTarget:i});t(i).trigger(n),t(e._element).trigger(s)};n?this._activate(n,n.parentNode,g):g()}}},i.dispose=function(){t.removeData(this._element,e),this._element=null},i._activate=function(e,n,i){var s=this,r=("UL"===n.nodeName?t(n).find(_):t(n).children(d))[0],o=i&&P.supportsTransitionEnd()&&r&&t(r).hasClass(h),a=function(){return s._transitionComplete(e,r,i)};r&&o?t(r).one(P.TRANSITION_END,a).emulateTransitionEnd(150):a()},i._transitionComplete=function(e,n,i){if(n){t(n).removeClass(c+" "+a);var s=t(n.parentNode).find(m)[0];s&&t(s).removeClass(a),"tab"===n.getAttribute("role")&&n.setAttribute("aria-selected",!1)}if(t(e).addClass(a),"tab"===e.getAttribute("role")&&e.setAttribute("aria-selected",!0),P.reflow(e),t(e).addClass(c),e.parentNode&&t(e.parentNode).hasClass(o)){var r=t(e).closest(u)[0];r&&t(r).find(p).addClass(a),e.setAttribute("aria-expanded",!0)}i&&i()},n._jQueryInterface=function(i){return this.each(function(){var s=t(this),r=s.data(e);if(r||(r=new n(this),s.data(e,r)),"string"==typeof i){if("undefined"==typeof r[i])throw new TypeError('No method named "'+i+'"');r[i]()}})},s(n,null,[{key:"VERSION",get:function(){return"4.0.0"}}]),n}();return t(document).on(r.CLICK_DATA_API,g,function(e){e.preventDefault(),v._jQueryInterface.call(t(this),"show")}),t.fn.tab=v._jQueryInterface,t.fn.tab.Constructor=v,t.fn.tab.noConflict=function(){return t.fn.tab=i,v._jQueryInterface},v}(e);!function(t){if("undefined"==typeof t)throw new TypeError("Bootstrap's JavaScript requires jQuery. jQuery must be included before Bootstrap's JavaScript.");var e=t.fn.jquery.split(" ")[0].split(".");if(e[0]<2&&e[1]<9||1===e[0]&&9===e[1]&&e[2]<1||e[0]>=4)throw new Error("Bootstrap's JavaScript requires at least jQuery v1.9.1 but less than v4.0.0")}(e),t.Util=P,t.Alert=L,t.Button=R,t.Carousel=j,t.Collapse=H,t.Dropdown=W,t.Modal=M,t.Popover=x,t.Scrollspy=K,t.Tab=V,t.Tooltip=U,Object.defineProperty(t,"__esModule",{value:!0})});
 //# sourceMappingURL=bootstrap.min.js.map
 /*!
  * JavaScript Cookie v2.2.0
@@ -48526,1921 +48526,83 @@ function __guardMethod__(obj, methodName, transform) {
 }
 
 /**
- * Super simple wysiwyg editor v0.8.8
- * http://summernote.org/
+ * Super simple wysiwyg editor v0.8.9
+ * https://summernote.org
  *
- * summernote.js
  * Copyright 2013- Alan Hong. and other contributors
- * summernote may be freely distributed under the MIT license./
+ * summernote may be freely distributed under the MIT license.
  *
- * Date: 2017-09-09T11:03Z
+ * Date: 2017-12-25T06:39Z
  */
-(function (factory) {
-  /* global define */
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(['jquery'], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(window.jQuery);
-  }
-}(function ($) {
-  'use strict';
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
+	typeof define === 'function' && define.amd ? define(['jquery'], factory) :
+	(factory(global.jQuery));
+}(this, (function ($$1) { 'use strict';
 
-  var isSupportAmd = typeof define === 'function' && define.amd;
+$$1 = $$1 && $$1.hasOwnProperty('default') ? $$1['default'] : $$1;
 
-  /**
-   * returns whether font is installed or not.
-   *
-   * @param {String} fontName
-   * @return {Boolean}
-   */
-  var isFontInstalled = function (fontName) {
-    var testFontName = fontName === 'Comic Sans MS' ? 'Courier New' : 'Comic Sans MS';
-    var $tester = $('<div>').css({
-      position: 'absolute',
-      left: '-9999px',
-      top: '-9999px',
-      fontSize: '200px'
-    }).text('mmmmmmmmmwwwwwww').appendTo(document.body);
-
-    var originalWidth = $tester.css('fontFamily', testFontName).width();
-    var width = $tester.css('fontFamily', fontName + ',' + testFontName).width();
-
-    $tester.remove();
-
-    return originalWidth !== width;
-  };
-
-  var userAgent = navigator.userAgent;
-  var isMSIE = /MSIE|Trident/i.test(userAgent);
-  var browserVersion;
-  if (isMSIE) {
-    var matches = /MSIE (\d+[.]\d+)/.exec(userAgent);
-    if (matches) {
-      browserVersion = parseFloat(matches[1]);
+var Renderer = /** @class */ (function () {
+    function Renderer(markup, children, options, callback) {
+        this.markup = markup;
+        this.children = children;
+        this.options = options;
+        this.callback = callback;
     }
-    matches = /Trident\/.*rv:([0-9]{1,}[\.0-9]{0,})/.exec(userAgent);
-    if (matches) {
-      browserVersion = parseFloat(matches[1]);
-    }
-  }
-
-  var isEdge = /Edge\/\d+/.test(userAgent);
-
-  var hasCodeMirror = !!window.CodeMirror;
-  if (!hasCodeMirror && isSupportAmd) {
-    // Webpack
-    if (typeof __webpack_require__ === 'function') { // jshint ignore:line
-      try {
-        // If CodeMirror can't be resolved, `require.resolve` will throw an
-        // exception and `hasCodeMirror` won't be set to `true`.
-        require.resolve('codemirror');
-        hasCodeMirror = true;
-      } catch (e) {
-        // do nothing
-      }
-    } else if (typeof require !== 'undefined') {
-      // Browserify
-      if (typeof require.resolve !== 'undefined') {
-        try {
-          // If CodeMirror can't be resolved, `require.resolve` will throw an
-          // exception and `hasCodeMirror` won't be set to `true`.
-          require.resolve('codemirror');
-          hasCodeMirror = true;
-        } catch (e) {
-          // do nothing
+    Renderer.prototype.render = function ($parent) {
+        var $node = $$1(this.markup);
+        if (this.options && this.options.contents) {
+            $node.html(this.options.contents);
         }
-      // Almond/Require
-      } else if (typeof require.specified !== 'undefined') {
-        hasCodeMirror = require.specified('codemirror');
-      }
-    }
-  }
-
-  var isSupportTouch =
-    (('ontouchstart' in window) ||
-     (navigator.MaxTouchPoints > 0) ||
-     (navigator.msMaxTouchPoints > 0));
-
-  /**
-   * @class core.agent
-   *
-   * Object which check platform and agent
-   *
-   * @singleton
-   * @alternateClassName agent
-   */
-  var agent = {
-    isMac: navigator.appVersion.indexOf('Mac') > -1,
-    isMSIE: isMSIE,
-    isEdge: isEdge,
-    isFF: !isEdge && /firefox/i.test(userAgent),
-    isPhantom: /PhantomJS/i.test(userAgent),
-    isWebkit: !isEdge && /webkit/i.test(userAgent),
-    isChrome: !isEdge && /chrome/i.test(userAgent),
-    isSafari: !isEdge && /safari/i.test(userAgent),
-    browserVersion: browserVersion,
-    jqueryVersion: parseFloat($.fn.jquery),
-    isSupportAmd: isSupportAmd,
-    isSupportTouch: isSupportTouch,
-    hasCodeMirror: hasCodeMirror,
-    isFontInstalled: isFontInstalled,
-    isW3CRangeSupport: !!document.createRange
-  };
-
-  /**
-   * @class core.func
-   *
-   * func utils (for high-order func's arg)
-   *
-   * @singleton
-   * @alternateClassName func
-   */
-  var func = (function () {
-    var eq = function (itemA) {
-      return function (itemB) {
-        return itemA === itemB;
-      };
-    };
-
-    var eq2 = function (itemA, itemB) {
-      return itemA === itemB;
-    };
-
-    var peq2 = function (propName) {
-      return function (itemA, itemB) {
-        return itemA[propName] === itemB[propName];
-      };
-    };
-
-    var ok = function () {
-      return true;
-    };
-
-    var fail = function () {
-      return false;
-    };
-
-    var not = function (f) {
-      return function () {
-        return !f.apply(f, arguments);
-      };
-    };
-
-    var and = function (fA, fB) {
-      return function (item) {
-        return fA(item) && fB(item);
-      };
-    };
-
-    var self = function (a) {
-      return a;
-    };
-
-    var invoke = function (obj, method) {
-      return function () {
-        return obj[method].apply(obj, arguments);
-      };
-    };
-
-    var idCounter = 0;
-
-    /**
-     * generate a globally-unique id
-     *
-     * @param {String} [prefix]
-     */
-    var uniqueId = function (prefix) {
-      var id = ++idCounter + '';
-      return prefix ? prefix + id : id;
-    };
-
-    /**
-     * returns bnd (bounds) from rect
-     *
-     * - IE Compatibility Issue: http://goo.gl/sRLOAo
-     * - Scroll Issue: http://goo.gl/sNjUc
-     *
-     * @param {Rect} rect
-     * @return {Object} bounds
-     * @return {Number} bounds.top
-     * @return {Number} bounds.left
-     * @return {Number} bounds.width
-     * @return {Number} bounds.height
-     */
-    var rect2bnd = function (rect) {
-      var $document = $(document);
-      return {
-        top: rect.top + $document.scrollTop(),
-        left: rect.left + $document.scrollLeft(),
-        width: rect.right - rect.left,
-        height: rect.bottom - rect.top
-      };
-    };
-
-    /**
-     * returns a copy of the object where the keys have become the values and the values the keys.
-     * @param {Object} obj
-     * @return {Object}
-     */
-    var invertObject = function (obj) {
-      var inverted = {};
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          inverted[obj[key]] = key;
+        if (this.options && this.options.className) {
+            $node.addClass(this.options.className);
         }
-      }
-      return inverted;
-    };
-
-    /**
-     * @param {String} namespace
-     * @param {String} [prefix]
-     * @return {String}
-     */
-    var namespaceToCamel = function (namespace, prefix) {
-      prefix = prefix || '';
-      return prefix + namespace.split('.').map(function (name) {
-        return name.substring(0, 1).toUpperCase() + name.substring(1);
-      }).join('');
-    };
-
-    /**
-     * Returns a function, that, as long as it continues to be invoked, will not
-     * be triggered. The function will be called after it stops being called for
-     * N milliseconds. If `immediate` is passed, trigger the function on the
-     * leading edge, instead of the trailing.
-     * @param {Function} func
-     * @param {Number} wait
-     * @param {Boolean} immediate
-     * @return {Function}
-     */
-    var debounce = function (func, wait, immediate) {
-      var timeout;
-      return function () {
-        var context = this, args = arguments;
-        var later = function () {
-          timeout = null;
-          if (!immediate) {
-            func.apply(context, args);
-          }
-        };
-        var callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) {
-          func.apply(context, args);
+        if (this.options && this.options.data) {
+            $$1.each(this.options.data, function (k, v) {
+                $node.attr('data-' + k, v);
+            });
         }
-      };
-    };
-
-    return {
-      eq: eq,
-      eq2: eq2,
-      peq2: peq2,
-      ok: ok,
-      fail: fail,
-      self: self,
-      not: not,
-      and: and,
-      invoke: invoke,
-      uniqueId: uniqueId,
-      rect2bnd: rect2bnd,
-      invertObject: invertObject,
-      namespaceToCamel: namespaceToCamel,
-      debounce: debounce
-    };
-  })();
-
-  /**
-   * @class core.list
-   *
-   * list utils
-   *
-   * @singleton
-   * @alternateClassName list
-   */
-  var list = (function () {
-    /**
-     * returns the first item of an array.
-     *
-     * @param {Array} array
-     */
-    var head = function (array) {
-      return array[0];
-    };
-
-    /**
-     * returns the last item of an array.
-     *
-     * @param {Array} array
-     */
-    var last = function (array) {
-      return array[array.length - 1];
-    };
-
-    /**
-     * returns everything but the last entry of the array.
-     *
-     * @param {Array} array
-     */
-    var initial = function (array) {
-      return array.slice(0, array.length - 1);
-    };
-
-    /**
-     * returns the rest of the items in an array.
-     *
-     * @param {Array} array
-     */
-    var tail = function (array) {
-      return array.slice(1);
-    };
-
-    /**
-     * returns item of array
-     */
-    var find = function (array, pred) {
-      for (var idx = 0, len = array.length; idx < len; idx ++) {
-        var item = array[idx];
-        if (pred(item)) {
-          return item;
+        if (this.options && this.options.click) {
+            $node.on('click', this.options.click);
         }
-      }
-    };
-
-    /**
-     * returns true if all of the values in the array pass the predicate truth test.
-     */
-    var all = function (array, pred) {
-      for (var idx = 0, len = array.length; idx < len; idx ++) {
-        if (!pred(array[idx])) {
-          return false;
+        if (this.children) {
+            var $container_1 = $node.find('.note-children-container');
+            this.children.forEach(function (child) {
+                child.render($container_1.length ? $container_1 : $node);
+            });
         }
-      }
-      return true;
-    };
-
-    /**
-     * returns index of item
-     */
-    var indexOf = function (array, item) {
-      return $.inArray(item, array);
-    };
-
-    /**
-     * returns true if the value is present in the list.
-     */
-    var contains = function (array, item) {
-      return indexOf(array, item) !== -1;
-    };
-
-    /**
-     * get sum from a list
-     *
-     * @param {Array} array - array
-     * @param {Function} fn - iterator
-     */
-    var sum = function (array, fn) {
-      fn = fn || func.self;
-      return array.reduce(function (memo, v) {
-        return memo + fn(v);
-      }, 0);
-    };
-  
-    /**
-     * returns a copy of the collection with array type.
-     * @param {Collection} collection - collection eg) node.childNodes, ...
-     */
-    var from = function (collection) {
-      var result = [], idx = -1, length = collection.length;
-      while (++idx < length) {
-        result[idx] = collection[idx];
-      }
-      return result;
-    };
-
-    /**
-     * returns whether list is empty or not
-     */
-    var isEmpty = function (array) {
-      return !array || !array.length;
-    };
-  
-    /**
-     * cluster elements by predicate function.
-     *
-     * @param {Array} array - array
-     * @param {Function} fn - predicate function for cluster rule
-     * @param {Array[]}
-     */
-    var clusterBy = function (array, fn) {
-      if (!array.length) { return []; }
-      var aTail = tail(array);
-      return aTail.reduce(function (memo, v) {
-        var aLast = last(memo);
-        if (fn(last(aLast), v)) {
-          aLast[aLast.length] = v;
-        } else {
-          memo[memo.length] = [v];
+        if (this.callback) {
+            this.callback($node, this.options);
         }
-        return memo;
-      }, [[head(array)]]);
-    };
-  
-    /**
-     * returns a copy of the array with all false values removed
-     *
-     * @param {Array} array - array
-     * @param {Function} fn - predicate function for cluster rule
-     */
-    var compact = function (array) {
-      var aResult = [];
-      for (var idx = 0, len = array.length; idx < len; idx ++) {
-        if (array[idx]) { aResult.push(array[idx]); }
-      }
-      return aResult;
-    };
-
-    /**
-     * produces a duplicate-free version of the array
-     *
-     * @param {Array} array
-     */
-    var unique = function (array) {
-      var results = [];
-
-      for (var idx = 0, len = array.length; idx < len; idx ++) {
-        if (!contains(results, array[idx])) {
-          results.push(array[idx]);
+        if (this.options && this.options.callback) {
+            this.options.callback($node);
         }
-      }
-
-      return results;
-    };
-
-    /**
-     * returns next item.
-     * @param {Array} array
-     */
-    var next = function (array, item) {
-      var idx = indexOf(array, item);
-      if (idx === -1) { return null; }
-
-      return array[idx + 1];
-    };
-
-    /**
-     * returns prev item.
-     * @param {Array} array
-     */
-    var prev = function (array, item) {
-      var idx = indexOf(array, item);
-      if (idx === -1) { return null; }
-
-      return array[idx - 1];
-    };
-
-    return { head: head, last: last, initial: initial, tail: tail,
-             prev: prev, next: next, find: find, contains: contains,
-             all: all, sum: sum, from: from, isEmpty: isEmpty,
-             clusterBy: clusterBy, compact: compact, unique: unique };
-  })();
-
-
-  var NBSP_CHAR = String.fromCharCode(160);
-  var ZERO_WIDTH_NBSP_CHAR = '\ufeff';
-
-  /**
-   * @class core.dom
-   *
-   * Dom functions
-   *
-   * @singleton
-   * @alternateClassName dom
-   */
-  var dom = (function () {
-    /**
-     * @method isEditable
-     *
-     * returns whether node is `note-editable` or not.
-     *
-     * @param {Node} node
-     * @return {Boolean}
-     */
-    var isEditable = function (node) {
-      return node && $(node).hasClass('note-editable');
-    };
-
-    /**
-     * @method isControlSizing
-     *
-     * returns whether node is `note-control-sizing` or not.
-     *
-     * @param {Node} node
-     * @return {Boolean}
-     */
-    var isControlSizing = function (node) {
-      return node && $(node).hasClass('note-control-sizing');
-    };
-
-    /**
-     * @method makePredByNodeName
-     *
-     * returns predicate which judge whether nodeName is same
-     *
-     * @param {String} nodeName
-     * @return {Function}
-     */
-    var makePredByNodeName = function (nodeName) {
-      nodeName = nodeName.toUpperCase();
-      return function (node) {
-        return node && node.nodeName.toUpperCase() === nodeName;
-      };
-    };
-
-    /**
-     * @method isText
-     *
-     *
-     *
-     * @param {Node} node
-     * @return {Boolean} true if node's type is text(3)
-     */
-    var isText = function (node) {
-      return node && node.nodeType === 3;
-    };
-
-    /**
-     * @method isElement
-     *
-     *
-     *
-     * @param {Node} node
-     * @return {Boolean} true if node's type is element(1)
-     */
-    var isElement = function (node) {
-      return node && node.nodeType === 1;
-    };
-
-    /**
-     * ex) br, col, embed, hr, img, input, ...
-     * @see http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements
-     */
-    var isVoid = function (node) {
-      return node && /^BR|^IMG|^HR|^IFRAME|^BUTTON|^INPUT/.test(node.nodeName.toUpperCase());
-    };
-
-    var isPara = function (node) {
-      if (isEditable(node)) {
-        return false;
-      }
-
-      // Chrome(v31.0), FF(v25.0.1) use DIV for paragraph
-      return node && /^DIV|^P|^LI|^H[1-7]/.test(node.nodeName.toUpperCase());
-    };
-
-    var isHeading = function (node) {
-      return node && /^H[1-7]/.test(node.nodeName.toUpperCase());
-    };
-
-    var isPre = makePredByNodeName('PRE');
-
-    var isLi = makePredByNodeName('LI');
-
-    var isPurePara = function (node) {
-      return isPara(node) && !isLi(node);
-    };
-
-    var isTable = makePredByNodeName('TABLE');
-
-    var isData = makePredByNodeName('DATA');
-
-    var isInline = function (node) {
-      return !isBodyContainer(node) &&
-             !isList(node) &&
-             !isHr(node) &&
-             !isPara(node) &&
-             !isTable(node) &&
-             !isBlockquote(node) &&
-             !isData(node);
-    };
-
-    var isList = function (node) {
-      return node && /^UL|^OL/.test(node.nodeName.toUpperCase());
-    };
-
-    var isHr = makePredByNodeName('HR');
-
-    var isCell = function (node) {
-      return node && /^TD|^TH/.test(node.nodeName.toUpperCase());
-    };
-
-    var isBlockquote = makePredByNodeName('BLOCKQUOTE');
-
-    var isBodyContainer = function (node) {
-      return isCell(node) || isBlockquote(node) || isEditable(node);
-    };
-
-    var isAnchor = makePredByNodeName('A');
-
-    var isParaInline = function (node) {
-      return isInline(node) && !!ancestor(node, isPara);
-    };
-
-    var isBodyInline = function (node) {
-      return isInline(node) && !ancestor(node, isPara);
-    };
-
-    var isBody = makePredByNodeName('BODY');
-
-    /**
-     * returns whether nodeB is closest sibling of nodeA
-     *
-     * @param {Node} nodeA
-     * @param {Node} nodeB
-     * @return {Boolean}
-     */
-    var isClosestSibling = function (nodeA, nodeB) {
-      return nodeA.nextSibling === nodeB ||
-             nodeA.previousSibling === nodeB;
-    };
-
-    /**
-     * returns array of closest siblings with node
-     *
-     * @param {Node} node
-     * @param {function} [pred] - predicate function
-     * @return {Node[]}
-     */
-    var withClosestSiblings = function (node, pred) {
-      pred = pred || func.ok;
-
-      var siblings = [];
-      if (node.previousSibling && pred(node.previousSibling)) {
-        siblings.push(node.previousSibling);
-      }
-      siblings.push(node);
-      if (node.nextSibling && pred(node.nextSibling)) {
-        siblings.push(node.nextSibling);
-      }
-      return siblings;
-    };
-
-    /**
-     * blank HTML for cursor position
-     * - [workaround] old IE only works with &nbsp;
-     * - [workaround] IE11 and other browser works with bogus br
-     */
-    var blankHTML = agent.isMSIE && agent.browserVersion < 11 ? '&nbsp;' : '<br>';
-
-    /**
-     * @method nodeLength
-     *
-     * returns #text's text size or element's childNodes size
-     *
-     * @param {Node} node
-     */
-    var nodeLength = function (node) {
-      if (isText(node)) {
-        return node.nodeValue.length;
-      }
-      
-      if (node) {
-        return node.childNodes.length;
-      }
-      
-      return 0;
-      
-    };
-
-    /**
-     * returns whether node is empty or not.
-     *
-     * @param {Node} node
-     * @return {Boolean}
-     */
-    var isEmpty = function (node) {
-      var len = nodeLength(node);
-
-      if (len === 0) {
-        return true;
-      } else if (!isText(node) && len === 1 && node.innerHTML === blankHTML) {
-        // ex) <p><br></p>, <span><br></span>
-        return true;
-      } else if (list.all(node.childNodes, isText) && node.innerHTML === '') {
-        // ex) <p></p>, <span></span>
-        return true;
-      }
-
-      return false;
-    };
-
-    /**
-     * padding blankHTML if node is empty (for cursor position)
-     */
-    var paddingBlankHTML = function (node) {
-      if (!isVoid(node) && !nodeLength(node)) {
-        node.innerHTML = blankHTML;
-      }
-    };
-
-    /**
-     * find nearest ancestor predicate hit
-     *
-     * @param {Node} node
-     * @param {Function} pred - predicate function
-     */
-    var ancestor = function (node, pred) {
-      while (node) {
-        if (pred(node)) { return node; }
-        if (isEditable(node)) { break; }
-
-        node = node.parentNode;
-      }
-      return null;
-    };
-
-    /**
-     * find nearest ancestor only single child blood line and predicate hit
-     *
-     * @param {Node} node
-     * @param {Function} pred - predicate function
-     */
-    var singleChildAncestor = function (node, pred) {
-      node = node.parentNode;
-
-      while (node) {
-        if (nodeLength(node) !== 1) { break; }
-        if (pred(node)) { return node; }
-        if (isEditable(node)) { break; }
-
-        node = node.parentNode;
-      }
-      return null;
-    };
-
-    /**
-     * returns new array of ancestor nodes (until predicate hit).
-     *
-     * @param {Node} node
-     * @param {Function} [optional] pred - predicate function
-     */
-    var listAncestor = function (node, pred) {
-      pred = pred || func.fail;
-
-      var ancestors = [];
-      ancestor(node, function (el) {
-        if (!isEditable(el)) {
-          ancestors.push(el);
+        if ($parent) {
+            $parent.append($node);
         }
-
-        return pred(el);
-      });
-      return ancestors;
+        return $node;
     };
-
-    /**
-     * find farthest ancestor predicate hit
-     */
-    var lastAncestor = function (node, pred) {
-      var ancestors = listAncestor(node);
-      return list.last(ancestors.filter(pred));
-    };
-
-    /**
-     * returns common ancestor node between two nodes.
-     *
-     * @param {Node} nodeA
-     * @param {Node} nodeB
-     */
-    var commonAncestor = function (nodeA, nodeB) {
-      var ancestors = listAncestor(nodeA);
-      for (var n = nodeB; n; n = n.parentNode) {
-        if ($.inArray(n, ancestors) > -1) { return n; }
-      }
-      return null; // difference document area
-    };
-
-    /**
-     * listing all previous siblings (until predicate hit).
-     *
-     * @param {Node} node
-     * @param {Function} [optional] pred - predicate function
-     */
-    var listPrev = function (node, pred) {
-      pred = pred || func.fail;
-
-      var nodes = [];
-      while (node) {
-        if (pred(node)) { break; }
-        nodes.push(node);
-        node = node.previousSibling;
-      }
-      return nodes;
-    };
-
-    /**
-     * listing next siblings (until predicate hit).
-     *
-     * @param {Node} node
-     * @param {Function} [pred] - predicate function
-     */
-    var listNext = function (node, pred) {
-      pred = pred || func.fail;
-
-      var nodes = [];
-      while (node) {
-        if (pred(node)) { break; }
-        nodes.push(node);
-        node = node.nextSibling;
-      }
-      return nodes;
-    };
-
-    /**
-     * listing descendant nodes
-     *
-     * @param {Node} node
-     * @param {Function} [pred] - predicate function
-     */
-    var listDescendant = function (node, pred) {
-      var descendants = [];
-      pred = pred || func.ok;
-
-      // start DFS(depth first search) with node
-      (function fnWalk(current) {
-        if (node !== current && pred(current)) {
-          descendants.push(current);
-        }
-        for (var idx = 0, len = current.childNodes.length; idx < len; idx++) {
-          fnWalk(current.childNodes[idx]);
-        }
-      })(node);
-
-      return descendants;
-    };
-
-    /**
-     * wrap node with new tag.
-     *
-     * @param {Node} node
-     * @param {Node} tagName of wrapper
-     * @return {Node} - wrapper
-     */
-    var wrap = function (node, wrapperName) {
-      var parent = node.parentNode;
-      var wrapper = $('<' + wrapperName + '>')[0];
-
-      parent.insertBefore(wrapper, node);
-      wrapper.appendChild(node);
-
-      return wrapper;
-    };
-
-    /**
-     * insert node after preceding
-     *
-     * @param {Node} node
-     * @param {Node} preceding - predicate function
-     */
-    var insertAfter = function (node, preceding) {
-      var next = preceding.nextSibling, parent = preceding.parentNode;
-      if (next) {
-        parent.insertBefore(node, next);
-      } else {
-        parent.appendChild(node);
-      }
-      return node;
-    };
-
-    /**
-     * append elements.
-     *
-     * @param {Node} node
-     * @param {Collection} aChild
-     */
-    var appendChildNodes = function (node, aChild) {
-      $.each(aChild, function (idx, child) {
-        node.appendChild(child);
-      });
-      return node;
-    };
-
-    /**
-     * returns whether boundaryPoint is left edge or not.
-     *
-     * @param {BoundaryPoint} point
-     * @return {Boolean}
-     */
-    var isLeftEdgePoint = function (point) {
-      return point.offset === 0;
-    };
-
-    /**
-     * returns whether boundaryPoint is right edge or not.
-     *
-     * @param {BoundaryPoint} point
-     * @return {Boolean}
-     */
-    var isRightEdgePoint = function (point) {
-      return point.offset === nodeLength(point.node);
-    };
-
-    /**
-     * returns whether boundaryPoint is edge or not.
-     *
-     * @param {BoundaryPoint} point
-     * @return {Boolean}
-     */
-    var isEdgePoint = function (point) {
-      return isLeftEdgePoint(point) || isRightEdgePoint(point);
-    };
-
-    /**
-     * returns whether node is left edge of ancestor or not.
-     *
-     * @param {Node} node
-     * @param {Node} ancestor
-     * @return {Boolean}
-     */
-    var isLeftEdgeOf = function (node, ancestor) {
-      while (node && node !== ancestor) {
-        if (position(node) !== 0) {
-          return false;
-        }
-        node = node.parentNode;
-      }
-
-      return true;
-    };
-
-    /**
-     * returns whether node is right edge of ancestor or not.
-     *
-     * @param {Node} node
-     * @param {Node} ancestor
-     * @return {Boolean}
-     */
-    var isRightEdgeOf = function (node, ancestor) {
-      if (!ancestor) {
-        return false;
-      }
-      while (node && node !== ancestor) {
-        if (position(node) !== nodeLength(node.parentNode) - 1) {
-          return false;
-        }
-        node = node.parentNode;
-      }
-
-      return true;
-    };
-
-    /**
-     * returns whether point is left edge of ancestor or not.
-     * @param {BoundaryPoint} point
-     * @param {Node} ancestor
-     * @return {Boolean}
-     */
-    var isLeftEdgePointOf = function (point, ancestor) {
-      return isLeftEdgePoint(point) && isLeftEdgeOf(point.node, ancestor);
-    };
-
-    /**
-     * returns whether point is right edge of ancestor or not.
-     * @param {BoundaryPoint} point
-     * @param {Node} ancestor
-     * @return {Boolean}
-     */
-    var isRightEdgePointOf = function (point, ancestor) {
-      return isRightEdgePoint(point) && isRightEdgeOf(point.node, ancestor);
-    };
-
-    /**
-     * returns offset from parent.
-     *
-     * @param {Node} node
-     */
-    var position = function (node) {
-      var offset = 0;
-      while ((node = node.previousSibling)) {
-        offset += 1;
-      }
-      return offset;
-    };
-
-    var hasChildren = function (node) {
-      return !!(node && node.childNodes && node.childNodes.length);
-    };
-
-    /**
-     * returns previous boundaryPoint
-     *
-     * @param {BoundaryPoint} point
-     * @param {Boolean} isSkipInnerOffset
-     * @return {BoundaryPoint}
-     */
-    var prevPoint = function (point, isSkipInnerOffset) {
-      var node, offset;
-
-      if (point.offset === 0) {
-        if (isEditable(point.node)) {
-          return null;
-        }
-
-        node = point.node.parentNode;
-        offset = position(point.node);
-      } else if (hasChildren(point.node)) {
-        node = point.node.childNodes[point.offset - 1];
-        offset = nodeLength(node);
-      } else {
-        node = point.node;
-        offset = isSkipInnerOffset ? 0 : point.offset - 1;
-      }
-
-      return {
-        node: node,
-        offset: offset
-      };
-    };
-
-    /**
-     * returns next boundaryPoint
-     *
-     * @param {BoundaryPoint} point
-     * @param {Boolean} isSkipInnerOffset
-     * @return {BoundaryPoint}
-     */
-    var nextPoint = function (point, isSkipInnerOffset) {
-      var node, offset;
-
-      if (nodeLength(point.node) === point.offset) {
-        if (isEditable(point.node)) {
-          return null;
-        }
-
-        node = point.node.parentNode;
-        offset = position(point.node) + 1;
-      } else if (hasChildren(point.node)) {
-        node = point.node.childNodes[point.offset];
-        offset = 0;
-      } else {
-        node = point.node;
-        offset = isSkipInnerOffset ? nodeLength(point.node) : point.offset + 1;
-      }
-
-      return {
-        node: node,
-        offset: offset
-      };
-    };
-
-    /**
-     * returns whether pointA and pointB is same or not.
-     *
-     * @param {BoundaryPoint} pointA
-     * @param {BoundaryPoint} pointB
-     * @return {Boolean}
-     */
-    var isSamePoint = function (pointA, pointB) {
-      return pointA.node === pointB.node && pointA.offset === pointB.offset;
-    };
-
-    /**
-     * returns whether point is visible (can set cursor) or not.
-     *
-     * @param {BoundaryPoint} point
-     * @return {Boolean}
-     */
-    var isVisiblePoint = function (point) {
-      if (isText(point.node) || !hasChildren(point.node) || isEmpty(point.node)) {
-        return true;
-      }
-
-      var leftNode = point.node.childNodes[point.offset - 1];
-      var rightNode = point.node.childNodes[point.offset];
-      if ((!leftNode || isVoid(leftNode)) && (!rightNode || isVoid(rightNode))) {
-        return true;
-      }
-
-      return false;
-    };
-
-    /**
-     * @method prevPointUtil
-     *
-     * @param {BoundaryPoint} point
-     * @param {Function} pred
-     * @return {BoundaryPoint}
-     */
-    var prevPointUntil = function (point, pred) {
-      while (point) {
-        if (pred(point)) {
-          return point;
-        }
-
-        point = prevPoint(point);
-      }
-
-      return null;
-    };
-
-    /**
-     * @method nextPointUntil
-     *
-     * @param {BoundaryPoint} point
-     * @param {Function} pred
-     * @return {BoundaryPoint}
-     */
-    var nextPointUntil = function (point, pred) {
-      while (point) {
-        if (pred(point)) {
-          return point;
-        }
-
-        point = nextPoint(point);
-      }
-
-      return null;
-    };
-
-    /**
-     * returns whether point has character or not.
-     *
-     * @param {Point} point
-     * @return {Boolean}
-     */
-    var isCharPoint = function (point) {
-      if (!isText(point.node)) {
-        return false;
-      }
-
-      var ch = point.node.nodeValue.charAt(point.offset - 1);
-      return ch && (ch !== ' ' && ch !== NBSP_CHAR);
-    };
-
-    /**
-     * @method walkPoint
-     *
-     * @param {BoundaryPoint} startPoint
-     * @param {BoundaryPoint} endPoint
-     * @param {Function} handler
-     * @param {Boolean} isSkipInnerOffset
-     */
-    var walkPoint = function (startPoint, endPoint, handler, isSkipInnerOffset) {
-      var point = startPoint;
-
-      while (point) {
-        handler(point);
-
-        if (isSamePoint(point, endPoint)) {
-          break;
-        }
-
-        var isSkipOffset = isSkipInnerOffset &&
-                           startPoint.node !== point.node &&
-                           endPoint.node !== point.node;
-        point = nextPoint(point, isSkipOffset);
-      }
-    };
-
-    /**
-     * @method makeOffsetPath
-     *
-     * return offsetPath(array of offset) from ancestor
-     *
-     * @param {Node} ancestor - ancestor node
-     * @param {Node} node
-     */
-    var makeOffsetPath = function (ancestor, node) {
-      var ancestors = listAncestor(node, func.eq(ancestor));
-      return ancestors.map(position).reverse();
-    };
-
-    /**
-     * @method fromOffsetPath
-     *
-     * return element from offsetPath(array of offset)
-     *
-     * @param {Node} ancestor - ancestor node
-     * @param {array} offsets - offsetPath
-     */
-    var fromOffsetPath = function (ancestor, offsets) {
-      var current = ancestor;
-      for (var i = 0, len = offsets.length; i < len; i++) {
-        if (current.childNodes.length <= offsets[i]) {
-          current = current.childNodes[current.childNodes.length - 1];
-        } else {
-          current = current.childNodes[offsets[i]];
-        }
-      }
-      return current;
-    };
-
-    /**
-     * @method splitNode
-     *
-     * split element or #text
-     *
-     * @param {BoundaryPoint} point
-     * @param {Object} [options]
-     * @param {Boolean} [options.isSkipPaddingBlankHTML] - default: false
-     * @param {Boolean} [options.isNotSplitEdgePoint] - default: false
-     * @return {Node} right node of boundaryPoint
-     */
-    var splitNode = function (point, options) {
-      var isSkipPaddingBlankHTML = options && options.isSkipPaddingBlankHTML;
-      var isNotSplitEdgePoint = options && options.isNotSplitEdgePoint;
-
-      // edge case
-      if (isEdgePoint(point) && (isText(point.node) || isNotSplitEdgePoint)) {
-        if (isLeftEdgePoint(point)) {
-          return point.node;
-        } else if (isRightEdgePoint(point)) {
-          return point.node.nextSibling;
-        }
-      }
-
-      // split #text
-      if (isText(point.node)) {
-        return point.node.splitText(point.offset);
-      } else {
-        var childNode = point.node.childNodes[point.offset];
-        var clone = insertAfter(point.node.cloneNode(false), point.node);
-        appendChildNodes(clone, listNext(childNode));
-
-        if (!isSkipPaddingBlankHTML) {
-          paddingBlankHTML(point.node);
-          paddingBlankHTML(clone);
-        }
-
-        return clone;
-      }
-    };
-
-    /**
-     * @method splitTree
-     *
-     * split tree by point
-     *
-     * @param {Node} root - split root
-     * @param {BoundaryPoint} point
-     * @param {Object} [options]
-     * @param {Boolean} [options.isSkipPaddingBlankHTML] - default: false
-     * @param {Boolean} [options.isNotSplitEdgePoint] - default: false
-     * @return {Node} right node of boundaryPoint
-     */
-    var splitTree = function (root, point, options) {
-      // ex) [#text, <span>, <p>]
-      var ancestors = listAncestor(point.node, func.eq(root));
-
-      if (!ancestors.length) {
-        return null;
-      } else if (ancestors.length === 1) {
-        return splitNode(point, options);
-      }
-
-      return ancestors.reduce(function (node, parent) {
-        if (node === point.node) {
-          node = splitNode(point, options);
-        }
-
-        return splitNode({
-          node: parent,
-          offset: node ? dom.position(node) : nodeLength(parent)
-        }, options);
-      });
-    };
-
-    /**
-     * split point
-     *
-     * @param {Point} point
-     * @param {Boolean} isInline
-     * @return {Object}
-     */
-    var splitPoint = function (point, isInline) {
-      // find splitRoot, container
-      //  - inline: splitRoot is a child of paragraph
-      //  - block: splitRoot is a child of bodyContainer
-      var pred = isInline ? isPara : isBodyContainer;
-      var ancestors = listAncestor(point.node, pred);
-      var topAncestor = list.last(ancestors) || point.node;
-
-      var splitRoot, container;
-      if (pred(topAncestor)) {
-        splitRoot = ancestors[ancestors.length - 2];
-        container = topAncestor;
-      } else {
-        splitRoot = topAncestor;
-        container = splitRoot.parentNode;
-      }
-
-      // if splitRoot is exists, split with splitTree
-      var pivot = splitRoot && splitTree(splitRoot, point, {
-        isSkipPaddingBlankHTML: isInline,
-        isNotSplitEdgePoint: isInline
-      });
-
-      // if container is point.node, find pivot with point.offset
-      if (!pivot && container === point.node) {
-        pivot = point.node.childNodes[point.offset];
-      }
-
-      return {
-        rightNode: pivot,
-        container: container
-      };
-    };
-
-    var create = function (nodeName) {
-      return document.createElement(nodeName);
-    };
-
-    var createText = function (text) {
-      return document.createTextNode(text);
-    };
-
-    /**
-     * @method remove
-     *
-     * remove node, (isRemoveChild: remove child or not)
-     *
-     * @param {Node} node
-     * @param {Boolean} isRemoveChild
-     */
-    var remove = function (node, isRemoveChild) {
-      if (!node || !node.parentNode) { return; }
-      if (node.removeNode) { return node.removeNode(isRemoveChild); }
-
-      var parent = node.parentNode;
-      if (!isRemoveChild) {
-        var nodes = [];
-        var i, len;
-        for (i = 0, len = node.childNodes.length; i < len; i++) {
-          nodes.push(node.childNodes[i]);
-        }
-
-        for (i = 0, len = nodes.length; i < len; i++) {
-          parent.insertBefore(nodes[i], node);
-        }
-      }
-
-      parent.removeChild(node);
-    };
-
-    /**
-     * @method removeWhile
-     *
-     * @param {Node} node
-     * @param {Function} pred
-     */
-    var removeWhile = function (node, pred) {
-      while (node) {
-        if (isEditable(node) || !pred(node)) {
-          break;
-        }
-
-        var parent = node.parentNode;
-        remove(node);
-        node = parent;
-      }
-    };
-
-    /**
-     * @method replace
-     *
-     * replace node with provided nodeName
-     *
-     * @param {Node} node
-     * @param {String} nodeName
-     * @return {Node} - new node
-     */
-    var replace = function (node, nodeName) {
-      if (node.nodeName.toUpperCase() === nodeName.toUpperCase()) {
-        return node;
-      }
-
-      var newNode = create(nodeName);
-
-      if (node.style.cssText) {
-        newNode.style.cssText = node.style.cssText;
-      }
-
-      appendChildNodes(newNode, list.from(node.childNodes));
-      insertAfter(newNode, node);
-      remove(node);
-
-      return newNode;
-    };
-
-    var isTextarea = makePredByNodeName('TEXTAREA');
-
-    /**
-     * @param {jQuery} $node
-     * @param {Boolean} [stripLinebreaks] - default: false
-     */
-    var value = function ($node, stripLinebreaks) {
-      var val = isTextarea($node[0]) ? $node.val() : $node.html();
-      if (stripLinebreaks) {
-        return val.replace(/[\n\r]/g, '');
-      }
-      return val;
-    };
-
-    /**
-     * @method html
-     *
-     * get the HTML contents of node
-     *
-     * @param {jQuery} $node
-     * @param {Boolean} [isNewlineOnBlock]
-     */
-    var html = function ($node, isNewlineOnBlock) {
-      var markup = value($node);
-
-      if (isNewlineOnBlock) {
-        var regexTag = /<(\/?)(\b(?!!)[^>\s]*)(.*?)(\s*\/?>)/g;
-        markup = markup.replace(regexTag, function (match, endSlash, name) {
-          name = name.toUpperCase();
-          var isEndOfInlineContainer = /^DIV|^TD|^TH|^P|^LI|^H[1-7]/.test(name) &&
-                                       !!endSlash;
-          var isBlockNode = /^BLOCKQUOTE|^TABLE|^TBODY|^TR|^HR|^UL|^OL/.test(name);
-
-          return match + ((isEndOfInlineContainer || isBlockNode) ? '\n' : '');
-        });
-        markup = $.trim(markup);
-      }
-
-      return markup;
-    };
-
-    var posFromPlaceholder = function (placeholder) {
-      var $placeholder = $(placeholder);
-      var pos = $placeholder.offset();
-      var height = $placeholder.outerHeight(true); // include margin
-
-      return {
-        left: pos.left,
-        top: pos.top + height
-      };
-    };
-
-    var attachEvents = function ($node, events) {
-      Object.keys(events).forEach(function (key) {
-        $node.on(key, events[key]);
-      });
-    };
-
-    var detachEvents = function ($node, events) {
-      Object.keys(events).forEach(function (key) {
-        $node.off(key, events[key]);
-      });
-    };
-
-    /**
-     * @method isCustomStyleTag
-     *
-     * assert if a node contains a "note-styletag" class,
-     * which implies that's a custom-made style tag node
-     *
-     * @param {Node} an HTML DOM node
-     */
-    var isCustomStyleTag = function (node) {
-      return node && !dom.isText(node) && list.contains(node.classList, 'note-styletag');
-    };
-
-    return {
-      /** @property {String} NBSP_CHAR */
-      NBSP_CHAR: NBSP_CHAR,
-      /** @property {String} ZERO_WIDTH_NBSP_CHAR */
-      ZERO_WIDTH_NBSP_CHAR: ZERO_WIDTH_NBSP_CHAR,
-      /** @property {String} blank */
-      blank: blankHTML,
-      /** @property {String} emptyPara */
-      emptyPara: '<p>' + blankHTML + '</p>',
-      makePredByNodeName: makePredByNodeName,
-      isEditable: isEditable,
-      isControlSizing: isControlSizing,
-      isText: isText,
-      isElement: isElement,
-      isVoid: isVoid,
-      isPara: isPara,
-      isPurePara: isPurePara,
-      isHeading: isHeading,
-      isInline: isInline,
-      isBlock: func.not(isInline),
-      isBodyInline: isBodyInline,
-      isBody: isBody,
-      isParaInline: isParaInline,
-      isPre: isPre,
-      isList: isList,
-      isTable: isTable,
-      isData: isData,
-      isCell: isCell,
-      isBlockquote: isBlockquote,
-      isBodyContainer: isBodyContainer,
-      isAnchor: isAnchor,
-      isDiv: makePredByNodeName('DIV'),
-      isLi: isLi,
-      isBR: makePredByNodeName('BR'),
-      isSpan: makePredByNodeName('SPAN'),
-      isB: makePredByNodeName('B'),
-      isU: makePredByNodeName('U'),
-      isS: makePredByNodeName('S'),
-      isI: makePredByNodeName('I'),
-      isImg: makePredByNodeName('IMG'),
-      isTextarea: isTextarea,
-      isEmpty: isEmpty,
-      isEmptyAnchor: func.and(isAnchor, isEmpty),
-      isClosestSibling: isClosestSibling,
-      withClosestSiblings: withClosestSiblings,
-      nodeLength: nodeLength,
-      isLeftEdgePoint: isLeftEdgePoint,
-      isRightEdgePoint: isRightEdgePoint,
-      isEdgePoint: isEdgePoint,
-      isLeftEdgeOf: isLeftEdgeOf,
-      isRightEdgeOf: isRightEdgeOf,
-      isLeftEdgePointOf: isLeftEdgePointOf,
-      isRightEdgePointOf: isRightEdgePointOf,
-      prevPoint: prevPoint,
-      nextPoint: nextPoint,
-      isSamePoint: isSamePoint,
-      isVisiblePoint: isVisiblePoint,
-      prevPointUntil: prevPointUntil,
-      nextPointUntil: nextPointUntil,
-      isCharPoint: isCharPoint,
-      walkPoint: walkPoint,
-      ancestor: ancestor,
-      singleChildAncestor: singleChildAncestor,
-      listAncestor: listAncestor,
-      lastAncestor: lastAncestor,
-      listNext: listNext,
-      listPrev: listPrev,
-      listDescendant: listDescendant,
-      commonAncestor: commonAncestor,
-      wrap: wrap,
-      insertAfter: insertAfter,
-      appendChildNodes: appendChildNodes,
-      position: position,
-      hasChildren: hasChildren,
-      makeOffsetPath: makeOffsetPath,
-      fromOffsetPath: fromOffsetPath,
-      splitTree: splitTree,
-      splitPoint: splitPoint,
-      create: create,
-      createText: createText,
-      remove: remove,
-      removeWhile: removeWhile,
-      replace: replace,
-      html: html,
-      value: value,
-      posFromPlaceholder: posFromPlaceholder,
-      attachEvents: attachEvents,
-      detachEvents: detachEvents,
-      isCustomStyleTag: isCustomStyleTag
-    };
-  })();
-
-  /**
-   * @param {jQuery} $note
-   * @param {Object} options
-   * @return {Context}
-   */
-  var Context = function ($note, options) {
-    var self = this;
-
-    var ui = $.summernote.ui;
-    this.memos = {};
-    this.modules = {};
-    this.layoutInfo = {};
-    this.options = options;
-
-    /**
-     * create layout and initialize modules and other resources
-     */
-    this.initialize = function () {
-      this.layoutInfo = ui.createLayout($note, options);
-      this._initialize();
-      $note.hide();
-      return this;
-    };
-
-    /**
-     * destroy modules and other resources and remove layout
-     */
-    this.destroy = function () {
-      this._destroy();
-      $note.removeData('summernote');
-      ui.removeLayout($note, this.layoutInfo);
-    };
-
-    /**
-     * destory modules and other resources and initialize it again
-     */
-    this.reset = function () {
-      var disabled = self.isDisabled();
-      this.code(dom.emptyPara);
-      this._destroy();
-      this._initialize();
-
-      if (disabled) {
-        self.disable();
-      }
-    };
-
-    this._initialize = function () {
-      // add optional buttons
-      var buttons = $.extend({}, this.options.buttons);
-      Object.keys(buttons).forEach(function (key) {
-        self.memo('button.' + key, buttons[key]);
-      });
-
-      var modules = $.extend({}, this.options.modules, $.summernote.plugins || {});
-
-      // add and initialize modules
-      Object.keys(modules).forEach(function (key) {
-        self.module(key, modules[key], true);
-      });
-
-      Object.keys(this.modules).forEach(function (key) {
-        self.initializeModule(key);
-      });
-    };
-
-    this._destroy = function () {
-      // destroy modules with reversed order
-      Object.keys(this.modules).reverse().forEach(function (key) {
-        self.removeModule(key);
-      });
-
-      Object.keys(this.memos).forEach(function (key) {
-        self.removeMemo(key);
-      });
-      // trigger custom onDestroy callback
-      this.triggerEvent('destroy', this);
-    };
-
-    this.code = function (html) {
-      var isActivated = this.invoke('codeview.isActivated');
-
-      if (html === undefined) {
-        this.invoke('codeview.sync');
-        return isActivated ? this.layoutInfo.codable.val() : this.layoutInfo.editable.html();
-      } else {
-        if (isActivated) {
-          this.layoutInfo.codable.val(html);
-        } else {
-          this.layoutInfo.editable.html(html);
-        }
-        $note.val(html);
-        this.triggerEvent('change', html);
-      }
-    };
-
-    this.isDisabled = function () {
-      return this.layoutInfo.editable.attr('contenteditable') === 'false';
-    };
-
-    this.enable = function () {
-      this.layoutInfo.editable.attr('contenteditable', true);
-      this.invoke('toolbar.activate', true);
-      this.triggerEvent('disable', false);
-    };
-
-    this.disable = function () {
-      // close codeview if codeview is opend
-      if (this.invoke('codeview.isActivated')) {
-        this.invoke('codeview.deactivate');
-      }
-      this.layoutInfo.editable.attr('contenteditable', false);
-      this.invoke('toolbar.deactivate', true);
-
-      this.triggerEvent('disable', true);
-    };
-
-    this.triggerEvent = function () {
-      var namespace = list.head(arguments);
-      var args = list.tail(list.from(arguments));
-
-      var callback = this.options.callbacks[func.namespaceToCamel(namespace, 'on')];
-      if (callback) {
-        callback.apply($note[0], args);
-      }
-      $note.trigger('summernote.' + namespace, args);
-    };
-
-    this.initializeModule = function (key) {
-      var module = this.modules[key];
-      module.shouldInitialize = module.shouldInitialize || func.ok;
-      if (!module.shouldInitialize()) {
-        return;
-      }
-
-      // initialize module
-      if (module.initialize) {
-        module.initialize();
-      }
-
-      // attach events
-      if (module.events) {
-        dom.attachEvents($note, module.events);
-      }
-    };
-
-    this.module = function (key, ModuleClass, withoutIntialize) {
-      if (arguments.length === 1) {
-        return this.modules[key];
-      }
-
-      this.modules[key] = new ModuleClass(this);
-
-      if (!withoutIntialize) {
-        this.initializeModule(key);
-      }
-    };
-
-    this.removeModule = function (key) {
-      var module = this.modules[key];
-      if (module.shouldInitialize()) {
-        if (module.events) {
-          dom.detachEvents($note, module.events);
-        }
-
-        if (module.destroy) {
-          module.destroy();
-        }
-      }
-
-      delete this.modules[key];
-    };
-
-    this.memo = function (key, obj) {
-      if (arguments.length === 1) {
-        return this.memos[key];
-      }
-      this.memos[key] = obj;
-    };
-
-    this.removeMemo = function (key) {
-      if (this.memos[key] && this.memos[key].destroy) {
-        this.memos[key].destroy();
-      }
-
-      delete this.memos[key];
-    };
-
-    /**
-     *Some buttons need to change their visual style immediately once they get pressed
-     */
-    this.createInvokeHandlerAndUpdateState = function (namespace, value) {
-      return function (event) {
-        self.createInvokeHandler(namespace, value)(event);
-        self.invoke('buttons.updateCurrentStyle');
-      };
-    };
-
-    this.createInvokeHandler = function (namespace, value) {
-      return function (event) {
-        event.preventDefault();
-        var $target = $(event.target);
-        self.invoke(namespace, value || $target.closest('[data-value]').data('value'), $target);
-      };
-    };
-
-    this.invoke = function () {
-      var namespace = list.head(arguments);
-      var args = list.tail(list.from(arguments));
-
-      var splits = namespace.split('.');
-      var hasSeparator = splits.length > 1;
-      var moduleName = hasSeparator && list.head(splits);
-      var methodName = hasSeparator ? list.last(splits) : list.head(splits);
-
-      var module = this.modules[moduleName || 'editor'];
-      if (!moduleName && this[methodName]) {
-        return this[methodName].apply(this, args);
-      } else if (module && module[methodName] && module.shouldInitialize()) {
-        return module[methodName].apply(module, args);
-      }
-    };
-
-    return this.initialize();
-  };
-
-  $.fn.extend({
-    /**
-     * Summernote API
-     *
-     * @param {Object|String}
-     * @return {this}
-     */
-    summernote: function () {
-      var type = $.type(list.head(arguments));
-      var isExternalAPICalled = type === 'string';
-      var hasInitOptions = type === 'object';
-
-      var options = hasInitOptions ? list.head(arguments) : {};
-
-      options = $.extend({}, $.summernote.options, options);
-
-      // Update options
-      options.langInfo = $.extend(true, {}, $.summernote.lang['en-US'], $.summernote.lang[options.lang]);
-      options.icons = $.extend(true, {}, $.summernote.options.icons, options.icons);
-      options.tooltip = options.tooltip === 'auto' ? !agent.isSupportTouch : options.tooltip;
-
-      this.each(function (idx, note) {
-        var $note = $(note);
-        if (!$note.data('summernote')) {
-          var context = new Context($note, options);
-          $note.data('summernote', context);
-          $note.data('summernote').triggerEvent('init', context.layoutInfo);
-        }
-      });
-
-      var $note = this.first();
-      if ($note.length) {
-        var context = $note.data('summernote');
-        if (isExternalAPICalled) {
-          return context.invoke.apply(context, list.from(arguments));
-        } else if (options.focus) {
-          context.invoke('editor.focus');
-        }
-      }
-
-      return this;
-    }
-  });
-
-
-  var Renderer = function (markup, children, options, callback) {
-    this.render = function ($parent) {
-      var $node = $(markup);
-
-      if (options && options.contents) {
-        $node.html(options.contents);
-      }
-
-      if (options && options.className) {
-        $node.addClass(options.className);
-      }
-
-      if (options && options.data) {
-        $.each(options.data, function (k, v) {
-          $node.attr('data-' + k, v);
-        });
-      }
-
-      if (options && options.click) {
-        $node.on('click', options.click);
-      }
-
-      if (children) {
-        var $container = $node.find('.note-children-container');
-        children.forEach(function (child) {
-          child.render($container.length ? $container : $node);
-        });
-      }
-
-      if (callback) {
-        callback($node, options);
-      }
-
-      if (options && options.callback) {
-        options.callback($node);
-      }
-
-      if ($parent) {
-        $parent.append($node);
-      }
-
-      return $node;
-    };
-  };
-
-  var renderer = {
+    return Renderer;
+}());
+var renderer = {
     create: function (markup, callback) {
-      return function () {
-        var children = $.isArray(arguments[0]) ? arguments[0] : [];
-        var options = typeof arguments[1] === 'object' ? arguments[1] : arguments[0];
-        if (options && options.children) {
-          children = options.children;
-        }
-        return new Renderer(markup, children, options, callback);
-      };
+        return function () {
+            var options = typeof arguments[1] === 'object' ? arguments[1] : arguments[0];
+            var children = $$1.isArray(arguments[0]) ? arguments[0] : [];
+            if (options && options.children) {
+                children = options.children;
+            }
+            return new Renderer(markup, children, options, callback);
+        };
     }
-  };
+};
 
-  var editor = renderer.create('<div class="note-editor note-frame panel panel-default"/>');
-  var toolbar = renderer.create('<div class="note-toolbar panel-heading"/>');
-  var editingArea = renderer.create('<div class="note-editing-area"/>');
-  var codable = renderer.create('<textarea class="note-codable"/>');
-  var editable = renderer.create('<div class="note-editable panel-body" contentEditable="true"/>');
-  var statusbar = renderer.create([
+var editor = renderer.create('<div class="note-editor note-frame panel"/>');
+var toolbar = renderer.create('<div class="note-toolbar-wrapper panel-default"><div class="note-toolbar panel-heading"></div></div>');
+var editingArea = renderer.create('<div class="note-editing-area"/>');
+var codable = renderer.create('<textarea class="note-codable"/>');
+var editable = renderer.create('<div class="note-editable" contentEditable="true"/>');
+var statusbar = renderer.create([
     '<div class="note-statusbar">',
     '  <div class="note-resizebar">',
     '    <div class="note-icon-bar"/>',
@@ -50448,123 +48610,105 @@ function __guardMethod__(obj, methodName, transform) {
     '    <div class="note-icon-bar"/>',
     '  </div>',
     '</div>'
-  ].join(''));
-
-  var airEditor = renderer.create('<div class="note-editor"/>');
-  var airEditable = renderer.create('<div class="note-editable" contentEditable="true"/>');
-
-  var buttonGroup = renderer.create('<div class="note-btn-group btn-group">');
-
-  var dropdown = renderer.create('<div class="dropdown-menu">', function ($node, options) {
-    var markup = $.isArray(options.items) ? options.items.map(function (item) {
-      var value = (typeof item === 'string') ? item : (item.value || '');
-      var content = options.template ? options.template(item) : item;
-      var option = (typeof item === 'object') ? item.option : undefined;
-
-      var dataValue = 'data-value="' + value + '"';
-      var dataOption = (option !== undefined) ? ' data-option="' + option + '"' : '';
-      return '<li><a href="#" ' + (dataValue + dataOption) + '>' + content + '</a></li>';
+].join(''));
+var airEditor = renderer.create('<div class="note-editor"/>');
+var airEditable = renderer.create('<div class="note-editable" contentEditable="true"/>');
+var buttonGroup = renderer.create('<div class="note-btn-group btn-group">');
+var dropdown = renderer.create('<div class="dropdown-menu">', function ($node, options) {
+    var markup = $$1.isArray(options.items) ? options.items.map(function (item) {
+        var value = (typeof item === 'string') ? item : (item.value || '');
+        var content = options.template ? options.template(item) : item;
+        var option = (typeof item === 'object') ? item.option : undefined;
+        var dataValue = 'data-value="' + value + '"';
+        var dataOption = (option !== undefined) ? ' data-option="' + option + '"' : '';
+        return '<li><a href="#" ' + (dataValue + dataOption) + '>' + content + '</a></li>';
     }).join('') : options.items;
-
     $node.html(markup);
-  });
-
-  var dropdownButtonContents = function (contents, options) {
+});
+var dropdownButtonContents = function (contents, options) {
     return contents + ' ' + icon(options.icons.caret, 'span');
-  };
-
-  var dropdownCheck = renderer.create('<div class="dropdown-menu note-check">', function ($node, options) {
-    var markup = $.isArray(options.items) ? options.items.map(function (item) {
-      var value = (typeof item === 'string') ? item : (item.value || '');
-      var content = options.template ? options.template(item) : item;
-      return '<li><a href="#" data-value="' + value + '">' + icon(options.checkClassName) + ' ' + content + '</a></li>';
+};
+var dropdownCheck = renderer.create('<div class="dropdown-menu note-check">', function ($node, options) {
+    var markup = $$1.isArray(options.items) ? options.items.map(function (item) {
+        var value = (typeof item === 'string') ? item : (item.value || '');
+        var content = options.template ? options.template(item) : item;
+        return '<li><a href="#" data-value="' + value + '">' + icon(options.checkClassName) + ' ' + content + '</a></li>';
     }).join('') : options.items;
     $node.html(markup);
-  });
-
-  var palette = renderer.create('<div class="note-color-palette"/>', function ($node, options) {
+});
+var palette = renderer.create('<div class="note-color-palette"/>', function ($node, options) {
     var contents = [];
     for (var row = 0, rowSize = options.colors.length; row < rowSize; row++) {
-      var eventName = options.eventName;
-      var colors = options.colors[row];
-      var buttons = [];
-      for (var col = 0, colSize = colors.length; col < colSize; col++) {
-        var color = colors[col];
-        buttons.push([
-          '<button type="button" class="note-color-btn"',
-          'style="background-color:', color, '" ',
-          'data-event="', eventName, '" ',
-          'data-value="', color, '" ',
-          'title="', color, '" ',
-          'data-toggle="button" tabindex="-1"></button>'
-        ].join(''));
-      }
-      contents.push('<div class="note-color-row">' + buttons.join('') + '</div>');
+        var eventName = options.eventName;
+        var colors = options.colors[row];
+        var buttons = [];
+        for (var col = 0, colSize = colors.length; col < colSize; col++) {
+            var color = colors[col];
+            buttons.push([
+                '<button type="button" class="note-color-btn"',
+                'style="background-color:', color, '" ',
+                'data-event="', eventName, '" ',
+                'data-value="', color, '" ',
+                'title="', color, '" ',
+                'data-toggle="button" tabindex="-1"></button>'
+            ].join(''));
+        }
+        contents.push('<div class="note-color-row">' + buttons.join('') + '</div>');
     }
     $node.html(contents.join(''));
-
     if (options.tooltip) {
-      $node.find('.note-color-btn').tooltip({
-        container: 'body',
-        trigger: 'hover',
-        placement: 'bottom'
-      });
+        $node.find('.note-color-btn').tooltip({
+            container: options.container,
+            trigger: 'hover',
+            placement: 'bottom'
+        });
     }
-  });
-
-  var dialog = renderer.create('<div class="modal" aria-hidden="false" tabindex="-1"/>', function ($node, options) {
+});
+var dialog = renderer.create('<div class="modal" aria-hidden="false" tabindex="-1"/>', function ($node, options) {
     if (options.fade) {
-      $node.addClass('fade');
+        $node.addClass('fade');
     }
     $node.html([
-      '<div class="modal-dialog">',
-      '  <div class="modal-content">',
-      (options.title ?
-      '    <div class="modal-header">' +
-      '      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-      '      <h4 class="modal-title">' + options.title + '</h4>' +
-      '    </div>' : ''
-      ),
-      '    <div class="modal-body">' + options.body + '</div>',
-      (options.footer ?
-      '    <div class="modal-footer">' + options.footer + '</div>' : ''
-      ),
-      '  </div>',
-      '</div>'
+        '<div class="modal-dialog">',
+        '  <div class="modal-content">',
+        (options.title
+            ? '    <div class="modal-header">' +
+                '      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+                '      <h4 class="modal-title">' + options.title + '</h4>' +
+                '    </div>' : ''),
+        '    <div class="modal-body">' + options.body + '</div>',
+        (options.footer
+            ? '    <div class="modal-footer">' + options.footer + '</div>' : ''),
+        '  </div>',
+        '</div>'
     ].join(''));
-  });
-
-  var popover = renderer.create([
+});
+var popover = renderer.create([
     '<div class="note-popover popover in">',
     '  <div class="arrow"/>',
     '  <div class="popover-content note-children-container"/>',
     '</div>'
-  ].join(''), function ($node, options) {
+].join(''), function ($node, options) {
     var direction = typeof options.direction !== 'undefined' ? options.direction : 'bottom';
-
     $node.addClass(direction);
-
     if (options.hideArrow) {
-      $node.find('.arrow').hide();
+        $node.find('.arrow').hide();
     }
-  });
-
-  var checkbox = renderer.create('<div class="checkbox"></div>', function ($node, options) {
-      $node.html([
-          ' <label' + (options.id ? ' for="' + options.id + '"' : '') + '>',
-          ' <input type="checkbox"' + (options.id ? ' id="' + options.id + '"' : ''),
-          (options.checked ? ' checked' : '') + '/>',
-          (options.text ? options.text : ''),
-          '</label>'
-      ].join(''));
-  });
-
-  var icon = function (iconClassName, tagName) {
+});
+var checkbox = renderer.create('<div class="checkbox"></div>', function ($node, options) {
+    $node.html([
+        ' <label' + (options.id ? ' for="' + options.id + '"' : '') + '>',
+        ' <input type="checkbox"' + (options.id ? ' id="' + options.id + '"' : ''),
+        (options.checked ? ' checked' : '') + '/>',
+        (options.text ? options.text : ''),
+        '</label>'
+    ].join(''));
+});
+var icon = function (iconClassName, tagName) {
     tagName = tagName || 'i';
     return '<' + tagName + ' class="' + iconClassName + '"/>';
-  };
-
-  var ui = {
+};
+var ui = {
     editor: editor,
     toolbar: toolbar,
     editingArea: editingArea,
@@ -50583,1298 +48727,2553 @@ function __guardMethod__(obj, methodName, transform) {
     checkbox: checkbox,
     icon: icon,
     options: {},
-
     button: function ($node, options) {
-      return renderer.create('<button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1">', function ($node, options) {
-        if (options && options.tooltip && self.options.tooltip) {
-          $node.attr({
-            title: options.tooltip
-          }).tooltip({
-            container: 'body',
-            trigger: 'hover',
-            placement: 'bottom'
-          });
-        }
-      })($node, options);
+        return renderer.create('<button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1">', function ($node, options) {
+            if (options && options.tooltip) {
+                $node.attr({
+                    title: options.tooltip
+                }).tooltip({
+                    container: options.container,
+                    trigger: 'hover',
+                    placement: 'bottom'
+                });
+            }
+        })($node, options);
     },
-
     toggleBtn: function ($btn, isEnable) {
-      $btn.toggleClass('disabled', !isEnable);
-      $btn.attr('disabled', !isEnable);
+        $btn.toggleClass('disabled', !isEnable);
+        $btn.attr('disabled', !isEnable);
     },
-
     toggleBtnActive: function ($btn, isActive) {
-      $btn.toggleClass('active', isActive);
+        $btn.toggleClass('active', isActive);
     },
-
     onDialogShown: function ($dialog, handler) {
-      $dialog.one('shown.bs.modal', handler);
+        $dialog.one('shown.bs.modal', handler);
     },
-
     onDialogHidden: function ($dialog, handler) {
-      $dialog.one('hidden.bs.modal', handler);
+        $dialog.one('hidden.bs.modal', handler);
     },
-
     showDialog: function ($dialog) {
-      $dialog.modal('show');
+        $dialog.modal('show');
     },
-
     hideDialog: function ($dialog) {
-      $dialog.modal('hide');
+        $dialog.modal('hide');
     },
-
     createLayout: function ($note, options) {
-      self.options = options;
-      var $editor = (options.airMode ? ui.airEditor([
-        ui.editingArea([
-          ui.airEditable()
-        ])
-      ]) : ui.editor([
-        ui.toolbar(),
-        ui.editingArea([
-          ui.codable(),
-          ui.editable()
-        ]),
-        ui.statusbar()
-      ])).render();
-
-      $editor.insertAfter($note);
-
-      return {
-        note: $note,
-        editor: $editor,
-        toolbar: $editor.find('.note-toolbar'),
-        editingArea: $editor.find('.note-editing-area'),
-        editable: $editor.find('.note-editable'),
-        codable: $editor.find('.note-codable'),
-        statusbar: $editor.find('.note-statusbar')
-      };
+        var $editor = (options.airMode ? ui.airEditor([
+            ui.editingArea([
+                ui.airEditable()
+            ])
+        ]) : ui.editor([
+            ui.toolbar(),
+            ui.editingArea([
+                ui.codable(),
+                ui.editable()
+            ]),
+            ui.statusbar()
+        ])).render();
+        $editor.insertAfter($note);
+        return {
+            note: $note,
+            editor: $editor,
+            toolbar: $editor.find('.note-toolbar'),
+            editingArea: $editor.find('.note-editing-area'),
+            editable: $editor.find('.note-editable'),
+            codable: $editor.find('.note-codable'),
+            statusbar: $editor.find('.note-statusbar')
+        };
     },
-
     removeLayout: function ($note, layoutInfo) {
-      $note.html(layoutInfo.editable.html());
-      layoutInfo.editor.remove();
-      $note.show();
+        $note.html(layoutInfo.editable.html());
+        layoutInfo.editor.remove();
+        $note.show();
     }
-  };
+};
 
-  $.summernote = $.summernote || {
-    lang: {}
-  };
-
-  $.extend($.summernote.lang, {
-    'en-US': {
-      font: {
-        bold: 'Bold',
-        italic: 'Italic',
-        underline: 'Underline',
-        clear: 'Remove Font Style',
-        height: 'Line Height',
-        name: 'Font Family',
-        strikethrough: 'Strikethrough',
-        subscript: 'Subscript',
-        superscript: 'Superscript',
-        size: 'Font Size'
-      },
-      image: {
-        image: 'Picture',
-        insert: 'Insert Image',
-        resizeFull: 'Resize Full',
-        resizeHalf: 'Resize Half',
-        resizeQuarter: 'Resize Quarter',
-        floatLeft: 'Float Left',
-        floatRight: 'Float Right',
-        floatNone: 'Float None',
-        shapeRounded: 'Shape: Rounded',
-        shapeCircle: 'Shape: Circle',
-        shapeThumbnail: 'Shape: Thumbnail',
-        shapeNone: 'Shape: None',
-        dragImageHere: 'Drag image or text here',
-        dropImage: 'Drop image or Text',
-        selectFromFiles: 'Select from files',
-        maximumFileSize: 'Maximum file size',
-        maximumFileSizeError: 'Maximum file size exceeded.',
-        url: 'Image URL',
-        remove: 'Remove Image'
-      },
-      video: {
-        video: 'Video',
-        videoLink: 'Video Link',
-        insert: 'Insert Video',
-        url: 'Video URL?',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion or Youku)'
-      },
-      link: {
-        link: 'Link',
-        insert: 'Insert Link',
-        unlink: 'Unlink',
-        edit: 'Edit',
-        textToDisplay: 'Text to display',
-        url: 'To what URL should this link go?',
-        openInNewWindow: 'Open in new window'
-      },
-      table: {
-        table: 'Table',
-        addRowAbove: 'Add row above',
-        addRowBelow: 'Add row below',
-        addColLeft: 'Add column left',
-        addColRight: 'Add column right',
-        delRow: 'Delete row',
-        delCol: 'Delete column',
-        delTable: 'Delete table'
-      },
-      hr: {
-        insert: 'Insert Horizontal Rule'
-      },
-      style: {
-        style: 'Style',
-        p: 'Normal',
-        blockquote: 'Quote',
-        pre: 'Code',
-        h1: 'Header 1',
-        h2: 'Header 2',
-        h3: 'Header 3',
-        h4: 'Header 4',
-        h5: 'Header 5',
-        h6: 'Header 6'
-      },
-      lists: {
-        unordered: 'Unordered list',
-        ordered: 'Ordered list'
-      },
-      options: {
-        help: 'Help',
-        fullscreen: 'Full Screen',
-        codeview: 'Code View'
-      },
-      paragraph: {
-        paragraph: 'Paragraph',
-        outdent: 'Outdent',
-        indent: 'Indent',
-        left: 'Align left',
-        center: 'Align center',
-        right: 'Align right',
-        justify: 'Justify full'
-      },
-      color: {
-        recent: 'Recent Color',
-        more: 'More Color',
-        background: 'Background Color',
-        foreground: 'Foreground Color',
-        transparent: 'Transparent',
-        setTransparent: 'Set transparent',
-        reset: 'Reset',
-        resetToDefault: 'Reset to default'
-      },
-      shortcut: {
-        shortcuts: 'Keyboard shortcuts',
-        close: 'Close',
-        textFormatting: 'Text formatting',
-        action: 'Action',
-        paragraphFormatting: 'Paragraph formatting',
-        documentStyle: 'Document Style',
-        extraKeys: 'Extra keys'
-      },
-      help: {
-        'insertParagraph': 'Insert Paragraph',
-        'undo': 'Undoes the last command',
-        'redo': 'Redoes the last command',
-        'tab': 'Tab',
-        'untab': 'Untab',
-        'bold': 'Set a bold style',
-        'italic': 'Set a italic style',
-        'underline': 'Set a underline style',
-        'strikethrough': 'Set a strikethrough style',
-        'removeFormat': 'Clean a style',
-        'justifyLeft': 'Set left align',
-        'justifyCenter': 'Set center align',
-        'justifyRight': 'Set right align',
-        'justifyFull': 'Set full align',
-        'insertUnorderedList': 'Toggle unordered list',
-        'insertOrderedList': 'Toggle ordered list',
-        'outdent': 'Outdent on current paragraph',
-        'indent': 'Indent on current paragraph',
-        'formatPara': 'Change current block\'s format as a paragraph(P tag)',
-        'formatH1': 'Change current block\'s format as H1',
-        'formatH2': 'Change current block\'s format as H2',
-        'formatH3': 'Change current block\'s format as H3',
-        'formatH4': 'Change current block\'s format as H4',
-        'formatH5': 'Change current block\'s format as H5',
-        'formatH6': 'Change current block\'s format as H6',
-        'insertHorizontalRule': 'Insert horizontal rule',
-        'linkDialog.show': 'Show Link Dialog'
-      },
-      history: {
-        undo: 'Undo',
-        redo: 'Redo'
-      },
-      specialChar: {
-        specialChar: 'SPECIAL CHARACTERS',
-        select: 'Select Special characters'
-      }
-    }
-  });
-
-
-  /**
-   * @class core.key
-   *
-   * Object for keycodes.
-   *
-   * @singleton
-   * @alternateClassName key
-   */
-  var key = (function () {
-    var keyMap = {
-      'BACKSPACE': 8,
-      'TAB': 9,
-      'ENTER': 13,
-      'SPACE': 32,
-      'DELETE': 46,
-
-      // Arrow
-      'LEFT': 37,
-      'UP': 38,
-      'RIGHT': 39,
-      'DOWN': 40,
-
-      // Number: 0-9
-      'NUM0': 48,
-      'NUM1': 49,
-      'NUM2': 50,
-      'NUM3': 51,
-      'NUM4': 52,
-      'NUM5': 53,
-      'NUM6': 54,
-      'NUM7': 55,
-      'NUM8': 56,
-
-      // Alphabet: a-z
-      'B': 66,
-      'E': 69,
-      'I': 73,
-      'J': 74,
-      'K': 75,
-      'L': 76,
-      'R': 82,
-      'S': 83,
-      'U': 85,
-      'V': 86,
-      'Y': 89,
-      'Z': 90,
-
-      'SLASH': 191,
-      'LEFTBRACKET': 219,
-      'BACKSLASH': 220,
-      'RIGHTBRACKET': 221
+/**
+ * @class core.func
+ *
+ * func utils (for high-order func's arg)
+ *
+ * @singleton
+ * @alternateClassName func
+ */
+function eq(itemA) {
+    return function (itemB) {
+        return itemA === itemB;
     };
-
+}
+function eq2(itemA, itemB) {
+    return itemA === itemB;
+}
+function peq2(propName) {
+    return function (itemA, itemB) {
+        return itemA[propName] === itemB[propName];
+    };
+}
+function ok() {
+    return true;
+}
+function fail() {
+    return false;
+}
+function not(f) {
+    return function () {
+        return !f.apply(f, arguments);
+    };
+}
+function and(fA, fB) {
+    return function (item) {
+        return fA(item) && fB(item);
+    };
+}
+function self(a) {
+    return a;
+}
+function invoke(obj, method) {
+    return function () {
+        return obj[method].apply(obj, arguments);
+    };
+}
+var idCounter = 0;
+/**
+ * generate a globally-unique id
+ *
+ * @param {String} [prefix]
+ */
+function uniqueId(prefix) {
+    var id = ++idCounter + '';
+    return prefix ? prefix + id : id;
+}
+/**
+ * returns bnd (bounds) from rect
+ *
+ * - IE Compatibility Issue: http://goo.gl/sRLOAo
+ * - Scroll Issue: http://goo.gl/sNjUc
+ *
+ * @param {Rect} rect
+ * @return {Object} bounds
+ * @return {Number} bounds.top
+ * @return {Number} bounds.left
+ * @return {Number} bounds.width
+ * @return {Number} bounds.height
+ */
+function rect2bnd(rect) {
+    var $document = $(document);
     return {
-      /**
-       * @method isEdit
-       *
-       * @param {Number} keyCode
-       * @return {Boolean}
-       */
-      isEdit: function (keyCode) {
-        return list.contains([
-          keyMap.BACKSPACE,
-          keyMap.TAB,
-          keyMap.ENTER,
-          keyMap.SPACE,
-          keyMap.DELETE
-        ], keyCode);
-      },
-      /**
-       * @method isMove
-       *
-       * @param {Number} keyCode
-       * @return {Boolean}
-       */
-      isMove: function (keyCode) {
-        return list.contains([
-          keyMap.LEFT,
-          keyMap.UP,
-          keyMap.RIGHT,
-          keyMap.DOWN
-        ], keyCode);
-      },
-      /**
-       * @property {Object} nameFromCode
-       * @property {String} nameFromCode.8 "BACKSPACE"
-       */
-      nameFromCode: func.invertObject(keyMap),
-      code: keyMap
+        top: rect.top + $document.scrollTop(),
+        left: rect.left + $document.scrollLeft(),
+        width: rect.right - rect.left,
+        height: rect.bottom - rect.top
     };
-  })();
+}
+/**
+ * returns a copy of the object where the keys have become the values and the values the keys.
+ * @param {Object} obj
+ * @return {Object}
+ */
+function invertObject(obj) {
+    var inverted = {};
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            inverted[obj[key]] = key;
+        }
+    }
+    return inverted;
+}
+/**
+ * @param {String} namespace
+ * @param {String} [prefix]
+ * @return {String}
+ */
+function namespaceToCamel(namespace, prefix) {
+    prefix = prefix || '';
+    return prefix + namespace.split('.').map(function (name) {
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
+    }).join('');
+}
+/**
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing.
+ * @param {Function} func
+ * @param {Number} wait
+ * @param {Boolean} immediate
+ * @return {Function}
+ */
+function debounce(func, wait, immediate) {
+    var _this = this;
+    var timeout;
+    return function () {
+        var context = _this;
+        var args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) {
+                func.apply(context, args);
+            }
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) {
+            func.apply(context, args);
+        }
+    };
+}
+var func = {
+    eq: eq,
+    eq2: eq2,
+    peq2: peq2,
+    ok: ok,
+    fail: fail,
+    self: self,
+    not: not,
+    and: and,
+    invoke: invoke,
+    uniqueId: uniqueId,
+    rect2bnd: rect2bnd,
+    invertObject: invertObject,
+    namespaceToCamel: namespaceToCamel,
+    debounce: debounce
+};
 
-  var range = (function () {
+/**
+ * returns the first item of an array.
+ *
+ * @param {Array} array
+ */
+function head(array) {
+    return array[0];
+}
+/**
+ * returns the last item of an array.
+ *
+ * @param {Array} array
+ */
+function last(array) {
+    return array[array.length - 1];
+}
+/**
+ * returns everything but the last entry of the array.
+ *
+ * @param {Array} array
+ */
+function initial(array) {
+    return array.slice(0, array.length - 1);
+}
+/**
+ * returns the rest of the items in an array.
+ *
+ * @param {Array} array
+ */
+function tail(array) {
+    return array.slice(1);
+}
+/**
+ * returns item of array
+ */
+function find(array, pred) {
+    for (var idx = 0, len = array.length; idx < len; idx++) {
+        var item = array[idx];
+        if (pred(item)) {
+            return item;
+        }
+    }
+}
+/**
+ * returns true if all of the values in the array pass the predicate truth test.
+ */
+function all(array, pred) {
+    for (var idx = 0, len = array.length; idx < len; idx++) {
+        if (!pred(array[idx])) {
+            return false;
+        }
+    }
+    return true;
+}
+/**
+ * returns index of item
+ */
+function indexOf(array, item) {
+    return $$1.inArray(item, array);
+}
+/**
+ * returns true if the value is present in the list.
+ */
+function contains(array, item) {
+    return indexOf(array, item) !== -1;
+}
+/**
+ * get sum from a list
+ *
+ * @param {Array} array - array
+ * @param {Function} fn - iterator
+ */
+function sum(array, fn) {
+    fn = fn || func.self;
+    return array.reduce(function (memo, v) {
+        return memo + fn(v);
+    }, 0);
+}
+/**
+ * returns a copy of the collection with array type.
+ * @param {Collection} collection - collection eg) node.childNodes, ...
+ */
+function from(collection) {
+    var result = [];
+    var length = collection.length;
+    var idx = -1;
+    while (++idx < length) {
+        result[idx] = collection[idx];
+    }
+    return result;
+}
+/**
+ * returns whether list is empty or not
+ */
+function isEmpty$1(array) {
+    return !array || !array.length;
+}
+/**
+ * cluster elements by predicate function.
+ *
+ * @param {Array} array - array
+ * @param {Function} fn - predicate function for cluster rule
+ * @param {Array[]}
+ */
+function clusterBy(array, fn) {
+    if (!array.length) {
+        return [];
+    }
+    var aTail = tail(array);
+    return aTail.reduce(function (memo, v) {
+        var aLast = last(memo);
+        if (fn(last(aLast), v)) {
+            aLast[aLast.length] = v;
+        }
+        else {
+            memo[memo.length] = [v];
+        }
+        return memo;
+    }, [[head(array)]]);
+}
+/**
+ * returns a copy of the array with all false values removed
+ *
+ * @param {Array} array - array
+ * @param {Function} fn - predicate function for cluster rule
+ */
+function compact(array) {
+    var aResult = [];
+    for (var idx = 0, len = array.length; idx < len; idx++) {
+        if (array[idx]) {
+            aResult.push(array[idx]);
+        }
+    }
+    return aResult;
+}
+/**
+ * produces a duplicate-free version of the array
+ *
+ * @param {Array} array
+ */
+function unique(array) {
+    var results = [];
+    for (var idx = 0, len = array.length; idx < len; idx++) {
+        if (!contains(results, array[idx])) {
+            results.push(array[idx]);
+        }
+    }
+    return results;
+}
+/**
+ * returns next item.
+ * @param {Array} array
+ */
+function next(array, item) {
+    var idx = indexOf(array, item);
+    if (idx === -1) {
+        return null;
+    }
+    return array[idx + 1];
+}
+/**
+ * returns prev item.
+ * @param {Array} array
+ */
+function prev(array, item) {
+    var idx = indexOf(array, item);
+    if (idx === -1) {
+        return null;
+    }
+    return array[idx - 1];
+}
+/**
+ * @class core.list
+ *
+ * list utils
+ *
+ * @singleton
+ * @alternateClassName list
+ */
+var lists = {
+    head: head,
+    last: last,
+    initial: initial,
+    tail: tail,
+    prev: prev,
+    next: next,
+    find: find,
+    contains: contains,
+    all: all,
+    sum: sum,
+    from: from,
+    isEmpty: isEmpty$1,
+    clusterBy: clusterBy,
+    compact: compact,
+    unique: unique
+};
 
+var isSupportAmd = typeof define === 'function' && define.amd; // eslint-disable-line
+/**
+ * returns whether font is installed or not.
+ *
+ * @param {String} fontName
+ * @return {Boolean}
+ */
+function isFontInstalled(fontName) {
+    var testFontName = fontName === 'Comic Sans MS' ? 'Courier New' : 'Comic Sans MS';
+    var $tester = $$1('<div>').css({
+        position: 'absolute',
+        left: '-9999px',
+        top: '-9999px',
+        fontSize: '200px'
+    }).text('mmmmmmmmmwwwwwww').appendTo(document.body);
+    var originalWidth = $tester.css('fontFamily', testFontName).width();
+    var width = $tester.css('fontFamily', fontName + ',' + testFontName).width();
+    $tester.remove();
+    return originalWidth !== width;
+}
+var userAgent = navigator.userAgent;
+var isMSIE = /MSIE|Trident/i.test(userAgent);
+var browserVersion;
+if (isMSIE) {
+    var matches = /MSIE (\d+[.]\d+)/.exec(userAgent);
+    if (matches) {
+        browserVersion = parseFloat(matches[1]);
+    }
+    matches = /Trident\/.*rv:([0-9]{1,}[.0-9]{0,})/.exec(userAgent);
+    if (matches) {
+        browserVersion = parseFloat(matches[1]);
+    }
+}
+var isEdge = /Edge\/\d+/.test(userAgent);
+var hasCodeMirror = !!window.CodeMirror;
+if (!hasCodeMirror && isSupportAmd) {
+    // Webpack
+    if (typeof __webpack_require__ === 'function') {
+        try {
+            // If CodeMirror can't be resolved, `require.resolve` will throw an
+            // exception and `hasCodeMirror` won't be set to `true`.
+            require.resolve('codemirror');
+            hasCodeMirror = true;
+        }
+        catch (e) {
+            // do nothing
+        }
+    }
+    else if (typeof require !== 'undefined') {
+        // Browserify
+        if (typeof require.resolve !== 'undefined') {
+            try {
+                // If CodeMirror can't be resolved, `require.resolve` will throw an
+                // exception and `hasCodeMirror` won't be set to `true`.
+                require.resolve('codemirror');
+                hasCodeMirror = true;
+            }
+            catch (e) {
+                // do nothing
+            }
+            // Almond/Require
+        }
+        else if (typeof require.specified !== 'undefined') {
+            hasCodeMirror = require.specified('codemirror');
+        }
+    }
+}
+var isSupportTouch = (('ontouchstart' in window) ||
+    (navigator.MaxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0));
+// [workaround] IE doesn't have input events for contentEditable
+// - see: https://goo.gl/4bfIvA
+var inputEventName = (isMSIE || isEdge) ? 'DOMCharacterDataModified DOMSubtreeModified DOMNodeInserted' : 'input';
+/**
+ * @class core.env
+ *
+ * Object which check platform and agent
+ *
+ * @singleton
+ * @alternateClassName env
+ */
+var env = {
+    isMac: navigator.appVersion.indexOf('Mac') > -1,
+    isMSIE: isMSIE,
+    isEdge: isEdge,
+    isFF: !isEdge && /firefox/i.test(userAgent),
+    isPhantom: /PhantomJS/i.test(userAgent),
+    isWebkit: !isEdge && /webkit/i.test(userAgent),
+    isChrome: !isEdge && /chrome/i.test(userAgent),
+    isSafari: !isEdge && /safari/i.test(userAgent),
+    browserVersion: browserVersion,
+    jqueryVersion: parseFloat($$1.fn.jquery),
+    isSupportAmd: isSupportAmd,
+    isSupportTouch: isSupportTouch,
+    hasCodeMirror: hasCodeMirror,
+    isFontInstalled: isFontInstalled,
+    isW3CRangeSupport: !!document.createRange,
+    inputEventName: inputEventName
+};
+
+var NBSP_CHAR = String.fromCharCode(160);
+var ZERO_WIDTH_NBSP_CHAR = '\ufeff';
+/**
+ * @method isEditable
+ *
+ * returns whether node is `note-editable` or not.
+ *
+ * @param {Node} node
+ * @return {Boolean}
+ */
+function isEditable(node) {
+    return node && $$1(node).hasClass('note-editable');
+}
+/**
+ * @method isControlSizing
+ *
+ * returns whether node is `note-control-sizing` or not.
+ *
+ * @param {Node} node
+ * @return {Boolean}
+ */
+function isControlSizing(node) {
+    return node && $$1(node).hasClass('note-control-sizing');
+}
+/**
+ * @method makePredByNodeName
+ *
+ * returns predicate which judge whether nodeName is same
+ *
+ * @param {String} nodeName
+ * @return {Function}
+ */
+function makePredByNodeName(nodeName) {
+    nodeName = nodeName.toUpperCase();
+    return function (node) {
+        return node && node.nodeName.toUpperCase() === nodeName;
+    };
+}
+/**
+ * @method isText
+ *
+ *
+ *
+ * @param {Node} node
+ * @return {Boolean} true if node's type is text(3)
+ */
+function isText(node) {
+    return node && node.nodeType === 3;
+}
+/**
+ * @method isElement
+ *
+ *
+ *
+ * @param {Node} node
+ * @return {Boolean} true if node's type is element(1)
+ */
+function isElement(node) {
+    return node && node.nodeType === 1;
+}
+/**
+ * ex) br, col, embed, hr, img, input, ...
+ * @see http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements
+ */
+function isVoid(node) {
+    return node && /^BR|^IMG|^HR|^IFRAME|^BUTTON|^INPUT/.test(node.nodeName.toUpperCase());
+}
+function isPara(node) {
+    if (isEditable(node)) {
+        return false;
+    }
+    // Chrome(v31.0), FF(v25.0.1) use DIV for paragraph
+    return node && /^DIV|^P|^LI|^H[1-7]/.test(node.nodeName.toUpperCase());
+}
+function isHeading(node) {
+    return node && /^H[1-7]/.test(node.nodeName.toUpperCase());
+}
+var isPre = makePredByNodeName('PRE');
+var isLi = makePredByNodeName('LI');
+function isPurePara(node) {
+    return isPara(node) && !isLi(node);
+}
+var isTable = makePredByNodeName('TABLE');
+var isData = makePredByNodeName('DATA');
+function isInline(node) {
+    return !isBodyContainer(node) &&
+        !isList(node) &&
+        !isHr(node) &&
+        !isPara(node) &&
+        !isTable(node) &&
+        !isBlockquote(node) &&
+        !isData(node);
+}
+function isList(node) {
+    return node && /^UL|^OL/.test(node.nodeName.toUpperCase());
+}
+var isHr = makePredByNodeName('HR');
+function isCell(node) {
+    return node && /^TD|^TH/.test(node.nodeName.toUpperCase());
+}
+var isBlockquote = makePredByNodeName('BLOCKQUOTE');
+function isBodyContainer(node) {
+    return isCell(node) || isBlockquote(node) || isEditable(node);
+}
+var isAnchor = makePredByNodeName('A');
+function isParaInline(node) {
+    return isInline(node) && !!ancestor(node, isPara);
+}
+function isBodyInline(node) {
+    return isInline(node) && !ancestor(node, isPara);
+}
+var isBody = makePredByNodeName('BODY');
+/**
+ * returns whether nodeB is closest sibling of nodeA
+ *
+ * @param {Node} nodeA
+ * @param {Node} nodeB
+ * @return {Boolean}
+ */
+function isClosestSibling(nodeA, nodeB) {
+    return nodeA.nextSibling === nodeB ||
+        nodeA.previousSibling === nodeB;
+}
+/**
+ * returns array of closest siblings with node
+ *
+ * @param {Node} node
+ * @param {function} [pred] - predicate function
+ * @return {Node[]}
+ */
+function withClosestSiblings(node, pred) {
+    pred = pred || func.ok;
+    var siblings = [];
+    if (node.previousSibling && pred(node.previousSibling)) {
+        siblings.push(node.previousSibling);
+    }
+    siblings.push(node);
+    if (node.nextSibling && pred(node.nextSibling)) {
+        siblings.push(node.nextSibling);
+    }
+    return siblings;
+}
+/**
+ * blank HTML for cursor position
+ * - [workaround] old IE only works with &nbsp;
+ * - [workaround] IE11 and other browser works with bogus br
+ */
+var blankHTML = env.isMSIE && env.browserVersion < 11 ? '&nbsp;' : '<br>';
+/**
+ * @method nodeLength
+ *
+ * returns #text's text size or element's childNodes size
+ *
+ * @param {Node} node
+ */
+function nodeLength(node) {
+    if (isText(node)) {
+        return node.nodeValue.length;
+    }
+    if (node) {
+        return node.childNodes.length;
+    }
+    return 0;
+}
+/**
+ * returns whether node is empty or not.
+ *
+ * @param {Node} node
+ * @return {Boolean}
+ */
+function isEmpty(node) {
+    var len = nodeLength(node);
+    if (len === 0) {
+        return true;
+    }
+    else if (!isText(node) && len === 1 && node.innerHTML === blankHTML) {
+        // ex) <p><br></p>, <span><br></span>
+        return true;
+    }
+    else if (lists.all(node.childNodes, isText) && node.innerHTML === '') {
+        // ex) <p></p>, <span></span>
+        return true;
+    }
+    return false;
+}
+/**
+ * padding blankHTML if node is empty (for cursor position)
+ */
+function paddingBlankHTML(node) {
+    if (!isVoid(node) && !nodeLength(node)) {
+        node.innerHTML = blankHTML;
+    }
+}
+/**
+ * find nearest ancestor predicate hit
+ *
+ * @param {Node} node
+ * @param {Function} pred - predicate function
+ */
+function ancestor(node, pred) {
+    while (node) {
+        if (pred(node)) {
+            return node;
+        }
+        if (isEditable(node)) {
+            break;
+        }
+        node = node.parentNode;
+    }
+    return null;
+}
+/**
+ * find nearest ancestor only single child blood line and predicate hit
+ *
+ * @param {Node} node
+ * @param {Function} pred - predicate function
+ */
+function singleChildAncestor(node, pred) {
+    node = node.parentNode;
+    while (node) {
+        if (nodeLength(node) !== 1) {
+            break;
+        }
+        if (pred(node)) {
+            return node;
+        }
+        if (isEditable(node)) {
+            break;
+        }
+        node = node.parentNode;
+    }
+    return null;
+}
+/**
+ * returns new array of ancestor nodes (until predicate hit).
+ *
+ * @param {Node} node
+ * @param {Function} [optional] pred - predicate function
+ */
+function listAncestor(node, pred) {
+    pred = pred || func.fail;
+    var ancestors = [];
+    ancestor(node, function (el) {
+        if (!isEditable(el)) {
+            ancestors.push(el);
+        }
+        return pred(el);
+    });
+    return ancestors;
+}
+/**
+ * find farthest ancestor predicate hit
+ */
+function lastAncestor(node, pred) {
+    var ancestors = listAncestor(node);
+    return lists.last(ancestors.filter(pred));
+}
+/**
+ * returns common ancestor node between two nodes.
+ *
+ * @param {Node} nodeA
+ * @param {Node} nodeB
+ */
+function commonAncestor(nodeA, nodeB) {
+    var ancestors = listAncestor(nodeA);
+    for (var n = nodeB; n; n = n.parentNode) {
+        if ($$1.inArray(n, ancestors) > -1) {
+            return n;
+        }
+    }
+    return null; // difference document area
+}
+/**
+ * listing all previous siblings (until predicate hit).
+ *
+ * @param {Node} node
+ * @param {Function} [optional] pred - predicate function
+ */
+function listPrev(node, pred) {
+    pred = pred || func.fail;
+    var nodes = [];
+    while (node) {
+        if (pred(node)) {
+            break;
+        }
+        nodes.push(node);
+        node = node.previousSibling;
+    }
+    return nodes;
+}
+/**
+ * listing next siblings (until predicate hit).
+ *
+ * @param {Node} node
+ * @param {Function} [pred] - predicate function
+ */
+function listNext(node, pred) {
+    pred = pred || func.fail;
+    var nodes = [];
+    while (node) {
+        if (pred(node)) {
+            break;
+        }
+        nodes.push(node);
+        node = node.nextSibling;
+    }
+    return nodes;
+}
+/**
+ * listing descendant nodes
+ *
+ * @param {Node} node
+ * @param {Function} [pred] - predicate function
+ */
+function listDescendant(node, pred) {
+    var descendants = [];
+    pred = pred || func.ok;
+    // start DFS(depth first search) with node
+    (function fnWalk(current) {
+        if (node !== current && pred(current)) {
+            descendants.push(current);
+        }
+        for (var idx = 0, len = current.childNodes.length; idx < len; idx++) {
+            fnWalk(current.childNodes[idx]);
+        }
+    })(node);
+    return descendants;
+}
+/**
+ * wrap node with new tag.
+ *
+ * @param {Node} node
+ * @param {Node} tagName of wrapper
+ * @return {Node} - wrapper
+ */
+function wrap(node, wrapperName) {
+    var parent = node.parentNode;
+    var wrapper = $$1('<' + wrapperName + '>')[0];
+    parent.insertBefore(wrapper, node);
+    wrapper.appendChild(node);
+    return wrapper;
+}
+/**
+ * insert node after preceding
+ *
+ * @param {Node} node
+ * @param {Node} preceding - predicate function
+ */
+function insertAfter(node, preceding) {
+    var next = preceding.nextSibling;
+    var parent = preceding.parentNode;
+    if (next) {
+        parent.insertBefore(node, next);
+    }
+    else {
+        parent.appendChild(node);
+    }
+    return node;
+}
+/**
+ * append elements.
+ *
+ * @param {Node} node
+ * @param {Collection} aChild
+ */
+function appendChildNodes(node, aChild) {
+    $$1.each(aChild, function (idx, child) {
+        node.appendChild(child);
+    });
+    return node;
+}
+/**
+ * returns whether boundaryPoint is left edge or not.
+ *
+ * @param {BoundaryPoint} point
+ * @return {Boolean}
+ */
+function isLeftEdgePoint(point) {
+    return point.offset === 0;
+}
+/**
+ * returns whether boundaryPoint is right edge or not.
+ *
+ * @param {BoundaryPoint} point
+ * @return {Boolean}
+ */
+function isRightEdgePoint(point) {
+    return point.offset === nodeLength(point.node);
+}
+/**
+ * returns whether boundaryPoint is edge or not.
+ *
+ * @param {BoundaryPoint} point
+ * @return {Boolean}
+ */
+function isEdgePoint(point) {
+    return isLeftEdgePoint(point) || isRightEdgePoint(point);
+}
+/**
+ * returns whether node is left edge of ancestor or not.
+ *
+ * @param {Node} node
+ * @param {Node} ancestor
+ * @return {Boolean}
+ */
+function isLeftEdgeOf(node, ancestor) {
+    while (node && node !== ancestor) {
+        if (position(node) !== 0) {
+            return false;
+        }
+        node = node.parentNode;
+    }
+    return true;
+}
+/**
+ * returns whether node is right edge of ancestor or not.
+ *
+ * @param {Node} node
+ * @param {Node} ancestor
+ * @return {Boolean}
+ */
+function isRightEdgeOf(node, ancestor) {
+    if (!ancestor) {
+        return false;
+    }
+    while (node && node !== ancestor) {
+        if (position(node) !== nodeLength(node.parentNode) - 1) {
+            return false;
+        }
+        node = node.parentNode;
+    }
+    return true;
+}
+/**
+ * returns whether point is left edge of ancestor or not.
+ * @param {BoundaryPoint} point
+ * @param {Node} ancestor
+ * @return {Boolean}
+ */
+function isLeftEdgePointOf(point, ancestor) {
+    return isLeftEdgePoint(point) && isLeftEdgeOf(point.node, ancestor);
+}
+/**
+ * returns whether point is right edge of ancestor or not.
+ * @param {BoundaryPoint} point
+ * @param {Node} ancestor
+ * @return {Boolean}
+ */
+function isRightEdgePointOf(point, ancestor) {
+    return isRightEdgePoint(point) && isRightEdgeOf(point.node, ancestor);
+}
+/**
+ * returns offset from parent.
+ *
+ * @param {Node} node
+ */
+function position(node) {
+    var offset = 0;
+    while ((node = node.previousSibling)) {
+        offset += 1;
+    }
+    return offset;
+}
+function hasChildren(node) {
+    return !!(node && node.childNodes && node.childNodes.length);
+}
+/**
+ * returns previous boundaryPoint
+ *
+ * @param {BoundaryPoint} point
+ * @param {Boolean} isSkipInnerOffset
+ * @return {BoundaryPoint}
+ */
+function prevPoint(point, isSkipInnerOffset) {
+    var node;
+    var offset;
+    if (point.offset === 0) {
+        if (isEditable(point.node)) {
+            return null;
+        }
+        node = point.node.parentNode;
+        offset = position(point.node);
+    }
+    else if (hasChildren(point.node)) {
+        node = point.node.childNodes[point.offset - 1];
+        offset = nodeLength(node);
+    }
+    else {
+        node = point.node;
+        offset = isSkipInnerOffset ? 0 : point.offset - 1;
+    }
+    return {
+        node: node,
+        offset: offset
+    };
+}
+/**
+ * returns next boundaryPoint
+ *
+ * @param {BoundaryPoint} point
+ * @param {Boolean} isSkipInnerOffset
+ * @return {BoundaryPoint}
+ */
+function nextPoint(point, isSkipInnerOffset) {
+    var node, offset;
+    if (nodeLength(point.node) === point.offset) {
+        if (isEditable(point.node)) {
+            return null;
+        }
+        node = point.node.parentNode;
+        offset = position(point.node) + 1;
+    }
+    else if (hasChildren(point.node)) {
+        node = point.node.childNodes[point.offset];
+        offset = 0;
+    }
+    else {
+        node = point.node;
+        offset = isSkipInnerOffset ? nodeLength(point.node) : point.offset + 1;
+    }
+    return {
+        node: node,
+        offset: offset
+    };
+}
+/**
+ * returns whether pointA and pointB is same or not.
+ *
+ * @param {BoundaryPoint} pointA
+ * @param {BoundaryPoint} pointB
+ * @return {Boolean}
+ */
+function isSamePoint(pointA, pointB) {
+    return pointA.node === pointB.node && pointA.offset === pointB.offset;
+}
+/**
+ * returns whether point is visible (can set cursor) or not.
+ *
+ * @param {BoundaryPoint} point
+ * @return {Boolean}
+ */
+function isVisiblePoint(point) {
+    if (isText(point.node) || !hasChildren(point.node) || isEmpty(point.node)) {
+        return true;
+    }
+    var leftNode = point.node.childNodes[point.offset - 1];
+    var rightNode = point.node.childNodes[point.offset];
+    if ((!leftNode || isVoid(leftNode)) && (!rightNode || isVoid(rightNode))) {
+        return true;
+    }
+    return false;
+}
+/**
+ * @method prevPointUtil
+ *
+ * @param {BoundaryPoint} point
+ * @param {Function} pred
+ * @return {BoundaryPoint}
+ */
+function prevPointUntil(point, pred) {
+    while (point) {
+        if (pred(point)) {
+            return point;
+        }
+        point = prevPoint(point);
+    }
+    return null;
+}
+/**
+ * @method nextPointUntil
+ *
+ * @param {BoundaryPoint} point
+ * @param {Function} pred
+ * @return {BoundaryPoint}
+ */
+function nextPointUntil(point, pred) {
+    while (point) {
+        if (pred(point)) {
+            return point;
+        }
+        point = nextPoint(point);
+    }
+    return null;
+}
+/**
+ * returns whether point has character or not.
+ *
+ * @param {Point} point
+ * @return {Boolean}
+ */
+function isCharPoint(point) {
+    if (!isText(point.node)) {
+        return false;
+    }
+    var ch = point.node.nodeValue.charAt(point.offset - 1);
+    return ch && (ch !== ' ' && ch !== NBSP_CHAR);
+}
+/**
+ * @method walkPoint
+ *
+ * @param {BoundaryPoint} startPoint
+ * @param {BoundaryPoint} endPoint
+ * @param {Function} handler
+ * @param {Boolean} isSkipInnerOffset
+ */
+function walkPoint(startPoint, endPoint, handler, isSkipInnerOffset) {
+    var point = startPoint;
+    while (point) {
+        handler(point);
+        if (isSamePoint(point, endPoint)) {
+            break;
+        }
+        var isSkipOffset = isSkipInnerOffset &&
+            startPoint.node !== point.node &&
+            endPoint.node !== point.node;
+        point = nextPoint(point, isSkipOffset);
+    }
+}
+/**
+ * @method makeOffsetPath
+ *
+ * return offsetPath(array of offset) from ancestor
+ *
+ * @param {Node} ancestor - ancestor node
+ * @param {Node} node
+ */
+function makeOffsetPath(ancestor, node) {
+    var ancestors = listAncestor(node, func.eq(ancestor));
+    return ancestors.map(position).reverse();
+}
+/**
+ * @method fromOffsetPath
+ *
+ * return element from offsetPath(array of offset)
+ *
+ * @param {Node} ancestor - ancestor node
+ * @param {array} offsets - offsetPath
+ */
+function fromOffsetPath(ancestor, offsets) {
+    var current = ancestor;
+    for (var i = 0, len = offsets.length; i < len; i++) {
+        if (current.childNodes.length <= offsets[i]) {
+            current = current.childNodes[current.childNodes.length - 1];
+        }
+        else {
+            current = current.childNodes[offsets[i]];
+        }
+    }
+    return current;
+}
+/**
+ * @method splitNode
+ *
+ * split element or #text
+ *
+ * @param {BoundaryPoint} point
+ * @param {Object} [options]
+ * @param {Boolean} [options.isSkipPaddingBlankHTML] - default: false
+ * @param {Boolean} [options.isNotSplitEdgePoint] - default: false
+ * @return {Node} right node of boundaryPoint
+ */
+function splitNode(point, options) {
+    var isSkipPaddingBlankHTML = options && options.isSkipPaddingBlankHTML;
+    var isNotSplitEdgePoint = options && options.isNotSplitEdgePoint;
+    // edge case
+    if (isEdgePoint(point) && (isText(point.node) || isNotSplitEdgePoint)) {
+        if (isLeftEdgePoint(point)) {
+            return point.node;
+        }
+        else if (isRightEdgePoint(point)) {
+            return point.node.nextSibling;
+        }
+    }
+    // split #text
+    if (isText(point.node)) {
+        return point.node.splitText(point.offset);
+    }
+    else {
+        var childNode = point.node.childNodes[point.offset];
+        var clone = insertAfter(point.node.cloneNode(false), point.node);
+        appendChildNodes(clone, listNext(childNode));
+        if (!isSkipPaddingBlankHTML) {
+            paddingBlankHTML(point.node);
+            paddingBlankHTML(clone);
+        }
+        return clone;
+    }
+}
+/**
+ * @method splitTree
+ *
+ * split tree by point
+ *
+ * @param {Node} root - split root
+ * @param {BoundaryPoint} point
+ * @param {Object} [options]
+ * @param {Boolean} [options.isSkipPaddingBlankHTML] - default: false
+ * @param {Boolean} [options.isNotSplitEdgePoint] - default: false
+ * @return {Node} right node of boundaryPoint
+ */
+function splitTree(root, point, options) {
+    // ex) [#text, <span>, <p>]
+    var ancestors = listAncestor(point.node, func.eq(root));
+    if (!ancestors.length) {
+        return null;
+    }
+    else if (ancestors.length === 1) {
+        return splitNode(point, options);
+    }
+    return ancestors.reduce(function (node, parent) {
+        if (node === point.node) {
+            node = splitNode(point, options);
+        }
+        return splitNode({
+            node: parent,
+            offset: node ? position(node) : nodeLength(parent)
+        }, options);
+    });
+}
+/**
+ * split point
+ *
+ * @param {Point} point
+ * @param {Boolean} isInline
+ * @return {Object}
+ */
+function splitPoint(point, isInline) {
+    // find splitRoot, container
+    //  - inline: splitRoot is a child of paragraph
+    //  - block: splitRoot is a child of bodyContainer
+    var pred = isInline ? isPara : isBodyContainer;
+    var ancestors = listAncestor(point.node, pred);
+    var topAncestor = lists.last(ancestors) || point.node;
+    var splitRoot, container;
+    if (pred(topAncestor)) {
+        splitRoot = ancestors[ancestors.length - 2];
+        container = topAncestor;
+    }
+    else {
+        splitRoot = topAncestor;
+        container = splitRoot.parentNode;
+    }
+    // if splitRoot is exists, split with splitTree
+    var pivot = splitRoot && splitTree(splitRoot, point, {
+        isSkipPaddingBlankHTML: isInline,
+        isNotSplitEdgePoint: isInline
+    });
+    // if container is point.node, find pivot with point.offset
+    if (!pivot && container === point.node) {
+        pivot = point.node.childNodes[point.offset];
+    }
+    return {
+        rightNode: pivot,
+        container: container
+    };
+}
+function create(nodeName) {
+    return document.createElement(nodeName);
+}
+function createText(text) {
+    return document.createTextNode(text);
+}
+/**
+ * @method remove
+ *
+ * remove node, (isRemoveChild: remove child or not)
+ *
+ * @param {Node} node
+ * @param {Boolean} isRemoveChild
+ */
+function remove(node, isRemoveChild) {
+    if (!node || !node.parentNode) {
+        return;
+    }
+    if (node.removeNode) {
+        return node.removeNode(isRemoveChild);
+    }
+    var parent = node.parentNode;
+    if (!isRemoveChild) {
+        var nodes = [];
+        for (var i = 0, len = node.childNodes.length; i < len; i++) {
+            nodes.push(node.childNodes[i]);
+        }
+        for (var i = 0, len = nodes.length; i < len; i++) {
+            parent.insertBefore(nodes[i], node);
+        }
+    }
+    parent.removeChild(node);
+}
+/**
+ * @method removeWhile
+ *
+ * @param {Node} node
+ * @param {Function} pred
+ */
+function removeWhile(node, pred) {
+    while (node) {
+        if (isEditable(node) || !pred(node)) {
+            break;
+        }
+        var parent = node.parentNode;
+        remove(node);
+        node = parent;
+    }
+}
+/**
+ * @method replace
+ *
+ * replace node with provided nodeName
+ *
+ * @param {Node} node
+ * @param {String} nodeName
+ * @return {Node} - new node
+ */
+function replace(node, nodeName) {
+    if (node.nodeName.toUpperCase() === nodeName.toUpperCase()) {
+        return node;
+    }
+    var newNode = create(nodeName);
+    if (node.style.cssText) {
+        newNode.style.cssText = node.style.cssText;
+    }
+    appendChildNodes(newNode, lists.from(node.childNodes));
+    insertAfter(newNode, node);
+    remove(node);
+    return newNode;
+}
+var isTextarea = makePredByNodeName('TEXTAREA');
+/**
+ * @param {jQuery} $node
+ * @param {Boolean} [stripLinebreaks] - default: false
+ */
+function value($node, stripLinebreaks) {
+    var val = isTextarea($node[0]) ? $node.val() : $node.html();
+    if (stripLinebreaks) {
+        return val.replace(/[\n\r]/g, '');
+    }
+    return val;
+}
+/**
+ * @method html
+ *
+ * get the HTML contents of node
+ *
+ * @param {jQuery} $node
+ * @param {Boolean} [isNewlineOnBlock]
+ */
+function html($node, isNewlineOnBlock) {
+    var markup = value($node);
+    if (isNewlineOnBlock) {
+        var regexTag = /<(\/?)(\b(?!!)[^>\s]*)(.*?)(\s*\/?>)/g;
+        markup = markup.replace(regexTag, function (match, endSlash, name) {
+            name = name.toUpperCase();
+            var isEndOfInlineContainer = /^DIV|^TD|^TH|^P|^LI|^H[1-7]/.test(name) &&
+                !!endSlash;
+            var isBlockNode = /^BLOCKQUOTE|^TABLE|^TBODY|^TR|^HR|^UL|^OL/.test(name);
+            return match + ((isEndOfInlineContainer || isBlockNode) ? '\n' : '');
+        });
+        markup = $$1.trim(markup);
+    }
+    return markup;
+}
+function posFromPlaceholder(placeholder) {
+    var $placeholder = $$1(placeholder);
+    var pos = $placeholder.offset();
+    var height = $placeholder.outerHeight(true); // include margin
+    return {
+        left: pos.left,
+        top: pos.top + height
+    };
+}
+function attachEvents($node, events) {
+    Object.keys(events).forEach(function (key) {
+        $node.on(key, events[key]);
+    });
+}
+function detachEvents($node, events) {
+    Object.keys(events).forEach(function (key) {
+        $node.off(key, events[key]);
+    });
+}
+/**
+ * @method isCustomStyleTag
+ *
+ * assert if a node contains a "note-styletag" class,
+ * which implies that's a custom-made style tag node
+ *
+ * @param {Node} an HTML DOM node
+ */
+function isCustomStyleTag(node) {
+    return node && !isText(node) && lists.contains(node.classList, 'note-styletag');
+}
+var dom = {
+    /** @property {String} NBSP_CHAR */
+    NBSP_CHAR: NBSP_CHAR,
+    /** @property {String} ZERO_WIDTH_NBSP_CHAR */
+    ZERO_WIDTH_NBSP_CHAR: ZERO_WIDTH_NBSP_CHAR,
+    /** @property {String} blank */
+    blank: blankHTML,
+    /** @property {String} emptyPara */
+    emptyPara: "<p>" + blankHTML + "</p>",
+    makePredByNodeName: makePredByNodeName,
+    isEditable: isEditable,
+    isControlSizing: isControlSizing,
+    isText: isText,
+    isElement: isElement,
+    isVoid: isVoid,
+    isPara: isPara,
+    isPurePara: isPurePara,
+    isHeading: isHeading,
+    isInline: isInline,
+    isBlock: func.not(isInline),
+    isBodyInline: isBodyInline,
+    isBody: isBody,
+    isParaInline: isParaInline,
+    isPre: isPre,
+    isList: isList,
+    isTable: isTable,
+    isData: isData,
+    isCell: isCell,
+    isBlockquote: isBlockquote,
+    isBodyContainer: isBodyContainer,
+    isAnchor: isAnchor,
+    isDiv: makePredByNodeName('DIV'),
+    isLi: isLi,
+    isBR: makePredByNodeName('BR'),
+    isSpan: makePredByNodeName('SPAN'),
+    isB: makePredByNodeName('B'),
+    isU: makePredByNodeName('U'),
+    isS: makePredByNodeName('S'),
+    isI: makePredByNodeName('I'),
+    isImg: makePredByNodeName('IMG'),
+    isTextarea: isTextarea,
+    isEmpty: isEmpty,
+    isEmptyAnchor: func.and(isAnchor, isEmpty),
+    isClosestSibling: isClosestSibling,
+    withClosestSiblings: withClosestSiblings,
+    nodeLength: nodeLength,
+    isLeftEdgePoint: isLeftEdgePoint,
+    isRightEdgePoint: isRightEdgePoint,
+    isEdgePoint: isEdgePoint,
+    isLeftEdgeOf: isLeftEdgeOf,
+    isRightEdgeOf: isRightEdgeOf,
+    isLeftEdgePointOf: isLeftEdgePointOf,
+    isRightEdgePointOf: isRightEdgePointOf,
+    prevPoint: prevPoint,
+    nextPoint: nextPoint,
+    isSamePoint: isSamePoint,
+    isVisiblePoint: isVisiblePoint,
+    prevPointUntil: prevPointUntil,
+    nextPointUntil: nextPointUntil,
+    isCharPoint: isCharPoint,
+    walkPoint: walkPoint,
+    ancestor: ancestor,
+    singleChildAncestor: singleChildAncestor,
+    listAncestor: listAncestor,
+    lastAncestor: lastAncestor,
+    listNext: listNext,
+    listPrev: listPrev,
+    listDescendant: listDescendant,
+    commonAncestor: commonAncestor,
+    wrap: wrap,
+    insertAfter: insertAfter,
+    appendChildNodes: appendChildNodes,
+    position: position,
+    hasChildren: hasChildren,
+    makeOffsetPath: makeOffsetPath,
+    fromOffsetPath: fromOffsetPath,
+    splitTree: splitTree,
+    splitPoint: splitPoint,
+    create: create,
+    createText: createText,
+    remove: remove,
+    removeWhile: removeWhile,
+    replace: replace,
+    html: html,
+    value: value,
+    posFromPlaceholder: posFromPlaceholder,
+    attachEvents: attachEvents,
+    detachEvents: detachEvents,
+    isCustomStyleTag: isCustomStyleTag
+};
+
+$$1.summernote = $$1.summernote || {
+    lang: {}
+};
+$$1.extend($$1.summernote.lang, {
+    'en-US': {
+        font: {
+            bold: 'Bold',
+            italic: 'Italic',
+            underline: 'Underline',
+            clear: 'Remove Font Style',
+            height: 'Line Height',
+            name: 'Font Family',
+            strikethrough: 'Strikethrough',
+            subscript: 'Subscript',
+            superscript: 'Superscript',
+            size: 'Font Size'
+        },
+        image: {
+            image: 'Picture',
+            insert: 'Insert Image',
+            resizeFull: 'Resize Full',
+            resizeHalf: 'Resize Half',
+            resizeQuarter: 'Resize Quarter',
+            floatLeft: 'Float Left',
+            floatRight: 'Float Right',
+            floatNone: 'Float None',
+            shapeRounded: 'Shape: Rounded',
+            shapeCircle: 'Shape: Circle',
+            shapeThumbnail: 'Shape: Thumbnail',
+            shapeNone: 'Shape: None',
+            dragImageHere: 'Drag image or text here',
+            dropImage: 'Drop image or Text',
+            selectFromFiles: 'Select from files',
+            maximumFileSize: 'Maximum file size',
+            maximumFileSizeError: 'Maximum file size exceeded.',
+            url: 'Image URL',
+            remove: 'Remove Image',
+            original: 'Original'
+        },
+        video: {
+            video: 'Video',
+            videoLink: 'Video Link',
+            insert: 'Insert Video',
+            url: 'Video URL',
+            providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion or Youku)'
+        },
+        link: {
+            link: 'Link',
+            insert: 'Insert Link',
+            unlink: 'Unlink',
+            edit: 'Edit',
+            textToDisplay: 'Text to display',
+            url: 'To what URL should this link go?',
+            openInNewWindow: 'Open in new window'
+        },
+        table: {
+            table: 'Table',
+            addRowAbove: 'Add row above',
+            addRowBelow: 'Add row below',
+            addColLeft: 'Add column left',
+            addColRight: 'Add column right',
+            delRow: 'Delete row',
+            delCol: 'Delete column',
+            delTable: 'Delete table'
+        },
+        hr: {
+            insert: 'Insert Horizontal Rule'
+        },
+        style: {
+            style: 'Style',
+            p: 'Normal',
+            blockquote: 'Quote',
+            pre: 'Code',
+            h1: 'Header 1',
+            h2: 'Header 2',
+            h3: 'Header 3',
+            h4: 'Header 4',
+            h5: 'Header 5',
+            h6: 'Header 6'
+        },
+        lists: {
+            unordered: 'Unordered list',
+            ordered: 'Ordered list'
+        },
+        options: {
+            help: 'Help',
+            fullscreen: 'Full Screen',
+            codeview: 'Code View'
+        },
+        paragraph: {
+            paragraph: 'Paragraph',
+            outdent: 'Outdent',
+            indent: 'Indent',
+            left: 'Align left',
+            center: 'Align center',
+            right: 'Align right',
+            justify: 'Justify full'
+        },
+        color: {
+            recent: 'Recent Color',
+            more: 'More Color',
+            background: 'Background Color',
+            foreground: 'Foreground Color',
+            transparent: 'Transparent',
+            setTransparent: 'Set transparent',
+            reset: 'Reset',
+            resetToDefault: 'Reset to default'
+        },
+        shortcut: {
+            shortcuts: 'Keyboard shortcuts',
+            close: 'Close',
+            textFormatting: 'Text formatting',
+            action: 'Action',
+            paragraphFormatting: 'Paragraph formatting',
+            documentStyle: 'Document Style',
+            extraKeys: 'Extra keys'
+        },
+        help: {
+            'insertParagraph': 'Insert Paragraph',
+            'undo': 'Undoes the last command',
+            'redo': 'Redoes the last command',
+            'tab': 'Tab',
+            'untab': 'Untab',
+            'bold': 'Set a bold style',
+            'italic': 'Set a italic style',
+            'underline': 'Set a underline style',
+            'strikethrough': 'Set a strikethrough style',
+            'removeFormat': 'Clean a style',
+            'justifyLeft': 'Set left align',
+            'justifyCenter': 'Set center align',
+            'justifyRight': 'Set right align',
+            'justifyFull': 'Set full align',
+            'insertUnorderedList': 'Toggle unordered list',
+            'insertOrderedList': 'Toggle ordered list',
+            'outdent': 'Outdent on current paragraph',
+            'indent': 'Indent on current paragraph',
+            'formatPara': 'Change current block\'s format as a paragraph(P tag)',
+            'formatH1': 'Change current block\'s format as H1',
+            'formatH2': 'Change current block\'s format as H2',
+            'formatH3': 'Change current block\'s format as H3',
+            'formatH4': 'Change current block\'s format as H4',
+            'formatH5': 'Change current block\'s format as H5',
+            'formatH6': 'Change current block\'s format as H6',
+            'insertHorizontalRule': 'Insert horizontal rule',
+            'linkDialog.show': 'Show Link Dialog'
+        },
+        history: {
+            undo: 'Undo',
+            redo: 'Redo'
+        },
+        specialChar: {
+            specialChar: 'SPECIAL CHARACTERS',
+            select: 'Select Special characters'
+        }
+    }
+});
+
+var KEY_MAP = {
+    'BACKSPACE': 8,
+    'TAB': 9,
+    'ENTER': 13,
+    'SPACE': 32,
+    'DELETE': 46,
+    // Arrow
+    'LEFT': 37,
+    'UP': 38,
+    'RIGHT': 39,
+    'DOWN': 40,
+    // Number: 0-9
+    'NUM0': 48,
+    'NUM1': 49,
+    'NUM2': 50,
+    'NUM3': 51,
+    'NUM4': 52,
+    'NUM5': 53,
+    'NUM6': 54,
+    'NUM7': 55,
+    'NUM8': 56,
+    // Alphabet: a-z
+    'B': 66,
+    'E': 69,
+    'I': 73,
+    'J': 74,
+    'K': 75,
+    'L': 76,
+    'R': 82,
+    'S': 83,
+    'U': 85,
+    'V': 86,
+    'Y': 89,
+    'Z': 90,
+    'SLASH': 191,
+    'LEFTBRACKET': 219,
+    'BACKSLASH': 220,
+    'RIGHTBRACKET': 221
+};
+/**
+ * @class core.key
+ *
+ * Object for keycodes.
+ *
+ * @singleton
+ * @alternateClassName key
+ */
+var key = {
     /**
-     * return boundaryPoint from TextRange, inspired by Andy Na's HuskyRange.js
+     * @method isEdit
      *
-     * @param {TextRange} textRange
-     * @param {Boolean} isStart
-     * @return {BoundaryPoint}
-     *
-     * @see http://msdn.microsoft.com/en-us/library/ie/ms535872(v=vs.85).aspx
+     * @param {Number} keyCode
+     * @return {Boolean}
      */
-    var textRangeToPoint = function (textRange, isStart) {
-      var container = textRange.parentElement(), offset;
-  
-      var tester = document.body.createTextRange(), prevContainer;
-      var childNodes = list.from(container.childNodes);
-      for (offset = 0; offset < childNodes.length; offset++) {
+    isEdit: function (keyCode) {
+        return lists.contains([
+            KEY_MAP.BACKSPACE,
+            KEY_MAP.TAB,
+            KEY_MAP.ENTER,
+            KEY_MAP.SPACE,
+            KEY_MAP.DELETE
+        ], keyCode);
+    },
+    /**
+     * @method isMove
+     *
+     * @param {Number} keyCode
+     * @return {Boolean}
+     */
+    isMove: function (keyCode) {
+        return lists.contains([
+            KEY_MAP.LEFT,
+            KEY_MAP.UP,
+            KEY_MAP.RIGHT,
+            KEY_MAP.DOWN
+        ], keyCode);
+    },
+    /**
+     * @property {Object} nameFromCode
+     * @property {String} nameFromCode.8 "BACKSPACE"
+     */
+    nameFromCode: func.invertObject(KEY_MAP),
+    code: KEY_MAP
+};
+
+/**
+ * return boundaryPoint from TextRange, inspired by Andy Na's HuskyRange.js
+ *
+ * @param {TextRange} textRange
+ * @param {Boolean} isStart
+ * @return {BoundaryPoint}
+ *
+ * @see http://msdn.microsoft.com/en-us/library/ie/ms535872(v=vs.85).aspx
+ */
+function textRangeToPoint(textRange, isStart) {
+    var container = textRange.parentElement();
+    var offset;
+    var tester = document.body.createTextRange();
+    var prevContainer;
+    var childNodes = lists.from(container.childNodes);
+    for (offset = 0; offset < childNodes.length; offset++) {
         if (dom.isText(childNodes[offset])) {
-          continue;
+            continue;
         }
         tester.moveToElementText(childNodes[offset]);
         if (tester.compareEndPoints('StartToStart', textRange) >= 0) {
-          break;
+            break;
         }
         prevContainer = childNodes[offset];
-      }
-  
-      if (offset !== 0 && dom.isText(childNodes[offset - 1])) {
-        var textRangeStart = document.body.createTextRange(), curTextNode = null;
+    }
+    if (offset !== 0 && dom.isText(childNodes[offset - 1])) {
+        var textRangeStart = document.body.createTextRange();
+        var curTextNode = null;
         textRangeStart.moveToElementText(prevContainer || container);
         textRangeStart.collapse(!prevContainer);
         curTextNode = prevContainer ? prevContainer.nextSibling : container.firstChild;
-  
         var pointTester = textRange.duplicate();
         pointTester.setEndPoint('StartToStart', textRangeStart);
         var textCount = pointTester.text.replace(/[\r\n]/g, '').length;
-  
         while (textCount > curTextNode.nodeValue.length && curTextNode.nextSibling) {
-          textCount -= curTextNode.nodeValue.length;
-          curTextNode = curTextNode.nextSibling;
+            textCount -= curTextNode.nodeValue.length;
+            curTextNode = curTextNode.nextSibling;
         }
-  
-        /* jshint ignore:start */
-        var dummy = curTextNode.nodeValue; // enforce IE to re-reference curTextNode, hack
-        /* jshint ignore:end */
-  
+        // [workaround] enforce IE to re-reference curTextNode, hack
+        var dummy = curTextNode.nodeValue; // eslint-disable-line
         if (isStart && curTextNode.nextSibling && dom.isText(curTextNode.nextSibling) &&
             textCount === curTextNode.nodeValue.length) {
-          textCount -= curTextNode.nodeValue.length;
-          curTextNode = curTextNode.nextSibling;
+            textCount -= curTextNode.nodeValue.length;
+            curTextNode = curTextNode.nextSibling;
         }
-  
         container = curTextNode;
         offset = textCount;
-      }
-  
-      return {
+    }
+    return {
         cont: container,
         offset: offset
-      };
     };
-    
-    /**
-     * return TextRange from boundary point (inspired by google closure-library)
-     * @param {BoundaryPoint} point
-     * @return {TextRange}
-     */
-    var pointToTextRange = function (point) {
-      var textRangeInfo = function (container, offset) {
+}
+/**
+ * return TextRange from boundary point (inspired by google closure-library)
+ * @param {BoundaryPoint} point
+ * @return {TextRange}
+ */
+function pointToTextRange(point) {
+    var textRangeInfo = function (container, offset) {
         var node, isCollapseToStart;
-  
         if (dom.isText(container)) {
-          var prevTextNodes = dom.listPrev(container, func.not(dom.isText));
-          var prevContainer = list.last(prevTextNodes).previousSibling;
-          node =  prevContainer || container.parentNode;
-          offset += list.sum(list.tail(prevTextNodes), dom.nodeLength);
-          isCollapseToStart = !prevContainer;
-        } else {
-          node = container.childNodes[offset] || container;
-          if (dom.isText(node)) {
-            return textRangeInfo(node, 0);
-          }
-  
-          offset = 0;
-          isCollapseToStart = false;
+            var prevTextNodes = dom.listPrev(container, func.not(dom.isText));
+            var prevContainer = lists.last(prevTextNodes).previousSibling;
+            node = prevContainer || container.parentNode;
+            offset += lists.sum(lists.tail(prevTextNodes), dom.nodeLength);
+            isCollapseToStart = !prevContainer;
         }
-  
+        else {
+            node = container.childNodes[offset] || container;
+            if (dom.isText(node)) {
+                return textRangeInfo(node, 0);
+            }
+            offset = 0;
+            isCollapseToStart = false;
+        }
         return {
-          node: node,
-          collapseToStart: isCollapseToStart,
-          offset: offset
+            node: node,
+            collapseToStart: isCollapseToStart,
+            offset: offset
         };
-      };
-  
-      var textRange = document.body.createTextRange();
-      var info = textRangeInfo(point.node, point.offset);
-  
-      textRange.moveToElementText(info.node);
-      textRange.collapse(info.collapseToStart);
-      textRange.moveStart('character', info.offset);
-      return textRange;
     };
-    
+    var textRange = document.body.createTextRange();
+    var info = textRangeInfo(point.node, point.offset);
+    textRange.moveToElementText(info.node);
+    textRange.collapse(info.collapseToStart);
+    textRange.moveStart('character', info.offset);
+    return textRange;
+}
+/**
+   * Wrapped Range
+   *
+   * @constructor
+   * @param {Node} sc - start container
+   * @param {Number} so - start offset
+   * @param {Node} ec - end container
+   * @param {Number} eo - end offset
+   */
+var WrappedRange = /** @class */ (function () {
+    function WrappedRange(sc, so, ec, eo) {
+        this.sc = sc;
+        this.so = so;
+        this.ec = ec;
+        this.eo = eo;
+        // isOnEditable: judge whether range is on editable or not
+        this.isOnEditable = this.makeIsOn(dom.isEditable);
+        // isOnList: judge whether range is on list node or not
+        this.isOnList = this.makeIsOn(dom.isList);
+        // isOnAnchor: judge whether range is on anchor node or not
+        this.isOnAnchor = this.makeIsOn(dom.isAnchor);
+        // isOnCell: judge whether range is on cell node or not
+        this.isOnCell = this.makeIsOn(dom.isCell);
+        // isOnData: judge whether range is on data node or not
+        this.isOnData = this.makeIsOn(dom.isData);
+    }
+    // nativeRange: get nativeRange from sc, so, ec, eo
+    WrappedRange.prototype.nativeRange = function () {
+        if (env.isW3CRangeSupport) {
+            var w3cRange = document.createRange();
+            w3cRange.setStart(this.sc, this.so);
+            w3cRange.setEnd(this.ec, this.eo);
+            return w3cRange;
+        }
+        else {
+            var textRange = pointToTextRange({
+                node: this.sc,
+                offset: this.so
+            });
+            textRange.setEndPoint('EndToEnd', pointToTextRange({
+                node: this.ec,
+                offset: this.eo
+            }));
+            return textRange;
+        }
+    };
+    WrappedRange.prototype.getPoints = function () {
+        return {
+            sc: this.sc,
+            so: this.so,
+            ec: this.ec,
+            eo: this.eo
+        };
+    };
+    WrappedRange.prototype.getStartPoint = function () {
+        return {
+            node: this.sc,
+            offset: this.so
+        };
+    };
+    WrappedRange.prototype.getEndPoint = function () {
+        return {
+            node: this.ec,
+            offset: this.eo
+        };
+    };
     /**
-     * Wrapped Range
-     *
-     * @constructor
-     * @param {Node} sc - start container
-     * @param {Number} so - start offset
-     * @param {Node} ec - end container
-     * @param {Number} eo - end offset
+     * select update visible range
      */
-    var WrappedRange = function (sc, so, ec, eo) {
-      this.sc = sc;
-      this.so = so;
-      this.ec = ec;
-      this.eo = eo;
-  
-      // nativeRange: get nativeRange from sc, so, ec, eo
-      var nativeRange = function () {
-        if (agent.isW3CRangeSupport) {
-          var w3cRange = document.createRange();
-          w3cRange.setStart(sc, so);
-          w3cRange.setEnd(ec, eo);
-
-          return w3cRange;
-        } else {
-          var textRange = pointToTextRange({
-            node: sc,
-            offset: so
-          });
-
-          textRange.setEndPoint('EndToEnd', pointToTextRange({
-            node: ec,
-            offset: eo
-          }));
-
-          return textRange;
+    WrappedRange.prototype.select = function () {
+        var nativeRng = this.nativeRange();
+        if (env.isW3CRangeSupport) {
+            var selection = document.getSelection();
+            if (selection.rangeCount > 0) {
+                selection.removeAllRanges();
+            }
+            selection.addRange(nativeRng);
         }
-      };
-
-      this.getPoints = function () {
-        return {
-          sc: sc,
-          so: so,
-          ec: ec,
-          eo: eo
-        };
-      };
-
-      this.getStartPoint = function () {
-        return {
-          node: sc,
-          offset: so
-        };
-      };
-
-      this.getEndPoint = function () {
-        return {
-          node: ec,
-          offset: eo
-        };
-      };
-
-      /**
-       * select update visible range
-       */
-      this.select = function () {
-        var nativeRng = nativeRange();
-        if (agent.isW3CRangeSupport) {
-          var selection = document.getSelection();
-          if (selection.rangeCount > 0) {
-            selection.removeAllRanges();
-          }
-          selection.addRange(nativeRng);
-        } else {
-          nativeRng.select();
+        else {
+            nativeRng.select();
         }
-        
         return this;
-      };
-
-      /**
-       * Moves the scrollbar to start container(sc) of current range
-       *
-       * @return {WrappedRange}
-       */
-      this.scrollIntoView = function (container) {
-        var height = $(container).height();
+    };
+    /**
+     * Moves the scrollbar to start container(sc) of current range
+     *
+     * @return {WrappedRange}
+     */
+    WrappedRange.prototype.scrollIntoView = function (container) {
+        var height = $$1(container).height();
         if (container.scrollTop + height < this.sc.offsetTop) {
-          container.scrollTop += Math.abs(container.scrollTop + height - this.sc.offsetTop);
+            container.scrollTop += Math.abs(container.scrollTop + height - this.sc.offsetTop);
         }
-
         return this;
-      };
-
-      /**
-       * @return {WrappedRange}
-       */
-      this.normalize = function () {
-
+    };
+    /**
+     * @return {WrappedRange}
+     */
+    WrappedRange.prototype.normalize = function () {
         /**
          * @param {BoundaryPoint} point
          * @param {Boolean} isLeftToRight
          * @return {BoundaryPoint}
          */
         var getVisiblePoint = function (point, isLeftToRight) {
-          if ((dom.isVisiblePoint(point) && !dom.isEdgePoint(point)) ||
-              (dom.isVisiblePoint(point) && dom.isRightEdgePoint(point) && !isLeftToRight) ||
-              (dom.isVisiblePoint(point) && dom.isLeftEdgePoint(point) && isLeftToRight) ||
-              (dom.isVisiblePoint(point) && dom.isBlock(point.node) && dom.isEmpty(point.node))) {
-            return point;
-          }
-
-          // point on block's edge
-          var block = dom.ancestor(point.node, dom.isBlock);
-          if (((dom.isLeftEdgePointOf(point, block) || dom.isVoid(dom.prevPoint(point).node)) && !isLeftToRight) ||
-              ((dom.isRightEdgePointOf(point, block) || dom.isVoid(dom.nextPoint(point).node)) && isLeftToRight)) {
-
-            // returns point already on visible point
-            if (dom.isVisiblePoint(point)) {
-              return point;
+            if ((dom.isVisiblePoint(point) && !dom.isEdgePoint(point)) ||
+                (dom.isVisiblePoint(point) && dom.isRightEdgePoint(point) && !isLeftToRight) ||
+                (dom.isVisiblePoint(point) && dom.isLeftEdgePoint(point) && isLeftToRight) ||
+                (dom.isVisiblePoint(point) && dom.isBlock(point.node) && dom.isEmpty(point.node))) {
+                return point;
             }
-            // reverse direction 
-            isLeftToRight = !isLeftToRight;
-          }
-
-          var nextPoint = isLeftToRight ? dom.nextPointUntil(dom.nextPoint(point), dom.isVisiblePoint) :
-                                          dom.prevPointUntil(dom.prevPoint(point), dom.isVisiblePoint);
-          return nextPoint || point;
+            // point on block's edge
+            var block = dom.ancestor(point.node, dom.isBlock);
+            if (((dom.isLeftEdgePointOf(point, block) || dom.isVoid(dom.prevPoint(point).node)) && !isLeftToRight) ||
+                ((dom.isRightEdgePointOf(point, block) || dom.isVoid(dom.nextPoint(point).node)) && isLeftToRight)) {
+                // returns point already on visible point
+                if (dom.isVisiblePoint(point)) {
+                    return point;
+                }
+                // reverse direction
+                isLeftToRight = !isLeftToRight;
+            }
+            var nextPoint = isLeftToRight ? dom.nextPointUntil(dom.nextPoint(point), dom.isVisiblePoint)
+                : dom.prevPointUntil(dom.prevPoint(point), dom.isVisiblePoint);
+            return nextPoint || point;
         };
-
         var endPoint = getVisiblePoint(this.getEndPoint(), false);
         var startPoint = this.isCollapsed() ? endPoint : getVisiblePoint(this.getStartPoint(), true);
-
-        return new WrappedRange(
-          startPoint.node,
-          startPoint.offset,
-          endPoint.node,
-          endPoint.offset
-        );
-      };
-
-      /**
-       * returns matched nodes on range
-       *
-       * @param {Function} [pred] - predicate function
-       * @param {Object} [options]
-       * @param {Boolean} [options.includeAncestor]
-       * @param {Boolean} [options.fullyContains]
-       * @return {Node[]}
-       */
-      this.nodes = function (pred, options) {
+        return new WrappedRange(startPoint.node, startPoint.offset, endPoint.node, endPoint.offset);
+    };
+    /**
+     * returns matched nodes on range
+     *
+     * @param {Function} [pred] - predicate function
+     * @param {Object} [options]
+     * @param {Boolean} [options.includeAncestor]
+     * @param {Boolean} [options.fullyContains]
+     * @return {Node[]}
+     */
+    WrappedRange.prototype.nodes = function (pred, options) {
         pred = pred || func.ok;
-
         var includeAncestor = options && options.includeAncestor;
         var fullyContains = options && options.fullyContains;
-
         // TODO compare points and sort
         var startPoint = this.getStartPoint();
         var endPoint = this.getEndPoint();
-
         var nodes = [];
         var leftEdgeNodes = [];
-
         dom.walkPoint(startPoint, endPoint, function (point) {
-          if (dom.isEditable(point.node)) {
-            return;
-          }
-
-          var node;
-          if (fullyContains) {
-            if (dom.isLeftEdgePoint(point)) {
-              leftEdgeNodes.push(point.node);
+            if (dom.isEditable(point.node)) {
+                return;
             }
-            if (dom.isRightEdgePoint(point) && list.contains(leftEdgeNodes, point.node)) {
-              node = point.node;
+            var node;
+            if (fullyContains) {
+                if (dom.isLeftEdgePoint(point)) {
+                    leftEdgeNodes.push(point.node);
+                }
+                if (dom.isRightEdgePoint(point) && lists.contains(leftEdgeNodes, point.node)) {
+                    node = point.node;
+                }
             }
-          } else if (includeAncestor) {
-            node = dom.ancestor(point.node, pred);
-          } else {
-            node = point.node;
-          }
-
-          if (node && pred(node)) {
-            nodes.push(node);
-          }
+            else if (includeAncestor) {
+                node = dom.ancestor(point.node, pred);
+            }
+            else {
+                node = point.node;
+            }
+            if (node && pred(node)) {
+                nodes.push(node);
+            }
         }, true);
-
-        return list.unique(nodes);
-      };
-
-      /**
-       * returns commonAncestor of range
-       * @return {Element} - commonAncestor
-       */
-      this.commonAncestor = function () {
-        return dom.commonAncestor(sc, ec);
-      };
-
-      /**
-       * returns expanded range by pred
-       *
-       * @param {Function} pred - predicate function
-       * @return {WrappedRange}
-       */
-      this.expand = function (pred) {
-        var startAncestor = dom.ancestor(sc, pred);
-        var endAncestor = dom.ancestor(ec, pred);
-
+        return lists.unique(nodes);
+    };
+    /**
+     * returns commonAncestor of range
+     * @return {Element} - commonAncestor
+     */
+    WrappedRange.prototype.commonAncestor = function () {
+        return dom.commonAncestor(this.sc, this.ec);
+    };
+    /**
+     * returns expanded range by pred
+     *
+     * @param {Function} pred - predicate function
+     * @return {WrappedRange}
+     */
+    WrappedRange.prototype.expand = function (pred) {
+        var startAncestor = dom.ancestor(this.sc, pred);
+        var endAncestor = dom.ancestor(this.ec, pred);
         if (!startAncestor && !endAncestor) {
-          return new WrappedRange(sc, so, ec, eo);
+            return new WrappedRange(this.sc, this.so, this.ec, this.eo);
         }
-
         var boundaryPoints = this.getPoints();
-
         if (startAncestor) {
-          boundaryPoints.sc = startAncestor;
-          boundaryPoints.so = 0;
+            boundaryPoints.sc = startAncestor;
+            boundaryPoints.so = 0;
         }
-
         if (endAncestor) {
-          boundaryPoints.ec = endAncestor;
-          boundaryPoints.eo = dom.nodeLength(endAncestor);
+            boundaryPoints.ec = endAncestor;
+            boundaryPoints.eo = dom.nodeLength(endAncestor);
         }
-
-        return new WrappedRange(
-          boundaryPoints.sc,
-          boundaryPoints.so,
-          boundaryPoints.ec,
-          boundaryPoints.eo
-        );
-      };
-
-      /**
-       * @param {Boolean} isCollapseToStart
-       * @return {WrappedRange}
-       */
-      this.collapse = function (isCollapseToStart) {
+        return new WrappedRange(boundaryPoints.sc, boundaryPoints.so, boundaryPoints.ec, boundaryPoints.eo);
+    };
+    /**
+     * @param {Boolean} isCollapseToStart
+     * @return {WrappedRange}
+     */
+    WrappedRange.prototype.collapse = function (isCollapseToStart) {
         if (isCollapseToStart) {
-          return new WrappedRange(sc, so, sc, so);
-        } else {
-          return new WrappedRange(ec, eo, ec, eo);
+            return new WrappedRange(this.sc, this.so, this.sc, this.so);
         }
-      };
-
-      /**
-       * splitText on range
-       */
-      this.splitText = function () {
-        var isSameContainer = sc === ec;
+        else {
+            return new WrappedRange(this.ec, this.eo, this.ec, this.eo);
+        }
+    };
+    /**
+     * splitText on range
+     */
+    WrappedRange.prototype.splitText = function () {
+        var isSameContainer = this.sc === this.ec;
         var boundaryPoints = this.getPoints();
-
-        if (dom.isText(ec) && !dom.isEdgePoint(this.getEndPoint())) {
-          ec.splitText(eo);
+        if (dom.isText(this.ec) && !dom.isEdgePoint(this.getEndPoint())) {
+            this.ec.splitText(this.eo);
         }
-
-        if (dom.isText(sc) && !dom.isEdgePoint(this.getStartPoint())) {
-          boundaryPoints.sc = sc.splitText(so);
-          boundaryPoints.so = 0;
-
-          if (isSameContainer) {
-            boundaryPoints.ec = boundaryPoints.sc;
-            boundaryPoints.eo = eo - so;
-          }
+        if (dom.isText(this.sc) && !dom.isEdgePoint(this.getStartPoint())) {
+            boundaryPoints.sc = this.sc.splitText(this.so);
+            boundaryPoints.so = 0;
+            if (isSameContainer) {
+                boundaryPoints.ec = boundaryPoints.sc;
+                boundaryPoints.eo = this.eo - this.so;
+            }
         }
-
-        return new WrappedRange(
-          boundaryPoints.sc,
-          boundaryPoints.so,
-          boundaryPoints.ec,
-          boundaryPoints.eo
-        );
-      };
-
-      /**
-       * delete contents on range
-       * @return {WrappedRange}
-       */
-      this.deleteContents = function () {
+        return new WrappedRange(boundaryPoints.sc, boundaryPoints.so, boundaryPoints.ec, boundaryPoints.eo);
+    };
+    /**
+     * delete contents on range
+     * @return {WrappedRange}
+     */
+    WrappedRange.prototype.deleteContents = function () {
         if (this.isCollapsed()) {
-          return this;
+            return this;
         }
-
         var rng = this.splitText();
         var nodes = rng.nodes(null, {
-          fullyContains: true
+            fullyContains: true
         });
-
         // find new cursor point
         var point = dom.prevPointUntil(rng.getStartPoint(), function (point) {
-          return !list.contains(nodes, point.node);
+            return !lists.contains(nodes, point.node);
         });
-
         var emptyParents = [];
-        $.each(nodes, function (idx, node) {
-          // find empty parents
-          var parent = node.parentNode;
-          if (point.node !== parent && dom.nodeLength(parent) === 1) {
-            emptyParents.push(parent);
-          }
-          dom.remove(node, false);
+        $$1.each(nodes, function (idx, node) {
+            // find empty parents
+            var parent = node.parentNode;
+            if (point.node !== parent && dom.nodeLength(parent) === 1) {
+                emptyParents.push(parent);
+            }
+            dom.remove(node, false);
         });
-
         // remove empty parents
-        $.each(emptyParents, function (idx, node) {
-          dom.remove(node, false);
+        $$1.each(emptyParents, function (idx, node) {
+            dom.remove(node, false);
         });
-
-        return new WrappedRange(
-          point.node,
-          point.offset,
-          point.node,
-          point.offset
-        ).normalize();
-      };
-      
-      /**
-       * makeIsOn: return isOn(pred) function
-       */
-      var makeIsOn = function (pred) {
+        return new WrappedRange(point.node, point.offset, point.node, point.offset).normalize();
+    };
+    /**
+     * makeIsOn: return isOn(pred) function
+     */
+    WrappedRange.prototype.makeIsOn = function (pred) {
         return function () {
-          var ancestor = dom.ancestor(sc, pred);
-          return !!ancestor && (ancestor === dom.ancestor(ec, pred));
+            var ancestor = dom.ancestor(this.sc, pred);
+            return !!ancestor && (ancestor === dom.ancestor(this.ec, pred));
         };
-      };
-  
-      // isOnEditable: judge whether range is on editable or not
-      this.isOnEditable = makeIsOn(dom.isEditable);
-      // isOnList: judge whether range is on list node or not
-      this.isOnList = makeIsOn(dom.isList);
-      // isOnAnchor: judge whether range is on anchor node or not
-      this.isOnAnchor = makeIsOn(dom.isAnchor);
-      // isOnCell: judge whether range is on cell node or not
-      this.isOnCell = makeIsOn(dom.isCell);
-      // isOnData: judge whether range is on data node or not
-      this.isOnData = makeIsOn(dom.isData);
-
-      /**
-       * @param {Function} pred
-       * @return {Boolean}
-       */
-      this.isLeftEdgeOf = function (pred) {
+    };
+    /**
+     * @param {Function} pred
+     * @return {Boolean}
+     */
+    WrappedRange.prototype.isLeftEdgeOf = function (pred) {
         if (!dom.isLeftEdgePoint(this.getStartPoint())) {
-          return false;
+            return false;
         }
-
         var node = dom.ancestor(this.sc, pred);
         return node && dom.isLeftEdgeOf(this.sc, node);
-      };
-
-      /**
-       * returns whether range was collapsed or not
-       */
-      this.isCollapsed = function () {
-        return sc === ec && so === eo;
-      };
-
-      /**
-       * wrap inline nodes which children of body with paragraph
-       *
-       * @return {WrappedRange}
-       */
-      this.wrapBodyInlineWithPara = function () {
-        if (dom.isBodyContainer(sc) && dom.isEmpty(sc)) {
-          sc.innerHTML = dom.emptyPara;
-          return new WrappedRange(sc.firstChild, 0, sc.firstChild, 0);
+    };
+    /**
+     * returns whether range was collapsed or not
+     */
+    WrappedRange.prototype.isCollapsed = function () {
+        return this.sc === this.ec && this.so === this.eo;
+    };
+    /**
+     * wrap inline nodes which children of body with paragraph
+     *
+     * @return {WrappedRange}
+     */
+    WrappedRange.prototype.wrapBodyInlineWithPara = function () {
+        if (dom.isBodyContainer(this.sc) && dom.isEmpty(this.sc)) {
+            this.sc.innerHTML = dom.emptyPara;
+            return new WrappedRange(this.sc.firstChild, 0, this.sc.firstChild, 0);
         }
-
         /**
          * [workaround] firefox often create range on not visible point. so normalize here.
          *  - firefox: |<p>text</p>|
          *  - chrome: <p>|text|</p>
          */
         var rng = this.normalize();
-        if (dom.isParaInline(sc) || dom.isPara(sc)) {
-          return rng;
+        if (dom.isParaInline(this.sc) || dom.isPara(this.sc)) {
+            return rng;
         }
-
         // find inline top ancestor
         var topAncestor;
         if (dom.isInline(rng.sc)) {
-          var ancestors = dom.listAncestor(rng.sc, func.not(dom.isInline));
-          topAncestor = list.last(ancestors);
-          if (!dom.isInline(topAncestor)) {
-            topAncestor = ancestors[ancestors.length - 2] || rng.sc.childNodes[rng.so];
-          }
-        } else {
-          topAncestor = rng.sc.childNodes[rng.so > 0 ? rng.so - 1 : 0];
+            var ancestors = dom.listAncestor(rng.sc, func.not(dom.isInline));
+            topAncestor = lists.last(ancestors);
+            if (!dom.isInline(topAncestor)) {
+                topAncestor = ancestors[ancestors.length - 2] || rng.sc.childNodes[rng.so];
+            }
         }
-
+        else {
+            topAncestor = rng.sc.childNodes[rng.so > 0 ? rng.so - 1 : 0];
+        }
         // siblings not in paragraph
         var inlineSiblings = dom.listPrev(topAncestor, dom.isParaInline).reverse();
         inlineSiblings = inlineSiblings.concat(dom.listNext(topAncestor.nextSibling, dom.isParaInline));
-
         // wrap with paragraph
         if (inlineSiblings.length) {
-          var para = dom.wrap(list.head(inlineSiblings), 'p');
-          dom.appendChildNodes(para, list.tail(inlineSiblings));
+            var para = dom.wrap(lists.head(inlineSiblings), 'p');
+            dom.appendChildNodes(para, lists.tail(inlineSiblings));
         }
-
         return this.normalize();
-      };
-
-      /**
-       * insert node at current cursor
-       *
-       * @param {Node} node
-       * @return {Node}
-       */
-      this.insertNode = function (node) {
+    };
+    /**
+     * insert node at current cursor
+     *
+     * @param {Node} node
+     * @return {Node}
+     */
+    WrappedRange.prototype.insertNode = function (node) {
         var rng = this.wrapBodyInlineWithPara().deleteContents();
         var info = dom.splitPoint(rng.getStartPoint(), dom.isInline(node));
-
         if (info.rightNode) {
-          info.rightNode.parentNode.insertBefore(node, info.rightNode);
-        } else {
-          info.container.appendChild(node);
+            info.rightNode.parentNode.insertBefore(node, info.rightNode);
         }
-
+        else {
+            info.container.appendChild(node);
+        }
         return node;
-      };
-
-      /**
-       * insert html at current cursor
-       */
-      this.pasteHTML = function (markup) {
-        var contentsContainer = $('<div></div>').html(markup)[0];
-        var childNodes = list.from(contentsContainer.childNodes);
-
-        var rng = this.wrapBodyInlineWithPara().deleteContents();
-
-        return childNodes.reverse().map(function (childNode) {
-          return rng.insertNode(childNode);
-        }).reverse();
-      };
-  
-      /**
-       * returns text in range
-       *
-       * @return {String}
-       */
-      this.toString = function () {
-        var nativeRng = nativeRange();
-        return agent.isW3CRangeSupport ? nativeRng.toString() : nativeRng.text;
-      };
-
-      /**
-       * returns range for word before cursor
-       *
-       * @param {Boolean} [findAfter] - find after cursor, default: false
-       * @return {WrappedRange}
-       */
-      this.getWordRange = function (findAfter) {
-        var endPoint = this.getEndPoint();
-
-        if (!dom.isCharPoint(endPoint)) {
-          return this;
-        }
-
-        var startPoint = dom.prevPointUntil(endPoint, function (point) {
-          return !dom.isCharPoint(point);
-        });
-
-        if (findAfter) {
-          endPoint = dom.nextPointUntil(endPoint, function (point) {
-            return !dom.isCharPoint(point);
-          });
-        }
-
-        return new WrappedRange(
-          startPoint.node,
-          startPoint.offset,
-          endPoint.node,
-          endPoint.offset
-        );
-      };
-  
-      /**
-       * create offsetPath bookmark
-       *
-       * @param {Node} editable
-       */
-      this.bookmark = function (editable) {
-        return {
-          s: {
-            path: dom.makeOffsetPath(editable, sc),
-            offset: so
-          },
-          e: {
-            path: dom.makeOffsetPath(editable, ec),
-            offset: eo
-          }
-        };
-      };
-
-      /**
-       * create offsetPath bookmark base on paragraph
-       *
-       * @param {Node[]} paras
-       */
-      this.paraBookmark = function (paras) {
-        return {
-          s: {
-            path: list.tail(dom.makeOffsetPath(list.head(paras), sc)),
-            offset: so
-          },
-          e: {
-            path: list.tail(dom.makeOffsetPath(list.last(paras), ec)),
-            offset: eo
-          }
-        };
-      };
-
-      /**
-       * getClientRects
-       * @return {Rect[]}
-       */
-      this.getClientRects = function () {
-        var nativeRng = nativeRange();
-        return nativeRng.getClientRects();
-      };
     };
-
-  /**
-   * @class core.range
-   *
-   * Data structure
-   *  * BoundaryPoint: a point of dom tree
-   *  * BoundaryPoints: two boundaryPoints corresponding to the start and the end of the Range
-   *
-   * See to http://www.w3.org/TR/DOM-Level-2-Traversal-Range/ranges.html#Level-2-Range-Position
-   *
-   * @singleton
-   * @alternateClassName range
-   */
-    return {
-      /**
-       * create Range Object From arguments or Browser Selection
-       *
-       * @param {Node} sc - start container
-       * @param {Number} so - start offset
-       * @param {Node} ec - end container
-       * @param {Number} eo - end offset
-       * @return {WrappedRange}
-       */
-      create: function (sc, so, ec, eo) {
+    /**
+     * insert html at current cursor
+     */
+    WrappedRange.prototype.pasteHTML = function (markup) {
+        var contentsContainer = $$1('<div></div>').html(markup)[0];
+        var childNodes = lists.from(contentsContainer.childNodes);
+        var rng = this.wrapBodyInlineWithPara().deleteContents();
+        return childNodes.reverse().map(function (childNode) {
+            return rng.insertNode(childNode);
+        }).reverse();
+    };
+    /**
+     * returns text in range
+     *
+     * @return {String}
+     */
+    WrappedRange.prototype.toString = function () {
+        var nativeRng = this.nativeRange();
+        return env.isW3CRangeSupport ? nativeRng.toString() : nativeRng.text;
+    };
+    /**
+     * returns range for word before cursor
+     *
+     * @param {Boolean} [findAfter] - find after cursor, default: false
+     * @return {WrappedRange}
+     */
+    WrappedRange.prototype.getWordRange = function (findAfter) {
+        var endPoint = this.getEndPoint();
+        if (!dom.isCharPoint(endPoint)) {
+            return this;
+        }
+        var startPoint = dom.prevPointUntil(endPoint, function (point) {
+            return !dom.isCharPoint(point);
+        });
+        if (findAfter) {
+            endPoint = dom.nextPointUntil(endPoint, function (point) {
+                return !dom.isCharPoint(point);
+            });
+        }
+        return new WrappedRange(startPoint.node, startPoint.offset, endPoint.node, endPoint.offset);
+    };
+    /**
+     * create offsetPath bookmark
+     *
+     * @param {Node} editable
+     */
+    WrappedRange.prototype.bookmark = function (editable) {
+        return {
+            s: {
+                path: dom.makeOffsetPath(editable, this.sc),
+                offset: this.so
+            },
+            e: {
+                path: dom.makeOffsetPath(editable, this.ec),
+                offset: this.eo
+            }
+        };
+    };
+    /**
+     * create offsetPath bookmark base on paragraph
+     *
+     * @param {Node[]} paras
+     */
+    WrappedRange.prototype.paraBookmark = function (paras) {
+        return {
+            s: {
+                path: lists.tail(dom.makeOffsetPath(lists.head(paras), this.sc)),
+                offset: this.so
+            },
+            e: {
+                path: lists.tail(dom.makeOffsetPath(lists.last(paras), this.ec)),
+                offset: this.eo
+            }
+        };
+    };
+    /**
+     * getClientRects
+     * @return {Rect[]}
+     */
+    WrappedRange.prototype.getClientRects = function () {
+        var nativeRng = this.nativeRange();
+        return nativeRng.getClientRects();
+    };
+    return WrappedRange;
+}());
+/**
+ * Data structure
+ *  * BoundaryPoint: a point of dom tree
+ *  * BoundaryPoints: two boundaryPoints corresponding to the start and the end of the Range
+ *
+ * See to http://www.w3.org/TR/DOM-Level-2-Traversal-Range/ranges.html#Level-2-Range-Position
+ */
+var range = {
+    /**
+     * create Range Object From arguments or Browser Selection
+     *
+     * @param {Node} sc - start container
+     * @param {Number} so - start offset
+     * @param {Node} ec - end container
+     * @param {Number} eo - end offset
+     * @return {WrappedRange}
+     */
+    create: function (sc, so, ec, eo) {
         if (arguments.length === 4) {
-          return new WrappedRange(sc, so, ec, eo);
-        } else if (arguments.length === 2) { //collapsed
-          ec = sc;
-          eo = so;
-          return new WrappedRange(sc, so, ec, eo);
-        } else {
-          var wrappedRange = this.createFromSelection();
-          if (!wrappedRange && arguments.length === 1) {
-            wrappedRange = this.createFromNode(arguments[0]);
-            return wrappedRange.collapse(dom.emptyPara === arguments[0].innerHTML);
-          }
-          return wrappedRange;
+            return new WrappedRange(sc, so, ec, eo);
         }
-      },
-
-      createFromSelection: function () {
+        else if (arguments.length === 2) {
+            ec = sc;
+            eo = so;
+            return new WrappedRange(sc, so, ec, eo);
+        }
+        else {
+            var wrappedRange = this.createFromSelection();
+            if (!wrappedRange && arguments.length === 1) {
+                wrappedRange = this.createFromNode(arguments[0]);
+                return wrappedRange.collapse(dom.emptyPara === arguments[0].innerHTML);
+            }
+            return wrappedRange;
+        }
+    },
+    createFromSelection: function () {
         var sc, so, ec, eo;
-        if (agent.isW3CRangeSupport) {
-          var selection = document.getSelection();
-          if (!selection || selection.rangeCount === 0) {
-            return null;
-          } else if (dom.isBody(selection.anchorNode)) {
-            // Firefox: returns entire body as range on initialization.
-            // We won't never need it.
-            return null;
-          }
-
-          var nativeRng = selection.getRangeAt(0);
-          sc = nativeRng.startContainer;
-          so = nativeRng.startOffset;
-          ec = nativeRng.endContainer;
-          eo = nativeRng.endOffset;
-        } else { // IE8: TextRange
-          var textRange = document.selection.createRange();
-          var textRangeEnd = textRange.duplicate();
-          textRangeEnd.collapse(false);
-          var textRangeStart = textRange;
-          textRangeStart.collapse(true);
-
-          var startPoint = textRangeToPoint(textRangeStart, true),
-          endPoint = textRangeToPoint(textRangeEnd, false);
-
-          // same visible point case: range was collapsed.
-          if (dom.isText(startPoint.node) && dom.isLeftEdgePoint(startPoint) &&
-              dom.isTextNode(endPoint.node) && dom.isRightEdgePoint(endPoint) &&
-              endPoint.node.nextSibling === startPoint.node) {
-            startPoint = endPoint;
-          }
-
-          sc = startPoint.cont;
-          so = startPoint.offset;
-          ec = endPoint.cont;
-          eo = endPoint.offset;
+        if (env.isW3CRangeSupport) {
+            var selection = document.getSelection();
+            if (!selection || selection.rangeCount === 0) {
+                return null;
+            }
+            else if (dom.isBody(selection.anchorNode)) {
+                // Firefox: returns entire body as range on initialization.
+                // We won't never need it.
+                return null;
+            }
+            var nativeRng = selection.getRangeAt(0);
+            sc = nativeRng.startContainer;
+            so = nativeRng.startOffset;
+            ec = nativeRng.endContainer;
+            eo = nativeRng.endOffset;
         }
-
+        else {
+            var textRange = document.selection.createRange();
+            var textRangeEnd = textRange.duplicate();
+            textRangeEnd.collapse(false);
+            var textRangeStart = textRange;
+            textRangeStart.collapse(true);
+            var startPoint = textRangeToPoint(textRangeStart, true);
+            var endPoint = textRangeToPoint(textRangeEnd, false);
+            // same visible point case: range was collapsed.
+            if (dom.isText(startPoint.node) && dom.isLeftEdgePoint(startPoint) &&
+                dom.isTextNode(endPoint.node) && dom.isRightEdgePoint(endPoint) &&
+                endPoint.node.nextSibling === startPoint.node) {
+                startPoint = endPoint;
+            }
+            sc = startPoint.cont;
+            so = startPoint.offset;
+            ec = endPoint.cont;
+            eo = endPoint.offset;
+        }
         return new WrappedRange(sc, so, ec, eo);
-      },
-
-      /**
-       * @method 
-       * 
-       * create WrappedRange from node
-       *
-       * @param {Node} node
-       * @return {WrappedRange}
-       */
-      createFromNode: function (node) {
+    },
+    /**
+     * @method
+     *
+     * create WrappedRange from node
+     *
+     * @param {Node} node
+     * @return {WrappedRange}
+     */
+    createFromNode: function (node) {
         var sc = node;
         var so = 0;
         var ec = node;
         var eo = dom.nodeLength(ec);
-
         // browsers can't target a picture or void node
         if (dom.isVoid(sc)) {
-          so = dom.listPrev(sc).length - 1;
-          sc = sc.parentNode;
+            so = dom.listPrev(sc).length - 1;
+            sc = sc.parentNode;
         }
         if (dom.isBR(ec)) {
-          eo = dom.listPrev(ec).length - 1;
-          ec = ec.parentNode;
-        } else if (dom.isVoid(ec)) {
-          eo = dom.listPrev(ec).length;
-          ec = ec.parentNode;
+            eo = dom.listPrev(ec).length - 1;
+            ec = ec.parentNode;
         }
-
+        else if (dom.isVoid(ec)) {
+            eo = dom.listPrev(ec).length;
+            ec = ec.parentNode;
+        }
         return this.create(sc, so, ec, eo);
-      },
-
-      /**
-       * create WrappedRange from node after position
-       *
-       * @param {Node} node
-       * @return {WrappedRange}
-       */
-      createFromNodeBefore: function (node) {
+    },
+    /**
+     * create WrappedRange from node after position
+     *
+     * @param {Node} node
+     * @return {WrappedRange}
+     */
+    createFromNodeBefore: function (node) {
         return this.createFromNode(node).collapse(true);
-      },
-
-      /**
-       * create WrappedRange from node after position
-       *
-       * @param {Node} node
-       * @return {WrappedRange}
-       */
-      createFromNodeAfter: function (node) {
+    },
+    /**
+     * create WrappedRange from node after position
+     *
+     * @param {Node} node
+     * @return {WrappedRange}
+     */
+    createFromNodeAfter: function (node) {
         return this.createFromNode(node).collapse();
-      },
-
-      /**
-       * @method 
-       * 
-       * create WrappedRange from bookmark
-       *
-       * @param {Node} editable
-       * @param {Object} bookmark
-       * @return {WrappedRange}
-       */
-      createFromBookmark: function (editable, bookmark) {
+    },
+    /**
+     * @method
+     *
+     * create WrappedRange from bookmark
+     *
+     * @param {Node} editable
+     * @param {Object} bookmark
+     * @return {WrappedRange}
+     */
+    createFromBookmark: function (editable, bookmark) {
         var sc = dom.fromOffsetPath(editable, bookmark.s.path);
         var so = bookmark.s.offset;
         var ec = dom.fromOffsetPath(editable, bookmark.e.path);
         var eo = bookmark.e.offset;
         return new WrappedRange(sc, so, ec, eo);
-      },
-
-      /**
-       * @method 
-       *
-       * create WrappedRange from paraBookmark
-       *
-       * @param {Object} bookmark
-       * @param {Node[]} paras
-       * @return {WrappedRange}
-       */
-      createFromParaBookmark: function (bookmark, paras) {
+    },
+    /**
+     * @method
+     *
+     * create WrappedRange from paraBookmark
+     *
+     * @param {Object} bookmark
+     * @param {Node[]} paras
+     * @return {WrappedRange}
+     */
+    createFromParaBookmark: function (bookmark, paras) {
         var so = bookmark.s.offset;
         var eo = bookmark.e.offset;
-        var sc = dom.fromOffsetPath(list.head(paras), bookmark.s.path);
-        var ec = dom.fromOffsetPath(list.last(paras), bookmark.e.path);
-
+        var sc = dom.fromOffsetPath(lists.head(paras), bookmark.s.path);
+        var ec = dom.fromOffsetPath(lists.last(paras), bookmark.e.path);
         return new WrappedRange(sc, so, ec, eo);
-      }
-    };
-  })();
+    }
+};
 
-  /**
-   * @class core.async
-   *
-   * Async functions which returns `Promise`
-   *
-   * @singleton
-   * @alternateClassName async
-   */
-  var async = (function () {
-    /**
-     * @method readFileAsDataURL
-     *
-     * read contents of file as representing URL
-     *
-     * @param {File} file
-     * @return {Promise} - then: dataUrl
-     */
-    var readFileAsDataURL = function (file) {
-      return $.Deferred(function (deferred) {
-        $.extend(new FileReader(), {
-          onload: function (e) {
-            var dataURL = e.target.result;
-            deferred.resolve(dataURL);
-          },
-          onerror: function () {
-            deferred.reject(this);
-          }
+/**
+ * @method readFileAsDataURL
+ *
+ * read contents of file as representing URL
+ *
+ * @param {File} file
+ * @return {Promise} - then: dataUrl
+ */
+function readFileAsDataURL(file) {
+    return $$1.Deferred(function (deferred) {
+        $$1.extend(new FileReader(), {
+            onload: function (e) {
+                var dataURL = e.target.result;
+                deferred.resolve(dataURL);
+            },
+            onerror: function (err) {
+                deferred.reject(err);
+            }
         }).readAsDataURL(file);
-      }).promise();
-    };
-  
-    /**
-     * @method createImage
-     *
-     * create `<image>` from url string
-     *
-     * @param {String} url
-     * @return {Promise} - then: $image
-     */
-    var createImage = function (url) {
-      return $.Deferred(function (deferred) {
-        var $img = $('<img>');
-
+    }).promise();
+}
+/**
+ * @method createImage
+ *
+ * create `<image>` from url string
+ *
+ * @param {String} url
+ * @return {Promise} - then: $image
+ */
+function createImage(url) {
+    return $$1.Deferred(function (deferred) {
+        var $img = $$1('<img>');
         $img.one('load', function () {
-          $img.off('error abort');
-          deferred.resolve($img);
+            $img.off('error abort');
+            deferred.resolve($img);
         }).one('error abort', function () {
-          $img.off('load').detach();
-          deferred.reject($img);
+            $img.off('load').detach();
+            deferred.reject($img);
         }).css({
-          display: 'none'
+            display: 'none'
         }).appendTo(document.body).attr('src', url);
-      }).promise();
+    }).promise();
+}
+
+var History = /** @class */ (function () {
+    function History($editable) {
+        this.stack = [];
+        this.stackOffset = -1;
+        this.$editable = $editable;
+        this.editable = $editable[0];
+    }
+    History.prototype.makeSnapshot = function () {
+        var rng = range.create(this.editable);
+        var emptyBookmark = { s: { path: [], offset: 0 }, e: { path: [], offset: 0 } };
+        return {
+            contents: this.$editable.html(),
+            bookmark: (rng ? rng.bookmark(this.editable) : emptyBookmark)
+        };
     };
-
-    return {
-      readFileAsDataURL: readFileAsDataURL,
-      createImage: createImage
+    History.prototype.applySnapshot = function (snapshot) {
+        if (snapshot.contents !== null) {
+            this.$editable.html(snapshot.contents);
+        }
+        if (snapshot.bookmark !== null) {
+            range.createFromBookmark(this.editable, snapshot.bookmark).select();
+        }
     };
-  })();
-
-  /**
-   * @class editing.History
-   *
-   * Editor History
-   *
-   */
-  var History = function ($editable) {
-    var stack = [], stackOffset = -1;
-    var editable = $editable[0];
-
-    var makeSnapshot = function () {
-      var rng = range.create(editable);
-      var emptyBookmark = {s: {path: [], offset: 0}, e: {path: [], offset: 0}};
-
-      return {
-        contents: $editable.html(),
-        bookmark: (rng ? rng.bookmark(editable) : emptyBookmark)
-      };
-    };
-
-    var applySnapshot = function (snapshot) {
-      if (snapshot.contents !== null) {
-        $editable.html(snapshot.contents);
-      }
-      if (snapshot.bookmark !== null) {
-        range.createFromBookmark(editable, snapshot.bookmark).select();
-      }
-    };
-
     /**
     * @method rewind
     * Rewinds the history stack back to the first snapshot taken.
     * Leaves the stack intact, so that "Redo" can still be used.
     */
-    this.rewind = function () {
-      // Create snap shot if not yet recorded
-      if ($editable.html() !== stack[stackOffset].contents) {
-        this.recordUndo();
-      }
-
-      // Return to the first available snapshot.
-      stackOffset = 0;
-
-      // Apply that snapshot.
-      applySnapshot(stack[stackOffset]);
+    History.prototype.rewind = function () {
+        // Create snap shot if not yet recorded
+        if (this.$editable.html() !== this.stack[this.stackOffset].contents) {
+            this.recordUndo();
+        }
+        // Return to the first available snapshot.
+        this.stackOffset = 0;
+        // Apply that snapshot.
+        this.applySnapshot(this.stack[this.stackOffset]);
     };
-
     /**
     * @method reset
     * Resets the history stack completely; reverting to an empty editor.
     */
-    this.reset = function () {
-      // Clear the stack.
-      stack = [];
-
-      // Restore stackOffset to its original value.
-      stackOffset = -1;
-
-      // Clear the editable area.
-      $editable.html('');
-
-      // Record our first snapshot (of nothing).
-      this.recordUndo();
+    History.prototype.reset = function () {
+        // Clear the stack.
+        this.stack = [];
+        // Restore stackOffset to its original value.
+        this.stackOffset = -1;
+        // Clear the editable area.
+        this.$editable.html('');
+        // Record our first snapshot (of nothing).
+        this.recordUndo();
     };
-
     /**
      * undo
      */
-    this.undo = function () {
-      // Create snap shot if not yet recorded
-      if ($editable.html() !== stack[stackOffset].contents) {
-        this.recordUndo();
-      }
-
-      if (0 < stackOffset) {
-        stackOffset--;
-        applySnapshot(stack[stackOffset]);
-      }
+    History.prototype.undo = function () {
+        // Create snap shot if not yet recorded
+        if (this.$editable.html() !== this.stack[this.stackOffset].contents) {
+            this.recordUndo();
+        }
+        if (this.stackOffset > 0) {
+            this.stackOffset--;
+            this.applySnapshot(this.stack[this.stackOffset]);
+        }
     };
-
     /**
      * redo
      */
-    this.redo = function () {
-      if (stack.length - 1 > stackOffset) {
-        stackOffset++;
-        applySnapshot(stack[stackOffset]);
-      }
+    History.prototype.redo = function () {
+        if (this.stack.length - 1 > this.stackOffset) {
+            this.stackOffset++;
+            this.applySnapshot(this.stack[this.stackOffset]);
+        }
     };
-
     /**
      * recorded undo
      */
-    this.recordUndo = function () {
-      stackOffset++;
-
-      // Wash out stack after stackOffset
-      if (stack.length > stackOffset) {
-        stack = stack.slice(0, stackOffset);
-      }
-
-      // Create new snapshot and push it to the end
-      stack.push(makeSnapshot());
+    History.prototype.recordUndo = function () {
+        this.stackOffset++;
+        // Wash out stack after stackOffset
+        if (this.stack.length > this.stackOffset) {
+            this.stack = this.stack.slice(0, this.stackOffset);
+        }
+        // Create new snapshot and push it to the end
+        this.stack.push(this.makeSnapshot());
     };
-  };
+    return History;
+}());
 
-  /**
-   * @class editing.Style
-   *
-   * Style
-   *
-   */
-  var Style = function () {
+var Style = /** @class */ (function () {
+    function Style() {
+    }
     /**
      * @method jQueryCSS
      *
@@ -51888,44 +51287,41 @@ function __guardMethod__(obj, methodName, transform) {
      * @param  {Array} propertyNames - An array of one or more CSS properties.
      * @return {Object}
      */
-    var jQueryCSS = function ($obj, propertyNames) {
-      if (agent.jqueryVersion < 1.9) {
-        var result = {};
-        $.each(propertyNames, function (idx, propertyName) {
-          result[propertyName] = $obj.css(propertyName);
-        });
-        return result;
-      }
-      return $obj.css.call($obj, propertyNames);
+    Style.prototype.jQueryCSS = function ($obj, propertyNames) {
+        if (env.jqueryVersion < 1.9) {
+            var result_1 = {};
+            $$1.each(propertyNames, function (idx, propertyName) {
+                result_1[propertyName] = $obj.css(propertyName);
+            });
+            return result_1;
+        }
+        return $obj.css(propertyNames);
     };
-
     /**
      * returns style object from node
      *
      * @param {jQuery} $node
      * @return {Object}
      */
-    this.fromNode = function ($node) {
-      var properties = ['font-family', 'font-size', 'text-align', 'list-style-type', 'line-height'];
-      var styleInfo = jQueryCSS($node, properties) || {};
-      styleInfo['font-size'] = parseInt(styleInfo['font-size'], 10);
-      return styleInfo;
+    Style.prototype.fromNode = function ($node) {
+        var properties = ['font-family', 'font-size', 'text-align', 'list-style-type', 'line-height'];
+        var styleInfo = this.jQueryCSS($node, properties) || {};
+        styleInfo['font-size'] = parseInt(styleInfo['font-size'], 10);
+        return styleInfo;
     };
-
     /**
      * paragraph level style
      *
      * @param {WrappedRange} rng
      * @param {Object} styleInfo
      */
-    this.stylePara = function (rng, styleInfo) {
-      $.each(rng.nodes(dom.isPara, {
-        includeAncestor: true
-      }), function (idx, para) {
-        $(para).css(styleInfo);
-      });
+    Style.prototype.stylePara = function (rng, styleInfo) {
+        $$1.each(rng.nodes(dom.isPara, {
+            includeAncestor: true
+        }), function (idx, para) {
+            $$1(para).css(styleInfo);
+        });
     };
-
     /**
      * insert and returns styleNodes on range.
      *
@@ -51936,242 +51332,213 @@ function __guardMethod__(obj, methodName, transform) {
      * @param {Boolean} [options.onlyPartialContains] - default: `false`
      * @return {Node[]}
      */
-    this.styleNodes = function (rng, options) {
-      rng = rng.splitText();
-
-      var nodeName = options && options.nodeName || 'SPAN';
-      var expandClosestSibling = !!(options && options.expandClosestSibling);
-      var onlyPartialContains = !!(options && options.onlyPartialContains);
-
-      if (rng.isCollapsed()) {
-        return [rng.insertNode(dom.create(nodeName))];
-      }
-
-      var pred = dom.makePredByNodeName(nodeName);
-      var nodes = rng.nodes(dom.isText, {
-        fullyContains: true
-      }).map(function (text) {
-        return dom.singleChildAncestor(text, pred) || dom.wrap(text, nodeName);
-      });
-
-      if (expandClosestSibling) {
-        if (onlyPartialContains) {
-          var nodesInRange = rng.nodes();
-          // compose with partial contains predication
-          pred = func.and(pred, function (node) {
-            return list.contains(nodesInRange, node);
-          });
+    Style.prototype.styleNodes = function (rng, options) {
+        rng = rng.splitText();
+        var nodeName = (options && options.nodeName) || 'SPAN';
+        var expandClosestSibling = !!(options && options.expandClosestSibling);
+        var onlyPartialContains = !!(options && options.onlyPartialContains);
+        if (rng.isCollapsed()) {
+            return [rng.insertNode(dom.create(nodeName))];
         }
-
-        return nodes.map(function (node) {
-          var siblings = dom.withClosestSiblings(node, pred);
-          var head = list.head(siblings);
-          var tails = list.tail(siblings);
-          $.each(tails, function (idx, elem) {
-            dom.appendChildNodes(head, elem.childNodes);
-            dom.remove(elem);
-          });
-          return list.head(siblings);
+        var pred = dom.makePredByNodeName(nodeName);
+        var nodes = rng.nodes(dom.isText, {
+            fullyContains: true
+        }).map(function (text) {
+            return dom.singleChildAncestor(text, pred) || dom.wrap(text, nodeName);
         });
-      } else {
-        return nodes;
-      }
+        if (expandClosestSibling) {
+            if (onlyPartialContains) {
+                var nodesInRange_1 = rng.nodes();
+                // compose with partial contains predication
+                pred = func.and(pred, function (node) {
+                    return lists.contains(nodesInRange_1, node);
+                });
+            }
+            return nodes.map(function (node) {
+                var siblings = dom.withClosestSiblings(node, pred);
+                var head = lists.head(siblings);
+                var tails = lists.tail(siblings);
+                $$1.each(tails, function (idx, elem) {
+                    dom.appendChildNodes(head, elem.childNodes);
+                    dom.remove(elem);
+                });
+                return lists.head(siblings);
+            });
+        }
+        else {
+            return nodes;
+        }
     };
-
     /**
      * get current style on cursor
      *
      * @param {WrappedRange} rng
      * @return {Object} - object contains style properties.
      */
-    this.current = function (rng) {
-      var $cont = $(!dom.isElement(rng.sc) ? rng.sc.parentNode : rng.sc);
-      var styleInfo = this.fromNode($cont);
-
-      // document.queryCommandState for toggle state
-      // [workaround] prevent Firefox nsresult: "0x80004005 (NS_ERROR_FAILURE)"
-      try {
-        styleInfo = $.extend(styleInfo, {
-          'font-bold': document.queryCommandState('bold') ? 'bold' : 'normal',
-          'font-italic': document.queryCommandState('italic') ? 'italic' : 'normal',
-          'font-underline': document.queryCommandState('underline') ? 'underline' : 'normal',
-          'font-subscript': document.queryCommandState('subscript') ? 'subscript' : 'normal',
-          'font-superscript': document.queryCommandState('superscript') ? 'superscript' : 'normal',
-          'font-strikethrough': document.queryCommandState('strikethrough') ? 'strikethrough' : 'normal',
-          'font-family': document.queryCommandValue('fontname') || styleInfo['font-family']
-        });
-      } catch (e) {}
-
-      // list-style-type to list-style(unordered, ordered)
-      if (!rng.isOnList()) {
-        styleInfo['list-style'] = 'none';
-      } else {
-        var orderedTypes = ['circle', 'disc', 'disc-leading-zero', 'square'];
-        var isUnordered = $.inArray(styleInfo['list-style-type'], orderedTypes) > -1;
-        styleInfo['list-style'] = isUnordered ? 'unordered' : 'ordered';
-      }
-
-      var para = dom.ancestor(rng.sc, dom.isPara);
-      if (para && para.style['line-height']) {
-        styleInfo['line-height'] = para.style.lineHeight;
-      } else {
-        var lineHeight = parseInt(styleInfo['line-height'], 10) / parseInt(styleInfo['font-size'], 10);
-        styleInfo['line-height'] = lineHeight.toFixed(1);
-      }
-
-      styleInfo.anchor = rng.isOnAnchor() && dom.ancestor(rng.sc, dom.isAnchor);
-      styleInfo.ancestors = dom.listAncestor(rng.sc, dom.isEditable);
-      styleInfo.range = rng;
-
-      return styleInfo;
+    Style.prototype.current = function (rng) {
+        var $cont = $$1(!dom.isElement(rng.sc) ? rng.sc.parentNode : rng.sc);
+        var styleInfo = this.fromNode($cont);
+        // document.queryCommandState for toggle state
+        // [workaround] prevent Firefox nsresult: "0x80004005 (NS_ERROR_FAILURE)"
+        try {
+            styleInfo = $$1.extend(styleInfo, {
+                'font-bold': document.queryCommandState('bold') ? 'bold' : 'normal',
+                'font-italic': document.queryCommandState('italic') ? 'italic' : 'normal',
+                'font-underline': document.queryCommandState('underline') ? 'underline' : 'normal',
+                'font-subscript': document.queryCommandState('subscript') ? 'subscript' : 'normal',
+                'font-superscript': document.queryCommandState('superscript') ? 'superscript' : 'normal',
+                'font-strikethrough': document.queryCommandState('strikethrough') ? 'strikethrough' : 'normal',
+                'font-family': document.queryCommandValue('fontname') || styleInfo['font-family']
+            });
+        }
+        catch (e) { }
+        // list-style-type to list-style(unordered, ordered)
+        if (!rng.isOnList()) {
+            styleInfo['list-style'] = 'none';
+        }
+        else {
+            var orderedTypes = ['circle', 'disc', 'disc-leading-zero', 'square'];
+            var isUnordered = $$1.inArray(styleInfo['list-style-type'], orderedTypes) > -1;
+            styleInfo['list-style'] = isUnordered ? 'unordered' : 'ordered';
+        }
+        var para = dom.ancestor(rng.sc, dom.isPara);
+        if (para && para.style['line-height']) {
+            styleInfo['line-height'] = para.style.lineHeight;
+        }
+        else {
+            var lineHeight = parseInt(styleInfo['line-height'], 10) / parseInt(styleInfo['font-size'], 10);
+            styleInfo['line-height'] = lineHeight.toFixed(1);
+        }
+        styleInfo.anchor = rng.isOnAnchor() && dom.ancestor(rng.sc, dom.isAnchor);
+        styleInfo.ancestors = dom.listAncestor(rng.sc, dom.isEditable);
+        styleInfo.range = rng;
+        return styleInfo;
     };
-  };
+    return Style;
+}());
 
-
-  /**
-   * @class editing.Bullet
-   *
-   * @alternateClassName Bullet
-   */
-  var Bullet = function () {
-    var self = this;
-
+var Bullet = /** @class */ (function () {
+    function Bullet() {
+    }
     /**
      * toggle ordered list
      */
-    this.insertOrderedList = function (editable) {
-      this.toggleList('OL', editable);
+    Bullet.prototype.insertOrderedList = function (editable) {
+        this.toggleList('OL', editable);
     };
-
     /**
      * toggle unordered list
      */
-    this.insertUnorderedList = function (editable) {
-      this.toggleList('UL', editable);
+    Bullet.prototype.insertUnorderedList = function (editable) {
+        this.toggleList('UL', editable);
     };
-
     /**
      * indent
      */
-    this.indent = function (editable) {
-      var self = this;
-      var rng = range.create(editable).wrapBodyInlineWithPara();
-
-      var paras = rng.nodes(dom.isPara, { includeAncestor: true });
-      var clustereds = list.clusterBy(paras, func.peq2('parentNode'));
-
-      $.each(clustereds, function (idx, paras) {
-        var head = list.head(paras);
-        if (dom.isLi(head)) {
-          self.wrapList(paras, head.parentNode.nodeName);
-        } else {
-          $.each(paras, function (idx, para) {
-            $(para).css('marginLeft', function (idx, val) {
-              return (parseInt(val, 10) || 0) + 25;
-            });
-          });
-        }
-      });
-
-      rng.select();
+    Bullet.prototype.indent = function (editable) {
+        var _this = this;
+        var rng = range.create(editable).wrapBodyInlineWithPara();
+        var paras = rng.nodes(dom.isPara, { includeAncestor: true });
+        var clustereds = lists.clusterBy(paras, func.peq2('parentNode'));
+        $$1.each(clustereds, function (idx, paras) {
+            var head = lists.head(paras);
+            if (dom.isLi(head)) {
+                _this.wrapList(paras, head.parentNode.nodeName);
+            }
+            else {
+                $$1.each(paras, function (idx, para) {
+                    $$1(para).css('marginLeft', function (idx, val) {
+                        return (parseInt(val, 10) || 0) + 25;
+                    });
+                });
+            }
+        });
+        rng.select();
     };
-
     /**
      * outdent
      */
-    this.outdent = function (editable) {
-      var self = this;
-      var rng = range.create(editable).wrapBodyInlineWithPara();
-
-      var paras = rng.nodes(dom.isPara, { includeAncestor: true });
-      var clustereds = list.clusterBy(paras, func.peq2('parentNode'));
-
-      $.each(clustereds, function (idx, paras) {
-        var head = list.head(paras);
-        if (dom.isLi(head)) {
-          self.releaseList([paras]);
-        } else {
-          $.each(paras, function (idx, para) {
-            $(para).css('marginLeft', function (idx, val) {
-              val = (parseInt(val, 10) || 0);
-              return val > 25 ? val - 25 : '';
-            });
-          });
-        }
-      });
-
-      rng.select();
+    Bullet.prototype.outdent = function (editable) {
+        var _this = this;
+        var rng = range.create(editable).wrapBodyInlineWithPara();
+        var paras = rng.nodes(dom.isPara, { includeAncestor: true });
+        var clustereds = lists.clusterBy(paras, func.peq2('parentNode'));
+        $$1.each(clustereds, function (idx, paras) {
+            var head = lists.head(paras);
+            if (dom.isLi(head)) {
+                _this.releaseList([paras]);
+            }
+            else {
+                $$1.each(paras, function (idx, para) {
+                    $$1(para).css('marginLeft', function (idx, val) {
+                        val = (parseInt(val, 10) || 0);
+                        return val > 25 ? val - 25 : '';
+                    });
+                });
+            }
+        });
+        rng.select();
     };
-
     /**
      * toggle list
      *
      * @param {String} listName - OL or UL
      */
-    this.toggleList = function (listName, editable) {
-      var rng = range.create(editable).wrapBodyInlineWithPara();
-
-      var paras = rng.nodes(dom.isPara, { includeAncestor: true });
-      var bookmark = rng.paraBookmark(paras);
-      var clustereds = list.clusterBy(paras, func.peq2('parentNode'));
-
-      // paragraph to list
-      if (list.find(paras, dom.isPurePara)) {
-        var wrappedParas = [];
-        $.each(clustereds, function (idx, paras) {
-          wrappedParas = wrappedParas.concat(self.wrapList(paras, listName));
-        });
-        paras = wrappedParas;
-      // list to paragraph or change list style
-      } else {
-        var diffLists = rng.nodes(dom.isList, {
-          includeAncestor: true
-        }).filter(function (listNode) {
-          return !$.nodeName(listNode, listName);
-        });
-
-        if (diffLists.length) {
-          $.each(diffLists, function (idx, listNode) {
-            dom.replace(listNode, listName);
-          });
-        } else {
-          paras = this.releaseList(clustereds, true);
+    Bullet.prototype.toggleList = function (listName, editable) {
+        var _this = this;
+        var rng = range.create(editable).wrapBodyInlineWithPara();
+        var paras = rng.nodes(dom.isPara, { includeAncestor: true });
+        var bookmark = rng.paraBookmark(paras);
+        var clustereds = lists.clusterBy(paras, func.peq2('parentNode'));
+        // paragraph to list
+        if (lists.find(paras, dom.isPurePara)) {
+            var wrappedParas_1 = [];
+            $$1.each(clustereds, function (idx, paras) {
+                wrappedParas_1 = wrappedParas_1.concat(_this.wrapList(paras, listName));
+            });
+            paras = wrappedParas_1;
+            // list to paragraph or change list style
         }
-      }
-
-      range.createFromParaBookmark(bookmark, paras).select();
+        else {
+            var diffLists = rng.nodes(dom.isList, {
+                includeAncestor: true
+            }).filter(function (listNode) {
+                return !$$1.nodeName(listNode, listName);
+            });
+            if (diffLists.length) {
+                $$1.each(diffLists, function (idx, listNode) {
+                    dom.replace(listNode, listName);
+                });
+            }
+            else {
+                paras = this.releaseList(clustereds, true);
+            }
+        }
+        range.createFromParaBookmark(bookmark, paras).select();
     };
-
     /**
      * @param {Node[]} paras
      * @param {String} listName
      * @return {Node[]}
      */
-    this.wrapList = function (paras, listName) {
-      var head = list.head(paras);
-      var last = list.last(paras);
-
-      var prevList = dom.isList(head.previousSibling) && head.previousSibling;
-      var nextList = dom.isList(last.nextSibling) && last.nextSibling;
-
-      var listNode = prevList || dom.insertAfter(dom.create(listName || 'UL'), last);
-
-      // P to LI
-      paras = paras.map(function (para) {
-        return dom.isPurePara(para) ? dom.replace(para, 'LI') : para;
-      });
-
-      // append to list(<ul>, <ol>)
-      dom.appendChildNodes(listNode, paras);
-
-      if (nextList) {
-        dom.appendChildNodes(listNode, list.from(nextList.childNodes));
-        dom.remove(nextList);
-      }
-
-      return paras;
+    Bullet.prototype.wrapList = function (paras, listName) {
+        var head = lists.head(paras);
+        var last = lists.last(paras);
+        var prevList = dom.isList(head.previousSibling) && head.previousSibling;
+        var nextList = dom.isList(last.nextSibling) && last.nextSibling;
+        var listNode = prevList || dom.insertAfter(dom.create(listName || 'UL'), last);
+        // P to LI
+        paras = paras.map(function (para) {
+            return dom.isPurePara(para) ? dom.replace(para, 'LI') : para;
+        });
+        // append to list(<ul>, <ol>)
+        dom.appendChildNodes(listNode, paras);
+        if (nextList) {
+            dom.appendChildNodes(listNode, lists.from(nextList.childNodes));
+            dom.remove(nextList);
+        }
+        return paras;
     };
-
     /**
      * @method releaseList
      *
@@ -52179,183 +51546,164 @@ function __guardMethod__(obj, methodName, transform) {
      * @param {Boolean} isEscapseToBody
      * @return {Node[]}
      */
-    this.releaseList = function (clustereds, isEscapseToBody) {
-      var releasedParas = [];
-
-      $.each(clustereds, function (idx, paras) {
-        var head = list.head(paras);
-        var last = list.last(paras);
-
-        var headList = isEscapseToBody ? dom.lastAncestor(head, dom.isList) :
-                                         head.parentNode;
-        var lastList = headList.childNodes.length > 1 ? dom.splitTree(headList, {
-          node: last.parentNode,
-          offset: dom.position(last) + 1
-        }, {
-          isSkipPaddingBlankHTML: true
-        }) : null;
-
-        var middleList = dom.splitTree(headList, {
-          node: head.parentNode,
-          offset: dom.position(head)
-        }, {
-          isSkipPaddingBlankHTML: true
-        });
-
-        paras = isEscapseToBody ? dom.listDescendant(middleList, dom.isLi) :
-                                  list.from(middleList.childNodes).filter(dom.isLi);
-
-        // LI to P
-        if (isEscapseToBody || !dom.isList(headList.parentNode)) {
-          paras = paras.map(function (para) {
-            return dom.replace(para, 'P');
-          });
-        }
-
-        $.each(list.from(paras).reverse(), function (idx, para) {
-          dom.insertAfter(para, headList);
-        });
-
-        // remove empty lists
-        var rootLists = list.compact([headList, middleList, lastList]);
-        $.each(rootLists, function (idx, rootList) {
-          var listNodes = [rootList].concat(dom.listDescendant(rootList, dom.isList));
-          $.each(listNodes.reverse(), function (idx, listNode) {
-            if (!dom.nodeLength(listNode)) {
-              dom.remove(listNode, true);
+    Bullet.prototype.releaseList = function (clustereds, isEscapseToBody) {
+        var releasedParas = [];
+        $$1.each(clustereds, function (idx, paras) {
+            var head = lists.head(paras);
+            var last = lists.last(paras);
+            var headList = isEscapseToBody ? dom.lastAncestor(head, dom.isList) : head.parentNode;
+            var lastList = headList.childNodes.length > 1 ? dom.splitTree(headList, {
+                node: last.parentNode,
+                offset: dom.position(last) + 1
+            }, {
+                isSkipPaddingBlankHTML: true
+            }) : null;
+            var middleList = dom.splitTree(headList, {
+                node: head.parentNode,
+                offset: dom.position(head)
+            }, {
+                isSkipPaddingBlankHTML: true
+            });
+            paras = isEscapseToBody ? dom.listDescendant(middleList, dom.isLi)
+                : lists.from(middleList.childNodes).filter(dom.isLi);
+            // LI to P
+            if (isEscapseToBody || !dom.isList(headList.parentNode)) {
+                paras = paras.map(function (para) {
+                    return dom.replace(para, 'P');
+                });
             }
-          });
+            $$1.each(lists.from(paras).reverse(), function (idx, para) {
+                dom.insertAfter(para, headList);
+            });
+            // remove empty lists
+            var rootLists = lists.compact([headList, middleList, lastList]);
+            $$1.each(rootLists, function (idx, rootList) {
+                var listNodes = [rootList].concat(dom.listDescendant(rootList, dom.isList));
+                $$1.each(listNodes.reverse(), function (idx, listNode) {
+                    if (!dom.nodeLength(listNode)) {
+                        dom.remove(listNode, true);
+                    }
+                });
+            });
+            releasedParas = releasedParas.concat(paras);
         });
-
-        releasedParas = releasedParas.concat(paras);
-      });
-
-      return releasedParas;
+        return releasedParas;
     };
-  };
+    return Bullet;
+}());
 
-
-  /**
-   * @class editing.Typing
-   *
-   * Typing
-   *
-   */
-  var Typing = function () {
-
-    // a Bullet instance to toggle lists off
-    var bullet = new Bullet();
-
+/**
+ * @class editing.Typing
+ *
+ * Typing
+ *
+ */
+var Typing = /** @class */ (function () {
+    function Typing() {
+        // a Bullet instance to toggle lists off
+        this.bullet = new Bullet();
+    }
     /**
      * insert tab
      *
      * @param {WrappedRange} rng
      * @param {Number} tabsize
      */
-    this.insertTab = function (rng, tabsize) {
-      var tab = dom.createText(new Array(tabsize + 1).join(dom.NBSP_CHAR));
-      rng = rng.deleteContents();
-      rng.insertNode(tab, true);
-
-      rng = range.create(tab, tabsize);
-      rng.select();
+    Typing.prototype.insertTab = function (rng, tabsize) {
+        var tab = dom.createText(new Array(tabsize + 1).join(dom.NBSP_CHAR));
+        rng = rng.deleteContents();
+        rng.insertNode(tab, true);
+        rng = range.create(tab, tabsize);
+        rng.select();
     };
-
     /**
      * insert paragraph
      */
-    this.insertParagraph = function (editable) {
-      var rng = range.create(editable);
-
-      // deleteContents on range.
-      rng = rng.deleteContents();
-
-      // Wrap range if it needs to be wrapped by paragraph
-      rng = rng.wrapBodyInlineWithPara();
-
-      // finding paragraph
-      var splitRoot = dom.ancestor(rng.sc, dom.isPara);
-
-      var nextPara;
-      // on paragraph: split paragraph
-      if (splitRoot) {
-        // if it is an empty line with li
-        if (dom.isEmpty(splitRoot) && dom.isLi(splitRoot)) {
-          // toogle UL/OL and escape
-          bullet.toggleList(splitRoot.parentNode.nodeName);
-          return;
-        // if it is an empty line with para on blockquote
-        } else if (dom.isEmpty(splitRoot) && dom.isPara(splitRoot) && dom.isBlockquote(splitRoot.parentNode)) {
-          // escape blockquote
-          dom.insertAfter(splitRoot, splitRoot.parentNode);
-          nextPara = splitRoot;
-        // if new line has content (not a line break)
-        } else {
-          nextPara = dom.splitTree(splitRoot, rng.getStartPoint());
-
-          var emptyAnchors = dom.listDescendant(splitRoot, dom.isEmptyAnchor);
-          emptyAnchors = emptyAnchors.concat(dom.listDescendant(nextPara, dom.isEmptyAnchor));
-
-          $.each(emptyAnchors, function (idx, anchor) {
-            dom.remove(anchor);
-          });
-
-          // replace empty heading, pre or custom-made styleTag with P tag
-          if ((dom.isHeading(nextPara) || dom.isPre(nextPara) || dom.isCustomStyleTag(nextPara)) && dom.isEmpty(nextPara)) {
-            nextPara = dom.replace(nextPara, 'p');
-          }
+    Typing.prototype.insertParagraph = function (editable) {
+        var rng = range.create(editable);
+        // deleteContents on range.
+        rng = rng.deleteContents();
+        // Wrap range if it needs to be wrapped by paragraph
+        rng = rng.wrapBodyInlineWithPara();
+        // finding paragraph
+        var splitRoot = dom.ancestor(rng.sc, dom.isPara);
+        var nextPara;
+        // on paragraph: split paragraph
+        if (splitRoot) {
+            // if it is an empty line with li
+            if (dom.isEmpty(splitRoot) && dom.isLi(splitRoot)) {
+                // toogle UL/OL and escape
+                this.bullet.toggleList(splitRoot.parentNode.nodeName);
+                return;
+                // if it is an empty line with para on blockquote
+            }
+            else if (dom.isEmpty(splitRoot) && dom.isPara(splitRoot) && dom.isBlockquote(splitRoot.parentNode)) {
+                // escape blockquote
+                dom.insertAfter(splitRoot, splitRoot.parentNode);
+                nextPara = splitRoot;
+                // if new line has content (not a line break)
+            }
+            else {
+                nextPara = dom.splitTree(splitRoot, rng.getStartPoint());
+                var emptyAnchors = dom.listDescendant(splitRoot, dom.isEmptyAnchor);
+                emptyAnchors = emptyAnchors.concat(dom.listDescendant(nextPara, dom.isEmptyAnchor));
+                $$1.each(emptyAnchors, function (idx, anchor) {
+                    dom.remove(anchor);
+                });
+                // replace empty heading, pre or custom-made styleTag with P tag
+                if ((dom.isHeading(nextPara) || dom.isPre(nextPara) || dom.isCustomStyleTag(nextPara)) && dom.isEmpty(nextPara)) {
+                    nextPara = dom.replace(nextPara, 'p');
+                }
+            }
+            // no paragraph: insert empty paragraph
         }
-      // no paragraph: insert empty paragraph
-      } else {
-        var next = rng.sc.childNodes[rng.so];
-        nextPara = $(dom.emptyPara)[0];
-        if (next) {
-          rng.sc.insertBefore(nextPara, next);
-        } else {
-          rng.sc.appendChild(nextPara);
+        else {
+            var next = rng.sc.childNodes[rng.so];
+            nextPara = $$1(dom.emptyPara)[0];
+            if (next) {
+                rng.sc.insertBefore(nextPara, next);
+            }
+            else {
+                rng.sc.appendChild(nextPara);
+            }
         }
-      }
-
-      range.create(nextPara, 0).normalize().select().scrollIntoView(editable);
+        range.create(nextPara, 0).normalize().select().scrollIntoView(editable);
     };
-  };
+    return Typing;
+}());
 
-
-  /**
-   * @class Create a virtual table to create what actions to do in change.
-   * @param {object} startPoint Cell selected to apply change.
-   * @param {enum} where  Where change will be applied Row or Col. Use enum: TableResultAction.where
-   * @param {enum} action Action to be applied. Use enum: TableResultAction.requestAction
-   * @param {object} domTable Dom element of table to make changes.
-   */
-  var TableResultAction = function (startPoint, where, action, domTable) {
+/**
+ * @class Create a virtual table to create what actions to do in change.
+ * @param {object} startPoint Cell selected to apply change.
+ * @param {enum} where  Where change will be applied Row or Col. Use enum: TableResultAction.where
+ * @param {enum} action Action to be applied. Use enum: TableResultAction.requestAction
+ * @param {object} domTable Dom element of table to make changes.
+ */
+var TableResultAction = function (startPoint, where, action, domTable) {
     var _startPoint = { 'colPos': 0, 'rowPos': 0 };
     var _virtualTable = [];
     var _actionCellList = [];
-
-    //////////////////////////////////////////////
+    /// ///////////////////////////////////////////
     // Private functions
-    //////////////////////////////////////////////
-
+    /// ///////////////////////////////////////////
     /**
      * Set the startPoint of action.
      */
     function setStartPoint() {
-      if (!startPoint || !startPoint.tagName || (startPoint.tagName.toLowerCase() !== 'td' && startPoint.tagName.toLowerCase() !== 'th')) {
-        console.error('Impossible to identify start Cell point.', startPoint);
-        return;
-      }
-      _startPoint.colPos = startPoint.cellIndex;
-      if (!startPoint.parentElement || !startPoint.parentElement.tagName || startPoint.parentElement.tagName.toLowerCase() !== 'tr') {
-        console.error('Impossible to identify start Row point.', startPoint);
-        return;
-      }
-      _startPoint.rowPos = startPoint.parentElement.rowIndex;
+        if (!startPoint || !startPoint.tagName || (startPoint.tagName.toLowerCase() !== 'td' && startPoint.tagName.toLowerCase() !== 'th')) {
+            console.error('Impossible to identify start Cell point.', startPoint);
+            return;
+        }
+        _startPoint.colPos = startPoint.cellIndex;
+        if (!startPoint.parentElement || !startPoint.parentElement.tagName || startPoint.parentElement.tagName.toLowerCase() !== 'tr') {
+            console.error('Impossible to identify start Row point.', startPoint);
+            return;
+        }
+        _startPoint.rowPos = startPoint.parentElement.rowIndex;
     }
-
     /**
      * Define virtual table position info object.
-     * 
+     *
      * @param {int} rowIndex Index position in line of virtual table.
      * @param {int} cellIndex Index position in column of virtual table.
      * @param {object} baseRow Row affected by this position.
@@ -52363,261 +51711,245 @@ function __guardMethod__(obj, methodName, transform) {
      * @param {bool} isSpan Inform if it is an span cell/row.
      */
     function setVirtualTablePosition(rowIndex, cellIndex, baseRow, baseCell, isRowSpan, isColSpan, isVirtualCell) {
-      var objPosition = {
-        'baseRow': baseRow,
-        'baseCell': baseCell,
-        'isRowSpan': isRowSpan,
-        'isColSpan': isColSpan,
-        'isVirtual': isVirtualCell
-      };
-      if (!_virtualTable[rowIndex]) {
-        _virtualTable[rowIndex] = [];
-      }
-      _virtualTable[rowIndex][cellIndex] = objPosition;
+        var objPosition = {
+            'baseRow': baseRow,
+            'baseCell': baseCell,
+            'isRowSpan': isRowSpan,
+            'isColSpan': isColSpan,
+            'isVirtual': isVirtualCell
+        };
+        if (!_virtualTable[rowIndex]) {
+            _virtualTable[rowIndex] = [];
+        }
+        _virtualTable[rowIndex][cellIndex] = objPosition;
     }
-
     /**
      * Create action cell object.
-     * 
+     *
      * @param {object} virtualTableCellObj Object of specific position on virtual table.
      * @param {enum} resultAction Action to be applied in that item.
      */
     function getActionCell(virtualTableCellObj, resultAction, virtualRowPosition, virtualColPosition) {
-      return {
-        'baseCell': virtualTableCellObj.baseCell,
-        'action': resultAction,
-        'virtualTable': {
-          'rowIndex': virtualRowPosition,
-          'cellIndex': virtualColPosition
-        }
-      };
+        return {
+            'baseCell': virtualTableCellObj.baseCell,
+            'action': resultAction,
+            'virtualTable': {
+                'rowIndex': virtualRowPosition,
+                'cellIndex': virtualColPosition
+            }
+        };
     }
-
     /**
      * Recover free index of row to append Cell.
-     * 
+     *
      * @param {int} rowIndex Index of row to find free space.
      * @param {int} cellIndex Index of cell to find free space in table.
      */
     function recoverCellIndex(rowIndex, cellIndex) {
-      if (!_virtualTable[rowIndex]) {
-        return cellIndex;
-      }
-      if (!_virtualTable[rowIndex][cellIndex]) {
-        return cellIndex;
-      }
-
-      var newCellIndex = cellIndex;
-      while (_virtualTable[rowIndex][newCellIndex]) {
-        newCellIndex++;
-        if (!_virtualTable[rowIndex][newCellIndex]) {
-          return newCellIndex;
+        if (!_virtualTable[rowIndex]) {
+            return cellIndex;
         }
-      }
+        if (!_virtualTable[rowIndex][cellIndex]) {
+            return cellIndex;
+        }
+        var newCellIndex = cellIndex;
+        while (_virtualTable[rowIndex][newCellIndex]) {
+            newCellIndex++;
+            if (!_virtualTable[rowIndex][newCellIndex]) {
+                return newCellIndex;
+            }
+        }
     }
-
     /**
      * Recover info about row and cell and add information to virtual table.
-     * 
+     *
      * @param {object} row Row to recover information.
      * @param {object} cell Cell to recover information.
      */
     function addCellInfoToVirtual(row, cell) {
-      var cellIndex = recoverCellIndex(row.rowIndex, cell.cellIndex);
-      var cellHasColspan = (cell.colSpan > 1);
-      var cellHasRowspan = (cell.rowSpan > 1);
-      var isThisSelectedCell = (row.rowIndex === _startPoint.rowPos && cell.cellIndex === _startPoint.colPos);
-      setVirtualTablePosition(row.rowIndex, cellIndex, row, cell, cellHasRowspan, cellHasColspan, false);
-
-      // Add span rows to virtual Table.
-      var rowspanNumber = cell.attributes.rowSpan ? parseInt(cell.attributes.rowSpan.value, 10) : 0;
-      if (rowspanNumber > 1) {
-        for (var rp = 1; rp < rowspanNumber; rp++) {
-          var rowspanIndex = row.rowIndex + rp;
-          adjustStartPoint(rowspanIndex, cellIndex, cell, isThisSelectedCell);
-          setVirtualTablePosition(rowspanIndex, cellIndex, row, cell, true, cellHasColspan, true);
+        var cellIndex = recoverCellIndex(row.rowIndex, cell.cellIndex);
+        var cellHasColspan = (cell.colSpan > 1);
+        var cellHasRowspan = (cell.rowSpan > 1);
+        var isThisSelectedCell = (row.rowIndex === _startPoint.rowPos && cell.cellIndex === _startPoint.colPos);
+        setVirtualTablePosition(row.rowIndex, cellIndex, row, cell, cellHasRowspan, cellHasColspan, false);
+        // Add span rows to virtual Table.
+        var rowspanNumber = cell.attributes.rowSpan ? parseInt(cell.attributes.rowSpan.value, 10) : 0;
+        if (rowspanNumber > 1) {
+            for (var rp = 1; rp < rowspanNumber; rp++) {
+                var rowspanIndex = row.rowIndex + rp;
+                adjustStartPoint(rowspanIndex, cellIndex, cell, isThisSelectedCell);
+                setVirtualTablePosition(rowspanIndex, cellIndex, row, cell, true, cellHasColspan, true);
+            }
         }
-      }
-
-      // Add span cols to virtual table.
-      var colspanNumber = cell.attributes.colSpan ? parseInt(cell.attributes.colSpan.value, 10) : 0;
-      if (colspanNumber > 1) {
-        for (var cp = 1; cp < colspanNumber; cp++) {
-          var cellspanIndex = recoverCellIndex(row.rowIndex, (cellIndex + cp));
-          adjustStartPoint(row.rowIndex, cellspanIndex, cell, isThisSelectedCell);
-          setVirtualTablePosition(row.rowIndex, cellspanIndex, row, cell, cellHasRowspan, true, true);
+        // Add span cols to virtual table.
+        var colspanNumber = cell.attributes.colSpan ? parseInt(cell.attributes.colSpan.value, 10) : 0;
+        if (colspanNumber > 1) {
+            for (var cp = 1; cp < colspanNumber; cp++) {
+                var cellspanIndex = recoverCellIndex(row.rowIndex, (cellIndex + cp));
+                adjustStartPoint(row.rowIndex, cellspanIndex, cell, isThisSelectedCell);
+                setVirtualTablePosition(row.rowIndex, cellspanIndex, row, cell, cellHasRowspan, true, true);
+            }
         }
-      }
     }
-
     /**
      * Process validation and adjust of start point if needed
-     * 
-     * @param {int} rowIndex 
-     * @param {int} cellIndex 
-     * @param {object} cell 
-     * @param {bool} isSelectedCell 
+     *
+     * @param {int} rowIndex
+     * @param {int} cellIndex
+     * @param {object} cell
+     * @param {bool} isSelectedCell
      */
     function adjustStartPoint(rowIndex, cellIndex, cell, isSelectedCell) {
-      if (rowIndex === _startPoint.rowPos && _startPoint.colPos >= cell.cellIndex && cell.cellIndex <= cellIndex && !isSelectedCell) {
-        _startPoint.colPos++;
-      }
+        if (rowIndex === _startPoint.rowPos && _startPoint.colPos >= cell.cellIndex && cell.cellIndex <= cellIndex && !isSelectedCell) {
+            _startPoint.colPos++;
+        }
     }
-
     /**
      * Create virtual table of cells with all cells, including span cells.
      */
     function createVirtualTable() {
-      var rows = domTable.rows;
-      for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
-        var cells = rows[rowIndex].cells;
-        for (var cellIndex = 0; cellIndex < cells.length; cellIndex++) {
-          addCellInfoToVirtual(rows[rowIndex], cells[cellIndex]);
+        var rows = domTable.rows;
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            var cells = rows[rowIndex].cells;
+            for (var cellIndex = 0; cellIndex < cells.length; cellIndex++) {
+                addCellInfoToVirtual(rows[rowIndex], cells[cellIndex]);
+            }
         }
-      }
     }
-
     /**
      * Get action to be applied on the cell.
-     * 
+     *
      * @param {object} cell virtual table cell to apply action
      */
     function getDeleteResultActionToCell(cell) {
-      switch (where) {
-        case TableResultAction.where.Column:
-          if (cell.isColSpan) {
-            return TableResultAction.resultAction.SubtractSpanCount;
-          }
-          break;
-        case TableResultAction.where.Row:
-          if (!cell.isVirtual && cell.isRowSpan) {
-            return TableResultAction.resultAction.AddCell;
-          }
-          else if (cell.isRowSpan) {
-            return TableResultAction.resultAction.SubtractSpanCount;
-          }
-          break;
-      }
-      return TableResultAction.resultAction.RemoveCell;
+        switch (where) {
+            case TableResultAction.where.Column:
+                if (cell.isColSpan) {
+                    return TableResultAction.resultAction.SubtractSpanCount;
+                }
+                break;
+            case TableResultAction.where.Row:
+                if (!cell.isVirtual && cell.isRowSpan) {
+                    return TableResultAction.resultAction.AddCell;
+                }
+                else if (cell.isRowSpan) {
+                    return TableResultAction.resultAction.SubtractSpanCount;
+                }
+                break;
+        }
+        return TableResultAction.resultAction.RemoveCell;
     }
-
     /**
      * Get action to be applied on the cell.
-     * 
+     *
      * @param {object} cell virtual table cell to apply action
      */
     function getAddResultActionToCell(cell) {
-      switch (where) {
-        case TableResultAction.where.Column:
-          if (cell.isColSpan) {
-            return TableResultAction.resultAction.SumSpanCount;
-          } else if (cell.isRowSpan && cell.isVirtual) {
-            return TableResultAction.resultAction.Ignore;
-          }
-          break;
-        case TableResultAction.where.Row:
-          if (cell.isRowSpan) {
-            return TableResultAction.resultAction.SumSpanCount;
-          } else if (cell.isColSpan && cell.isVirtual) {
-            return TableResultAction.resultAction.Ignore;
-          }
-          break;
-      }
-      return TableResultAction.resultAction.AddCell;
+        switch (where) {
+            case TableResultAction.where.Column:
+                if (cell.isColSpan) {
+                    return TableResultAction.resultAction.SumSpanCount;
+                }
+                else if (cell.isRowSpan && cell.isVirtual) {
+                    return TableResultAction.resultAction.Ignore;
+                }
+                break;
+            case TableResultAction.where.Row:
+                if (cell.isRowSpan) {
+                    return TableResultAction.resultAction.SumSpanCount;
+                }
+                else if (cell.isColSpan && cell.isVirtual) {
+                    return TableResultAction.resultAction.Ignore;
+                }
+                break;
+        }
+        return TableResultAction.resultAction.AddCell;
     }
-
     function init() {
-      setStartPoint();
-      createVirtualTable();
+        setStartPoint();
+        createVirtualTable();
     }
-
-    //////////////////////////////////////////////
+    /// ///////////////////////////////////////////
     // Public functions
-    //////////////////////////////////////////////
-
+    /// ///////////////////////////////////////////
     /**
      * Recover array os what to do in table.
      */
     this.getActionList = function () {
-      var fixedRow = (where === TableResultAction.where.Row) ? _startPoint.rowPos : -1;
-      var fixedCol = (where === TableResultAction.where.Column) ? _startPoint.colPos : -1;
-
-      var actualPosition = 0;
-      var canContinue = true;
-      while (canContinue) {
-        var rowPosition = (fixedRow >= 0) ? fixedRow : actualPosition;
-        var colPosition = (fixedCol >= 0) ? fixedCol : actualPosition;
-        var row = _virtualTable[rowPosition];
-        if (!row) {
-          canContinue = false;
-          return _actionCellList;
+        var fixedRow = (where === TableResultAction.where.Row) ? _startPoint.rowPos : -1;
+        var fixedCol = (where === TableResultAction.where.Column) ? _startPoint.colPos : -1;
+        var actualPosition = 0;
+        var canContinue = true;
+        while (canContinue) {
+            var rowPosition = (fixedRow >= 0) ? fixedRow : actualPosition;
+            var colPosition = (fixedCol >= 0) ? fixedCol : actualPosition;
+            var row = _virtualTable[rowPosition];
+            if (!row) {
+                canContinue = false;
+                return _actionCellList;
+            }
+            var cell = row[colPosition];
+            if (!cell) {
+                canContinue = false;
+                return _actionCellList;
+            }
+            // Define action to be applied in this cell
+            var resultAction = TableResultAction.resultAction.Ignore;
+            switch (action) {
+                case TableResultAction.requestAction.Add:
+                    resultAction = getAddResultActionToCell(cell);
+                    break;
+                case TableResultAction.requestAction.Delete:
+                    resultAction = getDeleteResultActionToCell(cell);
+                    break;
+            }
+            _actionCellList.push(getActionCell(cell, resultAction, rowPosition, colPosition));
+            actualPosition++;
         }
-        var cell = row[colPosition];
-        if (!cell) {
-          canContinue = false;
-          return _actionCellList;
-        }
-
-        // Define action to be applied in this cell
-        var resultAction = TableResultAction.resultAction.Ignore;
-        switch (action) {
-          case TableResultAction.requestAction.Add:
-            resultAction = getAddResultActionToCell(cell);
-            break;
-          case TableResultAction.requestAction.Delete:
-            resultAction = getDeleteResultActionToCell(cell);
-            break;
-        }
-        _actionCellList.push(getActionCell(cell, resultAction, rowPosition, colPosition));
-        actualPosition++;
-      }
-
-      return _actionCellList;
+        return _actionCellList;
     };
-
     init();
-  };
-  /**
-  * 
-  * Where action occours enum.
-  */
-  TableResultAction.where = { 'Row': 0, 'Column': 1 };
-  /**
-  * 
-  * Requested action to apply enum.
-  */
-  TableResultAction.requestAction = { 'Add': 0, 'Delete': 1 };
-  /**
-  * 
-  * Result action to be executed enum.
-  */
-  TableResultAction.resultAction = { 'Ignore': 0, 'SubtractSpanCount': 1, 'RemoveCell': 2, 'AddCell': 3, 'SumSpanCount': 4 };
-
-  /**
-   * 
-   * @class editing.Table
-   *
-   * Table
-   *
-   */
-  var Table = function () {
+};
+/**
+*
+* Where action occours enum.
+*/
+TableResultAction.where = { 'Row': 0, 'Column': 1 };
+/**
+*
+* Requested action to apply enum.
+*/
+TableResultAction.requestAction = { 'Add': 0, 'Delete': 1 };
+/**
+*
+* Result action to be executed enum.
+*/
+TableResultAction.resultAction = { 'Ignore': 0, 'SubtractSpanCount': 1, 'RemoveCell': 2, 'AddCell': 3, 'SumSpanCount': 4 };
+/**
+ *
+ * @class editing.Table
+ *
+ * Table
+ *
+ */
+var Table = /** @class */ (function () {
+    function Table() {
+    }
     /**
      * handle tab key
      *
      * @param {WrappedRange} rng
      * @param {Boolean} isShift
      */
-    this.tab = function (rng, isShift) {
-      var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
-      var table = dom.ancestor(cell, dom.isTable);
-      var cells = dom.listDescendant(table, dom.isCell);
-
-      var nextCell = list[isShift ? 'prev' : 'next'](cells, cell);
-      if (nextCell) {
-        range.create(nextCell, 0).select();
-      }
+    Table.prototype.tab = function (rng, isShift) {
+        var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
+        var table = dom.ancestor(cell, dom.isTable);
+        var cells = dom.listDescendant(table, dom.isCell);
+        var nextCell = lists[isShift ? 'prev' : 'next'](cells, cell);
+        if (nextCell) {
+            range.create(nextCell, 0).select();
+        }
     };
-
     /**
      * Add a new row
      *
@@ -52625,55 +51957,49 @@ function __guardMethod__(obj, methodName, transform) {
      * @param {String} position (top/bottom)
      * @return {Node}
      */
-    this.addRow = function (rng, position) {
-      var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
-
-      var currentTr = $(cell).closest('tr');
-      var trAttributes = this.recoverAttributes(currentTr);
-      var html = $('<tr' + trAttributes + '></tr>');
-
-      var vTable = new TableResultAction(cell, TableResultAction.where.Row,
-        TableResultAction.requestAction.Add, $(currentTr).closest('table')[0]);
-      var actions = vTable.getActionList();
-
-      for (var idCell = 0; idCell < actions.length; idCell++) {
-        var currentCell = actions[idCell];
-        var tdAttributes = this.recoverAttributes(currentCell.baseCell);
-        switch (currentCell.action) {
-          case TableResultAction.resultAction.AddCell:
-            html.append('<td' + tdAttributes + '>' + dom.blank + '</td>');
-            break;
-          case TableResultAction.resultAction.SumSpanCount:
-            if (position === 'top') {
-              var baseCellTr = currentCell.baseCell.parent;
-              var isTopFromRowSpan = (!baseCellTr ? 0 : currentCell.baseCell.closest('tr').rowIndex) <= currentTr[0].rowIndex;
-              if (isTopFromRowSpan) {
-                var newTd = $('<div></div>').append($('<td' + tdAttributes + '>' + dom.blank + '</td>').removeAttr('rowspan')).html();
-                html.append(newTd);
-                break;
-              }
+    Table.prototype.addRow = function (rng, position) {
+        var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
+        var currentTr = $$1(cell).closest('tr');
+        var trAttributes = this.recoverAttributes(currentTr);
+        var html = $$1('<tr' + trAttributes + '></tr>');
+        var vTable = new TableResultAction(cell, TableResultAction.where.Row, TableResultAction.requestAction.Add, $$1(currentTr).closest('table')[0]);
+        var actions = vTable.getActionList();
+        for (var idCell = 0; idCell < actions.length; idCell++) {
+            var currentCell = actions[idCell];
+            var tdAttributes = this.recoverAttributes(currentCell.baseCell);
+            switch (currentCell.action) {
+                case TableResultAction.resultAction.AddCell:
+                    html.append('<td' + tdAttributes + '>' + dom.blank + '</td>');
+                    break;
+                case TableResultAction.resultAction.SumSpanCount:
+                    if (position === 'top') {
+                        var baseCellTr = currentCell.baseCell.parent;
+                        var isTopFromRowSpan = (!baseCellTr ? 0 : currentCell.baseCell.closest('tr').rowIndex) <= currentTr[0].rowIndex;
+                        if (isTopFromRowSpan) {
+                            var newTd = $$1('<div></div>').append($$1('<td' + tdAttributes + '>' + dom.blank + '</td>').removeAttr('rowspan')).html();
+                            html.append(newTd);
+                            break;
+                        }
+                    }
+                    var rowspanNumber = parseInt(currentCell.baseCell.rowSpan, 10);
+                    rowspanNumber++;
+                    currentCell.baseCell.setAttribute('rowSpan', rowspanNumber);
+                    break;
             }
-            var rowspanNumber = parseInt(currentCell.baseCell.rowSpan, 10);
-            rowspanNumber++;
-            currentCell.baseCell.setAttribute('rowSpan', rowspanNumber);
-            break;
         }
-      }
-
-      if (position === 'top') {
-        currentTr.before(html);
-      }
-      else {
-        var cellHasRowspan = (cell.rowSpan > 1);
-        if (cellHasRowspan) {
-          var lastTrIndex = currentTr[0].rowIndex + (cell.rowSpan - 2);
-          $($(currentTr).parent().find('tr')[lastTrIndex]).after($(html));
-          return;
+        if (position === 'top') {
+            currentTr.before(html);
         }
-        currentTr.after(html);
-      }
+        else {
+            var cellHasRowspan = (cell.rowSpan > 1);
+            if (cellHasRowspan) {
+                var lastTrIndex = currentTr[0].rowIndex + (cell.rowSpan - 2);
+                $$1($$1(currentTr).parent().find('tr')[lastTrIndex]).after($$1(html));
+                return;
+            }
+            currentTr.after(html);
+        }
     };
-
     /**
      * Add a new col
      *
@@ -52681,177 +52007,173 @@ function __guardMethod__(obj, methodName, transform) {
      * @param {String} position (left/right)
      * @return {Node}
      */
-    this.addCol = function (rng, position) {
-      var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
-      var row = $(cell).closest('tr');
-      var rowsGroup = $(row).siblings();
-      rowsGroup.push(row);
-
-      var vTable = new TableResultAction(cell, TableResultAction.where.Column,
-        TableResultAction.requestAction.Add, $(row).closest('table')[0]);
-      var actions = vTable.getActionList();
-
-      for (var actionIndex = 0; actionIndex < actions.length; actionIndex++) {
-        var currentCell = actions[actionIndex];
-        var tdAttributes = this.recoverAttributes(currentCell.baseCell);
-        switch (currentCell.action) {
-          case TableResultAction.resultAction.AddCell:
-            if (position === 'right') {
-              $(currentCell.baseCell).after('<td' + tdAttributes + '>' + dom.blank + '</td>');
-            } else {
-              $(currentCell.baseCell).before('<td' + tdAttributes + '>' + dom.blank + '</td>');
+    Table.prototype.addCol = function (rng, position) {
+        var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
+        var row = $$1(cell).closest('tr');
+        var rowsGroup = $$1(row).siblings();
+        rowsGroup.push(row);
+        var vTable = new TableResultAction(cell, TableResultAction.where.Column, TableResultAction.requestAction.Add, $$1(row).closest('table')[0]);
+        var actions = vTable.getActionList();
+        for (var actionIndex = 0; actionIndex < actions.length; actionIndex++) {
+            var currentCell = actions[actionIndex];
+            var tdAttributes = this.recoverAttributes(currentCell.baseCell);
+            switch (currentCell.action) {
+                case TableResultAction.resultAction.AddCell:
+                    if (position === 'right') {
+                        $$1(currentCell.baseCell).after('<td' + tdAttributes + '>' + dom.blank + '</td>');
+                    }
+                    else {
+                        $$1(currentCell.baseCell).before('<td' + tdAttributes + '>' + dom.blank + '</td>');
+                    }
+                    break;
+                case TableResultAction.resultAction.SumSpanCount:
+                    if (position === 'right') {
+                        var colspanNumber = parseInt(currentCell.baseCell.colSpan, 10);
+                        colspanNumber++;
+                        currentCell.baseCell.setAttribute('colSpan', colspanNumber);
+                    }
+                    else {
+                        $$1(currentCell.baseCell).before('<td' + tdAttributes + '>' + dom.blank + '</td>');
+                    }
+                    break;
             }
-            break;
-          case TableResultAction.resultAction.SumSpanCount:
-            if (position === 'right') {
-              var colspanNumber = parseInt(currentCell.baseCell.colSpan, 10);
-              colspanNumber++;
-              currentCell.baseCell.setAttribute('colSpan', colspanNumber);
-            } else {
-              $(currentCell.baseCell).before('<td' + tdAttributes + '>' + dom.blank + '</td>');
-            }
-            break;
         }
-      }
     };
-
     /*
     * Copy attributes from element.
     *
     * @param {object} Element to recover attributes.
     * @return {string} Copied string elements.
     */
-    this.recoverAttributes = function (el) {
-      var resultStr = '';
-
-      if (!el) {
+    Table.prototype.recoverAttributes = function (el) {
+        var resultStr = '';
+        if (!el) {
+            return resultStr;
+        }
+        var attrList = el.attributes || [];
+        for (var i = 0; i < attrList.length; i++) {
+            if (attrList[i].name.toLowerCase() === 'id') {
+                continue;
+            }
+            if (attrList[i].specified) {
+                resultStr += ' ' + attrList[i].name + '=\'' + attrList[i].value + '\'';
+            }
+        }
         return resultStr;
-      }
-
-      var attrList = el.attributes || [];
-
-      for (var i = 0; i < attrList.length; i++) {
-        if (attrList[i].name.toLowerCase() === 'id') {
-          continue;
-        }
-
-        if (attrList[i].specified) {
-          resultStr += ' ' + attrList[i].name + '=\'' + attrList[i].value + '\'';
-        }
-      }
-
-      return resultStr;
     };
-
     /**
      * Delete current row
      *
      * @param {WrappedRange} rng
      * @return {Node}
      */
-    this.deleteRow = function (rng) {
-      var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
-      var row = $(cell).closest('tr');
-      var cellPos = row.children('td, th').index($(cell));
-      var rowPos = row[0].rowIndex;
-
-      var vTable = new TableResultAction(cell, TableResultAction.where.Row,
-        TableResultAction.requestAction.Delete, $(row).closest('table')[0]);
-      var actions = vTable.getActionList();
-
-      for (var actionIndex = 0; actionIndex < actions.length; actionIndex++) {
-        if (!actions[actionIndex]) {
-          continue;
-        }
-
-        var baseCell = actions[actionIndex].baseCell;
-        var virtualPosition = actions[actionIndex].virtualTable;
-        var hasRowspan = (baseCell.rowSpan && baseCell.rowSpan > 1);
-        var rowspanNumber = (hasRowspan) ? parseInt(baseCell.rowSpan, 10) : 0;
-        switch (actions[actionIndex].action) {
-          case TableResultAction.resultAction.Ignore:
-            continue;
-          case TableResultAction.resultAction.AddCell:
-            var nextRow = row.next('tr')[0];
-            if (!nextRow) { continue; }
-            var cloneRow = row[0].cells[cellPos];
-            if (hasRowspan) {
-              if (rowspanNumber > 2) {
-                rowspanNumber--;
-                nextRow.insertBefore(cloneRow, nextRow.cells[cellPos]);
-                nextRow.cells[cellPos].setAttribute('rowSpan', rowspanNumber);
-                nextRow.cells[cellPos].innerHTML = '';
-              } else if (rowspanNumber === 2) {
-                nextRow.insertBefore(cloneRow, nextRow.cells[cellPos]);
-                nextRow.cells[cellPos].removeAttribute('rowSpan');
-                nextRow.cells[cellPos].innerHTML = '';
-              }
+    Table.prototype.deleteRow = function (rng) {
+        var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
+        var row = $$1(cell).closest('tr');
+        var cellPos = row.children('td, th').index($$1(cell));
+        var rowPos = row[0].rowIndex;
+        var vTable = new TableResultAction(cell, TableResultAction.where.Row, TableResultAction.requestAction.Delete, $$1(row).closest('table')[0]);
+        var actions = vTable.getActionList();
+        for (var actionIndex = 0; actionIndex < actions.length; actionIndex++) {
+            if (!actions[actionIndex]) {
+                continue;
             }
-            continue;
-          case TableResultAction.resultAction.SubtractSpanCount:
-            if (hasRowspan) {
-              if (rowspanNumber > 2) {
-                rowspanNumber--;
-                baseCell.setAttribute('rowSpan', rowspanNumber);
-                if (virtualPosition.rowIndex !== rowPos && baseCell.cellIndex === cellPos) { baseCell.innerHTML = ''; }
-              } else if (rowspanNumber === 2) {
-                baseCell.removeAttribute('rowSpan');
-                if (virtualPosition.rowIndex !== rowPos && baseCell.cellIndex === cellPos) { baseCell.innerHTML = ''; }
-              }
+            var baseCell = actions[actionIndex].baseCell;
+            var virtualPosition = actions[actionIndex].virtualTable;
+            var hasRowspan = (baseCell.rowSpan && baseCell.rowSpan > 1);
+            var rowspanNumber = (hasRowspan) ? parseInt(baseCell.rowSpan, 10) : 0;
+            switch (actions[actionIndex].action) {
+                case TableResultAction.resultAction.Ignore:
+                    continue;
+                case TableResultAction.resultAction.AddCell:
+                    var nextRow = row.next('tr')[0];
+                    if (!nextRow) {
+                        continue;
+                    }
+                    var cloneRow = row[0].cells[cellPos];
+                    if (hasRowspan) {
+                        if (rowspanNumber > 2) {
+                            rowspanNumber--;
+                            nextRow.insertBefore(cloneRow, nextRow.cells[cellPos]);
+                            nextRow.cells[cellPos].setAttribute('rowSpan', rowspanNumber);
+                            nextRow.cells[cellPos].innerHTML = '';
+                        }
+                        else if (rowspanNumber === 2) {
+                            nextRow.insertBefore(cloneRow, nextRow.cells[cellPos]);
+                            nextRow.cells[cellPos].removeAttribute('rowSpan');
+                            nextRow.cells[cellPos].innerHTML = '';
+                        }
+                    }
+                    continue;
+                case TableResultAction.resultAction.SubtractSpanCount:
+                    if (hasRowspan) {
+                        if (rowspanNumber > 2) {
+                            rowspanNumber--;
+                            baseCell.setAttribute('rowSpan', rowspanNumber);
+                            if (virtualPosition.rowIndex !== rowPos && baseCell.cellIndex === cellPos) {
+                                baseCell.innerHTML = '';
+                            }
+                        }
+                        else if (rowspanNumber === 2) {
+                            baseCell.removeAttribute('rowSpan');
+                            if (virtualPosition.rowIndex !== rowPos && baseCell.cellIndex === cellPos) {
+                                baseCell.innerHTML = '';
+                            }
+                        }
+                    }
+                    continue;
+                case TableResultAction.resultAction.RemoveCell:
+                    // Do not need remove cell because row will be deleted.
+                    continue;
             }
-            continue;
-          case TableResultAction.resultAction.RemoveCell:
-            // Do not need remove cell because row will be deleted.
-            continue;
         }
-      }
-      row.remove();
+        row.remove();
     };
-
     /**
      * Delete current col
      *
      * @param {WrappedRange} rng
      * @return {Node}
      */
-    this.deleteCol = function (rng) {
-      var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
-      var row = $(cell).closest('tr');
-      var cellPos = row.children('td, th').index($(cell));
-
-      var vTable = new TableResultAction(cell, TableResultAction.where.Column,
-        TableResultAction.requestAction.Delete, $(row).closest('table')[0]);
-      var actions = vTable.getActionList();
-
-      for (var actionIndex = 0; actionIndex < actions.length; actionIndex++) {
-        if (!actions[actionIndex]) {
-          continue;
-        }
-        switch (actions[actionIndex].action) {
-          case TableResultAction.resultAction.Ignore:
-            continue;
-          case TableResultAction.resultAction.SubtractSpanCount:
-            var baseCell = actions[actionIndex].baseCell;
-            var hasColspan = (baseCell.colSpan && baseCell.colSpan > 1);
-            if (hasColspan) {
-              var colspanNumber = (baseCell.colSpan) ? parseInt(baseCell.colSpan, 10) : 0;
-              if (colspanNumber > 2) {
-                colspanNumber--;
-                baseCell.setAttribute('colSpan', colspanNumber);
-                if (baseCell.cellIndex === cellPos) { baseCell.innerHTML = ''; }
-              } else if (colspanNumber === 2) {
-                baseCell.removeAttribute('colSpan');
-                if (baseCell.cellIndex === cellPos) { baseCell.innerHTML = ''; }
-              }
+    Table.prototype.deleteCol = function (rng) {
+        var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
+        var row = $$1(cell).closest('tr');
+        var cellPos = row.children('td, th').index($$1(cell));
+        var vTable = new TableResultAction(cell, TableResultAction.where.Column, TableResultAction.requestAction.Delete, $$1(row).closest('table')[0]);
+        var actions = vTable.getActionList();
+        for (var actionIndex = 0; actionIndex < actions.length; actionIndex++) {
+            if (!actions[actionIndex]) {
+                continue;
             }
-            continue;
-          case TableResultAction.resultAction.RemoveCell:
-            dom.remove(actions[actionIndex].baseCell, true);
-            continue;
+            switch (actions[actionIndex].action) {
+                case TableResultAction.resultAction.Ignore:
+                    continue;
+                case TableResultAction.resultAction.SubtractSpanCount:
+                    var baseCell = actions[actionIndex].baseCell;
+                    var hasColspan = (baseCell.colSpan && baseCell.colSpan > 1);
+                    if (hasColspan) {
+                        var colspanNumber = (baseCell.colSpan) ? parseInt(baseCell.colSpan, 10) : 0;
+                        if (colspanNumber > 2) {
+                            colspanNumber--;
+                            baseCell.setAttribute('colSpan', colspanNumber);
+                            if (baseCell.cellIndex === cellPos) {
+                                baseCell.innerHTML = '';
+                            }
+                        }
+                        else if (colspanNumber === 2) {
+                            baseCell.removeAttribute('colSpan');
+                            if (baseCell.cellIndex === cellPos) {
+                                baseCell.innerHTML = '';
+                            }
+                        }
+                    }
+                    continue;
+                case TableResultAction.resultAction.RemoveCell:
+                    dom.remove(actions[actionIndex].baseCell, true);
+                    continue;
+            }
         }
-      }
     };
-
     /**
      * create empty table element
      *
@@ -52859,170 +52181,427 @@ function __guardMethod__(obj, methodName, transform) {
      * @param {Number} colCount
      * @return {Node}
      */
-    this.createTable = function (colCount, rowCount, options) {
-      var tds = [], tdHTML;
-      for (var idxCol = 0; idxCol < colCount; idxCol++) {
-        tds.push('<td>' + dom.blank + '</td>');
-      }
-      tdHTML = tds.join('');
-
-      var trs = [], trHTML;
-      for (var idxRow = 0; idxRow < rowCount; idxRow++) {
-        trs.push('<tr>' + tdHTML + '</tr>');
-      }
-      trHTML = trs.join('');
-      var $table = $('<table>' + trHTML + '</table>');
-      if (options && options.tableClassName) {
-        $table.addClass(options.tableClassName);
-      }
-
-      return $table[0];
+    Table.prototype.createTable = function (colCount, rowCount, options) {
+        var tds = [];
+        var tdHTML;
+        for (var idxCol = 0; idxCol < colCount; idxCol++) {
+            tds.push('<td>' + dom.blank + '</td>');
+        }
+        tdHTML = tds.join('');
+        var trs = [];
+        var trHTML;
+        for (var idxRow = 0; idxRow < rowCount; idxRow++) {
+            trs.push('<tr>' + tdHTML + '</tr>');
+        }
+        trHTML = trs.join('');
+        var $table = $$1('<table>' + trHTML + '</table>');
+        if (options && options.tableClassName) {
+            $table.addClass(options.tableClassName);
+        }
+        return $table[0];
     };
-
     /**
      * Delete current table
      *
      * @param {WrappedRange} rng
      * @return {Node}
      */
-    this.deleteTable = function (rng) {
-      var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
-      $(cell).closest('table').remove();
+    Table.prototype.deleteTable = function (rng) {
+        var cell = dom.ancestor(rng.commonAncestor(), dom.isCell);
+        $$1(cell).closest('table').remove();
     };
-  };
+    return Table;
+}());
 
-
-  var KEY_BOGUS = 'bogus';
-
-  /**
-   * @class Editor
-   */
-  var Editor = function (context) {
-    var self = this;
-
-    var $note = context.layoutInfo.note;
-    var $editor = context.layoutInfo.editor;
-    var $editable = context.layoutInfo.editable;
-    var options = context.options;
-    var lang = options.langInfo;
-
-    var editable = $editable[0];
-    var lastRange = null;
-
-    var style = new Style();
-    var table = new Table();
-    var typing = new Typing();
-    var bullet = new Bullet();
-    var history = new History($editable);
-
-    this.initialize = function () {
-      // bind custom events
-      $editable.on('keydown', function (event) {
-        if (event.keyCode === key.code.ENTER) {
-          context.triggerEvent('enter', event);
+var KEY_BOGUS = 'bogus';
+/**
+ * @class Editor
+ */
+var Editor = /** @class */ (function () {
+    function Editor(context) {
+        var _this = this;
+        this.context = context;
+        this.$note = context.layoutInfo.note;
+        this.$editor = context.layoutInfo.editor;
+        this.$editable = context.layoutInfo.editable;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+        this.editable = this.$editable[0];
+        this.lastRange = null;
+        this.style = new Style();
+        this.table = new Table();
+        this.typing = new Typing();
+        this.bullet = new Bullet();
+        this.history = new History(this.$editable);
+        this.context.memo('help.undo', this.lang.help.undo);
+        this.context.memo('help.redo', this.lang.help.redo);
+        this.context.memo('help.tab', this.lang.help.tab);
+        this.context.memo('help.untab', this.lang.help.untab);
+        this.context.memo('help.insertParagraph', this.lang.help.insertParagraph);
+        this.context.memo('help.insertOrderedList', this.lang.help.insertOrderedList);
+        this.context.memo('help.insertUnorderedList', this.lang.help.insertUnorderedList);
+        this.context.memo('help.indent', this.lang.help.indent);
+        this.context.memo('help.outdent', this.lang.help.outdent);
+        this.context.memo('help.formatPara', this.lang.help.formatPara);
+        this.context.memo('help.insertHorizontalRule', this.lang.help.insertHorizontalRule);
+        this.context.memo('help.fontName', this.lang.help.fontName);
+        // native commands(with execCommand), generate function for execCommand
+        var commands = [
+            'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
+            'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull',
+            'formatBlock', 'removeFormat', 'backColor'
+        ];
+        for (var idx = 0, len = commands.length; idx < len; idx++) {
+            this[commands[idx]] = (function (sCmd) {
+                return function (value) {
+                    _this.beforeCommand();
+                    document.execCommand(sCmd, false, value);
+                    _this.afterCommand(true);
+                };
+            })(commands[idx]);
+            this.context.memo('help.' + commands[idx], this.lang.help[commands[idx]]);
         }
-        context.triggerEvent('keydown', event);
-
-        if (!event.isDefaultPrevented()) {
-          if (options.shortcuts) {
-            self.handleKeyMap(event);
-          } else {
-            self.preventDefaultEditableShortCuts(event);
-          }
+        this.fontName = this.wrapCommand(function (value) {
+            return _this.fontStyling('font-family', "\'" + value + "\'");
+        });
+        this.fontSize = this.wrapCommand(function (value) {
+            return _this.fontStyling('font-size', value + 'px');
+        });
+        for (var idx = 1; idx <= 6; idx++) {
+            this['formatH' + idx] = (function (idx) {
+                return function () {
+                    _this.formatBlock('H' + idx);
+                };
+            })(idx);
+            this.context.memo('help.formatH' + idx, this.lang.help['formatH' + idx]);
         }
-      }).on('keyup', function (event) {
-        context.triggerEvent('keyup', event);
-      }).on('focus', function (event) {
-        context.triggerEvent('focus', event);
-      }).on('blur', function (event) {
-        context.triggerEvent('blur', event);
-      }).on('mousedown', function (event) {
-        context.triggerEvent('mousedown', event);
-      }).on('mouseup', function (event) {
-        context.triggerEvent('mouseup', event);
-      }).on('scroll', function (event) {
-        context.triggerEvent('scroll', event);
-      }).on('paste', function (event) {
-        context.triggerEvent('paste', event);
-      });
-
-      // init content before set event
-      $editable.html(dom.html($note) || dom.emptyPara);
-
-      // [workaround] IE doesn't have input events for contentEditable
-      // - see: https://goo.gl/4bfIvA
-      var changeEventName = agent.isMSIE ? 'DOMCharacterDataModified DOMSubtreeModified DOMNodeInserted' : 'input';
-      $editable.on(changeEventName, func.debounce(function () {
-        context.triggerEvent('change', $editable.html());
-      }, 100));
-
-      $editor.on('focusin', function (event) {
-        context.triggerEvent('focusin', event);
-      }).on('focusout', function (event) {
-        context.triggerEvent('focusout', event);
-      });
-
-      if (!options.airMode) {
-        if (options.width) {
-          $editor.outerWidth(options.width);
+        
+        this.insertParagraph = this.wrapCommand(function () {
+            _this.typing.insertParagraph(_this.editable);
+        });
+        this.insertOrderedList = this.wrapCommand(function () {
+            _this.bullet.insertOrderedList(_this.editable);
+        });
+        this.insertUnorderedList = this.wrapCommand(function () {
+            _this.bullet.insertUnorderedList(_this.editable);
+        });
+        this.indent = this.wrapCommand(function () {
+            _this.bullet.indent(_this.editable);
+        });
+        this.outdent = this.wrapCommand(function () {
+            _this.bullet.outdent(_this.editable);
+        });
+        /**
+         * insertNode
+         * insert node
+         * @param {Node} node
+         */
+        this.insertNode = this.wrapCommand(function (node) {
+            if (_this.isLimited($$1(node).text().length)) {
+                return;
+            }
+            var rng = _this.createRange();
+            rng.insertNode(node);
+            range.createFromNodeAfter(node).select();
+        });
+        /**
+         * insert text
+         * @param {String} text
+         */
+        this.insertText = this.wrapCommand(function (text) {
+            if (_this.isLimited(text.length)) {
+                return;
+            }
+            var rng = _this.createRange();
+            var textNode = rng.insertNode(dom.createText(text));
+            range.create(textNode, dom.nodeLength(textNode)).select();
+        });
+        /**
+         * paste HTML
+         * @param {String} markup
+         */
+        this.pasteHTML = this.wrapCommand(function (markup) {
+            if (_this.isLimited(markup.length)) {
+                return;
+            }
+            var contents = _this.createRange().pasteHTML(markup);
+            range.createFromNodeAfter(lists.last(contents)).select();
+        });
+        /**
+         * formatBlock
+         *
+         * @param {String} tagName
+         */
+        this.formatBlock = this.wrapCommand(function (tagName, $target) {
+            var onApplyCustomStyle = _this.options.callbacks.onApplyCustomStyle;
+            if (onApplyCustomStyle) {
+                onApplyCustomStyle.call(_this, $target, _this.context, _this.onFormatBlock);
+            }
+            else {
+                _this.onFormatBlock(tagName, $target);
+            }
+        });
+        /**
+         * insert horizontal rule
+         */
+        this.insertHorizontalRule = this.wrapCommand(function () {
+            var hrNode = _this.createRange().insertNode(dom.create('HR'));
+            if (hrNode.nextSibling) {
+                range.create(hrNode.nextSibling, 0).normalize().select();
+            }
+        });
+        /**
+         * lineHeight
+         * @param {String} value
+         */
+        this.lineHeight = this.wrapCommand(function (value) {
+            _this.style.stylePara(_this.createRange(), {
+                lineHeight: value
+            });
+        });
+        /**
+         * create link (command)
+         *
+         * @param {Object} linkInfo
+         */
+        this.createLink = this.wrapCommand(function (linkInfo) {
+            var linkUrl = linkInfo.url;
+            var linkText = linkInfo.text;
+            var isNewWindow = linkInfo.isNewWindow;
+            var rng = linkInfo.range || _this.createRange();
+            var isTextChanged = rng.toString() !== linkText;
+            // handle spaced urls from input
+            if (typeof linkUrl === 'string') {
+                linkUrl = linkUrl.trim();
+            }
+            if (_this.options.onCreateLink) {
+                linkUrl = _this.options.onCreateLink(linkUrl);
+            }
+            else {
+                // if url doesn't match an URL schema, set http:// as default
+                linkUrl = /^[A-Za-z][A-Za-z0-9+-.]*\:[\/\/]?/.test(linkUrl)
+                    ? linkUrl : 'http://' + linkUrl;
+            }
+            var anchors = [];
+            if (isTextChanged) {
+                rng = rng.deleteContents();
+                var anchor = rng.insertNode($$1('<A>' + linkText + '</A>')[0]);
+                anchors.push(anchor);
+            }
+            else {
+                anchors = _this.style.styleNodes(rng, {
+                    nodeName: 'A',
+                    expandClosestSibling: true,
+                    onlyPartialContains: true
+                });
+            }
+            $$1.each(anchors, function (idx, anchor) {
+                $$1(anchor).attr('href', linkUrl);
+                if (isNewWindow) {
+                    $$1(anchor).attr('target', '_blank');
+                }
+                else {
+                    $$1(anchor).removeAttr('target');
+                }
+            });
+            var startRange = range.createFromNodeBefore(lists.head(anchors));
+            var startPoint = startRange.getStartPoint();
+            var endRange = range.createFromNodeAfter(lists.last(anchors));
+            var endPoint = endRange.getEndPoint();
+            range.create(startPoint.node, startPoint.offset, endPoint.node, endPoint.offset).select();
+        });
+        /**
+         * setting color
+         *
+         * @param {Object} sObjColor  color code
+         * @param {String} sObjColor.foreColor foreground color
+         * @param {String} sObjColor.backColor background color
+         */
+        this.color = this.wrapCommand(function (colorInfo) {
+            var foreColor = colorInfo.foreColor;
+            var backColor = colorInfo.backColor;
+            if (foreColor) {
+                document.execCommand('foreColor', false, foreColor);
+            }
+            if (backColor) {
+                document.execCommand('backColor', false, backColor);
+            }
+        });
+        /**
+         * Set foreground color
+         *
+         * @param {String} colorCode foreground color code
+         */
+        this.foreColor = this.wrapCommand(function (colorInfo) {
+            document.execCommand('styleWithCSS', false, true);
+            document.execCommand('foreColor', false, colorInfo);
+        });
+        /**
+         * insert Table
+         *
+         * @param {String} dimension of table (ex : "5x5")
+         */
+        this.insertTable = this.wrapCommand(function (dim) {
+            var dimension = dim.split('x');
+            var rng = _this.createRange().deleteContents();
+            rng.insertNode(_this.table.createTable(dimension[0], dimension[1], _this.options));
+        });
+        /**
+         * remove media object and Figure Elements if media object is img with Figure.
+         */
+        this.removeMedia = this.wrapCommand(function () {
+            var $target = $$1(_this.restoreTarget()).parent();
+            if ($target.parent('figure').length) {
+                $target.parent('figure').remove();
+            }
+            else {
+                $target = $$1(_this.restoreTarget()).detach();
+            }
+            _this.context.triggerEvent('media.delete', $target, _this.$editable);
+        });
+        /**
+         * float me
+         *
+         * @param {String} value
+         */
+        this.floatMe = this.wrapCommand(function (value) {
+            var $target = $$1(_this.restoreTarget());
+            $target.toggleClass('note-float-left', value === 'left');
+            $target.toggleClass('note-float-right', value === 'right');
+            $target.css('float', value);
+        });
+        /**
+         * resize overlay element
+         * @param {String} value
+         */
+        this.resize = this.wrapCommand(function (value) {
+            var $target = $$1(_this.restoreTarget());
+            $target.css({
+                width: value * 100 + '%',
+                height: ''
+            });
+        });
+    }
+    Editor.prototype.initialize = function () {
+        var _this = this;
+        // bind custom events
+        this.$editable.on('keydown', function (event) {
+            if (event.keyCode === key.code.ENTER) {
+                _this.context.triggerEvent('enter', event);
+            }
+            _this.context.triggerEvent('keydown', event);
+            if (!event.isDefaultPrevented()) {
+                if (_this.options.shortcuts) {
+                    _this.handleKeyMap(event);
+                }
+                else {
+                    _this.preventDefaultEditableShortCuts(event);
+                }
+            }
+            if (_this.isLimited(1, event)) {
+                return false;
+            }
+        }).on('keyup', function (event) {
+            _this.context.triggerEvent('keyup', event);
+        }).on('focus', function (event) {
+            _this.context.triggerEvent('focus', event);
+        }).on('blur', function (event) {
+            _this.context.triggerEvent('blur', event);
+        }).on('mousedown', function (event) {
+            _this.context.triggerEvent('mousedown', event);
+        }).on('mouseup', function (event) {
+            _this.context.triggerEvent('mouseup', event);
+        }).on('scroll', function (event) {
+            _this.context.triggerEvent('scroll', event);
+        }).on('paste', function (event) {
+            _this.context.triggerEvent('paste', event);
+        });
+        // init content before set event
+        this.$editable.html(dom.html(this.$note) || dom.emptyPara);
+        this.$editable.on(env.inputEventName, func.debounce(function () {
+            _this.context.triggerEvent('change', _this.$editable.html());
+        }, 100));
+        this.$editor.on('focusin', function (event) {
+            _this.context.triggerEvent('focusin', event);
+        }).on('focusout', function (event) {
+            _this.context.triggerEvent('focusout', event);
+        });
+        if (!this.options.airMode) {
+            if (this.options.width) {
+                this.$editor.outerWidth(this.options.width);
+            }
+            if (this.options.height) {
+                this.$editable.outerHeight(this.options.height);
+            }
+            if (this.options.maxHeight) {
+                this.$editable.css('max-height', this.options.maxHeight);
+            }
+            if (this.options.minHeight) {
+                this.$editable.css('min-height', this.options.minHeight);
+            }
         }
-        if (options.height) {
-          $editable.outerHeight(options.height);
-        }
-        if (options.maxHeight) {
-          $editable.css('max-height', options.maxHeight);
-        }
-        if (options.minHeight) {
-          $editable.css('min-height', options.minHeight);
-        }
-      }
-
-      history.recordUndo();
+        this.history.recordUndo();
     };
-
-    this.destroy = function () {
-      $editable.off();
+    Editor.prototype.destroy = function () {
+        this.$editable.off();
     };
-
-    this.handleKeyMap = function (event) {
-      var keyMap = options.keyMap[agent.isMac ? 'mac' : 'pc'];
-      var keys = [];
-
-      if (event.metaKey) { keys.push('CMD'); }
-      if (event.ctrlKey && !event.altKey) { keys.push('CTRL'); }
-      if (event.shiftKey) { keys.push('SHIFT'); }
-
-      var keyName = key.nameFromCode[event.keyCode];
-      if (keyName) {
-        keys.push(keyName);
-      }
-
-      var eventName = keyMap[keys.join('+')];
-      if (eventName) {
-        event.preventDefault();
-        context.invoke(eventName);
-      } else if (key.isEdit(event.keyCode)) {
-        this.afterCommand();
-      }
+    Editor.prototype.handleKeyMap = function (event) {
+        var keyMap = this.options.keyMap[env.isMac ? 'mac' : 'pc'];
+        var keys = [];
+        if (event.metaKey) {
+            keys.push('CMD');
+        }
+        if (event.ctrlKey && !event.altKey) {
+            keys.push('CTRL');
+        }
+        if (event.shiftKey) {
+            keys.push('SHIFT');
+        }
+        var keyName = key.nameFromCode[event.keyCode];
+        if (keyName) {
+            keys.push(keyName);
+        }
+        var eventName = keyMap[keys.join('+')];
+        if (eventName) {
+            if (this.context.invoke(eventName) !== false) {
+                event.preventDefault();
+            }
+        }
+        else if (key.isEdit(event.keyCode)) {
+            this.afterCommand();
+        }
     };
-
-    this.preventDefaultEditableShortCuts = function (event) {
-      // B(Bold, 66) / I(Italic, 73) / U(Underline, 85)
-      if ((event.ctrlKey || event.metaKey) &&
-        list.contains([66, 73, 85], event.keyCode)) {
-        event.preventDefault();
-      }
+    Editor.prototype.preventDefaultEditableShortCuts = function (event) {
+        // B(Bold, 66) / I(Italic, 73) / U(Underline, 85)
+        if ((event.ctrlKey || event.metaKey) &&
+            lists.contains([66, 73, 85], event.keyCode)) {
+            event.preventDefault();
+        }
     };
-
+    Editor.prototype.isLimited = function (pad, event) {
+        pad = pad || 0;
+        if (typeof event !== 'undefined') {
+            if (key.isMove(event.keyCode) ||
+                (event.ctrlKey || event.metaKey) ||
+                lists.contains([key.code.BACKSPACE, key.code.DELETE], event.keyCode)) {
+                return false;
+            }
+        }
+        if (this.options.maxTextLength > 0) {
+            if ((this.$editable.text().length + pad) >= this.options.maxTextLength) {
+                return true;
+            }
+        }
+        return false;
+    };
     /**
      * create range
      * @return {WrappedRange}
      */
-    this.createRange = function () {
-      this.focus();
-      return range.create(editable);
+    Editor.prototype.createRange = function () {
+        this.focus();
+        return range.create(this.editable);
     };
-
     /**
      * saveRange
      *
@@ -53030,185 +52609,132 @@ function __guardMethod__(obj, methodName, transform) {
      *
      * @param {Boolean} [thenCollapse=false]
      */
-    this.saveRange = function (thenCollapse) {
-      lastRange = this.createRange();
-      if (thenCollapse) {
-        lastRange.collapse().select();
-      }
+    Editor.prototype.saveRange = function (thenCollapse) {
+        this.lastRange = this.createRange();
+        if (thenCollapse) {
+            this.lastRange.collapse().select();
+        }
     };
-
     /**
      * restoreRange
      *
      * restore lately range
      */
-    this.restoreRange = function () {
-      if (lastRange) {
-        lastRange.select();
-        this.focus();
-      }
+    Editor.prototype.restoreRange = function () {
+        if (this.lastRange) {
+            this.lastRange.select();
+            this.focus();
+        }
     };
-
-    this.saveTarget = function (node) {
-      $editable.data('target', node);
+    Editor.prototype.saveTarget = function (node) {
+        this.$editable.data('target', node);
     };
-
-    this.clearTarget = function () {
-      $editable.removeData('target');
+    Editor.prototype.clearTarget = function () {
+        this.$editable.removeData('target');
     };
-
-    this.restoreTarget = function () {
-      return $editable.data('target');
+    Editor.prototype.restoreTarget = function () {
+        return this.$editable.data('target');
     };
-
     /**
      * currentStyle
      *
      * current style
      * @return {Object|Boolean} unfocus
      */
-    this.currentStyle = function () {
-      var rng = range.create();
-      if (rng) {
-        rng = rng.normalize();
-      }
-      return rng ? style.current(rng) : style.fromNode($editable);
+    Editor.prototype.currentStyle = function () {
+        var rng = range.create();
+        if (rng) {
+            rng = rng.normalize();
+        }
+        return rng ? this.style.current(rng) : this.style.fromNode(this.$editable);
     };
-
     /**
      * style from node
      *
      * @param {jQuery} $node
      * @return {Object}
      */
-    this.styleFromNode = function ($node) {
-      return style.fromNode($node);
+    Editor.prototype.styleFromNode = function ($node) {
+        return this.style.fromNode($node);
     };
-
     /**
      * undo
      */
-    this.undo = function () {
-      context.triggerEvent('before.command', $editable.html());
-      history.undo();
-      context.triggerEvent('change', $editable.html());
+    Editor.prototype.undo = function () {
+        this.context.triggerEvent('before.command', this.$editable.html());
+        this.history.undo();
+        this.context.triggerEvent('change', this.$editable.html());
     };
-    context.memo('help.undo', lang.help.undo);
-
     /**
      * redo
      */
-    this.redo = function () {
-      context.triggerEvent('before.command', $editable.html());
-      history.redo();
-      context.triggerEvent('change', $editable.html());
+    Editor.prototype.redo = function () {
+        this.context.triggerEvent('before.command', this.$editable.html());
+        this.history.redo();
+        this.context.triggerEvent('change', this.$editable.html());
     };
-    context.memo('help.redo', lang.help.redo);
-
     /**
      * before command
      */
-    var beforeCommand = this.beforeCommand = function () {
-      context.triggerEvent('before.command', $editable.html());
-      // keep focus on editable before command execution
-      self.focus();
+    Editor.prototype.beforeCommand = function () {
+        this.context.triggerEvent('before.command', this.$editable.html());
+        // keep focus on editable before command execution
+        this.focus();
     };
-
     /**
      * after command
      * @param {Boolean} isPreventTrigger
      */
-    var afterCommand = this.afterCommand = function (isPreventTrigger) {
-      history.recordUndo();
-      if (!isPreventTrigger) {
-        context.triggerEvent('change', $editable.html());
-      }
+    Editor.prototype.afterCommand = function (isPreventTrigger) {
+        this.history.recordUndo();
+        if (!isPreventTrigger) {
+            this.context.triggerEvent('change', this.$editable.html());
+        }
     };
-
-    /* jshint ignore:start */
-    // native commands(with execCommand), generate function for execCommand
-    var commands = ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
-                    'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull',
-                    'formatBlock', 'removeFormat',
-                    'backColor', 'fontName'];
-
-    for (var idx = 0, len = commands.length; idx < len; idx ++) {
-      this[commands[idx]] = (function (sCmd) {
-        return function (value) {
-          beforeCommand();
-          document.execCommand(sCmd, false, value);
-          afterCommand(true);
-        };
-      })(commands[idx]);
-      context.memo('help.' + commands[idx], lang.help[commands[idx]]);
-    }
-    /* jshint ignore:end */
-
     /**
      * handle tab key
      */
-    this.tab = function () {
-      var rng = this.createRange();
-      if (rng.isCollapsed() && rng.isOnCell()) {
-        table.tab(rng);
-      } else {
-        beforeCommand();
-        typing.insertTab(rng, options.tabSize);
-        afterCommand();
-      }
+    Editor.prototype.tab = function () {
+        var rng = this.createRange();
+        if (rng.isCollapsed() && rng.isOnCell()) {
+            this.table.tab(rng);
+        }
+        else {
+            if (this.options.tabSize === 0) {
+                return false;
+            }
+            if (!this.isLimited(this.options.tabSize)) {
+                this.beforeCommand();
+                this.typing.insertTab(rng, this.options.tabSize);
+                this.afterCommand();
+            }
+        }
     };
-    context.memo('help.tab', lang.help.tab);
-
     /**
      * handle shift+tab key
      */
-    this.untab = function () {
-      var rng = this.createRange();
-      if (rng.isCollapsed() && rng.isOnCell()) {
-        table.tab(rng, true);
-      }
+    Editor.prototype.untab = function () {
+        var rng = this.createRange();
+        if (rng.isCollapsed() && rng.isOnCell()) {
+            this.table.tab(rng, true);
+        }
+        else {
+            if (this.options.tabSize === 0) {
+                return false;
+            }
+        }
     };
-    context.memo('help.untab', lang.help.untab);
-
     /**
      * run given function between beforeCommand and afterCommand
      */
-    this.wrapCommand = function (fn) {
-      return function () {
-        beforeCommand();
-        fn.apply(self, arguments);
-        afterCommand();
-      };
+    Editor.prototype.wrapCommand = function (fn) {
+        var _this = this;
+        return function () {
+            _this.beforeCommand();
+            fn.apply(_this, arguments);
+            _this.afterCommand();
+        };
     };
-
-    /**
-     * insert paragraph
-     */
-    this.insertParagraph = this.wrapCommand(function () {
-      typing.insertParagraph(editable);
-    });
-    context.memo('help.insertParagraph', lang.help.insertParagraph);
-
-    this.insertOrderedList = this.wrapCommand(function () {
-      bullet.insertOrderedList(editable);
-    });
-    context.memo('help.insertOrderedList', lang.help.insertOrderedList);
-
-    this.insertUnorderedList = this.wrapCommand(function () {
-      bullet.insertUnorderedList(editable);
-    });
-    context.memo('help.insertUnorderedList', lang.help.insertUnorderedList);
-
-    this.indent = this.wrapCommand(function () {
-      bullet.indent(editable);
-    });
-    context.memo('help.indent', lang.help.indent);
-
-    this.outdent = this.wrapCommand(function () {
-      bullet.outdent(editable);
-    });
-    context.memo('help.outdent', lang.help.outdent);
-
     /**
      * insert image
      *
@@ -53216,298 +52742,124 @@ function __guardMethod__(obj, methodName, transform) {
      * @param {String|Function} param
      * @return {Promise}
      */
-    this.insertImage = function (src, param) {
-      return async.createImage(src, param).then(function ($image) {
-        beforeCommand();
-
-        if (typeof param === 'function') {
-          param($image);
-        } else {
-          if (typeof param === 'string') {
-            $image.attr('data-filename', param);
-          }
-          $image.css('width', Math.min($editable.width(), $image.width()));
-        }
-
-        $image.show();
-        range.create(editable).insertNode($image[0]);
-        range.createFromNodeAfter($image[0]).select();
-        afterCommand();
-      }).fail(function (e) {
-        context.triggerEvent('image.upload.error', e);
-      });
+    Editor.prototype.insertImage = function (src, param) {
+        var _this = this;
+        return createImage(src, param).then(function ($image) {
+            _this.beforeCommand();
+            if (typeof param === 'function') {
+                param($image);
+            }
+            else {
+                if (typeof param === 'string') {
+                    $image.attr('data-filename', param);
+                }
+                $image.css('width', Math.min(_this.$editable.width(), $image.width()));
+            }
+            $image.show();
+            range.create(_this.editable).insertNode($image[0]);
+            range.createFromNodeAfter($image[0]).select();
+            _this.afterCommand();
+        }).fail(function (e) {
+            _this.context.triggerEvent('image.upload.error', e);
+        });
     };
-
     /**
      * insertImages
      * @param {File[]} files
      */
-    this.insertImages = function (files) {
-      $.each(files, function (idx, file) {
-        var filename = file.name;
-        if (options.maximumImageFileSize && options.maximumImageFileSize < file.size) {
-          context.triggerEvent('image.upload.error', lang.image.maximumFileSizeError);
-        } else {
-          async.readFileAsDataURL(file).then(function (dataURL) {
-            return self.insertImage(dataURL, filename);
-          }).fail(function () {
-            context.triggerEvent('image.upload.error');
-          });
-        }
-      });
+    Editor.prototype.insertImages = function (files) {
+        var _this = this;
+        $$1.each(files, function (idx, file) {
+            var filename = file.name;
+            if (_this.options.maximumImageFileSize && _this.options.maximumImageFileSize < file.size) {
+                _this.context.triggerEvent('image.upload.error', _this.lang.image.maximumFileSizeError);
+            }
+            else {
+                readFileAsDataURL(file).then(function (dataURL) {
+                    return _this.insertImage(dataURL, filename);
+                }).fail(function () {
+                    _this.context.triggerEvent('image.upload.error');
+                });
+            }
+        });
     };
-
     /**
      * insertImagesOrCallback
      * @param {File[]} files
      */
-    this.insertImagesOrCallback = function (files) {
-      var callbacks = options.callbacks;
-
-      // If onImageUpload options setted
-      if (callbacks.onImageUpload) {
-        context.triggerEvent('image.upload', files);
-      // else insert Image as dataURL
-      } else {
-        this.insertImages(files);
-      }
+    Editor.prototype.insertImagesOrCallback = function (files) {
+        var callbacks = this.options.callbacks;
+        // If onImageUpload this.options setted
+        if (callbacks.onImageUpload) {
+            this.context.triggerEvent('image.upload', files);
+            // else insert Image as dataURL
+        }
+        else {
+            this.insertImages(files);
+        }
     };
-
-    /**
-     * insertNode
-     * insert node
-     * @param {Node} node
-     */
-    this.insertNode = this.wrapCommand(function (node) {
-      var rng = this.createRange();
-      rng.insertNode(node);
-      range.createFromNodeAfter(node).select();
-    });
-
-    /**
-     * insert text
-     * @param {String} text
-     */
-    this.insertText = this.wrapCommand(function (text) {
-      var rng = this.createRange();
-      var textNode = rng.insertNode(dom.createText(text));
-      range.create(textNode, dom.nodeLength(textNode)).select();
-    });
-
     /**
      * return selected plain text
      * @return {String} text
      */
-    this.getSelectedText = function () {
-      var rng = this.createRange();
-
-      // if range on anchor, expand range with anchor
-      if (rng.isOnAnchor()) {
-        rng = range.createFromNode(dom.ancestor(rng.sc, dom.isAnchor));
-      }
-
-      return rng.toString();
-    };
-
-    /**
-     * paste HTML
-     * @param {String} markup
-     */
-    this.pasteHTML = this.wrapCommand(function (markup) {
-      var contents = this.createRange().pasteHTML(markup);
-      range.createFromNodeAfter(list.last(contents)).select();
-    });
-
-    /**
-     * formatBlock
-     *
-     * @param {String} tagName
-     */
-    this.formatBlock = this.wrapCommand(function (tagName, $target) {
-      var onApplyCustomStyle = context.options.callbacks.onApplyCustomStyle;
-      if (onApplyCustomStyle) {
-        onApplyCustomStyle.call(this, $target, context, this.onFormatBlock);
-      } else {
-        this.onFormatBlock(tagName);
-      }
-    });
-
-    this.onFormatBlock = function (tagName) {
-      // [workaround] for MSIE, IE need `<`
-      tagName = agent.isMSIE ? '<' + tagName + '>' : tagName;
-      document.execCommand('FormatBlock', false, tagName);
-    };
-
-    this.formatPara = function () {
-      this.formatBlock('P');
-    };
-    context.memo('help.formatPara', lang.help.formatPara);
-
-    /* jshint ignore:start */
-    for (var idx = 1; idx <= 6; idx ++) {
-      this['formatH' + idx] = function (idx) {
-        return function () {
-          this.formatBlock('H' + idx);
-        };
-      }(idx);
-      context.memo('help.formatH'+idx, lang.help['formatH' + idx]);
-    };
-    /* jshint ignore:end */
-
-    /**
-     * fontSize
-     *
-     * @param {String} value - px
-     */
-    this.fontSize = function (value) {
-      var rng = this.createRange();
-
-      if (rng && rng.isCollapsed()) {
-        var spans = style.styleNodes(rng);
-        var firstSpan = list.head(spans);
-
-        $(spans).css({
-          'font-size': value + 'px'
-        });
-
-        // [workaround] added styled bogus span for style
-        //  - also bogus character needed for cursor position
-        if (firstSpan && !dom.nodeLength(firstSpan)) {
-          firstSpan.innerHTML = dom.ZERO_WIDTH_NBSP_CHAR;
-          range.createFromNodeAfter(firstSpan.firstChild).select();
-          $editable.data(KEY_BOGUS, firstSpan);
+    Editor.prototype.getSelectedText = function () {
+        var rng = this.createRange();
+        // if range on anchor, expand range with anchor
+        if (rng.isOnAnchor()) {
+            rng = range.createFromNode(dom.ancestor(rng.sc, dom.isAnchor));
         }
-      } else {
-        beforeCommand();
-        $(style.styleNodes(rng)).css({
-          'font-size': value + 'px'
-        });
-        afterCommand();
-      }
+        return rng.toString();
     };
-
-    /**
-     * insert horizontal rule
-     */
-    this.insertHorizontalRule = this.wrapCommand(function () {
-      var hrNode = this.createRange().insertNode(dom.create('HR'));
-      if (hrNode.nextSibling) {
-        range.create(hrNode.nextSibling, 0).normalize().select();
-      }
-    });
-    context.memo('help.insertHorizontalRule', lang.help.insertHorizontalRule);
-
-    /**
-     * remove bogus node and character
-     */
-    this.removeBogus = function () {
-      var bogusNode = $editable.data(KEY_BOGUS);
-      if (!bogusNode) {
-        return;
-      }
-
-      var textNode = list.find(list.from(bogusNode.childNodes), dom.isText);
-
-      var bogusCharIdx = textNode.nodeValue.indexOf(dom.ZERO_WIDTH_NBSP_CHAR);
-      if (bogusCharIdx !== -1) {
-        textNode.deleteData(bogusCharIdx, 1);
-      }
-
-      if (dom.isEmpty(bogusNode)) {
-        dom.remove(bogusNode);
-      }
-
-      $editable.removeData(KEY_BOGUS);
+    Editor.prototype.onFormatBlock = function (tagName, $target) {
+        // [workaround] for MSIE, IE need `<`
+        tagName = env.isMSIE ? '<' + tagName + '>' : tagName;
+        document.execCommand('FormatBlock', false, tagName);
+        // support custom class
+        if ($target && $target.length) {
+            var className = $target[0].className || '';
+            if (className) {
+                var currentRange = this.createRange();
+                var $parent = $$1([currentRange.sc, currentRange.ec]).closest(tagName);
+                $parent.addClass(className);
+            }
+        }
     };
-
-    /**
-     * lineHeight
-     * @param {String} value
-     */
-    this.lineHeight = this.wrapCommand(function (value) {
-      style.stylePara(this.createRange(), {
-        lineHeight: value
-      });
-    });
-
+    Editor.prototype.formatPara = function () {
+        this.formatBlock('P');
+    };
+    Editor.prototype.fontStyling = function (target, value) {
+        var rng = this.createRange();
+        if (rng) {
+            var spans = this.style.styleNodes(rng);
+            $$1(spans).css(target, value);
+            // [workaround] added styled bogus span for style
+            //  - also bogus character needed for cursor position
+            if (rng.isCollapsed()) {
+                var firstSpan = lists.head(spans);
+                if (firstSpan && !dom.nodeLength(firstSpan)) {
+                    firstSpan.innerHTML = dom.ZERO_WIDTH_NBSP_CHAR;
+                    range.createFromNodeAfter(firstSpan.firstChild).select();
+                    this.$editable.data(KEY_BOGUS, firstSpan);
+                }
+            }
+        }
+    };
     /**
      * unlink
      *
      * @type command
      */
-    this.unlink = function () {
-      var rng = this.createRange();
-      if (rng.isOnAnchor()) {
-        var anchor = dom.ancestor(rng.sc, dom.isAnchor);
-        rng = range.createFromNode(anchor);
-        rng.select();
-
-        beforeCommand();
-        document.execCommand('unlink');
-        afterCommand();
-      }
-    };
-
-    /**
-     * create link (command)
-     *
-     * @param {Object} linkInfo
-     */
-    this.createLink = this.wrapCommand(function (linkInfo) {
-      var linkUrl = linkInfo.url;
-      var linkText = linkInfo.text;
-      var isNewWindow = linkInfo.isNewWindow;
-      var rng = linkInfo.range || this.createRange();
-      var isTextChanged = rng.toString() !== linkText;
-
-      // handle spaced urls from input
-      if (typeof linkUrl === 'string') {
-        linkUrl = linkUrl.trim();
-      }
-
-      if (options.onCreateLink) {
-        linkUrl = options.onCreateLink(linkUrl);
-      } else {
-        // if url doesn't match an URL schema, set http:// as default
-        linkUrl = /^[A-Za-z][A-Za-z0-9+-.]*\:[\/\/]?/.test(linkUrl) ?
-          linkUrl : 'http://' + linkUrl;
-      }
-
-      var anchors = [];
-      if (isTextChanged) {
-        rng = rng.deleteContents();
-        var anchor = rng.insertNode($('<A>' + linkText + '</A>')[0]);
-        anchors.push(anchor);
-      } else {
-        anchors = style.styleNodes(rng, {
-          nodeName: 'A',
-          expandClosestSibling: true,
-          onlyPartialContains: true
-        });
-      }
-
-      $.each(anchors, function (idx, anchor) {
-        $(anchor).attr('href', linkUrl);
-        if (isNewWindow) {
-          $(anchor).attr('target', '_blank');
-        } else {
-          $(anchor).removeAttr('target');
+    Editor.prototype.unlink = function () {
+        var rng = this.createRange();
+        if (rng.isOnAnchor()) {
+            var anchor = dom.ancestor(rng.sc, dom.isAnchor);
+            rng = range.createFromNode(anchor);
+            rng.select();
+            this.beforeCommand();
+            document.execCommand('unlink');
+            this.afterCommand();
         }
-      });
-
-      var startRange = range.createFromNodeBefore(list.head(anchors));
-      var startPoint = startRange.getStartPoint();
-      var endRange = range.createFromNodeAfter(list.last(anchors));
-      var endPoint = endRange.getEndPoint();
-
-      range.create(
-        startPoint.node,
-        startPoint.offset,
-        endPoint.node,
-        endPoint.offset
-      ).select();
-    });
-
+    };
     /**
      * returns link info
      *
@@ -53517,1351 +52869,1136 @@ function __guardMethod__(obj, methodName, transform) {
      * @return {Boolean} [return.isNewWindow=true]
      * @return {String} [return.url=""]
      */
-    this.getLinkInfo = function () {
-      var rng = this.createRange().expand(dom.isAnchor);
-
-      // Get the first anchor on range(for edit).
-      var $anchor = $(list.head(rng.nodes(dom.isAnchor)));
-      var linkInfo = {
-        range: rng,
-        text: rng.toString(),
-        url: $anchor.length ? $anchor.attr('href') : ''
-      };
-
-      // Define isNewWindow when anchor exists.
-      if ($anchor.length) {
-        linkInfo.isNewWindow = $anchor.attr('target') === '_blank';
-      }
-
-      return linkInfo;
+    Editor.prototype.getLinkInfo = function () {
+        var rng = this.createRange().expand(dom.isAnchor);
+        // Get the first anchor on range(for edit).
+        var $anchor = $$1(lists.head(rng.nodes(dom.isAnchor)));
+        var linkInfo = {
+            range: rng,
+            text: rng.toString(),
+            url: $anchor.length ? $anchor.attr('href') : ''
+        };
+        // Define isNewWindow when anchor exists.
+        if ($anchor.length) {
+            linkInfo.isNewWindow = $anchor.attr('target') === '_blank';
+        }
+        return linkInfo;
     };
-
-    /**
-     * setting color
-     *
-     * @param {Object} sObjColor  color code
-     * @param {String} sObjColor.foreColor foreground color
-     * @param {String} sObjColor.backColor background color
-     */
-    this.color = this.wrapCommand(function (colorInfo) {
-      var foreColor = colorInfo.foreColor;
-      var backColor = colorInfo.backColor;
-
-      if (foreColor) { document.execCommand('foreColor', false, foreColor); }
-      if (backColor) { document.execCommand('backColor', false, backColor); }
-    });
-
-    /**
-     * Set foreground color
-     *
-     * @param {String} colorCode foreground color code
-     */
-    this.foreColor = this.wrapCommand(function (colorInfo) {
-      document.execCommand('styleWithCSS', false, true);
-      document.execCommand('foreColor', false, colorInfo);
-    });
-
-    /**
-     * insert Table
-     *
-     * @param {String} dimension of table (ex : "5x5")
-     */
-    this.insertTable = this.wrapCommand(function (dim) {
-      var dimension = dim.split('x');
-
-      var rng = this.createRange().deleteContents();
-      rng.insertNode(table.createTable(dimension[0], dimension[1], options));
-    });
-
-     /**
-     * @method addRow
-     *
-     *
-     */
-    this.addRow = function (position) {
-      var rng = this.createRange($editable);
-      if (rng.isCollapsed() && rng.isOnCell()) {
-        beforeCommand();
-        table.addRow(rng, position);
-        afterCommand();
-      }
+    Editor.prototype.addRow = function (position) {
+        var rng = this.createRange(this.$editable);
+        if (rng.isCollapsed() && rng.isOnCell()) {
+            this.beforeCommand();
+            this.table.addRow(rng, position);
+            this.afterCommand();
+        }
     };
-
-     /**
-     * @method addCol
-     *
-     *
-     */
-    this.addCol = function (position) {
-      var rng = this.createRange($editable);
-      if (rng.isCollapsed() && rng.isOnCell()) {
-        beforeCommand();
-        table.addCol(rng, position);
-        afterCommand();
-      }
+    Editor.prototype.addCol = function (position) {
+        var rng = this.createRange(this.$editable);
+        if (rng.isCollapsed() && rng.isOnCell()) {
+            this.beforeCommand();
+            this.table.addCol(rng, position);
+            this.afterCommand();
+        }
     };
-
-    /**
-     * @method deleteRow
-     *
-     *
-     */
-    this.deleteRow = function () {
-      var rng = this.createRange($editable);
-      if (rng.isCollapsed() && rng.isOnCell()) {
-        beforeCommand();
-        table.deleteRow(rng);
-        afterCommand();
-      }
+    Editor.prototype.deleteRow = function () {
+        var rng = this.createRange(this.$editable);
+        if (rng.isCollapsed() && rng.isOnCell()) {
+            this.beforeCommand();
+            this.table.deleteRow(rng);
+            this.afterCommand();
+        }
     };
-
-    /**
-     * @method deleteCol
-     *
-     *
-     */
-    this.deleteCol = function () {
-      var rng = this.createRange($editable);
-      if (rng.isCollapsed() && rng.isOnCell()) {
-        beforeCommand();
-        table.deleteCol(rng);
-        afterCommand();
-      }
+    Editor.prototype.deleteCol = function () {
+        var rng = this.createRange(this.$editable);
+        if (rng.isCollapsed() && rng.isOnCell()) {
+            this.beforeCommand();
+            this.table.deleteCol(rng);
+            this.afterCommand();
+        }
     };
-
-    /**
-     * @method deleteTable
-     *
-     *
-     */
-    this.deleteTable = function () {
-      var rng = this.createRange($editable);
-      if (rng.isCollapsed() && rng.isOnCell()) {
-        beforeCommand();
-        table.deleteTable(rng);
-        afterCommand();
-      }
+    Editor.prototype.deleteTable = function () {
+        var rng = this.createRange(this.$editable);
+        if (rng.isCollapsed() && rng.isOnCell()) {
+            this.beforeCommand();
+            this.table.deleteTable(rng);
+            this.afterCommand();
+        }
     };
-
-    /**
-     * float me
-     *
-     * @param {String} value
-     */
-    this.floatMe = this.wrapCommand(function (value) {
-      var $target = $(this.restoreTarget());
-      $target.toggleClass('note-float-left', value === 'left');
-      $target.toggleClass('note-float-right', value === 'right');
-      $target.css('float', value);
-    });
-
-    /**
-     * resize overlay element
-     * @param {String} value
-     */
-    this.resize = this.wrapCommand(function (value) {
-      var $target = $(this.restoreTarget());
-      $target.css({
-        width: value * 100 + '%',
-        height: ''
-      });
-    });
-
     /**
      * @param {Position} pos
      * @param {jQuery} $target - target element
      * @param {Boolean} [bKeepRatio] - keep ratio
      */
-    this.resizeTo = function (pos, $target, bKeepRatio) {
-      var imageSize;
-      if (bKeepRatio) {
-        var newRatio = pos.y / pos.x;
-        var ratio = $target.data('ratio');
-        imageSize = {
-          width: ratio > newRatio ? pos.x : pos.y / ratio,
-          height: ratio > newRatio ? pos.x * ratio : pos.y
-        };
-      } else {
-        imageSize = {
-          width: pos.x,
-          height: pos.y
-        };
-      }
-
-      $target.css(imageSize);
+    Editor.prototype.resizeTo = function (pos, $target, bKeepRatio) {
+        var imageSize;
+        if (bKeepRatio) {
+            var newRatio = pos.y / pos.x;
+            var ratio = $target.data('ratio');
+            imageSize = {
+                width: ratio > newRatio ? pos.x : pos.y / ratio,
+                height: ratio > newRatio ? pos.x * ratio : pos.y
+            };
+        }
+        else {
+            imageSize = {
+                width: pos.x,
+                height: pos.y
+            };
+        }
+        $target.css(imageSize);
     };
-
-    /**
-     * remove media object
-     */
-    this.removeMedia = this.wrapCommand(function () {
-      var $target = $(this.restoreTarget()).detach();
-      context.triggerEvent('media.delete', $target, $editable);
-    });
-
     /**
      * returns whether editable area has focus or not.
      */
-    this.hasFocus = function () {
-      return $editable.is(':focus');
+    Editor.prototype.hasFocus = function () {
+        return this.$editable.is(':focus');
     };
-
     /**
      * set focus
      */
-    this.focus = function () {
-      // [workaround] Screen will move when page is scolled in IE.
-      //  - do focus when not focused
-      if (!this.hasFocus()) {
-        $editable.focus();
-      }
+    Editor.prototype.focus = function () {
+        // [workaround] Screen will move when page is scolled in IE.
+        //  - do focus when not focused
+        if (!this.hasFocus()) {
+            this.$editable.focus();
+        }
     };
-
     /**
      * returns whether contents is empty or not.
      * @return {Boolean}
      */
-    this.isEmpty = function () {
-      return dom.isEmpty($editable[0]) || dom.emptyPara === $editable.html();
+    Editor.prototype.isEmpty = function () {
+        return dom.isEmpty(this.$editable[0]) || dom.emptyPara === this.$editable.html();
     };
-
     /**
      * Removes all contents and restores the editable instance to an _emptyPara_.
      */
-    this.empty = function () {
-      context.invoke('code', dom.emptyPara);
+    Editor.prototype.empty = function () {
+        this.context.invoke('code', dom.emptyPara);
     };
-  };
+    return Editor;
+}());
 
-  var Clipboard = function (context) {
-    var self = this;
-
-    var $editable = context.layoutInfo.editable;
-
-    this.events = {
-      'summernote.keydown': function (we, e) {
-        if (self.needKeydownHook()) {
-          if ((e.ctrlKey || e.metaKey) && e.keyCode === key.code.V) {
-            context.invoke('editor.saveRange');
-            self.$paste.focus();
-
-            setTimeout(function () {
-              self.pasteByHook();
-            }, 0);
-          }
-        }
-      }
+var Clipboard = /** @class */ (function () {
+    function Clipboard(context) {
+        this.context = context;
+        this.$editable = context.layoutInfo.editable;
+    }
+    Clipboard.prototype.initialize = function () {
+        this.$editable.on('paste', this.pasteByEvent.bind(this));
     };
-
-    this.needKeydownHook = function () {
-      return (agent.isMSIE && agent.browserVersion > 10) || agent.isFF;
-    };
-
-    this.initialize = function () {
-      // [workaround] getting image from clipboard
-      //  - IE11 and Firefox: CTRL+v hook
-      //  - Webkit: event.clipboardData
-      if (this.needKeydownHook()) {
-        this.$paste = $('<div tabindex="-1" />').attr('contenteditable', true).css({
-          position: 'absolute',
-          left: -100000,
-          opacity: 0
-        });
-        $editable.before(this.$paste);
-
-        this.$paste.on('paste', function (event) {
-          context.triggerEvent('paste', event);
-        });
-      } else {
-        $editable.on('paste', this.pasteByEvent);
-      }
-    };
-
-    this.destroy = function () {
-      if (this.needKeydownHook()) {
-        this.$paste.remove();
-        this.$paste = null;
-      }
-    };
-
-    this.pasteByHook = function () {
-      var node = this.$paste[0].firstChild;
-
-      var src = node && node.src;
-      if (dom.isImg(node) && src.indexOf('data:') === 0) {
-        var decodedData = atob(node.src.split(',')[1]);
-        var array = new Uint8Array(decodedData.length);
-        for (var i = 0; i < decodedData.length; i++) {
-          array[i] = decodedData.charCodeAt(i);
-        }
-
-        var blob = new Blob([array], { type: 'image/png' });
-        blob.name = 'clipboard.png';
-
-        context.invoke('editor.restoreRange');
-        context.invoke('editor.focus');
-        context.invoke('editor.insertImagesOrCallback', [blob]);
-      } else {
-        var pasteContent = $('<div />').html(this.$paste.html()).html();
-        context.invoke('editor.restoreRange');
-        context.invoke('editor.focus');
-
-        if (pasteContent) {
-          context.invoke('editor.pasteHTML', pasteContent);
-        }
-      }
-
-      this.$paste.empty();
-    };
-
     /**
      * paste by clipboard event
      *
      * @param {Event} event
      */
-    this.pasteByEvent = function (event) {
-      var clipboardData = event.originalEvent.clipboardData;
-      if (clipboardData && clipboardData.items && clipboardData.items.length) {
-        var item = list.head(clipboardData.items);
-        if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
-          context.invoke('editor.insertImagesOrCallback', [item.getAsFile()]);
-        }
-        context.invoke('editor.afterCommand');
-      }
-    };
-  };
-
-  var Dropzone = function (context) {
-    var $document = $(document);
-    var $editor = context.layoutInfo.editor;
-    var $editable = context.layoutInfo.editable;
-    var options = context.options;
-    var lang = options.langInfo;
-    var documentEventHandlers = {};
-
-    var $dropzone = $([
-      '<div class="note-dropzone">',
-      '  <div class="note-dropzone-message"/>',
-      '</div>'
-    ].join('')).prependTo($editor);
-
-    var detachDocumentEvent = function () {
-      Object.keys(documentEventHandlers).forEach(function (key) {
-        $document.off(key.substr(2).toLowerCase(), documentEventHandlers[key]);
-      });
-      documentEventHandlers = {};
-    };
-
-    /**
-     * attach Drag and Drop Events
-     */
-    this.initialize = function () {
-      if (options.disableDragAndDrop) {
-        // prevent default drop event
-        documentEventHandlers.onDrop = function (e) {
-          e.preventDefault();
-        };
-        $document.on('drop', documentEventHandlers.onDrop);
-      } else {
-        this.attachDragAndDropEvent();
-      }
-    };
-
-    /**
-     * attach Drag and Drop Events
-     */
-    this.attachDragAndDropEvent = function () {
-      var collection = $(),
-          $dropzoneMessage = $dropzone.find('.note-dropzone-message');
-
-      documentEventHandlers.onDragenter = function (e) {
-        var isCodeview = context.invoke('codeview.isActivated');
-        var hasEditorSize = $editor.width() > 0 && $editor.height() > 0;
-        if (!isCodeview && !collection.length && hasEditorSize) {
-          $editor.addClass('dragover');
-          $dropzone.width($editor.width());
-          $dropzone.height($editor.height());
-          $dropzoneMessage.text(lang.image.dragImageHere);
-        }
-        collection = collection.add(e.target);
-      };
-
-      documentEventHandlers.onDragleave = function (e) {
-        collection = collection.not(e.target);
-        if (!collection.length) {
-          $editor.removeClass('dragover');
-        }
-      };
-
-      documentEventHandlers.onDrop = function () {
-        collection = $();
-        $editor.removeClass('dragover');
-      };
-
-      // show dropzone on dragenter when dragging a object to document
-      // -but only if the editor is visible, i.e. has a positive width and height
-      $document.on('dragenter', documentEventHandlers.onDragenter)
-        .on('dragleave', documentEventHandlers.onDragleave)
-        .on('drop', documentEventHandlers.onDrop);
-
-      // change dropzone's message on hover.
-      $dropzone.on('dragenter', function () {
-        $dropzone.addClass('hover');
-        $dropzoneMessage.text(lang.image.dropImage);
-      }).on('dragleave', function () {
-        $dropzone.removeClass('hover');
-        $dropzoneMessage.text(lang.image.dragImageHere);
-      });
-
-      // attach dropImage
-      $dropzone.on('drop', function (event) {
-        var dataTransfer = event.originalEvent.dataTransfer;
-
-        if (dataTransfer && dataTransfer.files && dataTransfer.files.length) {
-          event.preventDefault();
-          $editable.focus();
-          context.invoke('editor.insertImagesOrCallback', dataTransfer.files);
-        } else {
-          $.each(dataTransfer.types, function (idx, type) {
-            var content = dataTransfer.getData(type);
-
-            if (type.toLowerCase().indexOf('text') > -1) {
-              context.invoke('editor.pasteHTML', content);
-            } else {
-              $(content).each(function () {
-                context.invoke('editor.insertNode', this);
-              });
+    Clipboard.prototype.pasteByEvent = function (event) {
+        var clipboardData = event.originalEvent.clipboardData;
+        if (clipboardData && clipboardData.items && clipboardData.items.length) {
+            var item = lists.head(clipboardData.items);
+            if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+                this.context.invoke('editor.insertImagesOrCallback', [item.getAsFile()]);
             }
-          });
+            this.context.invoke('editor.afterCommand');
         }
-      }).on('dragover', false); // prevent default dragover event
     };
+    return Clipboard;
+}());
 
-    this.destroy = function () {
-      detachDocumentEvent();
-    };
-  };
-
-
-  var CodeMirror;
-  if (agent.hasCodeMirror) {
-    if (agent.isSupportAmd) {
-      require(['codemirror'], function (cm) {
-        CodeMirror = cm;
-      });
-    } else {
-      CodeMirror = window.CodeMirror;
+var Dropzone = /** @class */ (function () {
+    function Dropzone(context) {
+        this.context = context;
+        this.$eventListener = $$1(document);
+        this.$editor = context.layoutInfo.editor;
+        this.$editable = context.layoutInfo.editable;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+        this.documentEventHandlers = {};
+        this.$dropzone = $$1([
+            '<div class="note-dropzone">',
+            '  <div class="note-dropzone-message"/>',
+            '</div>'
+        ].join('')).prependTo(this.$editor);
     }
-  }
-
-  /**
-   * @class Codeview
-   */
-  var Codeview = function (context) {
-    var $editor = context.layoutInfo.editor;
-    var $editable = context.layoutInfo.editable;
-    var $codable = context.layoutInfo.codable;
-    var options = context.options;
-
-    this.sync = function () {
-      var isCodeview = this.isActivated();
-      if (isCodeview && agent.hasCodeMirror) {
-        $codable.data('cmEditor').save();
-      }
+    /**
+     * attach Drag and Drop Events
+     */
+    Dropzone.prototype.initialize = function () {
+        if (this.options.disableDragAndDrop) {
+            // prevent default drop event
+            this.documentEventHandlers.onDrop = function (e) {
+                e.preventDefault();
+            };
+            // do not consider outside of dropzone
+            this.$eventListener = this.$dropzone;
+            this.$eventListener.on('drop', this.documentEventHandlers.onDrop);
+        }
+        else {
+            this.attachDragAndDropEvent();
+        }
     };
+    /**
+     * attach Drag and Drop Events
+     */
+    Dropzone.prototype.attachDragAndDropEvent = function () {
+        var _this = this;
+        var collection = $$1();
+        var $dropzoneMessage = this.$dropzone.find('.note-dropzone-message');
+        this.documentEventHandlers.onDragenter = function (e) {
+            var isCodeview = _this.context.invoke('codeview.isActivated');
+            var hasEditorSize = _this.$editor.width() > 0 && _this.$editor.height() > 0;
+            if (!isCodeview && !collection.length && hasEditorSize) {
+                _this.$editor.addClass('dragover');
+                _this.$dropzone.width(_this.$editor.width());
+                _this.$dropzone.height(_this.$editor.height());
+                $dropzoneMessage.text(_this.lang.image.dragImageHere);
+            }
+            collection = collection.add(e.target);
+        };
+        this.documentEventHandlers.onDragleave = function (e) {
+            collection = collection.not(e.target);
+            if (!collection.length) {
+                _this.$editor.removeClass('dragover');
+            }
+        };
+        this.documentEventHandlers.onDrop = function () {
+            collection = $$1();
+            _this.$editor.removeClass('dragover');
+        };
+        // show dropzone on dragenter when dragging a object to document
+        // -but only if the editor is visible, i.e. has a positive width and height
+        this.$eventListener.on('dragenter', this.documentEventHandlers.onDragenter)
+            .on('dragleave', this.documentEventHandlers.onDragleave)
+            .on('drop', this.documentEventHandlers.onDrop);
+        // change dropzone's message on hover.
+        this.$dropzone.on('dragenter', function () {
+            _this.$dropzone.addClass('hover');
+            $dropzoneMessage.text(_this.lang.image.dropImage);
+        }).on('dragleave', function () {
+            _this.$dropzone.removeClass('hover');
+            $dropzoneMessage.text(_this.lang.image.dragImageHere);
+        });
+        // attach dropImage
+        this.$dropzone.on('drop', function (event) {
+            var dataTransfer = event.originalEvent.dataTransfer;
+            // stop the browser from opening the dropped content
+            event.preventDefault();
+            if (dataTransfer && dataTransfer.files && dataTransfer.files.length) {
+                _this.$editable.focus();
+                _this.context.invoke('editor.insertImagesOrCallback', dataTransfer.files);
+            }
+            else {
+                $$1.each(dataTransfer.types, function (idx, type) {
+                    var content = dataTransfer.getData(type);
+                    if (type.toLowerCase().indexOf('text') > -1) {
+                        _this.context.invoke('editor.pasteHTML', content);
+                    }
+                    else {
+                        $$1(content).each(function (idx, item) {
+                            _this.context.invoke('editor.insertNode', item);
+                        });
+                    }
+                });
+            }
+        }).on('dragover', false); // prevent default dragover event
+    };
+    Dropzone.prototype.destroy = function () {
+        var _this = this;
+        Object.keys(this.documentEventHandlers).forEach(function (key) {
+            _this.$eventListener.off(key.substr(2).toLowerCase(), _this.documentEventHandlers[key]);
+        });
+        this.documentEventHandlers = {};
+    };
+    return Dropzone;
+}());
 
+var CodeMirror;
+if (env.hasCodeMirror) {
+    if (env.isSupportAmd) {
+        require(['codemirror'], function (cm) {
+            CodeMirror = cm;
+        });
+    }
+    else {
+        CodeMirror = window.CodeMirror;
+    }
+}
+/**
+ * @class Codeview
+ */
+var CodeView = /** @class */ (function () {
+    function CodeView(context) {
+        this.context = context;
+        this.$editor = context.layoutInfo.editor;
+        this.$editable = context.layoutInfo.editable;
+        this.$codable = context.layoutInfo.codable;
+        this.options = context.options;
+    }
+    CodeView.prototype.sync = function () {
+        var isCodeview = this.isActivated();
+        if (isCodeview && env.hasCodeMirror) {
+            this.$codable.data('cmEditor').save();
+        }
+    };
     /**
      * @return {Boolean}
      */
-    this.isActivated = function () {
-      return $editor.hasClass('codeview');
+    CodeView.prototype.isActivated = function () {
+        return this.$editor.hasClass('codeview');
     };
-
     /**
      * toggle codeview
      */
-    this.toggle = function () {
-      if (this.isActivated()) {
-        this.deactivate();
-      } else {
-        this.activate();
-      }
-      context.triggerEvent('codeview.toggled');
+    CodeView.prototype.toggle = function () {
+        if (this.isActivated()) {
+            this.deactivate();
+        }
+        else {
+            this.activate();
+        }
+        this.context.triggerEvent('codeview.toggled');
     };
-
     /**
      * activate code view
      */
-    this.activate = function () {
-      $codable.val(dom.html($editable, options.prettifyHtml));
-      $codable.height($editable.height());
-
-      context.invoke('toolbar.updateCodeview', true);
-      $editor.addClass('codeview');
-      $codable.focus();
-
-      // activate CodeMirror as codable
-      if (agent.hasCodeMirror) {
-        var cmEditor = CodeMirror.fromTextArea($codable[0], options.codemirror);
-
-        // CodeMirror TernServer
-        if (options.codemirror.tern) {
-          var server = new CodeMirror.TernServer(options.codemirror.tern);
-          cmEditor.ternServer = server;
-          cmEditor.on('cursorActivity', function (cm) {
-            server.updateArgHints(cm);
-          });
+    CodeView.prototype.activate = function () {
+        var _this = this;
+        this.$codable.val(dom.html(this.$editable, this.options.prettifyHtml));
+        this.$codable.height(this.$editable.height());
+        this.context.invoke('toolbar.updateCodeview', true);
+        this.$editor.addClass('codeview');
+        this.$codable.focus();
+        // activate CodeMirror as codable
+        if (env.hasCodeMirror) {
+            var cmEditor_1 = CodeMirror.fromTextArea(this.$codable[0], this.options.codemirror);
+            // CodeMirror TernServer
+            if (this.options.codemirror.tern) {
+                var server_1 = new CodeMirror.TernServer(this.options.codemirror.tern);
+                cmEditor_1.ternServer = server_1;
+                cmEditor_1.on('cursorActivity', function (cm) {
+                    server_1.updateArgHints(cm);
+                });
+            }
+            cmEditor_1.on('blur', function (event) {
+                _this.context.triggerEvent('blur.codeview', cmEditor_1.getValue(), event);
+            });
+            // CodeMirror hasn't Padding.
+            cmEditor_1.setSize(null, this.$editable.outerHeight());
+            this.$codable.data('cmEditor', cmEditor_1);
         }
-
-        // CodeMirror hasn't Padding.
-        cmEditor.setSize(null, $editable.outerHeight());
-        $codable.data('cmEditor', cmEditor);
-      }
+        else {
+            this.$codable.on('blur', function (event) {
+                _this.context.triggerEvent('blur.codeview', _this.$codable.val(), event);
+            });
+        }
     };
-
     /**
      * deactivate code view
      */
-    this.deactivate = function () {
-      // deactivate CodeMirror as codable
-      if (agent.hasCodeMirror) {
-        var cmEditor = $codable.data('cmEditor');
-        $codable.val(cmEditor.getValue());
-        cmEditor.toTextArea();
-      }
-
-      var value = dom.value($codable, options.prettifyHtml) || dom.emptyPara;
-      var isChange = $editable.html() !== value;
-
-      $editable.html(value);
-      $editable.height(options.height ? $codable.height() : 'auto');
-      $editor.removeClass('codeview');
-
-      if (isChange) {
-        context.triggerEvent('change', $editable.html(), $editable);
-      }
-
-      $editable.focus();
-
-      context.invoke('toolbar.updateCodeview', false);
+    CodeView.prototype.deactivate = function () {
+        // deactivate CodeMirror as codable
+        if (env.hasCodeMirror) {
+            var cmEditor = this.$codable.data('cmEditor');
+            this.$codable.val(cmEditor.getValue());
+            cmEditor.toTextArea();
+        }
+        var value = dom.value(this.$codable, this.options.prettifyHtml) || dom.emptyPara;
+        var isChange = this.$editable.html() !== value;
+        this.$editable.html(value);
+        this.$editable.height(this.options.height ? this.$codable.height() : 'auto');
+        this.$editor.removeClass('codeview');
+        if (isChange) {
+            this.context.triggerEvent('change', this.$editable.html(), this.$editable);
+        }
+        this.$editable.focus();
+        this.context.invoke('toolbar.updateCodeview', false);
     };
-
-    this.destroy = function () {
-      if (this.isActivated()) {
-        this.deactivate();
-      }
+    CodeView.prototype.destroy = function () {
+        if (this.isActivated()) {
+            this.deactivate();
+        }
     };
-  };
+    return CodeView;
+}());
 
-  var EDITABLE_PADDING = 24;
+var EDITABLE_PADDING = 24;
+var Statusbar = /** @class */ (function () {
+    function Statusbar(context) {
+        this.$document = $$1(document);
+        this.$statusbar = context.layoutInfo.statusbar;
+        this.$editable = context.layoutInfo.editable;
+        this.options = context.options;
+    }
+    Statusbar.prototype.initialize = function () {
+        var _this = this;
+        if (this.options.airMode || this.options.disableResizeEditor) {
+            this.destroy();
+            return;
+        }
+        this.$statusbar.on('mousedown', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var editableTop = _this.$editable.offset().top - _this.$document.scrollTop();
+            var onMouseMove = function (event) {
+                var height = event.clientY - (editableTop + EDITABLE_PADDING);
+                height = (_this.options.minheight > 0) ? Math.max(height, _this.options.minheight) : height;
+                height = (_this.options.maxHeight > 0) ? Math.min(height, _this.options.maxHeight) : height;
+                _this.$editable.height(height);
+            };
+            _this.$document.on('mousemove', onMouseMove).one('mouseup', function () {
+                _this.$document.off('mousemove', onMouseMove);
+            });
+        });
+    };
+    Statusbar.prototype.destroy = function () {
+        this.$statusbar.off();
+    };
+    return Statusbar;
+}());
 
-  var Statusbar = function (context) {
-    var $document = $(document);
-    var $statusbar = context.layoutInfo.statusbar;
-    var $editable = context.layoutInfo.editable;
-    var options = context.options;
-
-    this.initialize = function () {
-      if (options.airMode || options.disableResizeEditor) {
-        this.destroy();
-        return;
-      }
-
-      $statusbar.on('mousedown', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        var editableTop = $editable.offset().top - $document.scrollTop();
-        var onMouseMove = function (event) {
-          var height = event.clientY - (editableTop + EDITABLE_PADDING);
-
-          height = (options.minheight > 0) ? Math.max(height, options.minheight) : height;
-          height = (options.maxHeight > 0) ? Math.min(height, options.maxHeight) : height;
-
-          $editable.height(height);
+var Fullscreen = /** @class */ (function () {
+    function Fullscreen(context) {
+        var _this = this;
+        this.context = context;
+        this.$editor = context.layoutInfo.editor;
+        this.$toolbar = context.layoutInfo.toolbar;
+        this.$editable = context.layoutInfo.editable;
+        this.$codable = context.layoutInfo.codable;
+        this.$window = $$1(window);
+        this.$scrollbar = $$1('html, body');
+        this.onResize = function () {
+            _this.resizeTo({
+                h: _this.$window.height() - _this.$toolbar.outerHeight()
+            });
         };
-
-        $document
-          .on('mousemove', onMouseMove)
-          .one('mouseup', function () {
-            $document.off('mousemove', onMouseMove);
-          });
-      });
+    }
+    Fullscreen.prototype.resizeTo = function (size) {
+        this.$editable.css('height', size.h);
+        this.$codable.css('height', size.h);
+        if (this.$codable.data('cmeditor')) {
+            this.$codable.data('cmeditor').setsize(null, size.h);
+        }
     };
-
-    this.destroy = function () {
-      $statusbar.off();
-      $statusbar.remove();
-    };
-  };
-
-  var Fullscreen = function (context) {
-    var self = this;
-    var $editor = context.layoutInfo.editor;
-    var $toolbar = context.layoutInfo.toolbar;
-    var $editable = context.layoutInfo.editable;
-    var $codable = context.layoutInfo.codable;
-
-    var $window = $(window);
-    var $scrollbar = $('html, body');
-
-    this.resizeTo = function (size) {
-      $editable.css('height', size.h);
-      $codable.css('height', size.h);
-      if ($codable.data('cmeditor')) {
-        $codable.data('cmeditor').setsize(null, size.h);
-      }
-    };
-
-    this.onResize = function () {
-      self.resizeTo({
-        h: $window.height() - $toolbar.outerHeight()
-      });
-    };
-
     /**
      * toggle fullscreen
      */
-    this.toggle = function () {
-      $editor.toggleClass('fullscreen');
-      if (this.isFullscreen()) {
-        $editable.data('orgHeight', $editable.css('height'));
-        $window.on('resize', this.onResize).trigger('resize');
-        $scrollbar.css('overflow', 'hidden');
-      } else {
-        $window.off('resize', this.onResize);
-        this.resizeTo({ h: $editable.data('orgHeight') });
-        $scrollbar.css('overflow', 'visible');
-      }
-
-      context.invoke('toolbar.updateFullscreen', this.isFullscreen());
-    };
-
-    this.isFullscreen = function () {
-      return $editor.hasClass('fullscreen');
-    };
-  };
-
-  var Handle = function (context) {
-    var self = this;
-
-    var $document = $(document);
-    var $editingArea = context.layoutInfo.editingArea;
-    var options = context.options;
-
-    this.events = {
-      'summernote.mousedown': function (we, e) {
-        if (self.update(e.target)) {
-          e.preventDefault();
+    Fullscreen.prototype.toggle = function () {
+        this.$editor.toggleClass('fullscreen');
+        if (this.isFullscreen()) {
+            this.$editable.data('orgHeight', this.$editable.css('height'));
+            this.$window.on('resize', this.onResize).trigger('resize');
+            this.$scrollbar.css('overflow', 'hidden');
         }
-      },
-      'summernote.keyup summernote.scroll summernote.change summernote.dialog.shown': function () {
-        self.update();
-      },
-      'summernote.disable': function () {
-        self.hide();
-      },
-      'summernote.codeview.toggled': function () {
-        self.update();
-      }
-    };
-
-    this.initialize = function () {
-      this.$handle = $([
-        '<div class="note-handle">',
-        '<div class="note-control-selection">',
-        '<div class="note-control-selection-bg"></div>',
-        '<div class="note-control-holder note-control-nw"></div>',
-        '<div class="note-control-holder note-control-ne"></div>',
-        '<div class="note-control-holder note-control-sw"></div>',
-        '<div class="',
-        (options.disableResizeImage ? 'note-control-holder' : 'note-control-sizing'),
-        ' note-control-se"></div>',
-        (options.disableResizeImage ? '' : '<div class="note-control-selection-info"></div>'),
-        '</div>',
-        '</div>'
-      ].join('')).prependTo($editingArea);
-
-      this.$handle.on('mousedown', function (event) {
-        if (dom.isControlSizing(event.target)) {
-          event.preventDefault();
-          event.stopPropagation();
-
-          var $target = self.$handle.find('.note-control-selection').data('target'),
-              posStart = $target.offset(),
-              scrollTop = $document.scrollTop();
-
-          var onMouseMove = function (event) {
-            context.invoke('editor.resizeTo', {
-              x: event.clientX - posStart.left,
-              y: event.clientY - (posStart.top - scrollTop)
-            }, $target, !event.shiftKey);
-
-            self.update($target[0]);
-          };
-
-          $document
-            .on('mousemove', onMouseMove)
-            .one('mouseup', function (e) {
-              e.preventDefault();
-              $document.off('mousemove', onMouseMove);
-              context.invoke('editor.afterCommand');
-            });
-
-          if (!$target.data('ratio')) { // original ratio.
-            $target.data('ratio', $target.height() / $target.width());
-          }
+        else {
+            this.$window.off('resize', this.onResize);
+            this.resizeTo({ h: this.$editable.data('orgHeight') });
+            this.$scrollbar.css('overflow', 'visible');
         }
-      });
-
-      // Listen for scrolling on the handle overlay.
-      this.$handle.on('wheel', function (e) {
-        e.preventDefault();
-        self.update();
-      });
+        this.context.invoke('toolbar.updateFullscreen', this.isFullscreen());
     };
-
-    this.destroy = function () {
-      this.$handle.remove();
+    Fullscreen.prototype.isFullscreen = function () {
+        return this.$editor.hasClass('fullscreen');
     };
+    return Fullscreen;
+}());
 
-    this.update = function (target) {
-      if (context.isDisabled()) {
-        return false;
-      }
-
-      var isImage = dom.isImg(target);
-      var $selection = this.$handle.find('.note-control-selection');
-
-      context.invoke('imagePopover.update', target);
-
-      if (isImage) {
-        var $image = $(target);
-        var position = $image.position();
-        var pos = {
-          left: position.left + parseInt($image.css('marginLeft'), 10),
-          top: position.top + parseInt($image.css('marginTop'), 10)
+var Handle = /** @class */ (function () {
+    function Handle(context) {
+        var _this = this;
+        this.context = context;
+        this.$document = $$1(document);
+        this.$editingArea = context.layoutInfo.editingArea;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+        this.events = {
+            'summernote.mousedown': function (we, e) {
+                if (_this.update(e.target)) {
+                    e.preventDefault();
+                }
+            },
+            'summernote.keyup summernote.scroll summernote.change summernote.dialog.shown': function () {
+                _this.update();
+            },
+            'summernote.disable': function () {
+                _this.hide();
+            },
+            'summernote.codeview.toggled': function () {
+                _this.update();
+            }
         };
-
-        // exclude margin
-        var imageSize = {
-          w: $image.outerWidth(false),
-          h: $image.outerHeight(false)
-        };
-
-        $selection.css({
-          display: 'block',
-          left: pos.left,
-          top: pos.top,
-          width: imageSize.w,
-          height: imageSize.h
-        }).data('target', $image); // save current image element.
-
-        var sizingText = imageSize.w + 'x' + imageSize.h;
-        $selection.find('.note-control-selection-info').text(sizingText);
-        context.invoke('editor.saveTarget', target);
-      } else {
-        this.hide();
-      }
-
-      return isImage;
+    }
+    Handle.prototype.initialize = function () {
+        var _this = this;
+        this.$handle = $$1([
+            '<div class="note-handle">',
+            '<div class="note-control-selection">',
+            '<div class="note-control-selection-bg"></div>',
+            '<div class="note-control-holder note-control-nw"></div>',
+            '<div class="note-control-holder note-control-ne"></div>',
+            '<div class="note-control-holder note-control-sw"></div>',
+            '<div class="',
+            (this.options.disableResizeImage ? 'note-control-holder' : 'note-control-sizing'),
+            ' note-control-se"></div>',
+            (this.options.disableResizeImage ? '' : '<div class="note-control-selection-info"></div>'),
+            '</div>',
+            '</div>'
+        ].join('')).prependTo(this.$editingArea);
+        this.$handle.on('mousedown', function (event) {
+            if (dom.isControlSizing(event.target)) {
+                event.preventDefault();
+                event.stopPropagation();
+                var $target_1 = _this.$handle.find('.note-control-selection').data('target');
+                var posStart_1 = $target_1.offset();
+                var scrollTop_1 = _this.$document.scrollTop();
+                var onMouseMove_1 = function (event) {
+                    _this.context.invoke('editor.resizeTo', {
+                        x: event.clientX - posStart_1.left,
+                        y: event.clientY - (posStart_1.top - scrollTop_1)
+                    }, $target_1, !event.shiftKey);
+                    _this.update($target_1[0]);
+                };
+                _this.$document
+                    .on('mousemove', onMouseMove_1)
+                    .one('mouseup', function (e) {
+                    e.preventDefault();
+                    _this.$document.off('mousemove', onMouseMove_1);
+                    _this.context.invoke('editor.afterCommand');
+                });
+                if (!$target_1.data('ratio')) {
+                    $target_1.data('ratio', $target_1.height() / $target_1.width());
+                }
+            }
+        });
+        // Listen for scrolling on the handle overlay.
+        this.$handle.on('wheel', function (e) {
+            e.preventDefault();
+            _this.update();
+        });
     };
-
+    Handle.prototype.destroy = function () {
+        this.$handle.remove();
+    };
+    Handle.prototype.update = function (target) {
+        if (this.context.isDisabled()) {
+            return false;
+        }
+        var isImage = dom.isImg(target);
+        var $selection = this.$handle.find('.note-control-selection');
+        this.context.invoke('imagePopover.update', target);
+        if (isImage) {
+            var $image = $$1(target);
+            var position = $image.position();
+            var pos = {
+                left: position.left + parseInt($image.css('marginLeft'), 10),
+                top: position.top + parseInt($image.css('marginTop'), 10)
+            };
+            // exclude margin
+            var imageSize = {
+                w: $image.outerWidth(false),
+                h: $image.outerHeight(false)
+            };
+            $selection.css({
+                display: 'block',
+                left: pos.left,
+                top: pos.top,
+                width: imageSize.w,
+                height: imageSize.h
+            }).data('target', $image); // save current image element.
+            var origImageObj = new Image();
+            origImageObj.src = $image.attr('src');
+            var sizingText = imageSize.w + 'x' + imageSize.h + ' (' + this.lang.image.original + ': ' + origImageObj.width + 'x' + origImageObj.height + ')';
+            $selection.find('.note-control-selection-info').text(sizingText);
+            this.context.invoke('editor.saveTarget', target);
+        }
+        else {
+            this.hide();
+        }
+        return isImage;
+    };
     /**
      * hide
      *
      * @param {jQuery} $handle
      */
-    this.hide = function () {
-      context.invoke('editor.clearTarget');
-      this.$handle.children().hide();
+    Handle.prototype.hide = function () {
+        this.context.invoke('editor.clearTarget');
+        this.$handle.children().hide();
     };
-  };
+    return Handle;
+}());
 
-  var AutoLink = function (context) {
-    var self = this;
-    var defaultScheme = 'http://';
-    var linkPattern = /^([A-Za-z][A-Za-z0-9+-.]*\:[\/\/]?|mailto:[A-Z0-9._%+-]+@)?(www\.)?(.+)$/i;
-
-    this.events = {
-      'summernote.keyup': function (we, e) {
-        if (!e.isDefaultPrevented()) {
-          self.handleKeyup(e);
-        }
-      },
-      'summernote.keydown': function (we, e) {
-        self.handleKeydown(e);
-      }
-    };
-
-    this.initialize = function () {
-      this.lastWordRange = null;
-    };
-
-    this.destroy = function () {
-      this.lastWordRange = null;
-    };
-
-    this.replace = function () {
-      if (!this.lastWordRange) {
-        return;
-      }
-
-      var keyword = this.lastWordRange.toString();
-      var match = keyword.match(linkPattern);
-
-      if (match && (match[1] || match[2])) {
-        var link = match[1] ? keyword : defaultScheme + keyword;
-        var node = $('<a />').html(keyword).attr('href', link)[0];
-
-        this.lastWordRange.insertNode(node);
-        this.lastWordRange = null;
-        context.invoke('editor.focus');
-      }
-
-    };
-
-    this.handleKeydown = function (e) {
-      if (list.contains([key.code.ENTER, key.code.SPACE], e.keyCode)) {
-        var wordRange = context.invoke('editor.createRange').getWordRange();
-        this.lastWordRange = wordRange;
-      }
-    };
-
-    this.handleKeyup = function (e) {
-      if (list.contains([key.code.ENTER, key.code.SPACE], e.keyCode)) {
-        this.replace();
-      }
-    };
-  };
-
-  /**
-   * textarea auto sync.
-   */
-  var AutoSync = function (context) {
-    var $note = context.layoutInfo.note;
-
-    this.events = {
-      'summernote.change': function () {
-        $note.val(context.invoke('code'));
-      }
-    };
-
-    this.shouldInitialize = function () {
-      return dom.isTextarea($note[0]);
-    };
-  };
-
-  var Placeholder = function (context) {
-    var self = this;
-    var $editingArea = context.layoutInfo.editingArea;
-    var options = context.options;
-
-    this.events = {
-      'summernote.init summernote.change': function () {
-        self.update();
-      },
-      'summernote.codeview.toggled': function () {
-        self.update();
-      }
-    };
-
-    this.shouldInitialize = function () {
-      return !!options.placeholder;
-    };
-
-    this.initialize = function () {
-      this.$placeholder = $('<div class="note-placeholder">');
-      this.$placeholder.on('click', function () {
-        context.invoke('focus');
-      }).text(options.placeholder).prependTo($editingArea);
-
-      this.update();
-    };
-
-    this.destroy = function () {
-      this.$placeholder.remove();
-    };
-
-    this.update = function () {
-      var isShow = !context.invoke('codeview.isActivated') && context.invoke('editor.isEmpty');
-      this.$placeholder.toggle(isShow);
-    };
-  };
-
-  var Buttons = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var $toolbar = context.layoutInfo.toolbar;
-    var options = context.options;
-    var lang = options.langInfo;
-
-    var invertedKeyMap = func.invertObject(options.keyMap[agent.isMac ? 'mac' : 'pc']);
-
-    var representShortcut = this.representShortcut = function (editorMethod) {
-      var shortcut = invertedKeyMap[editorMethod];
-      if (!options.shortcuts || !shortcut) {
-        return '';
-      }
-
-      if (agent.isMac) {
-        shortcut = shortcut.replace('CMD', '⌘').replace('SHIFT', '⇧');
-      }
-
-      shortcut = shortcut.replace('BACKSLASH', '\\')
-                         .replace('SLASH', '/')
-                         .replace('LEFTBRACKET', '[')
-                         .replace('RIGHTBRACKET', ']');
-
-      return ' (' + shortcut + ')';
-    };
-
-    this.initialize = function () {
-      this.addToolbarButtons();
-      this.addImagePopoverButtons();
-      this.addLinkPopoverButtons();
-      this.addTablePopoverButtons();
-      this.fontInstalledMap = {};
-    };
-
-    this.destroy = function () {
-      delete this.fontInstalledMap;
-    };
-
-    this.isFontInstalled = function (name) {
-      if (!self.fontInstalledMap.hasOwnProperty(name)) {
-        self.fontInstalledMap[name] = agent.isFontInstalled(name) ||
-          list.contains(options.fontNamesIgnoreCheck, name);
-      }
-
-      return self.fontInstalledMap[name];
-    };
-
-    this.addToolbarButtons = function () {
-      context.memo('button.style', function () {
-        return ui.buttonGroup([
-          ui.button({
-            className: 'dropdown-toggle',
-            contents: ui.dropdownButtonContents(ui.icon(options.icons.magic), options),
-            tooltip: lang.style.style,
-            data: {
-              toggle: 'dropdown'
-            }
-          }),
-          ui.dropdown({
-            className: 'dropdown-style',
-            items: context.options.styleTags,
-            template: function (item) {
-
-              if (typeof item === 'string') {
-                item = { tag: item, title: (lang.style.hasOwnProperty(item) ? lang.style[item] : item) };
-              }
-
-              var tag = item.tag;
-              var title = item.title;
-              var style = item.style ? ' style="' + item.style + '" ' : '';
-              var className = item.className ? ' class="' + item.className + '"' : '';
-
-              return '<' + tag + style + className + '>' + title + '</' + tag +  '>';
-            },
-            click: context.createInvokeHandler('editor.formatBlock')
-          })
-        ]).render();
-      });
-
-      context.memo('button.bold', function () {
-        return ui.button({
-          className: 'note-btn-bold',
-          contents: ui.icon(options.icons.bold),
-          tooltip: lang.font.bold + representShortcut('bold'),
-          click: context.createInvokeHandlerAndUpdateState('editor.bold')
-        }).render();
-      });
-
-      context.memo('button.italic', function () {
-        return ui.button({
-          className: 'note-btn-italic',
-          contents: ui.icon(options.icons.italic),
-          tooltip: lang.font.italic + representShortcut('italic'),
-          click: context.createInvokeHandlerAndUpdateState('editor.italic')
-        }).render();
-      });
-
-      context.memo('button.underline', function () {
-        return ui.button({
-          className: 'note-btn-underline',
-          contents: ui.icon(options.icons.underline),
-          tooltip: lang.font.underline + representShortcut('underline'),
-          click: context.createInvokeHandlerAndUpdateState('editor.underline')
-        }).render();
-      });
-
-      context.memo('button.clear', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.eraser),
-          tooltip: lang.font.clear + representShortcut('removeFormat'),
-          click: context.createInvokeHandler('editor.removeFormat')
-        }).render();
-      });
-
-      context.memo('button.strikethrough', function () {
-        return ui.button({
-          className: 'note-btn-strikethrough',
-          contents: ui.icon(options.icons.strikethrough),
-          tooltip: lang.font.strikethrough + representShortcut('strikethrough'),
-          click: context.createInvokeHandlerAndUpdateState('editor.strikethrough')
-        }).render();
-      });
-
-      context.memo('button.superscript', function () {
-        return ui.button({
-          className: 'note-btn-superscript',
-          contents: ui.icon(options.icons.superscript),
-          tooltip: lang.font.superscript,
-          click: context.createInvokeHandlerAndUpdateState('editor.superscript')
-        }).render();
-      });
-
-      context.memo('button.subscript', function () {
-        return ui.button({
-          className: 'note-btn-subscript',
-          contents: ui.icon(options.icons.subscript),
-          tooltip: lang.font.subscript,
-          click: context.createInvokeHandlerAndUpdateState('editor.subscript')
-        }).render();
-      });
-
-      context.memo('button.fontname', function () {
-        return ui.buttonGroup([
-          ui.button({
-            className: 'dropdown-toggle',
-            contents: ui.dropdownButtonContents('<span class="note-current-fontname"/>', options),
-            tooltip: lang.font.name,
-            data: {
-              toggle: 'dropdown'
-            }
-          }),
-          ui.dropdownCheck({
-            className: 'dropdown-fontname',
-            checkClassName: options.icons.menuCheck,
-            items: options.fontNames.filter(self.isFontInstalled),
-            template: function (item) {
-              return '<span style="font-family:' + item + '">' + item + '</span>';
-            },
-            click: context.createInvokeHandlerAndUpdateState('editor.fontName')
-          })
-        ]).render();
-      });
-
-      context.memo('button.fontsize', function () {
-        return ui.buttonGroup([
-          ui.button({
-            className: 'dropdown-toggle',
-            contents: ui.dropdownButtonContents('<span class="note-current-fontsize"/>', options),
-            tooltip: lang.font.size,
-            data: {
-              toggle: 'dropdown'
-            }
-          }),
-          ui.dropdownCheck({
-            className: 'dropdown-fontsize',
-            checkClassName: options.icons.menuCheck,
-            items: options.fontSizes,
-            click: context.createInvokeHandlerAndUpdateState('editor.fontSize')
-          })
-        ]).render();
-      });
-
-      context.memo('button.color', function () {
-        return ui.buttonGroup({
-          className: 'note-color',
-          children: [
-            ui.button({
-              className: 'note-current-color-button',
-              contents: ui.icon(options.icons.font + ' note-recent-color'),
-              tooltip: lang.color.recent,
-              click: function (e) {
-                var $button = $(e.currentTarget);
-                context.invoke('editor.color', {
-                  backColor: $button.attr('data-backColor'),
-                  foreColor: $button.attr('data-foreColor')
-                });
-              },
-              callback: function ($button) {
-                var $recentColor = $button.find('.note-recent-color');
-                $recentColor.css('background-color', '#FFFF00');
-                $button.attr('data-backColor', '#FFFF00');
-              }
-            }),
-            ui.button({
-              className: 'dropdown-toggle',
-              contents: ui.dropdownButtonContents('', options),
-              tooltip: lang.color.more,
-              data: {
-                toggle: 'dropdown'
-              }
-            }),
-            ui.dropdown({
-              items: [
-                '<div class="note-palette">',
-                '  <div class="note-palette-title">' + lang.color.background + '</div>',
-                '  <div>',
-                '    <button type="button" class="note-color-reset btn btn-light" data-event="backColor" data-value="inherit">',
-                lang.color.transparent,
-                '    </button>',
-                '  </div>',
-                '  <div class="note-holder" data-event="backColor"/>',
-                '</div>',
-                '<div class="note-palette">',
-                '  <div class="note-palette-title">' + lang.color.foreground + '</div>',
-                '  <div>',
-                '    <button type="button" class="note-color-reset btn btn-light" data-event="removeFormat" data-value="foreColor">',
-                lang.color.resetToDefault,
-                '    </button>',
-                '  </div>',
-                '  <div class="note-holder" data-event="foreColor"/>',
-                '</div>'
-              ].join(''),
-              callback: function ($dropdown) {
-                $dropdown.find('.note-holder').each(function () {
-                  var $holder = $(this);
-                  $holder.append(ui.palette({
-                    colors: options.colors,
-                    eventName: $holder.data('event'),
-                    tooltip: options.tooltip
-                  }).render());
-                });
-              },
-              click: function (event) {
-                var $button = $(event.target);
-                var eventName = $button.data('event');
-                var value = $button.data('value');
-
-                if (eventName && value) {
-                  var key = eventName === 'backColor' ? 'background-color' : 'color';
-                  var $color = $button.closest('.note-color').find('.note-recent-color');
-                  var $currentButton = $button.closest('.note-color').find('.note-current-color-button');
-
-                  $color.css(key, value);
-                  $currentButton.attr('data-' + eventName, value);
-                  context.invoke('editor.' + eventName, value);
+var defaultScheme = 'http://';
+var linkPattern = /^([A-Za-z][A-Za-z0-9+-.]*\:[\/\/]?|mailto:[A-Z0-9._%+-]+@)?(www\.)?(.+)$/i;
+var AutoLink = /** @class */ (function () {
+    function AutoLink(context) {
+        var _this = this;
+        this.context = context;
+        this.events = {
+            'summernote.keyup': function (we, e) {
+                if (!e.isDefaultPrevented()) {
+                    _this.handleKeyup(e);
                 }
-              }
-            })
-          ]
-        }).render();
-      });
-
-      context.memo('button.ul',  function () {
-        return ui.button({
-          contents: ui.icon(options.icons.unorderedlist),
-          tooltip: lang.lists.unordered + representShortcut('insertUnorderedList'),
-          click: context.createInvokeHandler('editor.insertUnorderedList')
-        }).render();
-      });
-
-      context.memo('button.ol', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.orderedlist),
-          tooltip: lang.lists.ordered + representShortcut('insertOrderedList'),
-          click:  context.createInvokeHandler('editor.insertOrderedList')
-        }).render();
-      });
-
-      var justifyLeft = ui.button({
-        contents: ui.icon(options.icons.alignLeft),
-        tooltip: lang.paragraph.left + representShortcut('justifyLeft'),
-        click: context.createInvokeHandler('editor.justifyLeft')
-      });
-
-      var justifyCenter = ui.button({
-        contents: ui.icon(options.icons.alignCenter),
-        tooltip: lang.paragraph.center + representShortcut('justifyCenter'),
-        click: context.createInvokeHandler('editor.justifyCenter')
-      });
-
-      var justifyRight = ui.button({
-        contents: ui.icon(options.icons.alignRight),
-        tooltip: lang.paragraph.right + representShortcut('justifyRight'),
-        click: context.createInvokeHandler('editor.justifyRight')
-      });
-
-      var justifyFull = ui.button({
-        contents: ui.icon(options.icons.alignJustify),
-        tooltip: lang.paragraph.justify + representShortcut('justifyFull'),
-        click: context.createInvokeHandler('editor.justifyFull')
-      });
-
-      var outdent = ui.button({
-        contents: ui.icon(options.icons.outdent),
-        tooltip: lang.paragraph.outdent + representShortcut('outdent'),
-        click: context.createInvokeHandler('editor.outdent')
-      });
-
-      var indent = ui.button({
-        contents: ui.icon(options.icons.indent),
-        tooltip: lang.paragraph.indent + representShortcut('indent'),
-        click: context.createInvokeHandler('editor.indent')
-      });
-
-      context.memo('button.justifyLeft', func.invoke(justifyLeft, 'render'));
-      context.memo('button.justifyCenter', func.invoke(justifyCenter, 'render'));
-      context.memo('button.justifyRight', func.invoke(justifyRight, 'render'));
-      context.memo('button.justifyFull', func.invoke(justifyFull, 'render'));
-      context.memo('button.outdent', func.invoke(outdent, 'render'));
-      context.memo('button.indent', func.invoke(indent, 'render'));
-
-      context.memo('button.paragraph', function () {
-        return ui.buttonGroup([
-          ui.button({
-            className: 'dropdown-toggle',
-            contents: ui.dropdownButtonContents(ui.icon(options.icons.alignLeft), options),
-            tooltip: lang.paragraph.paragraph,
-            data: {
-              toggle: 'dropdown'
+            },
+            'summernote.keydown': function (we, e) {
+                _this.handleKeydown(e);
             }
-          }),
-          ui.dropdown([
-            ui.buttonGroup({
-              className: 'note-align',
-              children: [justifyLeft, justifyCenter, justifyRight, justifyFull]
-            }),
-            ui.buttonGroup({
-              className: 'note-list',
-              children: [outdent, indent]
-            })
-          ])
-        ]).render();
-      });
-
-      context.memo('button.height', function () {
-        return ui.buttonGroup([
-          ui.button({
-            className: 'dropdown-toggle',
-            contents: ui.dropdownButtonContents(ui.icon(options.icons.textHeight), options),
-            tooltip: lang.font.height,
-            data: {
-              toggle: 'dropdown'
-            }
-          }),
-          ui.dropdownCheck({
-            items: options.lineHeights,
-            checkClassName: options.icons.menuCheck,
-            className: 'dropdown-line-height',
-            click: context.createInvokeHandler('editor.lineHeight')
-          })
-        ]).render();
-      });
-
-      context.memo('button.table', function () {
-        return ui.buttonGroup([
-          ui.button({
-            className: 'dropdown-toggle',
-            contents: ui.dropdownButtonContents(ui.icon(options.icons.table), options),
-            tooltip: lang.table.table,
-            data: {
-              toggle: 'dropdown'
-            }
-          }),
-          ui.dropdown({
-            className: 'note-table',
-            items: [
-              '<div class="note-dimension-picker">',
-              '  <div class="note-dimension-picker-mousecatcher" data-event="insertTable" data-value="1x1"/>',
-              '  <div class="note-dimension-picker-highlighted"/>',
-              '  <div class="note-dimension-picker-unhighlighted"/>',
-              '</div>',
-              '<div class="note-dimension-display">1 x 1</div>'
-            ].join('')
-          })
-        ], {
-          callback: function ($node) {
-            var $catcher = $node.find('.note-dimension-picker-mousecatcher');
-            $catcher.css({
-              width: options.insertTableMaxSize.col + 'em',
-              height: options.insertTableMaxSize.row + 'em'
-            }).mousedown(context.createInvokeHandler('editor.insertTable'))
-              .on('mousemove', self.tableMoveHandler);
-          }
-        }).render();
-      });
-
-      context.memo('button.link', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.link),
-          tooltip: lang.link.link + representShortcut('linkDialog.show'),
-          click: context.createInvokeHandler('linkDialog.show')
-        }).render();
-      });
-
-      context.memo('button.picture', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.picture),
-          tooltip: lang.image.image,
-          click: context.createInvokeHandler('imageDialog.show')
-        }).render();
-      });
-
-      context.memo('button.video', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.video),
-          tooltip: lang.video.video,
-          click: context.createInvokeHandler('videoDialog.show')
-        }).render();
-      });
-
-      context.memo('button.hr', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.minus),
-          tooltip: lang.hr.insert + representShortcut('insertHorizontalRule'),
-          click: context.createInvokeHandler('editor.insertHorizontalRule')
-        }).render();
-      });
-
-      context.memo('button.fullscreen', function () {
-        return ui.button({
-          className: 'btn-fullscreen',
-          contents: ui.icon(options.icons.arrowsAlt),
-          tooltip: lang.options.fullscreen,
-          click: context.createInvokeHandler('fullscreen.toggle')
-        }).render();
-      });
-
-      context.memo('button.codeview', function () {
-        return ui.button({
-          className: 'btn-codeview',
-          contents: ui.icon(options.icons.code),
-          tooltip: lang.options.codeview,
-          click: context.createInvokeHandler('codeview.toggle')
-        }).render();
-      });
-
-      context.memo('button.redo', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.redo),
-          tooltip: lang.history.redo + representShortcut('redo'),
-          click: context.createInvokeHandler('editor.redo')
-        }).render();
-      });
-
-      context.memo('button.undo', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.undo),
-          tooltip: lang.history.undo + representShortcut('undo'),
-          click: context.createInvokeHandler('editor.undo')
-        }).render();
-      });
-
-      context.memo('button.help', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.question),
-          tooltip: lang.options.help,
-          click: context.createInvokeHandler('helpDialog.show')
-        }).render();
-      });
+        };
+    }
+    AutoLink.prototype.initialize = function () {
+        this.lastWordRange = null;
     };
+    AutoLink.prototype.destroy = function () {
+        this.lastWordRange = null;
+    };
+    AutoLink.prototype.replace = function () {
+        if (!this.lastWordRange) {
+            return;
+        }
+        var keyword = this.lastWordRange.toString();
+        var match = keyword.match(linkPattern);
+        if (match && (match[1] || match[2])) {
+            var link = match[1] ? keyword : defaultScheme + keyword;
+            var node = $$1('<a />').html(keyword).attr('href', link)[0];
+            this.lastWordRange.insertNode(node);
+            this.lastWordRange = null;
+            this.context.invoke('editor.focus');
+        }
+    };
+    AutoLink.prototype.handleKeydown = function (e) {
+        if (lists.contains([key.code.ENTER, key.code.SPACE], e.keyCode)) {
+            var wordRange = this.context.invoke('editor.createRange').getWordRange();
+            this.lastWordRange = wordRange;
+        }
+    };
+    AutoLink.prototype.handleKeyup = function (e) {
+        if (lists.contains([key.code.ENTER, key.code.SPACE], e.keyCode)) {
+            this.replace();
+        }
+    };
+    return AutoLink;
+}());
 
+/**
+ * textarea auto sync.
+ */
+var AutoSync = /** @class */ (function () {
+    function AutoSync(context) {
+        var _this = this;
+        this.$note = context.layoutInfo.note;
+        this.events = {
+            'summernote.change': function () {
+                _this.$note.val(context.invoke('code'));
+            }
+        };
+    }
+    AutoSync.prototype.shouldInitialize = function () {
+        return dom.isTextarea(this.$note[0]);
+    };
+    return AutoSync;
+}());
+
+var Placeholder = /** @class */ (function () {
+    function Placeholder(context) {
+        var _this = this;
+        this.context = context;
+        this.$editingArea = context.layoutInfo.editingArea;
+        this.options = context.options;
+        this.events = {
+            'summernote.init summernote.change': function () {
+                _this.update();
+            },
+            'summernote.codeview.toggled': function () {
+                _this.update();
+            }
+        };
+    }
+    Placeholder.prototype.shouldInitialize = function () {
+        return !!this.options.placeholder;
+    };
+    Placeholder.prototype.initialize = function () {
+        var _this = this;
+        this.$placeholder = $$1('<div class="note-placeholder">');
+        this.$placeholder.on('click', function () {
+            _this.context.invoke('focus');
+        }).text(this.options.placeholder).prependTo(this.$editingArea);
+        this.update();
+    };
+    Placeholder.prototype.destroy = function () {
+        this.$placeholder.remove();
+    };
+    Placeholder.prototype.update = function () {
+        var isShow = !this.context.invoke('codeview.isActivated') && this.context.invoke('editor.isEmpty');
+        this.$placeholder.toggle(isShow);
+    };
+    return Placeholder;
+}());
+
+var Buttons = /** @class */ (function () {
+    function Buttons(context) {
+        this.ui = $$1.summernote.ui;
+        this.context = context;
+        this.$toolbar = context.layoutInfo.toolbar;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+        this.invertedKeyMap = func.invertObject(this.options.keyMap[env.isMac ? 'mac' : 'pc']);
+    }
+    Buttons.prototype.representShortcut = function (editorMethod) {
+        var shortcut = this.invertedKeyMap[editorMethod];
+        if (!this.options.shortcuts || !shortcut) {
+            return '';
+        }
+        if (env.isMac) {
+            shortcut = shortcut.replace('CMD', '⌘').replace('SHIFT', '⇧');
+        }
+        shortcut = shortcut.replace('BACKSLASH', '\\')
+            .replace('SLASH', '/')
+            .replace('LEFTBRACKET', '[')
+            .replace('RIGHTBRACKET', ']');
+        return ' (' + shortcut + ')';
+    };
+    Buttons.prototype.button = function (o) {
+        if (!this.options.tooltip && o.tooltip) {
+            delete o.tooltip;
+        }
+        o.container = this.options.container;
+        return this.ui.button(o);
+    };
+    Buttons.prototype.initialize = function () {
+        this.addToolbarButtons();
+        this.addImagePopoverButtons();
+        this.addLinkPopoverButtons();
+        this.addTablePopoverButtons();
+        this.fontInstalledMap = {};
+    };
+    Buttons.prototype.destroy = function () {
+        delete this.fontInstalledMap;
+    };
+    Buttons.prototype.isFontInstalled = function (name) {
+        if (!this.fontInstalledMap.hasOwnProperty(name)) {
+            this.fontInstalledMap[name] = env.isFontInstalled(name) ||
+                lists.contains(this.options.fontNamesIgnoreCheck, name);
+        }
+        return this.fontInstalledMap[name];
+    };
+    Buttons.prototype.isFontDeservedToAdd = function (name) {
+        var genericFamilies = ['sans-serif', 'serif', 'monospace', 'cursive', 'fantasy'];
+        name = name.toLowerCase();
+        return ((name !== '') && this.isFontInstalled(name) && ($$1.inArray(name, genericFamilies) === -1));
+    };
+    Buttons.prototype.addToolbarButtons = function () {
+        var _this = this;
+        this.context.memo('button.style', function () {
+            return _this.ui.buttonGroup([
+                _this.button({
+                    className: 'dropdown-toggle',
+                    contents: _this.ui.dropdownButtonContents(_this.ui.icon(_this.options.icons.magic), _this.options),
+                    tooltip: _this.lang.style.style,
+                    data: {
+                        toggle: 'dropdown'
+                    }
+                }),
+                _this.ui.dropdown({
+                    className: 'dropdown-style',
+                    items: _this.options.styleTags,
+                    template: function (item) {
+                        if (typeof item === 'string') {
+                            item = { tag: item, title: (_this.lang.style.hasOwnProperty(item) ? _this.lang.style[item] : item) };
+                        }
+                        var tag = item.tag;
+                        var title = item.title;
+                        var style = item.style ? ' style="' + item.style + '" ' : '';
+                        var className = item.className ? ' class="' + item.className + '"' : '';
+                        return '<' + tag + style + className + '>' + title + '</' + tag + '>';
+                    },
+                    click: _this.context.createInvokeHandler('editor.formatBlock')
+                })
+            ]).render();
+        });
+        var _loop_1 = function (styleIdx, styleLen) {
+            var item = this_1.options.styleTags[styleIdx];
+            this_1.context.memo('button.style.' + item, function () {
+                return _this.button({
+                    className: 'note-btn-style-' + item,
+                    contents: '<div data-value="' + item + '">' + item.toUpperCase() + '</div>',
+                    tooltip: item.toUpperCase(),
+                    click: _this.context.createInvokeHandler('editor.formatBlock')
+                }).render();
+            });
+        };
+        var this_1 = this;
+        for (var styleIdx = 0, styleLen = this.options.styleTags.length; styleIdx < styleLen; styleIdx++) {
+            _loop_1(styleIdx, styleLen);
+        }
+        this.context.memo('button.bold', function () {
+            return _this.button({
+                className: 'note-btn-bold',
+                contents: _this.ui.icon(_this.options.icons.bold),
+                tooltip: _this.lang.font.bold + _this.representShortcut('bold'),
+                click: _this.context.createInvokeHandlerAndUpdateState('editor.bold')
+            }).render();
+        });
+        this.context.memo('button.italic', function () {
+            return _this.button({
+                className: 'note-btn-italic',
+                contents: _this.ui.icon(_this.options.icons.italic),
+                tooltip: _this.lang.font.italic + _this.representShortcut('italic'),
+                click: _this.context.createInvokeHandlerAndUpdateState('editor.italic')
+            }).render();
+        });
+        this.context.memo('button.underline', function () {
+            return _this.button({
+                className: 'note-btn-underline',
+                contents: _this.ui.icon(_this.options.icons.underline),
+                tooltip: _this.lang.font.underline + _this.representShortcut('underline'),
+                click: _this.context.createInvokeHandlerAndUpdateState('editor.underline')
+            }).render();
+        });
+        this.context.memo('button.clear', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.eraser),
+                tooltip: _this.lang.font.clear + _this.representShortcut('removeFormat'),
+                click: _this.context.createInvokeHandler('editor.removeFormat')
+            }).render();
+        });
+        this.context.memo('button.strikethrough', function () {
+            return _this.button({
+                className: 'note-btn-strikethrough',
+                contents: _this.ui.icon(_this.options.icons.strikethrough),
+                tooltip: _this.lang.font.strikethrough + _this.representShortcut('strikethrough'),
+                click: _this.context.createInvokeHandlerAndUpdateState('editor.strikethrough')
+            }).render();
+        });
+        this.context.memo('button.superscript', function () {
+            return _this.button({
+                className: 'note-btn-superscript',
+                contents: _this.ui.icon(_this.options.icons.superscript),
+                tooltip: _this.lang.font.superscript,
+                click: _this.context.createInvokeHandlerAndUpdateState('editor.superscript')
+            }).render();
+        });
+        this.context.memo('button.subscript', function () {
+            return _this.button({
+                className: 'note-btn-subscript',
+                contents: _this.ui.icon(_this.options.icons.subscript),
+                tooltip: _this.lang.font.subscript,
+                click: _this.context.createInvokeHandlerAndUpdateState('editor.subscript')
+            }).render();
+        });
+        this.context.memo('button.fontname', function () {
+            var styleInfo = _this.context.invoke('editor.currentStyle');
+            // Add 'default' fonts into the fontnames array if not exist
+            $$1.each(styleInfo['font-family'].split(','), function (idx, fontname) {
+                fontname = fontname.trim().replace(/['"]+/g, '');
+                if (_this.isFontDeservedToAdd(fontname)) {
+                    if ($$1.inArray(fontname, _this.options.fontNames) === -1) {
+                        _this.options.fontNames.push(fontname);
+                    }
+                }
+            });
+            return _this.ui.buttonGroup([
+                _this.button({
+                    className: 'dropdown-toggle',
+                    contents: _this.ui.dropdownButtonContents('<span class="note-current-fontname"/>', _this.options),
+                    tooltip: _this.lang.font.name,
+                    data: {
+                        toggle: 'dropdown'
+                    }
+                }),
+                _this.ui.dropdownCheck({
+                    className: 'dropdown-fontname',
+                    checkClassName: _this.options.icons.menuCheck,
+                    items: _this.options.fontNames.filter(_this.isFontInstalled.bind(_this)),
+                    template: function (item) {
+                        return '<span style="font-family: \'' + item + '\'">' + item + '</span>';
+                    },
+                    click: _this.context.createInvokeHandlerAndUpdateState('editor.fontName')
+                })
+            ]).render();
+        });
+        this.context.memo('button.fontsize', function () {
+            return _this.ui.buttonGroup([
+                _this.button({
+                    className: 'dropdown-toggle',
+                    contents: _this.ui.dropdownButtonContents('<span class="note-current-fontsize"/>', _this.options),
+                    tooltip: _this.lang.font.size,
+                    data: {
+                        toggle: 'dropdown'
+                    }
+                }),
+                _this.ui.dropdownCheck({
+                    className: 'dropdown-fontsize',
+                    checkClassName: _this.options.icons.menuCheck,
+                    items: _this.options.fontSizes,
+                    click: _this.context.createInvokeHandlerAndUpdateState('editor.fontSize')
+                })
+            ]).render();
+        });
+        this.context.memo('button.color', function () {
+            return _this.ui.buttonGroup({
+                className: 'note-color',
+                children: [
+                    _this.button({
+                        className: 'note-current-color-button',
+                        contents: _this.ui.icon(_this.options.icons.font + ' note-recent-color'),
+                        tooltip: _this.lang.color.recent,
+                        click: function (e) {
+                            var $button = $$1(e.currentTarget);
+                            _this.context.invoke('editor.color', {
+                                backColor: $button.attr('data-backColor'),
+                                foreColor: $button.attr('data-foreColor')
+                            });
+                        },
+                        callback: function ($button) {
+                            var $recentColor = $button.find('.note-recent-color');
+                            $recentColor.css('background-color', '#FFFF00');
+                            $button.attr('data-backColor', '#FFFF00');
+                        }
+                    }),
+                    _this.button({
+                        className: 'dropdown-toggle',
+                        contents: _this.ui.dropdownButtonContents('', _this.options),
+                        tooltip: _this.lang.color.more,
+                        data: {
+                            toggle: 'dropdown'
+                        }
+                    }),
+                    _this.ui.dropdown({
+                        items: [
+                            '<div class="note-palette">',
+                            '  <div class="note-palette-title">' + _this.lang.color.background + '</div>',
+                            '  <div>',
+                            '    <button type="button" class="note-color-reset btn btn-light" data-event="backColor" data-value="inherit">',
+                            _this.lang.color.transparent,
+                            '    </button>',
+                            '  </div>',
+                            '  <div class="note-holder" data-event="backColor"/>',
+                            '</div>',
+                            '<div class="note-palette">',
+                            '  <div class="note-palette-title">' + _this.lang.color.foreground + '</div>',
+                            '  <div>',
+                            '    <button type="button" class="note-color-reset btn btn-light" data-event="removeFormat" data-value="foreColor">',
+                            _this.lang.color.resetToDefault,
+                            '    </button>',
+                            '  </div>',
+                            '  <div class="note-holder" data-event="foreColor"/>',
+                            '</div>'
+                        ].join(''),
+                        callback: function ($dropdown) {
+                            $dropdown.find('.note-holder').each(function (idx, item) {
+                                var $holder = $$1(item);
+                                $holder.append(_this.ui.palette({
+                                    colors: _this.options.colors,
+                                    eventName: $holder.data('event'),
+                                    container: _this.options.container,
+                                    tooltip: _this.options.tooltip
+                                }).render());
+                            });
+                        },
+                        click: function (event) {
+                            var $button = $$1(event.target);
+                            var eventName = $button.data('event');
+                            var value = $button.data('value');
+                            if (eventName && value) {
+                                var key = eventName === 'backColor' ? 'background-color' : 'color';
+                                var $color = $button.closest('.note-color').find('.note-recent-color');
+                                var $currentButton = $button.closest('.note-color').find('.note-current-color-button');
+                                $color.css(key, value);
+                                $currentButton.attr('data-' + eventName, value);
+                                _this.context.invoke('editor.' + eventName, value);
+                            }
+                        }
+                    })
+                ]
+            }).render();
+        });
+        this.context.memo('button.ul', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.unorderedlist),
+                tooltip: _this.lang.lists.unordered + _this.representShortcut('insertUnorderedList'),
+                click: _this.context.createInvokeHandler('editor.insertUnorderedList')
+            }).render();
+        });
+        this.context.memo('button.ol', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.orderedlist),
+                tooltip: _this.lang.lists.ordered + _this.representShortcut('insertOrderedList'),
+                click: _this.context.createInvokeHandler('editor.insertOrderedList')
+            }).render();
+        });
+        var justifyLeft = this.button({
+            contents: this.ui.icon(this.options.icons.alignLeft),
+            tooltip: this.lang.paragraph.left + this.representShortcut('justifyLeft'),
+            click: this.context.createInvokeHandler('editor.justifyLeft')
+        });
+        var justifyCenter = this.button({
+            contents: this.ui.icon(this.options.icons.alignCenter),
+            tooltip: this.lang.paragraph.center + this.representShortcut('justifyCenter'),
+            click: this.context.createInvokeHandler('editor.justifyCenter')
+        });
+        var justifyRight = this.button({
+            contents: this.ui.icon(this.options.icons.alignRight),
+            tooltip: this.lang.paragraph.right + this.representShortcut('justifyRight'),
+            click: this.context.createInvokeHandler('editor.justifyRight')
+        });
+        var justifyFull = this.button({
+            contents: this.ui.icon(this.options.icons.alignJustify),
+            tooltip: this.lang.paragraph.justify + this.representShortcut('justifyFull'),
+            click: this.context.createInvokeHandler('editor.justifyFull')
+        });
+        var outdent = this.button({
+            contents: this.ui.icon(this.options.icons.outdent),
+            tooltip: this.lang.paragraph.outdent + this.representShortcut('outdent'),
+            click: this.context.createInvokeHandler('editor.outdent')
+        });
+        var indent = this.button({
+            contents: this.ui.icon(this.options.icons.indent),
+            tooltip: this.lang.paragraph.indent + this.representShortcut('indent'),
+            click: this.context.createInvokeHandler('editor.indent')
+        });
+        this.context.memo('button.justifyLeft', func.invoke(justifyLeft, 'render'));
+        this.context.memo('button.justifyCenter', func.invoke(justifyCenter, 'render'));
+        this.context.memo('button.justifyRight', func.invoke(justifyRight, 'render'));
+        this.context.memo('button.justifyFull', func.invoke(justifyFull, 'render'));
+        this.context.memo('button.outdent', func.invoke(outdent, 'render'));
+        this.context.memo('button.indent', func.invoke(indent, 'render'));
+        this.context.memo('button.paragraph', function () {
+            return _this.ui.buttonGroup([
+                _this.button({
+                    className: 'dropdown-toggle',
+                    contents: _this.ui.dropdownButtonContents(_this.ui.icon(_this.options.icons.alignLeft), _this.options),
+                    tooltip: _this.lang.paragraph.paragraph,
+                    data: {
+                        toggle: 'dropdown'
+                    }
+                }),
+                _this.ui.dropdown([
+                    _this.ui.buttonGroup({
+                        className: 'note-align',
+                        children: [justifyLeft, justifyCenter, justifyRight, justifyFull]
+                    }),
+                    _this.ui.buttonGroup({
+                        className: 'note-list',
+                        children: [outdent, indent]
+                    })
+                ])
+            ]).render();
+        });
+        this.context.memo('button.height', function () {
+            return _this.ui.buttonGroup([
+                _this.button({
+                    className: 'dropdown-toggle',
+                    contents: _this.ui.dropdownButtonContents(_this.ui.icon(_this.options.icons.textHeight), _this.options),
+                    tooltip: _this.lang.font.height,
+                    data: {
+                        toggle: 'dropdown'
+                    }
+                }),
+                _this.ui.dropdownCheck({
+                    items: _this.options.lineHeights,
+                    checkClassName: _this.options.icons.menuCheck,
+                    className: 'dropdown-line-height',
+                    click: _this.context.createInvokeHandler('editor.lineHeight')
+                })
+            ]).render();
+        });
+        this.context.memo('button.table', function () {
+            return _this.ui.buttonGroup([
+                _this.button({
+                    className: 'dropdown-toggle',
+                    contents: _this.ui.dropdownButtonContents(_this.ui.icon(_this.options.icons.table), _this.options),
+                    tooltip: _this.lang.table.table,
+                    data: {
+                        toggle: 'dropdown'
+                    }
+                }),
+                _this.ui.dropdown({
+                    className: 'note-table',
+                    items: [
+                        '<div class="note-dimension-picker">',
+                        '  <div class="note-dimension-picker-mousecatcher" data-event="insertTable" data-value="1x1"/>',
+                        '  <div class="note-dimension-picker-highlighted"/>',
+                        '  <div class="note-dimension-picker-unhighlighted"/>',
+                        '</div>',
+                        '<div class="note-dimension-display">1 x 1</div>'
+                    ].join('')
+                })
+            ], {
+                callback: function ($node) {
+                    var $catcher = $node.find('.note-dimension-picker-mousecatcher');
+                    $catcher.css({
+                        width: _this.options.insertTableMaxSize.col + 'em',
+                        height: _this.options.insertTableMaxSize.row + 'em'
+                    }).mousedown(_this.context.createInvokeHandler('editor.insertTable'))
+                        .on('mousemove', _this.tableMoveHandler.bind(_this));
+                }
+            }).render();
+        });
+        this.context.memo('button.link', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.link),
+                tooltip: _this.lang.link.link + _this.representShortcut('linkDialog.show'),
+                click: _this.context.createInvokeHandler('linkDialog.show')
+            }).render();
+        });
+        this.context.memo('button.picture', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.picture),
+                tooltip: _this.lang.image.image,
+                click: _this.context.createInvokeHandler('imageDialog.show')
+            }).render();
+        });
+        this.context.memo('button.video', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.video),
+                tooltip: _this.lang.video.video,
+                click: _this.context.createInvokeHandler('videoDialog.show')
+            }).render();
+        });
+        this.context.memo('button.hr', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.minus),
+                tooltip: _this.lang.hr.insert + _this.representShortcut('insertHorizontalRule'),
+                click: _this.context.createInvokeHandler('editor.insertHorizontalRule')
+            }).render();
+        });
+        this.context.memo('button.fullscreen', function () {
+            return _this.button({
+                className: 'btn-fullscreen',
+                contents: _this.ui.icon(_this.options.icons.arrowsAlt),
+                tooltip: _this.options.fullscreen,
+                click: _this.context.createInvokeHandler('fullscreen.toggle')
+            }).render();
+        });
+        this.context.memo('button.codeview', function () {
+            return _this.button({
+                className: 'btn-codeview',
+                contents: _this.ui.icon(_this.options.icons.code),
+                tooltip: _this.options.codeview,
+                click: _this.context.createInvokeHandler('codeview.toggle')
+            }).render();
+        });
+        this.context.memo('button.redo', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.redo),
+                tooltip: _this.lang.history.redo + _this.representShortcut('redo'),
+                click: _this.context.createInvokeHandler('editor.redo')
+            }).render();
+        });
+        this.context.memo('button.undo', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.undo),
+                tooltip: _this.lang.history.undo + _this.representShortcut('undo'),
+                click: _this.context.createInvokeHandler('editor.undo')
+            }).render();
+        });
+        this.context.memo('button.help', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.question),
+                tooltip: _this.options.help,
+                click: _this.context.createInvokeHandler('helpDialog.show')
+            }).render();
+        });
+    };
     /**
      * image : [
      *   ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
@@ -54869,1649 +54006,1803 @@ function __guardMethod__(obj, methodName, transform) {
      *   ['remove', ['removeMedia']]
      * ],
      */
-    this.addImagePopoverButtons = function () {
-      // Image Size Buttons
-      context.memo('button.imageSize100', function () {
-        return ui.button({
-          contents: '<span class="note-fontsize-10">100%</span>',
-          tooltip: lang.image.resizeFull,
-          click: context.createInvokeHandler('editor.resize', '1')
-        }).render();
-      });
-      context.memo('button.imageSize50', function () {
-        return  ui.button({
-          contents: '<span class="note-fontsize-10">50%</span>',
-          tooltip: lang.image.resizeHalf,
-          click: context.createInvokeHandler('editor.resize', '0.5')
-        }).render();
-      });
-      context.memo('button.imageSize25', function () {
-        return ui.button({
-          contents: '<span class="note-fontsize-10">25%</span>',
-          tooltip: lang.image.resizeQuarter,
-          click: context.createInvokeHandler('editor.resize', '0.25')
-        }).render();
-      });
-
-      // Float Buttons
-      context.memo('button.floatLeft', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.alignLeft),
-          tooltip: lang.image.floatLeft,
-          click: context.createInvokeHandler('editor.floatMe', 'left')
-        }).render();
-      });
-
-      context.memo('button.floatRight', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.alignRight),
-          tooltip: lang.image.floatRight,
-          click: context.createInvokeHandler('editor.floatMe', 'right')
-        }).render();
-      });
-
-      context.memo('button.floatNone', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.alignJustify),
-          tooltip: lang.image.floatNone,
-          click: context.createInvokeHandler('editor.floatMe', 'none')
-        }).render();
-      });
-
-      // Remove Buttons
-      context.memo('button.removeMedia', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.trash),
-          tooltip: lang.image.remove,
-          click: context.createInvokeHandler('editor.removeMedia')
-        }).render();
-      });
+    Buttons.prototype.addImagePopoverButtons = function () {
+        var _this = this;
+        // Image Size Buttons
+        this.context.memo('button.imageSize100', function () {
+            return _this.button({
+                contents: '<span class="note-fontsize-10">100%</span>',
+                tooltip: _this.lang.image.resizeFull,
+                click: _this.context.createInvokeHandler('editor.resize', '1')
+            }).render();
+        });
+        this.context.memo('button.imageSize50', function () {
+            return _this.button({
+                contents: '<span class="note-fontsize-10">50%</span>',
+                tooltip: _this.lang.image.resizeHalf,
+                click: _this.context.createInvokeHandler('editor.resize', '0.5')
+            }).render();
+        });
+        this.context.memo('button.imageSize25', function () {
+            return _this.button({
+                contents: '<span class="note-fontsize-10">25%</span>',
+                tooltip: _this.lang.image.resizeQuarter,
+                click: _this.context.createInvokeHandler('editor.resize', '0.25')
+            }).render();
+        });
+        // Float Buttons
+        this.context.memo('button.floatLeft', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.alignLeft),
+                tooltip: _this.lang.image.floatLeft,
+                click: _this.context.createInvokeHandler('editor.floatMe', 'left')
+            }).render();
+        });
+        this.context.memo('button.floatRight', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.alignRight),
+                tooltip: _this.lang.image.floatRight,
+                click: _this.context.createInvokeHandler('editor.floatMe', 'right')
+            }).render();
+        });
+        this.context.memo('button.floatNone', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.alignJustify),
+                tooltip: _this.lang.image.floatNone,
+                click: _this.context.createInvokeHandler('editor.floatMe', 'none')
+            }).render();
+        });
+        // Remove Buttons
+        this.context.memo('button.removeMedia', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.trash),
+                tooltip: _this.lang.image.remove,
+                click: _this.context.createInvokeHandler('editor.removeMedia')
+            }).render();
+        });
     };
-
-    this.addLinkPopoverButtons = function () {
-      context.memo('button.linkDialogShow', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.link),
-          tooltip: lang.link.edit,
-          click: context.createInvokeHandler('linkDialog.show')
-        }).render();
-      });
-
-      context.memo('button.unlink', function () {
-        return ui.button({
-          contents: ui.icon(options.icons.unlink),
-          tooltip: lang.link.unlink,
-          click: context.createInvokeHandler('editor.unlink')
-        }).render();
-      });
+    Buttons.prototype.addLinkPopoverButtons = function () {
+        var _this = this;
+        this.context.memo('button.linkDialogShow', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.link),
+                tooltip: _this.lang.link.edit,
+                click: _this.context.createInvokeHandler('linkDialog.show')
+            }).render();
+        });
+        this.context.memo('button.unlink', function () {
+            return _this.button({
+                contents: _this.ui.icon(_this.options.icons.unlink),
+                tooltip: _this.lang.link.unlink,
+                click: _this.context.createInvokeHandler('editor.unlink')
+            }).render();
+        });
     };
-
     /**
      * table : [
      *  ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
      *  ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
      * ],
      */
-    this.addTablePopoverButtons = function () {
-      context.memo('button.addRowUp', function () {
-        return ui.button({
-          className: 'btn-md',
-          contents: ui.icon(options.icons.rowAbove),
-          tooltip: lang.table.addRowAbove,
-          click: context.createInvokeHandler('editor.addRow', 'top')
-        }).render();
-      });
-      context.memo('button.addRowDown', function () {
-        return ui.button({
-          className: 'btn-md',
-          contents: ui.icon(options.icons.rowBelow),
-          tooltip: lang.table.addRowBelow,
-          click: context.createInvokeHandler('editor.addRow', 'bottom')
-        }).render();
-      });
-      context.memo('button.addColLeft', function () {
-        return ui.button({
-          className: 'btn-md',
-          contents: ui.icon(options.icons.colBefore),
-          tooltip: lang.table.addColLeft,
-          click: context.createInvokeHandler('editor.addCol', 'left')
-        }).render();
-      });
-      context.memo('button.addColRight', function () {
-        return ui.button({
-          className: 'btn-md',
-          contents: ui.icon(options.icons.colAfter),
-          tooltip: lang.table.addColRight,
-          click: context.createInvokeHandler('editor.addCol', 'right')
-        }).render();
-      });
-      context.memo('button.deleteRow', function () {
-        return ui.button({
-          className: 'btn-md',
-          contents: ui.icon(options.icons.rowRemove),
-          tooltip: lang.table.delRow,
-          click: context.createInvokeHandler('editor.deleteRow')
-        }).render();
-      });
-      context.memo('button.deleteCol', function () {
-        return ui.button({
-          className: 'btn-md',
-          contents: ui.icon(options.icons.colRemove),
-          tooltip: lang.table.delCol,
-          click: context.createInvokeHandler('editor.deleteCol')
-        }).render();
-      });
-      context.memo('button.deleteTable', function () {
-        return ui.button({
-          className: 'btn-md',
-          contents: ui.icon(options.icons.trash),
-          tooltip: lang.table.delTable,
-          click: context.createInvokeHandler('editor.deleteTable')
-        }).render();
-      });
+    Buttons.prototype.addTablePopoverButtons = function () {
+        var _this = this;
+        this.context.memo('button.addRowUp', function () {
+            return _this.button({
+                className: 'btn-md',
+                contents: _this.ui.icon(_this.options.icons.rowAbove),
+                tooltip: _this.lang.table.addRowAbove,
+                click: _this.context.createInvokeHandler('editor.addRow', 'top')
+            }).render();
+        });
+        this.context.memo('button.addRowDown', function () {
+            return _this.button({
+                className: 'btn-md',
+                contents: _this.ui.icon(_this.options.icons.rowBelow),
+                tooltip: _this.lang.table.addRowBelow,
+                click: _this.context.createInvokeHandler('editor.addRow', 'bottom')
+            }).render();
+        });
+        this.context.memo('button.addColLeft', function () {
+            return _this.button({
+                className: 'btn-md',
+                contents: _this.ui.icon(_this.options.icons.colBefore),
+                tooltip: _this.lang.table.addColLeft,
+                click: _this.context.createInvokeHandler('editor.addCol', 'left')
+            }).render();
+        });
+        this.context.memo('button.addColRight', function () {
+            return _this.button({
+                className: 'btn-md',
+                contents: _this.ui.icon(_this.options.icons.colAfter),
+                tooltip: _this.lang.table.addColRight,
+                click: _this.context.createInvokeHandler('editor.addCol', 'right')
+            }).render();
+        });
+        this.context.memo('button.deleteRow', function () {
+            return _this.button({
+                className: 'btn-md',
+                contents: _this.ui.icon(_this.options.icons.rowRemove),
+                tooltip: _this.lang.table.delRow,
+                click: _this.context.createInvokeHandler('editor.deleteRow')
+            }).render();
+        });
+        this.context.memo('button.deleteCol', function () {
+            return _this.button({
+                className: 'btn-md',
+                contents: _this.ui.icon(_this.options.icons.colRemove),
+                tooltip: _this.lang.table.delCol,
+                click: _this.context.createInvokeHandler('editor.deleteCol')
+            }).render();
+        });
+        this.context.memo('button.deleteTable', function () {
+            return _this.button({
+                className: 'btn-md',
+                contents: _this.ui.icon(_this.options.icons.trash),
+                tooltip: _this.lang.table.delTable,
+                click: _this.context.createInvokeHandler('editor.deleteTable')
+            }).render();
+        });
     };
-
-    this.build = function ($container, groups) {
-      for (var groupIdx = 0, groupLen = groups.length; groupIdx < groupLen; groupIdx++) {
-        var group = groups[groupIdx];
-        var groupName = group[0];
-        var buttons = group[1];
-
-        var $group = ui.buttonGroup({
-          className: 'note-' + groupName
-        }).render();
-
-        for (var idx = 0, len = buttons.length; idx < len; idx++) {
-          var button = context.memo('button.' + buttons[idx]);
-          if (button) {
-            $group.append(typeof button === 'function' ? button(context) : button);
-          }
+    Buttons.prototype.build = function ($container, groups) {
+        for (var groupIdx = 0, groupLen = groups.length; groupIdx < groupLen; groupIdx++) {
+            var group = groups[groupIdx];
+            var groupName = $$1.isArray(group) ? group[0] : group;
+            var buttons = $$1.isArray(group) ? ((group.length === 1) ? [group[0]] : group[1]) : [group];
+            var $group = this.ui.buttonGroup({
+                className: 'note-' + groupName
+            }).render();
+            for (var idx = 0, len = buttons.length; idx < len; idx++) {
+                var btn = this.context.memo('button.' + buttons[idx]);
+                if (btn) {
+                    $group.append(typeof btn === 'function' ? btn(this.context) : btn);
+                }
+            }
+            $group.appendTo($container);
         }
-        $group.appendTo($container);
-      }
     };
-
     /**
      * @param {jQuery} [$container]
      */
-    this.updateCurrentStyle = function ($container) {
-      var $cont = $container || $toolbar;
-      
-      var styleInfo = context.invoke('editor.currentStyle');
-      this.updateBtnStates($cont, {
-        '.note-btn-bold': function () {
-          return styleInfo['font-bold'] === 'bold';
-        },
-        '.note-btn-italic': function () {
-          return styleInfo['font-italic'] === 'italic';
-        },
-        '.note-btn-underline': function () {
-          return styleInfo['font-underline'] === 'underline';
-        },
-        '.note-btn-subscript': function () {
-          return styleInfo['font-subscript'] === 'subscript';
-        },
-        '.note-btn-superscript': function () {
-          return styleInfo['font-superscript'] === 'superscript';
-        },
-        '.note-btn-strikethrough': function () {
-          return styleInfo['font-strikethrough'] === 'strikethrough';
+    Buttons.prototype.updateCurrentStyle = function ($container) {
+        var _this = this;
+        var $cont = $container || this.$toolbar;
+        var styleInfo = this.context.invoke('editor.currentStyle');
+        this.updateBtnStates($cont, {
+            '.note-btn-bold': function () {
+                return styleInfo['font-bold'] === 'bold';
+            },
+            '.note-btn-italic': function () {
+                return styleInfo['font-italic'] === 'italic';
+            },
+            '.note-btn-underline': function () {
+                return styleInfo['font-underline'] === 'underline';
+            },
+            '.note-btn-subscript': function () {
+                return styleInfo['font-subscript'] === 'subscript';
+            },
+            '.note-btn-superscript': function () {
+                return styleInfo['font-superscript'] === 'superscript';
+            },
+            '.note-btn-strikethrough': function () {
+                return styleInfo['font-strikethrough'] === 'strikethrough';
+            }
+        });
+        if (styleInfo['font-family']) {
+            var fontNames = styleInfo['font-family'].split(',').map(function (name) {
+                return name.replace(/[\'\"]/g, '')
+                    .replace(/\s+$/, '')
+                    .replace(/^\s+/, '');
+            });
+            var fontName_1 = lists.find(fontNames, this.isFontInstalled.bind(this));
+            $cont.find('.dropdown-fontname a').each(function (idx, item) {
+                var $item = $$1(item);
+                // always compare string to avoid creating another func.
+                var isChecked = ($item.data('value') + '') === (fontName_1 + '');
+                $item.toggleClass('checked', isChecked);
+            });
+            $cont.find('.note-current-fontname').text(fontName_1).css('font-family', fontName_1);
         }
-      });
-
-      if (styleInfo['font-family']) {
-        var fontNames = styleInfo['font-family'].split(',').map(function (name) {
-          return name.replace(/[\'\"]/g, '')
-            .replace(/\s+$/, '')
-            .replace(/^\s+/, '');
-        });
-        var fontName = list.find(fontNames, self.isFontInstalled);
-
-        $cont.find('.dropdown-fontname a').each(function () {
-          var $item = $(this);
-          // always compare string to avoid creating another func.
-          var isChecked = ($item.data('value') + '') === (fontName + '');
-          $item.toggleClass('checked', isChecked);
-        });
-        $cont.find('.note-current-fontname').text(fontName);
-      }
-
-      if (styleInfo['font-size']) {
-        var fontSize = styleInfo['font-size'];
-        $cont.find('.dropdown-fontsize a').each(function () {
-          var $item = $(this);
-          // always compare with string to avoid creating another func.
-          var isChecked = ($item.data('value') + '') === (fontSize + '');
-          $item.toggleClass('checked', isChecked);
-        });
-        $cont.find('.note-current-fontsize').text(fontSize);
-      }
-
-      if (styleInfo['line-height']) {
-        var lineHeight = styleInfo['line-height'];
-        $cont.find('.dropdown-line-height li a').each(function () {
-          // always compare with string to avoid creating another func.
-          var isChecked = ($(this).data('value') + '') === (lineHeight + '');
-          this.className = isChecked ? 'checked' : '';
-        });
-      }
+        if (styleInfo['font-size']) {
+            var fontSize_1 = styleInfo['font-size'];
+            $cont.find('.dropdown-fontsize a').each(function (idx, item) {
+                var $item = $$1(item);
+                // always compare with string to avoid creating another func.
+                var isChecked = ($item.data('value') + '') === (fontSize_1 + '');
+                $item.toggleClass('checked', isChecked);
+            });
+            $cont.find('.note-current-fontsize').text(fontSize_1);
+        }
+        if (styleInfo['line-height']) {
+            var lineHeight_1 = styleInfo['line-height'];
+            $cont.find('.dropdown-line-height li a').each(function (idx, item) {
+                // always compare with string to avoid creating another func.
+                var isChecked = ($$1(item).data('value') + '') === (lineHeight_1 + '');
+                _this.className = isChecked ? 'checked' : '';
+            });
+        }
     };
-
-    this.updateBtnStates = function ($container, infos) {
-      $.each(infos, function (selector, pred) {
-        ui.toggleBtnActive($container.find(selector), pred());
-      });
+    Buttons.prototype.updateBtnStates = function ($container, infos) {
+        var _this = this;
+        $$1.each(infos, function (selector, pred) {
+            _this.ui.toggleBtnActive($container.find(selector), pred());
+        });
     };
-
-    this.tableMoveHandler = function (event) {
-      var PX_PER_EM = 18;
-      var $picker = $(event.target.parentNode); // target is mousecatcher
-      var $dimensionDisplay = $picker.next();
-      var $catcher = $picker.find('.note-dimension-picker-mousecatcher');
-      var $highlighted = $picker.find('.note-dimension-picker-highlighted');
-      var $unhighlighted = $picker.find('.note-dimension-picker-unhighlighted');
-
-      var posOffset;
-      // HTML5 with jQuery - e.offsetX is undefined in Firefox
-      if (event.offsetX === undefined) {
-        var posCatcher = $(event.target).offset();
-        posOffset = {
-          x: event.pageX - posCatcher.left,
-          y: event.pageY - posCatcher.top
+    Buttons.prototype.tableMoveHandler = function (event) {
+        var PX_PER_EM = 18;
+        var $picker = $$1(event.target.parentNode); // target is mousecatcher
+        var $dimensionDisplay = $picker.next();
+        var $catcher = $picker.find('.note-dimension-picker-mousecatcher');
+        var $highlighted = $picker.find('.note-dimension-picker-highlighted');
+        var $unhighlighted = $picker.find('.note-dimension-picker-unhighlighted');
+        var posOffset;
+        // HTML5 with jQuery - e.offsetX is undefined in Firefox
+        if (event.offsetX === undefined) {
+            var posCatcher = $$1(event.target).offset();
+            posOffset = {
+                x: event.pageX - posCatcher.left,
+                y: event.pageY - posCatcher.top
+            };
+        }
+        else {
+            posOffset = {
+                x: event.offsetX,
+                y: event.offsetY
+            };
+        }
+        var dim = {
+            c: Math.ceil(posOffset.x / PX_PER_EM) || 1,
+            r: Math.ceil(posOffset.y / PX_PER_EM) || 1
         };
-      } else {
-        posOffset = {
-          x: event.offsetX,
-          y: event.offsetY
-        };
-      }
-
-      var dim = {
-        c: Math.ceil(posOffset.x / PX_PER_EM) || 1,
-        r: Math.ceil(posOffset.y / PX_PER_EM) || 1
-      };
-
-      $highlighted.css({ width: dim.c + 'em', height: dim.r + 'em' });
-      $catcher.data('value', dim.c + 'x' + dim.r);
-
-      if (3 < dim.c && dim.c < options.insertTableMaxSize.col) {
-        $unhighlighted.css({ width: dim.c + 1 + 'em'});
-      }
-
-      if (3 < dim.r && dim.r < options.insertTableMaxSize.row) {
-        $unhighlighted.css({ height: dim.r + 1 + 'em'});
-      }
-
-      $dimensionDisplay.html(dim.c + ' x ' + dim.r);
-    };
-  };
-
-  var Toolbar = function (context) {
-    var ui = $.summernote.ui;
-
-    var $note = context.layoutInfo.note;
-    var $editor = context.layoutInfo.editor;
-    var $toolbar = context.layoutInfo.toolbar;
-    var options = context.options;
-
-    this.shouldInitialize = function () {
-      return !options.airMode;
-    };
-
-    this.initialize = function () {
-      options.toolbar = options.toolbar || [];
-
-      if (!options.toolbar.length) {
-        $toolbar.hide();
-      } else {
-        context.invoke('buttons.build', $toolbar, options.toolbar);
-      }
-
-      if (options.toolbarContainer) {
-        $toolbar.appendTo(options.toolbarContainer);
-      }
-
-      this.changeContainer(false);
-
-      $note.on('summernote.keyup summernote.mouseup summernote.change', function () {
-        context.invoke('buttons.updateCurrentStyle');
-      });
-
-      context.invoke('buttons.updateCurrentStyle');
-    };
-
-    this.destroy = function () {
-      $toolbar.children().remove();
-    };
-
-    this.changeContainer = function (isFullscreen) {
-      if (isFullscreen) {
-        $toolbar.prependTo($editor);
-      } else {
-        if (options.toolbarContainer) {
-          $toolbar.appendTo(options.toolbarContainer);
+        $highlighted.css({ width: dim.c + 'em', height: dim.r + 'em' });
+        $catcher.data('value', dim.c + 'x' + dim.r);
+        if (dim.c > 3 && dim.c < this.options.insertTableMaxSize.col) {
+            $unhighlighted.css({ width: dim.c + 1 + 'em' });
         }
-      }
-    };
-
-    this.updateFullscreen = function (isFullscreen) {
-      ui.toggleBtnActive($toolbar.find('.btn-fullscreen'), isFullscreen);
-
-      this.changeContainer(isFullscreen);
-    };
-
-    this.updateCodeview = function (isCodeview) {
-      ui.toggleBtnActive($toolbar.find('.btn-codeview'), isCodeview);
-      if (isCodeview) {
-        this.deactivate();
-      } else {
-        this.activate();
-      }
-    };
-
-    this.activate = function (isIncludeCodeview) {
-      var $btn = $toolbar.find('button');
-      if (!isIncludeCodeview) {
-        $btn = $btn.not('.btn-codeview');
-      }
-      ui.toggleBtn($btn, true);
-    };
-
-    this.deactivate = function (isIncludeCodeview) {
-      var $btn = $toolbar.find('button');
-      if (!isIncludeCodeview) {
-        $btn = $btn.not('.btn-codeview');
-      }
-      ui.toggleBtn($btn, false);
-    };
-  };
-
-  var LinkDialog = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var $editor = context.layoutInfo.editor;
-    var options = context.options;
-    var lang = options.langInfo;
-
-    this.initialize = function () {
-      var $container = options.dialogsInBody ? $(document.body) : $editor;
-
-      var body = '<div class="form-group note-form-group">' +
-                   '<label class="note-form-label">' + lang.link.textToDisplay + '</label>' +
-                   '<input class="note-link-text form-control '+
-                   ' note-form-control  note-input" type="text" />' +
-                 '</div>' +
-                 '<div class="form-group note-form-group">' +
-                   '<label class="note-form-label">' + lang.link.url + '</label>' +
-                   '<input class="note-link-url form-control note-form-control ' +
-                   'note-input" type="text" value="http://" />' +
-                 '</div>' +
-      (!options.disableLinkTarget ?
-          $('<div/>').append(ui.checkbox({ id: 'sn-checkbox-open-in-new-window', text: lang.link.openInNewWindow, checked: true }).render())
-              .html()
-          : '');
-      var footer = '<button href="#" class="btn btn-primary note-btn note-btn-primary ' +
-      'note-link-btn disabled" disabled>' + lang.link.insert + '</button>';
-
-      this.$dialog = ui.dialog({
-        className: 'link-dialog',
-        title: lang.link.insert,
-        fade: options.dialogsFade,
-        body: body,
-        footer: footer
-      }).render().appendTo($container);
-    };
-
-    this.destroy = function () {
-      ui.hideDialog(this.$dialog);
-      this.$dialog.remove();
-    };
-
-    this.bindEnterKey = function ($input, $btn) {
-      $input.on('keypress', function (event) {
-        if (event.keyCode === key.code.ENTER) {
-          $btn.trigger('click');
+        if (dim.r > 3 && dim.r < this.options.insertTableMaxSize.row) {
+            $unhighlighted.css({ height: dim.r + 1 + 'em' });
         }
-      });
+        $dimensionDisplay.html(dim.c + ' x ' + dim.r);
     };
+    return Buttons;
+}());
 
+var Toolbar = /** @class */ (function () {
+    function Toolbar(context) {
+        this.context = context;
+        this.$window = $$1(window);
+        this.$document = $$1(document);
+        this.ui = $$1.summernote.ui;
+        this.$note = context.layoutInfo.note;
+        this.$editor = context.layoutInfo.editor;
+        this.$toolbar = context.layoutInfo.toolbar;
+        this.options = context.options;
+        this.followScroll = this.followScroll.bind(this);
+    }
+    Toolbar.prototype.shouldInitialize = function () {
+        return !this.options.airMode;
+    };
+    Toolbar.prototype.initialize = function () {
+        var _this = this;
+        this.options.toolbar = this.options.toolbar || [];
+        if (!this.options.toolbar.length) {
+            this.$toolbar.hide();
+        }
+        else {
+            this.context.invoke('buttons.build', this.$toolbar, this.options.toolbar);
+        }
+        if (this.options.toolbarContainer) {
+            this.$toolbar.appendTo(this.options.toolbarContainer);
+        }
+        this.changeContainer(false);
+        this.$note.on('summernote.keyup summernote.mouseup summernote.change', function () {
+            _this.context.invoke('buttons.updateCurrentStyle');
+        });
+        this.context.invoke('buttons.updateCurrentStyle');
+        if (this.options.followingToolbar) {
+            this.$window.on('scroll resize', this.followScroll);
+        }
+    };
+    Toolbar.prototype.destroy = function () {
+        this.$toolbar.children().remove();
+        if (this.options.followingToolbar) {
+            this.$window.off('scroll resize', this.followScroll);
+        }
+    };
+    Toolbar.prototype.followScroll = function () {
+        if (this.$editor.hasClass('fullscreen')) {
+            return false;
+        }
+        var $toolbarWrapper = this.$toolbar.parent('.note-toolbar-wrapper');
+        var editorHeight = this.$editor.outerHeight();
+        var editorWidth = this.$editor.width();
+        var toolbarHeight = this.$toolbar.height();
+        $toolbarWrapper.css({
+            height: toolbarHeight
+        });
+        // check if the web app is currently using another static bar
+        var otherBarHeight = 0;
+        if (this.options.otherStaticBar) {
+            otherBarHeight = $$1(this.options.otherStaticBar).outerHeight();
+        }
+        var currentOffset = this.$document.scrollTop();
+        var editorOffsetTop = this.$editor.offset().top;
+        var editorOffsetBottom = editorOffsetTop + editorHeight;
+        var activateOffset = editorOffsetTop - otherBarHeight;
+        var deactivateOffsetBottom = editorOffsetBottom - otherBarHeight - toolbarHeight;
+        if ((currentOffset > activateOffset) && (currentOffset < deactivateOffsetBottom)) {
+            this.$toolbar.css({
+                position: 'fixed',
+                top: otherBarHeight,
+                width: editorWidth
+            });
+        }
+        else {
+            this.$toolbar.css({
+                position: 'relative',
+                top: 0,
+                width: '100%'
+            });
+        }
+    };
+    Toolbar.prototype.changeContainer = function (isFullscreen) {
+        if (isFullscreen) {
+            this.$toolbar.prependTo(this.$editor);
+        }
+        else {
+            if (this.options.toolbarContainer) {
+                this.$toolbar.appendTo(this.options.toolbarContainer);
+            }
+        }
+    };
+    Toolbar.prototype.updateFullscreen = function (isFullscreen) {
+        this.ui.toggleBtnActive(this.$toolbar.find('.btn-fullscreen'), isFullscreen);
+        this.changeContainer(isFullscreen);
+    };
+    Toolbar.prototype.updateCodeview = function (isCodeview) {
+        this.ui.toggleBtnActive(this.$toolbar.find('.btn-codeview'), isCodeview);
+        if (isCodeview) {
+            this.deactivate();
+        }
+        else {
+            this.activate();
+        }
+    };
+    Toolbar.prototype.activate = function (isIncludeCodeview) {
+        var $btn = this.$toolbar.find('button');
+        if (!isIncludeCodeview) {
+            $btn = $btn.not('.btn-codeview');
+        }
+        this.ui.toggleBtn($btn, true);
+    };
+    Toolbar.prototype.deactivate = function (isIncludeCodeview) {
+        var $btn = this.$toolbar.find('button');
+        if (!isIncludeCodeview) {
+            $btn = $btn.not('.btn-codeview');
+        }
+        this.ui.toggleBtn($btn, false);
+    };
+    return Toolbar;
+}());
+
+var LinkDialog = /** @class */ (function () {
+    function LinkDialog(context) {
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.$body = $$1(document.body);
+        this.$editor = context.layoutInfo.editor;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+        context.memo('help.linkDialog.show', this.options.langInfo.help['linkDialog.show']);
+    }
+    LinkDialog.prototype.initialize = function () {
+        var $container = this.options.dialogsInBody ? this.$body : this.$editor;
+        var body = [
+            '<div class="form-group note-form-group">',
+            "<label class=\"note-form-label\">" + this.lang.link.textToDisplay + "</label>",
+            '<input class="note-link-text form-control note-form-control  note-input" type="text" />',
+            '</div>',
+            '<div class="form-group note-form-group">',
+            "<label class=\"note-form-label\">" + this.lang.link.url + "</label>",
+            '<input class="note-link-url form-control note-form-control note-input" type="text" value="http://" />',
+            '</div>',
+            !this.options.disableLinkTarget
+                ? $$1('<div/>').append(this.ui.checkbox({
+                    id: 'sn-checkbox-open-in-new-window',
+                    text: this.lang.link.openInNewWindow,
+                    checked: true
+                }).render()).html()
+                : ''
+        ].join('');
+        var buttonClass = 'btn btn-primary note-btn note-btn-primary note-link-btn';
+        var footer = "<button type=\"submit\" href=\"#\" class=\"" + buttonClass + "\" disabled>" + this.lang.link.insert + "</button>";
+        this.$dialog = this.ui.dialog({
+            className: 'link-dialog',
+            title: this.lang.link.insert,
+            fade: this.options.dialogsFade,
+            body: body,
+            footer: footer
+        }).render().appendTo($container);
+    };
+    LinkDialog.prototype.destroy = function () {
+        this.ui.hideDialog(this.$dialog);
+        this.$dialog.remove();
+    };
+    LinkDialog.prototype.bindEnterKey = function ($input, $btn) {
+        $input.on('keypress', function (event) {
+            if (event.keyCode === key.code.ENTER) {
+                event.preventDefault();
+                $btn.trigger('click');
+            }
+        });
+    };
     /**
      * toggle update button
      */
-    this.toggleLinkBtn = function ($linkBtn, $linkText, $linkUrl) {
-      ui.toggleBtn($linkBtn, $linkText.val() && $linkUrl.val());
+    LinkDialog.prototype.toggleLinkBtn = function ($linkBtn, $linkText, $linkUrl) {
+        this.ui.toggleBtn($linkBtn, $linkText.val() && $linkUrl.val());
     };
-
     /**
      * Show link dialog and set event handlers on dialog controls.
      *
      * @param {Object} linkInfo
      * @return {Promise}
      */
-    this.showLinkDialog = function (linkInfo) {
-      return $.Deferred(function (deferred) {
-        var $linkText = self.$dialog.find('.note-link-text'),
-        $linkUrl = self.$dialog.find('.note-link-url'),
-        $linkBtn = self.$dialog.find('.note-link-btn'),
-        $openInNewWindow = self.$dialog.find('input[type=checkbox]');
-
-        ui.onDialogShown(self.$dialog, function () {
-          context.triggerEvent('dialog.shown');
-
-          // if no url was given, copy text to url
-          if (!linkInfo.url) {
-            linkInfo.url = linkInfo.text;
-          }
-
-          $linkText.val(linkInfo.text);
-
-          var handleLinkTextUpdate = function () {
-            self.toggleLinkBtn($linkBtn, $linkText, $linkUrl);
-            // if linktext was modified by keyup,
-            // stop cloning text from linkUrl
-            linkInfo.text = $linkText.val();
-          };
-
-          $linkText.on('input', handleLinkTextUpdate).on('paste', function () {
-            setTimeout(handleLinkTextUpdate, 0);
-          });
-
-          var handleLinkUrlUpdate = function () {
-            self.toggleLinkBtn($linkBtn, $linkText, $linkUrl);
-            // display same link on `Text to display` input
-            // when create a new link
-            if (!linkInfo.text) {
-              $linkText.val($linkUrl.val());
-            }
-          };
-
-          $linkUrl.on('input', handleLinkUrlUpdate).on('paste', function () {
-            setTimeout(handleLinkUrlUpdate, 0);
-          }).val(linkInfo.url).trigger('focus');
-
-          self.toggleLinkBtn($linkBtn, $linkText, $linkUrl);
-          self.bindEnterKey($linkUrl, $linkBtn);
-          self.bindEnterKey($linkText, $linkBtn);
-
-          var isChecked = linkInfo.isNewWindow !== undefined ?
-            linkInfo.isNewWindow : context.options.linkTargetBlank;
-
-          $openInNewWindow.prop('checked', isChecked);
-
-          $linkBtn.one('click', function (event) {
-            event.preventDefault();
-
-            deferred.resolve({
-              range: linkInfo.range,
-              url: $linkUrl.val(),
-              text: $linkText.val(),
-              isNewWindow: $openInNewWindow.is(':checked')
+    LinkDialog.prototype.showLinkDialog = function (linkInfo) {
+        var _this = this;
+        return $$1.Deferred(function (deferred) {
+            var $linkText = _this.$dialog.find('.note-link-text');
+            var $linkUrl = _this.$dialog.find('.note-link-url');
+            var $linkBtn = _this.$dialog.find('.note-link-btn');
+            var $openInNewWindow = _this.$dialog.find('input[type=checkbox]');
+            _this.ui.onDialogShown(_this.$dialog, function () {
+                _this.context.triggerEvent('dialog.shown');
+                // if no url was given, copy text to url
+                if (!linkInfo.url) {
+                    linkInfo.url = linkInfo.text;
+                }
+                $linkText.val(linkInfo.text);
+                var handleLinkTextUpdate = function () {
+                    _this.toggleLinkBtn($linkBtn, $linkText, $linkUrl);
+                    // if linktext was modified by keyup,
+                    // stop cloning text from linkUrl
+                    linkInfo.text = $linkText.val();
+                };
+                $linkText.on('input', handleLinkTextUpdate).on('paste', function () {
+                    setTimeout(handleLinkTextUpdate, 0);
+                });
+                var handleLinkUrlUpdate = function () {
+                    _this.toggleLinkBtn($linkBtn, $linkText, $linkUrl);
+                    // display same link on `Text to display` input
+                    // when create a new link
+                    if (!linkInfo.text) {
+                        $linkText.val($linkUrl.val());
+                    }
+                };
+                $linkUrl.on('input', handleLinkUrlUpdate).on('paste', function () {
+                    setTimeout(handleLinkUrlUpdate, 0);
+                }).val(linkInfo.url);
+                if (!env.isSupportTouch) {
+                    $linkUrl.trigger('focus');
+                }
+                _this.toggleLinkBtn($linkBtn, $linkText, $linkUrl);
+                _this.bindEnterKey($linkUrl, $linkBtn);
+                _this.bindEnterKey($linkText, $linkBtn);
+                var isChecked = linkInfo.isNewWindow !== undefined
+                    ? linkInfo.isNewWindow : _this.context.options.linkTargetBlank;
+                $openInNewWindow.prop('checked', isChecked);
+                $linkBtn.one('click', function (event) {
+                    event.preventDefault();
+                    deferred.resolve({
+                        range: linkInfo.range,
+                        url: $linkUrl.val(),
+                        text: $linkText.val(),
+                        isNewWindow: $openInNewWindow.is(':checked')
+                    });
+                    _this.ui.hideDialog(_this.$dialog);
+                });
             });
-            ui.hideDialog(self.$dialog);
-          });
-        });
-
-        ui.onDialogHidden(self.$dialog, function () {
-          // detach events
-          $linkText.off('input paste keypress');
-          $linkUrl.off('input paste keypress');
-          $linkBtn.off('click');
-
-          if (deferred.state() === 'pending') {
-            deferred.reject();
-          }
-        });
-
-        ui.showDialog(self.$dialog);
-      }).promise();
+            _this.ui.onDialogHidden(_this.$dialog, function () {
+                // detach events
+                $linkText.off('input paste keypress');
+                $linkUrl.off('input paste keypress');
+                $linkBtn.off('click');
+                if (deferred.state() === 'pending') {
+                    deferred.reject();
+                }
+            });
+            _this.ui.showDialog(_this.$dialog);
+        }).promise();
     };
-
     /**
      * @param {Object} layoutInfo
      */
-    this.show = function () {
-      var linkInfo = context.invoke('editor.getLinkInfo');
-
-      context.invoke('editor.saveRange');
-      this.showLinkDialog(linkInfo).then(function (linkInfo) {
-        context.invoke('editor.restoreRange');
-        context.invoke('editor.createLink', linkInfo);
-      }).fail(function () {
-        context.invoke('editor.restoreRange');
-      });
-    };
-    context.memo('help.linkDialog.show', options.langInfo.help['linkDialog.show']);
-  };
-
-  var LinkPopover = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var options = context.options;
-
-    this.events = {
-      'summernote.keyup summernote.mouseup summernote.change summernote.scroll': function () {
-        self.update();
-      },
-      'summernote.disable summernote.dialog.shown': function () {
-        self.hide();
-      }
-    };
-
-    this.shouldInitialize = function () {
-      return !list.isEmpty(options.popover.link);
-    };
-
-    this.initialize = function () {
-      this.$popover = ui.popover({
-        className: 'note-link-popover',
-        callback: function ($node) {
-          var $content = $node.find('.popover-content,.note-popover-content');
-          $content.prepend('<span><a target="_blank"></a>&nbsp;</span>');
-        }
-      }).render().appendTo('body');
-      var $content = this.$popover.find('.popover-content,.note-popover-content');
-
-      context.invoke('buttons.build', $content, options.popover.link);
-    };
-
-    this.destroy = function () {
-      this.$popover.remove();
-    };
-
-    this.update = function () {
-      // Prevent focusing on editable when invoke('code') is executed
-      if (!context.invoke('editor.hasFocus')) {
-        this.hide();
-        return;
-      }
-
-      var rng = context.invoke('editor.createRange');
-      if (rng.isCollapsed() && rng.isOnAnchor()) {
-        var anchor = dom.ancestor(rng.sc, dom.isAnchor);
-        var href = $(anchor).attr('href');
-        this.$popover.find('a').attr('href', href).html(href);
-
-        var pos = dom.posFromPlaceholder(anchor);
-        this.$popover.css({
-          display: 'block',
-          left: pos.left,
-          top: pos.top
+    LinkDialog.prototype.show = function () {
+        var _this = this;
+        var linkInfo = this.context.invoke('editor.getLinkInfo');
+        this.context.invoke('editor.saveRange');
+        this.showLinkDialog(linkInfo).then(function (linkInfo) {
+            _this.context.invoke('editor.restoreRange');
+            _this.context.invoke('editor.createLink', linkInfo);
+        }).fail(function () {
+            _this.context.invoke('editor.restoreRange');
         });
-      } else {
-        this.hide();
-      }
     };
+    return LinkDialog;
+}());
 
-    this.hide = function () {
-      this.$popover.hide();
+var LinkPopover = /** @class */ (function () {
+    function LinkPopover(context) {
+        var _this = this;
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.options = context.options;
+        this.events = {
+            'summernote.keyup summernote.mouseup summernote.change summernote.scroll': function () {
+                _this.update();
+            },
+            'summernote.disable summernote.dialog.shown': function () {
+                _this.hide();
+            }
+        };
+    }
+    LinkPopover.prototype.shouldInitialize = function () {
+        return !lists.isEmpty(this.options.popover.link);
     };
-  };
-
-  var ImageDialog = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var $editor = context.layoutInfo.editor;
-    var options = context.options;
-    var lang = options.langInfo;
-
-    this.initialize = function () {
-      var $container = options.dialogsInBody ? $(document.body) : $editor;
-
-      var imageLimitation = '';
-      if (options.maximumImageFileSize) {
-        var unit = Math.floor(Math.log(options.maximumImageFileSize) / Math.log(1024));
-        var readableSize = (options.maximumImageFileSize / Math.pow(1024, unit)).toFixed(2) * 1 +
-                           ' ' + ' KMGTP'[unit] + 'B';
-        imageLimitation = '<small>' + lang.image.maximumFileSize + ' : ' + readableSize + '</small>';
-      }
-
-      var body = '<div class="form-group note-form-group note-group-select-from-files">' +
-                   '<label class="note-form-label">' + lang.image.selectFromFiles + '</label>' +
-                   '<input class="note-image-input form-control note-form-control note-input" '+
-                   ' type="file" name="files" accept="image/*" multiple="multiple" />' +
-                   imageLimitation +
-                 '</div>' + 
-                 '<div class="form-group note-group-image-url" style="overflow:auto;">' +
-                   '<label class="note-form-label">' + lang.image.url + '</label>' +
-                   '<input class="note-image-url form-control note-form-control note-input ' +
-                   ' col-md-12" type="text" />' +
-                 '</div>';
-      var footer = '<button href="#" class="btn btn-primary note-btn note-btn-primary ' +
-      'note-image-btn disabled" disabled>' + lang.image.insert + '</button>';
-
-      this.$dialog = ui.dialog({
-        title: lang.image.insert,
-        fade: options.dialogsFade,
-        body: body,
-        footer: footer
-      }).render().appendTo($container);
+    LinkPopover.prototype.initialize = function () {
+        this.$popover = this.ui.popover({
+            className: 'note-link-popover',
+            callback: function ($node) {
+                var $content = $node.find('.popover-content,.note-popover-content');
+                $content.prepend('<span><a target="_blank"></a>&nbsp;</span>');
+            }
+        }).render().appendTo(this.options.container);
+        var $content = this.$popover.find('.popover-content,.note-popover-content');
+        this.context.invoke('buttons.build', $content, this.options.popover.link);
     };
-
-    this.destroy = function () {
-      ui.hideDialog(this.$dialog);
-      this.$dialog.remove();
+    LinkPopover.prototype.destroy = function () {
+        this.$popover.remove();
     };
-
-    this.bindEnterKey = function ($input, $btn) {
-      $input.on('keypress', function (event) {
-        if (event.keyCode === key.code.ENTER) {
-          $btn.trigger('click');
+    LinkPopover.prototype.update = function () {
+        // Prevent focusing on editable when invoke('code') is executed
+        if (!this.context.invoke('editor.hasFocus')) {
+            this.hide();
+            return;
         }
-      });
-    };
-
-    this.show = function () {
-      context.invoke('editor.saveRange');
-      this.showImageDialog().then(function (data) {
-        // [workaround] hide dialog before restore range for IE range focus
-        ui.hideDialog(self.$dialog);
-        context.invoke('editor.restoreRange');
-
-        if (typeof data === 'string') { // image url
-          context.invoke('editor.insertImage', data);
-        } else { // array of files
-          context.invoke('editor.insertImagesOrCallback', data);
+        var rng = this.context.invoke('editor.createRange');
+        if (rng.isCollapsed() && rng.isOnAnchor()) {
+            var anchor = dom.ancestor(rng.sc, dom.isAnchor);
+            var href = $$1(anchor).attr('href');
+            this.$popover.find('a').attr('href', href).html(href);
+            var pos = dom.posFromPlaceholder(anchor);
+            this.$popover.css({
+                display: 'block',
+                left: pos.left,
+                top: pos.top
+            });
         }
-      }).fail(function () {
-        context.invoke('editor.restoreRange');
-      });
+        else {
+            this.hide();
+        }
     };
+    LinkPopover.prototype.hide = function () {
+        this.$popover.hide();
+    };
+    return LinkPopover;
+}());
 
+var ImageDialog = /** @class */ (function () {
+    function ImageDialog(context) {
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.$body = $$1(document.body);
+        this.$editor = context.layoutInfo.editor;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+    }
+    ImageDialog.prototype.initialize = function () {
+        var $container = this.options.dialogsInBody ? this.$body : this.$editor;
+        var imageLimitation = '';
+        if (this.options.maximumImageFileSize) {
+            var unit = Math.floor(Math.log(this.options.maximumImageFileSize) / Math.log(1024));
+            var readableSize = (this.options.maximumImageFileSize / Math.pow(1024, unit)).toFixed(2) * 1 +
+                ' ' + ' KMGTP'[unit] + 'B';
+            imageLimitation = "<small>" + (this.lang.image.maximumFileSize + ' : ' + readableSize) + "</small>";
+        }
+        var body = [
+            '<div class="form-group note-form-group note-group-select-from-files">',
+            '<label class="note-form-label">' + this.lang.image.selectFromFiles + '</label>',
+            '<input class="note-image-input note-form-control note-input" ',
+            ' type="file" name="files" accept="image/*" multiple="multiple" />',
+            imageLimitation,
+            '</div>',
+            '<div class="form-group note-group-image-url" style="overflow:auto;">',
+            '<label class="note-form-label">' + this.lang.image.url + '</label>',
+            '<input class="note-image-url form-control note-form-control note-input ',
+            ' col-md-12" type="text" />',
+            '</div>'
+        ].join('');
+        var buttonClass = 'btn btn-primary note-btn note-btn-primary note-image-btn';
+        var footer = "<button type=\"submit\" href=\"#\" class=\"" + buttonClass + "\" disabled>" + this.lang.image.insert + "</button>";
+        this.$dialog = this.ui.dialog({
+            title: this.lang.image.insert,
+            fade: this.options.dialogsFade,
+            body: body,
+            footer: footer
+        }).render().appendTo($container);
+    };
+    ImageDialog.prototype.destroy = function () {
+        this.ui.hideDialog(this.$dialog);
+        this.$dialog.remove();
+    };
+    ImageDialog.prototype.bindEnterKey = function ($input, $btn) {
+        $input.on('keypress', function (event) {
+            if (event.keyCode === key.code.ENTER) {
+                event.preventDefault();
+                $btn.trigger('click');
+            }
+        });
+    };
+    ImageDialog.prototype.show = function () {
+        var _this = this;
+        this.context.invoke('editor.saveRange');
+        this.showImageDialog().then(function (data) {
+            // [workaround] hide dialog before restore range for IE range focus
+            _this.ui.hideDialog(_this.$dialog);
+            _this.context.invoke('editor.restoreRange');
+            if (typeof data === 'string') {
+                _this.context.invoke('editor.insertImage', data);
+            }
+            else {
+                _this.context.invoke('editor.insertImagesOrCallback', data);
+            }
+        }).fail(function () {
+            _this.context.invoke('editor.restoreRange');
+        });
+    };
     /**
      * show image dialog
      *
      * @param {jQuery} $dialog
      * @return {Promise}
      */
-    this.showImageDialog = function () {
-      return $.Deferred(function (deferred) {
-        var $imageInput = self.$dialog.find('.note-image-input'),
-            $imageUrl = self.$dialog.find('.note-image-url'),
-            $imageBtn = self.$dialog.find('.note-image-btn');
-
-        ui.onDialogShown(self.$dialog, function () {
-          context.triggerEvent('dialog.shown');
-
-          // Cloning imageInput to clear element.
-          $imageInput.replaceWith($imageInput.clone()
-            .on('change', function () {
-              deferred.resolve(this.files || this.value);
-            })
-            .val('')
-          );
-
-          $imageBtn.click(function (event) {
-            event.preventDefault();
-
-            deferred.resolve($imageUrl.val());
-          });
-
-          $imageUrl.on('keyup paste', function () {
-            var url = $imageUrl.val();
-            ui.toggleBtn($imageBtn, url);
-          }).val('').trigger('focus');
-          self.bindEnterKey($imageUrl, $imageBtn);
+    ImageDialog.prototype.showImageDialog = function () {
+        var _this = this;
+        return $$1.Deferred(function (deferred) {
+            var $imageInput = _this.$dialog.find('.note-image-input');
+            var $imageUrl = _this.$dialog.find('.note-image-url');
+            var $imageBtn = _this.$dialog.find('.note-image-btn');
+            _this.ui.onDialogShown(_this.$dialog, function () {
+                _this.context.triggerEvent('dialog.shown');
+                // Cloning imageInput to clear element.
+                $imageInput.replaceWith($imageInput.clone().on('change', function (event) {
+                    deferred.resolve(event.target.files || event.target.value);
+                }).val(''));
+                $imageBtn.click(function (event) {
+                    event.preventDefault();
+                    deferred.resolve($imageUrl.val());
+                });
+                $imageUrl.on('keyup paste', function () {
+                    var url = $imageUrl.val();
+                    _this.ui.toggleBtn($imageBtn, url);
+                }).val('');
+                if (!env.isSupportTouch) {
+                    $imageUrl.trigger('focus');
+                }
+                _this.bindEnterKey($imageUrl, $imageBtn);
+            });
+            _this.ui.onDialogHidden(_this.$dialog, function () {
+                $imageInput.off('change');
+                $imageUrl.off('keyup paste keypress');
+                $imageBtn.off('click');
+                if (deferred.state() === 'pending') {
+                    deferred.reject();
+                }
+            });
+            _this.ui.showDialog(_this.$dialog);
         });
-
-        ui.onDialogHidden(self.$dialog, function () {
-          $imageInput.off('change');
-          $imageUrl.off('keyup paste keypress');
-          $imageBtn.off('click');
-
-          if (deferred.state() === 'pending') {
-            deferred.reject();
-          }
-        });
-
-        ui.showDialog(self.$dialog);
-      });
     };
-  };
+    return ImageDialog;
+}());
 
-
-  /**
-   * Image popover module
-   *  mouse events that show/hide popover will be handled by Handle.js.
-   *  Handle.js will receive the events and invoke 'imagePopover.update'.
-   */
-  var ImagePopover = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var $editable = context.layoutInfo.editable;
-    var editable = $editable[0];
-    var options = context.options;
-
-    this.events = {
-      'summernote.disable': function () {
-        self.hide();
-      }
+/**
+ * Image popover module
+ *  mouse events that show/hide popover will be handled by Handle.js.
+ *  Handle.js will receive the events and invoke 'imagePopover.update'.
+ */
+var ImagePopover = /** @class */ (function () {
+    function ImagePopover(context) {
+        var _this = this;
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.editable = context.layoutInfo.editable[0];
+        this.options = context.options;
+        this.events = {
+            'summernote.disable': function () {
+                _this.hide();
+            }
+        };
+    }
+    ImagePopover.prototype.shouldInitialize = function () {
+        return !lists.isEmpty(this.options.popover.image);
     };
-
-    this.shouldInitialize = function () {
-      return !list.isEmpty(options.popover.image);
+    ImagePopover.prototype.initialize = function () {
+        this.$popover = this.ui.popover({
+            className: 'note-image-popover'
+        }).render().appendTo(this.options.container);
+        var $content = this.$popover.find('.popover-content,.note-popover-content');
+        this.context.invoke('buttons.build', $content, this.options.popover.image);
     };
-
-    this.initialize = function () {
-      this.$popover = ui.popover({
-        className: 'note-image-popover'
-      }).render().appendTo('body');
-      var $content = this.$popover.find('.popover-content,.note-popover-content');
-
-      context.invoke('buttons.build', $content, options.popover.image);
+    ImagePopover.prototype.destroy = function () {
+        this.$popover.remove();
     };
-
-    this.destroy = function () {
-      this.$popover.remove();
-    };
-
-    this.update = function (target) {
-      if (dom.isImg(target)) {
-        var pos = dom.posFromPlaceholder(target);
-        var posEditor = dom.posFromPlaceholder(editable);
-
-        this.$popover.css({
-          display: 'block',
-          left: pos.left,
-          top: Math.min(pos.top, posEditor.top)
-        });
-      } else {
-        this.hide();
-      }
-    };
-
-    this.hide = function () {
-      this.$popover.hide();
-    };
-  };
-
-  var TablePopover = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var options = context.options;
-
-    this.events = {
-      'summernote.mousedown': function (we, e) {
-        self.update(e.target);
-      },
-      'summernote.keyup summernote.scroll summernote.change': function () {
-        self.update();
-      },
-      'summernote.disable': function () {
-        self.hide();
-      }
-    };
-
-    this.shouldInitialize = function () {
-      return !list.isEmpty(options.popover.table);
-    };
-
-    this.initialize = function () {
-      this.$popover = ui.popover({
-        className: 'note-table-popover'
-      }).render().appendTo('body');
-      var $content = this.$popover.find('.popover-content,.note-popover-content');
-
-      context.invoke('buttons.build', $content, options.popover.table);
-
-      // [workaround] Disable Firefox's default table editor
-      if (agent.isFF) {
-        document.execCommand('enableInlineTableEditing', false, false);
-      }
-    };
-
-    this.destroy = function () {
-      this.$popover.remove();
-    };
-
-    this.update = function (target) {
-      if (context.isDisabled()) {
-        return false;
-      }
-
-      var isCell = dom.isCell(target);
-
-      if (isCell) {
-        var pos = dom.posFromPlaceholder(target);
-        this.$popover.css({
-          display: 'block',
-          left: pos.left,
-          top: pos.top
-        });
-      } else {
-        this.hide();
-      }
-
-      return isCell;
-    };
-
-    this.hide = function () {
-      this.$popover.hide();
-    };
-  };
-
-  var VideoDialog = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var $editor = context.layoutInfo.editor;
-    var options = context.options;
-    var lang = options.langInfo;
-
-    this.initialize = function () {
-      var $container = options.dialogsInBody ? $(document.body) : $editor;
-
-      var body = '<div class="form-group note-form-group row-fluid">' +
-          '<label class="note-form-label">' + lang.video.url + ' <small class="text-muted">' + lang.video.providers + '</small></label>' +
-          '<input class="note-video-url form-control  note-form-control note-input span12" ' + 
-          ' type="text" />' +
-          '</div>';
-      var footer = '<button href="#" class="btn btn-primary note-btn note-btn-primary ' + 
-      ' note-video-btn disabled" disabled>' + lang.video.insert + '</button>';
-
-      this.$dialog = ui.dialog({
-        title: lang.video.insert,
-        fade: options.dialogsFade,
-        body: body,
-        footer: footer
-      }).render().appendTo($container);
-    };
-
-    this.destroy = function () {
-      ui.hideDialog(this.$dialog);
-      this.$dialog.remove();
-    };
-
-    this.bindEnterKey = function ($input, $btn) {
-      $input.on('keypress', function (event) {
-        if (event.keyCode === key.code.ENTER) {
-          $btn.trigger('click');
+    ImagePopover.prototype.update = function (target) {
+        if (dom.isImg(target)) {
+            var pos = dom.posFromPlaceholder(target);
+            var posEditor = dom.posFromPlaceholder(this.editable);
+            this.$popover.css({
+                display: 'block',
+                left: this.options.popatmouse ? event.pageX - 20 : pos.left,
+                top: this.options.popatmouse ? event.pageY : Math.min(pos.top, posEditor.top)
+            });
         }
-      });
-    };
-
-    this.createVideoNode = function (url) {
-      // video url patterns(youtube, instagram, vimeo, dailymotion, youku, mp4, ogg, webm)
-      var ytRegExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-      var ytMatch = url.match(ytRegExp);
-
-      var igRegExp = /(?:www\.|\/\/)instagram\.com\/p\/(.[a-zA-Z0-9_-]*)/;
-      var igMatch = url.match(igRegExp);
-
-      var vRegExp = /\/\/vine\.co\/v\/([a-zA-Z0-9]+)/;
-      var vMatch = url.match(vRegExp);
-
-      var vimRegExp = /\/\/(player\.)?vimeo\.com\/([a-z]*\/)*(\d+)[?]?.*/;
-      var vimMatch = url.match(vimRegExp);
-
-      var dmRegExp = /.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
-      var dmMatch = url.match(dmRegExp);
-
-      var youkuRegExp = /\/\/v\.youku\.com\/v_show\/id_(\w+)=*\.html/;
-      var youkuMatch = url.match(youkuRegExp);
-
-      var qqRegExp = /\/\/v\.qq\.com.*?vid=(.+)/;
-      var qqMatch = url.match(qqRegExp);
-
-      var qqRegExp2 = /\/\/v\.qq\.com\/x?\/?(page|cover).*?\/([^\/]+)\.html\??.*/;
-      var qqMatch2 = url.match(qqRegExp2);
-
-      var mp4RegExp = /^.+.(mp4|m4v)$/;
-      var mp4Match = url.match(mp4RegExp);
-
-      var oggRegExp = /^.+.(ogg|ogv)$/;
-      var oggMatch = url.match(oggRegExp);
-
-      var webmRegExp = /^.+.(webm)$/;
-      var webmMatch = url.match(webmRegExp);
-
-      var $video;
-      if (ytMatch && ytMatch[1].length === 11) {
-        var youtubeId = ytMatch[1];
-        $video = $('<iframe>')
-            .attr('frameborder', 0)
-            .attr('src', '//www.youtube.com/embed/' + youtubeId)
-            .attr('width', '640').attr('height', '360');
-      } else if (igMatch && igMatch[0].length) {
-        $video = $('<iframe>')
-            .attr('frameborder', 0)
-            .attr('src', 'https://instagram.com/p/' + igMatch[1] + '/embed/')
-            .attr('width', '612').attr('height', '710')
-            .attr('scrolling', 'no')
-            .attr('allowtransparency', 'true');
-      } else if (vMatch && vMatch[0].length) {
-        $video = $('<iframe>')
-            .attr('frameborder', 0)
-            .attr('src', vMatch[0] + '/embed/simple')
-            .attr('width', '600').attr('height', '600')
-            .attr('class', 'vine-embed');
-      } else if (vimMatch && vimMatch[3].length) {
-        $video = $('<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen>')
-            .attr('frameborder', 0)
-            .attr('src', '//player.vimeo.com/video/' + vimMatch[3])
-            .attr('width', '640').attr('height', '360');
-      } else if (dmMatch && dmMatch[2].length) {
-        $video = $('<iframe>')
-            .attr('frameborder', 0)
-            .attr('src', '//www.dailymotion.com/embed/video/' + dmMatch[2])
-            .attr('width', '640').attr('height', '360');
-      } else if (youkuMatch && youkuMatch[1].length) {
-        $video = $('<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen>')
-            .attr('frameborder', 0)
-            .attr('height', '498')
-            .attr('width', '510')
-            .attr('src', '//player.youku.com/embed/' + youkuMatch[1]);
-      } else if ((qqMatch && qqMatch[1].length) || (qqMatch2 && qqMatch2[2].length)) {
-        var vid = ((qqMatch && qqMatch[1].length) ? qqMatch[1]:qqMatch2[2]);
-        $video = $('<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen>')
-            .attr('frameborder', 0)
-            .attr('height', '310')
-            .attr('width', '500')
-            .attr('src', 'http://v.qq.com/iframe/player.html?vid=' + vid + '&amp;auto=0');
-      } else if (mp4Match || oggMatch || webmMatch) {
-        $video = $('<video controls>')
-            .attr('src', url)
-            .attr('width', '640').attr('height', '360');
-      } else {
-        // this is not a known video link. Now what, Cat? Now what?
-        return false;
-      }
-
-      $video.addClass('note-video-clip');
-
-      return $video[0];
-    };
-
-    this.show = function () {
-      var text = context.invoke('editor.getSelectedText');
-      context.invoke('editor.saveRange');
-      this.showVideoDialog(text).then(function (url) {
-        // [workaround] hide dialog before restore range for IE range focus
-        ui.hideDialog(self.$dialog);
-        context.invoke('editor.restoreRange');
-
-        // build node
-        var $node = self.createVideoNode(url);
-
-        if ($node) {
-          // insert video node
-          context.invoke('editor.insertNode', $node);
+        else {
+            this.hide();
         }
-      }).fail(function () {
-        context.invoke('editor.restoreRange');
-      });
     };
+    ImagePopover.prototype.hide = function () {
+        this.$popover.hide();
+    };
+    return ImagePopover;
+}());
 
+var TablePopover = /** @class */ (function () {
+    function TablePopover(context) {
+        var _this = this;
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.options = context.options;
+        this.events = {
+            'summernote.mousedown': function (we, e) {
+                _this.update(e.target);
+            },
+            'summernote.keyup summernote.scroll summernote.change': function () {
+                _this.update();
+            },
+            'summernote.disable': function () {
+                _this.hide();
+            }
+        };
+    }
+    TablePopover.prototype.shouldInitialize = function () {
+        return !lists.isEmpty(this.options.popover.table);
+    };
+    TablePopover.prototype.initialize = function () {
+        this.$popover = this.ui.popover({
+            className: 'note-table-popover'
+        }).render().appendTo(this.options.container);
+        var $content = this.$popover.find('.popover-content,.note-popover-content');
+        this.context.invoke('buttons.build', $content, this.options.popover.table);
+        // [workaround] Disable Firefox's default table editor
+        if (env.isFF) {
+            document.execCommand('enableInlineTableEditing', false, false);
+        }
+    };
+    TablePopover.prototype.destroy = function () {
+        this.$popover.remove();
+    };
+    TablePopover.prototype.update = function (target) {
+        if (this.context.isDisabled()) {
+            return false;
+        }
+        var isCell = dom.isCell(target);
+        if (isCell) {
+            var pos = dom.posFromPlaceholder(target);
+            this.$popover.css({
+                display: 'block',
+                left: pos.left,
+                top: pos.top
+            });
+        }
+        else {
+            this.hide();
+        }
+        return isCell;
+    };
+    TablePopover.prototype.hide = function () {
+        this.$popover.hide();
+    };
+    return TablePopover;
+}());
+
+var VideoDialog = /** @class */ (function () {
+    function VideoDialog(context) {
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.$body = $$1(document.body);
+        this.$editor = context.layoutInfo.editor;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+    }
+    VideoDialog.prototype.initialize = function () {
+        var $container = this.options.dialogsInBody ? this.$body : this.$editor;
+        var body = [
+            '<div class="form-group note-form-group row-fluid">',
+            "<label class=\"note-form-label\">" + this.lang.video.url + " <small class=\"text-muted\">" + this.lang.video.providers + "</small></label>",
+            '<input class="note-video-url form-control note-form-control note-input" type="text" />',
+            '</div>'
+        ].join('');
+        var buttonClass = 'btn btn-primary note-btn note-btn-primary note-video-btn';
+        var footer = "<button type=\"submit\" href=\"#\" class=\"" + buttonClass + "\" disabled>" + this.lang.video.insert + "</button>";
+        this.$dialog = this.ui.dialog({
+            title: this.lang.video.insert,
+            fade: this.options.dialogsFade,
+            body: body,
+            footer: footer
+        }).render().appendTo($container);
+    };
+    VideoDialog.prototype.destroy = function () {
+        this.ui.hideDialog(this.$dialog);
+        this.$dialog.remove();
+    };
+    VideoDialog.prototype.bindEnterKey = function ($input, $btn) {
+        $input.on('keypress', function (event) {
+            if (event.keyCode === key.code.ENTER) {
+                event.preventDefault();
+                $btn.trigger('click');
+            }
+        });
+    };
+    VideoDialog.prototype.createVideoNode = function (url) {
+        // video url patterns(youtube, instagram, vimeo, dailymotion, youku, mp4, ogg, webm)
+        var ytRegExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+        var ytMatch = url.match(ytRegExp);
+        var igRegExp = /(?:www\.|\/\/)instagram\.com\/p\/(.[a-zA-Z0-9_-]*)/;
+        var igMatch = url.match(igRegExp);
+        var vRegExp = /\/\/vine\.co\/v\/([a-zA-Z0-9]+)/;
+        var vMatch = url.match(vRegExp);
+        var vimRegExp = /\/\/(player\.)?vimeo\.com\/([a-z]*\/)*(\d+)[?]?.*/;
+        var vimMatch = url.match(vimRegExp);
+        var dmRegExp = /.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
+        var dmMatch = url.match(dmRegExp);
+        var youkuRegExp = /\/\/v\.youku\.com\/v_show\/id_(\w+)=*\.html/;
+        var youkuMatch = url.match(youkuRegExp);
+        var qqRegExp = /\/\/v\.qq\.com.*?vid=(.+)/;
+        var qqMatch = url.match(qqRegExp);
+        var qqRegExp2 = /\/\/v\.qq\.com\/x?\/?(page|cover).*?\/([^\/]+)\.html\??.*/;
+        var qqMatch2 = url.match(qqRegExp2);
+        var mp4RegExp = /^.+.(mp4|m4v)$/;
+        var mp4Match = url.match(mp4RegExp);
+        var oggRegExp = /^.+.(ogg|ogv)$/;
+        var oggMatch = url.match(oggRegExp);
+        var webmRegExp = /^.+.(webm)$/;
+        var webmMatch = url.match(webmRegExp);
+        var $video;
+        if (ytMatch && ytMatch[1].length === 11) {
+            var youtubeId = ytMatch[1];
+            $video = $$1('<iframe>')
+                .attr('frameborder', 0)
+                .attr('src', '//www.youtube.com/embed/' + youtubeId)
+                .attr('width', '640').attr('height', '360');
+        }
+        else if (igMatch && igMatch[0].length) {
+            $video = $$1('<iframe>')
+                .attr('frameborder', 0)
+                .attr('src', 'https://instagram.com/p/' + igMatch[1] + '/embed/')
+                .attr('width', '612').attr('height', '710')
+                .attr('scrolling', 'no')
+                .attr('allowtransparency', 'true');
+        }
+        else if (vMatch && vMatch[0].length) {
+            $video = $$1('<iframe>')
+                .attr('frameborder', 0)
+                .attr('src', vMatch[0] + '/embed/simple')
+                .attr('width', '600').attr('height', '600')
+                .attr('class', 'vine-embed');
+        }
+        else if (vimMatch && vimMatch[3].length) {
+            $video = $$1('<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen>')
+                .attr('frameborder', 0)
+                .attr('src', '//player.vimeo.com/video/' + vimMatch[3])
+                .attr('width', '640').attr('height', '360');
+        }
+        else if (dmMatch && dmMatch[2].length) {
+            $video = $$1('<iframe>')
+                .attr('frameborder', 0)
+                .attr('src', '//www.dailymotion.com/embed/video/' + dmMatch[2])
+                .attr('width', '640').attr('height', '360');
+        }
+        else if (youkuMatch && youkuMatch[1].length) {
+            $video = $$1('<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen>')
+                .attr('frameborder', 0)
+                .attr('height', '498')
+                .attr('width', '510')
+                .attr('src', '//player.youku.com/embed/' + youkuMatch[1]);
+        }
+        else if ((qqMatch && qqMatch[1].length) || (qqMatch2 && qqMatch2[2].length)) {
+            var vid = ((qqMatch && qqMatch[1].length) ? qqMatch[1] : qqMatch2[2]);
+            $video = $$1('<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen>')
+                .attr('frameborder', 0)
+                .attr('height', '310')
+                .attr('width', '500')
+                .attr('src', 'http://v.qq.com/iframe/player.html?vid=' + vid + '&amp;auto=0');
+        }
+        else if (mp4Match || oggMatch || webmMatch) {
+            $video = $$1('<video controls>')
+                .attr('src', url)
+                .attr('width', '640').attr('height', '360');
+        }
+        else {
+            // this is not a known video link. Now what, Cat? Now what?
+            return false;
+        }
+        $video.addClass('note-video-clip');
+        return $video[0];
+    };
+    VideoDialog.prototype.show = function () {
+        var _this = this;
+        var text = this.context.invoke('editor.getSelectedText');
+        this.context.invoke('editor.saveRange');
+        this.showVideoDialog(text).then(function (url) {
+            // [workaround] hide dialog before restore range for IE range focus
+            _this.ui.hideDialog(_this.$dialog);
+            _this.context.invoke('editor.restoreRange');
+            // build node
+            var $node = _this.createVideoNode(url);
+            if ($node) {
+                // insert video node
+                _this.context.invoke('editor.insertNode', $node);
+            }
+        }).fail(function () {
+            _this.context.invoke('editor.restoreRange');
+        });
+    };
     /**
      * show image dialog
      *
      * @param {jQuery} $dialog
      * @return {Promise}
      */
-    this.showVideoDialog = function (text) {
-      return $.Deferred(function (deferred) {
-        var $videoUrl = self.$dialog.find('.note-video-url'),
-            $videoBtn = self.$dialog.find('.note-video-btn');
-
-        ui.onDialogShown(self.$dialog, function () {
-          context.triggerEvent('dialog.shown');
-
-          $videoUrl.val(text).on('input', function () {
-            ui.toggleBtn($videoBtn, $videoUrl.val());
-          }).trigger('focus');
-
-          $videoBtn.click(function (event) {
-            event.preventDefault();
-
-            deferred.resolve($videoUrl.val());
-          });
-
-          self.bindEnterKey($videoUrl, $videoBtn);
+    VideoDialog.prototype.showVideoDialog = function (text) {
+        var _this = this;
+        return $$1.Deferred(function (deferred) {
+            var $videoUrl = _this.$dialog.find('.note-video-url');
+            var $videoBtn = _this.$dialog.find('.note-video-btn');
+            _this.ui.onDialogShown(_this.$dialog, function () {
+                _this.context.triggerEvent('dialog.shown');
+                $videoUrl.val(text).on('input', function () {
+                    _this.ui.toggleBtn($videoBtn, $videoUrl.val());
+                });
+                if (!env.isSupportTouch) {
+                    $videoUrl.trigger('focus');
+                }
+                $videoBtn.click(function (event) {
+                    event.preventDefault();
+                    deferred.resolve($videoUrl.val());
+                });
+                _this.bindEnterKey($videoUrl, $videoBtn);
+            });
+            _this.ui.onDialogHidden(_this.$dialog, function () {
+                $videoUrl.off('input');
+                $videoBtn.off('click');
+                if (deferred.state() === 'pending') {
+                    deferred.reject();
+                }
+            });
+            _this.ui.showDialog(_this.$dialog);
         });
-
-        ui.onDialogHidden(self.$dialog, function () {
-          $videoUrl.off('input');
-          $videoBtn.off('click');
-
-          if (deferred.state() === 'pending') {
-            deferred.reject();
-          }
-        });
-
-        ui.showDialog(self.$dialog);
-      });
     };
-  };
+    return VideoDialog;
+}());
 
-  var HelpDialog = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var $editor = context.layoutInfo.editor;
-    var options = context.options;
-    var lang = options.langInfo;
-
-    this.createShortCutList = function () {
-      var keyMap = options.keyMap[agent.isMac ? 'mac' : 'pc'];
-      return Object.keys(keyMap).map(function (key) {
-        var command = keyMap[key];
-        var $row = $('<div><div class="help-list-item"/></div>');
-        $row.append($('<label><kbd>' + key + '</kdb></label>').css({
-          'width': 180,
-          'margin-right': 10
-        })).append($('<span/>').html(context.memo('help.' + command) || command));
-        return $row.html();
-      }).join('');
+var HelpDialog = /** @class */ (function () {
+    function HelpDialog(context) {
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.$body = $$1(document.body);
+        this.$editor = context.layoutInfo.editor;
+        this.options = context.options;
+        this.lang = this.options.langInfo;
+    }
+    HelpDialog.prototype.initialize = function () {
+        var $container = this.options.dialogsInBody ? this.$body : this.$editor;
+        var body = [
+            '<p class="text-center">',
+            '<a href="http://summernote.org/" target="_blank">Summernote 0.8.9</a> · ',
+            '<a href="https://github.com/summernote/summernote" target="_blank">Project</a> · ',
+            '<a href="https://github.com/summernote/summernote/issues" target="_blank">Issues</a>',
+            '</p>'
+        ].join('');
+        this.$dialog = this.ui.dialog({
+            title: this.lang.options.help,
+            fade: this.options.dialogsFade,
+            body: this.createShortcutList(),
+            footer: body,
+            callback: function ($node) {
+                $node.find('.modal-body,.note-modal-body').css({
+                    'max-height': 300,
+                    'overflow': 'scroll'
+                });
+            }
+        }).render().appendTo($container);
     };
-
-    this.initialize = function () {
-      var $container = options.dialogsInBody ? $(document.body) : $editor;
-
-      var body = [
-        '<p class="text-center">',
-        '<a href="http://summernote.org/" target="_blank">Summernote 0.8.8</a> · ',
-        '<a href="https://github.com/summernote/summernote" target="_blank">Project</a> · ',
-        '<a href="https://github.com/summernote/summernote/issues" target="_blank">Issues</a>',
-        '</p>'
-      ].join('');
-
-      this.$dialog = ui.dialog({
-        title: lang.options.help,
-        fade: options.dialogsFade,
-        body: this.createShortCutList(),
-        footer: body,
-        callback: function ($node) {
-          $node.find('.modal-body,.note-modal-body').css({
-            'max-height': 300,
-            'overflow': 'scroll'
-          });
-        }
-      }).render().appendTo($container);
+    HelpDialog.prototype.destroy = function () {
+        this.ui.hideDialog(this.$dialog);
+        this.$dialog.remove();
     };
-
-    this.destroy = function () {
-      ui.hideDialog(this.$dialog);
-      this.$dialog.remove();
+    HelpDialog.prototype.createShortcutList = function () {
+        var _this = this;
+        var keyMap = this.options.keyMap[env.isMac ? 'mac' : 'pc'];
+        return Object.keys(keyMap).map(function (key) {
+            var command = keyMap[key];
+            var $row = $$1('<div><div class="help-list-item"/></div>');
+            $row.append($$1('<label><kbd>' + key + '</kdb></label>').css({
+                'width': 180,
+                'margin-right': 10
+            })).append($$1('<span/>').html(_this.context.memo('help.' + command) || command));
+            return $row.html();
+        }).join('');
     };
-
     /**
      * show help dialog
      *
      * @return {Promise}
      */
-    this.showHelpDialog = function () {
-      return $.Deferred(function (deferred) {
-        ui.onDialogShown(self.$dialog, function () {
-          context.triggerEvent('dialog.shown');
-          deferred.resolve();
-        });
-        ui.showDialog(self.$dialog);
-      }).promise();
-    };
-
-    this.show = function () {
-      context.invoke('editor.saveRange');
-      this.showHelpDialog().then(function () {
-        context.invoke('editor.restoreRange');
-      });
-    };
-  };
-
-  var AirPopover = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var options = context.options;
-
-    var AIR_MODE_POPOVER_X_OFFSET = 20;
-
-    this.events = {
-      'summernote.keyup summernote.mouseup summernote.scroll': function () {
-        self.update();
-      },
-      'summernote.disable summernote.change summernote.dialog.shown': function () {
-        self.hide();
-      },
-      'summernote.focusout': function (we, e) {
-        // [workaround] Firefox doesn't support relatedTarget on focusout
-        //  - Ignore hide action on focus out in FF.
-        if (agent.isFF) {
-          return;
-        }
-
-        if (!e.relatedTarget || !dom.ancestor(e.relatedTarget, func.eq(self.$popover[0]))) {
-          self.hide();
-        }
-      }
-    };
-
-    this.shouldInitialize = function () {
-      return options.airMode && !list.isEmpty(options.popover.air);
-    };
-
-    this.initialize = function () {
-      this.$popover = ui.popover({
-        className: 'note-air-popover'
-      }).render().appendTo('body');
-      var $content = this.$popover.find('.popover-content');
-
-      context.invoke('buttons.build', $content, options.popover.air);
-    };
-
-    this.destroy = function () {
-      this.$popover.remove();
-    };
-
-    this.update = function () {
-      var styleInfo = context.invoke('editor.currentStyle');
-      if (styleInfo.range && !styleInfo.range.isCollapsed()) {
-        var rect = list.last(styleInfo.range.getClientRects());
-        if (rect) {
-          var bnd = func.rect2bnd(rect);
-          this.$popover.css({
-            display: 'block',
-            left: Math.max(bnd.left + bnd.width / 2, 0) - AIR_MODE_POPOVER_X_OFFSET,
-            top: bnd.top + bnd.height
-          });
-          context.invoke('buttons.updateCurrentStyle', this.$popover);
-        }
-      } else {
-        this.hide();
-      }
-    };
-
-    this.hide = function () {
-      this.$popover.hide();
-    };
-  };
-
-  var HintPopover = function (context) {
-    var self = this;
-    var ui = $.summernote.ui;
-
-    var POPOVER_DIST = 5;
-    var hint = context.options.hint || [];
-    var direction = context.options.hintDirection || 'bottom';
-    var hints = $.isArray(hint) ? hint : [hint];
-
-    this.events = {
-      'summernote.keyup': function (we, e) {
-        if (!e.isDefaultPrevented()) {
-          self.handleKeyup(e);
-        }
-      },
-      'summernote.keydown': function (we, e) {
-        self.handleKeydown(e);
-      },
-      'summernote.disable summernote.dialog.shown': function () {
-        self.hide();
-      }
-    };
-
-    this.shouldInitialize = function () {
-      return hints.length > 0;
-    };
-
-    this.initialize = function () {
-      this.lastWordRange = null;
-      this.$popover = ui.popover({
-        className: 'note-hint-popover',
-        hideArrow: true,
-        direction: ''
-      }).render().appendTo('body');
-
-      this.$popover.hide();
-
-      this.$content = this.$popover.find('.popover-content,.note-popover-content');
-
-      this.$content.on('click', '.note-hint-item', function () {
-        self.$content.find('.active').removeClass('active');
-        $(this).addClass('active');
-        self.replace();
-      });
-    };
-
-    this.destroy = function () {
-      this.$popover.remove();
-    };
-
-    this.selectItem = function ($item) {
-      this.$content.find('.active').removeClass('active');
-      $item.addClass('active');
-
-      this.$content[0].scrollTop = $item[0].offsetTop - (this.$content.innerHeight() / 2);
-    };
-
-    this.moveDown = function () {
-      var $current = this.$content.find('.note-hint-item.active');
-      var $next = $current.next();
-
-      if ($next.length) {
-        this.selectItem($next);
-      } else {
-        var $nextGroup = $current.parent().next();
-
-        if (!$nextGroup.length) {
-          $nextGroup = this.$content.find('.note-hint-group').first();
-        }
-
-        this.selectItem($nextGroup.find('.note-hint-item').first());
-      }
-    };
-
-    this.moveUp = function () {
-      var $current = this.$content.find('.note-hint-item.active');
-      var $prev = $current.prev();
-
-      if ($prev.length) {
-        this.selectItem($prev);
-      } else {
-        var $prevGroup = $current.parent().prev();
-
-        if (!$prevGroup.length) {
-          $prevGroup = this.$content.find('.note-hint-group').last();
-        }
-
-        this.selectItem($prevGroup.find('.note-hint-item').last());
-      }
-    };
-
-    this.replace = function () {
-      var $item = this.$content.find('.note-hint-item.active');
-
-      if ($item.length) {
-        var node = this.nodeFromItem($item);
-        // XXX: consider to move codes to editor for recording redo/undo.
-        this.lastWordRange.insertNode(node);
-        range.createFromNode(node).collapse().select();
-
-        this.lastWordRange = null;
-        this.hide();
-        context.triggerEvent('change', context.layoutInfo.editable.html(), context.layoutInfo.editable);
-        context.invoke('editor.focus');
-      }
-
-    };
-
-    this.nodeFromItem = function ($item) {
-      var hint = hints[$item.data('index')];
-      var item = $item.data('item');
-      var node = hint.content ? hint.content(item) : item;
-      if (typeof node === 'string') {
-        node = dom.createText(node);
-      }
-      return node;
-    };
-
-    this.createItemTemplates = function (hintIdx, items) {
-      var hint = hints[hintIdx];
-      return items.map(function (item, idx) {
-        var $item = $('<div class="note-hint-item"/>');
-        $item.append(hint.template ? hint.template(item) : item + '');
-        $item.data({
-          'index': hintIdx,
-          'item': item
-        });
-
-        if (hintIdx === 0 && idx === 0) {
-          $item.addClass('active');
-        }
-        return $item;
-      });
-    };
-
-    this.handleKeydown = function (e) {
-      if (!this.$popover.is(':visible')) {
-        return;
-      }
-
-      if (e.keyCode === key.code.ENTER) {
-        e.preventDefault();
-        this.replace();
-      } else if (e.keyCode === key.code.UP) {
-        e.preventDefault();
-        this.moveUp();
-      } else if (e.keyCode === key.code.DOWN) {
-        e.preventDefault();
-        this.moveDown();
-      }
-    };
-
-    this.searchKeyword = function (index, keyword, callback) {
-      var hint = hints[index];
-      if (hint && hint.match.test(keyword) && hint.search) {
-        var matches = hint.match.exec(keyword);
-        hint.search(matches[1], callback);
-      } else {
-        callback();
-      }
-    };
-
-    this.createGroup = function (idx, keyword) {
-      var $group = $('<div class="note-hint-group note-hint-group-' + idx + '"/>');
-      this.searchKeyword(idx, keyword, function (items) {
-        items = items || [];
-        if (items.length) {
-          $group.html(self.createItemTemplates(idx, items));
-          self.show();
-        }
-      });
-
-      return $group;
-    };
-
-    this.handleKeyup = function (e) {
-      if (list.contains([key.code.ENTER, key.code.UP, key.code.DOWN], e.keyCode)) {
-        if (e.keyCode === key.code.ENTER) {
-          if (this.$popover.is(':visible')) {
-            return;
-          }
-        }
-      } else {
-        var wordRange = context.invoke('editor.createRange').getWordRange();
-        var keyword = wordRange.toString();
-        if (hints.length && keyword) {
-          this.$content.empty();
-
-          var bnd = func.rect2bnd(list.last(wordRange.getClientRects()));
-          if (bnd) {
-
-            this.$popover.hide();
-
-            this.lastWordRange = wordRange;
-
-            hints.forEach(function (hint, idx) {
-              if (hint.match.test(keyword)) {
-                self.createGroup(idx, keyword).appendTo(self.$content);
-              }
+    HelpDialog.prototype.showHelpDialog = function () {
+        var _this = this;
+        return $$1.Deferred(function (deferred) {
+            _this.ui.onDialogShown(_this.$dialog, function () {
+                _this.context.triggerEvent('dialog.shown');
+                deferred.resolve();
             });
+            _this.ui.showDialog(_this.$dialog);
+        }).promise();
+    };
+    HelpDialog.prototype.show = function () {
+        var _this = this;
+        this.context.invoke('editor.saveRange');
+        this.showHelpDialog().then(function () {
+            _this.context.invoke('editor.restoreRange');
+        });
+    };
+    return HelpDialog;
+}());
 
-            // set position for popover after group is created
-            if (direction === 'top') {
-              this.$popover.css({
-                left: bnd.left,
-                top: bnd.top - this.$popover.outerHeight() - POPOVER_DIST
-              });
-            } else {
-              this.$popover.css({
-                left: bnd.left,
-                top: bnd.top + bnd.height + POPOVER_DIST
-              });
+var AIR_MODE_POPOVER_X_OFFSET = 20;
+var AirPopover = /** @class */ (function () {
+    function AirPopover(context) {
+        var _this = this;
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.options = context.options;
+        this.events = {
+            'summernote.keyup summernote.mouseup summernote.scroll': function () {
+                _this.update();
+            },
+            'summernote.disable summernote.change summernote.dialog.shown': function () {
+                _this.hide();
+            },
+            'summernote.focusout': function (we, e) {
+                // [workaround] Firefox doesn't support relatedTarget on focusout
+                //  - Ignore hide action on focus out in FF.
+                if (env.isFF) {
+                    return;
+                }
+                if (!e.relatedTarget || !dom.ancestor(e.relatedTarget, func.eq(_this.$popover[0]))) {
+                    _this.hide();
+                }
             }
-
-          }
-        } else {
-          this.hide();
+        };
+    }
+    AirPopover.prototype.shouldInitialize = function () {
+        return this.options.airMode && !lists.isEmpty(this.options.popover.air);
+    };
+    AirPopover.prototype.initialize = function () {
+        this.$popover = this.ui.popover({
+            className: 'note-air-popover'
+        }).render().appendTo(this.options.container);
+        var $content = this.$popover.find('.popover-content');
+        this.context.invoke('buttons.build', $content, this.options.popover.air);
+    };
+    AirPopover.prototype.destroy = function () {
+        this.$popover.remove();
+    };
+    AirPopover.prototype.update = function () {
+        var styleInfo = this.context.invoke('editor.currentStyle');
+        if (styleInfo.range && !styleInfo.range.isCollapsed()) {
+            var rect = lists.last(styleInfo.range.getClientRects());
+            if (rect) {
+                var bnd = func.rect2bnd(rect);
+                this.$popover.css({
+                    display: 'block',
+                    left: Math.max(bnd.left + bnd.width / 2, 0) - AIR_MODE_POPOVER_X_OFFSET,
+                    top: bnd.top + bnd.height
+                });
+                this.context.invoke('buttons.updateCurrentStyle', this.$popover);
+            }
         }
-      }
+        else {
+            this.hide();
+        }
     };
-
-    this.show = function () {
-      this.$popover.show();
+    AirPopover.prototype.hide = function () {
+        this.$popover.hide();
     };
+    return AirPopover;
+}());
 
-    this.hide = function () {
-      this.$popover.hide();
+var POPOVER_DIST = 5;
+var HintPopover = /** @class */ (function () {
+    function HintPopover(context) {
+        var _this = this;
+        this.context = context;
+        this.ui = $$1.summernote.ui;
+        this.$editable = context.layoutInfo.editable;
+        this.options = context.options;
+        this.hint = this.options.hint || [];
+        this.direction = this.options.hintDirection || 'bottom';
+        this.hints = $$1.isArray(this.hint) ? this.hint : [this.hint];
+        this.events = {
+            'summernote.keyup': function (we, e) {
+                if (!e.isDefaultPrevented()) {
+                    _this.handleKeyup(e);
+                }
+            },
+            'summernote.keydown': function (we, e) {
+                _this.handleKeydown(e);
+            },
+            'summernote.disable summernote.dialog.shown': function () {
+                _this.hide();
+            }
+        };
+    }
+    HintPopover.prototype.shouldInitialize = function () {
+        return this.hints.length > 0;
     };
-  };
+    HintPopover.prototype.initialize = function () {
+        var _this = this;
+        this.lastWordRange = null;
+        this.$popover = this.ui.popover({
+            className: 'note-hint-popover',
+            hideArrow: true,
+            direction: ''
+        }).render().appendTo(this.options.container);
+        this.$popover.hide();
+        this.$content = this.$popover.find('.popover-content,.note-popover-content');
+        this.$content.on('click', '.note-hint-item', function () {
+            _this.$content.find('.active').removeClass('active');
+            $$1(_this).addClass('active');
+            _this.replace();
+        });
+    };
+    HintPopover.prototype.destroy = function () {
+        this.$popover.remove();
+    };
+    HintPopover.prototype.selectItem = function ($item) {
+        this.$content.find('.active').removeClass('active');
+        $item.addClass('active');
+        this.$content[0].scrollTop = $item[0].offsetTop - (this.$content.innerHeight() / 2);
+    };
+    HintPopover.prototype.moveDown = function () {
+        var $current = this.$content.find('.note-hint-item.active');
+        var $next = $current.next();
+        if ($next.length) {
+            this.selectItem($next);
+        }
+        else {
+            var $nextGroup = $current.parent().next();
+            if (!$nextGroup.length) {
+                $nextGroup = this.$content.find('.note-hint-group').first();
+            }
+            this.selectItem($nextGroup.find('.note-hint-item').first());
+        }
+    };
+    HintPopover.prototype.moveUp = function () {
+        var $current = this.$content.find('.note-hint-item.active');
+        var $prev = $current.prev();
+        if ($prev.length) {
+            this.selectItem($prev);
+        }
+        else {
+            var $prevGroup = $current.parent().prev();
+            if (!$prevGroup.length) {
+                $prevGroup = this.$content.find('.note-hint-group').last();
+            }
+            this.selectItem($prevGroup.find('.note-hint-item').last());
+        }
+    };
+    HintPopover.prototype.replace = function () {
+        var $item = this.$content.find('.note-hint-item.active');
+        if ($item.length) {
+            var node = this.nodeFromItem($item);
+            // XXX: consider to move codes to editor for recording redo/undo.
+            this.lastWordRange.insertNode(node);
+            range.createFromNode(node).collapse().select();
+            this.lastWordRange = null;
+            this.hide();
+            this.context.triggerEvent('change', this.$editable.html(), this.$editable[0]);
+            this.context.invoke('editor.focus');
+        }
+    };
+    HintPopover.prototype.nodeFromItem = function ($item) {
+        var hint = this.hints[$item.data('index')];
+        var item = $item.data('item');
+        var node = hint.content ? hint.content(item) : item;
+        if (typeof node === 'string') {
+            node = dom.createText(node);
+        }
+        return node;
+    };
+    HintPopover.prototype.createItemTemplates = function (hintIdx, items) {
+        var hint = this.hints[hintIdx];
+        return items.map(function (item, idx) {
+            var $item = $$1('<div class="note-hint-item"/>');
+            $item.append(hint.template ? hint.template(item) : item + '');
+            $item.data({
+                'index': hintIdx,
+                'item': item
+            });
+            return $item;
+        });
+    };
+    HintPopover.prototype.handleKeydown = function (e) {
+        if (!this.$popover.is(':visible')) {
+            return;
+        }
+        if (e.keyCode === key.code.ENTER) {
+            e.preventDefault();
+            this.replace();
+        }
+        else if (e.keyCode === key.code.UP) {
+            e.preventDefault();
+            this.moveUp();
+        }
+        else if (e.keyCode === key.code.DOWN) {
+            e.preventDefault();
+            this.moveDown();
+        }
+    };
+    HintPopover.prototype.searchKeyword = function (index, keyword, callback) {
+        var hint = this.hints[index];
+        if (hint && hint.match.test(keyword) && hint.search) {
+            var matches = hint.match.exec(keyword);
+            hint.search(matches[1], callback);
+        }
+        else {
+            callback();
+        }
+    };
+    HintPopover.prototype.createGroup = function (idx, keyword) {
+        var _this = this;
+        var $group = $$1('<div class="note-hint-group note-hint-group-' + idx + '"/>');
+        this.searchKeyword(idx, keyword, function (items) {
+            items = items || [];
+            if (items.length) {
+                $group.html(_this.createItemTemplates(idx, items));
+                _this.show();
+            }
+        });
+        return $group;
+    };
+    HintPopover.prototype.handleKeyup = function (e) {
+        var _this = this;
+        if (!lists.contains([key.code.ENTER, key.code.UP, key.code.DOWN], e.keyCode)) {
+            var wordRange = this.context.invoke('editor.createRange').getWordRange();
+            var keyword_1 = wordRange.toString();
+            if (this.hints.length && keyword_1) {
+                this.$content.empty();
+                var bnd = func.rect2bnd(lists.last(wordRange.getClientRects()));
+                if (bnd) {
+                    this.$popover.hide();
+                    this.lastWordRange = wordRange;
+                    this.hints.forEach(function (hint, idx) {
+                        if (hint.match.test(keyword_1)) {
+                            _this.createGroup(idx, keyword_1).appendTo(_this.$content);
+                        }
+                    });
+                    // select first .note-hint-item
+                    this.$content.find('.note-hint-item:first').addClass('active');
+                    // set position for popover after group is created
+                    if (this.direction === 'top') {
+                        this.$popover.css({
+                            left: bnd.left,
+                            top: bnd.top - this.$popover.outerHeight() - POPOVER_DIST
+                        });
+                    }
+                    else {
+                        this.$popover.css({
+                            left: bnd.left,
+                            top: bnd.top + bnd.height + POPOVER_DIST
+                        });
+                    }
+                }
+            }
+            else {
+                this.hide();
+            }
+        }
+    };
+    HintPopover.prototype.show = function () {
+        this.$popover.show();
+    };
+    HintPopover.prototype.hide = function () {
+        this.$popover.hide();
+    };
+    return HintPopover;
+}());
 
+var Context = /** @class */ (function () {
+    /**
+     * @param {jQuery} $note
+     * @param {Object} options
+     */
+    function Context($note, options) {
+        this.ui = $$1.summernote.ui;
+        this.$note = $note;
+        this.memos = {};
+        this.modules = {};
+        this.layoutInfo = {};
+        this.options = options;
+        this.initialize();
+    }
+    /**
+     * create layout and initialize modules and other resources
+     */
+    Context.prototype.initialize = function () {
+        this.layoutInfo = this.ui.createLayout(this.$note, this.options);
+        this._initialize();
+        this.$note.hide();
+        return this;
+    };
+    /**
+     * destroy modules and other resources and remove layout
+     */
+    Context.prototype.destroy = function () {
+        this._destroy();
+        this.$note.removeData('summernote');
+        this.ui.removeLayout(this.$note, this.layoutInfo);
+    };
+    /**
+     * destory modules and other resources and initialize it again
+     */
+    Context.prototype.reset = function () {
+        var disabled = this.isDisabled();
+        this.code(dom.emptyPara);
+        this._destroy();
+        this._initialize();
+        if (disabled) {
+            this.disable();
+        }
+    };
+    Context.prototype._initialize = function () {
+        var _this = this;
+        // add optional buttons
+        var buttons = $$1.extend({}, this.options.buttons);
+        Object.keys(buttons).forEach(function (key) {
+            _this.memo('button.' + key, buttons[key]);
+        });
+        var modules = $$1.extend({}, this.options.modules, $$1.summernote.plugins || {});
+        // add and initialize modules
+        Object.keys(modules).forEach(function (key) {
+            _this.module(key, modules[key], true);
+        });
+        Object.keys(this.modules).forEach(function (key) {
+            _this.initializeModule(key);
+        });
+    };
+    Context.prototype._destroy = function () {
+        var _this = this;
+        // destroy modules with reversed order
+        Object.keys(this.modules).reverse().forEach(function (key) {
+            _this.removeModule(key);
+        });
+        Object.keys(this.memos).forEach(function (key) {
+            _this.removeMemo(key);
+        });
+        // trigger custom onDestroy callback
+        this.triggerEvent('destroy', this);
+    };
+    Context.prototype.code = function (html) {
+        var isActivated = this.invoke('codeview.isActivated');
+        if (html === undefined) {
+            this.invoke('codeview.sync');
+            return isActivated ? this.layoutInfo.codable.val() : this.layoutInfo.editable.html();
+        }
+        else {
+            if (isActivated) {
+                this.layoutInfo.codable.val(html);
+            }
+            else {
+                this.layoutInfo.editable.html(html);
+            }
+            this.$note.val(html);
+            this.triggerEvent('change', html);
+        }
+    };
+    Context.prototype.isDisabled = function () {
+        return this.layoutInfo.editable.attr('contenteditable') === 'false';
+    };
+    Context.prototype.enable = function () {
+        this.layoutInfo.editable.attr('contenteditable', true);
+        this.invoke('toolbar.activate', true);
+        this.triggerEvent('disable', false);
+    };
+    Context.prototype.disable = function () {
+        // close codeview if codeview is opend
+        if (this.invoke('codeview.isActivated')) {
+            this.invoke('codeview.deactivate');
+        }
+        this.layoutInfo.editable.attr('contenteditable', false);
+        this.invoke('toolbar.deactivate', true);
+        this.triggerEvent('disable', true);
+    };
+    Context.prototype.triggerEvent = function () {
+        var namespace = lists.head(arguments);
+        var args = lists.tail(lists.from(arguments));
+        var callback = this.options.callbacks[func.namespaceToCamel(namespace, 'on')];
+        if (callback) {
+            callback.apply(this.$note[0], args);
+        }
+        this.$note.trigger('summernote.' + namespace, args);
+    };
+    Context.prototype.initializeModule = function (key) {
+        var module = this.modules[key];
+        module.shouldInitialize = module.shouldInitialize || func.ok;
+        if (!module.shouldInitialize()) {
+            return;
+        }
+        // initialize module
+        if (module.initialize) {
+            module.initialize();
+        }
+        // attach events
+        if (module.events) {
+            dom.attachEvents(this.$note, module.events);
+        }
+    };
+    Context.prototype.module = function (key, ModuleClass, withoutIntialize) {
+        if (arguments.length === 1) {
+            return this.modules[key];
+        }
+        this.modules[key] = new ModuleClass(this);
+        if (!withoutIntialize) {
+            this.initializeModule(key);
+        }
+    };
+    Context.prototype.removeModule = function (key) {
+        var module = this.modules[key];
+        if (module.shouldInitialize()) {
+            if (module.events) {
+                dom.detachEvents(this.$note, module.events);
+            }
+            if (module.destroy) {
+                module.destroy();
+            }
+        }
+        delete this.modules[key];
+    };
+    Context.prototype.memo = function (key, obj) {
+        if (arguments.length === 1) {
+            return this.memos[key];
+        }
+        this.memos[key] = obj;
+    };
+    Context.prototype.removeMemo = function (key) {
+        if (this.memos[key] && this.memos[key].destroy) {
+            this.memos[key].destroy();
+        }
+        delete this.memos[key];
+    };
+    /**
+     * Some buttons need to change their visual style immediately once they get pressed
+     */
+    Context.prototype.createInvokeHandlerAndUpdateState = function (namespace, value) {
+        var _this = this;
+        return function (event) {
+            _this.createInvokeHandler(namespace, value)(event);
+            _this.invoke('buttons.updateCurrentStyle');
+        };
+    };
+    Context.prototype.createInvokeHandler = function (namespace, value) {
+        var _this = this;
+        return function (event) {
+            event.preventDefault();
+            var $target = $$1(event.target);
+            _this.invoke(namespace, value || $target.closest('[data-value]').data('value'), $target);
+        };
+    };
+    Context.prototype.invoke = function () {
+        var namespace = lists.head(arguments);
+        var args = lists.tail(lists.from(arguments));
+        var splits = namespace.split('.');
+        var hasSeparator = splits.length > 1;
+        var moduleName = hasSeparator && lists.head(splits);
+        var methodName = hasSeparator ? lists.last(splits) : lists.head(splits);
+        var module = this.modules[moduleName || 'editor'];
+        if (!moduleName && this[methodName]) {
+            return this[methodName].apply(this, args);
+        }
+        else if (module && module[methodName] && module.shouldInitialize()) {
+            return module[methodName].apply(module, args);
+        }
+    };
+    return Context;
+}());
 
-  $.summernote = $.extend($.summernote, {
-    version: '0.8.8',
+$$1.fn.extend({
+    /**
+     * Summernote API
+     *
+     * @param {Object|String}
+     * @return {this}
+     */
+    summernote: function () {
+        var type = $$1.type(lists.head(arguments));
+        var isExternalAPICalled = type === 'string';
+        var hasInitOptions = type === 'object';
+        var options = $$1.extend({}, $$1.summernote.options, hasInitOptions ? lists.head(arguments) : {});
+        // Update options
+        options.langInfo = $$1.extend(true, {}, $$1.summernote.lang['en-US'], $$1.summernote.lang[options.lang]);
+        options.icons = $$1.extend(true, {}, $$1.summernote.options.icons, options.icons);
+        options.tooltip = options.tooltip === 'auto' ? !env.isSupportTouch : options.tooltip;
+        this.each(function (idx, note) {
+            var $note = $$1(note);
+            if (!$note.data('summernote')) {
+                var context = new Context($note, options);
+                $note.data('summernote', context);
+                $note.data('summernote').triggerEvent('init', context.layoutInfo);
+            }
+        });
+        var $note = this.first();
+        if ($note.length) {
+            var context = $note.data('summernote');
+            if (isExternalAPICalled) {
+                return context.invoke.apply(context, lists.from(arguments));
+            }
+            else if (options.focus) {
+                context.invoke('editor.focus');
+            }
+        }
+        return this;
+    }
+});
+
+$$1.summernote = $$1.extend($$1.summernote, {
+    version: '0.8.9',
     ui: ui,
     dom: dom,
-
     plugins: {},
-
     options: {
-      modules: {
-        'editor': Editor,
-        'clipboard': Clipboard,
-        'dropzone': Dropzone,
-        'codeview': Codeview,
-        'statusbar': Statusbar,
-        'fullscreen': Fullscreen,
-        'handle': Handle,
-        // FIXME: HintPopover must be front of autolink
-        //  - Script error about range when Enter key is pressed on hint popover
-        'hintPopover': HintPopover,
-        'autoLink': AutoLink,
-        'autoSync': AutoSync,
-        'placeholder': Placeholder,
-        'buttons': Buttons,
-        'toolbar': Toolbar,
-        'linkDialog': LinkDialog,
-        'linkPopover': LinkPopover,
-        'imageDialog': ImageDialog,
-        'imagePopover': ImagePopover,
-        'tablePopover': TablePopover,
-        'videoDialog': VideoDialog,
-        'helpDialog': HelpDialog,
-        'airPopover': AirPopover
-      },
-
-      buttons: {},
-
-      lang: 'en-US',
-
-      // toolbar
-      toolbar: [
-        ['style', ['style']],
-        ['font', ['bold', 'underline', 'clear']],
-        ['fontname', ['fontname']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['table', ['table']],
-        ['insert', ['link', 'picture', 'video']],
-        ['view', ['fullscreen', 'codeview', 'help']]
-      ],
-
-      // popover
-      popover: {
-        image: [
-          ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-          ['float', ['floatLeft', 'floatRight', 'floatNone']],
-          ['remove', ['removeMedia']]
-        ],
-        link: [
-          ['link', ['linkDialogShow', 'unlink']]
-        ],
-        table: [
-          ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
-          ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
-        ],
-        air: [
-          ['color', ['color']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['para', ['ul', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture']]
-        ]
-      },
-
-      // air mode: inline editor
-      airMode: false,
-
-      width: null,
-      height: null,
-      linkTargetBlank: true,
-
-      focus: false,
-      tabSize: 4,
-      styleWithSpan: true,
-      shortcuts: true,
-      textareaAutoSync: true,
-      direction: null,
-      tooltip: 'auto',
-
-      styleTags: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-
-      fontNames: [
-        'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New',
-        'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande',
-        'Tahoma', 'Times New Roman', 'Verdana'
-      ],
-
-      fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
-
-      // pallete colors(n x n)
-      colors: [
-        ['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'],
-        ['#FF0000', '#FF9C00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#9C00FF', '#FF00FF'],
-        ['#F7C6CE', '#FFE7CE', '#FFEFC6', '#D6EFD6', '#CEDEE7', '#CEE7F7', '#D6D6E7', '#E7D6DE'],
-        ['#E79C9C', '#FFC69C', '#FFE79C', '#B5D6A5', '#A5C6CE', '#9CC6EF', '#B5A5D6', '#D6A5BD'],
-        ['#E76363', '#F7AD6B', '#FFD663', '#94BD7B', '#73A5AD', '#6BADDE', '#8C7BC6', '#C67BA5'],
-        ['#CE0000', '#E79439', '#EFC631', '#6BA54A', '#4A7B8C', '#3984C6', '#634AA5', '#A54A7B'],
-        ['#9C0000', '#B56308', '#BD9400', '#397B21', '#104A5A', '#085294', '#311873', '#731842'],
-        ['#630000', '#7B3900', '#846300', '#295218', '#083139', '#003163', '#21104A', '#4A1031']
-      ],
-
-      lineHeights: ['1.0', '1.2', '1.4', '1.5', '1.6', '1.8', '2.0', '3.0'],
-
-      tableClassName: 'table table-bordered',
-
-      insertTableMaxSize: {
-        col: 10,
-        row: 10
-      },
-
-      dialogsInBody: false,
-      dialogsFade: false,
-
-      maximumImageFileSize: null,
-
-      callbacks: {
-        onInit: null,
-        onFocus: null,
-        onBlur: null,
-        onEnter: null,
-        onKeyup: null,
-        onKeydown: null,
-        onImageUpload: null,
-        onImageUploadError: null
-      },
-
-      codemirror: {
-        mode: 'text/html',
-        htmlMode: true,
-        lineNumbers: true
-      },
-
-      keyMap: {
-        pc: {
-          'ENTER': 'insertParagraph',
-          'CTRL+Z': 'undo',
-          'CTRL+Y': 'redo',
-          'TAB': 'tab',
-          'SHIFT+TAB': 'untab',
-          'CTRL+B': 'bold',
-          'CTRL+I': 'italic',
-          'CTRL+U': 'underline',
-          'CTRL+SHIFT+S': 'strikethrough',
-          'CTRL+BACKSLASH': 'removeFormat',
-          'CTRL+SHIFT+L': 'justifyLeft',
-          'CTRL+SHIFT+E': 'justifyCenter',
-          'CTRL+SHIFT+R': 'justifyRight',
-          'CTRL+SHIFT+J': 'justifyFull',
-          'CTRL+SHIFT+NUM7': 'insertUnorderedList',
-          'CTRL+SHIFT+NUM8': 'insertOrderedList',
-          'CTRL+LEFTBRACKET': 'outdent',
-          'CTRL+RIGHTBRACKET': 'indent',
-          'CTRL+NUM0': 'formatPara',
-          'CTRL+NUM1': 'formatH1',
-          'CTRL+NUM2': 'formatH2',
-          'CTRL+NUM3': 'formatH3',
-          'CTRL+NUM4': 'formatH4',
-          'CTRL+NUM5': 'formatH5',
-          'CTRL+NUM6': 'formatH6',
-          'CTRL+ENTER': 'insertHorizontalRule',
-          'CTRL+K': 'linkDialog.show'
+        modules: {
+            'editor': Editor,
+            'clipboard': Clipboard,
+            'dropzone': Dropzone,
+            'codeview': CodeView,
+            'statusbar': Statusbar,
+            'fullscreen': Fullscreen,
+            'handle': Handle,
+            // FIXME: HintPopover must be front of autolink
+            //  - Script error about range when Enter key is pressed on hint popover
+            'hintPopover': HintPopover,
+            'autoLink': AutoLink,
+            'autoSync': AutoSync,
+            'placeholder': Placeholder,
+            'buttons': Buttons,
+            'toolbar': Toolbar,
+            'linkDialog': LinkDialog,
+            'linkPopover': LinkPopover,
+            'imageDialog': ImageDialog,
+            'imagePopover': ImagePopover,
+            'tablePopover': TablePopover,
+            'videoDialog': VideoDialog,
+            'helpDialog': HelpDialog,
+            'airPopover': AirPopover
         },
-
-        mac: {
-          'ENTER': 'insertParagraph',
-          'CMD+Z': 'undo',
-          'CMD+SHIFT+Z': 'redo',
-          'TAB': 'tab',
-          'SHIFT+TAB': 'untab',
-          'CMD+B': 'bold',
-          'CMD+I': 'italic',
-          'CMD+U': 'underline',
-          'CMD+SHIFT+S': 'strikethrough',
-          'CMD+BACKSLASH': 'removeFormat',
-          'CMD+SHIFT+L': 'justifyLeft',
-          'CMD+SHIFT+E': 'justifyCenter',
-          'CMD+SHIFT+R': 'justifyRight',
-          'CMD+SHIFT+J': 'justifyFull',
-          'CMD+SHIFT+NUM7': 'insertUnorderedList',
-          'CMD+SHIFT+NUM8': 'insertOrderedList',
-          'CMD+LEFTBRACKET': 'outdent',
-          'CMD+RIGHTBRACKET': 'indent',
-          'CMD+NUM0': 'formatPara',
-          'CMD+NUM1': 'formatH1',
-          'CMD+NUM2': 'formatH2',
-          'CMD+NUM3': 'formatH3',
-          'CMD+NUM4': 'formatH4',
-          'CMD+NUM5': 'formatH5',
-          'CMD+NUM6': 'formatH6',
-          'CMD+ENTER': 'insertHorizontalRule',
-          'CMD+K': 'linkDialog.show'
+        buttons: {},
+        lang: 'en-US',
+        followingToolbar: true,
+        otherStaticBar: '',
+        // toolbar
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        // popover
+        popatmouse: true,
+        popover: {
+            image: [
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ],
+            link: [
+                ['link', ['linkDialogShow', 'unlink']]
+            ],
+            table: [
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+            ],
+            air: [
+                ['color', ['color']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']]
+            ]
+        },
+        // air mode: inline editor
+        airMode: false,
+        width: null,
+        height: null,
+        linkTargetBlank: true,
+        focus: false,
+        tabSize: 4,
+        styleWithSpan: true,
+        shortcuts: true,
+        textareaAutoSync: true,
+        hintDirection: 'bottom',
+        tooltip: 'auto',
+        container: 'body',
+        maxTextLength: 0,
+        styleTags: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+        fontNames: [
+            'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New',
+            'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande',
+            'Tahoma', 'Times New Roman', 'Verdana'
+        ],
+        fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
+        // pallete colors(n x n)
+        colors: [
+            ['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'],
+            ['#FF0000', '#FF9C00', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#9C00FF', '#FF00FF'],
+            ['#F7C6CE', '#FFE7CE', '#FFEFC6', '#D6EFD6', '#CEDEE7', '#CEE7F7', '#D6D6E7', '#E7D6DE'],
+            ['#E79C9C', '#FFC69C', '#FFE79C', '#B5D6A5', '#A5C6CE', '#9CC6EF', '#B5A5D6', '#D6A5BD'],
+            ['#E76363', '#F7AD6B', '#FFD663', '#94BD7B', '#73A5AD', '#6BADDE', '#8C7BC6', '#C67BA5'],
+            ['#CE0000', '#E79439', '#EFC631', '#6BA54A', '#4A7B8C', '#3984C6', '#634AA5', '#A54A7B'],
+            ['#9C0000', '#B56308', '#BD9400', '#397B21', '#104A5A', '#085294', '#311873', '#731842'],
+            ['#630000', '#7B3900', '#846300', '#295218', '#083139', '#003163', '#21104A', '#4A1031']
+        ],
+        lineHeights: ['1.0', '1.2', '1.4', '1.5', '1.6', '1.8', '2.0', '3.0'],
+        tableClassName: 'table table-bordered',
+        insertTableMaxSize: {
+            col: 10,
+            row: 10
+        },
+        dialogsInBody: false,
+        dialogsFade: false,
+        maximumImageFileSize: null,
+        callbacks: {
+            onInit: null,
+            onFocus: null,
+            onBlur: null,
+            onBlurCodeview: null,
+            onEnter: null,
+            onKeyup: null,
+            onKeydown: null,
+            onImageUpload: null,
+            onImageUploadError: null
+        },
+        codemirror: {
+            mode: 'text/html',
+            htmlMode: true,
+            lineNumbers: true
+        },
+        keyMap: {
+            pc: {
+                'ENTER': 'insertParagraph',
+                'CTRL+Z': 'undo',
+                'CTRL+Y': 'redo',
+                'TAB': 'tab',
+                'SHIFT+TAB': 'untab',
+                'CTRL+B': 'bold',
+                'CTRL+I': 'italic',
+                'CTRL+U': 'underline',
+                'CTRL+SHIFT+S': 'strikethrough',
+                'CTRL+BACKSLASH': 'removeFormat',
+                'CTRL+SHIFT+L': 'justifyLeft',
+                'CTRL+SHIFT+E': 'justifyCenter',
+                'CTRL+SHIFT+R': 'justifyRight',
+                'CTRL+SHIFT+J': 'justifyFull',
+                'CTRL+SHIFT+NUM7': 'insertUnorderedList',
+                'CTRL+SHIFT+NUM8': 'insertOrderedList',
+                'CTRL+LEFTBRACKET': 'outdent',
+                'CTRL+RIGHTBRACKET': 'indent',
+                'CTRL+NUM0': 'formatPara',
+                'CTRL+NUM1': 'formatH1',
+                'CTRL+NUM2': 'formatH2',
+                'CTRL+NUM3': 'formatH3',
+                'CTRL+NUM4': 'formatH4',
+                'CTRL+NUM5': 'formatH5',
+                'CTRL+NUM6': 'formatH6',
+                'CTRL+ENTER': 'insertHorizontalRule',
+                'CTRL+K': 'linkDialog.show'
+            },
+            mac: {
+                'ENTER': 'insertParagraph',
+                'CMD+Z': 'undo',
+                'CMD+SHIFT+Z': 'redo',
+                'TAB': 'tab',
+                'SHIFT+TAB': 'untab',
+                'CMD+B': 'bold',
+                'CMD+I': 'italic',
+                'CMD+U': 'underline',
+                'CMD+SHIFT+S': 'strikethrough',
+                'CMD+BACKSLASH': 'removeFormat',
+                'CMD+SHIFT+L': 'justifyLeft',
+                'CMD+SHIFT+E': 'justifyCenter',
+                'CMD+SHIFT+R': 'justifyRight',
+                'CMD+SHIFT+J': 'justifyFull',
+                'CMD+SHIFT+NUM7': 'insertUnorderedList',
+                'CMD+SHIFT+NUM8': 'insertOrderedList',
+                'CMD+LEFTBRACKET': 'outdent',
+                'CMD+RIGHTBRACKET': 'indent',
+                'CMD+NUM0': 'formatPara',
+                'CMD+NUM1': 'formatH1',
+                'CMD+NUM2': 'formatH2',
+                'CMD+NUM3': 'formatH3',
+                'CMD+NUM4': 'formatH4',
+                'CMD+NUM5': 'formatH5',
+                'CMD+NUM6': 'formatH6',
+                'CMD+ENTER': 'insertHorizontalRule',
+                'CMD+K': 'linkDialog.show'
+            }
+        },
+        icons: {
+            'align': 'note-icon-align',
+            'alignCenter': 'note-icon-align-center',
+            'alignJustify': 'note-icon-align-justify',
+            'alignLeft': 'note-icon-align-left',
+            'alignRight': 'note-icon-align-right',
+            'rowBelow': 'note-icon-row-below',
+            'colBefore': 'note-icon-col-before',
+            'colAfter': 'note-icon-col-after',
+            'rowAbove': 'note-icon-row-above',
+            'rowRemove': 'note-icon-row-remove',
+            'colRemove': 'note-icon-col-remove',
+            'indent': 'note-icon-align-indent',
+            'outdent': 'note-icon-align-outdent',
+            'arrowsAlt': 'note-icon-arrows-alt',
+            'bold': 'note-icon-bold',
+            'caret': 'note-icon-caret',
+            'circle': 'note-icon-circle',
+            'close': 'note-icon-close',
+            'code': 'note-icon-code',
+            'eraser': 'note-icon-eraser',
+            'font': 'note-icon-font',
+            'frame': 'note-icon-frame',
+            'italic': 'note-icon-italic',
+            'link': 'note-icon-link',
+            'unlink': 'note-icon-chain-broken',
+            'magic': 'note-icon-magic',
+            'menuCheck': 'note-icon-menu-check',
+            'minus': 'note-icon-minus',
+            'orderedlist': 'note-icon-orderedlist',
+            'pencil': 'note-icon-pencil',
+            'picture': 'note-icon-picture',
+            'question': 'note-icon-question',
+            'redo': 'note-icon-redo',
+            'square': 'note-icon-square',
+            'strikethrough': 'note-icon-strikethrough',
+            'subscript': 'note-icon-subscript',
+            'superscript': 'note-icon-superscript',
+            'table': 'note-icon-table',
+            'textHeight': 'note-icon-text-height',
+            'trash': 'note-icon-trash',
+            'underline': 'note-icon-underline',
+            'undo': 'note-icon-undo',
+            'unorderedlist': 'note-icon-unorderedlist',
+            'video': 'note-icon-video'
         }
-      },
-      icons: {
-        'align': 'note-icon-align',
-        'alignCenter': 'note-icon-align-center',
-        'alignJustify': 'note-icon-align-justify',
-        'alignLeft': 'note-icon-align-left',
-        'alignRight': 'note-icon-align-right',
-        'rowBelow': 'note-icon-row-below',
-        'colBefore': 'note-icon-col-before',
-        'colAfter': 'note-icon-col-after',
-        'rowAbove': 'note-icon-row-above',
-        'rowRemove': 'note-icon-row-remove',
-        'colRemove': 'note-icon-col-remove',
-        'indent': 'note-icon-align-indent',
-        'outdent': 'note-icon-align-outdent',
-        'arrowsAlt': 'note-icon-arrows-alt',
-        'bold': 'note-icon-bold',
-        'caret': 'note-icon-caret',
-        'circle': 'note-icon-circle',
-        'close': 'note-icon-close',
-        'code': 'note-icon-code',
-        'eraser': 'note-icon-eraser',
-        'font': 'note-icon-font',
-        'frame': 'note-icon-frame',
-        'italic': 'note-icon-italic',
-        'link': 'note-icon-link',
-        'unlink': 'note-icon-chain-broken',
-        'magic': 'note-icon-magic',
-        'menuCheck': 'note-icon-menu-check',
-        'minus': 'note-icon-minus',
-        'orderedlist': 'note-icon-orderedlist',
-        'pencil': 'note-icon-pencil',
-        'picture': 'note-icon-picture',
-        'question': 'note-icon-question',
-        'redo': 'note-icon-redo',
-        'square': 'note-icon-square',
-        'strikethrough': 'note-icon-strikethrough',
-        'subscript': 'note-icon-subscript',
-        'superscript': 'note-icon-superscript',
-        'table': 'note-icon-table',
-        'textHeight': 'note-icon-text-height',
-        'trash': 'note-icon-trash',
-        'underline': 'note-icon-underline',
-        'undo': 'note-icon-undo',
-        'unorderedlist': 'note-icon-unorderedlist',
-        'video': 'note-icon-video'
-      }
     }
-  });
+});
 
-}));
+})));
+//# sourceMappingURL=summernote.js.map
 
 // Released under MIT license
 // Copyright (c) 2009-2010 Dominic Baggott
@@ -62441,6 +61732,14 @@ jQuery.validator.setDefaults({
         group.find('.form-control-feedback').remove();
     }
 });
+
+jQuery.validator.addMethod("email", function(value, element) {
+    if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
+        return true;
+    } else {
+        return false;
+    }
+}, "Please enter a valid Email.");
 !function(a){"function"==typeof define&&define.amd?define(["jquery"],a):a("object"==typeof exports?require("jquery"):jQuery)}(function(a){function b(b,d,e){var d={content:{message:"object"==typeof d?d.message:d,title:d.title?d.title:"",icon:d.icon?d.icon:"",url:d.url?d.url:"#",target:d.target?d.target:"-"}};e=a.extend(!0,{},d,e),this.settings=a.extend(!0,{},c,e),this._defaults=c,"-"==this.settings.content.target&&(this.settings.content.target=this.settings.url_target),this.animations={start:"webkitAnimationStart oanimationstart MSAnimationStart animationstart",end:"webkitAnimationEnd oanimationend MSAnimationEnd animationend"},"number"==typeof this.settings.offset&&(this.settings.offset={x:this.settings.offset,y:this.settings.offset}),this.init()}var c={element:"body",position:null,type:"info",allow_dismiss:!0,newest_on_top:!1,showProgressbar:!1,placement:{from:"top",align:"right"},offset:20,spacing:10,z_index:1031,delay:5e3,timer:1e3,url_target:"_blank",mouse_over:null,animate:{enter:"animated fadeInDown",exit:"animated fadeOutUp"},onShow:null,onShown:null,onClose:null,onClosed:null,icon_type:"class",template:'<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"><button type="button" aria-hidden="true" class="close" data-notify="dismiss">&times;</button><span data-notify="icon"></span> <span data-notify="title">{1}</span> <span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>'};String.format=function(){for(var a=arguments[0],b=1;b<arguments.length;b++)a=a.replace(RegExp("\\{"+(b-1)+"\\}","gm"),arguments[b]);return a},a.extend(b.prototype,{init:function(){var a=this;this.buildNotify(),this.settings.content.icon&&this.setIcon(),"#"!=this.settings.content.url&&this.styleURL(),this.styleDismiss(),this.placement(),this.bind(),this.notify={$ele:this.$ele,update:function(b,c){var d={};"string"==typeof b?d[b]=c:d=b;for(var b in d)switch(b){case"type":this.$ele.removeClass("alert-"+a.settings.type),this.$ele.find('[data-notify="progressbar"] > .progress-bar').removeClass("progress-bar-"+a.settings.type),a.settings.type=d[b],this.$ele.addClass("alert-"+d[b]).find('[data-notify="progressbar"] > .progress-bar').addClass("progress-bar-"+d[b]);break;case"icon":var e=this.$ele.find('[data-notify="icon"]');"class"==a.settings.icon_type.toLowerCase()?e.removeClass(a.settings.content.icon).addClass(d[b]):(e.is("img")||e.find("img"),e.attr("src",d[b]));break;case"progress":var f=a.settings.delay-a.settings.delay*(d[b]/100);this.$ele.data("notify-delay",f),this.$ele.find('[data-notify="progressbar"] > div').attr("aria-valuenow",d[b]).css("width",d[b]+"%");break;case"url":this.$ele.find('[data-notify="url"]').attr("href",d[b]);break;case"target":this.$ele.find('[data-notify="url"]').attr("target",d[b]);break;default:this.$ele.find('[data-notify="'+b+'"]').html(d[b])}var g=this.$ele.outerHeight()+parseInt(a.settings.spacing)+parseInt(a.settings.offset.y);a.reposition(g)},close:function(){a.close()}}},buildNotify:function(){var b=this.settings.content;this.$ele=a(String.format(this.settings.template,this.settings.type,b.title,b.message,b.url,b.target)),this.$ele.attr("data-notify-position",this.settings.placement.from+"-"+this.settings.placement.align),this.settings.allow_dismiss||this.$ele.find('[data-notify="dismiss"]').css("display","none"),(this.settings.delay<=0&&!this.settings.showProgressbar||!this.settings.showProgressbar)&&this.$ele.find('[data-notify="progressbar"]').remove()},setIcon:function(){"class"==this.settings.icon_type.toLowerCase()?this.$ele.find('[data-notify="icon"]').addClass(this.settings.content.icon):this.$ele.find('[data-notify="icon"]').is("img")?this.$ele.find('[data-notify="icon"]').attr("src",this.settings.content.icon):this.$ele.find('[data-notify="icon"]').append('<img src="'+this.settings.content.icon+'" alt="Notify Icon" />')},styleDismiss:function(){this.$ele.find('[data-notify="dismiss"]').css({position:"absolute",right:"10px",top:"5px",zIndex:this.settings.z_index+2})},styleURL:function(){this.$ele.find('[data-notify="url"]').css({backgroundImage:"url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)",height:"100%",left:"0px",position:"absolute",top:"0px",width:"100%",zIndex:this.settings.z_index+1})},placement:function(){var b=this,c=this.settings.offset.y,d={display:"inline-block",margin:"0px auto",position:this.settings.position?this.settings.position:"body"===this.settings.element?"fixed":"absolute",transition:"all .5s ease-in-out",zIndex:this.settings.z_index},e=!1,f=this.settings;switch(a('[data-notify-position="'+this.settings.placement.from+"-"+this.settings.placement.align+'"]:not([data-closing="true"])').each(function(){return c=Math.max(c,parseInt(a(this).css(f.placement.from))+parseInt(a(this).outerHeight())+parseInt(f.spacing))}),1==this.settings.newest_on_top&&(c=this.settings.offset.y),d[this.settings.placement.from]=c+"px",this.settings.placement.align){case"left":case"right":d[this.settings.placement.align]=this.settings.offset.x+"px";break;case"center":d.left=0,d.right=0}this.$ele.css(d).addClass(this.settings.animate.enter),a.each(Array("webkit","moz","o","ms",""),function(a,c){b.$ele[0].style[c+"AnimationIterationCount"]=1}),a(this.settings.element).append(this.$ele),1==this.settings.newest_on_top&&(c=parseInt(c)+parseInt(this.settings.spacing)+this.$ele.outerHeight(),this.reposition(c)),a.isFunction(b.settings.onShow)&&b.settings.onShow.call(this.$ele),this.$ele.one(this.animations.start,function(a){e=!0}).one(this.animations.end,function(c){a.isFunction(b.settings.onShown)&&b.settings.onShown.call(this)}),setTimeout(function(){e||a.isFunction(b.settings.onShown)&&b.settings.onShown.call(this)},600)},bind:function(){var b=this;if(this.$ele.find('[data-notify="dismiss"]').on("click",function(){b.close()}),this.$ele.mouseover(function(b){a(this).data("data-hover","true")}).mouseout(function(b){a(this).data("data-hover","false")}),this.$ele.data("data-hover","false"),this.settings.delay>0){b.$ele.data("notify-delay",b.settings.delay);var c=setInterval(function(){var a=parseInt(b.$ele.data("notify-delay"))-b.settings.timer;if("false"===b.$ele.data("data-hover")&&"pause"==b.settings.mouse_over||"pause"!=b.settings.mouse_over){var d=(b.settings.delay-a)/b.settings.delay*100;b.$ele.data("notify-delay",a),b.$ele.find('[data-notify="progressbar"] > div').attr("aria-valuenow",d).css("width",d+"%")}a<=-b.settings.timer&&(clearInterval(c),b.close())},b.settings.timer)}},close:function(){var b=this,c=parseInt(this.$ele.css(this.settings.placement.from)),d=!1;this.$ele.data("closing","true").addClass(this.settings.animate.exit),b.reposition(c),a.isFunction(b.settings.onClose)&&b.settings.onClose.call(this.$ele),this.$ele.one(this.animations.start,function(a){d=!0}).one(this.animations.end,function(c){a(this).remove(),a.isFunction(b.settings.onClosed)&&b.settings.onClosed.call(this)}),setTimeout(function(){d||(b.$ele.remove(),b.settings.onClosed&&b.settings.onClosed(b.$ele))},600)},reposition:function(b){var c=this,d='[data-notify-position="'+this.settings.placement.from+"-"+this.settings.placement.align+'"]:not([data-closing="true"])',e=this.$ele.nextAll(d);1==this.settings.newest_on_top&&(e=this.$ele.prevAll(d)),e.each(function(){a(this).css(c.settings.placement.from,b),b=parseInt(b)+parseInt(c.settings.spacing)+a(this).outerHeight()})}}),a.notify=function(a,c){var d=new b(this,a,c);return d.notify},a.notifyDefaults=function(b){return c=a.extend(!0,{},c,b)},a.notifyClose=function(b){"undefined"==typeof b||"all"==b?a("[data-notify]").find('[data-notify="dismiss"]').trigger("click"):a('[data-notify-position="'+b+'"]').find('[data-notify="dismiss"]').trigger("click")}});
 //== Set defaults
 

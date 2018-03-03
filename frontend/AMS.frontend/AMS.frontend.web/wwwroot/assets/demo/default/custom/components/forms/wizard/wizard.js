@@ -125,6 +125,9 @@ var WizardDemo = function () {
                     required: true,
                     number: true
                 },
+                billing_delivery: {
+                    required: true
+                },
 
                 //=== Confirmation(step 4)
                 accept: {

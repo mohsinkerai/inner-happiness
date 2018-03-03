@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@{
     ViewBag.Title = "Fast Pay";
     ViewBag.DesktopHeader = "Fast Pay Backoffice";
     ViewBag.MobileHeader = "Fast Pay";
@@ -46,6 +47,7 @@ License: You must have a valid license purchased only from themeforest(the above
     @RenderSection("styles", false)
     <!--begin::Custom Styles -->
     <link rel="shortcut icon" href="~/assets/demo/demo6/media/img/logo/favicon.ico" />
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <!-- end::Head -->
 <!-- end::Body -->

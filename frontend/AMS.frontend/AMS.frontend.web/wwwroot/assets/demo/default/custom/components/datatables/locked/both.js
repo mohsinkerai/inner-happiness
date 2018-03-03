@@ -11,7 +11,7 @@ var DefaultDatatableDemo = function () {
 				type: 'remote',
 				source: {
 					read: {
-						url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php'
+						url: 'https://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php'
 					}
 				},
 				pageSize: 20,
@@ -25,7 +25,7 @@ var DefaultDatatableDemo = function () {
 				class: '',
 				scroll: true,
 				height: 550,
-				footer: false
+				footer: true
 			},
 
 			sortable: true,

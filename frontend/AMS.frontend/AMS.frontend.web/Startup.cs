@@ -58,11 +58,11 @@ namespace AMS.frontend.web
             {
                 routes.MapRoute(
                     name: "areaRoute",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    template: "{area:exists}/{controller=Authenticate}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Authenticate}/{action=Index}/{id?}");
             });
         }
     }
