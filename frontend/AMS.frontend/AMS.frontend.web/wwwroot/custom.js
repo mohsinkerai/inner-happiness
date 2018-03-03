@@ -2,15 +2,16 @@
 
 $(document).ready(function () {
     $(".input-validation-error").parents(".form-group").addClass("has-danger");
-    Select2.init();
-    $(".m-select2")
-        .each(function () {
-            var placeholder = $(this).attr("placeholder");
-            $(this)
-                .select2({
-                    placeholder: placeholder
-                });
-        });
+    if (typeof $.select2 !== "undefined") {
+        $(".m-select2")
+            .each(function() {
+                var placeholder = $(this).attr("placeholder");
+                $(this)
+                    .select2({
+                        placeholder: placeholder
+                    });
+            });
+    }
 });
 
 function toggleNotMe() {
