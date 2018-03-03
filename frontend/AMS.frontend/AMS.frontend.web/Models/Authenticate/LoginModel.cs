@@ -4,9 +4,7 @@ namespace AMS.frontend.web.Models.Authenticate
 {
     public class LoginModel
     {
-        [Required]
-        [Display(Name = "Customer Code")]
-        public string CustomerCode { get; set; }
+        [Required] [Display(Name = "Company")] public string Company { get; set; }
 
         [Required]
         [EmailAddress]

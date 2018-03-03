@@ -3,6 +3,7 @@
     public static class ActionNames
     {
         public const string Index = "Index";
+        public const string Reset = "Reset";
         public const string Add = "Add";
         public const string Edit = "Edit";
         public const string Delete = "Delete";

@@ -9,7 +9,7 @@ var DatatableRecordSelectionDemo = function() {
 			type: 'remote',
 			source: {
 				read: {
-					url: 'http://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
+					url: 'https://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php',
 				},
 			},
 			pageSize: 10,

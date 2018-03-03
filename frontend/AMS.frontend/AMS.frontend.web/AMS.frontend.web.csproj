@@ -2,11 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourcegroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourcegroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
 
@@ -19,6 +22,10 @@
     <Folder Include="Areas\Administration\Views\" />
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Areas\Administration\Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
