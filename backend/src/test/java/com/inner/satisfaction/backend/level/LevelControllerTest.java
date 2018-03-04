@@ -11,9 +11,9 @@ import org.springframework.http.MediaType;
 public class LevelControllerTest extends AbstractIntegrationTest{
 
   @Test
-  public void shouldFindByCnic() throws Exception {
+  public void shouldFindByParentId() throws Exception {
     mockMvc.perform(
-        get("/level/search/cnic?value=2").contentType(MediaType.APPLICATION_JSON))
+        get("/level/search/parent?value=2").contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().is2xxSuccessful());
   }
