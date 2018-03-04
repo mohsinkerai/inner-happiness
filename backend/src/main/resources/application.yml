@@ -22,3 +22,6 @@ server:
       enabled: true
       directory: ./
     basedir: my-tomcat
+person:
+  images:
+    path: images

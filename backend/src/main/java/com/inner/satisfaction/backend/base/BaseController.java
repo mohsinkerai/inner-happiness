@@ -26,7 +26,7 @@ public abstract class BaseController<E extends BaseEntity> {
     this.baseService = baseService;
   }
 
-  @RequestMapping(ONE)
+  @GetMapping(ONE)
   public E findOne(
       @PathVariable("id") Long entityId
   ) {
