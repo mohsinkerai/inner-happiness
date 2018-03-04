@@ -16,7 +16,7 @@ public class BasicApplicationTests extends AbstractIntegrationTest {
 
   @Test
   public void healthCheckTest() throws Exception {
-    mockMvc.perform(get("/health"))
+    mockMvc.perform(get("/actuator/health"))
         .andDo(print())
         .andExpect(jsonPath("$.status").value("UP"));
 

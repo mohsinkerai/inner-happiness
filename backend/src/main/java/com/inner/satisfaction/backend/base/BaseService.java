@@ -1,6 +1,7 @@
 package com.inner.satisfaction.backend.base;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -24,7 +25,7 @@ public abstract class BaseService <E extends BaseEntity> {
   }
 
   public E findOne(Long id) {
-    return baseRepository.findOne(id);
+    return baseRepository.getOne(id);
   }
 
   public E save(E e) {
