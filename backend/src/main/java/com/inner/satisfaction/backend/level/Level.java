@@ -15,4 +15,6 @@ public class Level extends BaseEntity{
 
   private int levelTypeId;
   private Long companyId;
+
+  private Long levelParentId;
 }

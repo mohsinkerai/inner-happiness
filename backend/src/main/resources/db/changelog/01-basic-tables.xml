@@ -16,17 +16,17 @@
     </createTable>
     <insert
       tableName="company">
-      <column name="id" value="1" />
+      <column name="id" value="1"/>
       <column name="name" value="National Council"/>
     </insert>
     <insert
       tableName="company">
-      <column name="id" value="2" />
+      <column name="id" value="2"/>
       <column name="name" value="Estate Office"/>
     </insert>
     <insert
       tableName="company">
-      <column name="id" value="3" />
+      <column name="id" value="3"/>
       <column name="name" value="AKDN"/>
     </insert>
   </changeSet>
@@ -43,22 +43,22 @@
     </createTable>
     <insert
       tableName="level_type">
-      <column name="id" value="1" />
+      <column name="id" value="1"/>
       <column name="name" value="National"/>
     </insert>
     <insert
       tableName="level_type">
-      <column name="id" value="2" />
+      <column name="id" value="2"/>
       <column name="name" value="Regional"/>
     </insert>
     <insert
       tableName="level_type">
-      <column name="id" value="3" />
+      <column name="id" value="3"/>
       <column name="name" value="Local"/>
     </insert>
     <insert
       tableName="level_type">
-      <column name="id" value="4" />
+      <column name="id" value="4"/>
       <column name="name" value="Jamatkhana"/>
     </insert>
   </changeSet>
@@ -87,108 +87,121 @@
       <column name="company_id" type="bigint">
         <constraints nullable="false" unique="false"/>
       </column>
+      <column name="level_parent_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
     </createTable>
     <insert
       tableName="level">
-      <column name="id" value="1" />
+      <column name="id" value="1"/>
       <column name="level_type_id" value="1"/>
       <column name="name" value="Pakistan"/>
-      <column name="full_name" value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Pakistan"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Pakistan"/>
       <column name="short_code" value="PK"/>
       <column name="address" value="Opp. Garden Jamatkhana, Britto Road, Garden East"/>
       <column name="company_id" value="1"/>
+      <column name="level_parent_id" value="null"/>
     </insert>
     <insert
       tableName="level">
-      <column name="id" value="2" />
+      <column name="id" value="2"/>
       <column name="level_type_id" value="2"/>
       <column name="name" value="Southern"/>
-      <column name="full_name" value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Southern Region"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Southern Region"/>
       <column name="short_code" value="SO"/>
       <column name="address" value="Opp. Garden Jamatkhana, Britto Road, Garden East"/>
       <column name="company_id" value="1"/>
+      <column name="level_parent_id" value="1"/>
     </insert>
     <insert
       tableName="level">
-      <column name="id" value="3" />
+      <column name="id" value="3"/>
       <column name="level_type_id" value="3"/>
       <column name="name" value="Karimabad"/>
-      <column name="full_name" value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Karimabad"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Karimabad"/>
       <column name="short_code" value="SO.03"/>
       <column name="address" value="Room # 1, Karimabad Jamatkhana Karachi"/>
       <column name="company_id" value="1"/>
+      <column name="level_parent_id" value="2"/>
     </insert>
     <insert
       tableName="level">
-      <column name="id" value="4" />
+      <column name="id" value="4"/>
       <column name="level_type_id" value="4"/>
       <column name="name" value="Karimabad Jamatkhana"/>
       <column name="full_name" value="Karimabad Jamatkhana"/>
       <column name="short_code" value="SO.03.03"/>
       <column name="address" value="Room # 1, Karimabad Jamatkhana Karachi"/>
       <column name="company_id" value="2"/>
+      <column name="level_parent_id" value="3"/>
     </insert>
     <insert
       tableName="level">
-      <column name="id" value="5" />
+      <column name="id" value="5"/>
       <column name="level_type_id" value="3"/>
       <column name="name" value="Gulshan"/>
-      <column name="full_name" value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Gulshan-e-Noor"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Gulshan-e-Noor"/>
       <column name="short_code" value="SO.04"/>
       <column name="address" value="Flat # R-32, Gulshan-e-Noor Colony Karachi"/>
       <column name="company_id" value="1"/>
+      <column name="level_parent_id" value="2"/>
     </insert>
     <insert
       tableName="level">
-      <column name="id" value="6" />
+      <column name="id" value="6"/>
       <column name="level_type_id" value="4"/>
-      <column name="name" value="Gulshan"/>
-      <column name="full_name" value="Noorabad colony"/>
+      <column name="name" value="Noorabad"/>
+      <column name="full_name" value="Noorabad Jamatkhana"/>
       <column name="short_code" value="SO.04.01"/>
       <column name="address" value="Noorabad Colony, Gulshan-e-Iqbal, Karachi"/>
       <column name="company_id" value="1"/>
+      <column name="level_parent_id" value="5"/>
     </insert>
   </changeSet>
   <!--Table Level_Active and Its Basic Data Population-->
-  <changeSet id="01-3" author="mohsin.kerai">
-    <createTable tableName="level_active"
-      remarks="A table to store active levels, Council for Pakistan, Southern Council, Active level is a virtuality on levels">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints nullable="false" unique="true" primaryKey="true"/>
-      </column>
-      <column name="level_id" type="bigint">
-        <constraints nullable="true"/>
-      </column>
-      <column name="level_active_parent_id" type="varchar(255)">
-        <constraints nullable="true" unique="false"/>
-      </column>
-    </createTable>
-    <insert tableName="level_active">
-      <column name="id" value="1"/>
-      <column name="level_id" value="1"/>
-      <column name="level_active_parent_id" value="null"/>
-    </insert>
-    <insert tableName="level_active">
-      <column name="id" value="2"/>
-      <column name="level_id" value="2"/>
-      <column name="level_active_parent_id" value="1"/>
-    </insert>
-    <insert tableName="level_active">
-      <column name="id" value="3"/>
-      <column name="level_id" value="3"/>
-      <column name="level_active_parent_id" value="2"/>
-    </insert>
-    <insert tableName="level_active">
-      <column name="id" value="4"/>
-      <column name="level_id" value="6"/>
-      <column name="level_active_parent_id" value="5"/>
-    </insert>
-    <insert tableName="level_active">
-      <column name="id" value="5"/>
-      <column name="level_id" value="5"/>
-      <column name="level_active_parent_id" value="2"/>
-    </insert>
-  </changeSet>
+  <!--<changeSet id="01-3" author="mohsin.kerai">-->
+  <!--<createTable tableName="level_active"-->
+  <!--remarks="A table to store active levels, Council for Pakistan, Southern Council, Active level is a virtuality on levels">-->
+  <!--<column name="id" type="bigint" autoIncrement="true">-->
+  <!--<constraints nullable="false" unique="true" primaryKey="true"/>-->
+  <!--</column>-->
+  <!--<column name="level_id" type="bigint">-->
+  <!--<constraints nullable="true"/>-->
+  <!--</column>-->
+  <!--<column name="level_active_parent_id" type="varchar(255)">-->
+  <!--<constraints nullable="true" unique="false"/>-->
+  <!--</column>-->
+  <!--</createTable>-->
+  <!--<insert tableName="level_active">-->
+  <!--<column name="id" value="1"/>-->
+  <!--<column name="level_id" value="1"/>-->
+  <!--<column name="level_active_parent_id" value="null"/>-->
+  <!--</insert>-->
+  <!--<insert tableName="level_active">-->
+  <!--<column name="id" value="2"/>-->
+  <!--<column name="level_id" value="2"/>-->
+  <!--<column name="level_active_parent_id" value="1"/>-->
+  <!--</insert>-->
+  <!--<insert tableName="level_active">-->
+  <!--<column name="id" value="3"/>-->
+  <!--<column name="level_id" value="3"/>-->
+  <!--<column name="level_active_parent_id" value="2"/>-->
+  <!--</insert>-->
+  <!--<insert tableName="level_active">-->
+  <!--<column name="id" value="4"/>-->
+  <!--<column name="level_id" value="6"/>-->
+  <!--<column name="level_active_parent_id" value="5"/>-->
+  <!--</insert>-->
+  <!--<insert tableName="level_active">-->
+  <!--<column name="id" value="5"/>-->
+  <!--<column name="level_id" value="5"/>-->
+  <!--<column name="level_active_parent_id" value="2"/>-->
+  <!--</insert>-->
+  <!--</changeSet>-->
   <changeSet id="01-4" author="mohsin.kerai">
     <createTable tableName="position"
       remarks="Stores Positions Available at Any Levels, Lets say President, Chairman, Sec, Hon. Sec, It Consultant">

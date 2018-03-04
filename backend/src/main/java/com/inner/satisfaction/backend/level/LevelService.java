@@ -1,14 +1,22 @@
 package com.inner.satisfaction.backend.level;
 
 import com.inner.satisfaction.backend.base.BaseService;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LevelService extends BaseService<Level>{
 
+  private final LevelRepository levelRepository;
+
   protected LevelService(
-      LevelRepository baseRepository,
+      LevelRepository levelRepository,
       LevelValidation levelValidation) {
-    super(baseRepository, levelValidation);
+    super(levelRepository, levelValidation);
+    this.levelRepository = levelRepository;
+  }
+
+  public Set<Level> findByLevelParentId(long levelParentId) {
+    return levelRepository.findByLevelParentId(levelParentId);
   }
 }
