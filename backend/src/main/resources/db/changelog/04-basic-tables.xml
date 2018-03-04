@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="04-01" author="mohsin.kerai">
+    <addColumn
+      tableName="person">
+      <column name="cnic" type="varchar(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="04-02">
+    <addUniqueConstraint
+      columnNames="cnic"
+      constraintName="cnic_unique"
+      deferrable="true"
+      disabled="true"
+      initiallyDeferred="true"
+      tableName="person"
+      tablespace="A String"/>
+  </changeSet>
+  <changeSet id="04-03" author="mohsin.kerai">
+    <insert tableName="person">
+      <column name="id" value="5"/>
+      <column name="name" value="Amsal Akber v2"/>
+      <column name="date_of_birth" value="1995-05-13"/>
+      <column name="cnic" value="42101-1111111-1"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

@@ -6,9 +6,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService extends BaseService<Person>{
 
+  private final PersonRepository personRepository;
+
   protected PersonService(
-      PersonRepository baseRepository,
+      PersonRepository personRepository,
       PersonValidation personValidation) {
-    super(baseRepository, personValidation);
+    super(personRepository, personValidation);
+    this.personRepository = personRepository;
+  }
+
+  public Person findByCnic(String cnic) {
+    return personRepository.findByCnic(cnic);
   }
 }

@@ -6,4 +6,4 @@ spring:
     password: sa
     driver-class-name: com.mysql.jdbc.Driver
 liquibase:
-  enabled: false
+  enabled: true
