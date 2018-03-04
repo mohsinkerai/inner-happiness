@@ -17,11 +17,10 @@
                             Add Person
                         </h3>
                     </div>
-
                 </div>
             </div>
             <!--begin::Form-->
-            <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action=@ActionNames.Add method="post" class="m-form m-form--fit m-form--label-align-right">
+            <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" method="post" class="m-form m-form--fit m-form--label-align-right">
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
                         <div class="col-lg-4">
@@ -236,13 +235,77 @@
                             </div>
                         </div>
                     </div>
+                    <div class="m-form__heading">
+                        <h3 class="m-form__heading-title">
+                            2. Education
+                        </h3>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label asp-for="HighestLevelOfStudy" class="control-label"></label><span class="required">*</span>
+                                <select asp-for="HighestLevelOfStudy" asp-items="@ViewBag.HighestLevelOfStudyList" class="form-control m-select2 highest-level-select" placeholder="Select a highest level">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="HighestLevelOfStudy" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label asp-for="HighestLevelOfStudyOther" class="control-label"></label><span class="required">*</span>
+                                <input type="text" asp-for="HighestLevelOfStudyOther" class="form-control">
+                                <span asp-validation-for="HighestLevelOfStudyOther" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="Institution" class="control-label"></label><span class="required">*</span>
+                                <select asp-for="Institution" asp-items="@ViewBag.InstitutionList" class="form-control m-select2" placeholder="Select an institution">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="Institution" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label asp-for="FromYear" class="control-label"></label><span class="required">*</span>
+                                <input type="text" asp-for="FromYear" class="form-control">
+                                <span asp-validation-for="FromYear" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label asp-for="ToYear" class="control-label"></label><span class="required">*</span>
+                                <input type="text" asp-for="ToYear" class="form-control">
+                                <span asp-validation-for="ToYear" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="NameOfDegree" class="control-label"></label><span class="required">*</span>
+                                <select asp-for="NameOfDegree" asp-items="@ViewBag.NameOfDegreeList" class="form-control m-select2" placeholder="Select a degree">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="NameOfDegree" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="MajorAreaOfStudy" class="control-label"></label><span class="required">*</span>
+                                <input type="text" asp-for="MajorAreaOfStudy" class="form-control">
+                                <span asp-validation-for="MajorAreaOfStudy" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                     <div class="m-form__actions m-form__actions--solid">
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-save"></i> Save
                         </button>
-                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Index class="btn default">
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
                             <i class="fa fa-close"></i> Cancel
                         </a>
                     </div>
@@ -259,16 +322,16 @@
     @Html.Partial(PartialNames.ValidationScripts)
     @Html.Partial(PartialNames.DateTimePickerScripts)
 
-<script type="text/javascript">
-        jQuery(document).ready(function () {
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
 
             $("#mainForm input").prop("disabled", true);
             $("#mainForm select").prop("disabled", true);
             $(".cnic").prop("disabled", false);
 
-            $(".cnic").blur(function () {
+            $(".cnic").blur(function() {
                 $.post("Verify", { cnic: $(".cnic").val() })
-                    .done(function (data) {
+                    .done(function(data) {
                         $("#mainForm input").prop("disabled", false);
                         $("#mainForm select").prop("disabled", false);
 
@@ -278,11 +341,13 @@
                         $("#LocalCouncil").prop("disabled", true);
                         $("#Jamatkhana").prop("disabled", true);
 
+                        $("#HighestLevelOfStudyOther").prop("disabled", true);
+
                         $("#PassportNumber").focus();
                     });
             });
 
-            $("#PlanToRelocate").change(function () {
+            $("#PlanToRelocate").change(function() {
                 if (this.checked) {
                     $("#RelocateLocation").prop("disabled", false);
                     $("#RelocationDateTime").prop("disabled", false);
@@ -294,17 +359,22 @@
 
             MakeCascadingDropDown("regional-select",
                 "local-select",
-                "@Url.Action(ActionNames.GetLocalCouncil, ControllerNames.Persons, new { area = AreaNames.Operations })");
+                "@Url.Action(ActionNames.GetLocalCouncil, ControllerNames.Persons, new {area = AreaNames.Operations})");
 
             MakeCascadingDropDown("local-select",
                 "jamatkhana-select",
-                "@Url.Action(ActionNames.GetJamatkhana, ControllerNames.Persons, new { area = AreaNames.Operations })");
+                "@Url.Action(ActionNames.GetJamatkhana, ControllerNames.Persons, new {area = AreaNames.Operations})");
 
             $("#Cnic").inputmask({
                 "mask": "99999-9999999-9"
             });
+
+            $(".highest-level-select").change(function() {
+                var selectedValue = $(this).val();
+                if (selectedValue === "Others") {
+                    $("#HighestLevelOfStudyOther").prop("disabled", false);
+                }
+            });
         });
-</script>
+    </script>
 }
-
-

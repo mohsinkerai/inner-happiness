@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
@@ -83,5 +84,32 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string PassportNumber { get; set; }
 
         public string Image { get; set; }
+
+        [Required]
+        [Display(Name = "Highest Level of Study")]
+        public string HighestLevelOfStudy { get; set; }
+
+        [Display(Name = "Others")]
+        public string HighestLevelOfStudyOther { get; set; }
+
+        [Required] public string Institution { get; set; }
+
+        [Required]
+        [Display(Name = "Country of Study")]
+        public string CountryOfStudy { get; set; }
+
+        [Required]
+        [Display(Name = "From Year")]
+        public int FromYear { get; set; }
+
+        [Required] [Display(Name = "To Year")] public int ToYear { get; set; }
+
+        [Required]
+        [Display(Name = "Name of Degree")]
+        public string NameOfDegree { get; set; }
+
+        [Required]
+        [Display(Name = "Major Area of Study")]
+        public string MajorAreaOfStudy { get; set; }
     }
 }
