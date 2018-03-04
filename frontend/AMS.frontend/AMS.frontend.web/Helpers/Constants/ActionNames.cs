@@ -8,5 +8,7 @@
         public const string Edit = "Edit";
         public const string Delete = "Delete";
         public const string Detail = "Detail";
+        public const string GetLocalCouncil = "GetLocalCouncil";
+        public const string GetJamatkhana = "GetJamatkhana";
     }
 }
