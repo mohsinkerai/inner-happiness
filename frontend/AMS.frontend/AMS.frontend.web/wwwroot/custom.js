@@ -10,6 +10,14 @@ $(document).ready(function () {
                     placeholder: placeholder
                 });
         });
+    $(".date-picker").datepicker({
+        todayHighlight: true,
+        orientation: "bottom left",
+        templates: {
+            leftArrow: '<i class="la la-angle-left"></i>',
+            rightArrow: '<i class="la la-angle-right"></i>'
+        }
+    });
 });
 
 function toggleNotMe() {
@@ -315,4 +323,53 @@ function DeleteConfirm(uid, urlForDelete, urlToPost) {
         }
     });
     return true;
+}
+
+function MakeCascadingDropDown(primaryDropdownClass, secondaryDropdownClass, url) {
+    if ($("." + primaryDropdownClass).exists() && $("." + secondaryDropdownClass).exists()) {
+        $("." + primaryDropdownClass)
+            .change(function () {
+                var selectedPrimaryValue = $(this).val();
+                LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, selectedPrimaryValue, url, "");
+            });
+    }
+}
+function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, selectedPrimaryValue, url, selectedSecondaryValue) {
+    if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
+        $("." + primaryDropdownClass).val([]);
+        $("." + secondaryDropdownClass).empty().append("<option></option>").prop("disabled", true);
+    } else {
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: url,
+            data: { "uid": selectedPrimaryValue },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                $("." + secondaryDropdownClass)
+                    .empty()
+                    .append("<option></option>");
+                $.each(result,
+                    function (key, value) {
+                        $("." + secondaryDropdownClass)
+                            .append($("<option></option>")
+                                .attr("value", value.value)
+                                .text(value.text));
+                    });
+                $("." + secondaryDropdownClass).prop("disabled", false);
+                if (selectedSecondaryValue !== "" || selectedSecondaryValue !== "0") {
+                    $("." + secondaryDropdownClass).val(selectedSecondaryValue);
+                }
+            }
+        });
+    }
 }
