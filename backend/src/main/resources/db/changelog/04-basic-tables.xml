@@ -28,4 +28,182 @@
       <!--<column name="cnic" value="42101-1111111-1"/>-->
     <!--</insert>-->
   <!--</changeSet>-->
+  <changeSet id="04-01" author="zeeshan.damani">
+    <createTable tableName="jamati_titles"
+      remarks="Jamati Title awarded to nominated khidmatgars">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="title" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="gender" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-02" author="zeeshan.damani">
+    <insert tableName="jamati_titles">
+      <column name="id" value="1"/>
+      <column name="title" value="Huzur Mukhi"/>
+      <column name="gender" value="Male"/>
+    </insert>
+    <insert tableName="jamati_titles">
+      <column name="id" value="2"/>
+      <column name="title" value="Huzur Mukhiani"/>
+      <column name="gender" value="female"/>
+    </insert>
+    <insert tableName="jamati_titles">
+      <column name="id" value="3"/>
+      <column name="title" value="Alija"/>
+      <column name="gender" value="Male"/>
+    </insert>
+  </changeSet>
+  <changeSet id="04-03" author="zeeshan.damani">
+    <createTable tableName="marital_status"
+      remarks="Marital status of nominated person">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="status" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-04" author="zeeshan.damani">
+    <insert tableName="marital_status">
+      <column name="id" value="1"/>
+      <column name="status" value="Single"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="2"/>
+      <column name="status" value="Widowed"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="3"/>
+      <column name="status" value="Married"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="4"/>
+      <column name="status" value="Divorced"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="5"/>
+      <column name="status" value="Separated"/>
+    </insert>
+  </changeSet>
+  <changeSet id="04-05" author="zeeshan.damani">
+    <createTable tableName="area_of_origin"
+                 remarks="Area of Origin of nominated person">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="area" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-06" author="zeeshan.damani">
+    <insert tableName="area_of_origin">
+      <column name="id" value="1"/>
+      <column name="area" value="Hunza"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="2"/>
+      <column name="area" value="Punjab"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-07" author="zeeshan.damani">
+    <createTable tableName="country"
+                 remarks="Country of nominated person">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code" type="varchar(55)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-08" author="zeeshan.damani">
+    <insert tableName="country">
+      <column name="id" value="1"/>
+      <column name="name" value="Pakistan"/>
+      <column name="code" value="PK"/>
+    </insert>
+    <insert tableName="country">
+      <column name="id" value="2"/>
+      <column name="name" value="India"/>
+      <column name="code" value="IND"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-09" author="zeeshan.damani">
+    <createTable tableName="salutation"
+                 remarks="all salutations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="salutation" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      </createTable>
+  </changeSet>
+  <changeSet id="04-10" author="zeeshan.damani">
+    <insert tableName="salutation">
+      <column name="id" value="1"/>
+      <column name="salutation" value="Mr."/>
+      </insert>
+    <insert tableName="salutation">
+      <column name="id" value="2"/>
+      <column name="salutation" value="Mrs."/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-11" author="zeeshan.damani">
+    <createTable tableName="secular_study_level"
+                 remarks="all salutations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="level" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-12" author="zeeshan.damani">
+    <insert tableName="secular_study_level">
+      <column name="id" value="1"/>
+      <column name="level" value="PHD"/>
+    </insert>
+    <insert tableName="secular_study_level">
+      <column name="id" value="2"/>
+      <column name="level" value="Masters"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-13" author="zeeshan.damani">
+    <createTable tableName="religious_qualification"
+                 remarks="all salutations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="level" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-14" author="zeeshan.damani">
+    <insert tableName="religious_qualification">
+      <column name="id" value="1"/>
+      <column name="level" value="HRE"/>
+    </insert>
+    <insert tableName="religious_qualification">
+      <column name="id" value="2"/>
+      <column name="level" value="ARE"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>

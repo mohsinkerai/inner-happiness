@@ -4,7 +4,7 @@ spring:
   datasource:
     db: inner_satisfaction
     url: jdbc:mysql://localhost:3306/${spring.datasource.db}?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-    username: mohsin.kerai
+    username: root
     password: 123
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
