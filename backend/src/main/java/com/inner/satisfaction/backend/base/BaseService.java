@@ -5,36 +5,25 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public abstract class BaseService <E extends BaseEntity> {
+public abstract class BaseService <E extends BaseEntity> extends SimpleBaseService<E>{
 
-  private final BaseRepository<E> baseRepository;
-  private final BaseEntityValidation<E> baseEntityValidation;
+  protected final BaseEntityValidation<E> baseEntityValidation;
 
   protected BaseService(BaseRepository<E> baseRepository,
       BaseEntityValidation<E> baseEntityValidation) {
-    this.baseRepository = baseRepository;
+    super(baseRepository);
     this.baseEntityValidation = baseEntityValidation;
   }
 
-  public List<E> findAll() {
-    return baseRepository.findAll();
-  }
-
-  public Page<E> findAll(Pageable pageable) {
-    return baseRepository.findAll(pageable);
-  }
-
-  public E findOne(Long id) {
-    return baseRepository.getOne(id);
-  }
-
+  @Override
   public E save(E e) {
     baseEntityValidation.isValidToSave(e);
-    return baseRepository.save(e);
+    return super.save(e);
   }
 
+  @Override
   public void delete(E e) {
     baseEntityValidation.isValidToDelete(e);
-    baseRepository.delete(e);
+    super.delete(e);
   }
 }
