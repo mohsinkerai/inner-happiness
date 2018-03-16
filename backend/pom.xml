@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 
-		<swagger-core-version>1.5.10</swagger-core-version>
+		<swagger-core-version>1.5.18</swagger-core-version>
 		<springfox-version>2.8.0</springfox-version>
 	</properties>
 
@@ -105,13 +105,6 @@
       <version>3.1.0</version>
       <scope>test</scope>
     </dependency>
-
-		<dependency>
-			<groupId>org.bitbucket.radistao.test</groupId>
-			<artifactId>before-after-spring-test-runner</artifactId>
-			<version>0.1.0</version>
-			<scope>test</scope>
-		</dependency>
 
 	</dependencies>
 

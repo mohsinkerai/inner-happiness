@@ -1,6 +1,7 @@
 package com.inner.satisfaction.backend.person;
 
 import com.inner.satisfaction.backend.base.BaseRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

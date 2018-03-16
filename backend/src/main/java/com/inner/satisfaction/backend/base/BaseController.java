@@ -20,9 +20,9 @@ public abstract class BaseController<E extends BaseEntity> {
   public static final String ONE = ROOT + "one/{id}";
   public static final String ALL = ROOT + "all";
 
-  private final BaseService<E> baseService;
+  protected final SimpleBaseService<E> baseService;
 
-  protected BaseController(BaseService<E> baseService) {
+  protected BaseController(SimpleBaseService<E> baseService) {
     this.baseService = baseService;
   }
 
