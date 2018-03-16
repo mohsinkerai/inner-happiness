@@ -10,5 +10,11 @@
         public const string Detail = "Detail";
         public const string GetLocalCouncil = "GetLocalCouncil";
         public const string GetJamatkhana = "GetJamatkhana";
+        public const string EducationListAdd = "EducationListAdd";
+        public const string EducationListDelete = "EducationListDelete";
+        public const string AkdnTrainingListAdd = "AkdnTrainingListAdd";
+        public const string AkdnTrainingListDelete = "AkdnTrainingListDelete";
+        public const string ProfessionalTrainingListAdd = "ProfessionalTrainingListAdd";
+        public const string ProfessionalTrainingListDelete = "ProfessionalTrainingListDelete";
     }
 }

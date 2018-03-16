@@ -9,19 +9,19 @@ namespace AMS.frontend.web.Extensions
 
         public static T Get<T>(this ISession session, string key)
         {
-            string value = session.GetString(key);
+            var value = session.GetString(key);
 
             return value == null
                 ? default(T)
                 : JsonConvert.DeserializeObject<T>(value,
-                    new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+                    new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
         }
 
         public static void Set(this ISession session, string key, object value)
         {
             session.SetString(key,
                 JsonConvert.SerializeObject(value,
-                    new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                    new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
         }
 
         #endregion Public Methods

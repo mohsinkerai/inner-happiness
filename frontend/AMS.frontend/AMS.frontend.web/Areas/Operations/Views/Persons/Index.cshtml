@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                    <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Add class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                    <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
                         <span>
                             <i class="la la-user-plus"></i>
                             <span>
@@ -90,46 +90,44 @@
 
         <table id="users">
             <thead>
-                <tr>
-                    <th> Name </th>
-                    <th> Email Address </th>
-                    <th> Mobile Number </th>
-                    <th> Salary </th>
-                    <th> Pay Date </th>
-                    <th> Actions </th>
-                </tr>
+            <tr>
+                <th> Name </th>
+                <th> Email Address </th>
+                <th> Mobile Number </th>
+                <th> Salary </th>
+                <th> Pay Date </th>
+                <th> Actions </th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td> Naveed </td>
-                        <td> Naveed </td>
-                        <td> Naveed </td>
-                        <td> Naveed </td>
-                        <td> Naveed </td>
-                        <td>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Detail class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View Details">
-                                <i class="la la-eye"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit Details">
-                                <i class="la la-edit"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> Naveed </td>
+                    <td> Naveed </td>
+                    <td> Naveed </td>
+                    <td> Naveed </td>
+                    <td> Naveed </td>
+                    <td>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Detail class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View Details">
+                            <i class="la la-eye"></i>
+                        </a>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit Details">
+                            <i class="la la-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>
-
 </div>
 
 @section scripts{
 
     <script type="text/javascript">
-        jQuery(document).ready(function () {
+        jQuery(document).ready(function() {
             InitializeDataTable("users", "Users");
         });
     </script>
 }
-
