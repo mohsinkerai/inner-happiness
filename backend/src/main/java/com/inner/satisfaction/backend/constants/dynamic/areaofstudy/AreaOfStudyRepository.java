@@ -1,10 +1,10 @@
-package com.inner.satisfaction.backend.constants.educationaldegree;
+package com.inner.satisfaction.backend.constants.dynamic.areaofstudy;
 
 import com.inner.satisfaction.backend.base.BaseRepository;
 import com.inner.satisfaction.backend.company.Company;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EducationalDegreeRepository extends BaseRepository<Company> {
+public interface AreaOfStudyRepository extends BaseRepository<AreaOfStudy> {
 
 }

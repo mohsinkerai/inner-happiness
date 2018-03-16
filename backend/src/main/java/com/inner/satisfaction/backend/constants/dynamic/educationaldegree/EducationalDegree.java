@@ -1,4 +1,4 @@
-package com.inner.satisfaction.backend.constants.educationaldegree;
+package com.inner.satisfaction.backend.constants.dynamic.educationaldegree;
 
 import com.inner.satisfaction.backend.base.BaseEntity;
 import javax.persistence.Entity;

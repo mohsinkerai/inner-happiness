@@ -1,0 +1,13 @@
+package com.inner.satisfaction.backend.constants.dynamic.educationalinstitution;
+
+import com.inner.satisfaction.backend.base.BaseEntity;
+import lombok.Data;
+
+import javax.persistence.Entity;
+
+@Data
+@Entity
+public class EducationalInstitution extends BaseEntity{
+
+  private String name;
+}

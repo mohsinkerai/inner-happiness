@@ -1,12 +1,11 @@
-package com.inner.satisfaction.backend.constants.educationaldegree;
+package com.inner.satisfaction.backend.constants.dynamic.educationaldegree;
 
 import com.inner.satisfaction.backend.base.SimpleBaseService;
 import com.inner.satisfaction.backend.company.Company;
-import com.inner.satisfaction.backend.company.CompanyValidation;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EducationalDegreeService extends SimpleBaseService<Company> {
+public class EducationalDegreeService extends SimpleBaseService<EducationalDegree> {
 
   protected EducationalDegreeService(
       EducationalDegreeRepository baseRepository) {
