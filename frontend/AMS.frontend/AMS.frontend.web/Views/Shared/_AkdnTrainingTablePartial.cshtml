@@ -1,0 +1,34 @@
+@model IEnumerable<AkdnTrainingModel>
+<table id="akdn-training">
+    <thead>
+    <tr>
+        <th> Training </th>
+        <th> Country </th>
+        <th> Month </th>
+        <th> Year </th>
+        <th> Action </th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr id="akdn-training-row-@item.TrainingId">
+                <td> @item.Training </td>
+                <td> @item.CountryOfTraining </td>
+                <td> @item.Month </td>
+                <td> @item.Year </td>
+                <td>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return AkdnTrainingListEdit("@item.TrainingId", "@item.Training", "@item.CountryOfTraining", "@item.Month", "@item.Year");'>
+                        <i class="la la-edit"></i>
+                    </button>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return AkdnTrainingListDelete("@Url.Action(ActionNames.AkdnTrainingListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.TrainingId");'>
+                        <i class="la la-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

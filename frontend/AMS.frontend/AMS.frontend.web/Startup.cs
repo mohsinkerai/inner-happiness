@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -57,12 +54,12 @@ namespace AMS.frontend.web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "areaRoute",
-                    template: "{area:exists}/{controller=Authenticate}/{action=Index}/{id?}");
+                    "areaRoute",
+                    "{area:exists}/{controller=Authenticate}/{action=Index}/{id?}");
 
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Authenticate}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Authenticate}/{action=Index}/{id?}");
             });
         }
     }

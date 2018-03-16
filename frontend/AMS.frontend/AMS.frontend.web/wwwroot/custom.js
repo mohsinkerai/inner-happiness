@@ -33,6 +33,267 @@ var deleteCookie = function (name) {
     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 };
 
+function ProfessionalTrainingListEdit(id, training, institution, country, month, year) {
+    $("#ProfesisonalTraining").val(training).trigger('change');
+    $("#ProfessionalTrainingInstitution").val(institution).trigger('change');
+    $("#ProfessionalTrainingCountry").val(country).trigger('change');
+    $("#ProfessionalTrainingMonth").val(month).trigger('change');
+    $("#ProfessionalTrainingYear").val(year).trigger('change');
+    $("#professional-training-id").val(id);
+
+    $("#professional-training-row-" + id).addClass("selected");
+}
+
+function AkdnTrainingListEdit(id, training, country, month, year) {
+    $("#AkdnTraining").val(training).trigger('change');
+    $("#AkdnTrainingCountry").val(country).trigger('change');
+    $("#AkdnTrainingMonth").val(month).trigger('change');
+    $("#AkdnTrainingYear").val(year).trigger('change');
+    $("#akdn-training-id").val(id);
+
+    $("#akdn-training-row-" + id).addClass("selected");
+}
+
+function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, nameOfDegree, majorAreaOfStudy) {
+    $("#Institution").val(institution).trigger('change');
+    $("#CountryOfStudy").val(countryOfStudy).trigger('change');
+    $("#FromYear").val(fromYear).trigger('change');
+    $("#ToYear").val(toYear).trigger('change');
+    $("#NameOfDegree").val(nameOfDegree).trigger('change');
+    $("#MajorAreaOfStudy").val(majorAreaOfStudy).trigger('change');
+    $("#education-id").val(id);
+
+    $("#education-row-" + id).addClass("selected");
+}
+
+function ProfessionalTrainingListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#professional-training-table").html(result);
+                InitializeDataTableLite("professional-training", "Professional Trainings");
+                $("#ProfesisonalTraining").val('').trigger('change');
+                $("#ProfessionalTrainingInstitution").val('').trigger('change');
+                $("#ProfessionalTrainingCountry").val('').trigger('change');
+                $("#ProfessionalTrainingMonth").val('').trigger('change');
+                $("#ProfessionalTrainingYear").val('').trigger('change');
+                $("#professional-training-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function EducationListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#education-table").html(result);
+                InitializeDataTableLite("education", "Education");
+                $("#Institution").val('').trigger('change');
+                $("#CountryOfStudy").val('').trigger('change');
+                $("#FromYear").val('').trigger('change');
+                $("#ToYear").val('').trigger('change');
+                $("#NameOfDegree").val('').trigger('change');
+                $("#MajorAreaOfStudy").val('').trigger('change');
+                $("#education-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function AkdnTrainingListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#akdn-training-table").html(result);
+                InitializeDataTableLite("akdn-training", "AKDN Trainings");
+                $("#AkdnTraining").val('').trigger('change');
+                $("#AkdnTrainingCountry").val('').trigger('change');
+                $("#AkdnTrainingMonth").val('').trigger('change');
+                $("#AkdnTrainingYear").val('').trigger('change');
+                $("#akdn-training-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function ProfessionalTrainingListAdd(url) {
+    if ($("#ProfesisonalTraining").valid() && $("#ProfessionalTrainingInstitution").valid() && $("#ProfessionalTrainingCountry").valid() && $("#ProfessionalTrainingMonth").valid() && $("#ProfessionalTrainingYear").valid()) {
+        var trainingId = $("#professional-training-id").val();
+        var training = $("#ProfesisonalTraining").val();
+        var institution = $("#ProfessionalTrainingInstitution").val();
+        var country = $("#ProfessionalTrainingCountry").val();
+        var month = $("#ProfessionalTrainingMonth").val();
+        var year = $("#ProfessionalTrainingYear").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": trainingId, "training": training, "institution": institution, "countryOfTarining": country, "month": month, "year": year },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#professional-training-table").html(result);
+                    InitializeDataTableLite("professional-training", "Professional Trainings");
+                    $("#ProfesisonalTraining").val('').trigger('change');
+                    $("#ProfessionalTrainingInstitution").val('').trigger('change');
+                    $("#ProfessionalTrainingCountry").val('').trigger('change');
+                    $("#ProfessionalTrainingMonth").val('').trigger('change');
+                    $("#ProfessionalTrainingYear").val('').trigger('change');
+                    $("#professional-training-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function EducationListAdd(url) {
+    if ($("#Institution").valid() && $("#CountryOfStudy").valid() && $("#FromYear").valid() && $("#ToYear").valid() && $("#NameOfDegree").valid() && $("#MajorAreaOfStudy").valid()) {
+        var educationId = $("#education-id").val();
+        var institution = $("#Institution").val();
+        var countryOfStudy = $("#CountryOfStudy").val();
+        var fromYear = $("#FromYear").val();
+        var toYear = $("#FromYear").val();
+        var nameOfDegree = $("#NameOfDegree").val();
+        var majorAreaOfStudy = $("#MajorAreaOfStudy").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": educationId, "institution": institution, "countryOfStudy": countryOfStudy, "fromYear": fromYear, "toYear": toYear, "nameOfDegree": nameOfDegree, "majorAreaOfStudy": majorAreaOfStudy },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#education-table").html(result);
+                    InitializeDataTableLite("education", "Education");
+                    $("#Institution").val('').trigger('change');
+                    $("#CountryOfStudy").val('').trigger('change');
+                    $("#FromYear").val('').trigger('change');
+                    $("#ToYear").val('').trigger('change');
+                    $("#NameOfDegree").val('').trigger('change');
+                    $("#MajorAreaOfStudy").val('').trigger('change');
+                    $("#education-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function AkdnTrainingListAdd(url) {
+    if ($("#AkdnTraining").valid() && $("#AkdnTrainingCountry").valid() && $("#AkdnTrainingMonth").valid() && $("#AkdnTrainingYear").valid()) {
+        var trainingId = $("#akdn-training-id").val();
+        var training = $("#AkdnTraining").val();
+        var country = $("#AkdnTrainingCountry").val();
+        var month = $("#AkdnTrainingMonth").val();
+        var year = $("#AkdnTrainingYear").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": trainingId, "training": training, "countryOfTarining": country, "month": month, "year": year },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#akdn-training-table").html(result);
+                    InitializeDataTableLite("akdn-training", "AKDN Trainings");
+                    $("#AkdnTraining").val('').trigger('change');
+                    $("#AkdnTrainingCountry").val('').trigger('change');
+                    $("#AkdnTrainingMonth").val('').trigger('change');
+                    $("#AkdnTrainingYear").val('').trigger('change');
+                    $("#akdn-training-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function InitializeDataTableLite(id, title) {
+    var datatable = $("#" + id).mDatatable({
+        pagination: false
+    });
+}
+
 function InitializeDataTable(id, title) {
 
 

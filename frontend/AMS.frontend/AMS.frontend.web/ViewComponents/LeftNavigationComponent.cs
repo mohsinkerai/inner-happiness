@@ -14,30 +14,82 @@ namespace AMS.frontend.web.ViewComponents
         {
             IList MenuModel = new List<MenuModel>();
 
-            MenuModel menu = new MenuModel() { MenuId = 1, Action = "Index", Controller = "Home", SubMenu = null, Title = "Dashboard", Area = "", ImageClass = "flaticon-dashboard" };
+            var menu = new MenuModel
+            {
+                MenuId = 1,
+                Action = "Index",
+                Controller = "Home",
+                SubMenu = null,
+                Title = "Dashboard",
+                Area = "",
+                ImageClass = "flaticon-dashboard"
+            };
             MenuModel.Add(menu);
 
-            menu = new MenuModel() { MenuId = 2, Title = "Employee Management", Action = "Index", Controller = "Persons", SubMenu = null, Area = AreaNames.Operations, ImageClass = "flaticon-users" };
+            menu = new MenuModel
+            {
+                MenuId = 2,
+                Title = "Employee Management",
+                Action = "Index",
+                Controller = "Persons",
+                SubMenu = null,
+                Area = AreaNames.Operations,
+                ImageClass = "flaticon-users"
+            };
             MenuModel.Add(menu);
 
-            menu = new MenuModel() { MenuId = 3, Title = "User Groups/Tags Management", Action = "List", Controller = "TagsManagement", SubMenu = null, Area = AreaNames.Operations, ImageClass = "flaticon-interface-9" };
+            menu = new MenuModel
+            {
+                MenuId = 3,
+                Title = "User Groups/Tags Management",
+                Action = "List",
+                Controller = "TagsManagement",
+                SubMenu = null,
+                Area = AreaNames.Operations,
+                ImageClass = "flaticon-interface-9"
+            };
             MenuModel.Add(menu);
 
-            menu = new MenuModel() { MenuId = 4, Title = "Fee Management", Action = "List", Controller = "FeeManagement", SubMenu = null, Area = AreaNames.Operations, ImageClass = "flaticon-coins" };
+            menu = new MenuModel
+            {
+                MenuId = 4,
+                Title = "Fee Management",
+                Action = "List",
+                Controller = "FeeManagement",
+                SubMenu = null,
+                Area = AreaNames.Operations,
+                ImageClass = "flaticon-coins"
+            };
             MenuModel.Add(menu);
 
-            menu = new MenuModel() { MenuId = 5, Title = "Administration", ImageClass = "flaticon-user" };
+            menu = new MenuModel {MenuId = 5, Title = "Administration", ImageClass = "flaticon-user"};
 
             menu.SubMenu = new List<MenuModel>();
-            MenuModel subMenu = new MenuModel() { Action = "Roles", Controller = "Administration", SubMenu = null, Title = "Role Management", Area = AreaNames.Operations, ImageClass = "flaticon-user-settings" };
+            var subMenu = new MenuModel
+            {
+                Action = "Roles",
+                Controller = "Administration",
+                SubMenu = null,
+                Title = "Role Management",
+                Area = AreaNames.Operations,
+                ImageClass = "flaticon-user-settings"
+            };
             menu.SubMenu.Add(subMenu);
 
-            subMenu = new MenuModel() { Action = "Users", Controller = "Administration", SubMenu = null, Title = "User Management", Area = AreaNames.Operations, ImageClass = "flaticon-user-add" };
+            subMenu = new MenuModel
+            {
+                Action = "Users",
+                Controller = "Administration",
+                SubMenu = null,
+                Title = "User Management",
+                Area = AreaNames.Operations,
+                ImageClass = "flaticon-user-add"
+            };
             menu.SubMenu.Add(subMenu);
 
             MenuModel.Add(menu);
 
-            menu = new MenuModel() { MenuId = 6, Title = "Reports", ImageClass = "flaticon-analytics" };
+            menu = new MenuModel {MenuId = 6, Title = "Reports", ImageClass = "flaticon-analytics"};
             MenuModel.Add(menu);
             //Session["ABC"] = MenuModel;
 

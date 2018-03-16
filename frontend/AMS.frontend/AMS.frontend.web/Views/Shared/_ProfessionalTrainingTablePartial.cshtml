@@ -1,0 +1,36 @@
+@model IEnumerable<ProfessionalTrainingModel>
+<table id="professional-training">
+    <thead>
+    <tr>
+        <th> Training </th>
+        <th> Institution </th>
+        <th> Country </th>
+        <th> Month </th>
+        <th> Year </th>
+        <th> Action </th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr id="professional-training-row-@item.TrainingId">
+                <td> @item.Training </td>
+                <td> @item.Institution </td>
+                <td> @item.CountryOfTraining </td>
+                <td> @item.Month </td>
+                <td> @item.Year </td>
+                <td>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return ProfessionalTrainingListEdit("@item.TrainingId", "@item.Training", "@item.Institution", "@item.CountryOfTraining", "@item.Month", "@item.Year");'>
+                        <i class="la la-edit"></i>
+                    </button>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return ProfessionalTrainingListDelete("@Url.Action(ActionNames.ProfessionalTrainingListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.TrainingId");'>
+                        <i class="la la-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
