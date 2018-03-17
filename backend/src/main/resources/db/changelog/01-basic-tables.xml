@@ -13,6 +13,18 @@
       <column name="name" type="varchar(255)">
         <constraints nullable="false" unique="false"/>
       </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
     </createTable>
     <insert
       tableName="company">
@@ -39,6 +51,18 @@
       </column>
       <column name="name" type="varchar(255)">
         <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
     <insert
@@ -88,6 +112,18 @@
         <constraints nullable="false" unique="false"/>
       </column>
       <column name="level_parent_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
@@ -211,6 +247,18 @@
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
     </createTable>
     <insert tableName="position">
       <column name="id" value="1"/>
@@ -234,6 +282,18 @@
         <constraints nullable="false" unique="false"/>
       </column>
       <column name="end_date" type="timestamp">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>

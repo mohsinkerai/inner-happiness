@@ -40,6 +40,18 @@
       <column name="gender" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
     </createTable>
   </changeSet>
   <changeSet id="04-02" author="zeeshan.damani">
@@ -67,6 +79,18 @@
       </column>
       <column name="status" type="varchar(255)">
         <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
@@ -101,6 +125,18 @@
       <column name="area" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
     </createTable>
   </changeSet>
   <changeSet id="04-06" author="zeeshan.damani">
@@ -126,6 +162,18 @@
       <column name="code" type="varchar(55)">
         <constraints nullable="false"/>
       </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
     </createTable>
   </changeSet>
   <changeSet id="04-08" author="zeeshan.damani">
@@ -150,6 +198,18 @@
       <column name="salutation" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
       </createTable>
   </changeSet>
   <changeSet id="04-10" author="zeeshan.damani">
@@ -171,6 +231,18 @@
       </column>
       <column name="level" type="varchar(255)">
         <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
@@ -194,6 +266,18 @@
       <column name="level" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+    <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <constraints nullable="false" unique="false"/>
+    </column>
+    <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <constraints nullable="false" unique="false"/>
+    </column>
+    <column name="created_by" type="datetime" defaultValueComputed="null">
+      <constraints nullable="true" unique="false"/>
+    </column>
+    <column name="updated_by" type="datetime" defaultValueComputed="null">
+      <constraints nullable="true" unique="false"/>
+    </column>
     </createTable>
   </changeSet>
   <changeSet id="04-14" author="zeeshan.damani">
@@ -215,6 +299,18 @@
       </column>
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
@@ -242,6 +338,18 @@
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
     </createTable>
   </changeSet>
   <changeSet id="04-18" author="mohsin.kerai">
@@ -267,6 +375,18 @@
       </column>
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
