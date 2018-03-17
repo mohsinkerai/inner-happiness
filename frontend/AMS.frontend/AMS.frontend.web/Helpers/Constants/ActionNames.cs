@@ -16,5 +16,7 @@
         public const string AkdnTrainingListDelete = "AkdnTrainingListDelete";
         public const string ProfessionalTrainingListAdd = "ProfessionalTrainingListAdd";
         public const string ProfessionalTrainingListDelete = "ProfessionalTrainingListDelete";
+        public const string LanguageListAdd = "LanguageListAdd";
+        public const string LanguageListDelete = "LanguageListDelete";
     }
 }

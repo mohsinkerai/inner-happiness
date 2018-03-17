@@ -175,5 +175,44 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_ProfessionalTrainingTablePartial", new List<ProfessionalTrainingModel>());
         }
+        [HttpPost]
+        public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
+            string write, string speak)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_LanguageTablePartial",
+                new List<LanguageProficiencyModel>
+                {
+                    new LanguageProficiencyModel
+                    {
+                        LanguageProficiencyId = id,
+                        Language = language,
+                        Read = read,
+                        Speak = speak,
+                        Write = write
+                    }
+                });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LanguageListDelete(string id)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_LanguageTablePartial", new List<LanguageProficiencyModel>());
+        }
     }
 }

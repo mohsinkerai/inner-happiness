@@ -105,5 +105,15 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Year")] public string ProfessionalTrainingYear { get; set; }
 
         public List<ProfessionalTrainingModel> ProfessionalTrainings { get; set; }
+
+        public List<string> Skills { get; set; }
+        public List<string> ProfessionalMemberships { get; set; }
+
+        public string Language { get; set; }
+        public string Read { get; set; }
+        public string Write { get; set; }
+        public string Speak { get; set; }
+
+        public List<LanguageProficiencyModel> LanguageProficiencies { get; set; }
     }
 }

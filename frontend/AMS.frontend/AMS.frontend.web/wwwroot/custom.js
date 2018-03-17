@@ -10,6 +10,15 @@ $(document).ready(function () {
                     placeholder: placeholder
                 });
         });
+    $(".m-select2-multiple")
+        .each(function () {
+            var placeholder = $(this).attr("placeholder");
+            $(this)
+                .select2({
+                    placeholder: placeholder,
+                    tags: true
+                });
+        });
     $(".date-picker").datepicker({
         todayHighlight: true,
         orientation: "bottom left",
@@ -32,6 +41,16 @@ function toggleNotMe() {
 var deleteCookie = function (name) {
     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 };
+
+function LanguageListEdit(id, language, read, write, speak) {
+    $("#Language").val(language).trigger('change');
+    $("#Read").val(read).trigger('change');
+    $("#Write").val(write).trigger('change');
+    $("#Speak").val(speak).trigger('change');
+    $("#language-id").val(id);
+
+    $("#language-row-" + id).addClass("selected");
+}
 
 function ProfessionalTrainingListEdit(id, training, institution, country, month, year) {
     $("#ProfesisonalTraining").val(training).trigger('change');
@@ -64,6 +83,38 @@ function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, na
     $("#education-id").val(id);
 
     $("#education-row-" + id).addClass("selected");
+}
+
+function LanguageListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#language-table").html(result);
+                InitializeDataTableLite("language", "Languages");
+                $("#Language").val('').trigger('change');
+                $("#Read").val('').trigger('change');
+                $("#Write").val('').trigger('change');
+                $("#Speak").val('').trigger('change');
+                $("#language-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
 }
 
 function ProfessionalTrainingListDelete(url, id) {
@@ -163,6 +214,45 @@ function AkdnTrainingListDelete(url, id) {
             //}
         }
     });
+}
+
+function LanguageListAdd(url) {
+    if ($("#Language").valid() && $("#Read").valid() && $("#Write").valid() && $("#Speak").valid()) {
+        var languageId = $("#language-id").val();
+        var language = $("#Language").val();
+        var read = $("#Read").val();
+        var write = $("#Write").val();
+        var speak = $("#Speak").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": languageId, "language": language, "read": read, "write": write, "speak": speak },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#language-table").html(result);
+                    InitializeDataTableLite("language", "Languages");
+                    $("#Language").val('').trigger('change');
+                    $("#Read").val('').trigger('change');
+                    $("#Write").val('').trigger('change');
+                    $("#Speak").val('').trigger('change');
+                    $("#language-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
 }
 
 function ProfessionalTrainingListAdd(url) {
