@@ -38,7 +38,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             //RestfulClient restfulClient = new RestfulClient();
 
-            using (var client = new HttpClient()) {
+            /*using (var client = new HttpClient()) {
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage Res = await client.GetAsync("salutatuions");
@@ -57,11 +57,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
 
                     ViewBag.SalutationList = list;
-                }
+                }*/
             
-            }
+            //}
 
-            //var getSalutation = restfulClient.getSalutation();
+            ViewBag.SalutationList = await RestfulClient.getSalutation();
 
             return View();
         }
