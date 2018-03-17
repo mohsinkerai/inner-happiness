@@ -214,5 +214,44 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_LanguageTablePartial", new List<LanguageProficiencyModel>());
         }
+
+        [HttpPost]
+        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear, string toYear, string position)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_VoluntaryCommunityTablePartial",
+                new List<VoluntaryCommunityModel>
+                {
+                    new VoluntaryCommunityModel
+                    {
+                        VoluntaryCommunityId = id,
+                        FromYear = Convert.ToInt32(fromYear),
+                        Institution = institution,
+                        ToYear = Convert.ToInt32(toYear),
+                        Position = position
+                    }
+                });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VoluntaryCommunityListDelete(string id)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_VoluntaryCommunityTablePartial", new List<VoluntaryCommunityModel>());
+        }
     }
 }

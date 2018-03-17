@@ -73,6 +73,16 @@ function AkdnTrainingListEdit(id, training, country, month, year) {
     $("#akdn-training-row-" + id).addClass("selected");
 }
 
+function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position) {
+    $("#VoluntaryCommunityInstitution").val(institution).trigger('change');
+    $("#VoluntaryCommunityFromYear").val(fromYear).trigger('change');
+    $("#VoluntaryCommunityToYear").val(toYear).trigger('change');
+    $("#VoluntaryCommunityPosition").val(position).trigger('change');
+    $("#voluntary-community-id").val(id);
+
+    $("#voluntary-community-row-" + id).addClass("selected");
+}
+
 function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, nameOfDegree, majorAreaOfStudy) {
     $("#Institution").val(institution).trigger('change');
     $("#CountryOfStudy").val(countryOfStudy).trigger('change');
@@ -142,6 +152,38 @@ function ProfessionalTrainingListDelete(url, id) {
                 $("#ProfessionalTrainingMonth").val('').trigger('change');
                 $("#ProfessionalTrainingYear").val('').trigger('change');
                 $("#professional-training-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function VoluntaryCommunityListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#voluntary-community-table").html(result);
+                InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
+                $("#VoluntaryCommunityInstitution").val('').trigger('change');
+                $("#VoluntaryCommunityFromYear").val('').trigger('change');
+                $("#VoluntaryCommunityToYear").val('').trigger('change');
+                $("#VoluntaryCommunityPosition").val('').trigger('change');
+                $("#voluntary-community-id").val('');
             }
             //else {
             //    window.location.replace(window.loginUrl);
@@ -287,6 +329,45 @@ function ProfessionalTrainingListAdd(url) {
                     $("#ProfessionalTrainingMonth").val('').trigger('change');
                     $("#ProfessionalTrainingYear").val('').trigger('change');
                     $("#professional-training-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function VoluntaryCommunityListAdd(url) {
+    if ($("#VoluntaryCommunityInstitution").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityToYear").valid() && $("#VoluntaryCommunityPosition").valid()) {
+        var voluntaryCommunityId = $("#voluntary-community-id").val();
+        var institution = $("#VoluntaryCommunityInstitution").val();
+        var fromYear = $("#VoluntaryCommunityFromYear").val();
+        var toYear = $("#VoluntaryCommunityToYear").val();
+        var position = $("#VoluntaryCommunityPosition").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": voluntaryCommunityId, "institution": institution, "fromYear": fromYear, "toYear": toYear, "position": position },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#voluntary-community-table").html(result);
+                    InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
+                    $("#VoluntaryCommunityInstitution").val('').trigger('change');
+                    $("#VoluntaryCommunityFromYear").val('').trigger('change');
+                    $("#VoluntaryCommunityToYear").val('').trigger('change');
+                    $("#VoluntaryCommunityPosition").val('').trigger('change');
+                    $("#voluntary-community-id").val('');
                 }
                 //else {
                 //    window.location.replace(window.loginUrl);

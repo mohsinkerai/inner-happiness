@@ -18,5 +18,7 @@
         public const string ProfessionalTrainingListDelete = "ProfessionalTrainingListDelete";
         public const string LanguageListAdd = "LanguageListAdd";
         public const string LanguageListDelete = "LanguageListDelete";
+        public const string VoluntaryCommunityListAdd = "VoluntaryCommunityListAdd";
+        public const string VoluntaryCommunityListDelete = "VoluntaryCommunityListDelete";
     }
 }

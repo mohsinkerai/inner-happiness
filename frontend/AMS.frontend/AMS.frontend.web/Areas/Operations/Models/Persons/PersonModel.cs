@@ -115,5 +115,15 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string Speak { get; set; }
 
         public List<LanguageProficiencyModel> LanguageProficiencies { get; set; }
+
+        [Display(Name = "Institution")]
+        public string VoluntaryCommunityInstitution { get; set; }
+        [Display(Name = "From Year")]
+        public int VoluntaryCommunityFromYear { get; set; }
+        [Display(Name = "To Year")]
+        public int VoluntaryCommunityToYear { get; set; }
+        [Display(Name = "Position")]
+        public string VoluntaryCommunityPosition { get; set; }
+        public List<VoluntaryCommunityModel> VoluntaryCommunityServices { get; set; }
     }
 }
