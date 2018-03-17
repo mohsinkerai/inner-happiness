@@ -25,3 +25,4 @@ hs_err_pid*
 /frontend/AMS.frontend/AMS.frontend.web/obj
 /frontend/AMS.frontend/AMS.frontend.web/bin
 app.log* 
+/.vs
