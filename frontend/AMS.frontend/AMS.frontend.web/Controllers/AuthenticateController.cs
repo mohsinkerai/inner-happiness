@@ -1,9 +1,9 @@
-﻿using AMS.frontend.web.Helpers.Constants;
+﻿using System;
+using System.Threading.Tasks;
+using AMS.frontend.web.Helpers.Constants;
 using AMS.frontend.web.Models.Authenticate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Controllers
 {
@@ -29,7 +29,7 @@ namespace AMS.frontend.web.Controllers
             {
                 if (model.RememberMe)
                 {
-                    var cookieOptions = new CookieOptions { HttpOnly = false };
+                    var cookieOptions = new CookieOptions {HttpOnly = false};
                     Response.Cookies.Append(CookieNames.RememberMe, Convert.ToString(model.RememberMe), cookieOptions);
                     Response.Cookies.Append(CookieNames.Company, model.Company, cookieOptions);
                 }

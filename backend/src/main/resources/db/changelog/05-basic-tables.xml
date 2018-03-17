@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="05-01" author="aliahad">
+        <createTable tableName="akdn_training"
+                     remarks="All AKDN training programs">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="05-02" author="aliahad">
+        <insert tableName="akdn-training">
+            <column name="id" value="1"/>
+            <column name="name" value="akdn-training-A"/>
+        </insert>
+        <insert tableName="akdn-training">
+            <column name="id" value="2"/>
+            <column name="name" value="akdn-training-B"/>
+        </insert>
+        <insert tableName="akdn-training">
+            <column name="id" value="3"/>
+            <column name="name" value="akdn-training-C"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="05-03" author="aliahad">
+        <createTable tableName="area_of_study"
+                     remarks="All area of study">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="05-04" author="aliahad">
+        <insert tableName="area_of_study">
+            <column name="id" value="1"/>
+            <column name="name" value="Engineering"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="2"/>
+            <column name="name" value="Commerce"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="3"/>
+            <column name="name" value="Medical"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="05-05" author="aliahad">
+        <createTable tableName="educational_institution"
+                     remarks="All educational institution list">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="05-06" author="aliahad">
+        <insert tableName="educational_institution">
+            <column name="id" value="1"/>
+            <column name="name" value="FAST"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="2"/>
+            <column name="name" value="IQRA"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="3"/>
+            <column name="name" value="IBA"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="05-07" author="aliahad">
+        <createTable tableName="field_of_expertise"
+                     remarks="All fields of experties">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="05-06" author="aliahad">
+        <insert tableName="field_of_expertise">
+            <column name="id" value="1"/>
+            <column name="name" value="Designing"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="2"/>
+            <column name="name" value="Content Writing"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="3"/>
+            <column name="name" value="Communication"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="05-07" author="aliahad">
+        <createTable tableName="voluntary_institution"
+                     remarks="All voluntary institution list">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="05-08" author="aliahad">
+        <insert tableName="voluntary_institution">
+            <column name="id" value="1"/>
+            <column name="name" value="Scout"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="2"/>
+            <column name="name" value="ITREB"/>
+        </insert>
+        <insert tableName="area_of_study">
+            <column name="id" value="3"/>
+            <column name="name" value="Water and Shoes Service"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

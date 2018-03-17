@@ -3,7 +3,7 @@
 namespace AMS.frontend.web.Helpers.CustomAttributes
 {
     [AttributeUsage(AttributeTargets.All)]
-    public class UnEditable : System.Attribute
+    public class UnEditable : Attribute
     {
     }
 }

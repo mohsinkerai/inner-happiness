@@ -24,7 +24,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <html lang="en">
 <!-- begin::Head -->
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>
         @ViewBag.Title | @ViewBag.PageTitle
     </title>
@@ -36,151 +36,151 @@ License: You must have a valid license purchased only from themeforest(the above
     <script>
         WebFont.load({
             google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
-            active: function () {
+            active: function() {
                 sessionStorage.fonts = true;
             }
         });
     </script>
     <!--end::Web font -->
     <!--begin::Base Styles -->
-    <link href="assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/vendors/base/vendors.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css"/>
     <!--end::Base Styles -->
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- end::Head -->
 <!-- end::Body -->
 <body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
-    <!-- begin:: Page -->
-    <div class="m-grid m-grid--hor m-grid--root m-page">
-        <div class="m-login m-login--signin  m-login--5" id="m_login" style="background-image: url(assets/app/media/img//bg/bg-3.jpg);">
-            <div class="m-login__wrapper-1 m-portlet-full-height">
-                <div class="m-login__wrapper-1-1">
-                    <div class="m-login__contanier">
-                        <div class="m-login__content">
-                            <div class="m-login__logo">
-                                <a href="#">
-                                    <img src="images/ismaili-logo.png">
-                                </a>
-                            </div>
-                            <div class="m-login__title">
-                                <h3>
-                                    Pakistan Jamat
-                                </h3>
-                            </div>
-                            <div class="m-login__desc">
-                               Imamat Appointment Management System
-                            </div>
-                            @*<div class="m-login__form-action">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <div class="m-login m-login--signin  m-login--5" id="m_login" style="background-image: url(assets/app/media/img//bg/bg-3.jpg);">
+        <div class="m-login__wrapper-1 m-portlet-full-height">
+            <div class="m-login__wrapper-1-1">
+                <div class="m-login__contanier">
+                    <div class="m-login__content">
+                        <div class="m-login__logo">
+                            <a href="#">
+                                <img src="images/ismaili-logo.png">
+                            </a>
+                        </div>
+                        <div class="m-login__title">
+                            <h3>
+                                Pakistan Jamat
+                            </h3>
+                        </div>
+                        <div class="m-login__desc">
+                            Imamat Appointment Management System
+                        </div>
+                        @*<div class="m-login__form-action">
                                     <button type="button" id="m_login_signup" class="btn btn-outline-focus m-btn--pill">
                                         Get An Account
                                     </button>
                                 </div>*@
-                        </div>
-                    </div>
-                    <div class="m-login__border">
-                        <div></div>
                     </div>
                 </div>
+                <div class="m-login__border">
+                    <div></div>
+                </div>
             </div>
-            <div class="m-login__wrapper-2 m-portlet-full-height">
-                <div class="m-login__contanier">
-                    <div class="m-login__signin">
-                        <div class="m-login__head">
-                            <h3 id="loginTitle" class="m-login__title">
-                                @loginTitle
-                            </h3>
-                        </div>
-                        <form asp-controller="@ControllerNames.Authenticate" asp-action="@ActionNames.Index" class="m-login__form m-form" method="post">
-                            <div class="form-group m-form__group">
-                                <select asp-for="Company" class="form-control m-input m-select2" placeholder="Select a Company">
-                                    <option></option>
-                                    <option>AKDN</option>
-                                    <option>National Council</option>
-                                    <option>Estate Office</option>
-                                </select>
-                                <span asp-validation-for="Company" class="form-control-feedback"></span>
-                            </div>
-                            @if (Model.RememberMe)
-                            {
-                                <div id="toggleNotMe" class="col m--align-right">
-                                    <a href="javascript:toggleNotMe();" class="m-link">
-                                        Not Me ?
-                                    </a>
-                                </div>
-                            }
-                            <br />
-                            <div class="form-group m-form__group">
-                                <input asp-for="EmailAddress" class="form-control m-input" type="text" placeholder="Email Address">
-                                <span asp-validation-for="EmailAddress" class="form-control-feedback"></span>
-                            </div>
-                            <div class="form-group m-form__group">
-                                <input asp-for="Password" class="form-control m-input m-login__form-input--last" type="Password" placeholder="Password">
-                                <span asp-validation-for="Password" class="form-control-feedback"></span>
-                            </div>
-                            <div class="row m-login__form-sub">
-                                <div class="col m--align-left">
-                                    <label class="m-checkbox m-checkbox--focus">
-                                        <input asp-for="RememberMe" type="checkbox">
-                                        Remember me
-                                        <span></span>
-                                    </label>
-                                    <span asp-validation-for="RememberMe" class="form-control-feedback"></span>
-                                </div>
-                                <div class="col m--align-right">
-                                    <a href="javascript:;" id="m_login_forget_password" class="m-link">
-                                        Forget Password ?
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="m-login__form-action">
-                                <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
-                                    Sign In
-                                </button>
-                            </div>
-                        </form>
+        </div>
+        <div class="m-login__wrapper-2 m-portlet-full-height">
+            <div class="m-login__contanier">
+                <div class="m-login__signin">
+                    <div class="m-login__head">
+                        <h3 id="loginTitle" class="m-login__title">
+                            @loginTitle
+                        </h3>
                     </div>
-                    <div class="m-login__forget-password">
-                        <div class="m-login__head">
-                            <h3 class="m-login__title">
-                                Forgotten Password ?
-                            </h3>
-                            <div class="m-login__desc">
-                                Enter your email to reset your password:
+                    <form asp-controller="@ControllerNames.Authenticate" asp-action="@ActionNames.Index" class="m-login__form m-form" method="post">
+                        <div class="form-group m-form__group">
+                            <select asp-for="Company" class="form-control m-input m-select2" placeholder="Select a Company">
+                                <option></option>
+                                <option>AKDN</option>
+                                <option>National Council</option>
+                                <option>Estate Office</option>
+                            </select>
+                            <span asp-validation-for="Company" class="form-control-feedback"></span>
+                        </div>
+                        @if (Model.RememberMe)
+                        {
+                            <div id="toggleNotMe" class="col m--align-right">
+                                <a href="javascript:toggleNotMe();" class="m-link">
+                                    Not Me ?
+                                </a>
+                            </div>
+                        }
+                        <br/>
+                        <div class="form-group m-form__group">
+                            <input asp-for="EmailAddress" class="form-control m-input" type="text" placeholder="Email Address">
+                            <span asp-validation-for="EmailAddress" class="form-control-feedback"></span>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <input asp-for="Password" class="form-control m-input m-login__form-input--last" type="Password" placeholder="Password">
+                            <span asp-validation-for="Password" class="form-control-feedback"></span>
+                        </div>
+                        <div class="row m-login__form-sub">
+                            <div class="col m--align-left">
+                                <label class="m-checkbox m-checkbox--focus">
+                                    <input asp-for="RememberMe" type="checkbox">
+                                    Remember me
+                                    <span></span>
+                                </label>
+                                <span asp-validation-for="RememberMe" class="form-control-feedback"></span>
+                            </div>
+                            <div class="col m--align-right">
+                                <a href="javascript:;" id="m_login_forget_password" class="m-link">
+                                    Forget Password ?
+                                </a>
                             </div>
                         </div>
-                        <form asp-controller="@ControllerNames.Authenticate" asp-action="@ActionNames.Reset" class="m-login__form m-form">
-                            <div class="form-group m-form__group">
-                                <input asp-for="EmailAddress" class="form-control m-input" type="text" placeholder="Email" id="m_email">
-                                <span asp-validation-for="EmailAddress" class="form-control-feedback"></span>
-                            </div>
-                            <div class="m-login__form-action">
-                                <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
-                                    Request
-                                </button>
-                                <button id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom ">
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+                        <div class="m-login__form-action">
+                            <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="m-login__forget-password">
+                    <div class="m-login__head">
+                        <h3 class="m-login__title">
+                            Forgotten Password ?
+                        </h3>
+                        <div class="m-login__desc">
+                            Enter your email to reset your password:
+                        </div>
                     </div>
+                    <form asp-controller="@ControllerNames.Authenticate" asp-action="@ActionNames.Reset" class="m-login__form m-form">
+                        <div class="form-group m-form__group">
+                            <input asp-for="EmailAddress" class="form-control m-input" type="text" placeholder="Email" id="m_email">
+                            <span asp-validation-for="EmailAddress" class="form-control-feedback"></span>
+                        </div>
+                        <div class="m-login__form-action">
+                            <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+                                Request
+                            </button>
+                            <button id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom ">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end:: Page -->
-    <!--begin::Base Scripts -->
-    <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-    <script src="assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-    <!--end::Base Scripts -->
-    <!--begin::Page Snippets -->
-    <script src="assets/snippets/pages/user/login.js" type="text/javascript"></script>
-    <script src="assets/demo/default/custom/components/forms/widgets/select2.js" type="text/javascript"></script>
-    <!--end::Page Snippets -->
-    <!--begin::Page Scripts -->
-    @Html.Partial(PartialNames.ValidationScripts)
-    <script src="custom.js" type="text/javascript"></script>
-    <!--end::Page Scripts -->
+</div>
+<!-- end:: Page -->
+<!--begin::Base Scripts -->
+<script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+<script src="assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+<!--end::Base Scripts -->
+<!--begin::Page Snippets -->
+<script src="assets/snippets/pages/user/login.js" type="text/javascript"></script>
+<script src="assets/demo/default/custom/components/forms/widgets/select2.js" type="text/javascript"></script>
+<!--end::Page Snippets -->
+<!--begin::Page Scripts -->
+@Html.Partial(PartialNames.ValidationScripts)
+<script src="custom.js" type="text/javascript"></script>
+<!--end::Page Scripts -->
 </body>
 <!-- end::Body -->
 </html>

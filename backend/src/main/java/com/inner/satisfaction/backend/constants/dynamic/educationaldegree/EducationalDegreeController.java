@@ -1,16 +1,15 @@
-package com.inner.satisfaction.backend.constants.educationaldegree;
+package com.inner.satisfaction.backend.constants.dynamic.educationaldegree;
 
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
-import static com.inner.satisfaction.backend.constants.educationaldegree.EducationalDegreeController.PATH;
+import static com.inner.satisfaction.backend.constants.dynamic.educationaldegree.EducationalDegreeController.PATH;
 
 import com.inner.satisfaction.backend.base.BaseController;
-import com.inner.satisfaction.backend.company.Company;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(PREFIX + PATH)
-public class EducationalDegreeController extends BaseController<Company> {
+public class EducationalDegreeController extends BaseController<EducationalDegree> {
 
   public static final String PATH = "educational-degree";
 
