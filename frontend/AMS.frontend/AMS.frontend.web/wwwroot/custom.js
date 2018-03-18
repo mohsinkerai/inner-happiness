@@ -19,6 +19,14 @@ $(document).ready(function () {
                     tags: true
                 });
         });
+    $(".preserve-order").on("select2:select", function (evt) {
+        var element = evt.params.data.element;
+        var $element = $(element);
+
+        $element.detach();
+        $(this).append($element);
+        $(this).trigger("change");
+    });
     $(".date-picker").datepicker({
         todayHighlight: true,
         orientation: "bottom left",
@@ -49,7 +57,7 @@ function LanguageListEdit(id, language, read, write, speak) {
     $("#Speak").val(speak).trigger('change');
     $("#language-id").val(id);
 
-    $("#language-row-" + id).addClass("selected");
+    $("#language-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function ProfessionalTrainingListEdit(id, training, institution, country, month, year) {
@@ -60,7 +68,7 @@ function ProfessionalTrainingListEdit(id, training, institution, country, month,
     $("#ProfessionalTrainingYear").val(year).trigger('change');
     $("#professional-training-id").val(id);
 
-    $("#professional-training-row-" + id).addClass("selected");
+    $("#professional-training-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function AkdnTrainingListEdit(id, training, country, month, year) {
@@ -70,7 +78,27 @@ function AkdnTrainingListEdit(id, training, country, month, year) {
     $("#AkdnTrainingYear").val(year).trigger('change');
     $("#akdn-training-id").val(id);
 
-    $("#akdn-training-row-" + id).addClass("selected");
+    $("#akdn-training-row-" + id).addClass("m-datatable__row--hover");
+}
+
+function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position) {
+    $("#VoluntaryCommunityInstitution").val(institution).trigger('change');
+    $("#VoluntaryCommunityFromYear").val(fromYear).trigger('change');
+    $("#VoluntaryCommunityToYear").val(toYear).trigger('change');
+    $("#VoluntaryCommunityPosition").val(position).trigger('change');
+    $("#voluntary-community-id").val(id);
+
+    $("#voluntary-community-row-" + id).addClass("m-datatable__row--hover");
+}
+
+function VoluntaryPublicListEdit(id, institution, fromYear, toYear, position) {
+    $("#VoluntaryPublicInstitution").val(institution).trigger('change');
+    $("#VoluntaryPublicFromYear").val(fromYear).trigger('change');
+    $("#VoluntaryPublicToYear").val(toYear).trigger('change');
+    $("#VoluntaryPublicPosition").val(position).trigger('change');
+    $("#voluntary-public-id").val(id);
+
+    $("#voluntary-public-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, nameOfDegree, majorAreaOfStudy) {
@@ -82,7 +110,7 @@ function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, na
     $("#MajorAreaOfStudy").val(majorAreaOfStudy).trigger('change');
     $("#education-id").val(id);
 
-    $("#education-row-" + id).addClass("selected");
+    $("#education-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function LanguageListDelete(url, id) {
@@ -142,6 +170,70 @@ function ProfessionalTrainingListDelete(url, id) {
                 $("#ProfessionalTrainingMonth").val('').trigger('change');
                 $("#ProfessionalTrainingYear").val('').trigger('change');
                 $("#professional-training-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function VoluntaryCommunityListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#voluntary-community-table").html(result);
+                InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
+                $("#VoluntaryCommunityInstitution").val('').trigger('change');
+                $("#VoluntaryCommunityFromYear").val('').trigger('change');
+                $("#VoluntaryCommunityToYear").val('').trigger('change');
+                $("#VoluntaryCommunityPosition").val('').trigger('change');
+                $("#voluntary-community-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function VoluntaryPublicListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#voluntary-public-table").html(result);
+                InitializeDataTableLite("voluntary-public", "Voluntary Public Service");
+                $("#VoluntaryPublicInstitution").val('').trigger('change');
+                $("#VoluntaryPublicFromYear").val('').trigger('change');
+                $("#VoluntaryPublicToYear").val('').trigger('change');
+                $("#VoluntaryPublicPosition").val('').trigger('change');
+                $("#voluntary-public-id").val('');
             }
             //else {
             //    window.location.replace(window.loginUrl);
@@ -287,6 +379,84 @@ function ProfessionalTrainingListAdd(url) {
                     $("#ProfessionalTrainingMonth").val('').trigger('change');
                     $("#ProfessionalTrainingYear").val('').trigger('change');
                     $("#professional-training-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function VoluntaryCommunityListAdd(url) {
+    if ($("#VoluntaryCommunityInstitution").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityToYear").valid() && $("#VoluntaryCommunityPosition").valid()) {
+        var voluntaryCommunityId = $("#voluntary-community-id").val();
+        var institution = $("#VoluntaryCommunityInstitution").val();
+        var fromYear = $("#VoluntaryCommunityFromYear").val();
+        var toYear = $("#VoluntaryCommunityToYear").val();
+        var position = $("#VoluntaryCommunityPosition").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": voluntaryCommunityId, "institution": institution, "fromYear": fromYear, "toYear": toYear, "position": position },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#voluntary-community-table").html(result);
+                    InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
+                    $("#VoluntaryCommunityInstitution").val('').trigger('change');
+                    $("#VoluntaryCommunityFromYear").val('').trigger('change');
+                    $("#VoluntaryCommunityToYear").val('').trigger('change');
+                    $("#VoluntaryCommunityPosition").val('').trigger('change');
+                    $("#voluntary-community-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function VoluntaryPublicListAdd(url) {
+    if ($("#VoluntaryPublicInstitution").valid() && $("#VoluntaryPublicFromYear").valid() && $("#VoluntaryPublicFromYear").valid() && $("#VoluntaryPublicToYear").valid() && $("#VoluntaryPublicPosition").valid()) {
+        var voluntaryPublicId = $("#voluntary-public-id").val();
+        var institution = $("#VoluntaryPublicInstitution").val();
+        var fromYear = $("#VoluntaryPublicFromYear").val();
+        var toYear = $("#VoluntaryPublicToYear").val();
+        var position = $("#VoluntaryPublicPosition").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": voluntaryPublicId, "institution": institution, "fromYear": fromYear, "toYear": toYear, "position": position },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#voluntary-public-table").html(result);
+                    InitializeDataTableLite("voluntary-public", "Voluntary Public Service");
+                    $("#VoluntaryPublicInstitution").val('').trigger('change');
+                    $("#VoluntaryPublicFromYear").val('').trigger('change');
+                    $("#VoluntaryPublicToYear").val('').trigger('change');
+                    $("#VoluntaryPublicPosition").val('').trigger('change');
+                    $("#voluntary-public-id").val('');
                 }
                 //else {
                 //    window.location.replace(window.loginUrl);

@@ -52,12 +52,25 @@ License: You must have a valid license purchased only from themeforest(the above
 </head>
 <!-- end::Head -->
 <!-- end::Body -->
-<body class="m-page--fluid m--skin- m-page--loading m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-light m-aside-left--fixed m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default">
+<body class="m-page--fluid m-page--loading-enabled m-page--loading m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-light m-aside-left--fixed m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default">
 <!-- begin::Page loader -->
-<div class="m-page-loader">
-    <div class="m-spinner m-spinner--brand"></div>
+<div class="m-page-loader m-page-loader--base">
+    @*<div class="m-blockui">
+        <span>
+            Please wait...
+        </span>
+        <span>
+            <div class="m-loader m-loader--brand"></div>
+        </span>
+    </div>*@
+    <div class="m-spinner m-spinner--brand m-spinner--lg"></div>
+    <div class="m-spinner m-spinner--primary m-spinner--lg"></div>
+    <div class="m-spinner m-spinner--success m-spinner--lg"></div>
+    <div class="m-spinner m-spinner--info m-spinner--lg"></div>
+    <div class="m-spinner m-spinner--warning m-spinner--lg"></div>
+    <div class="m-spinner m-spinner--danger m-spinner--lg"></div>
 </div>
-<!-- end::Page Loader -->
+<!-- end::Page Loader -->        
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
 <!-- BEGIN: Header -->
