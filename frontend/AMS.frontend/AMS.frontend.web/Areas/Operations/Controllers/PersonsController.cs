@@ -21,8 +21,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         private readonly Configuration _configuration;
         private readonly IMapper _mapper;
-
-        string Baseurl = "http://13.93.85.18:8080/constants/";
         
         public PersonsController(IMapper mapper, IOptions<Configuration> configuration)
         {
@@ -37,33 +35,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Add()
         {
-            //RestfulClient restfulClient = new RestfulClient();
-
-            /*using (var client = new HttpClient()) {
-                client.BaseAddress = new Uri(Baseurl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("salutatuions");
-
-                if (Res.IsSuccessStatusCode)
-                {
-                    var result = await Res.Content.ReadAsStringAsync();
-                    dynamic myObject = JArray.Parse(result);
-                    var list = new List<SelectListItem>();
-                    
-                    foreach (var item in myObject) {
-                        var id = Convert.ToString(item.id);
-                        var salutation = Convert.ToString(item.salutation);
-                        list.Add(new SelectListItem { Text = salutation, Value = id });
-                    }
-
-
-                    ViewBag.SalutationList = list;
-                }*/
-            
-            //}
-
+           
             ViewBag.SalutationList = await RestfulClient.getSalutation();
-
+            ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+            ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
+            ViewBag.CityList = await RestfulClient.getCities();
+            ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
+            ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
+            ViewBag.CountryOfStudyList = await RestfulClient.getAllCountries();
+            ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
+            ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
+            
             return View();
         }
 
