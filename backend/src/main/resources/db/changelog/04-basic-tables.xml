@@ -263,7 +263,7 @@
     <column name="id" type="bigint" autoIncrement="true">
       <constraints nullable="false" unique="true" primaryKey="true"/>
     </column>
-      <column name="level" type="varchar(255)">
+      <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
     <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
@@ -283,11 +283,11 @@
   <changeSet id="04-14" author="zeeshan.damani">
     <insert tableName="religious_qualification">
       <column name="id" value="1"/>
-      <column name="level" value="HRE"/>
+      <column name="name" value="HRE"/>
     </insert>
     <insert tableName="religious_qualification">
       <column name="id" value="2"/>
-      <column name="level" value="ARE"/>
+      <column name="name" value="ARE"/>
     </insert>
   </changeSet>
 
