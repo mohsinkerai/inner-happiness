@@ -20,5 +20,7 @@
         public const string LanguageListDelete = "LanguageListDelete";
         public const string VoluntaryCommunityListAdd = "VoluntaryCommunityListAdd";
         public const string VoluntaryCommunityListDelete = "VoluntaryCommunityListDelete";
+        public const string VoluntaryPublicListAdd = "VoluntaryPublicListAdd";
+        public const string VoluntaryPublicListDelete = "VoluntaryPublicListDelete";
     }
 }

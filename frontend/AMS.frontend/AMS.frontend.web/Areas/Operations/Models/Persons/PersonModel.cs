@@ -125,5 +125,15 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Position")]
         public string VoluntaryCommunityPosition { get; set; }
         public List<VoluntaryCommunityModel> VoluntaryCommunityServices { get; set; }
+
+        [Display(Name = "Institution")]
+        public string VoluntaryPublicInstitution { get; set; }
+        [Display(Name = "From Year")]
+        public int VoluntaryPublicFromYear { get; set; }
+        [Display(Name = "To Year")]
+        public int VoluntaryPublicToYear { get; set; }
+        [Display(Name = "Position")]
+        public string VoluntaryPublicPosition { get; set; }
+        public List<VoluntaryPublicModel> VoluntaryPublicServices { get; set; }
     }
 }
