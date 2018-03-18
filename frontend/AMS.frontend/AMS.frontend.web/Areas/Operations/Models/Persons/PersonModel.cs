@@ -144,5 +144,26 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Hours per Week")]
         public double HoursPerWeek { get; set; }
+        [Display(Name = "Occupation Type")]
+        public string OccupationType { get; set; }
+
+        [Display(Name = "Others")] public string OccupationTypeOther { get; set; }
+
+        public string NameOfOrganization { get; set; }
+        public string Designation { get; set; }
+        public string Location { get; set; }
+        [EmailAddress]
+        public string EmploymentEmailAddress { get; set; }
+
+        public string EmploymentTelephone { get; set; }
+
+        public string TypeOfBusiness { get; set; }
+
+        public string NatureOfBusiness { get; set; }
+        public string NatureOfBusinessOther { get; set; }
+        public DateTime EmploymentStartDate { get; set; }
+        public DateTime EmploymentEndDate { get; set; }
+
+        public List<EmploymentModel> Employments { get; set; }
     }
 }
