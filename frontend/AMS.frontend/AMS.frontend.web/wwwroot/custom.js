@@ -19,6 +19,14 @@ $(document).ready(function () {
                     tags: true
                 });
         });
+    $(".preserve-order").on("select2:select", function (evt) {
+        var element = evt.params.data.element;
+        var $element = $(element);
+
+        $element.detach();
+        $(this).append($element);
+        $(this).trigger("change");
+    });
     $(".date-picker").datepicker({
         todayHighlight: true,
         orientation: "bottom left",
@@ -49,7 +57,7 @@ function LanguageListEdit(id, language, read, write, speak) {
     $("#Speak").val(speak).trigger('change');
     $("#language-id").val(id);
 
-    $("#language-row-" + id).addClass("selected");
+    $("#language-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function ProfessionalTrainingListEdit(id, training, institution, country, month, year) {
@@ -60,7 +68,7 @@ function ProfessionalTrainingListEdit(id, training, institution, country, month,
     $("#ProfessionalTrainingYear").val(year).trigger('change');
     $("#professional-training-id").val(id);
 
-    $("#professional-training-row-" + id).addClass("selected");
+    $("#professional-training-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function AkdnTrainingListEdit(id, training, country, month, year) {
@@ -70,7 +78,7 @@ function AkdnTrainingListEdit(id, training, country, month, year) {
     $("#AkdnTrainingYear").val(year).trigger('change');
     $("#akdn-training-id").val(id);
 
-    $("#akdn-training-row-" + id).addClass("selected");
+    $("#akdn-training-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position) {
@@ -80,7 +88,7 @@ function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position)
     $("#VoluntaryCommunityPosition").val(position).trigger('change');
     $("#voluntary-community-id").val(id);
 
-    $("#voluntary-community-row-" + id).addClass("selected");
+    $("#voluntary-community-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function VoluntaryPublicListEdit(id, institution, fromYear, toYear, position) {
@@ -90,7 +98,7 @@ function VoluntaryPublicListEdit(id, institution, fromYear, toYear, position) {
     $("#VoluntaryPublicPosition").val(position).trigger('change');
     $("#voluntary-public-id").val(id);
 
-    $("#voluntary-public-row-" + id).addClass("selected");
+    $("#voluntary-public-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, nameOfDegree, majorAreaOfStudy) {
@@ -102,7 +110,7 @@ function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, na
     $("#MajorAreaOfStudy").val(majorAreaOfStudy).trigger('change');
     $("#education-id").val(id);
 
-    $("#education-row-" + id).addClass("selected");
+    $("#education-row-" + id).addClass("m-datatable__row--hover");
 }
 
 function LanguageListDelete(url, id) {

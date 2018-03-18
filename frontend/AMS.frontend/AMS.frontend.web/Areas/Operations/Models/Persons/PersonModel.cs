@@ -135,5 +135,14 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Position")]
         public string VoluntaryPublicPosition { get; set; }
         public List<VoluntaryPublicModel> VoluntaryPublicServices { get; set; }
+
+        [Display(Name = "Willingness to Devote Time in Future")]
+        public string WillingnessToDevoteTimeInFuture { get; set; }
+
+        [Display(Name = "Fields of Interest (in order of preference)")]
+        public List<string> FieldOfInterest { get; set; }
+
+        [Display(Name = "Hours per Week")]
+        public double HoursPerWeek { get; set; }
     }
 }
