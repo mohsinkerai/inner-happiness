@@ -1,45 +1,45 @@
 @model IEnumerable<EmploymentModel>
 <table id="employment">
     <thead>
-        <tr>
-            <th> Organization </th>
-            <th> Designation </th>
-            @*<th> Location </th>
+    <tr>
+        <th> Organization </th>
+        <th> Designation </th>
+        @*<th> Location </th>
             <th>Email</th>
             <th>Phone</th>*@
-            <th> Type </th>
-            <th> Nature </th>
-            @*<th> Other </th>*@
-            <th> Start </th>
-            <th> End </th>
-            <th> Actions </th>
-        </tr>
+        <th> Type </th>
+        <th> Nature </th>
+        @*<th> Other </th>*@
+        <th> Start </th>
+        <th> End </th>
+        <th> Actions </th>
+    </tr>
     </thead>
     <tbody>
     @if (Model != null)
     {
         foreach (var item in Model)
         {
-        <tr id="employment-row-@item.EmploymentId">
-            <td> @item.NameOfOrganization </td>
-            <td> @item.Designation </td>
-            @*<td> @item.Location </td>
+            <tr id="employment-row-@item.EmploymentId">
+                <td> @item.NameOfOrganization </td>
+                <td> @item.Designation </td>
+                @*<td> @item.Location </td>
         <td> @item.EmploymentEmailAddress </td>
         <td> @item.EmploymentTelephone </td>*@
-            <td> @item.TypeOfBusiness </td>
-            <td> @item.NatureOfBusiness </td>
-            @*<td> @item.NatureOfBusinessOther </td>*@
-            <td> @item.EmploymentStartDate </td>
-            <td> @item.EmploymentEndDate </td>
-            <td>
-                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return EmploymentListEdit("@item.EmploymentId", "@item.NameOfOrganization","@item.Designation","@item.Location" ,"@item.EmploymentEmailAddress","@item.EmploymentTelephone","@item.TypeOfBusiness","@item.NatureOfBusiness","@item.NatureOfBusinessOther","@item.EmploymentStartDate", "@item.EmploymentEndDate");'>
-                    <i class="la la-edit"></i>
-                </button>
-                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return EmploymentListDelete("@Url.Action(ActionNames.EmploymentListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.EmploymentId");'>
-                    <i class="la la-trash"></i>
-                </button>
-            </td>
-        </tr>
+                <td> @item.TypeOfBusiness </td>
+                <td> @item.NatureOfBusiness </td>
+                @*<td> @item.NatureOfBusinessOther </td>*@
+                <td> @item.EmploymentStartDate </td>
+                <td> @item.EmploymentEndDate </td>
+                <td>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return EmploymentListEdit("@item.EmploymentId", "@item.NameOfOrganization", "@item.Designation", "@item.Location", "@item.EmploymentEmailAddress", "@item.EmploymentTelephone", "@item.TypeOfBusiness", "@item.NatureOfBusiness", "@item.NatureOfBusinessOther", "@item.EmploymentStartDate", "@item.EmploymentEndDate");'>
+                        <i class="la la-edit"></i>
+                    </button>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return EmploymentListDelete("@Url.Action(ActionNames.EmploymentListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.EmploymentId");'>
+                        <i class="la la-trash"></i>
+                    </button>
+                </td>
+            </tr>
         }
     }
     </tbody>
