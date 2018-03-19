@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AMS.frontend.web.Areas.Operations.Models.Persons
+﻿namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
     public class LanguageProficiencyModel
     {

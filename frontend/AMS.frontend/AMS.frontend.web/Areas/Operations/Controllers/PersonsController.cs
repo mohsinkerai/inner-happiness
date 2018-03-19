@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Helpers.Constants;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Net.Http;
-using System;
-using System.Net.Http.Headers;
-using AMS.frontend.web.Areas.Operations.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Options;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
@@ -21,7 +16,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         private readonly Configuration _configuration;
         private readonly IMapper _mapper;
-        
+
         public PersonsController(IMapper mapper, IOptions<Configuration> configuration)
         {
             _mapper = mapper;
@@ -35,7 +30,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Add()
         {
-           
             ViewBag.SalutationList = await RestfulClient.getSalutation();
             ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
             ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
@@ -45,7 +39,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.CountryOfStudyList = await RestfulClient.getAllCountries();
             ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
             ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
-            
+
             return View();
         }
 
@@ -192,6 +186,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_ProfessionalTrainingTablePartial", new List<ProfessionalTrainingModel>());
         }
+
         [HttpPost]
         public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
             string write, string speak)
@@ -233,7 +228,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear, string toYear, string position)
+        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear,
+            string toYear, string position)
         {
             //User user = GetLoggedInUser();
             //if (user != null)
@@ -272,7 +268,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear, string toYear, string position)
+        public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear,
+            string toYear, string position)
         {
             //User user = GetLoggedInUser();
             //if (user != null)
@@ -309,6 +306,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_VoluntaryPublicTablePartial", new List<VoluntaryPublicModel>());
         }
+
         [HttpPost]
         public async Task<IActionResult> EmploymentListDelete(string id)
         {
@@ -322,8 +320,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_EmploymentTablePartial", new List<EmploymentModel>());
         }
+
         [HttpPost]
-        public async Task<IActionResult> EmploymentListAdd(string id, string nameOfOrganization, string designation, string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness, string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
+        public async Task<IActionResult> EmploymentListAdd(string id, string nameOfOrganization, string designation,
+            string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
+            string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
             //User user = GetLoggedInUser();
             //if (user != null)
@@ -348,7 +349,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         NatureOfBusiness = natureOfBusiness,
                         EmploymentStartDate = Convert.ToDateTime(employmentEndDate),
                         EmploymentTelephone = employmentTelephone,
-                         NatureOfBusinessOther = natureOfBusinessOther
+                        NatureOfBusinessOther = natureOfBusinessOther
                     }
                 });
         }

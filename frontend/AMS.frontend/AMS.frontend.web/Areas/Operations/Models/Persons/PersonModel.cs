@@ -116,24 +116,24 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public List<LanguageProficiencyModel> LanguageProficiencies { get; set; }
 
-        [Display(Name = "Institution")]
-        public string VoluntaryCommunityInstitution { get; set; }
-        [Display(Name = "From Year")]
-        public int VoluntaryCommunityFromYear { get; set; }
-        [Display(Name = "To Year")]
-        public int VoluntaryCommunityToYear { get; set; }
-        [Display(Name = "Position")]
-        public string VoluntaryCommunityPosition { get; set; }
+        [Display(Name = "Institution")] public string VoluntaryCommunityInstitution { get; set; }
+
+        [Display(Name = "From Year")] public int VoluntaryCommunityFromYear { get; set; }
+
+        [Display(Name = "To Year")] public int VoluntaryCommunityToYear { get; set; }
+
+        [Display(Name = "Position")] public string VoluntaryCommunityPosition { get; set; }
+
         public List<VoluntaryCommunityModel> VoluntaryCommunityServices { get; set; }
 
-        [Display(Name = "Institution")]
-        public string VoluntaryPublicInstitution { get; set; }
-        [Display(Name = "From Year")]
-        public int VoluntaryPublicFromYear { get; set; }
-        [Display(Name = "To Year")]
-        public int VoluntaryPublicToYear { get; set; }
-        [Display(Name = "Position")]
-        public string VoluntaryPublicPosition { get; set; }
+        [Display(Name = "Institution")] public string VoluntaryPublicInstitution { get; set; }
+
+        [Display(Name = "From Year")] public int VoluntaryPublicFromYear { get; set; }
+
+        [Display(Name = "To Year")] public int VoluntaryPublicToYear { get; set; }
+
+        [Display(Name = "Position")] public string VoluntaryPublicPosition { get; set; }
+
         public List<VoluntaryPublicModel> VoluntaryPublicServices { get; set; }
 
         [Display(Name = "Willingness to Devote Time in Future")]
@@ -142,18 +142,17 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Fields of Interest (in order of preference)")]
         public List<string> FieldOfInterest { get; set; }
 
-        [Display(Name = "Hours per Week")]
-        public double HoursPerWeek { get; set; }
-        [Display(Name = "Occupation Type")]
-        public string OccupationType { get; set; }
+        [Display(Name = "Hours per Week")] public double HoursPerWeek { get; set; }
+
+        [Display(Name = "Occupation Type")] public string OccupationType { get; set; }
 
         [Display(Name = "Others")] public string OccupationTypeOther { get; set; }
 
         public string NameOfOrganization { get; set; }
         public string Designation { get; set; }
         public string Location { get; set; }
-        [EmailAddress]
-        public string EmploymentEmailAddress { get; set; }
+
+        [EmailAddress] public string EmploymentEmailAddress { get; set; }
 
         public string EmploymentTelephone { get; set; }
 

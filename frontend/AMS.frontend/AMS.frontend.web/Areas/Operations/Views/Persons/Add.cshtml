@@ -4,849 +4,849 @@
     ViewBag.PageTitle = "Add";
 }
 <div class="row">
-    <div class="col-lg-12">
-        <!--begin::Portlet-->
-        <div class="m-portlet">
-            <div class="m-portlet__head">
-                <div class="m-portlet__head-caption">
-                    <div class="m-portlet__head-title">
-                        <span class="m-portlet__head-icon">
-                            <i class="la la-user-plus"></i>
-                        </span>
-                        <h3 class="m-portlet__head-text">
-                            Add Person
-                        </h3>
-                    </div>
+<div class="col-lg-12">
+<!--begin::Portlet-->
+<div class="m-portlet">
+<div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+        <div class="m-portlet__head-title">
+            <span class="m-portlet__head-icon">
+                <i class="la la-user-plus"></i>
+            </span>
+            <h3 class="m-portlet__head-text">
+                Add Person
+            </h3>
+        </div>
+    </div>
+</div>
+<!--begin::Form-->
+<form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" method="post" class="m-form m-form--fit m-form--label-align-right">
+<div class="m-portlet__body">
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Cnic" class="control-label"></label><span class="required">*</span>
+            <input type="text" asp-for="Cnic" class="form-control cnic">
+            <span asp-validation-for="Cnic" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="PassportNumber" class="control-label"></label>
+            <input type="text" asp-for="PassportNumber" class="form-control">
+            <span asp-validation-for="PassportNumber" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Image" class="control-label"></label>
+            <input type="file" asp-for="Image" class="form-control">
+            <span asp-validation-for="Image" class="form-control-feedback"></span>
+        </div>
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        1. Personal Information
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="Salutation" class="control-label"></label>
+            <select asp-for="Salutation" asp-items="@ViewBag.SalutationList" class="form-control m-select2" placeholder="Select">
+                <option></option>
+            </select>
+            <span asp-validation-for="Salutation" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"></label><span class="required">*</span>
+            <input type="text" asp-for="FirstName" class="form-control">
+            <span asp-validation-for="FirstName" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="FathersName" class="control-label"></label>
+            <input type="text" asp-for="FathersName" class="form-control">
+            <span asp-validation-for="FathersName" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="FamilyName" class="control-label"></label>
+            <input type="text" asp-for="FamilyName" class="form-control">
+            <span asp-validation-for="FamilyName" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="JamatiTitle" class="control-label"></label>
+            <select asp-for="JamatiTitle" asp-items="@ViewBag.JamatiTitleList" class="form-control m-select2" placeholder="Select">
+                <option></option>
+            </select>
+            <span asp-validation-for="JamatiTitle" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Gender" class="control-label"></label>
+            <div class="m-radio-inline">
+                <label class="m-radio">
+                    <input asp-for="Gender" type="radio" value="Male"> Male
+                    <span></span>
+                </label>
+                <label class="m-radio">
+                    <input asp-for="Gender" type="radio" value="Female"> Female
+                    <span></span>
+                </label>
+            </div>
+            <span asp-validation-for="Gender" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="DateOfBirth" class="control-label"></label>
+            <div class="input-group">
+                <input type="text" asp-for="DateOfBirth" class="form-control date-picker" readonly placeholder="Select date">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                        <i class="la la-calendar"></i>
+                    </span>
                 </div>
             </div>
-            <!--begin::Form-->
-            <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" method="post" class="m-form m-form--fit m-form--label-align-right">
-                <div class="m-portlet__body">
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Cnic" class="control-label"></label><span class="required">*</span>
-                                <input type="text" asp-for="Cnic" class="form-control cnic">
-                                <span asp-validation-for="Cnic" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="PassportNumber" class="control-label"></label>
-                                <input type="text" asp-for="PassportNumber" class="form-control">
-                                <span asp-validation-for="PassportNumber" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Image" class="control-label"></label>
-                                <input type="file" asp-for="Image" class="form-control">
-                                <span asp-validation-for="Image" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            1. Personal Information
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="Salutation" class="control-label"></label>
-                                <select asp-for="Salutation" asp-items="@ViewBag.SalutationList" class="form-control m-select2" placeholder="Select">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="Salutation" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="FirstName" class="control-label"></label><span class="required">*</span>
-                                <input type="text" asp-for="FirstName" class="form-control">
-                                <span asp-validation-for="FirstName" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="FathersName" class="control-label"></label>
-                                <input type="text" asp-for="FathersName" class="form-control">
-                                <span asp-validation-for="FathersName" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="FamilyName" class="control-label"></label>
-                                <input type="text" asp-for="FamilyName" class="form-control">
-                                <span asp-validation-for="FamilyName" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="JamatiTitle" class="control-label"></label>
-                                <select asp-for="JamatiTitle" asp-items="@ViewBag.JamatiTitleList" class="form-control m-select2" placeholder="Select">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="JamatiTitle" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Gender" class="control-label"></label>
-                                <div class="m-radio-inline">
-                                    <label class="m-radio">
-                                        <input asp-for="Gender" type="radio" value="Male"> Male
-                                        <span></span>
-                                    </label>
-                                    <label class="m-radio">
-                                        <input asp-for="Gender" type="radio" value="Female"> Female
-                                        <span></span>
-                                    </label>
-                                </div>
-                                <span asp-validation-for="Gender" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="DateOfBirth" class="control-label"></label>
-                                <div class="input-group">
-                                    <input type="text" asp-for="DateOfBirth" class="form-control date-picker" readonly placeholder="Select date">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <span asp-validation-for="DateOfBirth" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="MaritalStatus" class="control-label"></label>
-                                <select asp-for="MaritalStatus" asp-items="@ViewBag.MaritalStatusList" class="form-control m-select2" placeholder="Select a marital status">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="MaritalStatus" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label asp-for="ResidentalAddress" class="control-label"></label>
-                                <input type="text" asp-for="ResidentalAddress" class="form-control">
-                                <span asp-validation-for="ResidentalAddress" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="City" class="control-label"></label>
-                                <select asp-for="City" asp-items="@ViewBag.CityList" class="form-control m-select2" placeholder="Select a city or village">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="City" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="ResidenceTelephone" class="control-label"></label>
-                                <input type="text" asp-for="ResidenceTelephone" class="form-control">
-                                <span asp-validation-for="ResidenceTelephone" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="MobilePhone" class="control-label"></label>
-                                <input type="text" asp-for="MobilePhone" class="form-control">
-                                <span asp-validation-for="MobilePhone" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="EmailAddress" class="control-label"></label>
-                                <input type="text" asp-for="EmailAddress" class="form-control">
-                                <span asp-validation-for="EmailAddress" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="AreaOfOrigin" class="control-label"></label>
-                                <select asp-for="AreaOfOrigin" asp-items="@ViewBag.AreaOfOriginList" class="form-control m-select2" placeholder="Select an area of originn">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="AreaOfOrigin" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="RegionalCouncil" class="control-label"></label><span class="required">*</span>
-                                <select asp-for="RegionalCouncil" asp-items="@ViewBag.RegionalCouncilList" class="form-control m-select2 regional-select" placeholder="Select a regional council">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="RegionalCouncil" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="LocalCouncil" class="control-label"></label><span class="required">*</span>
-                                <select asp-for="LocalCouncil" asp-items="@ViewBag.LocalCouncilList" class="form-control m-select2 local-select" placeholder="Select a local council">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="LocalCouncil" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="Jamatkhana" class="control-label"></label><span class="required">*</span>
-                                <select asp-for="Jamatkhana" asp-items="@ViewBag.JamatkhanaList" class="form-control m-select2 jamatkhana-select" placeholder="Select a jamatkhana">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="Jamatkhana" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="PlanToRelocate" class="control-label"></label>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <label class="m-checkbox m-checkbox--single m-checkbox--state m-checkbox--state-primary">
-                                                <input asp-for="PlanToRelocate" type="checkbox">
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                    </div>
-                                    <input id="RelocateLocation" type="text" asp-for="RelocateLocation" class="form-control" placeholder="Location" readonly="readonly">
-                                </div>
-                                <span asp-validation-for="PlanToRelocate" class="form-control-feedback"></span>
-                                <span asp-validation-for="RelocateLocation" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="RelocationDateTime" class="control-label"></label>
-                                <div class="input-group">
-                                    <input type="text" asp-for="RelocationDateTime" class="form-control date-picker" readonly placeholder="Select date">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <span asp-validation-for="RelocationDateTime" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            2. Education
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="HighestLevelOfStudy" class="control-label"></label>
-                                <select asp-for="HighestLevelOfStudy" asp-items="@ViewBag.HighestLevelOfStudyList" class="form-control m-select2 highest-level-select" placeholder="Select a highest level">
-                                    <option></option>=
-                                </select>
-                                <span asp-validation-for="HighestLevelOfStudy" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="HighestLevelOfStudyOther" class="control-label"></label>
-                                <input type="text" asp-for="HighestLevelOfStudyOther" class="form-control">
-                                <span asp-validation-for="HighestLevelOfStudyOther" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            Graduation & Post Graduation
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Institution" class="control-label"></label>
-                                <select asp-for="Institution" asp-items="@ViewBag.InstitutionList" class="form-control m-select2" placeholder="Select an institution">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="Institution" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="CountryOfStudy" class="control-label"></label>
-                                <select asp-for="CountryOfStudy" asp-items="@ViewBag.CountryOfStudyList" class="form-control m-select2" placeholder="Select a country">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="CountryOfStudy" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="FromYear" class="control-label"></label>
-                                <input type="text" asp-for="FromYear" class="form-control">
-                                <span asp-validation-for="FromYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="ToYear" class="control-label"></label>
-                                <input type="text" asp-for="ToYear" class="form-control">
-                                <span asp-validation-for="ToYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="NameOfDegree" class="control-label"></label>
-                                <select asp-for="NameOfDegree" asp-items="@ViewBag.NameOfDegreeList" class="form-control m-select2" placeholder="Select a degree">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="NameOfDegree" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="MajorAreaOfStudy" class="control-label"></label>
-                                <input type="text" asp-for="MajorAreaOfStudy" class="form-control">
-                                <span asp-validation-for="MajorAreaOfStudy" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="education-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return EducationListAdd("@Url.Action(ActionNames.EducationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-plus"></i> Add Education
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12" id="education-table">
-                            @{
-                                await Html.RenderPartialAsync("_EducationTablePartial", Model?.Educations).ConfigureAwait(false);
-                            }
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="FieldOfExpertise" class="control-label"></label>
-                                <input type="text" asp-for="FieldOfExpertise" class="form-control">
-                                <span asp-validation-for="FieldOfExpertise" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="ReligiousEducation" class="control-label"></label>
-                                <select asp-for="ReligiousEducation" asp-items="@ViewBag.ReligiousEducationList" class="form-control m-select2" placeholder="Select a religious education">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="ReligiousEducation" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            AKDN Training
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="AkdnTraining" class="control-label"></label>
-                                <select asp-for="AkdnTraining" asp-items="@ViewBag.AkdnTrainingList" class="form-control m-select2" placeholder="Select a training">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="AkdnTraining" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="AkdnTrainingCountry" class="control-label"></label>
-                                <select asp-for="AkdnTrainingCountry" asp-items="@ViewBag.AkdnTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="AkdnTrainingCountry" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="AkdnTrainingMonth" class="control-label"></label>
-                                <select asp-for="AkdnTrainingMonth" class="form-control m-select2" placeholder="Select a month">
-                                    <option></option>
-                                    <option>Januray</option>
-                                    <option>February</option>
-                                    <option>March</option>
-                                    <option>April</option>
-                                    <option>May</option>
-                                    <option>June</option>
-                                    <option>July</option>
-                                    <option>August</option>
-                                    <option>September</option>
-                                    <option>October</option>
-                                    <option>November</option>
-                                    <option>December</option>
-                                </select>
-                                <span asp-validation-for="AkdnTrainingMonth" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="AkdnTrainingYear" class="control-label"></label>
-                                <input type="text" asp-for="AkdnTrainingYear" class="form-control">
-                                <span asp-validation-for="AkdnTrainingYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="akdn-training-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return AkdnTrainingListAdd("@Url.Action(ActionNames.AkdnTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-plus"></i> Add Training
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12" id="akdn-training-table">
-                            @{
-                                await Html.RenderPartialAsync("_AkdnTrainingTablePartial", Model?.AkdnTrainings).ConfigureAwait(false);
-                            }
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            Professional Training & Achievements
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="ProfesisonalTraining" class="control-label"></label>
-                                <input type="text" asp-for="ProfesisonalTraining" class="form-control">
-                                <span asp-validation-for="ProfesisonalTraining" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="ProfessionalTrainingInstitution" class="control-label"></label>
-                                <input type="text" asp-for="ProfessionalTrainingInstitution" class="form-control">
-                                <span asp-validation-for="ProfessionalTrainingInstitution" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="ProfessionalTrainingCountry" class="control-label"></label>
-                                <select asp-for="ProfessionalTrainingCountry" asp-items="@ViewBag.ProfessionalTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="ProfessionalTrainingCountry" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="ProfessionalTrainingMonth" class="control-label"></label>
-                                <select asp-for="ProfessionalTrainingMonth" class="form-control m-select2" placeholder="Select a month">
-                                    <option></option>
-                                    <option>Januray</option>
-                                    <option>February</option>
-                                    <option>March</option>
-                                    <option>April</option>
-                                    <option>May</option>
-                                    <option>June</option>
-                                    <option>July</option>
-                                    <option>August</option>
-                                    <option>September</option>
-                                    <option>October</option>
-                                    <option>November</option>
-                                    <option>December</option>
-                                </select>
-                                <span asp-validation-for="ProfessionalTrainingMonth" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="ProfessionalTrainingYear" class="control-label"></label>
-                                <input type="text" asp-for="ProfessionalTrainingYear" class="form-control">
-                                <span asp-validation-for="ProfessionalTrainingYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="professional-training-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-plus"></i> Add Training
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12" id="professional-training-table">
-                            @{
-                                await Html.RenderPartialAsync("_ProfessionalTrainingTablePartial", Model?.ProfessionalTrainings).ConfigureAwait(false);
-                            }
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="Skills" class="control-label"></label>
-                                <select asp-for="Skills" asp-items="@ViewBag.SkillsList" class="form-control m-select2-multiple" placeholder="Select or add a skill" multiple name="param">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="Skills" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="ProfessionalMemberships" class="control-label"></label>
-                                <select asp-for="ProfessionalMemberships" asp-items="@ViewBag.ProfessionalMembershipsList" class="form-control m-select2-multiple" placeholder="Select or add a profesisonal membership" multiple name="param">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="ProfessionalMemberships" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            Languages
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Language" class="control-label"></label>
-                                <select asp-for="Language" asp-items="@ViewBag.LanguageList" class="form-control m-select2" placeholder="Select a language">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="Language" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Read" class="control-label"></label>
-                                <select asp-for="Read" class="form-control m-select2" placeholder="Select a proficiency">
-                                    <option></option>
-                                    <option>Native</option>
-                                    <option>Excellent</option>
-                                    <option>Good</option>
-                                    <option>Fair</option>
-                                </select>
-                                <span asp-validation-for="Read" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Write" class="control-label"></label>
-                                <select asp-for="Write" class="form-control m-select2" placeholder="Select a proficiency">
-                                    <option></option>
-                                    <option>Native</option>
-                                    <option>Excellent</option>
-                                    <option>Good</option>
-                                    <option>Fair</option>
-                                </select>
-                                <span asp-validation-for="Write" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Speak" class="control-label"></label>
-                                <select asp-for="Speak" class="form-control m-select2" placeholder="Select a proficiency">
-                                    <option></option>
-                                    <option>Native</option>
-                                    <option>Excellent</option>
-                                    <option>Good</option>
-                                    <option>Fair</option>
-                                </select>
-                                <span asp-validation-for="Speak" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="language-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return LanguageListAdd("@Url.Action(ActionNames.LanguageListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-plus"></i> Add Language
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12" id="language-table">
-                            @{
-                                await Html.RenderPartialAsync("_LanguageTablePartial", Model?.LanguageProficiencies).ConfigureAwait(false);
-                            }
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            3.1. Voluntary Community Service
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityInstitution" class="control-label"></label>
-                                <select asp-for="VoluntaryCommunityInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2" placeholder="Select an institution">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="VoluntaryCommunityInstitution" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityFromYear" class="control-label"></label>
-                                <input type="text" asp-for="VoluntaryCommunityFromYear" class="form-control">
-                                <span asp-validation-for="VoluntaryCommunityFromYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityToYear" class="control-label"></label>
-                                <input type="text" asp-for="VoluntaryCommunityToYear" class="form-control">
-                                <span asp-validation-for="VoluntaryCommunityToYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityPosition" class="control-label"></label>
-                                <select asp-for="VoluntaryCommunityPosition" asp-items="@ViewBag.VoluntaryCommunityPositionList" class="form-control m-select2" placeholder="Select a position">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="VoluntaryCommunityPosition" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="voluntary-community-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-plus"></i> Add Service
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12" id="voluntary-community-table">
-                            @{
-                                await Html.RenderPartialAsync("_VoluntaryCommunityTablePartial", Model?.VoluntaryCommunityServices).ConfigureAwait(false);
-                            }
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            3.2. Voluntary Public Service
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryPublicInstitution" class="control-label"></label>
-                                <input type="text" asp-for="VoluntaryPublicInstitution" class="form-control">
-                                <span asp-validation-for="VoluntaryPublicInstitution" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryPublicFromYear" class="control-label"></label>
-                                <input type="text" asp-for="VoluntaryPublicFromYear" class="form-control">
-                                <span asp-validation-for="VoluntaryPublicFromYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryPublicToYear" class="control-label"></label>
-                                <input type="text" asp-for="VoluntaryPublicToYear" class="form-control">
-                                <span asp-validation-for="VoluntaryPublicToYear" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryPublicPosition" class="control-label"></label>
-                                <input type="text" asp-for="VoluntaryPublicPosition" class="form-control">
-                                <span asp-validation-for="VoluntaryPublicPosition" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="voluntary-public-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return VoluntaryPublicListAdd("@Url.Action(ActionNames.VoluntaryPublicListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-plus"></i> Add Service
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12" id="voluntary-public-table">
-                            @{
-                                await Html.RenderPartialAsync("_VoluntaryPublicTablePartial", Model?.VoluntaryPublicServices).ConfigureAwait(false);
-                            }
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="WillingnessToDevoteTimeInFuture" class="control-label"></label>
-                                <select asp-for="WillingnessToDevoteTimeInFuture" class="form-control m-select2" placeholder="Select an option">
-                                    <option></option>
-                                    <option>Continue with Present Institution</option>
-                                    <option>Change Institution</option>
-                                    <option>Not Willing to Continue</option>
-                                </select>
-                                <span asp-validation-for="WillingnessToDevoteTimeInFuture" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="FieldOfInterest" class="control-label"></label>
-                                <select asp-for="FieldOfInterest" asp-items="@ViewBag.FieldOfInterestsList" class="form-control m-select2-multiple preserve-order" placeholder="Select a field of interest" multiple name="param">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="FieldOfInterest" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="HoursPerWeek" class="control-label"></label>
-                                <input type="text" asp-for="HoursPerWeek" class="form-control">
-                                <span asp-validation-for="HoursPerWeek" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            6. Occupation
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="OccupationType" class="control-label"></label>
-                                <select asp-for="OccupationType" asp-items="@ViewBag.OccupationTypeList" class="form-control m-select2 occupation-type" placeholder="Select a occupation type">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="OccupationType" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="OccupationTypeOther" class="control-label"></label>
-                                <input type="text" asp-for="OccupationTypeOther" class="form-control">
-                                <span asp-validation-for="OccupationTypeOther" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Working Here-->
-                    <div class="m-form__heading">
-                        <h3 class="m-form__heading-title">
-                            Employment or Self Employment History
-                        </h3>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="NameOfOrganization" class="control-label"></label>
-                                <input type="text" asp-for="NameOfOrganization" class="form-control">
-                                <span asp-validation-for="NameOfOrganization" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Designation" class="control-label"></label>
-                                <input type="text" asp-for="Designation" class="form-control">
-                                <span asp-validation-for="Designation" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="Location" class="control-label"></label>
-                                <input type="text" asp-for="Location" class="form-control">
-                                <span asp-validation-for="Location" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="EmploymentEmailAddress" class="control-label"></label>
-                                <input type="text" asp-for="EmploymentEmailAddress" class="form-control">
-                                <span asp-validation-for="EmploymentEmailAddress" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="EmploymentTelephone" class="control-label"></label>
-                                <input type="text" asp-for="EmploymentTelephone" class="form-control">
-                                <span asp-validation-for="EmploymentTelephone" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="TypeOfBusiness" class="control-label"></label>
-                                <select asp-for="TypeOfBusiness" asp-items="@ViewBag.TypeOfBusinessList" class="form-control m-select2" placeholder="Select a type of business">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="TypeOfBusiness" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="NatureOfBusiness" class="control-label"></label>
-                                <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusinessList" class="form-control m-select2 nature-of-business" placeholder="Select a nature of business">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="NatureOfBusiness" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="NatureOfBusinessOther" class="control-label"></label>
-                                <input type="text" asp-for="NatureOfBusinessOther" class="form-control">
-                                <span asp-validation-for="NatureOfBusinessOther" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="EmploymentStartDate" class="control-label"></label>
-                                <div class="input-group">
-                                    <input type="text" asp-for="EmploymentStartDate" class="form-control date-picker" readonly placeholder="Select start date">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <span asp-validation-for="EmploymentStartDate" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="EmploymentEndDate" class="control-label"></label>
-                                <div class="input-group">
-                                    <input type="text" asp-for="EmploymentEndDate" class="form-control date-picker" readonly placeholder="Select end date">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <span asp-validation-for="EmploymentEndDate" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="employment-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-plus"></i> Add Employment
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-12" id="employment-table">
-                            @{
-                                await Html.RenderPartialAsync("_EmploymentTablePartial", Model?.Educations).ConfigureAwait(false);
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-                    <div class="m-form__actions m-form__actions--solid">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-save"></i> Save
-                        </button>
-                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
-                            <i class="fa fa-close"></i> Cancel
-                        </a>
-                    </div>
-                </div>
-            </form>
-            <!--end::Form-->
+            <span asp-validation-for="DateOfBirth" class="form-control-feedback"></span>
         </div>
-        <!--end::Portlet-->
     </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="MaritalStatus" class="control-label"></label>
+            <select asp-for="MaritalStatus" asp-items="@ViewBag.MaritalStatusList" class="form-control m-select2" placeholder="Select a marital status">
+                <option></option>
+            </select>
+            <span asp-validation-for="MaritalStatus" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label asp-for="ResidentalAddress" class="control-label"></label>
+            <input type="text" asp-for="ResidentalAddress" class="form-control">
+            <span asp-validation-for="ResidentalAddress" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="City" class="control-label"></label>
+            <select asp-for="City" asp-items="@ViewBag.CityList" class="form-control m-select2" placeholder="Select a city or village">
+                <option></option>
+            </select>
+            <span asp-validation-for="City" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="ResidenceTelephone" class="control-label"></label>
+            <input type="text" asp-for="ResidenceTelephone" class="form-control">
+            <span asp-validation-for="ResidenceTelephone" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="MobilePhone" class="control-label"></label>
+            <input type="text" asp-for="MobilePhone" class="form-control">
+            <span asp-validation-for="MobilePhone" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="EmailAddress" class="control-label"></label>
+            <input type="text" asp-for="EmailAddress" class="form-control">
+            <span asp-validation-for="EmailAddress" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="AreaOfOrigin" class="control-label"></label>
+            <select asp-for="AreaOfOrigin" asp-items="@ViewBag.AreaOfOriginList" class="form-control m-select2" placeholder="Select an area of originn">
+                <option></option>
+            </select>
+            <span asp-validation-for="AreaOfOrigin" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="RegionalCouncil" class="control-label"></label><span class="required">*</span>
+            <select asp-for="RegionalCouncil" asp-items="@ViewBag.RegionalCouncilList" class="form-control m-select2 regional-select" placeholder="Select a regional council">
+                <option></option>
+            </select>
+            <span asp-validation-for="RegionalCouncil" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="LocalCouncil" class="control-label"></label><span class="required">*</span>
+            <select asp-for="LocalCouncil" asp-items="@ViewBag.LocalCouncilList" class="form-control m-select2 local-select" placeholder="Select a local council">
+                <option></option>
+            </select>
+            <span asp-validation-for="LocalCouncil" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="Jamatkhana" class="control-label"></label><span class="required">*</span>
+            <select asp-for="Jamatkhana" asp-items="@ViewBag.JamatkhanaList" class="form-control m-select2 jamatkhana-select" placeholder="Select a jamatkhana">
+                <option></option>
+            </select>
+            <span asp-validation-for="Jamatkhana" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="PlanToRelocate" class="control-label"></label>
+            <div class="input-group">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <label class="m-checkbox m-checkbox--single m-checkbox--state m-checkbox--state-primary">
+                            <input asp-for="PlanToRelocate" type="checkbox">
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+                <input id="RelocateLocation" type="text" asp-for="RelocateLocation" class="form-control" placeholder="Location" readonly="readonly">
+            </div>
+            <span asp-validation-for="PlanToRelocate" class="form-control-feedback"></span>
+            <span asp-validation-for="RelocateLocation" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="RelocationDateTime" class="control-label"></label>
+            <div class="input-group">
+                <input type="text" asp-for="RelocationDateTime" class="form-control date-picker" readonly placeholder="Select date">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                        <i class="la la-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <span asp-validation-for="RelocationDateTime" class="form-control-feedback"></span>
+        </div>
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        2. Education
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="HighestLevelOfStudy" class="control-label"></label>
+            <select asp-for="HighestLevelOfStudy" asp-items="@ViewBag.HighestLevelOfStudyList" class="form-control m-select2 highest-level-select" placeholder="Select a highest level">
+                <option></option>=
+            </select>
+            <span asp-validation-for="HighestLevelOfStudy" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="HighestLevelOfStudyOther" class="control-label"></label>
+            <input type="text" asp-for="HighestLevelOfStudyOther" class="form-control">
+            <span asp-validation-for="HighestLevelOfStudyOther" class="form-control-feedback"></span>
+        </div>
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        Graduation & Post Graduation
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Institution" class="control-label"></label>
+            <select asp-for="Institution" asp-items="@ViewBag.InstitutionList" class="form-control m-select2" placeholder="Select an institution">
+                <option></option>
+            </select>
+            <span asp-validation-for="Institution" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="CountryOfStudy" class="control-label"></label>
+            <select asp-for="CountryOfStudy" asp-items="@ViewBag.CountryOfStudyList" class="form-control m-select2" placeholder="Select a country">
+                <option></option>
+            </select>
+            <span asp-validation-for="CountryOfStudy" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="FromYear" class="control-label"></label>
+            <input type="text" asp-for="FromYear" class="form-control">
+            <span asp-validation-for="FromYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="ToYear" class="control-label"></label>
+            <input type="text" asp-for="ToYear" class="form-control">
+            <span asp-validation-for="ToYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="NameOfDegree" class="control-label"></label>
+            <select asp-for="NameOfDegree" asp-items="@ViewBag.NameOfDegreeList" class="form-control m-select2" placeholder="Select a degree">
+                <option></option>
+            </select>
+            <span asp-validation-for="NameOfDegree" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="MajorAreaOfStudy" class="control-label"></label>
+            <input type="text" asp-for="MajorAreaOfStudy" class="form-control">
+            <span asp-validation-for="MajorAreaOfStudy" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <input type="hidden" id="education-id"/>
+    <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+        <button type="button" class="btn btn-primary" onclick='return EducationListAdd("@Url.Action(ActionNames.EducationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+            <i class="fa fa-plus"></i> Add Education
+        </button>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-12" id="education-table">
+        @{
+            await Html.RenderPartialAsync("_EducationTablePartial", Model?.Educations).ConfigureAwait(false);
+        }
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="FieldOfExpertise" class="control-label"></label>
+            <input type="text" asp-for="FieldOfExpertise" class="form-control">
+            <span asp-validation-for="FieldOfExpertise" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="ReligiousEducation" class="control-label"></label>
+            <select asp-for="ReligiousEducation" asp-items="@ViewBag.ReligiousEducationList" class="form-control m-select2" placeholder="Select a religious education">
+                <option></option>
+            </select>
+            <span asp-validation-for="ReligiousEducation" class="form-control-feedback"></span>
+        </div>
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        AKDN Training
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="AkdnTraining" class="control-label"></label>
+            <select asp-for="AkdnTraining" asp-items="@ViewBag.AkdnTrainingList" class="form-control m-select2" placeholder="Select a training">
+                <option></option>
+            </select>
+            <span asp-validation-for="AkdnTraining" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="AkdnTrainingCountry" class="control-label"></label>
+            <select asp-for="AkdnTrainingCountry" asp-items="@ViewBag.AkdnTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
+                <option></option>
+            </select>
+            <span asp-validation-for="AkdnTrainingCountry" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="AkdnTrainingMonth" class="control-label"></label>
+            <select asp-for="AkdnTrainingMonth" class="form-control m-select2" placeholder="Select a month">
+                <option></option>
+                <option>Januray</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+            </select>
+            <span asp-validation-for="AkdnTrainingMonth" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="AkdnTrainingYear" class="control-label"></label>
+            <input type="text" asp-for="AkdnTrainingYear" class="form-control">
+            <span asp-validation-for="AkdnTrainingYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <input type="hidden" id="akdn-training-id"/>
+    <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+        <button type="button" class="btn btn-primary" onclick='return AkdnTrainingListAdd("@Url.Action(ActionNames.AkdnTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+            <i class="fa fa-plus"></i> Add Training
+        </button>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-12" id="akdn-training-table">
+        @{
+            await Html.RenderPartialAsync("_AkdnTrainingTablePartial", Model?.AkdnTrainings).ConfigureAwait(false);
+        }
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        Professional Training & Achievements
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="ProfesisonalTraining" class="control-label"></label>
+            <input type="text" asp-for="ProfesisonalTraining" class="form-control">
+            <span asp-validation-for="ProfesisonalTraining" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="ProfessionalTrainingInstitution" class="control-label"></label>
+            <input type="text" asp-for="ProfessionalTrainingInstitution" class="form-control">
+            <span asp-validation-for="ProfessionalTrainingInstitution" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="ProfessionalTrainingCountry" class="control-label"></label>
+            <select asp-for="ProfessionalTrainingCountry" asp-items="@ViewBag.ProfessionalTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
+                <option></option>
+            </select>
+            <span asp-validation-for="ProfessionalTrainingCountry" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="ProfessionalTrainingMonth" class="control-label"></label>
+            <select asp-for="ProfessionalTrainingMonth" class="form-control m-select2" placeholder="Select a month">
+                <option></option>
+                <option>Januray</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+            </select>
+            <span asp-validation-for="ProfessionalTrainingMonth" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="ProfessionalTrainingYear" class="control-label"></label>
+            <input type="text" asp-for="ProfessionalTrainingYear" class="form-control">
+            <span asp-validation-for="ProfessionalTrainingYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <input type="hidden" id="professional-training-id"/>
+    <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+        <button type="button" class="btn btn-primary" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+            <i class="fa fa-plus"></i> Add Training
+        </button>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-12" id="professional-training-table">
+        @{
+            await Html.RenderPartialAsync("_ProfessionalTrainingTablePartial", Model?.ProfessionalTrainings).ConfigureAwait(false);
+        }
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="Skills" class="control-label"></label>
+            <select asp-for="Skills" asp-items="@ViewBag.SkillsList" class="form-control m-select2-multiple" placeholder="Select or add a skill" multiple name="param">
+                <option></option>
+            </select>
+            <span asp-validation-for="Skills" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="ProfessionalMemberships" class="control-label"></label>
+            <select asp-for="ProfessionalMemberships" asp-items="@ViewBag.ProfessionalMembershipsList" class="form-control m-select2-multiple" placeholder="Select or add a profesisonal membership" multiple name="param">
+                <option></option>
+            </select>
+            <span asp-validation-for="ProfessionalMemberships" class="form-control-feedback"></span>
+        </div>
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        Languages
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Language" class="control-label"></label>
+            <select asp-for="Language" asp-items="@ViewBag.LanguageList" class="form-control m-select2" placeholder="Select a language">
+                <option></option>
+            </select>
+            <span asp-validation-for="Language" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Read" class="control-label"></label>
+            <select asp-for="Read" class="form-control m-select2" placeholder="Select a proficiency">
+                <option></option>
+                <option>Native</option>
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Fair</option>
+            </select>
+            <span asp-validation-for="Read" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Write" class="control-label"></label>
+            <select asp-for="Write" class="form-control m-select2" placeholder="Select a proficiency">
+                <option></option>
+                <option>Native</option>
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Fair</option>
+            </select>
+            <span asp-validation-for="Write" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Speak" class="control-label"></label>
+            <select asp-for="Speak" class="form-control m-select2" placeholder="Select a proficiency">
+                <option></option>
+                <option>Native</option>
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Fair</option>
+            </select>
+            <span asp-validation-for="Speak" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <input type="hidden" id="language-id"/>
+    <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+        <button type="button" class="btn btn-primary" onclick='return LanguageListAdd("@Url.Action(ActionNames.LanguageListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+            <i class="fa fa-plus"></i> Add Language
+        </button>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-12" id="language-table">
+        @{
+            await Html.RenderPartialAsync("_LanguageTablePartial", Model?.LanguageProficiencies).ConfigureAwait(false);
+        }
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        3.1. Voluntary Community Service
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="VoluntaryCommunityInstitution" class="control-label"></label>
+            <select asp-for="VoluntaryCommunityInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2" placeholder="Select an institution">
+                <option></option>
+            </select>
+            <span asp-validation-for="VoluntaryCommunityInstitution" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="VoluntaryCommunityFromYear" class="control-label"></label>
+            <input type="text" asp-for="VoluntaryCommunityFromYear" class="form-control">
+            <span asp-validation-for="VoluntaryCommunityFromYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="VoluntaryCommunityToYear" class="control-label"></label>
+            <input type="text" asp-for="VoluntaryCommunityToYear" class="form-control">
+            <span asp-validation-for="VoluntaryCommunityToYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="VoluntaryCommunityPosition" class="control-label"></label>
+            <select asp-for="VoluntaryCommunityPosition" asp-items="@ViewBag.VoluntaryCommunityPositionList" class="form-control m-select2" placeholder="Select a position">
+                <option></option>
+            </select>
+            <span asp-validation-for="VoluntaryCommunityPosition" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <input type="hidden" id="voluntary-community-id"/>
+    <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+        <button type="button" class="btn btn-primary" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+            <i class="fa fa-plus"></i> Add Service
+        </button>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-12" id="voluntary-community-table">
+        @{
+            await Html.RenderPartialAsync("_VoluntaryCommunityTablePartial", Model?.VoluntaryCommunityServices).ConfigureAwait(false);
+        }
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        3.2. Voluntary Public Service
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="VoluntaryPublicInstitution" class="control-label"></label>
+            <input type="text" asp-for="VoluntaryPublicInstitution" class="form-control">
+            <span asp-validation-for="VoluntaryPublicInstitution" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="VoluntaryPublicFromYear" class="control-label"></label>
+            <input type="text" asp-for="VoluntaryPublicFromYear" class="form-control">
+            <span asp-validation-for="VoluntaryPublicFromYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="VoluntaryPublicToYear" class="control-label"></label>
+            <input type="text" asp-for="VoluntaryPublicToYear" class="form-control">
+            <span asp-validation-for="VoluntaryPublicToYear" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="VoluntaryPublicPosition" class="control-label"></label>
+            <input type="text" asp-for="VoluntaryPublicPosition" class="form-control">
+            <span asp-validation-for="VoluntaryPublicPosition" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <input type="hidden" id="voluntary-public-id"/>
+    <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+        <button type="button" class="btn btn-primary" onclick='return VoluntaryPublicListAdd("@Url.Action(ActionNames.VoluntaryPublicListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+            <i class="fa fa-plus"></i> Add Service
+        </button>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-12" id="voluntary-public-table">
+        @{
+            await Html.RenderPartialAsync("_VoluntaryPublicTablePartial", Model?.VoluntaryPublicServices).ConfigureAwait(false);
+        }
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="WillingnessToDevoteTimeInFuture" class="control-label"></label>
+            <select asp-for="WillingnessToDevoteTimeInFuture" class="form-control m-select2" placeholder="Select an option">
+                <option></option>
+                <option>Continue with Present Institution</option>
+                <option>Change Institution</option>
+                <option>Not Willing to Continue</option>
+            </select>
+            <span asp-validation-for="WillingnessToDevoteTimeInFuture" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label asp-for="FieldOfInterest" class="control-label"></label>
+            <select asp-for="FieldOfInterest" asp-items="@ViewBag.FieldOfInterestsList" class="form-control m-select2-multiple preserve-order" placeholder="Select a field of interest" multiple name="param">
+                <option></option>
+            </select>
+            <span asp-validation-for="FieldOfInterest" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label asp-for="HoursPerWeek" class="control-label"></label>
+            <input type="text" asp-for="HoursPerWeek" class="form-control">
+            <span asp-validation-for="HoursPerWeek" class="form-control-feedback"></span>
+        </div>
+    </div>
+</div>
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        6. Occupation
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="OccupationType" class="control-label"></label>
+            <select asp-for="OccupationType" asp-items="@ViewBag.OccupationTypeList" class="form-control m-select2 occupation-type" placeholder="Select a occupation type">
+                <option></option>
+            </select>
+            <span asp-validation-for="OccupationType" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label asp-for="OccupationTypeOther" class="control-label"></label>
+            <input type="text" asp-for="OccupationTypeOther" class="form-control">
+            <span asp-validation-for="OccupationTypeOther" class="form-control-feedback"></span>
+        </div>
+    </div>
+</div>
+<!-- Working Here-->
+<div class="m-form__heading">
+    <h3 class="m-form__heading-title">
+        Employment or Self Employment History
+    </h3>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="NameOfOrganization" class="control-label"></label>
+            <input type="text" asp-for="NameOfOrganization" class="form-control">
+            <span asp-validation-for="NameOfOrganization" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Designation" class="control-label"></label>
+            <input type="text" asp-for="Designation" class="form-control">
+            <span asp-validation-for="Designation" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="Location" class="control-label"></label>
+            <input type="text" asp-for="Location" class="form-control">
+            <span asp-validation-for="Location" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="EmploymentEmailAddress" class="control-label"></label>
+            <input type="text" asp-for="EmploymentEmailAddress" class="form-control">
+            <span asp-validation-for="EmploymentEmailAddress" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="EmploymentTelephone" class="control-label"></label>
+            <input type="text" asp-for="EmploymentTelephone" class="form-control">
+            <span asp-validation-for="EmploymentTelephone" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="TypeOfBusiness" class="control-label"></label>
+            <select asp-for="TypeOfBusiness" asp-items="@ViewBag.TypeOfBusinessList" class="form-control m-select2" placeholder="Select a type of business">
+                <option></option>
+            </select>
+            <span asp-validation-for="TypeOfBusiness" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="NatureOfBusiness" class="control-label"></label>
+            <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusinessList" class="form-control m-select2 nature-of-business" placeholder="Select a nature of business">
+                <option></option>
+            </select>
+            <span asp-validation-for="NatureOfBusiness" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="NatureOfBusinessOther" class="control-label"></label>
+            <input type="text" asp-for="NatureOfBusinessOther" class="form-control">
+            <span asp-validation-for="NatureOfBusinessOther" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="EmploymentStartDate" class="control-label"></label>
+            <div class="input-group">
+                <input type="text" asp-for="EmploymentStartDate" class="form-control date-picker" readonly placeholder="Select start date">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                        <i class="la la-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <span asp-validation-for="EmploymentStartDate" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label asp-for="EmploymentEndDate" class="control-label"></label>
+            <div class="input-group">
+                <input type="text" asp-for="EmploymentEndDate" class="form-control date-picker" readonly placeholder="Select end date">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">
+                        <i class="la la-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <span asp-validation-for="EmploymentEndDate" class="form-control-feedback"></span>
+        </div>
+    </div>
+    <input type="hidden" id="employment-id"/>
+    <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+        <button type="button" class="btn btn-primary" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+            <i class="fa fa-plus"></i> Add Employment
+        </button>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <div class="col-lg-12" id="employment-table">
+        @{
+            await Html.RenderPartialAsync("_EmploymentTablePartial", Model?.Educations).ConfigureAwait(false);
+        }
+    </div>
+</div>
+</div>
+<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+    <div class="m-form__actions m-form__actions--solid">
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-save"></i> Save
+        </button>
+        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
+            <i class="fa fa-close"></i> Cancel
+        </a>
+    </div>
+</div>
+</form>
+<!--end::Form-->
+</div>
+<!--end::Portlet-->
+</div>
 </div>
 
 @section scripts{
