@@ -322,38 +322,44 @@
       <column name="name" value="Self Employed"/>
     </insert>
   </changeSet>
-  <!--<changeSet author="mohsin.kerai" id="05-19">-->
-    <!--<createTable remarks="List of Business Natures"-->
-      <!--tableName="business_type">-->
-      <!--<column autoIncrement="true" name="id" type="bigint">-->
-        <!--<constraints nullable="false" primaryKey="true" unique="true"/>-->
-      <!--</column>-->
-      <!--<column name="name" type="varchar(255)">-->
-        <!--<constraints nullable="false"/>-->
-      <!--</column>-->
-      <!--<column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">-->
-        <!--<constraints nullable="false" unique="false"/>-->
-      <!--</column>-->
-      <!--<column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">-->
-        <!--<constraints nullable="false" unique="false"/>-->
-      <!--</column>-->
-      <!--<column defaultValueComputed="null" name="created_by" type="datetime">-->
-        <!--<constraints nullable="true" unique="false"/>-->
-      <!--</column>-->
-      <!--<column defaultValueComputed="null" name="updated_by" type="datetime">-->
-        <!--<constraints nullable="true" unique="false"/>-->
-      <!--</column>-->
-    <!--</createTable>-->
-  <!--</changeSet>-->
-  <!--<changeSet author="mohsin.kerai" id="05-20">-->
-    <!--<insert tableName="business_type">-->
-      <!--<column name="name" value="Aalo Cholay"/>-->
-    <!--</insert>-->
-    <!--<insert tableName="business_type">-->
-      <!--<column name="name" value="Dahi Baray"/>-->
-    <!--</insert>-->
-    <!--<insert tableName="business_type">-->
-      <!--<column name="name" value="Channa Chaat"/>-->
-    <!--</insert>-->
-  <!--</changeSet>-->
+  <changeSet author="mohsin.kerai" id="05-19">
+    <createTable remarks="Highest Level Of Study Crud"
+      tableName="highest_level_of_study">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="05-20">
+    <insert tableName="highest_level_of_study">
+      <column name="name" value="Post Graduate"/>
+    </insert>
+    <insert tableName="highest_level_of_study">
+      <column name="name" value="Graduate"/>
+    </insert>
+    <insert tableName="highest_level_of_study">
+      <column name="name" value="Intermediate"/>
+    </insert>
+    <insert tableName="highest_level_of_study">
+      <column name="name" value="Matric"/>
+    </insert>
+    <insert tableName="highest_level_of_study">
+      <column name="name" value="Others"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>
