@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 @Data
-@Entity
+@Entity(name = "akdn_training")
 public class AKDNTraining extends BaseEntity{
 
   private String name;

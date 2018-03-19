@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 public abstract class BaseController<E extends BaseEntity> {
 
+  public static final String CONSTANTS_PREFIX = "constants/";
   public static final String PREFIX = "";
   public static final String ROOT = "";
   public static final String ONE = ROOT + "one/{id}";

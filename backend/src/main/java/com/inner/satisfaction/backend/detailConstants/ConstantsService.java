@@ -1,8 +1,8 @@
 package com.inner.satisfaction.backend.detailConstants;
 
 import com.inner.satisfaction.backend.detailConstants.model.AreaOfOrigin;
-import com.inner.satisfaction.backend.detailConstants.model.BussinessNature;
-import com.inner.satisfaction.backend.detailConstants.model.BussinessType;
+import com.inner.satisfaction.backend.detailConstants.model.BusinessNature;
+import com.inner.satisfaction.backend.detailConstants.model.BusinessType;
 import com.inner.satisfaction.backend.detailConstants.model.City;
 import com.inner.satisfaction.backend.detailConstants.model.Country;
 import com.inner.satisfaction.backend.detailConstants.model.FieldOfInterest;
@@ -88,11 +88,11 @@ public class ConstantsService {
     return occupationRepository.findAll();
   }
 
-  public List<BussinessType> getAllBussinessType() {
+  public List<BusinessType> getAllBussinessType() {
     return bussinessTypeRepository.findAll();
   }
 
-  public List<BussinessNature> getAllBussinessNature() {
+  public List<BusinessNature> getAllBussinessNature() {
     return bussinessNatureRepository.findAll();
   }
 

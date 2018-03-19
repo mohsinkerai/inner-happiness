@@ -4,8 +4,8 @@ package com.inner.satisfaction.backend.detailConstants;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import com.inner.satisfaction.backend.detailConstants.model.AreaOfOrigin;
-import com.inner.satisfaction.backend.detailConstants.model.BussinessNature;
-import com.inner.satisfaction.backend.detailConstants.model.BussinessType;
+import com.inner.satisfaction.backend.detailConstants.model.BusinessNature;
+import com.inner.satisfaction.backend.detailConstants.model.BusinessType;
 import com.inner.satisfaction.backend.detailConstants.model.City;
 import com.inner.satisfaction.backend.detailConstants.model.Country;
 import com.inner.satisfaction.backend.detailConstants.model.FieldOfInterest;
@@ -76,12 +76,12 @@ public class ConstantsController {
   }
 
   @RequestMapping(method = GET, value = "/bussinessType")
-  public List<BussinessType> getAllBussinessType() {
+  public List<BusinessType> getAllBussinessType() {
     return constantsService.getAllBussinessType();
   }
 
   @RequestMapping(method = GET, value = "/bussinessNature")
-  public List<BussinessNature> getAllBussinessNature() {
+  public List<BusinessNature> getAllBussinessNature() {
     return constantsService.getAllBussinessNature();
   }
 
