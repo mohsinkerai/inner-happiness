@@ -1,5 +1,4 @@
-﻿@model IEnumerable
-<MenuModel>
+﻿@model IEnumerable<MenuModel>
 <!-- BEGIN: Left Aside -->
 <button class="m-aside-left-close  m-aside-left-close--skin-light " id="m_aside_left_close_btn">
     <i class="la la-close"></i>
@@ -13,7 +12,7 @@
         <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
             @foreach (var menu in Model)
             {
-                <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-menu-submenu-toggle="hover" data-redirect="true">
+                <li id="menu-@menu.MenuId" class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-menu-submenu-toggle="hover" data-redirect="true">
                     @if (menu.SubMenu != null && menu.SubMenu.Count > 0)
                     {
                         <a href="#" class="m-menu__link m-menu__toggle">

@@ -12,88 +12,99 @@ namespace AMS.frontend.web.ViewComponents
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            IList MenuModel = new List<MenuModel>();
+            IList menuModel = new List<MenuModel>();
 
-            var menu = new MenuModel
+            menuModel.Add(new MenuModel
             {
                 MenuId = 1,
-                Action = "Index",
-                Controller = "Home",
+                Action = ActionNames.Index,
+                Controller = ControllerNames.Persons,
                 SubMenu = null,
-                Title = "Dashboard",
-                Area = "",
-                ImageClass = "flaticon-dashboard"
-            };
-            MenuModel.Add(menu);
-
-            menu = new MenuModel
-            {
-                MenuId = 2,
-                Title = "Employee Management",
-                Action = "Index",
-                Controller = "Persons",
-                SubMenu = null,
+                Title = "Basic Information Form",
                 Area = AreaNames.Operations,
-                ImageClass = "flaticon-users"
-            };
-            MenuModel.Add(menu);
+                ImageClass = "flaticon-information"
+            });
 
-            menu = new MenuModel
-            {
-                MenuId = 3,
-                Title = "User Groups/Tags Management",
-                Action = "List",
-                Controller = "TagsManagement",
-                SubMenu = null,
-                Area = AreaNames.Operations,
-                ImageClass = "flaticon-interface-9"
-            };
-            MenuModel.Add(menu);
+            //var menu = new MenuModel
+            //{
+            //    MenuId = 1,
+            //    Action = "Index",
+            //    Controller = "Home",
+            //    SubMenu = null,
+            //    Title = "Dashboard",
+            //    Area = "",
+            //    ImageClass = "flaticon-dashboard"
+            //};
+            //menuModel.Add(menu);
 
-            menu = new MenuModel
-            {
-                MenuId = 4,
-                Title = "Fee Management",
-                Action = "List",
-                Controller = "FeeManagement",
-                SubMenu = null,
-                Area = AreaNames.Operations,
-                ImageClass = "flaticon-coins"
-            };
-            MenuModel.Add(menu);
+            //menu = new MenuModel
+            //{
+            //    MenuId = 2,
+            //    Title = "Employee Management",
+            //    Action = "Index",
+            //    Controller = "Persons",
+            //    SubMenu = null,
+            //    Area = AreaNames.Operations,
+            //    ImageClass = "flaticon-users"
+            //};
+            //menuModel.Add(menu);
 
-            menu = new MenuModel {MenuId = 5, Title = "Administration", ImageClass = "flaticon-user"};
+            //menu = new MenuModel
+            //{
+            //    MenuId = 3,
+            //    Title = "User Groups/Tags Management",
+            //    Action = "List",
+            //    Controller = "TagsManagement",
+            //    SubMenu = null,
+            //    Area = AreaNames.Operations,
+            //    ImageClass = "flaticon-interface-9"
+            //};
+            //menuModel.Add(menu);
 
-            menu.SubMenu = new List<MenuModel>();
-            var subMenu = new MenuModel
-            {
-                Action = "Roles",
-                Controller = "Administration",
-                SubMenu = null,
-                Title = "Role Management",
-                Area = AreaNames.Operations,
-                ImageClass = "flaticon-user-settings"
-            };
-            menu.SubMenu.Add(subMenu);
+            //menu = new MenuModel
+            //{
+            //    MenuId = 4,
+            //    Title = "Fee Management",
+            //    Action = "List",
+            //    Controller = "FeeManagement",
+            //    SubMenu = null,
+            //    Area = AreaNames.Operations,
+            //    ImageClass = "flaticon-coins"
+            //};
+            //menuModel.Add(menu);
 
-            subMenu = new MenuModel
-            {
-                Action = "Users",
-                Controller = "Administration",
-                SubMenu = null,
-                Title = "User Management",
-                Area = AreaNames.Operations,
-                ImageClass = "flaticon-user-add"
-            };
-            menu.SubMenu.Add(subMenu);
+            //menu = new MenuModel {MenuId = 5, Title = "Administration", ImageClass = "flaticon-user"};
 
-            MenuModel.Add(menu);
+            //menu.SubMenu = new List<MenuModel>();
+            //var subMenu = new MenuModel
+            //{
+            //    Action = "Roles",
+            //    Controller = "Administration",
+            //    SubMenu = null,
+            //    Title = "Role Management",
+            //    Area = AreaNames.Operations,
+            //    ImageClass = "flaticon-user-settings"
+            //};
+            //menu.SubMenu.Add(subMenu);
 
-            menu = new MenuModel {MenuId = 6, Title = "Reports", ImageClass = "flaticon-analytics"};
-            MenuModel.Add(menu);
+            //subMenu = new MenuModel
+            //{
+            //    Action = "Users",
+            //    Controller = "Administration",
+            //    SubMenu = null,
+            //    Title = "User Management",
+            //    Area = AreaNames.Operations,
+            //    ImageClass = "flaticon-user-add"
+            //};
+            //menu.SubMenu.Add(subMenu);
+
+            //menuModel.Add(menu);
+
+            //menu = new MenuModel {MenuId = 6, Title = "Reports", ImageClass = "flaticon-analytics"};
+            //menuModel.Add(menu);
             //Session["ABC"] = MenuModel;
 
-            return View(MenuModel);
+            return View(menuModel);
         }
     }
 }

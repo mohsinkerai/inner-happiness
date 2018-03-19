@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AMS.frontend.web.Areas.Operations.Models;
+﻿using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Helpers.Constants;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -28,17 +28,27 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View(new List<PersonModel>());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
+        {
+            return View(new List<PersonModel>());
+        }
+
         public async Task<IActionResult> Add()
         {
-            ViewBag.SalutationList = await RestfulClient.getSalutation();
-            ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
-            ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
-            ViewBag.CityList = await RestfulClient.getCities();
-            ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
-            ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
-            ViewBag.CountryOfStudyList = await RestfulClient.getAllCountries();
-            ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
-            ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
+            try
+            {
+                ViewBag.SalutationList = await RestfulClient.getSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
+                ViewBag.CityList = await RestfulClient.getCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
+                ViewBag.CountryOfStudyList = await RestfulClient.getAllCountries();
+                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
+            }
+            catch { }
 
             return View();
         }
@@ -51,14 +61,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetLocalCouncil(string uid)
         {
-            var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            var list = new List<SelectListItem> { new SelectListItem { Text = "Karimabad", Value = "Karimabad" } };
 
             return new JsonResult(list);
         }
 
         public async Task<JsonResult> GetJamatkhana(string uid)
         {
-            var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            var list = new List<SelectListItem> { new SelectListItem { Text = "Karimabad", Value = "Karimabad" } };
 
             return new JsonResult(list);
         }
