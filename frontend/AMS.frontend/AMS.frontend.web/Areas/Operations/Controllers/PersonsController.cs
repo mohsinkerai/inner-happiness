@@ -309,5 +309,48 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_VoluntaryPublicTablePartial", new List<VoluntaryPublicModel>());
         }
+        [HttpPost]
+        public async Task<IActionResult> EmploymentListDelete(string id)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_EmploymentTablePartial", new List<EmploymentModel>());
+        }
+        [HttpPost]
+        public async Task<IActionResult> EmploymentListAdd(string id, string nameOfOrganization, string designation, string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness, string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_EmploymentTablePartial",
+                new List<EmploymentModel>
+                {
+                    new EmploymentModel
+                    {
+                        EmploymentId = id,
+                        NameOfOrganization = nameOfOrganization,
+                        Designation = designation,
+                        Location = location,
+                        TypeOfBusiness = typeOfBusiness,
+                        EmploymentEmailAddress = employmentEmailAddress,
+                        EmploymentEndDate = Convert.ToDateTime(employmentStartDate),
+                        NatureOfBusiness = natureOfBusiness,
+                        EmploymentStartDate = Convert.ToDateTime(employmentEndDate),
+                        EmploymentTelephone = employmentTelephone,
+                         NatureOfBusinessOther = natureOfBusinessOther
+                    }
+                });
+        }
     }
 }
