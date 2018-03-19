@@ -245,7 +245,7 @@
                             <div class="form-group">
                                 <label asp-for="HighestLevelOfStudy" class="control-label"></label>
                                 <select asp-for="HighestLevelOfStudy" asp-items="@ViewBag.HighestLevelOfStudyList" class="form-control m-select2 highest-level-select" placeholder="Select a highest level">
-                                    <option></option>
+                                    <option></option>=
                                 </select>
                                 <span asp-validation-for="HighestLevelOfStudy" class="form-control-feedback"></span>
                             </div>
@@ -355,7 +355,6 @@
                                 <label asp-for="AkdnTraining" class="control-label"></label>
                                 <select asp-for="AkdnTraining" asp-items="@ViewBag.AkdnTrainingList" class="form-control m-select2" placeholder="Select a training">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="AkdnTraining" class="form-control-feedback"></span>
                             </div>
@@ -365,7 +364,6 @@
                                 <label asp-for="AkdnTrainingCountry" class="control-label"></label>
                                 <select asp-for="AkdnTrainingCountry" asp-items="@ViewBag.AkdnTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="AkdnTrainingCountry" class="form-control-feedback"></span>
                             </div>
@@ -373,9 +371,20 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="AkdnTrainingMonth" class="control-label"></label>
-                                <select asp-for="AkdnTrainingMonth" asp-items="@ViewBag.AkdnTrainingMonthList" class="form-control m-select2" placeholder="Select a month">
+                                <select asp-for="AkdnTrainingMonth" class="form-control m-select2" placeholder="Select a month">
                                     <option></option>
-                                    <option>1</option>
+                                    <option>Januray</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November</option>
+                                    <option>December</option>
                                 </select>
                                 <span asp-validation-for="AkdnTrainingMonth" class="form-control-feedback"></span>
                             </div>
@@ -426,7 +435,6 @@
                                 <label asp-for="ProfessionalTrainingCountry" class="control-label"></label>
                                 <select asp-for="ProfessionalTrainingCountry" asp-items="@ViewBag.ProfessionalTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="ProfessionalTrainingCountry" class="form-control-feedback"></span>
                             </div>
@@ -434,7 +442,21 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="ProfessionalTrainingMonth" class="control-label"></label>
-                                <input type="text" asp-for="ProfessionalTrainingMonth" class="form-control">
+                                <select asp-for="ProfessionalTrainingMonth" class="form-control m-select2" placeholder="Select a month">
+                                    <option></option>
+                                    <option>Januray</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November</option>
+                                    <option>December</option>
+                                </select>
                                 <span asp-validation-for="ProfessionalTrainingMonth" class="form-control-feedback"></span>
                             </div>
                         </div>
@@ -490,7 +512,6 @@
                                 <label asp-for="Language" class="control-label"></label>
                                 <select asp-for="Language" asp-items="@ViewBag.LanguageList" class="form-control m-select2" placeholder="Select a language">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="Language" class="form-control-feedback"></span>
                             </div>
@@ -559,7 +580,6 @@
                                 <label asp-for="VoluntaryCommunityInstitution" class="control-label"></label>
                                 <select asp-for="VoluntaryCommunityInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2" placeholder="Select an institution">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="VoluntaryCommunityInstitution" class="form-control-feedback"></span>
                             </div>
@@ -583,7 +603,6 @@
                                 <label asp-for="VoluntaryCommunityPosition" class="control-label"></label>
                                 <select asp-for="VoluntaryCommunityPosition" asp-items="@ViewBag.VoluntaryCommunityPositionList" class="form-control m-select2" placeholder="Select a position">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="VoluntaryCommunityPosition" class="form-control-feedback"></span>
                             </div>
@@ -668,9 +687,6 @@
                                 <label asp-for="FieldOfInterest" class="control-label"></label>
                                 <select asp-for="FieldOfInterest" asp-items="@ViewBag.FieldOfInterestsList" class="form-control m-select2-multiple preserve-order" placeholder="Select a field of interest" multiple name="param">
                                     <option></option>
-                                    <option>Council</option>
-                                    <option>Tariqah & Religious Education Board</option>
-                                    <option>Grants & Review Board</option>
                                 </select>
                                 <span asp-validation-for="FieldOfInterest" class="form-control-feedback"></span>
                             </div>
@@ -753,7 +769,6 @@
                                 <label asp-for="TypeOfBusiness" class="control-label"></label>
                                 <select asp-for="TypeOfBusiness" asp-items="@ViewBag.TypeOfBusinessList" class="form-control m-select2" placeholder="Select a type of business">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="TypeOfBusiness" class="form-control-feedback"></span>
                             </div>
@@ -763,7 +778,6 @@
                                 <label asp-for="NatureOfBusiness" class="control-label"></label>
                                 <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusinessList" class="form-control m-select2 nature-of-business" placeholder="Select a nature of business">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="NatureOfBusiness" class="form-control-feedback"></span>
                             </div>
@@ -811,12 +825,12 @@
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
-                            <div class="col-lg-12" id="employment-table">
-                                @{
-                                    await Html.RenderPartialAsync("_EmploymentTablePartial", Model?.Educations).ConfigureAwait(false);
-                                }
-                            </div>
+                        <div class="col-lg-12" id="employment-table">
+                            @{
+                                await Html.RenderPartialAsync("_EmploymentTablePartial", Model?.Educations).ConfigureAwait(false);
+                            }
                         </div>
+                    </div>
                 </div>
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                     <div class="m-form__actions m-form__actions--solid">
@@ -904,14 +918,14 @@
                 }
             });
 
-            $(".occupation-type").change(function () {
+            $(".occupation-type").change(function() {
                 var selectedValue = $(this).val();
                 if (selectedValue === "Others") {
                     $("#OccupationTypeOther").prop("disabled", false);
                 }
             });
 
-            $(".nature-of-business").change(function () {
+            $(".nature-of-business").change(function() {
                 var selectedValue = $(this).val();
                 if (selectedValue === "Others") {
                     $("#NatureOfBusinessOther").prop("disabled", false);
