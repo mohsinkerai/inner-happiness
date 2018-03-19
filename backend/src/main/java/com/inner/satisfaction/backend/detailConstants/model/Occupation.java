@@ -9,5 +9,5 @@ import javax.persistence.Entity;
 @Data
 public class Occupation extends BaseEntity {
 
-    private String type;
+  private String name;
 }

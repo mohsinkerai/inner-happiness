@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 @Entity
 @Data
-public class FieldOfInterest extends BaseEntity {
+public class BusinessType extends BaseEntity {
 
   String name;
 }
