@@ -216,7 +216,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("educational-degree/all");
+            var Res = await client.GetAsync("constants/educational-degree/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -260,10 +260,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 return list;
             }
-            else
-            {
-                return null;
-            }
+           
+           return null;
         }
 
         public static async Task<List<SelectListItem>> getPositions()
@@ -272,10 +270,10 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage Res = await client.GetAsync("position/all");
+            var Res = await client.GetAsync("position/all");
             if (Res.IsSuccessStatusCode)
             {
-                var json = Res.Content.ReadAsStringAsync().Result.ToString();
+                var json = Res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
                 var list = new List<SelectListItem>();
 
@@ -289,10 +287,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 return list;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public static async Task<List<SelectListItem>> getRegionalCouncil()
@@ -301,10 +297,10 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage Res = await client.GetAsync("level/search/parent?value=1");
+            var Res = await client.GetAsync("level/search/parent?value=1");
             if (Res.IsSuccessStatusCode)
             {
-                var json = Res.Content.ReadAsStringAsync().Result.ToString();
+                var json = Res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
                 var list = new List<SelectListItem>();
 
@@ -318,10 +314,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 return list;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public static async Task<List<SelectListItem>> getLocalCouncil(string uid)
@@ -330,10 +324,10 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage Res = await client.GetAsync("level/search/parent?value="+uid);
+            var Res = await client.GetAsync("level/search/parent?value="+uid);
             if (Res.IsSuccessStatusCode)
             {
-                var json = Res.Content.ReadAsStringAsync().Result.ToString();
+                var json = Res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
                 var list = new List<SelectListItem>();
 
@@ -347,10 +341,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 return list;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public static async Task<List<SelectListItem>> getJamatkhana(string uid)
@@ -359,10 +351,10 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage Res = await client.GetAsync("level/search/parent?value=" + uid);
+            var Res = await client.GetAsync("level/search/parent?value=" + uid);
             if (Res.IsSuccessStatusCode)
             {
-                var json = Res.Content.ReadAsStringAsync().Result.ToString();
+                var json = Res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
                 var list = new List<SelectListItem>();
 
@@ -376,11 +368,189 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 return list;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
+        public static async Task<List<SelectListItem>> getHighestLevelOfStudy()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/highest-level-of-study/all");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> getAkdnTraining()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/akdn-training/all");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> getVoluntaryInstitution()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/voluntary-institution/all");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> getFieldOfInterests()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/fieldOfInterests");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> getOcupations()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/Occupations");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> getBussinessType()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/bussinessType");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> getBussinessNature()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/bussinessNature");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
     }
 }
