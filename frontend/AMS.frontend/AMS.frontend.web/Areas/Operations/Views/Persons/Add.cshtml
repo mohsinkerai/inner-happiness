@@ -1,26 +1,36 @@
 ﻿@model PersonModel
 @{
     ViewBag.ModuleTitle = "Person Management";
-    ViewBag.PageTitle = "Add";
+    ViewBag.PageTitle = "Basic Information Form";
 }
 <div class="row">
     <div class="col-lg-12">
         <!--begin::Portlet-->
         <div class="m-portlet">
-            <div class="m-portlet__head">
-                <div class="m-portlet__head-caption">
-                    <div class="m-portlet__head-title">
-                        <span class="m-portlet__head-icon">
-                            <i class="la la-user-plus"></i>
-                        </span>
-                        <h3 class="m-portlet__head-text">
-                            Add Person
-                        </h3>
+            @*<div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon">
+                                <i class="la la-user-plus"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Add Person
+                            </h3>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>*@
             <!--begin::Form-->
             <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" method="post" class="m-form m-form--fit m-form--label-align-right">
+                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions--solid m--align-right">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
+                            <i class="fa fa-close"></i> Cancel
+                        </a>
+                    </div>
+                </div>
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
                         <div class="col-lg-4">
@@ -245,7 +255,7 @@
                             <div class="form-group">
                                 <label asp-for="HighestLevelOfStudy" class="control-label"></label>
                                 <select asp-for="HighestLevelOfStudy" asp-items="@ViewBag.HighestLevelOfStudyList" class="form-control m-select2 highest-level-select" placeholder="Select a highest level">
-                                    <option></option>
+                                    <option></option>=
                                 </select>
                                 <span asp-validation-for="HighestLevelOfStudy" class="form-control-feedback"></span>
                             </div>
@@ -314,7 +324,7 @@
                         </div>
                         <input type="hidden" id="education-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return EducationListAdd("@Url.Action(ActionNames.EducationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                            <button type="button" class="btn btn-info" onclick='return EducationListAdd("@Url.Action(ActionNames.EducationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                 <i class="fa fa-plus"></i> Add Education
                             </button>
                         </div>
@@ -355,7 +365,6 @@
                                 <label asp-for="AkdnTraining" class="control-label"></label>
                                 <select asp-for="AkdnTraining" asp-items="@ViewBag.AkdnTrainingList" class="form-control m-select2" placeholder="Select a training">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="AkdnTraining" class="form-control-feedback"></span>
                             </div>
@@ -372,9 +381,20 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="AkdnTrainingMonth" class="control-label"></label>
-                                <select asp-for="AkdnTrainingMonth" asp-items="@ViewBag.AkdnTrainingMonthList" class="form-control m-select2" placeholder="Select a month">
+                                <select asp-for="AkdnTrainingMonth" class="form-control m-select2" placeholder="Select a month">
                                     <option></option>
-                                    <option>1</option>
+                                    <option>Januray</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November</option>
+                                    <option>December</option>
                                 </select>
                                 <span asp-validation-for="AkdnTrainingMonth" class="form-control-feedback"></span>
                             </div>
@@ -388,7 +408,7 @@
                         </div>
                         <input type="hidden" id="akdn-training-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return AkdnTrainingListAdd("@Url.Action(ActionNames.AkdnTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                            <button type="button" class="btn btn-info" onclick='return AkdnTrainingListAdd("@Url.Action(ActionNames.AkdnTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                 <i class="fa fa-plus"></i> Add Training
                             </button>
                         </div>
@@ -432,7 +452,21 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="ProfessionalTrainingMonth" class="control-label"></label>
-                                <input type="text" asp-for="ProfessionalTrainingMonth" class="form-control">
+                                <select asp-for="ProfessionalTrainingMonth" class="form-control m-select2" placeholder="Select a month">
+                                    <option></option>
+                                    <option>Januray</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November</option>
+                                    <option>December</option>
+                                </select>
                                 <span asp-validation-for="ProfessionalTrainingMonth" class="form-control-feedback"></span>
                             </div>
                         </div>
@@ -445,7 +479,7 @@
                         </div>
                         <input type="hidden" id="professional-training-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                            <button type="button" class="btn btn-info" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                 <i class="fa fa-plus"></i> Add Training
                             </button>
                         </div>
@@ -488,7 +522,6 @@
                                 <label asp-for="Language" class="control-label"></label>
                                 <select asp-for="Language" asp-items="@ViewBag.LanguageList" class="form-control m-select2" placeholder="Select a language">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="Language" class="form-control-feedback"></span>
                             </div>
@@ -534,7 +567,7 @@
                         </div>
                         <input type="hidden" id="language-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return LanguageListAdd("@Url.Action(ActionNames.LanguageListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                            <button type="button" class="btn btn-info" onclick='return LanguageListAdd("@Url.Action(ActionNames.LanguageListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                 <i class="fa fa-plus"></i> Add Language
                             </button>
                         </div>
@@ -557,7 +590,6 @@
                                 <label asp-for="VoluntaryCommunityInstitution" class="control-label"></label>
                                 <select asp-for="VoluntaryCommunityInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2" placeholder="Select an institution">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="VoluntaryCommunityInstitution" class="form-control-feedback"></span>
                             </div>
@@ -587,7 +619,7 @@
                         </div>
                         <input type="hidden" id="voluntary-community-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                            <button type="button" class="btn btn-info" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                 <i class="fa fa-plus"></i> Add Service
                             </button>
                         </div>
@@ -635,7 +667,7 @@
                         </div>
                         <input type="hidden" id="voluntary-public-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return VoluntaryPublicListAdd("@Url.Action(ActionNames.VoluntaryPublicListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                            <button type="button" class="btn btn-info" onclick='return VoluntaryPublicListAdd("@Url.Action(ActionNames.VoluntaryPublicListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                 <i class="fa fa-plus"></i> Add Service
                             </button>
                         </div>
@@ -665,9 +697,6 @@
                                 <label asp-for="FieldOfInterest" class="control-label"></label>
                                 <select asp-for="FieldOfInterest" asp-items="@ViewBag.FieldOfInterestsList" class="form-control m-select2-multiple preserve-order" placeholder="Select a field of interest" multiple name="param">
                                     <option></option>
-                                    <option>Council</option>
-                                    <option>Tariqah & Religious Education Board</option>
-                                    <option>Grants & Review Board</option>
                                 </select>
                                 <span asp-validation-for="FieldOfInterest" class="form-control-feedback"></span>
                             </div>
@@ -750,7 +779,6 @@
                                 <label asp-for="TypeOfBusiness" class="control-label"></label>
                                 <select asp-for="TypeOfBusiness" asp-items="@ViewBag.TypeOfBusinessList" class="form-control m-select2" placeholder="Select a type of business">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="TypeOfBusiness" class="form-control-feedback"></span>
                             </div>
@@ -760,7 +788,6 @@
                                 <label asp-for="NatureOfBusiness" class="control-label"></label>
                                 <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusinessList" class="form-control m-select2 nature-of-business" placeholder="Select a nature of business">
                                     <option></option>
-                                    <option>1</option>
                                 </select>
                                 <span asp-validation-for="NatureOfBusiness" class="form-control-feedback"></span>
                             </div>
@@ -802,22 +829,22 @@
                         </div>
                         <input type="hidden" id="employment-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-primary" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                            <button type="button" class="btn btn-info" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                 <i class="fa fa-plus"></i> Add Employment
                             </button>
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
-                            <div class="col-lg-12" id="employment-table">
-                                @{
-                                    await Html.RenderPartialAsync("_EmploymentTablePartial", Model?.Educations).ConfigureAwait(false);
-                                }
-                            </div>
+                        <div class="col-lg-12" id="employment-table">
+                            @{
+                                await Html.RenderPartialAsync("_EmploymentTablePartial", Model?.Educations).ConfigureAwait(false);
+                            }
                         </div>
+                    </div>
                 </div>
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-                    <div class="m-form__actions m-form__actions--solid">
-                        <button type="submit" class="btn btn-primary">
+                    <div class="m-form__actions m-form__actions--solid m--align-right">
+                        <button type="submit" class="btn btn-success">
                             <i class="fa fa-save"></i> Save
                         </button>
                         <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
@@ -839,6 +866,8 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function() {
+
+            $("#menu-1").addClass("m-menu__item--open m-menu__item--expanded");
 
             InitializeDataTableLite("education", "Education");
             InitializeDataTableLite("akdn-training", "AKDN Trainings");
@@ -901,14 +930,14 @@
                 }
             });
 
-            $(".occupation-type").change(function () {
+            $(".occupation-type").change(function() {
                 var selectedValue = $(this).val();
                 if (selectedValue === "Others") {
                     $("#OccupationTypeOther").prop("disabled", false);
                 }
             });
 
-            $(".nature-of-business").change(function () {
+            $(".nature-of-business").change(function() {
                 var selectedValue = $(this).val();
                 if (selectedValue === "Others") {
                     $("#NatureOfBusinessOther").prop("disabled", false);

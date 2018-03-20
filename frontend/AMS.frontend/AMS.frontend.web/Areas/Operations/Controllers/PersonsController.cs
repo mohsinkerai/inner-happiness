@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Helpers.Constants;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Net.Http;
-using System;
-using System.Net.Http.Headers;
-using AMS.frontend.web.Areas.Operations.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -21,7 +16,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         private readonly Configuration _configuration;
         private readonly IMapper _mapper;
-        
+
         public PersonsController(IMapper mapper, IOptions<Configuration> configuration)
         {
             _mapper = mapper;
@@ -33,8 +28,28 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View(new List<PersonModel>());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
+        {
+            return View(new List<PersonModel>());
+        }
+
         public async Task<IActionResult> Add()
         {
+            try
+            {
+                ViewBag.SalutationList = await RestfulClient.getSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
+                ViewBag.CityList = await RestfulClient.getCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
+                ViewBag.CountryOfStudyList = await RestfulClient.getAllCountries();
+                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
+            }
+            catch { }
+
             
             ViewBag.SalutationList = await RestfulClient.getSalutation();
             ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
@@ -203,6 +218,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_ProfessionalTrainingTablePartial", new List<ProfessionalTrainingModel>());
         }
+
         [HttpPost]
         public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
             string write, string speak)
@@ -244,7 +260,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear, string toYear, string position)
+        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear,
+            string toYear, string position)
         {
             //User user = GetLoggedInUser();
             //if (user != null)
@@ -283,7 +300,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear, string toYear, string position)
+        public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear,
+            string toYear, string position)
         {
             //User user = GetLoggedInUser();
             //if (user != null)
@@ -319,6 +337,53 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //}
 
             return PartialView("_VoluntaryPublicTablePartial", new List<VoluntaryPublicModel>());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EmploymentListDelete(string id)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_EmploymentTablePartial", new List<EmploymentModel>());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EmploymentListAdd(string id, string nameOfOrganization, string designation,
+            string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
+            string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
+        {
+            //User user = GetLoggedInUser();
+            //if (user != null)
+            //{
+            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+
+            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
+            //}
+
+            return PartialView("_EmploymentTablePartial",
+                new List<EmploymentModel>
+                {
+                    new EmploymentModel
+                    {
+                        EmploymentId = id,
+                        NameOfOrganization = nameOfOrganization,
+                        Designation = designation,
+                        Location = location,
+                        TypeOfBusiness = typeOfBusiness,
+                        EmploymentEmailAddress = employmentEmailAddress,
+                        EmploymentEndDate = Convert.ToDateTime(employmentStartDate),
+                        NatureOfBusiness = natureOfBusiness,
+                        EmploymentStartDate = Convert.ToDateTime(employmentEndDate),
+                        EmploymentTelephone = employmentTelephone,
+                        NatureOfBusinessOther = natureOfBusinessOther
+                    }
+                });
         }
     }
 }

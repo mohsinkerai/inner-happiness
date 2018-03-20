@@ -10,8 +10,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string NameOfOrganization { get; set; }
         public string Designation { get; set; }
         public string Location { get; set; }
-        [EmailAddress]
-        public string EmploymentEmailAddress { get; set; }
+
+        [EmailAddress] public string EmploymentEmailAddress { get; set; }
 
         public string EmploymentTelephone { get; set; }
 

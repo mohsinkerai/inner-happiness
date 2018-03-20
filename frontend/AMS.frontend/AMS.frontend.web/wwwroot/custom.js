@@ -60,6 +60,22 @@ function LanguageListEdit(id, language, read, write, speak) {
     $("#language-row-" + id).addClass("m-datatable__row--hover");
 }
 
+function EmploymentListEdit(id, nameOfOrganization,designation, location,employmentEmailAddress,employmentTelephone,typeOfBusiness,natureOfBusiness,natureOfBusinessOther,employmentStartDate, employmentEndDate) {
+    $("#NameOfOrganization").val(nameOfOrganization).trigger('change');
+    $("#Designation").val(designation).trigger('change');
+    $("#Location").val(location).trigger('change');
+    $("#EmploymentEmailAddress").val(employmentEmailAddress).trigger('change');
+    $("#EmploymentTelephone").val(employmentTelephone).trigger('change');
+    $("#TypeOfBusiness").val(typeOfBusiness).trigger('change');
+    $("#NatureOfBusiness").val(natureOfBusiness).trigger('change');
+    $("#NatureOfBusinessOther").val(natureOfBusinessOther).trigger('change');
+    $("#EmploymentStartDate").val(employmentStartDate).trigger('change');
+    $("#EmploymentEndDate").val(employmentEndDate).trigger('change');
+    $("#employment-id").val(id);
+
+    $("#employment-row-" + id).addClass("m-datatable__row--hover");
+}
+
 function ProfessionalTrainingListEdit(id, training, institution, country, month, year) {
     $("#ProfesisonalTraining").val(training).trigger('change');
     $("#ProfessionalTrainingInstitution").val(institution).trigger('change');
@@ -137,6 +153,44 @@ function LanguageListDelete(url, id) {
                 $("#Write").val('').trigger('change');
                 $("#Speak").val('').trigger('change');
                 $("#language-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function EmploymentListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#employment-table").html(result);
+                InitializeDataTableLite("employment", "Employments");
+                $("#NameOfOrganization").val('').trigger('change');
+                $("#Designation").val('').trigger('change');
+                $("#Location").val('').trigger('change');
+                $("#EmploymentEmailAddress").val('').trigger('change');
+                $("#EmploymentTelephone").val('').trigger('change');
+                $("#TypeOfBusiness").val('').trigger('change');
+                $("#NatureOfBusiness").val('').trigger('change');
+                $("#NatureOfBusinessOther").val('').trigger('change');
+                $("#EmploymentStartDate").val('').trigger('change');
+                $("#EmploymentEndDate").val('').trigger('change');
+                $("#employment-id").val('');
             }
             //else {
             //    window.location.replace(window.loginUrl);
@@ -500,6 +554,57 @@ function EducationListAdd(url) {
                     $("#NameOfDegree").val('').trigger('change');
                     $("#MajorAreaOfStudy").val('').trigger('change');
                     $("#education-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function EmploymentListAdd(url) {
+    if ($("#NameOfOrganization").valid() && $("#Designation").valid() && $("#Location").valid() && $("#EmploymentEmailAddress").valid() && $("#EmploymentTelephone").valid() && $("#TypeOfBusiness").valid() && $("#NatureOfBusiness").valid() && $("#NatureOfBusinessOther").valid() && $("#EmploymentStartDate").valid() && $("#EmploymentEndDate").valid()) {
+        var id =$("#employment-id").val();
+        var name= $("#NameOfOrganization").val();
+        var designation = $("#Designation").val();
+        var location = $("#Location").val();
+        var email = $("#EmploymentEmailAddress").val();
+        var phone = $("#EmploymentTelephone").val();
+        var type = $("#TypeOfBusiness").val();
+        var nature = $("#NatureOfBusiness").val();
+        var other = $("#NatureOfBusinessOther").val();
+        var start = $("#EmploymentStartDate").val();
+        var end = $("#EmploymentEndDate").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": id, "nameOfOrganization": name, "designation": designation, "location": location, "employmentEmailAddress": email, "employmentTelephone": phone, "typeOfBusiness": type, "natureOfBusiness": nature, "NatureOfBusinessOther": other, "employmentStartDate": start, "employmentEndDate" :end  },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#employment-table").html(result);
+                    InitializeDataTableLite("employment", "Employments");
+                    $("#NameOfOrganization").val('').trigger('change');
+                    $("#Designation").val('').trigger('change');
+                    $("#Location").val('').trigger('change');
+                    $("#EmploymentEmailAddress").val('').trigger('change');
+                    $("#EmploymentTelephone").val('').trigger('change');
+                    $("#TypeOfBusiness").val('').trigger('change');
+                    $("#NatureOfBusiness").val('').trigger('change');
+                    $("#NatureOfBusinessOther").val('').trigger('change');
+                    $("#EmploymentStartDate").val('').trigger('change');
+                    $("#EmploymentEndDate").val('').trigger('change');
+                    $("#employment-id").val('');
                 }
                 //else {
                 //    window.location.replace(window.loginUrl);
