@@ -35,17 +35,26 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Add()
         {
-           
+            
             ViewBag.SalutationList = await RestfulClient.getSalutation();
             ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
             ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
             ViewBag.CityList = await RestfulClient.getCities();
             ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
             ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
-            ViewBag.CountryOfStudyList = await RestfulClient.getAllCountries();
             ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
             ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
-            
+
+            @ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
+
+            List<SelectListItem> ListOfCountries = await RestfulClient.getAllCountries();
+            ViewBag.CountryOfStudyList = ListOfCountries;
+            ViewBag.AkdnTrainingCountryList = ListOfCountries;
+            ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
+
+            ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
+
+
             return View();
         }
 
@@ -57,14 +66,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetLocalCouncil(string uid)
         {
-            var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            var list = await RestfulClient.getLocalCouncil(uid);
 
             return new JsonResult(list);
         }
 
         public async Task<JsonResult> GetJamatkhana(string uid)
         {
-            var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            var list = await RestfulClient.getJamatkhana(uid);
 
             return new JsonResult(list);
         }
