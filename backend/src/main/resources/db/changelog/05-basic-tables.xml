@@ -362,4 +362,84 @@
       <column name="name" value="Others"/>
     </insert>
   </changeSet>
+  <changeSet author="mohsin.kerai" id="05-21">
+    <createTable remarks="Language Spoken"
+      tableName="language">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="05-22">
+    <insert tableName="language">
+      <column name="name" value="English"/>
+    </insert>
+    <insert tableName="language">
+      <column name="name" value="German"/>
+    </insert>
+    <insert tableName="language">
+      <column name="name" value="Gujrati"/>
+    </insert>
+    <insert tableName="language">
+      <column name="name" value="Urdu"/>
+    </insert>
+    <insert tableName="language">
+      <column name="name" value="French"/>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="05-23">
+    <createTable remarks="Professional Memberships"
+      tableName="professional_membership">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="05-24">
+    <insert tableName="professional_membership">
+      <column name="name" value="IEEE"/>
+    </insert>
+    <insert tableName="professional_membership">
+      <column name="name" value="ACM"/>
+    </insert>
+    <insert tableName="professional_membership">
+      <column name="name" value="RIEU"/>
+    </insert>
+    <insert tableName="professional_membership">
+      <column name="name" value="WSJ"/>
+    </insert>
+    <insert tableName="professional_membership">
+      <column name="name" value="PAPPU-Game"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>
