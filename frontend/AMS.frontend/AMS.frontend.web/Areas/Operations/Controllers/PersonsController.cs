@@ -25,7 +25,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(new List<PersonModel>());
+            //return View(new List<PersonModel>());
+            return View(await RestfulClient.getPersonDetails());
         }
 
         [HttpPost]
@@ -61,6 +62,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
                 ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
                 ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
+                ViewBag.ProfessionalMembershipsList = await RestfulClient.getProfessionalMemeberShipDetails();
+                ViewBag.LanguageList = await RestfulClient.getLanguages();
+                ViewBag.SkillsList = await RestfulClient.getSkills();
             }
             catch { }
             
