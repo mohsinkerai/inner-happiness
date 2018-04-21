@@ -1,5 +1,6 @@
 ﻿using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
+using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
                 ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
                 ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
-            
+
                 List<SelectListItem> ListOfCountries = await RestfulClient.getAllCountries();
                 ViewBag.CountryOfStudyList = ListOfCountries;
                 ViewBag.AkdnTrainingCountryList = ListOfCountries;
@@ -63,7 +64,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
             }
             catch { }
-            
+
             return View();
         }
 
@@ -133,241 +134,169 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string fromYear,
             string toYear, string nameOfDegree, string majorAreaOfStudy)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
+            sessionEducationList.Add(new EducationModel
+            {
+                EducationId = id,
+                CountryOfStudy = countryOfStudy,
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
+                Institution = institution,
+                MajorAreaOfStudy = majorAreaOfStudy,
+                NameOfDegree = nameOfDegree,
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
+            });
+            HttpContext.Session.Set("EducationList", sessionEducationList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_EducationTablePartial",
-                new List<EducationModel>
-                {
-                    new EducationModel
-                    {
-                        EducationId = id,
-                        CountryOfStudy = countryOfStudy,
-                        FromYear = Convert.ToInt32(fromYear),
-                        Institution = institution,
-                        MajorAreaOfStudy = majorAreaOfStudy,
-                        NameOfDegree = nameOfDegree,
-                        ToYear = Convert.ToInt32(toYear)
-                    }
-                });
+            return PartialView("_EducationTablePartial", sessionEducationList);
         }
 
         [HttpPost]
         public async Task<IActionResult> EducationListDelete(string id)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
+            sessionEducationList.Remove(sessionEducationList.Find(e => e.EducationId == id));
+            HttpContext.Session.Set("EducationList", sessionEducationList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_EducationTablePartial", new List<EducationModel>());
+            return PartialView("_EducationTablePartial", sessionEducationList);
         }
 
         [HttpPost]
         public async Task<IActionResult> AkdnTrainingListAdd(string id, string training, string countryOfTarining,
             string month, string year)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
+            sessionAkdnTrainingList.Add(new AkdnTrainingModel
+            {
+                TrainingId = id,
+                CountryOfTraining = countryOfTarining,
+                Month = month,
+                Training = training,
+                Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
+            });
+            HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_AkdnTrainingTablePartial",
-                new List<AkdnTrainingModel>
-                {
-                    new AkdnTrainingModel
-                    {
-                        TrainingId = id,
-                        CountryOfTraining = countryOfTarining,
-                        Month = month,
-                        Training = training,
-                        Year = Convert.ToInt32(year)
-                    }
-                });
+            return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
 
         [HttpPost]
         public async Task<IActionResult> AkdnTrainingListDelete(string id)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
+            sessionAkdnTrainingList.Remove(sessionAkdnTrainingList.Find(e => e.TrainingId == id));
+            HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_AkdnTrainingTablePartial", new List<AkdnTrainingModel>());
+            return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
 
         [HttpPost]
         public async Task<IActionResult> ProfessionalTrainingListAdd(string id, string training, string institution,
             string countryOfTarining, string month, string year)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
+            sessionProfessionalTrainingList.Add(new ProfessionalTrainingModel
+            {
+                TrainingId = id,
+                CountryOfTraining = countryOfTarining,
+                Institution = institution,
+                Month = month,
+                Training = training,
+                Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
+            });
+            HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_ProfessionalTrainingTablePartial",
-                new List<ProfessionalTrainingModel>
-                {
-                    new ProfessionalTrainingModel
-                    {
-                        TrainingId = id,
-                        CountryOfTraining = countryOfTarining,
-                        Institution = institution,
-                        Month = month,
-                        Training = training,
-                        Year = Convert.ToInt32(year)
-                    }
-                });
+            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
         }
 
         [HttpPost]
         public async Task<IActionResult> ProfessionalTrainingListDelete(string id)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
+            sessionProfessionalTrainingList.Remove(sessionProfessionalTrainingList.Find(e => e.TrainingId == id));
+            HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_ProfessionalTrainingTablePartial", new List<ProfessionalTrainingModel>());
+            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
         }
 
         [HttpPost]
         public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
             string write, string speak)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ?? new List<LanguageProficiencyModel>();
+            sessionLanguageList.Add(new LanguageProficiencyModel
+            {
+                LanguageProficiencyId = id,
+                Language = language,
+                Read = read,
+                Speak = speak,
+                Write = write
+            });
+            HttpContext.Session.Set("LanguageList", sessionLanguageList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_LanguageTablePartial",
-                new List<LanguageProficiencyModel>
-                {
-                    new LanguageProficiencyModel
-                    {
-                        LanguageProficiencyId = id,
-                        Language = language,
-                        Read = read,
-                        Speak = speak,
-                        Write = write
-                    }
-                });
+            return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
 
         [HttpPost]
         public async Task<IActionResult> LanguageListDelete(string id)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ?? new List<LanguageProficiencyModel>();
+            sessionLanguageList.Remove(sessionLanguageList.Find(e => e.LanguageProficiencyId == id));
+            HttpContext.Session.Set("LanguageList", sessionLanguageList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_LanguageTablePartial", new List<LanguageProficiencyModel>());
+            return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
 
         [HttpPost]
         public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear,
             string toYear, string position)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionVoluntaryCommunityList = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ?? new List<VoluntaryCommunityModel>();
+            sessionVoluntaryCommunityList.Add(new VoluntaryCommunityModel
+            {
+                VoluntaryCommunityId = id,
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
+                Institution = institution,
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
+                Position = position
+            });
+            HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_VoluntaryCommunityTablePartial",
-                new List<VoluntaryCommunityModel>
-                {
-                    new VoluntaryCommunityModel
-                    {
-                        VoluntaryCommunityId = id,
-                        FromYear = Convert.ToInt32(fromYear),
-                        Institution = institution,
-                        ToYear = Convert.ToInt32(toYear),
-                        Position = position
-                    }
-                });
+            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
         }
 
         [HttpPost]
         public async Task<IActionResult> VoluntaryCommunityListDelete(string id)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionVoluntaryCommunityList = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ?? new List<VoluntaryCommunityModel>();
+            sessionVoluntaryCommunityList.Remove(sessionVoluntaryCommunityList.Find(e => e.VoluntaryCommunityId == id));
+            HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_VoluntaryCommunityTablePartial", new List<VoluntaryCommunityModel>());
+            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
         }
 
         [HttpPost]
         public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear,
             string toYear, string position)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionVoluntaryPublicList = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ?? new List<VoluntaryPublicModel>();
+            sessionVoluntaryPublicList.Add(new VoluntaryPublicModel
+            {
+                VoluntaryPublicId = id,
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
+                Institution = institution,
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
+                Position = position
+            });
+            HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_VoluntaryPublicTablePartial",
-                new List<VoluntaryPublicModel>
-                {
-                    new VoluntaryPublicModel
-                    {
-                        VoluntaryPublicId = id,
-                        FromYear = Convert.ToInt32(fromYear),
-                        Institution = institution,
-                        ToYear = Convert.ToInt32(toYear),
-                        Position = position
-                    }
-                });
+            return PartialView("_VoluntaryPublicTablePartial", sessionVoluntaryPublicList);
         }
 
         [HttpPost]
         public async Task<IActionResult> VoluntaryPublicListDelete(string id)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
-
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
+            var sessionVoluntaryPublicList = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ?? new List<VoluntaryPublicModel>();
+            sessionVoluntaryPublicList.Remove(sessionVoluntaryPublicList.Find(e => e.VoluntaryPublicId == id));
+            HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
 
             return PartialView("_VoluntaryPublicTablePartial", new List<VoluntaryPublicModel>());
         }
@@ -375,15 +304,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> EmploymentListDelete(string id)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ?? new List<EmploymentModel>();
+            sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
+            HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_EmploymentTablePartial", new List<EmploymentModel>());
+            return PartialView("_EmploymentTablePartial", sessionEmploymentList);
         }
 
         [HttpPost]
@@ -391,32 +316,24 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
-            //User user = GetLoggedInUser();
-            //if (user != null)
-            //{
-            //    IEnumerable<LanguageProficiency> languageProficiencies = await AddLanguageProficiencyInSession(languageId, reading, writing, speaking).ConfigureAwait(false);
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ?? new List<EmploymentModel>();
+            sessionEmploymentList.Add(new EmploymentModel
+            {
+                EmploymentId = id,
+                NameOfOrganization = nameOfOrganization,
+                Designation = designation,
+                Location = location,
+                TypeOfBusiness = typeOfBusiness,
+                EmploymentEmailAddress = employmentEmailAddress,
+                EmploymentEndDate = string.IsNullOrWhiteSpace(employmentStartDate) ? (DateTime?)null : Convert.ToDateTime(employmentStartDate),
+                NatureOfBusiness = natureOfBusiness,
+                EmploymentStartDate = string.IsNullOrWhiteSpace(employmentStartDate) ? (DateTime?)null : Convert.ToDateTime(employmentEndDate),
+                EmploymentTelephone = employmentTelephone,
+                NatureOfBusinessOther = natureOfBusinessOther
+            });
+            HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
 
-            //    return PartialView(PartialViewNames.LanguageProficiencyTable, languageProficiencies);
-            //}
-
-            return PartialView("_EmploymentTablePartial",
-                new List<EmploymentModel>
-                {
-                    new EmploymentModel
-                    {
-                        EmploymentId = id,
-                        NameOfOrganization = nameOfOrganization,
-                        Designation = designation,
-                        Location = location,
-                        TypeOfBusiness = typeOfBusiness,
-                        EmploymentEmailAddress = employmentEmailAddress,
-                        EmploymentEndDate = Convert.ToDateTime(employmentStartDate),
-                        NatureOfBusiness = natureOfBusiness,
-                        EmploymentStartDate = Convert.ToDateTime(employmentEndDate),
-                        EmploymentTelephone = employmentTelephone,
-                        NatureOfBusinessOther = natureOfBusinessOther
-                    }
-                });
+            return PartialView("_EmploymentTablePartial", sessionEmploymentList);
         }
     }
 }
