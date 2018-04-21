@@ -36,7 +36,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Mobile No")] public string MobilePhone { get; set; }
 
         [Display(Name = "Email Address")]
-        [EmailAddress]
         public string EmailAddress { get; set; }
 
         [Display(Name = "Area of Origin")] public string AreaOfOrigin { get; set; }
@@ -68,9 +67,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Country of Study")] public string CountryOfStudy { get; set; }
 
-        [Display(Name = "From Year")] public int FromYear { get; set; }
+        [Display(Name = "From Year")] public int? FromYear { get; set; }
 
-        [Display(Name = "To Year")] public int ToYear { get; set; }
+        [Display(Name = "To Year")] public int? ToYear { get; set; }
 
         [Display(Name = "Name of Degree")] public string NameOfDegree { get; set; }
 
@@ -118,9 +117,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Institution")] public string VoluntaryCommunityInstitution { get; set; }
 
-        [Display(Name = "From Year")] public int VoluntaryCommunityFromYear { get; set; }
+        [Display(Name = "From Year")] public int? VoluntaryCommunityFromYear { get; set; }
 
-        [Display(Name = "To Year")] public int VoluntaryCommunityToYear { get; set; }
+        [Display(Name = "To Year")] public int? VoluntaryCommunityToYear { get; set; }
 
         [Display(Name = "Position")] public string VoluntaryCommunityPosition { get; set; }
 
@@ -128,9 +127,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Institution")] public string VoluntaryPublicInstitution { get; set; }
 
-        [Display(Name = "From Year")] public int VoluntaryPublicFromYear { get; set; }
+        [Display(Name = "From Year")] public int? VoluntaryPublicFromYear { get; set; }
 
-        [Display(Name = "To Year")] public int VoluntaryPublicToYear { get; set; }
+        [Display(Name = "To Year")] public int? VoluntaryPublicToYear { get; set; }
 
         [Display(Name = "Position")] public string VoluntaryPublicPosition { get; set; }
 
@@ -142,7 +141,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Fields of Interest (in order of preference)")]
         public List<string> FieldOfInterest { get; set; }
 
-        [Display(Name = "Hours per Week")] public double HoursPerWeek { get; set; }
+        [Display(Name = "Hours per Week")] public double? HoursPerWeek { get; set; }
 
         [Display(Name = "Occupation Type")] public string OccupationType { get; set; }
 
@@ -152,7 +151,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string Designation { get; set; }
         public string Location { get; set; }
 
-        [EmailAddress] public string EmploymentEmailAddress { get; set; }
+        public string EmploymentEmailAddress { get; set; }
 
         public string EmploymentTelephone { get; set; }
 
@@ -160,8 +159,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string NatureOfBusiness { get; set; }
         public string NatureOfBusinessOther { get; set; }
-        public DateTime EmploymentStartDate { get; set; }
-        public DateTime EmploymentEndDate { get; set; }
+        public DateTime? EmploymentStartDate { get; set; }
+        public DateTime? EmploymentEndDate { get; set; }
 
         public List<EmploymentModel> Employments { get; set; }
     }
