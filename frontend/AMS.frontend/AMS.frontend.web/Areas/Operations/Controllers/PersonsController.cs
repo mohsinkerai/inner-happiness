@@ -71,6 +71,39 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Detail(string id)
+        {
+            try
+            {
+                ViewBag.SalutationList = await RestfulClient.getSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
+                ViewBag.CityList = await RestfulClient.getCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
+                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
+                ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
+
+                List<SelectListItem> ListOfCountries = await RestfulClient.getAllCountries();
+                ViewBag.CountryOfStudyList = ListOfCountries;
+                ViewBag.AkdnTrainingCountryList = ListOfCountries;
+                ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
+
+                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
+                ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
+                ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.getVoluntaryInstitution();
+                ViewBag.FieldOfInterestsList = await RestfulClient.getFieldOfInterests();
+                ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
+                ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
+                ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
+            }
+            catch { }
+
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(PersonModel model)
         {
