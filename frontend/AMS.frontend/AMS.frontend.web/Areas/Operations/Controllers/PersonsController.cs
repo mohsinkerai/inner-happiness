@@ -68,6 +68,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Add(PersonModel model)
+        {
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Verify(string cnic)
         {
             return Json(true);
