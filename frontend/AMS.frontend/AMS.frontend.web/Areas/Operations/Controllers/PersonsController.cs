@@ -101,7 +101,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
             catch { }
 
-            return View();
+            return View(await RestfulClient.getPersonDetailsById(id));
         }
 
         [HttpPost]

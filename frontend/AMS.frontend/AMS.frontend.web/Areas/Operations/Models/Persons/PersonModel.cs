@@ -51,7 +51,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Relocate Location")] public string RelocateLocation { get; set; }
 
         [Display(Name = "Relocation Date Time")]
-        public DateTime RelocationDateTime { get; set; }
+        public DateTime? RelocationDateTime { get; set; }
 
         [Display(Name = "Passport Number (for foreign nationals)")]
         public string PassportNumber { get; set; }

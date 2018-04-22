@@ -661,5 +661,29 @@ namespace AMS.frontend.web.Areas.Operations.Models
         }
 
         /*-----------------------------------------Person Index------------------------------------------*/
+
+        /*-----------------------------------------Person Detail------------------------------------------*/
+
+        public static async Task<PersonModel> getPersonDetailsById(string id)
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("person/one/"+id);
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+
+                PersonModel person = new PersonModel();
+
+                person = JsonConvert.DeserializeObject<PersonModel>(json);
+
+                return person;
+            }
+            return null;
+        }
+
+        /*-----------------------------------------Person Detail------------------------------------------*/
     }
 }
