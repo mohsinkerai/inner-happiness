@@ -15,12 +15,12 @@
         foreach (var item in Model)
         {
             <tr id="language-row-@item.LanguageProficiencyId">
-                <td> @item.Language </td>
+                <td> @item.LanguageName </td>
                 <td> @item.Read </td>
                 <td> @item.Write </td>
                 <td> @item.Speak </td>
                 <td>
-                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return LanguageListEdit("@item.LanguageProficiencyId", "@item.Language", "@item.Read", "@item.Write", "@item.Speak");'>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return LanguageListEdit("@item.LanguageProficiencyId", "@item.Language-@item.LanguageName", "@item.Read", "@item.Write", "@item.Speak");'>
                         <i class="la la-edit"></i>
                     </button>
                     <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return LanguageListDelete("@Url.Action(ActionNames.LanguageListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.LanguageProficiencyId");'>

@@ -15,12 +15,12 @@
         foreach (var item in Model)
         {
             <tr id="voluntary-community-row-@item.VoluntaryCommunityId">
-                <td> @item.Institution </td>
+                <td> @item.InstitutionName </td>
                 <td> @item.FromYear </td>
                 <td> @item.ToYear </td>
-                <td> @item.Position </td>
+                <td> @item.PositionName </td>
                 <td>
-                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return VoluntaryCommunityListEdit("@item.VoluntaryCommunityId", "@item.Institution", "@item.FromYear", "@item.ToYear", "@item.Position");'>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return VoluntaryCommunityListEdit("@item.VoluntaryCommunityId", "@item.Institution-@item.InstitutionName", "@item.FromYear", "@item.ToYear", "@item.Position-@item.PositionName");'>
                         <i class="la la-edit"></i>
                     </button>
                     <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return VoluntaryCommunityListDelete("@Url.Action(ActionNames.VoluntaryCommunityListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.VoluntaryCommunityId");'>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonModel>
+﻿@model List<PersonModel>
 @{
     ViewBag.ModuleTitle = "Person Management";
     ViewBag.PageTitle = "Person Basic Information Forms";
@@ -127,12 +127,12 @@
                         <td> @item.FirstName @item.FathersName @item.FamilyName </td>
                         <td> @item.Cnic </td>
                         <td>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Detail class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                            <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
                                 <i class="la la-eye"></i>
                             </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                            @*<a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
                                 <i class="la la-edit"></i>
-                            </a>
+                            </a>*@
                         </td>
                     </tr>
                 }
