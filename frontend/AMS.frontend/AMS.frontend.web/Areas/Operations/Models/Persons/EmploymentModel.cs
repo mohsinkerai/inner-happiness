@@ -19,7 +19,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string NatureOfBusiness { get; set; }
         public string NatureOfBusinessOther { get; set; }
-        public DateTime EmploymentStartDate { get; set; }
-        public DateTime EmploymentEndDate { get; set; }
+        public DateTime? EmploymentStartDate { get; set; }
+        public DateTime? EmploymentEndDate { get; set; }
     }
 }

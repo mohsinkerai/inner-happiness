@@ -15,7 +15,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [DataType(DataType.Date)]
         [Display(Name = "Year")]
-        public int Year { get; set; }
+        public int? Year { get; set; }
 
         public string Month { get; set; }
     }
