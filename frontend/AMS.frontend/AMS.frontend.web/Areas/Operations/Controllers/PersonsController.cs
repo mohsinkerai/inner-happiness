@@ -140,15 +140,26 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
 
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionEducationList.Remove(sessionEducationList.Find(e => e.EducationId == id));
+            }
+
             sessionEducationList.Add(new EducationModel
             {
                 EducationId = id,
                 CountryOfStudy = string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
                 CountryOfStudyName = string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
                 FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
-                Institution = institution,
+                Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
+                InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
                 MajorAreaOfStudy = majorAreaOfStudy,
-                NameOfDegree = nameOfDegree,
+                NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
+                NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
                 ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
             });
             HttpContext.Session.Set("EducationList", sessionEducationList);
@@ -171,12 +182,24 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string month, string year)
         {
             var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionAkdnTrainingList.Remove(sessionAkdnTrainingList.Find(e => e.TrainingId == id));
+            }
+
             sessionAkdnTrainingList.Add(new AkdnTrainingModel
             {
                 TrainingId = id,
-                CountryOfTraining = countryOfTarining,
+                CountryOfTraining = string.IsNullOrWhiteSpace(countryOfTarining) ? string.Empty : countryOfTarining.Split('-')[0],
+                CountryOfTrainingName = string.IsNullOrWhiteSpace(countryOfTarining) ? string.Empty : countryOfTarining.Split('-')[1],
                 Month = month,
-                Training = training,
+                Training = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[0],
+                TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
                 Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
             });
             HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
@@ -199,10 +222,21 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string countryOfTarining, string month, string year)
         {
             var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionProfessionalTrainingList.Remove(sessionProfessionalTrainingList.Find(e => e.TrainingId == id));
+            }
+
             sessionProfessionalTrainingList.Add(new ProfessionalTrainingModel
             {
                 TrainingId = id,
-                CountryOfTraining = countryOfTarining,
+                CountryOfTraining = string.IsNullOrWhiteSpace(countryOfTarining) ? string.Empty : countryOfTarining.Split('-')[0],
+                CountryOfTrainingName = string.IsNullOrWhiteSpace(countryOfTarining) ? string.Empty : countryOfTarining.Split('-')[1],
                 Institution = institution,
                 Month = month,
                 Training = training,
@@ -228,10 +262,21 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string write, string speak)
         {
             var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ?? new List<LanguageProficiencyModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionLanguageList.Remove(sessionLanguageList.Find(e => e.LanguageProficiencyId == id));
+            }
+
             sessionLanguageList.Add(new LanguageProficiencyModel
             {
                 LanguageProficiencyId = id,
-                Language = language,
+                Language = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[0],
+                LanguageName = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[1],
                 Read = read,
                 Speak = speak,
                 Write = write
@@ -256,13 +301,25 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string toYear, string position)
         {
             var sessionVoluntaryCommunityList = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ?? new List<VoluntaryCommunityModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionVoluntaryCommunityList.Remove(sessionVoluntaryCommunityList.Find(e => e.VoluntaryCommunityId == id));
+            }
+
             sessionVoluntaryCommunityList.Add(new VoluntaryCommunityModel
             {
                 VoluntaryCommunityId = id,
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
-                Institution = institution,
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
-                Position = position
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
+                InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear),
+                Position = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[0],
+                PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1]
             });
             HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
 
@@ -284,6 +341,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string toYear, string position)
         {
             var sessionVoluntaryPublicList = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ?? new List<VoluntaryPublicModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionVoluntaryPublicList.Remove(sessionVoluntaryPublicList.Find(e => e.VoluntaryPublicId == id));
+            }
+
             sessionVoluntaryPublicList.Add(new VoluntaryPublicModel
             {
                 VoluntaryPublicId = id,
@@ -323,16 +390,28 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
             var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ?? new List<EmploymentModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
+            }
+
             sessionEmploymentList.Add(new EmploymentModel
             {
                 EmploymentId = id,
                 NameOfOrganization = nameOfOrganization,
                 Designation = designation,
                 Location = location,
-                TypeOfBusiness = typeOfBusiness,
+                TypeOfBusiness = string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[0],
+                TypeOfBusinessName = string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[1],
                 EmploymentEmailAddress = employmentEmailAddress,
                 EmploymentEndDate = string.IsNullOrWhiteSpace(employmentStartDate) ? (DateTime?)null : Convert.ToDateTime(employmentStartDate),
-                NatureOfBusiness = natureOfBusiness,
+                NatureOfBusiness = string.IsNullOrWhiteSpace(natureOfBusiness) ? string.Empty : natureOfBusiness.Split('-')[0],
+                NatureOfBusinessName = string.IsNullOrWhiteSpace(natureOfBusiness) ? string.Empty : natureOfBusiness.Split('-')[1],
                 EmploymentStartDate = string.IsNullOrWhiteSpace(employmentStartDate) ? (DateTime?)null : Convert.ToDateTime(employmentEndDate),
                 EmploymentTelephone = employmentTelephone,
                 NatureOfBusinessOther = natureOfBusinessOther
