@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 
 @Data
 @Entity
+/**
+ * This should be called skills (Refactoring needed)
+ */
 public class FieldOfExpertise extends BaseEntity{
 
   private String name;

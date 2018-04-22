@@ -1,31 +1,24 @@
 package com.inner.satisfaction.backend.person;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.inner.satisfaction.backend.base.BaseEntity;
-import com.inner.satisfaction.backend.config.JpaConverterJson;
+import com.inner.satisfaction.backend.base.BaseDto;
 import com.inner.satisfaction.backend.person.akdntraining.PersonAkdnTraining;
 import com.inner.satisfaction.backend.person.education.PersonEducation;
 import com.inner.satisfaction.backend.person.professionaltraining.PersonProfessionalTraining;
 import com.inner.satisfaction.backend.person.skills.PersonSkills;
 import java.sql.Timestamp;
 import java.util.List;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@JsonAutoDetect
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Person extends BaseEntity {
+@NoArgsConstructor
+public class PersonDto extends BaseDto{
 
+  private long id;
   private String cnic;
   private String passportNumber;
   private String imagePath;
@@ -58,11 +51,10 @@ public class Person extends BaseEntity {
   private String highestLevelOfStudy;
   private String highestLevelOfStudyOthers;
 
-  @Convert(converter = JpaConverterJson.class)
   private List<PersonEducation> educationDetails;
-//  private List<PersonAkdnTraining> akdnTraining;
-//  private List<PersonProfessionalTraining> professionalTraining;
-//  private List<PersonSkills> skills;
+  private List<PersonAkdnTraining> akdnTraining;
+  private List<PersonProfessionalTraining> professionalTraining;
+  private List<PersonSkills> skills;
 //  private List<Long> professionalMembership;
 //  private List<Long> personLanguage;
 //  private List<Long> voluntaryCommunityService;
