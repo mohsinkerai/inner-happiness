@@ -3,9 +3,8 @@ package com.inner.satisfaction.backend.person;
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
-import org.springframework.data.repository.query.Param;
+import java.util.List;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,5 +26,12 @@ public class PersonController extends BaseController<Person> {
   @ResponseStatus(HttpStatus.OK)
   public Person findByCnic(@RequestParam("value") String cnic) {
     return personService.findByCnic(cnic);
+  }
+
+  public List<Person> findByCnicOrFirstNameOrLastName(
+    @RequestParam("cnic") String cnic,
+    @RequestParam("firstName") String firstName,
+    @RequestParam("lastName") String lastName) {
+    return personService.findByCnicOrFirstNameOrLastName(cnic, firstName, lastName);
   }
 }
