@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseEntity;
 import com.inner.satisfaction.backend.config.JpaConverterJson;
-import com.inner.satisfaction.backend.person.akdntraining.PersonAkdnTraining;
-import com.inner.satisfaction.backend.person.education.PersonEducation;
-import com.inner.satisfaction.backend.person.professionaltraining.PersonProfessionalTraining;
-import com.inner.satisfaction.backend.person.skills.PersonSkills;
+import com.inner.satisfaction.backend.person.dto.PersonAkdnTrainingDto;
+import com.inner.satisfaction.backend.person.dto.PersonEducationDto;
+import com.inner.satisfaction.backend.person.dto.PersonProfessionalTrainingDto;
+import com.inner.satisfaction.backend.person.dto.PersonSkillsDto;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.Convert;
@@ -30,13 +30,13 @@ public class Person extends BaseEntity {
   private String passportNumber;
   private String imagePath;
 
-  private long salutation;
+  private String salutation;
   private String firstName;
   private String fatherName;
   private String familyName;
 
-  // 1 male, 2 female
   private String jamatiTitle;
+  // 0 male, 1 female
   private int gender;
   private Timestamp dateOfBirth;
   private String residentialAddress;
@@ -45,8 +45,8 @@ public class Person extends BaseEntity {
   private String mobilePhone;
   private String email;
 
-  private long maritalStatus;
-  private long areaOfOrigin;
+  private String maritalStatus;
+  private String areaOfOrigin;
 
   // LevelID To be Exact
   private long regionalCouncilId;
@@ -59,14 +59,17 @@ public class Person extends BaseEntity {
   private String highestLevelOfStudyOthers;
 
   @Convert(converter = JpaConverterJson.class)
-  private List<PersonEducation> educationDetails;
-//  private List<PersonAkdnTraining> akdnTraining;
-//  private List<PersonProfessionalTraining> professionalTraining;
-//  private List<PersonSkills> skills;
+  private List<PersonEducationDto> educationDetails;
+  @Convert(converter = JpaConverterJson.class)
+  private List<PersonAkdnTrainingDto> akdnTraining;
+  @Convert(converter = JpaConverterJson.class)
+  private List<PersonProfessionalTrainingDto> professionalTraining;
+  @Convert(converter = JpaConverterJson.class)
+  private List<String> skills;
 //  private List<Long> professionalMembership;
 //  private List<Long> personLanguage;
 //  private List<Long> voluntaryCommunityService;
 
-  private String fieldOfExpertise;
-  private String religiousEducation;
+//  private String fieldOfExpertise;
+//  private String religiousEducation;
 }

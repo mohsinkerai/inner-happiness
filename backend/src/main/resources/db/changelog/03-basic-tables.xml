@@ -85,40 +85,40 @@
       <column name="max_count" value="1"/>
       <column name="nominations" value="3"/>
     </insert>
-    <insert tableName="person">
-      <column name="id" value="3"/>
-      <column name="cnic" value="42101-1111111-4"/>
-      <column name="first_name" value="Naveed"/>
-      <column name="family_name" value="Tejani"/>
-      <column name="gender" value="1"/>
-      <column name="date_of_birth" value="1989-11-07"/>
-      <column name="marital_status" value="single"/>
-      <column name="residential_address" value="DD 95"/>
-      <column name="mobile_phone" value="03135489948"/>
-      <column name="email" value="tejaninaveed@gmail.com"/>
-      <column name="area_of_origin" value="Karachi"/>
-      <column name="regional_council_id" value="2"/>
-      <column name="local_council_id" value="3"/>
-      <column name="jamatkhana_id" value="4"/>
-      <column name="image_path" value="42101-1111111-4.png" />
-    </insert>
-    <insert tableName="person">
-      <column name="id" value="4"/>
-      <column name="cnic" value="42101-1111111-5"/>
-      <column name="first_name" value="Amsal"/>
-      <column name="father_name" value="Akber"/>
-      <column name="gender" value="1"/>
-      <column name="date_of_birth" value="1995-05-13"/>
-      <column name="marital_status" value="single"/>
-      <column name="residential_address" value="A-32 Noorabad"/>
-      <column name="mobile_phone" value="03059789964"/>
-      <column name="email" value="amsalakber@hotmail.com"/>
-      <column name="area_of_origin" value="Karachi"/>
-      <column name="regional_council_id" value="2"/>
-      <column name="local_council_id" value="5"/>
-      <column name="jamatkhana_id" value="6"/>
-      <column name="image_path" value="42101-1111111-5.png" />
-    </insert>
+    <!--<insert tableName="person">-->
+      <!--<column name="id" value="3"/>-->
+      <!--<column name="cnic" value="42101-1111111-4"/>-->
+      <!--<column name="first_name" value="Naveed"/>-->
+      <!--<column name="family_name" value="Tejani"/>-->
+      <!--<column name="gender" value="1"/>-->
+      <!--<column name="date_of_birth" value="1989-11-07"/>-->
+      <!--<column name="marital_status" value="single"/>-->
+      <!--<column name="residential_address" value="DD 95"/>-->
+      <!--<column name="mobile_phone" value="03135489948"/>-->
+      <!--<column name="email" value="tejaninaveed@gmail.com"/>-->
+      <!--<column name="area_of_origin" value="Karachi"/>-->
+      <!--<column name="regional_council_id" value="2"/>-->
+      <!--<column name="local_council_id" value="3"/>-->
+      <!--<column name="jamatkhana_id" value="4"/>-->
+      <!--<column name="image_path" value="42101-1111111-4.png" />-->
+    <!--</insert>-->
+    <!--<insert tableName="person">-->
+      <!--<column name="id" value="4"/>-->
+      <!--<column name="cnic" value="42101-1111111-5"/>-->
+      <!--<column name="first_name" value="Amsal"/>-->
+      <!--<column name="father_name" value="Akber"/>-->
+      <!--<column name="gender" value="1"/>-->
+      <!--<column name="date_of_birth" value="1995-05-13"/>-->
+      <!--<column name="marital_status" value="single"/>-->
+      <!--<column name="residential_address" value="A-32 Noorabad"/>-->
+      <!--<column name="mobile_phone" value="03059789964"/>-->
+      <!--<column name="email" value="amsalakber@hotmail.com"/>-->
+      <!--<column name="area_of_origin" value="Karachi"/>-->
+      <!--<column name="regional_council_id" value="2"/>-->
+      <!--<column name="local_council_id" value="5"/>-->
+      <!--<column name="jamatkhana_id" value="6"/>-->
+      <!--<column name="image_path" value="42101-1111111-5.png" />-->
+    <!--</insert>-->
     <insert tableName="cpal_nomination">
       <column name="id" value="2"/>
       <column name="person_id" value="2"/>
