@@ -55,7 +55,7 @@
         <constraints nullable="false" unique="true"/>
       </column>
 
-      <column name="salutation" type="varchar(10)">
+      <column name="salutation" type="bigint">
         <constraints nullable="true"/>
       </column>
       <column name="first_name" type="varchar(100)">
@@ -68,7 +68,7 @@
         <constraints nullable="true"/>
       </column>
 
-      <column name="jamati_title" type="varchar(100)">
+      <column name="jamati_title" type="bigint">
         <constraints nullable="true"/>
       </column>
       <column name="gender" type="int">
@@ -80,7 +80,7 @@
       <column name="residential_address" type="text">
         <constraints nullable="true"/>
       </column>
-      <column name="city" type="varchar(100)">
+      <column name="city" type="bigint">
         <constraints nullable="true"/>
       </column>
       <column name="residence_telephone" type="varchar(100)">
@@ -93,20 +93,20 @@
         <constraints nullable="true"/>
       </column>
 
-      <column name="marital_status" type="varchar(100)">
+      <column name="marital_status" type="bigint">
         <constraints nullable="true"/>
       </column>
-      <column name="area_of_origin" type="varchar(100)">
+      <column name="area_of_origin" type="bigint">
         <constraints nullable="true"/>
       </column>
 
-      <column name="regional_council_id" type="bigint">
+      <column name="regional_council" type="bigint">
         <constraints nullable="true"/>
       </column>
-      <column name="local_council_id" type="bigint">
+      <column name="local_council" type="bigint">
         <constraints nullable="true"/>
       </column>
-      <column name="jamatkhana_id" type="bigint">
+      <column name="jamatkhana" type="bigint">
         <constraints nullable="true"/>
       </column>
       <column name="relocation" type="varchar(100)">
@@ -135,6 +135,9 @@
       <column name="skills" type="json">
         <constraints nullable="true"/>
       </column>
+      <column name="professional_membership" type="json">
+        <constraints nullable="true"/>
+      </column>
 
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false" unique="false"/>
@@ -157,26 +160,29 @@
       <column name="cnic" value="42101-1111111-2"/>
       <column name="image_path" value="42101-1111111-2.png" />
 
-      <column name="salutation" value="Mr." />
+      <column name="salutation" value="1" />
       <column name="first_name" value="Mohsin"/>
       <column name="father_name" value="Mansoor"/>
       <column name="family_name" value="Kerai"/>
 
-      <column name="jamati_title" value="Huzur Mukhi"/>
+      <column name="jamati_title" value="1"/>
       <column name="gender" value="0"/>
       <column name="date_of_birth" value="1993-07-27"/>
+      <column name="city" value="1"/>
       <column name="marital_status" value="single"/>
       <column name="residential_address" value="Flat # DD-108 Karimabad Colony Block 3 FB Area Karachi"/>
       <column name="mobile_phone" value="03312338554"/>
       <column name="email" value="mohsin.kerai@gmail.com"/>
-      <column name="area_of_origin" value="Karachi"/>
-      <column name="regional_council_id" value="2"/>
-      <column name="local_council_id" value="3"/>
-      <column name="jamatkhana_id" value="4"/>
+      <column name="marital_status" value="1"/>
+      <column name="area_of_origin" value="1"/>
+      <column name="regional_council" value="2"/>
+      <column name="local_council" value="3"/>
+      <column name="jamatkhana" value="4"/>
       <column name="education_details" value="[]" />
       <column name="akdn_training" value="[]" />
       <column name="professional_training" value="[]" />
       <column name="skills" value="[]" />
+      <column name="professional_membership" value="[]" />
     </insert>
     <!--<insert tableName="person">-->
       <!--<column name="id" value="2"/>-->

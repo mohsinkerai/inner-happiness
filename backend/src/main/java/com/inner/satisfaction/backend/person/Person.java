@@ -30,28 +30,28 @@ public class Person extends BaseEntity {
   private String passportNumber;
   private String imagePath;
 
-  private String salutation;
+  private long salutation; // id
   private String firstName;
   private String fatherName;
   private String familyName;
 
-  private String jamatiTitle;
+  private long jamatiTitle; // id
   // 0 male, 1 female
   private int gender;
   private Timestamp dateOfBirth;
   private String residentialAddress;
-  private String city;
+  private long city; // id
   private String residenceTelephone;
   private String mobilePhone;
   private String email;
 
-  private String maritalStatus;
-  private String areaOfOrigin;
+  private long maritalStatus; //id
+  private long areaOfOrigin; // id
 
   // LevelID To be Exact
-  private long regionalCouncilId;
-  private long localCouncilId;
-  private long jamatkhanaId;
+  private long regionalCouncil;
+  private long localCouncil;
+  private long jamatkhana;
   private String relocation;
   private Timestamp relocationDateTime;
 
@@ -66,10 +66,6 @@ public class Person extends BaseEntity {
   private List<PersonProfessionalTrainingDto> professionalTraining;
   @Convert(converter = JpaConverterJson.class)
   private List<String> skills;
-//  private List<Long> professionalMembership;
-//  private List<Long> personLanguage;
-//  private List<Long> voluntaryCommunityService;
-
-//  private String fieldOfExpertise;
-//  private String religiousEducation;
+  @Convert(converter = JpaConverterJson.class)
+  private List<String> professionalMembership;
 }
