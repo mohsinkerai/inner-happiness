@@ -135,10 +135,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string toYear, string nameOfDegree, string majorAreaOfStudy)
         {
             var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
+
             sessionEducationList.Add(new EducationModel
             {
                 EducationId = id,
-                CountryOfStudy = countryOfStudy,
+                CountryOfStudy = string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
+                CountryOfStudyName = string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
                 FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
                 Institution = institution,
                 MajorAreaOfStudy = majorAreaOfStudy,

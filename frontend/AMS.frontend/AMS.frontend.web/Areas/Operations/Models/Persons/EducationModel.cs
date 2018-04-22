@@ -10,6 +10,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Country of Study")] public string CountryOfStudy { get; set; }
 
+        public string CountryOfStudyName { get; set; }
+
         [Display(Name = "From Year")] public int? FromYear { get; set; }
 
         [Display(Name = "To Year")] public int? ToYear { get; set; }
