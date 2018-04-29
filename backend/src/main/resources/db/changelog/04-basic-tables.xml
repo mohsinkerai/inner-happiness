@@ -122,7 +122,7 @@
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
-      <column name="area" type="varchar(255)">
+      <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">

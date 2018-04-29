@@ -179,10 +179,10 @@
       <column name="local_council" value="3"/>
       <column name="jamatkhana" value="4"/>
       <column name="education_details" value="[]" />
-      <column name="akdn_training" value="[]" />
-      <column name="professional_training" value="[]" />
+      <column name="akdn_trainings" value="[]" />
+      <column name="professional_trainings" value="[]" />
       <column name="skills" value="[]" />
-      <column name="professional_membership" value="[]" />
+      <column name="professional_memberships" value="[]" />
     </insert>
     <!--<insert tableName="person">-->
       <!--<column name="id" value="2"/>-->
