@@ -34,7 +34,7 @@
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
-      <column name="title" type="varchar(255)">
+      <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
       <column name="gender" type="varchar(255)">
@@ -57,17 +57,17 @@
   <changeSet id="04-02" author="zeeshan.damani">
     <insert tableName="jamati_title">
       <column name="id" value="1"/>
-      <column name="title" value="Huzur Mukhi"/>
+      <column name="name" value="Huzur Mukhi"/>
       <column name="gender" value="Male"/>
     </insert>
     <insert tableName="jamati_title">
       <column name="id" value="2"/>
-      <column name="title" value="Huzur Mukhiani"/>
+      <column name="name" value="Huzur Mukhiani"/>
       <column name="gender" value="female"/>
     </insert>
     <insert tableName="jamati_title">
       <column name="id" value="3"/>
-      <column name="title" value="Alija"/>
+      <column name="name" value="Alija"/>
       <column name="gender" value="Male"/>
     </insert>
   </changeSet>
