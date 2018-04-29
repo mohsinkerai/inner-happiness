@@ -142,11 +142,11 @@
   <changeSet id="04-06" author="zeeshan.damani">
     <insert tableName="area_of_origin">
       <column name="id" value="1"/>
-      <column name="area" value="Hunza"/>
+      <column name="name" value="Hunza"/>
     </insert>
     <insert tableName="area_of_origin">
       <column name="id" value="2"/>
-      <column name="area" value="Punjab"/>
+      <column name="name" value="Punjab"/>
     </insert>
   </changeSet>
 
