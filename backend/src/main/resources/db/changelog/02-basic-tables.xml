@@ -126,16 +126,16 @@
       <column name="education_details" type="json">
         <constraints nullable="true"/>
       </column>
-      <column name="akdn_training" type="json">
+      <column name="akdn_trainings" type="json">
         <constraints nullable="true"/>
       </column>
-      <column name="professional_training" type="json">
+      <column name="professional_trainings" type="json">
         <constraints nullable="true"/>
       </column>
       <column name="skills" type="json">
         <constraints nullable="true"/>
       </column>
-      <column name="professional_membership" type="json">
+      <column name="professional_memberships" type="json">
         <constraints nullable="true"/>
       </column>
 

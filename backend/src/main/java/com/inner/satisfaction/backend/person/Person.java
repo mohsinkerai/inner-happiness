@@ -61,11 +61,11 @@ public class Person extends BaseEntity {
   @Convert(converter = JpaConverterJson.class)
   private List<PersonEducationDto> educationDetails;
   @Convert(converter = JpaConverterJson.class)
-  private List<PersonAkdnTrainingDto> akdnTraining;
+  private List<PersonAkdnTrainingDto> akdnTrainings;
   @Convert(converter = JpaConverterJson.class)
-  private List<PersonProfessionalTrainingDto> professionalTraining;
+  private List<PersonProfessionalTrainingDto> professionalTrainings;
   @Convert(converter = JpaConverterJson.class)
   private List<String> skills;
   @Convert(converter = JpaConverterJson.class)
-  private List<String> professionalMembership;
+  private List<String> professionalMemberships;
 }
