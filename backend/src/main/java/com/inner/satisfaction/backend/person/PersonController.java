@@ -28,6 +28,8 @@ public class PersonController extends BaseController<Person> {
     return personService.findByCnic(cnic);
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping("/search/findByCnicOrFirstNameOrLastName")
   public List<Person> findByCnicOrFirstNameOrLastName(
     @RequestParam("cnic") String cnic,
     @RequestParam("firstName") String firstName,

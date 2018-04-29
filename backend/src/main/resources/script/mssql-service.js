@@ -28,12 +28,12 @@ exports.end = function () {
 
 exports.query = (queryString) => {
     return new Promise((resolve, reject) => {
-        getPool().connect(function(err){
+            getPool().connect(function(err){
             if(err) {
                 console.log(err);
                 reject(err);
             } else {
-                let request = new mssql.Request(getPool()); 
+                let request = new mssql.Request(getPool());
                 request.query(queryString, function(err, recordSet) {
                     if(err) {
                         reject(err);
@@ -43,5 +43,5 @@ exports.query = (queryString) => {
                 });
             }
         });
-    });
+});
 }
