@@ -1,13 +1,16 @@
 package com.inner.satisfaction.backend.person.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseDto;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Data
 @Builder
@@ -24,6 +27,9 @@ public class EmploymentHistoryDto extends BaseDto {
   private String employmentTelephone;
   private long businessType; // ID
   private long businessNature; // ID
-  private Timestamp employmentStartDate;
-  private Timestamp employmentEndDate;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  private LocalDate employmentStartDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  private LocalDate employmentEndDate;
 }

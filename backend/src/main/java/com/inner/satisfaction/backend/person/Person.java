@@ -11,7 +11,7 @@ import com.inner.satisfaction.backend.person.dto.PersonEducationDto;
 import com.inner.satisfaction.backend.person.dto.PersonProfessionalTrainingDto;
 import com.inner.satisfaction.backend.person.dto.VoluntaryCommunityServiceDto;
 import com.inner.satisfaction.backend.person.dto.VoluntaryPublicServiceDto;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -41,7 +41,9 @@ public class Person extends BaseEntity {
   private long jamatiTitle; // id
   // 0 male, 1 female
   private int gender;
-  private Timestamp dateOfBirth;
+
+  // Should Represent UTC
+  private LocalDate dateOfBirth;
   private String residentialAddress;
   private long city; // id
   private String residenceTelephone;
@@ -56,7 +58,8 @@ public class Person extends BaseEntity {
   private long localCouncil;
   private long jamatkhana;
   private String relocation;
-  private Timestamp relocationDateTime;
+  // Should Represent UTC
+  private LocalDate relocationDateTime;
 
   private String highestLevelOfStudy;
   private String highestLevelOfStudyOthers;
@@ -96,7 +99,7 @@ public class Person extends BaseEntity {
   private String willingnessToDevoteTimeInFuture;
 
   @Convert(converter = JpaConverterJson.class)
-  private List<Long> fieldOfInterests; // ID's
+  private List<Integer> fieldOfInterests; // ID's
 
   private long hoursPerWeek;
 

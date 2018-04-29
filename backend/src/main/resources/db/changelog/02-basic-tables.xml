@@ -52,7 +52,7 @@
         <constraints nullable="true" unique="false"/>
       </column>
       <column name="image_path" type="varchar(255)">
-        <constraints nullable="false" unique="true"/>
+        <constraints nullable="true" unique="true"/>
       </column>
 
       <column name="salutation" type="bigint">
