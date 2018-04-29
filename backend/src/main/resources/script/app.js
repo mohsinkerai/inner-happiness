@@ -160,6 +160,46 @@ function syncEducationalInstitution() {
     });
 }
 
+function syncPosition() {
+    getDataFromTable("Ali_tblPosition")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO \`position\` (name) VALUES ("${value['Descr']}")`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncSecularStudyLevel() {
+    getDataByQuery("SELECT DISTINCT EducationLevel FROM Ali_tblPerson WHERE EducationLevel IS NOT NULL AND EducationLevel != ''")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO secular_study_level (level) VALUES ("${value['EducationLevel']}")`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncSkills() {
+    getDataByQuery("SELECT DISTINCT SkillsGot FROM Ali_tblPerson WHERE SkillsGot IS NOT NULL AND SkillsGot != ''")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO skill (name) VALUES ("${value['SkillsGot']}")`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncPublicServiceInstitution() {
+    getDataByQuery("SELECT DISTINCT InstitutionName FROM Ali_tblPublicService WHERE InstitutionName IS NOT NULL AND InstitutionName != ''")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO public_service_institution (name) VALUES ("${value['InstitutionName']}")`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
 //syncCity();
 //syncCountry();
 //syncJamatiTitle();
@@ -175,21 +215,22 @@ function syncEducationalInstitution() {
 //syncMaritalStatus();
 //syncOccupation();
 //syncEducationalInstitution();
-
+//syncPosition();
+//syncSecularStudyLevel();
+//syncSkills();
+//syncPublicServiceInstitution();
 
 /*
 Confusion: educational_institution, institution
  */
 
 /*
-Left:
+Left: (?)
     akdntraining
     areaoforigin
     fieldofexperties
-    highestlevelofstudy
-    institution
-    highestlevelstudy
     religiousqualification
-    secularstudylevel
-    skill
+
+    institution (replaced with public_service_institution)
+    highestlevelstudy (should be replaced by secular_study_level)
  */
