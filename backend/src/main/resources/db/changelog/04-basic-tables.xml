@@ -29,7 +29,7 @@
     <!--</insert>-->
   <!--</changeSet>-->
   <changeSet id="04-01" author="zeeshan.damani">
-    <createTable tableName="jamati_titles"
+    <createTable tableName="jamati_title"
       remarks="Jamati Title awarded to nominated khidmatgars">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
@@ -55,17 +55,17 @@
     </createTable>
   </changeSet>
   <changeSet id="04-02" author="zeeshan.damani">
-    <insert tableName="jamati_titles">
+    <insert tableName="jamati_title">
       <column name="id" value="1"/>
       <column name="title" value="Huzur Mukhi"/>
       <column name="gender" value="Male"/>
     </insert>
-    <insert tableName="jamati_titles">
+    <insert tableName="jamati_title">
       <column name="id" value="2"/>
       <column name="title" value="Huzur Mukhiani"/>
       <column name="gender" value="female"/>
     </insert>
-    <insert tableName="jamati_titles">
+    <insert tableName="jamati_title">
       <column name="id" value="3"/>
       <column name="title" value="Alija"/>
       <column name="gender" value="Male"/>
@@ -77,7 +77,7 @@
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
-      <column name="status" type="varchar(255)">
+      <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
@@ -97,23 +97,23 @@
   <changeSet id="04-04" author="zeeshan.damani">
     <insert tableName="marital_status">
       <column name="id" value="1"/>
-      <column name="status" value="Single"/>
+      <column name="name" value="Single"/>
     </insert>
     <insert tableName="marital_status">
       <column name="id" value="2"/>
-      <column name="status" value="Widowed"/>
+      <column name="name" value="Widowed"/>
     </insert>
     <insert tableName="marital_status">
       <column name="id" value="3"/>
-      <column name="status" value="Married"/>
+      <column name="name" value="Married"/>
     </insert>
     <insert tableName="marital_status">
       <column name="id" value="4"/>
-      <column name="status" value="Divorced"/>
+      <column name="name" value="Divorced"/>
     </insert>
     <insert tableName="marital_status">
       <column name="id" value="5"/>
-      <column name="status" value="Separated"/>
+      <column name="name" value="Separated"/>
     </insert>
   </changeSet>
   <changeSet id="04-05" author="zeeshan.damani">
@@ -195,7 +195,7 @@
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
-      <column name="salutation" type="varchar(255)">
+      <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
@@ -215,11 +215,11 @@
   <changeSet id="04-10" author="zeeshan.damani">
     <insert tableName="salutation">
       <column name="id" value="1"/>
-      <column name="salutation" value="Mr."/>
+      <column name="name" value="Mr."/>
       </insert>
     <insert tableName="salutation">
       <column name="id" value="2"/>
-      <column name="salutation" value="Mrs."/>
+      <column name="name" value="Mrs."/>
     </insert>
   </changeSet>
 
@@ -229,7 +229,7 @@
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
-      <column name="level" type="varchar(255)">
+      <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
@@ -249,11 +249,11 @@
   <changeSet id="04-12" author="zeeshan.damani">
     <insert tableName="secular_study_level">
       <column name="id" value="1"/>
-      <column name="level" value="PHD"/>
+      <column name="name" value="PHD"/>
     </insert>
     <insert tableName="secular_study_level">
       <column name="id" value="2"/>
-      <column name="level" value="Masters"/>
+      <column name="name" value="Masters"/>
     </insert>
   </changeSet>
 
