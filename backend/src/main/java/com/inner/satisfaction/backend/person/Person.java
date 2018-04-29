@@ -58,14 +58,25 @@ public class Person extends BaseEntity {
   private String highestLevelOfStudy;
   private String highestLevelOfStudyOthers;
 
+  // 2.Education - Graduation & Post Graduation
   @Convert(converter = JpaConverterJson.class)
   private List<PersonEducationDto> educationDetails;
+
+  // 2.Education - AKDN Training
   @Convert(converter = JpaConverterJson.class)
   private List<PersonAkdnTrainingDto> akdnTrainings;
+
+  // 2.Education - Professional Training & Acheivements
   @Convert(converter = JpaConverterJson.class)
   private List<PersonProfessionalTrainingDto> professionalTrainings;
+
+  // 2.Education - Professional Training & Acheivements
   @Convert(converter = JpaConverterJson.class)
   private List<String> skills;
+
+  // 2.Education - Professional Training & Acheivements
   @Convert(converter = JpaConverterJson.class)
   private List<String> professionalMemberships;
+
+
 }

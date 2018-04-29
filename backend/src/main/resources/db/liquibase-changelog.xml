@@ -9,6 +9,7 @@
   <include file="changelog/03-basic-tables.xml" relativeToChangelogFile="true"/>
   <include file="changelog/04-basic-tables.xml" relativeToChangelogFile="true"/>
   <include file="changelog/05-basic-tables.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/06-basic-tables.xml" relativeToChangelogFile="true"/>
   <!--<include file="changelog/02-insert-data-authors.xml" relativeToChangelogFile="true"/>-->
   <!--<include file="changelog/02-insert-data-books.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>
