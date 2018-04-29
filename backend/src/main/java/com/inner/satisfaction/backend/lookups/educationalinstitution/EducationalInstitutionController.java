@@ -11,7 +11,7 @@ import static com.inner.satisfaction.backend.lookups.educationalinstitution.Educ
 @RequestMapping(CONSTANTS_PREFIX + PATH)
 public class EducationalInstitutionController extends BaseController<EducationalInstitution> {
 
-  public static final String PATH = "educational-institution";
+  public static final String PATH = "educational-publicserviceinstitution";
 
   public EducationalInstitutionController(
     EducationalInstitutionService educationalInstitutionService) {

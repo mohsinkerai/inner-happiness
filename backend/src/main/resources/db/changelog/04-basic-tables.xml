@@ -330,7 +330,7 @@
   </changeSet>
 
   <changeSet id="04-17" author="mohsin.kerai">
-    <createTable tableName="institution"
+    <createTable tableName="public_service_institution"
       remarks="All Educational Institution, In Pakistan or Anywhere in this world">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
@@ -353,15 +353,15 @@
     </createTable>
   </changeSet>
   <changeSet id="04-18" author="mohsin.kerai">
-    <insert tableName="institution">
+    <insert tableName="public_service_institution">
       <column name="id" value="1"/>
       <column name="name" value="IBA"/>
     </insert>
-    <insert tableName="institution">
+    <insert tableName="public_service_institution">
       <column name="id" value="2"/>
       <column name="name" value="FAST"/>
     </insert>
-    <insert tableName="institution">
+    <insert tableName="public_service_institution">
       <column name="id" value="3"/>
       <column name="name" value="CBM"/>
     </insert>
