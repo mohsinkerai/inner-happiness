@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseEntity;
 import com.inner.satisfaction.backend.config.JpaConverterJson;
+import com.inner.satisfaction.backend.person.dto.EmploymentHistoryDto;
+import com.inner.satisfaction.backend.person.dto.LanguageDto;
 import com.inner.satisfaction.backend.person.dto.PersonAkdnTrainingDto;
 import com.inner.satisfaction.backend.person.dto.PersonEducationDto;
 import com.inner.satisfaction.backend.person.dto.PersonProfessionalTrainingDto;
-import com.inner.satisfaction.backend.person.dto.PersonSkillsDto;
+import com.inner.satisfaction.backend.person.dto.VoluntaryCommunityServiceDto;
+import com.inner.satisfaction.backend.person.dto.VoluntaryPublicServiceDto;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.Convert;
@@ -78,5 +81,31 @@ public class Person extends BaseEntity {
   @Convert(converter = JpaConverterJson.class)
   private List<String> professionalMemberships;
 
+  // 2.Education - Professional Training & Acheivements
+  @Convert(converter = JpaConverterJson.class)
+  private List<LanguageDto> languages;
+
+  // 3.1. Voluntary Community Service
+  @Convert(converter = JpaConverterJson.class)
+  private List<VoluntaryCommunityServiceDto> voluntaryCommunityServices;
+
+  // 3.2. Voluntary Public Service
+  @Convert(converter = JpaConverterJson.class)
+  private List<VoluntaryPublicServiceDto> voluntaryPublicServices;
+
+  private String willingnessToDevoteTimeInFuture;
+
+  @Convert(converter = JpaConverterJson.class)
+  private List<Long> fieldOfInterests; // ID's
+
+  private long hoursPerWeek;
+
+  // 6. Occupation
+  private long occupationType;
+  private String occupationOthers;
+
+  // EmploymentHistory
+  @Convert(converter = JpaConverterJson.class)
+  private List<EmploymentHistoryDto> employmentHistorys;
 
 }
