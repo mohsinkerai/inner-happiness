@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class PersonService extends BaseService<Person> {
 
   public Person findByCnic(String cnic) {
     return personRepository.findByCnic(cnic);
+  }
+
+  public List<Person> findByCnicOrFirstNameOrLastName(String cnic, String firstName, String lastName) {
+    return personRepository.findByCnicIgnoreCaseContainingOrFirstNameIgnoreCaseContainingOrFamilyNameIgnoreCaseContaining(cnic, firstName, lastName);
   }
 
   @Override
