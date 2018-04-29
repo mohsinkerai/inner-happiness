@@ -529,12 +529,8 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="Read" class="control-label"></label>
-                                <select asp-for="Read" class="form-control m-select2" placeholder="Select a proficiency">
+                                <select asp-for="Read" asp-items="@ViewBag.Proficiency" class="form-control m-select2" placeholder="Select a proficiency">
                                     <option></option>
-                                    <option value="Native">Native</option>
-                                    <option value="Excellent">Excellent</option>
-                                    <option value="Good">Good</option>
-                                    <option value="Fair">Fair</option>
                                 </select>
                                 <span asp-validation-for="Read" class="form-control-feedback"></span>
                             </div>
@@ -542,12 +538,8 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="Write" class="control-label"></label>
-                                <select asp-for="Write" class="form-control m-select2" placeholder="Select a proficiency">
+                                <select asp-for="Write" asp-items="@ViewBag.Proficiency" class="form-control m-select2" placeholder="Select a proficiency">
                                     <option></option>
-                                    <option value="Native">Native</option>
-                                    <option value="Excellent">Excellent</option>
-                                    <option value="Good">Good</option>
-                                    <option value="Fair">Fair</option>
                                 </select>
                                 <span asp-validation-for="Write" class="form-control-feedback"></span>
                             </div>
@@ -555,12 +547,8 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="Speak" class="control-label"></label>
-                                <select asp-for="Speak" class="form-control m-select2" placeholder="Select a proficiency">
+                                <select asp-for="Speak" asp-items="@ViewBag.Proficiency" class="form-control m-select2" placeholder="Select a proficiency">
                                     <option></option>
-                                    <option value="Native">Native</option>
-                                    <option value="Excellent">Excellent</option>
-                                    <option value="Good">Good</option>
-                                    <option value="Fair">Fair</option>
                                 </select>
                                 <span asp-validation-for="Speak" class="form-control-feedback"></span>
                             </div>
