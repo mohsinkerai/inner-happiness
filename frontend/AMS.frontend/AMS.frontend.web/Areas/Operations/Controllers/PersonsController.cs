@@ -55,6 +55,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.AkdnTrainingCountryList = ListOfCountries;
                 ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
 
+                List<SelectListItem> ListOfLanguageProficiency = await RestfulClient.getLanguageProficiency();
+                ViewBag.Proficiency = ListOfLanguageProficiency;
+
                 ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
                 ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
                 ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();

@@ -15,9 +15,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         private static HttpClient client;
         private static readonly string BASE_URL = "http://13.93.85.18:8080/";
-
-        /*---------------------------------------Person Add--------------------------------------------*/
-
+       
         public static async Task<List<SelectListItem>> getSalutation()
         {
             client = new HttpClient();
@@ -26,7 +24,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             try
             {
-                var Res = await client.GetAsync("constants/salutatuions");
+                var Res = await client.GetAsync("constants/salutation/all");
                 if (Res.IsSuccessStatusCode)
                 {
                     var json = Res.Content.ReadAsStringAsync().Result;
@@ -36,8 +34,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     foreach (var item in myObject)
                     {
                         var id = Convert.ToString(item.id);
-                        var salutation = Convert.ToString(item.salutation);
-                        list.Add(new SelectListItem { Text = salutation, Value = id });
+                        var name = Convert.ToString(item.name);
+                        list.Add(new SelectListItem { Text = name, Value = id });
                     }
 
                     return list;
@@ -58,7 +56,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/jamatiTitles");
+            var Res = await client.GetAsync("constants/jamati-title/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -68,10 +66,9 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 foreach (var item in myObject)
                 {
                     var id = Convert.ToString(item.id);
-                    var title = Convert.ToString(item.title);
-                    var gender = Convert.ToString(item.gender);
+                    var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem { Text = title, Value = id });
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -86,7 +83,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/maritalStatuses");
+            var Res = await client.GetAsync("constants/marital-status/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -96,9 +93,9 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 foreach (var item in myObject)
                 {
                     var id = Convert.ToString(item.id);
-                    var status = Convert.ToString(item.status);
+                    var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem { Text = status, Value = id });
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -113,7 +110,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/cities");
+            var Res = await client.GetAsync("constants/city/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -140,7 +137,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/areaOfOrigin");
+            var Res = await client.GetAsync("constants/area-of-origin/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -150,9 +147,9 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 foreach (var item in myObject)
                 {
                     var id = Convert.ToString(item.id);
-                    var area = Convert.ToString(item.area);
+                    var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem { Text = area, Value = id });
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -167,7 +164,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/institutions");
+            var Res = await client.GetAsync("constants/institution/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -194,7 +191,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/countries");
+            var Res = await client.GetAsync("constants/country/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -248,7 +245,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/religiousQualifications");
+            var Res = await client.GetAsync("constants/religious-qualification/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -460,7 +457,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/fieldOfInterests");
+            var Res = await client.GetAsync("constants/field-of-interest/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -486,7 +483,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/Occupations");
+            var Res = await client.GetAsync("constants/occupation/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -512,7 +509,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/bussinessType");
+            var Res = await client.GetAsync("constants/business-type/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -538,7 +535,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/bussinessNature");
+            var Res = await client.GetAsync("constants/business-nature/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -635,11 +632,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             return null;
         }
-
-        /*-----------------------------------------Person Add--------------------------------------------*/
-
-        /*-----------------------------------------Person Index------------------------------------------*/
-
+        
         public static async Task<List<PersonModel>> getPersonDetails()
         {
             client = new HttpClient();
@@ -659,11 +652,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             return null;
         }
-
-        /*-----------------------------------------Person Index------------------------------------------*/
-
-        /*-----------------------------------------Person Detail------------------------------------------*/
-
+        
         public static async Task<PersonModel> getPersonDetailsById(string id)
         {
             client = new HttpClient();
@@ -684,6 +673,30 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        /*-----------------------------------------Person Detail------------------------------------------*/
+        public static async Task<List<SelectListItem>> getLanguageProficiency()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("/constants/language-proficiency/all");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;  
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
     }
 }
