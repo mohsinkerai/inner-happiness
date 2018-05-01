@@ -21,7 +21,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Jamati Title")] public string JamatiTitle { get; set; }
 
         public Gender Gender { get; set; }
-
+        
         [Display(Name = "Date of Birth")] public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "Marital Status")] public string MaritalStatus { get; set; }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -698,5 +700,45 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             return null;
         }
+
+        public static async Task<List<PersonModel>> searchPerson(string cnic, string firstName, string lastName)
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("person/search/findByCnicOrFirstNameOrLastName?cnic="+cnic+"&firstName="+firstName+"&lastName="+lastName);
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+
+                List<PersonModel> person = new List<PersonModel>();
+
+                person = JsonConvert.DeserializeObject<List<PersonModel>>(json);
+
+                return person;
+            }
+            return null;
+        }
+
+        public static async Task savePersonData(PersonModel personModel) {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string json = JsonConvert.SerializeObject(personModel);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json.ToString());
+            var Res = await client.PostAsync("person", httpContent);
+
+            if (Res.StatusCode == HttpStatusCode.OK) {
+
+            }
+            
+        }
+
+
+
     }
 }
