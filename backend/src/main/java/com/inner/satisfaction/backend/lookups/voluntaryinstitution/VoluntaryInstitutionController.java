@@ -11,7 +11,7 @@ import static com.inner.satisfaction.backend.lookups.voluntaryinstitution.Volunt
 @RequestMapping(CONSTANTS_PREFIX + PATH)
 public class VoluntaryInstitutionController extends BaseController<VoluntaryInstitution> {
 
-  public static final String PATH = "voluntary-institution";
+  public static final String PATH = "voluntary-publicserviceinstitution";
 
   public VoluntaryInstitutionController(VoluntaryInstitutionService voluntaryInstitutionService) {
     super(voluntaryInstitutionService);

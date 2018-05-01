@@ -16,8 +16,10 @@ spring:
   jackson:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
+      WRITE_DATES_AS_TIMESTAMPS: false
     deserialization:
       FAIL_ON_UNKNOWN_PROPERTIES: false
+#      READ_DATES_AS_TIMESTAMPS: false
 logging:
   file: app.log
 springfox.documentation.swagger.v2.path: /swagger.json

@@ -3,6 +3,8 @@ package com.inner.satisfaction.backend;
 import com.inner.satisfaction.backend.level.LevelService;
 import com.inner.satisfaction.backend.person.PersonRepository;
 import com.inner.satisfaction.backend.person.relation.PersonRelationPersonService;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +25,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
   @Override
   public void run(String... strings) throws Exception {
+    log.info("Local Time is {}", LocalDateTime.now());
+
 //    personRepository.save(Person.builder()
 //      .firstName("Mohsin")
 //      .fatherName("Mansoor")
