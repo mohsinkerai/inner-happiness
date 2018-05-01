@@ -40,17 +40,18 @@ public class PersonService extends BaseService<Person> {
   public Person save(Person person) {
     try {
       String imagePath = person.getImagePath();
-      byte[] imageByte = Base64.getDecoder().decode(imagePath.split(",")[1]);
-      ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-      BufferedImage image = ImageIO.read(bis);
-      bis.close();
+      if(imagePath != null) {
+        byte[] imageByte = Base64.getDecoder().decode(imagePath.split(",")[1]);
+        ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+        BufferedImage image = ImageIO.read(bis);
+        bis.close();
 
-      // write the image to a file
-      File file = new File(path + File.separator + person.getCnic() + ".png");
-      ImageIO.write(image, "png", file);
-      String fileName = person.getCnic() + ".png";
-      person.setImagePath(fileName);
-
+        // write the image to a file
+        File file = new File(path + File.separator + person.getCnic() + ".png");
+        ImageIO.write(image, "png", file);
+        String fileName = person.getCnic() + ".png";
+        person.setImagePath(fileName);
+      }
       return super.save(person);
     } catch (IOException e) {
       throw new BadRequestException("Unable to Save Image, Invalid Image or Format", e);

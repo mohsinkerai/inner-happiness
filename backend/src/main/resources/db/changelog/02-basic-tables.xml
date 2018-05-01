@@ -52,7 +52,7 @@
         <constraints nullable="true" unique="false"/>
       </column>
       <column name="image_path" type="varchar(255)">
-        <constraints nullable="false" unique="true"/>
+        <constraints nullable="true" unique="true"/>
       </column>
 
       <column name="salutation" type="bigint">
@@ -139,6 +139,34 @@
         <constraints nullable="true"/>
       </column>
 
+      <column name="languages" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="voluntary_community_services" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="voluntary_public_services" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="willingness_to_devote_time_in_future" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="field_of_interests" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="hours_per_week" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="occupation_type" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="occupation_others" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="employment_historys" type="json">
+        <constraints nullable="true"/>
+      </column>
+
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false" unique="false"/>
       </column>
@@ -183,6 +211,14 @@
       <column name="professional_trainings" value="[]" />
       <column name="skills" value="[]" />
       <column name="professional_memberships" value="[]" />
+      <column name="languages" value="[]" />
+      <column name="voluntary_community_services" value="[]" />
+      <column name="voluntary_public_services" value="[]" />
+      <column name="willingness_to_devote_time_in_future" value="Change institution" />
+      <column name="field_of_interests" value="[]" />
+      <column name="hours_per_week" value="9" />
+      <column name="occupation_type" value="2" />
+      <column name="employment_historys" value="[]" />
     </insert>
     <!--<insert tableName="person">-->
       <!--<column name="id" value="2"/>-->
