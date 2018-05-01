@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -35,8 +36,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Mobile No")] public string MobilePhone { get; set; }
 
-        [Display(Name = "Email Address")]
-        public string EmailAddress { get; set; }
+        [Display(Name = "Email Address")] public string EmailAddress { get; set; }
 
         [Display(Name = "Area of Origin")] public string AreaOfOrigin { get; set; }
 
@@ -63,16 +63,25 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Others")] public string HighestLevelOfStudyOther { get; set; }
 
-        public string Institution { get; set; }
+        [JsonIgnore] public string Institution { get; set; }
 
-        [Display(Name = "Country of Study")] public string CountryOfStudy { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Country of Study")]
+        public string CountryOfStudy { get; set; }
 
-        [Display(Name = "From Year")] public int? FromYear { get; set; }
+        [JsonIgnore]
+        [Display(Name = "From Year")]
+        public int? FromYear { get; set; }
 
-        [Display(Name = "To Year")] public int? ToYear { get; set; }
+        [JsonIgnore]
+        [Display(Name = "To Year")]
+        public int? ToYear { get; set; }
 
-        [Display(Name = "Name of Degree")] public string NameOfDegree { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Name of Degree")]
+        public string NameOfDegree { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "Major Area of Study")]
         public string MajorAreaOfStudy { get; set; }
 
@@ -83,55 +92,84 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Religious Education")]
         public string ReligiousEducation { get; set; }
 
-        [Display(Name = "Training")] public string AkdnTraining { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Training")]
+        public string AkdnTraining { get; set; }
 
-        [Display(Name = "Country")] public string AkdnTrainingCountry { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Country")]
+        public string AkdnTrainingCountry { get; set; }
 
-        [Display(Name = "Month")] public string AkdnTrainingMonth { get; set; }
+        [JsonIgnore] [Display(Name = "Month")] public string AkdnTrainingMonth { get; set; }
 
-        [Display(Name = "Year")] public string AkdnTrainingYear { get; set; }
+        [JsonIgnore] [Display(Name = "Year")] public string AkdnTrainingYear { get; set; }
 
         public List<AkdnTrainingModel> AkdnTrainings { get; set; }
 
-        [Display(Name = "Training")] public string ProfesisonalTraining { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Training")]
+        public string ProfesisonalTraining { get; set; }
 
-        [Display(Name = "Institution")] public string ProfessionalTrainingInstitution { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Institution")]
+        public string ProfessionalTrainingInstitution { get; set; }
 
-        [Display(Name = "Country")] public string ProfessionalTrainingCountry { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Country")]
+        public string ProfessionalTrainingCountry { get; set; }
 
-        [Display(Name = "Month")] public string ProfessionalTrainingMonth { get; set; }
+        [JsonIgnore] [Display(Name = "Month")] public string ProfessionalTrainingMonth { get; set; }
 
-        [Display(Name = "Year")] public string ProfessionalTrainingYear { get; set; }
+        [JsonIgnore] [Display(Name = "Year")] public string ProfessionalTrainingYear { get; set; }
 
         public List<ProfessionalTrainingModel> ProfessionalTrainings { get; set; }
 
         public List<string> Skills { get; set; }
         public List<string> ProfessionalMemberships { get; set; }
 
-        public string Language { get; set; }
-        public string Read { get; set; }
-        public string Write { get; set; }
-        public string Speak { get; set; }
+        [JsonIgnore] public string Language { get; set; }
+
+        [JsonIgnore] public string Read { get; set; }
+
+        [JsonIgnore] public string Write { get; set; }
+
+        [JsonIgnore] public string Speak { get; set; }
 
         public List<LanguageProficiencyModel> LanguageProficiencies { get; set; }
 
-        [Display(Name = "Institution")] public string VoluntaryCommunityInstitution { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Institution")]
+        public string VoluntaryCommunityInstitution { get; set; }
 
-        [Display(Name = "From Year")] public int? VoluntaryCommunityFromYear { get; set; }
+        [JsonIgnore]
+        [Display(Name = "From Year")]
+        public int? VoluntaryCommunityFromYear { get; set; }
 
-        [Display(Name = "To Year")] public int? VoluntaryCommunityToYear { get; set; }
+        [JsonIgnore]
+        [Display(Name = "To Year")]
+        public int? VoluntaryCommunityToYear { get; set; }
 
-        [Display(Name = "Position")] public string VoluntaryCommunityPosition { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Position")]
+        public string VoluntaryCommunityPosition { get; set; }
 
         public List<VoluntaryCommunityModel> VoluntaryCommunityServices { get; set; }
 
-        [Display(Name = "Institution")] public string VoluntaryPublicInstitution { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Institution")]
+        public string VoluntaryPublicInstitution { get; set; }
 
-        [Display(Name = "From Year")] public int? VoluntaryPublicFromYear { get; set; }
+        [JsonIgnore]
+        [Display(Name = "From Year")]
+        public int? VoluntaryPublicFromYear { get; set; }
 
-        [Display(Name = "To Year")] public int? VoluntaryPublicToYear { get; set; }
+        [JsonIgnore]
+        [Display(Name = "To Year")]
+        public int? VoluntaryPublicToYear { get; set; }
 
-        [Display(Name = "Position")] public string VoluntaryPublicPosition { get; set; }
+        [JsonIgnore]
+        [Display(Name = "Position")]
+        public string VoluntaryPublicPosition { get; set; }
 
         public List<VoluntaryPublicModel> VoluntaryPublicServices { get; set; }
 
@@ -147,21 +185,32 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Others")] public string OccupationTypeOther { get; set; }
 
-        public string NameOfOrganization { get; set; }
-        public string Designation { get; set; }
-        public string Location { get; set; }
+        [JsonIgnore] public string NameOfOrganization { get; set; }
 
-        public string EmploymentEmailAddress { get; set; }
+        [JsonIgnore] public string Designation { get; set; }
 
-        public string EmploymentTelephone { get; set; }
+        [JsonIgnore] public string Location { get; set; }
 
-        public string TypeOfBusiness { get; set; }
+        [JsonIgnore] public string EmploymentEmailAddress { get; set; }
 
-        public string NatureOfBusiness { get; set; }
-        public string NatureOfBusinessOther { get; set; }
-        public DateTime? EmploymentStartDate { get; set; }
-        public DateTime? EmploymentEndDate { get; set; }
+        [JsonIgnore] public string EmploymentTelephone { get; set; }
+
+        [JsonIgnore] public string TypeOfBusiness { get; set; }
+
+        [JsonIgnore] public string NatureOfBusiness { get; set; }
+
+        [JsonIgnore] public string NatureOfBusinessOther { get; set; }
+
+        [JsonIgnore] public DateTime? EmploymentStartDate { get; set; }
+
+        [JsonIgnore] public DateTime? EmploymentEndDate { get; set; }
 
         public List<EmploymentModel> Employments { get; set; }
+
+        [Display(Name = "Cnic")] [JsonIgnore] public string RelativeCnic { get; set; }
+
+        [Display(Name = "Salutation")]
+        [JsonIgnore]
+        public string RelativeSalutation { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -16,10 +17,13 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string EmploymentTelephone { get; set; }
 
         public string TypeOfBusiness { get; set; }
-        public string TypeOfBusinessName { get; set; }
+
+        [JsonIgnore] public string TypeOfBusinessName { get; set; }
 
         public string NatureOfBusiness { get; set; }
-        public string NatureOfBusinessName { get; set; }
+
+        [JsonIgnore] public string NatureOfBusinessName { get; set; }
+
         public string NatureOfBusinessOther { get; set; }
         public DateTime? EmploymentStartDate { get; set; }
         public DateTime? EmploymentEndDate { get; set; }

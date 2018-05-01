@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -7,18 +8,20 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string EducationId { get; set; }
 
         public string Institution { get; set; }
-        public string InstitutionName { get; set; }
+
+        [JsonIgnore] public string InstitutionName { get; set; }
 
         [Display(Name = "Country of Study")] public string CountryOfStudy { get; set; }
 
-        public string CountryOfStudyName { get; set; }
+        [JsonIgnore] public string CountryOfStudyName { get; set; }
 
         [Display(Name = "From Year")] public int? FromYear { get; set; }
 
         [Display(Name = "To Year")] public int? ToYear { get; set; }
 
         [Display(Name = "Name of Degree")] public string NameOfDegree { get; set; }
-        public string NameOfDegreeName { get; set; }
+
+        [JsonIgnore] public string NameOfDegreeName { get; set; }
 
         [Display(Name = "Major Area of Study")]
         public string MajorAreaOfStudy { get; set; }
