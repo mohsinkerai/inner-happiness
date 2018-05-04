@@ -111,6 +111,6 @@ public class Person extends BaseEntity {
 
   // EmploymentHistory
   @Convert(converter = JpaConverterJson.class)
-  private List<EmploymentHistoryDto> employmentHistorys;
+  private List<EmploymentHistoryDto> employments;
 
 }

@@ -166,7 +166,7 @@
       <column name="occupation_others" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
-      <column name="employment_historys" type="json">
+      <column name="employments" type="json">
         <constraints nullable="true"/>
       </column>
 
@@ -221,7 +221,7 @@
       <column name="field_of_interests" value="[]" />
       <column name="hours_per_week" value="9" />
       <column name="occupation_type" value="2" />
-      <column name="employment_historys" value="[]" />
+      <column name="employments" value="[]" />
     </insert>
     <!--<insert tableName="person">-->
       <!--<column name="id" value="2"/>-->
