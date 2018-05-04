@@ -58,7 +58,7 @@ public class Person extends BaseEntity {
   private long regionalCouncil;
   private long localCouncil;
   private long jamatkhana;
-  private boolean planToRelocate;
+  private Boolean planToRelocate;
   private String relocateLocation;
   // Should Represent UTC
   private LocalDate relocationDateTime;

@@ -126,7 +126,7 @@
         <constraints nullable="true"/>
       </column>
 
-      <column name="education_details" type="json">
+      <column name="educations" type="json">
         <constraints nullable="true"/>
       </column>
       <column name="akdn_trainings" type="json">
@@ -209,7 +209,7 @@
       <column name="regional_council" value="2"/>
       <column name="local_council" value="3"/>
       <column name="jamatkhana" value="4"/>
-      <column name="education_details" value="[]" />
+      <column name="educations" value="[]" />
       <column name="akdn_trainings" value="[]" />
       <column name="professional_trainings" value="[]" />
       <column name="skills" value="[]" />
