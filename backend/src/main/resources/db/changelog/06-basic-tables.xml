@@ -42,7 +42,7 @@
     </insert>
   </changeSet>
 
-  <changeSet author="mohsin.kerai" id="06-01">
+  <changeSet author="mohsin.kerai" id="06-03">
     <createTable remarks="Relation Repository, Father, Mother, Sister, Brother"
       tableName="relation">
       <column autoIncrement="true" name="id" type="bigint">
@@ -65,7 +65,7 @@
       </column>
     </createTable>
   </changeSet>
-  <changeSet author="mohsin.kerai" id="06-02">
+  <changeSet author="mohsin.kerai" id="06-04">
     <insert tableName="relation">
       <column name="name" value="Sister"/>
     </insert>
