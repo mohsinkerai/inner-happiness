@@ -19,7 +19,7 @@ public class PersonProfessionalTrainingDto extends BaseDto{
 
   private String training;
   private String institution;
-  private long country;// Id
+  private long countryOfTraining;// Id
   private long month;
   private int year;
 }

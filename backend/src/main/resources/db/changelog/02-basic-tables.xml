@@ -61,7 +61,7 @@
       <column name="first_name" type="varchar(100)">
         <constraints nullable="true"/>
       </column>
-      <column name="father_name" type="varchar(100)">
+      <column name="fathers_name" type="varchar(100)">
         <constraints nullable="true"/>
       </column>
       <column name="family_name" type="varchar(100)">
@@ -89,7 +89,7 @@
       <column name="mobile_phone" type="varchar(100)">
         <constraints nullable="true"/>
       </column>
-      <column name="email" type="varchar(100)">
+      <column name="email_address" type="varchar(100)">
         <constraints nullable="true"/>
       </column>
 
@@ -109,7 +109,10 @@
       <column name="jamatkhana" type="bigint">
         <constraints nullable="true"/>
       </column>
-      <column name="relocation" type="varchar(100)">
+      <column name="plan_to_relocate" type="tinyint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="relocate_location" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
       <column name="relocation_date_time" type="timestamp">
@@ -190,7 +193,7 @@
 
       <column name="salutation" value="1" />
       <column name="first_name" value="Mohsin"/>
-      <column name="father_name" value="Mansoor"/>
+      <column name="fathers_name" value="Mansoor"/>
       <column name="family_name" value="Kerai"/>
 
       <column name="jamati_title" value="1"/>
@@ -200,7 +203,7 @@
       <column name="marital_status" value="single"/>
       <column name="residential_address" value="Flat # DD-108 Karimabad Colony Block 3 FB Area Karachi"/>
       <column name="mobile_phone" value="03312338554"/>
-      <column name="email" value="mohsin.kerai@gmail.com"/>
+      <column name="email_address" value="mohsin.kerai@gmail.com"/>
       <column name="marital_status" value="1"/>
       <column name="area_of_origin" value="1"/>
       <column name="regional_council" value="2"/>
@@ -224,14 +227,14 @@
       <!--<column name="id" value="2"/>-->
       <!--<column name="cnic" value="42101-1111111-3"/>-->
       <!--<column name="first_name" value="Zeeshan"/>-->
-      <!--<column name="father_name" value="Moiz"/>-->
+      <!--<column name="fathers_name" value="Moiz"/>-->
       <!--<column name="family_name" value="Damani"/>-->
       <!--<column name="gender" value="1"/>-->
       <!--<column name="date_of_birth" value="1994-10-10"/>-->
       <!--<column name="marital_status" value="single"/>-->
       <!--<column name="residential_address" value="KA-3 102"/>-->
       <!--<column name="mobile_phone" value="03322359875"/>-->
-      <!--<column name="email" value="zeshanmoizdamani@gmail.com"/>-->
+      <!--<column name="email_address" value="zeshanmoizdamani@gmail.com"/>-->
       <!--<column name="area_of_origin" value="Karachi"/>-->
       <!--<column name="regional_council_id" value="2"/>-->
       <!--<column name="local_council_id" value="3"/>-->

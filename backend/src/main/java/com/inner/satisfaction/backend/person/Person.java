@@ -13,6 +13,7 @@ import com.inner.satisfaction.backend.person.dto.VoluntaryCommunityServiceDto;
 import com.inner.satisfaction.backend.person.dto.VoluntaryPublicServiceDto;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class Person extends BaseEntity {
 
   private long salutation; // id
   private String firstName;
-  private String fatherName;
+  private String fathersName;
   private String familyName;
 
   private long jamatiTitle; // id
@@ -48,7 +49,7 @@ public class Person extends BaseEntity {
   private long city; // id
   private String residenceTelephone;
   private String mobilePhone;
-  private String email;
+  private String emailAddress;
 
   private long maritalStatus; //id
   private long areaOfOrigin; // id
@@ -57,7 +58,8 @@ public class Person extends BaseEntity {
   private long regionalCouncil;
   private long localCouncil;
   private long jamatkhana;
-  private String relocation;
+  private boolean planToRelocate;
+  private String relocateLocation;
   // Should Represent UTC
   private LocalDate relocationDateTime;
 
@@ -66,7 +68,7 @@ public class Person extends BaseEntity {
 
   // 2.Education - Graduation & Post Graduation
   @Convert(converter = JpaConverterJson.class)
-  private List<PersonEducationDto> educationDetails;
+  private List<PersonEducationDto> educations;
 
   // 2.Education - AKDN Training
   @Convert(converter = JpaConverterJson.class)

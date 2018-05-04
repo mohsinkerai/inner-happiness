@@ -95,7 +95,7 @@
       <!--<column name="marital_status" value="single"/>-->
       <!--<column name="residential_address" value="DD 95"/>-->
       <!--<column name="mobile_phone" value="03135489948"/>-->
-      <!--<column name="email" value="tejaninaveed@gmail.com"/>-->
+      <!--<column name="email_address" value="tejaninaveed@gmail.com"/>-->
       <!--<column name="area_of_origin" value="Karachi"/>-->
       <!--<column name="regional_council_id" value="2"/>-->
       <!--<column name="local_council_id" value="3"/>-->
@@ -106,13 +106,13 @@
       <!--<column name="id" value="4"/>-->
       <!--<column name="cnic" value="42101-1111111-5"/>-->
       <!--<column name="first_name" value="Amsal"/>-->
-      <!--<column name="father_name" value="Akber"/>-->
+      <!--<column name="fathers_name" value="Akber"/>-->
       <!--<column name="gender" value="1"/>-->
       <!--<column name="date_of_birth" value="1995-05-13"/>-->
       <!--<column name="marital_status" value="single"/>-->
       <!--<column name="residential_address" value="A-32 Noorabad"/>-->
       <!--<column name="mobile_phone" value="03059789964"/>-->
-      <!--<column name="email" value="amsalakber@hotmail.com"/>-->
+      <!--<column name="email_address" value="amsalakber@hotmail.com"/>-->
       <!--<column name="area_of_origin" value="Karachi"/>-->
       <!--<column name="regional_council_id" value="2"/>-->
       <!--<column name="local_council_id" value="5"/>-->
