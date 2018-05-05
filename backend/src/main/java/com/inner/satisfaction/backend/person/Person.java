@@ -9,13 +9,14 @@ import com.inner.satisfaction.backend.person.dto.LanguageDto;
 import com.inner.satisfaction.backend.person.dto.PersonAkdnTrainingDto;
 import com.inner.satisfaction.backend.person.dto.PersonEducationDto;
 import com.inner.satisfaction.backend.person.dto.PersonProfessionalTrainingDto;
+import com.inner.satisfaction.backend.person.dto.ReducedPersonDto;
 import com.inner.satisfaction.backend.person.dto.VoluntaryCommunityServiceDto;
 import com.inner.satisfaction.backend.person.dto.VoluntaryPublicServiceDto;
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -51,8 +52,8 @@ public class Person extends BaseEntity {
   private String mobilePhone;
   private String emailAddress;
 
-  private long maritalStatus; //id
-  private long areaOfOrigin; // id
+  private Long maritalStatus; //id
+  private Long areaOfOrigin; // id
 
   // LevelID To be Exact
   private long regionalCouncil;
@@ -106,11 +107,13 @@ public class Person extends BaseEntity {
   private long hoursPerWeek;
 
   // 6. Occupation
-  private long occupationType;
+  private Long occupationType;
   private String occupationOthers;
 
   // EmploymentHistory
   @Convert(converter = JpaConverterJson.class)
   private List<EmploymentHistoryDto> employments;
 
+  @Transient
+  private List<ReducedPersonDto> relations;
 }
