@@ -155,7 +155,7 @@ INSERT INTO `level_type` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `person` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
+  `emailAddress` varchar(255) DEFAULT NULL,
   `date_of_birth` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `person` (
 
 -- Dumping data for table inner_satisfaction.person: ~4 rows (approximately)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` (`id`, `name`, `email`, `date_of_birth`) VALUES
+INSERT INTO `person` (`id`, `name`, `emailAddress`, `date_of_birth`) VALUES
 	(1, 'Mohsin Mansoor Kerai', NULL, '1993-07-27 00:00:00'),
 	(2, 'Zeeshan Moiz Damani', NULL, '1994-10-10 00:00:00'),
 	(3, 'Naveed Tejani', NULL, '1989-11-07 00:00:00'),

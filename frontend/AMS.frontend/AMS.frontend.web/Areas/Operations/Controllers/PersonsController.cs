@@ -442,5 +442,49 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return PartialView("_EmploymentTablePartial", sessionEmploymentList);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> FamilyRelationListAdd(string id, string relativeCnic, string relativeSalutation,
+            string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
+            string relativeDateOfBirth, string relativeRelation)
+        {
+            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ?? new List<FamilyRelationModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
+            }
+
+            sessionFamilyRelationList.Add(new FamilyRelationModel
+            {
+                FamilyRelationId = id,
+                Cnic = relativeCnic,
+                DateOfBirth = Convert.ToDateTime(relativeDateOfBirth),
+                FathersName = relativeFathersName,
+                FirstName = relativeFirstName,
+                RelationName = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[1],
+                FamilyName = relativeFamilyName,
+                JamatiTitle = relativeJamatiTitle,
+                Relation = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[0],
+                Salutation = relativeSalutation
+            });
+            HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
+
+            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FamilyRelationListDelete(string id)
+        {
+            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ?? new List<FamilyRelationModel>();
+            sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
+            HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
+
+            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
     }
 }

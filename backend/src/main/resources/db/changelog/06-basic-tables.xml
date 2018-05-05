@@ -41,4 +41,24 @@
       <column name="name" value="Fair"/>
     </insert>
   </changeSet>
+  <changeSet author="mohsin.kerai" id="06-04">
+    <insert tableName="relation">
+      <column name="name" value="Sister"/>
+    </insert>
+    <insert tableName="relation">
+      <column name="name" value="Brother"/>
+    </insert>
+    <insert tableName="relation">
+      <column name="name" value="Son"/>
+    </insert>
+    <insert tableName="relation">
+      <column name="name" value="Daugher"/>
+    </insert>
+    <insert tableName="relation">
+      <column name="name" value="Father"/>
+    </insert>
+    <insert tableName="relation">
+      <column name="name" value="Mother"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>
