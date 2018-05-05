@@ -124,38 +124,49 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PersonModel model)
         {
-
-            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
-            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
-            var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
-            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ?? new List<LanguageProficiencyModel>();
-            var sessionVoluntaryCommunityList = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ?? new List<VoluntaryCommunityModel>();
-            var sessionVoluntaryPublicList = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ?? new List<VoluntaryPublicModel>();
-            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ?? new List<EmploymentModel>();
-
-            model.AkdnTrainings = sessionAkdnTrainingList;
-            model.Educations = sessionEducationList;
-            model.ProfessionalTrainings = sessionProfessionalTrainingList;
-            model.LanguageProficiencies = sessionLanguageList;
-            model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
-            model.VoluntaryPublicServices = sessionVoluntaryPublicList;
-            model.Employments = sessionEmploymentList;
-            
-            bool success = await RestfulClient.savePersonData(model);
-            if (success)
+            try
             {
-                TempData["MessageType"] = MessageTypes.Success;
-                TempData["Message"] = Messages.SuccessfulUserAdd;
+                if (ModelState.IsValid)
+                {
+                    var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
+                    var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
+                    var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
+                    var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ?? new List<LanguageProficiencyModel>();
+                    var sessionVoluntaryCommunityList = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ?? new List<VoluntaryCommunityModel>();
+                    var sessionVoluntaryPublicList = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ?? new List<VoluntaryPublicModel>();
+                    var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ?? new List<EmploymentModel>();
+
+                    model.AkdnTrainings = sessionAkdnTrainingList;
+                    model.Educations = sessionEducationList;
+                    model.ProfessionalTrainings = sessionProfessionalTrainingList;
+                    model.LanguageProficiencies = sessionLanguageList;
+                    model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
+                    model.VoluntaryPublicServices = sessionVoluntaryPublicList;
+                    model.Employments = sessionEmploymentList;
+
+                    bool success = await RestfulClient.savePersonData(model);
+                    if (success)
+                    {
+                        TempData["MessageType"] = MessageTypes.Success;
+                        TempData["Message"] = Messages.SuccessfulUserAdd;
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ViewBag.MessageType = MessageTypes.Error;
+                        ViewBag.Message = Messages.GeneralError;
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
             }
-
-            return RedirectToAction("Index");
+            return View(model);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Verify(string cnic)
         {
@@ -359,10 +370,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             sessionVoluntaryCommunityList.Add(new VoluntaryCommunityModel
             {
                 VoluntaryCommunityId = id,
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear),
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
                 Position = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[0],
                 PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1]
             });
