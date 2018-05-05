@@ -166,7 +166,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/institution/all");
+            var Res = await client.GetAsync("constants/educational-publicserviceinstitution/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -433,7 +433,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("constants/voluntary-institution/all");
+            var Res = await client.GetAsync("constants/voluntary-publicserviceinstitution/all");
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -690,7 +690,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
+                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
                     list.Add(new SelectListItem { Text = name, Value = id });
@@ -737,8 +737,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             
         }
-
-
+        
 
     }
 }

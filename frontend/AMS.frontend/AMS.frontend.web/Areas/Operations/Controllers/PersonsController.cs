@@ -112,6 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PersonModel model)
         {
+
             var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
             var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
             var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
@@ -127,11 +128,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
             model.VoluntaryPublicServices = sessionVoluntaryPublicList;
             model.Employments = sessionEmploymentList;
-
+            
             await RestfulClient.savePersonData(model);
             return RedirectToAction("Index");
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Verify(string cnic)
         {
@@ -298,9 +299,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 LanguageProficiencyId = id,
                 Language = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[0],
                 LanguageName = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[1],
-                Read = read,
-                Speak = speak,
-                Write = write
+                Read = string.IsNullOrWhiteSpace(read) ? string.Empty : read.Split('-')[1],
+                Speak = string.IsNullOrWhiteSpace(speak) ? string.Empty : speak.Split('-')[1],
+                Write = string.IsNullOrWhiteSpace(write) ? string.Empty : write.Split('-')[1]
             });
             HttpContext.Session.Set("LanguageList", sessionLanguageList);
 
