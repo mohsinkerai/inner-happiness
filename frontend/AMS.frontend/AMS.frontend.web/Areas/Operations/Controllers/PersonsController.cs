@@ -510,9 +510,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
         }
 
-        public IActionResult ValidateCnic(string cnic)
+        public async Task<IActionResult> ValidateCnic(string cnic)
         {
-            return Json(1 != 1 ? "true" : string.Format("A record against {0} already exists.", cnic));
+            bool success =await RestfulClient.searchByCNIC(cnic);
+            return Json(success == false ? "true" : string.Format("A record against {0} already exists.", cnic));
         }
     }
 }

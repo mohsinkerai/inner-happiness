@@ -766,6 +766,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             return null;
         }
-        
+
+        public static async Task<bool> searchByCNIC(String cnic)
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("person/search/cnic?value=" + cnic);
+            if (Res.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
