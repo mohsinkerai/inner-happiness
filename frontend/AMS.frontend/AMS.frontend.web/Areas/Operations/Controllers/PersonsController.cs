@@ -27,13 +27,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> Index()
         {
             //return View(new List<PersonModel>());
-            return View(await RestfulClient.getPersonDetails());
+            return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
         {
-            return View(new List<PersonModel>());
+            //return View(new List<PersonModel>());
+            return View(new IndexPersonModel { Persons = await RestfulClient.searchPerson(cnic, firstName, lastName), Cnic = cnic, FirstName = firstName, LastName = lastName });
         }
 
         public async Task<IActionResult> Add()
@@ -120,9 +121,27 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PersonModel model)
         {
+
+            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
+            var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ?? new List<LanguageProficiencyModel>();
+            var sessionVoluntaryCommunityList = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ?? new List<VoluntaryCommunityModel>();
+            var sessionVoluntaryPublicList = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ?? new List<VoluntaryPublicModel>();
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ?? new List<EmploymentModel>();
+
+            model.AkdnTrainings = sessionAkdnTrainingList;
+            model.Educations = sessionEducationList;
+            model.ProfessionalTrainings = sessionProfessionalTrainingList;
+            model.LanguageProficiencies = sessionLanguageList;
+            model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
+            model.VoluntaryPublicServices = sessionVoluntaryPublicList;
+            model.Employments = sessionEmploymentList;
+            
+            await RestfulClient.savePersonData(model);
             return RedirectToAction("Index");
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Verify(string cnic)
         {
@@ -289,9 +308,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 LanguageProficiencyId = id,
                 Language = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[0],
                 LanguageName = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[1],
-                Read = read,
-                Speak = speak,
-                Write = write
+                Read = string.IsNullOrWhiteSpace(read) ? string.Empty : read.Split('-')[1],
+                Speak = string.IsNullOrWhiteSpace(speak) ? string.Empty : speak.Split('-')[1],
+                Write = string.IsNullOrWhiteSpace(write) ? string.Empty : write.Split('-')[1]
             });
             HttpContext.Session.Set("LanguageList", sessionLanguageList);
 
