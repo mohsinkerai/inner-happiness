@@ -70,6 +70,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Last Name")]
         public string FamilyName { get; set; }
 
+        [JsonProperty(PropertyName = "familyRelations")]
         public List<FamilyRelationModel> FamilyRelations { get; set; }
 
         [JsonProperty(PropertyName = "fathersName")]

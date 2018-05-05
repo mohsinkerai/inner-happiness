@@ -70,6 +70,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.ProfessionalMembershipsList = await RestfulClient.getProfessionalMemeberShipDetails();
                 ViewBag.LanguageList = await RestfulClient.getLanguages();
                 ViewBag.SkillsList = await RestfulClient.getSkills();
+                ViewBag.RelationList = await RestfulClient.getAllRelatives();
 
                 HttpContext.Session.Set("EducationList", new List<EducationModel>());
                 HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
@@ -138,7 +139,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             model.VoluntaryPublicServices = sessionVoluntaryPublicList;
             model.Employments = sessionEmploymentList;
             
-            await RestfulClient.savePersonData(model);
+            bool success = await RestfulClient.savePersonData(model);
+            if (success)
+            {
+                TempData["MessageType"] = MessageTypes.Success;
+                TempData["Message"] = Messages.SuccessfulUserAdd;
+            }
+            else
+            {
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = Messages.GeneralError;
+            }
+
             return RedirectToAction("Index");
         }
         
