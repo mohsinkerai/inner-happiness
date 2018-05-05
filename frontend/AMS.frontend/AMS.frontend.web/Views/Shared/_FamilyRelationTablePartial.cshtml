@@ -15,20 +15,21 @@
     {
         foreach (var item in Model)
         {
-            <tr id="family-relation-row-@item.Cnic">
-                <td> @item.FirstName </td>
-                <td> @item.FamilyName </td>
-                <td> @item.DateOfBirth </td>
-                <td> @item.RelationName </td>
-                <td>
-                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return FamilyInformationListEdit("@item.FamilyRelationId", "@item.Cnic", "@item.DateOfBirth", "@item.FamilyName", "@item.FathersName", "@item.FirstName", "@item.JamatiTitle", "@item.Relation-@item.RelationName", "@item.Salutation");'>
-                        <i class="la la-edit"></i>
-                    </button>
-                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return FamilyInformationListDelete("@Url.Action(ActionNames.FamilyRelationListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.FamilyRelationId");'>
-                        <i class="la la-trash"></i>
-                    </button>
-                </td>
-            </tr>
+        <tr id="family-relation-row-@item.FamilyRelationId">
+            <td> @item.Cnic </td>
+            <td> @item.FirstName </td>
+            <td> @item.FamilyName </td>
+            <td> @item.DateOfBirth </td>
+            <td> @item.RelationName </td>
+            <td>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return FamilyInformationListEdit("@item.FamilyRelationId", "@item.Cnic", "@item.DateOfBirth", "@item.FamilyName", "@item.FathersName", "@item.FirstName", "@item.JamatiTitle", "@item.Relation-@item.RelationName", "@item.Salutation");'>
+                    <i class="la la-edit"></i>
+                </button>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return FamilyInformationListDelete("@Url.Action(ActionNames.FamilyRelationListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.FamilyRelationId");'>
+                    <i class="la la-trash"></i>
+                </button>
+            </td>
+        </tr>
         }
     }
     </tbody>

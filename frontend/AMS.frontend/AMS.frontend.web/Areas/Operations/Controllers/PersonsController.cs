@@ -69,6 +69,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.ProfessionalMembershipsList = await RestfulClient.getProfessionalMemeberShipDetails();
                 ViewBag.LanguageList = await RestfulClient.getLanguages();
                 ViewBag.SkillsList = await RestfulClient.getSkills();
+
+                HttpContext.Session.Set("EducationList", new List<EducationModel>());
+                HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
+                HttpContext.Session.Set("ProfessionalTrainingList", new List<ProfessionalTrainingModel>());
+                HttpContext.Session.Set("LanguageList", new List<LanguageProficiencyModel>());
+                HttpContext.Session.Set("VoluntaryCommunityList", new List<VoluntaryCommunityModel>());
+                HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
+                HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
+                HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
             }
             catch { }
 
