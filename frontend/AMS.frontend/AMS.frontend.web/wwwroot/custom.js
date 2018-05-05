@@ -76,6 +76,20 @@ function EmploymentListEdit(id, nameOfOrganization,designation, location,employm
     $("#employment-row-" + id).addClass("m-datatable__row--hover");
 }
 
+function FamilyInformationListEdit(id, relativeCnic, relativeSalutation, relativeFirstName, relativeFathersName, relativeFamilyName, relativeJamatiTitle, relativeDateOfBirth, relativeRelation) {
+    $("#RelativeCnic").val(relativeCnic).trigger('change');
+    $("#RelativeSalutation").val(relativeSalutation).trigger('change');
+    $("#RelativeFirstName").val(relativeFirstName).trigger('change');
+    $("#RelativeFathersName").val(relativeFathersName).trigger('change');
+    $("#RelativeFamilyName").val(relativeFamilyName).trigger('change');
+    $("#RelativeJamatiTitle").val(relativeJamatiTitle).trigger('change');
+    $("#RelativeDateOfBirth").val(relativeDateOfBirth).trigger('change');
+    $("#RelativeRelation").val(relativeRelation).trigger('change');
+    $("#family-information-id").val(id);
+
+    $("#family-relation-row-" + id).addClass("m-datatable__row--hover");
+}
+
 function ProfessionalTrainingListEdit(id, training, institution, country, month, year) {
     $("#ProfesisonalTraining").val(training).trigger('change');
     $("#ProfessionalTrainingInstitution").val(institution).trigger('change');
@@ -191,6 +205,42 @@ function EmploymentListDelete(url, id) {
                 $("#EmploymentStartDate").val('').trigger('change');
                 $("#EmploymentEndDate").val('').trigger('change');
                 $("#employment-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
+}
+
+function FamilyInformationListDelete(url, id) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#family-relation-table").html(result);
+                InitializeDataTableLite("family-relation", "Family Information");
+                $("#RelativeCnic").val('').trigger('change');
+                $("#RelativeSalutation").val('').trigger('change');
+                $("#RelativeFirstName").val('').trigger('change');
+                $("#RelativeFathersName").val('').trigger('change');
+                $("#RelativeFamilyName").val('').trigger('change');
+                $("#RelativeJamatiTitle").val('').trigger('change');
+                $("#RelativeDateOfBirth").val('').trigger('change');
+                $("#RelativeRelation").val('').trigger('change');
+                $("#family-information-id").val('');
             }
             //else {
             //    window.location.replace(window.loginUrl);
@@ -605,6 +655,53 @@ function EmploymentListAdd(url) {
                     $("#EmploymentStartDate").val('').trigger('change');
                     $("#EmploymentEndDate").val('').trigger('change');
                     $("#employment-id").val('');
+                }
+                //else {
+                //    window.location.replace(window.loginUrl);
+                //}
+            }
+        });
+    }
+}
+
+function FamilyInformationListAdd(url) {
+    if ($("#RelativeCnic").valid() && $("#RelativeSalutation").valid() && $("#RelativeFirstName").valid() && $("#RelativeFathersName").valid() && $("#RelativeFamilyName").valid() && $("#RelativeJamatiTitle").valid() && $("#RelativeDateOfBirth").valid() && $("#RelativeRelation").valid()) {
+        var id = $("#family-information-id").val();
+        var relativeCnic = $("#RelativeCnic").val();
+        var relativeSalutation = $("#RelativeSalutation").val();
+        var relativeFirstName = $("#RelativeFirstName").val();
+        var relativeFathersName = $("#RelativeFathersName").val();
+        var relativeFamilyName = $("#RelativeFamilyName").val();
+        var relativeJamatiTitle = $("#RelativeJamatiTitle").val();
+        var relativeDateOfBirth = $("#RelativeDateOfBirth").val();
+        var relativeRelation = $("#RelativeRelation").val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "id": id, "relativeCnic": relativeCnic, "relativeSalutation": relativeSalutation, "relativeFirstName": relativeFirstName, "relativeFathersName": relativeFathersName, "relativeFamilyName": relativeFamilyName, "relativeJamatiTitle": relativeJamatiTitle, "relativeDateOfBirth": relativeDateOfBirth, "relativeRelation": relativeRelation },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#family-relation-table").html(result);
+                    InitializeDataTableLite("family-relation", "Family Information");
+                    $("#RelativeCnic").val('').trigger('change');
+                    $("#RelativeSalutation").val('').trigger('change');
+                    $("#RelativeFirstName").val('').trigger('change');
+                    $("#RelativeFathersName").val('').trigger('change');
+                    $("#RelativeFamilyName").val('').trigger('change');
+                    $("#RelativeJamatiTitle").val('').trigger('change');
+                    $("#RelativeDateOfBirth").val('').trigger('change');
+                    $("#RelativeRelation").val('').trigger('change');
+                    $("#family-information-id").val('');
                 }
                 //else {
                 //    window.location.replace(window.loginUrl);

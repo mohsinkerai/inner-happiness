@@ -26,14 +26,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
             //return View(new List<PersonModel>());
-            return View(await RestfulClient.getPersonDetails());
+            return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
         {
-            return View(new List<PersonModel>());
+            //return View(new List<PersonModel>());
+            return View(new IndexPersonModel { Persons = await RestfulClient.searchPerson(cnic, firstName, lastName), Cnic = cnic, FirstName = firstName, LastName = lastName });
         }
 
         public async Task<IActionResult> Add()
@@ -69,6 +72,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.ProfessionalMembershipsList = await RestfulClient.getProfessionalMemeberShipDetails();
                 ViewBag.LanguageList = await RestfulClient.getLanguages();
                 ViewBag.SkillsList = await RestfulClient.getSkills();
+
+                HttpContext.Session.Set("EducationList", new List<EducationModel>());
+                HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
+                HttpContext.Session.Set("ProfessionalTrainingList", new List<ProfessionalTrainingModel>());
+                HttpContext.Session.Set("LanguageList", new List<LanguageProficiencyModel>());
+                HttpContext.Session.Set("VoluntaryCommunityList", new List<VoluntaryCommunityModel>());
+                HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
+                HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
+                HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
             }
             catch { }
 
@@ -111,9 +123,27 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PersonModel model)
         {
+
+            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ?? new List<AkdnTrainingModel>();
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ?? new List<EducationModel>();
+            var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ?? new List<ProfessionalTrainingModel>();
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ?? new List<LanguageProficiencyModel>();
+            var sessionVoluntaryCommunityList = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ?? new List<VoluntaryCommunityModel>();
+            var sessionVoluntaryPublicList = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ?? new List<VoluntaryPublicModel>();
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ?? new List<EmploymentModel>();
+
+            model.AkdnTrainings = sessionAkdnTrainingList;
+            model.Educations = sessionEducationList;
+            model.ProfessionalTrainings = sessionProfessionalTrainingList;
+            model.LanguageProficiencies = sessionLanguageList;
+            model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
+            model.VoluntaryPublicServices = sessionVoluntaryPublicList;
+            model.Employments = sessionEmploymentList;
+            
+            await RestfulClient.savePersonData(model);
             return RedirectToAction("Index");
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Verify(string cnic)
         {
@@ -280,9 +310,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 LanguageProficiencyId = id,
                 Language = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[0],
                 LanguageName = string.IsNullOrWhiteSpace(language) ? string.Empty : language.Split('-')[1],
-                Read = read,
-                Speak = speak,
-                Write = write
+                Read = string.IsNullOrWhiteSpace(read) ? string.Empty : read.Split('-')[1],
+                Speak = string.IsNullOrWhiteSpace(speak) ? string.Empty : speak.Split('-')[1],
+                Write = string.IsNullOrWhiteSpace(write) ? string.Empty : write.Split('-')[1]
             });
             HttpContext.Session.Set("LanguageList", sessionLanguageList);
 
@@ -422,6 +452,55 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
 
             return PartialView("_EmploymentTablePartial", sessionEmploymentList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FamilyRelationListAdd(string id, string relativeCnic, string relativeSalutation,
+            string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
+            string relativeDateOfBirth, string relativeRelation)
+        {
+            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ?? new List<FamilyRelationModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
+            }
+
+            sessionFamilyRelationList.Add(new FamilyRelationModel
+            {
+                FamilyRelationId = id,
+                Cnic = relativeCnic,
+                DateOfBirth = Convert.ToDateTime(relativeDateOfBirth),
+                FathersName = relativeFathersName,
+                FirstName = relativeFirstName,
+                RelationName = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[1],
+                FamilyName = relativeFamilyName,
+                JamatiTitle = relativeJamatiTitle,
+                Relation = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[0],
+                Salutation = relativeSalutation
+            });
+            HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
+
+            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FamilyRelationListDelete(string id)
+        {
+            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ?? new List<FamilyRelationModel>();
+            sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
+            HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
+
+            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
+
+        public IActionResult ValidateCnic(string cnic)
+        {
+            return Json(1 != 1 ? "true" : string.Format("A record against {0} already exists.", cnic));
         }
     }
 }
