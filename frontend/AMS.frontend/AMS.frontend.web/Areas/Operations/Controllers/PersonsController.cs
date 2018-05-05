@@ -26,6 +26,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
             //return View(new List<PersonModel>());
             return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
         }
@@ -494,6 +496,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
 
             return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
+
+        public IActionResult ValidateCnic(string cnic)
+        {
+            return Json(1 != 1 ? "true" : string.Format("A record against {0} already exists.", cnic));
         }
     }
 }
