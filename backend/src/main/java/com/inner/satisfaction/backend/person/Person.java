@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Builder
+@JsonAutoDetect
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonAutoDetect
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person extends BaseEntity {
 
@@ -58,7 +58,7 @@ public class Person extends BaseEntity {
   private long regionalCouncil;
   private long localCouncil;
   private long jamatkhana;
-  private Boolean planToRelocate;
+  private boolean planToRelocate;
   private String relocateLocation;
   // Should Represent UTC
   private LocalDate relocationDateTime;

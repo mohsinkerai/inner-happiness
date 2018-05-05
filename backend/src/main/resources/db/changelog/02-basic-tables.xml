@@ -52,14 +52,14 @@
         <constraints nullable="true" unique="false"/>
       </column>
       <column name="image_path" type="varchar(255)">
-        <constraints nullable="true" unique="true"/>
+        <constraints nullable="true" unique="false"/>
       </column>
 
       <column name="salutation" type="bigint">
         <constraints nullable="true"/>
       </column>
       <column name="first_name" type="varchar(100)">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
       <column name="fathers_name" type="varchar(100)">
         <constraints nullable="true"/>
@@ -72,7 +72,7 @@
         <constraints nullable="true"/>
       </column>
       <column name="gender" type="int">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
       <column name="date_of_birth" type="timestamp">
         <constraints nullable="true"/>
@@ -101,16 +101,16 @@
       </column>
 
       <column name="regional_council" type="bigint">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
       <column name="local_council" type="bigint">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
       <column name="jamatkhana" type="bigint">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
       <column name="plan_to_relocate" type="tinyint">
-        <constraints nullable="true"/>
+        <constraints nullable="false"/>
       </column>
       <column name="relocate_location" type="varchar(255)">
         <constraints nullable="true"/>
@@ -220,6 +220,7 @@
       <column name="willingness_to_devote_time_in_future" value="Change institution" />
       <column name="field_of_interests" value="[]" />
       <column name="hours_per_week" value="9" />
+      <column name="plan_to_relocate" value="0" />
       <column name="occupation_type" value="2" />
       <column name="employments" value="[]" />
     </insert>
