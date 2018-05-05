@@ -24,5 +24,7 @@
         public const string VoluntaryPublicListDelete = "VoluntaryPublicListDelete";
         public const string EmploymentListAdd = "EmploymentListAdd";
         public const string EmploymentListDelete = "EmploymentListDelete";
+        public const string FamilyRelationListAdd = "FamilyRelationListAdd";
+        public const string FamilyRelationListDelete = "FamilyRelationListDelete";
     }
 }

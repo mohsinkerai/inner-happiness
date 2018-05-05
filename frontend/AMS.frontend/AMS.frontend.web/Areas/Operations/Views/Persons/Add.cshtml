@@ -829,13 +829,13 @@
                         </div>
                     </div>
                     <!-- Working Here-->
-                    @*<div class="m-form__heading">
+                    <div class="m-form__heading">
                         <h3 class="m-form__heading-title">
                             7. Family Information
                         </h3>
                     </div>
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label asp-for="RelativeCnic" class="control-label"></label>
                                 <input type="text" asp-for="RelativeCnic" class="form-control relative-cnic">
@@ -853,35 +853,72 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label asp-for="FirstName" class="control-label"></label><span class="required">*</span>
-                                <input type="text" asp-for="FirstName" class="form-control">
-                                <span asp-validation-for="FirstName" class="form-control-feedback"></span>
+                                <label asp-for="RelativeFirstName" class="control-label"></label><span class="required">*</span>
+                                <input type="text" asp-for="RelativeFirstName" class="form-control">
+                                <span asp-validation-for="RelativeFirstName" class="form-control-feedback"></span>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="FathersName" class="control-label"></label>
-                                <input type="text" asp-for="FathersName" class="form-control">
-                                <span asp-validation-for="FathersName" class="form-control-feedback"></span>
+                                <label asp-for="RelativeFathersName" class="control-label"></label>
+                                <input type="text" asp-for="RelativeFathersName" class="form-control">
+                                <span asp-validation-for="RelativeFathersName" class="form-control-feedback"></span>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="FamilyName" class="control-label"></label>
-                                <input type="text" asp-for="FamilyName" class="form-control">
-                                <span asp-validation-for="FamilyName" class="form-control-feedback"></span>
+                                <label asp-for="RelativeFamilyName" class="control-label"></label>
+                                <input type="text" asp-for="RelativeFamilyName" class="form-control">
+                                <span asp-validation-for="RelativeFamilyName" class="form-control-feedback"></span>
                             </div>
                         </div>
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label asp-for="JamatiTitle" class="control-label"></label>
-                                <select asp-for="JamatiTitle" asp-items="@ViewBag.JamatiTitleList" class="form-control m-select2" placeholder="Select">
+                                <label asp-for="RelativeJamatiTitle" class="control-label"></label>
+                                <select asp-for="RelativeJamatiTitle" asp-items="@ViewBag.JamatiTitleList" class="form-control m-select2" placeholder="Select">
                                     <option></option>
                                 </select>
-                                <span asp-validation-for="JamatiTitle" class="form-control-feedback"></span>
+                                <span asp-validation-for="RelativeJamatiTitle" class="form-control-feedback"></span>
                             </div>
                         </div>
-                    </div>*@
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label asp-for="RelativeDateOfBirth" class="control-label"></label>
+                                <div class="input-group">
+                                    <input type="text" asp-for="RelativeDateOfBirth" class="form-control date-picker" readonly placeholder="Select date">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="RelativeDateOfBirth" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label asp-for="RelativeRelation" class="control-label"></label>
+                                <select asp-for="RelativeRelation" asp-items="@ViewBag.RelationList" class="form-control m-select2" placeholder="Select">
+                                    <option></option>
+                                    <option value="1-Father">Father</option>
+                                </select>
+                                <span asp-validation-for="RelativeRelation" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="family-information-id" />
+                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+                            <button type="button" class="btn btn-warning" onclick='return FamilyInformationListAdd("@Url.Action(ActionNames.FamilyRelationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-12" id="family-relation-table">
+                        @{
+                            await Html.RenderPartialAsync("_FamilyRelationTablePartial", Model?.FamilyRelations).ConfigureAwait(false);
+                        }
+                    </div>
+                </div>
                 </div>
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                     <div class="m-form__actions m-form__actions--solid m--align-right">
@@ -917,6 +954,7 @@
             InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
             InitializeDataTableLite("voluntary-public", "Voluntary Public Service");
             InitializeDataTableLite("employment", "Employment");
+            InitializeDataTableLite("family-relation", "Family Information");
 
             $("#mainForm input").prop("disabled", true);
             $("#mainForm select").prop("disabled", true);
@@ -964,6 +1002,10 @@
                 "mask": "99999-9999999-9"
             });
 
+            $("#RelativeCnic").inputmask({
+                "mask": "99999-9999999-9"
+            });
+
             $(".highest-level-select").change(function() {
                 var selectedValue = $(this).val();
                 if (selectedValue === "Others") {
@@ -994,6 +1036,7 @@
             $("#voluntary-community").css("min-height", "0px");
             $("#voluntary-public").css("min-height", "0px");
             $("#employment").css("min-height", "0px");
+            $("#family-relation").css("min-height", "0px");
         });
     </script>
 }
