@@ -22,7 +22,7 @@
             <td> @item.DateOfBirth </td>
             <td> @item.RelationName </td>
             <td>
-                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return FamilyInformationListEdit("@item.FamilyRelationId", "@item.Cnic", "@item.DateOfBirth", "@item.FamilyName", "@item.FathersName", "@item.FirstName", "@item.JamatiTitle", "@item.Relation-@item.RelationName", "@item.Salutation");'>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return FamilyInformationListEdit("@item.FamilyRelationId", "@item.Cnic", "@item.Salutation", "@item.FirstName", "@item.FathersName", "@item.FamilyName", "@item.JamatiTitle", "@item.DateOfBirth", "@item.Relation-@item.RelationName");'>
                     <i class="la la-edit"></i>
                 </button>
                 <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return FamilyInformationListDelete("@Url.Action(ActionNames.FamilyRelationListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.FamilyRelationId");'>
