@@ -90,7 +90,9 @@ public class PersonService extends BaseService<Person> {
       return null;
     }
     List<ReducedPersonDto> reducedPersons = personRelationPersonService
-      .findByFirstPersonId(id).stream().map(prp -> findOneReducedPerson(prp, id))
+      .findByFirstPersonId(id)
+      .stream()
+      .map(prp -> findOneReducedPerson(prp, id))
       .collect(Collectors.toList());
     one.setRelations(reducedPersons);
     return one;

@@ -10,7 +10,8 @@ public class Level extends BaseEntity{
 
   private String name;
   private String fullName;
-  private String shortCode;
+  private String codeEo;
+  private String codeNc;
   private String address;
 
   private int levelTypeId;

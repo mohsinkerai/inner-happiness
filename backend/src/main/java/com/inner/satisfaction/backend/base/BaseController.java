@@ -29,11 +29,14 @@ public abstract class BaseController<E extends BaseEntity> {
   }
 
   @GetMapping(ONE)
-  public E findOne(
+  public ResponseEntity<E> findOne(
       @PathVariable("id") Long entityId
   ) {
     E entity = baseService.findOne(entityId);
-    return entity;
+    if(entity == null) {
+      return ResponseEntity.status(404).body(null);
+    }
+    return ResponseEntity.ok(entity);
   }
 
   @PutMapping(ONE)

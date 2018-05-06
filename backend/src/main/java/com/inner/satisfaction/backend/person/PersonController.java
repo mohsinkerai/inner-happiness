@@ -4,7 +4,11 @@ import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
 import java.util.List;
+import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +30,8 @@ public class PersonController extends BaseController<Person> {
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/cnic", method = RequestMethod.GET)
   public Person findByCnic(@RequestParam("cnic") String cnic) {
-    return personService.findByCnic(cnic);
+    return Optional.ofNullable(personService.findByCnic(cnic))
+      .orElseThrow(() -> new EntityNotFoundException("Person with Cnic " + cnic + " Not found"));
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -36,5 +41,10 @@ public class PersonController extends BaseController<Person> {
     @RequestParam("firstName") String firstName,
     @RequestParam("lastName") String lastName) {
     return personService.findByCnicOrFirstNameOrLastName(cnic, firstName, lastName);
+  }
+
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<Void> handleEntityNotFound() {
+    return ResponseEntity.status(404).build();
   }
 }
