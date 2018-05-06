@@ -37,9 +37,13 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "natureOfBusinessOther")]
         public string NatureOfBusinessOther { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
         [JsonProperty(PropertyName = "employmentStartDate")]
         public DateTime? EmploymentStartDate { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
         [JsonProperty(PropertyName = "employmentEndDate")]
         public DateTime? EmploymentEndDate { get; set; }
     }

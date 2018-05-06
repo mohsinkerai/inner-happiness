@@ -721,7 +721,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task savePersonData(PersonModel personModel) {
+        public static async Task<bool> savePersonData(PersonModel personModel) {
             client = new HttpClient();
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -732,12 +732,56 @@ namespace AMS.frontend.web.Areas.Operations.Models
             var content = new StringContent(json.ToString());
             var Res = await client.PostAsync("person", httpContent);
 
-            if (Res.StatusCode == HttpStatusCode.OK) {
-
+            if (Res.StatusCode == HttpStatusCode.OK)
+            {
+                return true;
             }
-            
+            else {
+                return false;
+            }
         }
-        
 
+        public static async Task<List<SelectListItem>> getAllRelatives()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("constants/relation/all");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<bool> searchByCNIC(String cnic)
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("person/search/cnic?value=" + cnic);
+            if (Res.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

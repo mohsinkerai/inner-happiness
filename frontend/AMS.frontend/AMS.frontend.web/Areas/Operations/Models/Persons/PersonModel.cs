@@ -72,6 +72,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Last Name")]
         public string FamilyName { get; set; }
 
+        [JsonProperty(PropertyName = "familyRelations")]
         public List<FamilyRelationModel> FamilyRelations { get; set; }
 
         [JsonProperty(PropertyName = "fathersName")]
@@ -205,7 +206,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Cnic")] [JsonIgnore] public string RelativeCnic { get; set; }
 
-        [Display(Name = "Date of Birth")] public DateTime RelativeDateOfBirth { get; set; }
+        [Display(Name = "Date of Birth")] public DateTime? RelativeDateOfBirth { get; set; }
 
         [Display(Name = "Last Name")] public string RelativeFamilyName { get; set; }
 
