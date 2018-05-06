@@ -12,10 +12,8 @@ public class Level extends BaseEntity{
   private String fullName;
   private String codeEo;
   private String codeNc;
-  private String address;
 
   private int levelTypeId;
-  private Long companyId;
 
   private Long levelParentId;
 }
