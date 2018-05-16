@@ -28,8 +28,8 @@ public class EmploymentHistoryDto extends BaseDto {
   private long businessType; // ID
   private long businessNature; // ID
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
   private LocalDate employmentStartDate;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
   private LocalDate employmentEndDate;
 }
