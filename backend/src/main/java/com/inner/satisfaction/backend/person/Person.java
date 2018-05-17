@@ -65,7 +65,7 @@ public class Person extends BaseEntity {
   private LocalDate relocationDateTime;
 
   private String highestLevelOfStudy;
-  private String highestLevelOfStudyOthers;
+  private String highestLevelOfStudyOther;
 
   // 2.Education - Graduation & Post Graduation
   @Convert(converter = JpaConverterJson.class)
@@ -89,7 +89,7 @@ public class Person extends BaseEntity {
 
   // 2.Education - Professional Training & Acheivements
   @Convert(converter = JpaConverterJson.class)
-  private List<LanguageDto> languages;
+  private List<LanguageDto> languageProficiencies;
 
   // 3.1. Voluntary Community Service
   @Convert(converter = JpaConverterJson.class)
@@ -102,7 +102,10 @@ public class Person extends BaseEntity {
   private String willingnessToDevoteTimeInFuture;
 
   @Convert(converter = JpaConverterJson.class)
-  private List<Integer> fieldOfInterests; // ID's
+  private List<Integer> fieldOfInterest; // ID's
+
+  private String fieldOfExpertise;
+  private long religiousEducation;
 
   private long hoursPerWeek;
 
