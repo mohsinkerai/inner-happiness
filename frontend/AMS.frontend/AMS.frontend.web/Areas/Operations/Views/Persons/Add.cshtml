@@ -52,46 +52,48 @@
                     success: function(result) {
                         $("#familyRelationData").html(result);
                         Initialize();
+                        if (!($("#RelativeFirstName").val() === "")) {
+                            $(".relative-fields").prop("disabled", true);
+                        } else {
+                            $("#RelativeCnic").val(cnic);
+                        }
+                        $("#RelativeCnic").inputmask({
+                            "mask": "99999-9999999-9"
+                        });
+                        $(".relative-cnic").blur(function () {
+                            var cnic = $(".relative-cnic").val();
+                            $.ajax({
+                                type: "POST",
+                                url:
+                                    "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new { area = AreaNames.Operations })",
+                                data: { "cnic": cnic },
+                                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                                dataType: "html",
+                                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                                    alert("Request: " +
+                                        xmlHttpRequest.toString() +
+                                        "\n\nStatus: " +
+                                        textStatus +
+                                        "\n\nError: " +
+                                        errorThrown);
+                                },
+                                success: function(result) {
+                                    $("#familyRelationData").html(result);
+                                    Initialize();
+                                    if (!($("#RelativeFirstName").val() === "")) {
+                                        $(".relative-fields").prop("disabled", true);
+                                    } else {
+                                        $("#RelativeCnic").val(cnic);
+                                    }
+                                    $("#RelativeCnic").inputmask({
+                                        "mask": "99999-9999999-9"
+                                    });
+                                }
+                            });
+                        });
                     }
                 });
-                @*$.post("@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new { area = AreaNames.Operations })", { cnic: $(".relative-cnic").val() })
-                    .done(function(data) {
-                        $("#mainForm input").prop("disabled", false);
-                        $("#mainForm select").prop("disabled", false);
-
-                        $("#RelocateLocation").prop("disabled", true);
-                        $("#RelocationDateTime").prop("disabled", true);
-
-                        $("#LocalCouncil").prop("disabled", true);
-                        $("#Jamatkhana").prop("disabled", true);
-
-                        $("#HighestLevelOfStudyOther").prop("disabled", true);
-                        $("#OccupationTypeOther").prop("disabled", true);
-                        $("#NatureOfBusinessOther").prop("disabled", true);
-
-                        $("#PassportNumber").focus();
-                    });*@
             });
-
-            //$(".cnic").blur(function() {
-            //    $.post("Verify", { cnic: $(".cnic").val() })
-            //        .done(function(data) {
-            //            $("#mainForm input").prop("disabled", false);
-            //            $("#mainForm select").prop("disabled", false);
-
-            //            $("#RelocateLocation").prop("disabled", true);
-            //            $("#RelocationDateTime").prop("disabled", true);
-
-            //            $("#LocalCouncil").prop("disabled", true);
-            //            $("#Jamatkhana").prop("disabled", true);
-
-            //            $("#HighestLevelOfStudyOther").prop("disabled", true);
-            //            $("#OccupationTypeOther").prop("disabled", true);
-            //            $("#NatureOfBusinessOther").prop("disabled", true);
-
-            //            $("#PassportNumber").focus();
-            //        });
-            //});
 
             $("#PlanToRelocate").change(function() {
                 if (this.checked) {
