@@ -3,13 +3,22 @@ package com.inner.satisfaction.backend.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.persistence.AttributeConverter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class JpaConverterJson implements AttributeConverter<Object, String> {
 
-  private final static ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper;
+
+  public JpaConverterJson() {
+    objectMapper = new ObjectMapper();
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    objectMapper.setDateFormat(df);
+  }
+
 
   @Override
   public String convertToDatabaseColumn(Object meta) {

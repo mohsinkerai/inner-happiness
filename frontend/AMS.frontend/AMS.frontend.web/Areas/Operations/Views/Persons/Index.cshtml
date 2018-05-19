@@ -85,7 +85,7 @@
         <!--begin: Search Form -->
         <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
             <div class="row align-items-center">
-                <div class="col-xl-8 order-2 order-xl-1">
+                @*<div class="col-xl-8 order-2 order-xl-1">
                     <div class="form-group m-form__group row align-items-center">
                         <div class="col-md-4">
                             <div class="m-input-icon m-input-icon--left">
@@ -98,8 +98,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                </div>*@
+                <div class="col-xl-12 order-1 order-xl-2 m--align-right">
                     <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" class="btn btn-primary">
                         <span>
                             <i class="la la-user-plus"></i>
@@ -130,9 +130,9 @@
                             <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
                                 <i class="la la-eye"></i>
                             </a>
-                            @*<a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
                                 <i class="la la-edit"></i>
-                            </a>*@
+                            </a>
                         </td>
                     </tr>
                 }

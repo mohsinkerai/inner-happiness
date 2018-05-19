@@ -833,88 +833,15 @@
                             7. Family Information
                         </h3>
                     </div>
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="RelativeCnic" class="control-label"></label>
-                                <input type="text" asp-for="RelativeCnic" class="form-control relative-cnic">
-                                <span asp-validation-for="RelativeCnic" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="RelativeSalutation" class="control-label"></label>
-                                <select asp-for="RelativeSalutation" asp-items="@ViewBag.SalutationList" class="form-control m-select2" placeholder="Select">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="RelativeSalutation" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="RelativeFirstName" class="control-label"></label><span class="required">*</span>
-                                <input type="text" asp-for="RelativeFirstName" class="form-control">
-                                <span asp-validation-for="RelativeFirstName" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="RelativeFathersName" class="control-label"></label>
-                                <input type="text" asp-for="RelativeFathersName" class="form-control">
-                                <span asp-validation-for="RelativeFathersName" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="RelativeFamilyName" class="control-label"></label>
-                                <input type="text" asp-for="RelativeFamilyName" class="form-control">
-                                <span asp-validation-for="RelativeFamilyName" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="RelativeJamatiTitle" class="control-label"></label>
-                                <select asp-for="RelativeJamatiTitle" asp-items="@ViewBag.JamatiTitleList" class="form-control m-select2" placeholder="Select">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="RelativeJamatiTitle" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="RelativeDateOfBirth" class="control-label"></label>
-                                <div class="input-group">
-                                    <input type="text" asp-for="RelativeDateOfBirth" class="form-control date-picker" readonly placeholder="Select date">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <span asp-validation-for="RelativeDateOfBirth" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="RelativeRelation" class="control-label"></label>
-                                <select asp-for="RelativeRelation" asp-items="@ViewBag.RelationList" class="form-control m-select2" placeholder="Select">
-                                    <option></option>
-                                    <option value="1-Father">Father</option>
-                                </select>
-                                <span asp-validation-for="RelativeRelation" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="family-information-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-warning" onclick='return FamilyInformationListAdd("@Url.Action(ActionNames.FamilyRelationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                <i class="fa fa-save"></i> Save
-                            </button>
-                        </div>
+                    <div id="familyRelationData" class="form-group m-form__group row">
+                        @{
+                            await Html.RenderPartialAsync("_FamilyRelationPartial", Model).ConfigureAwait(false);
+                        }
                     </div>
                     <div class="form-group m-form__group row">
                         <div class="col-lg-12" id="family-relation-table">
                             @{
-                            await Html.RenderPartialAsync("_FamilyRelationTablePartial", Model?.FamilyRelations).ConfigureAwait(false);
+                                await Html.RenderPartialAsync("_FamilyRelationTablePartial", Model?.FamilyRelations).ConfigureAwait(false);
                             }
                         </div>
                     </div>

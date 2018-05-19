@@ -84,6 +84,41 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                ViewBag.SalutationList = await RestfulClient.getSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
+                ViewBag.CityList = await RestfulClient.getCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
+                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
+                ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
+
+                var ListOfCountries = await RestfulClient.getAllCountries();
+                ViewBag.CountryOfStudyList = ListOfCountries;
+                ViewBag.AkdnTrainingCountryList = ListOfCountries;
+                ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
+
+                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
+                ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
+                ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.getVoluntaryInstitution();
+                ViewBag.FieldOfInterestsList = await RestfulClient.getFieldOfInterests();
+                ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
+                ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
+                ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
+            }
+            catch
+            {
+            }
+
+            return View(await RestfulClient.getPersonDetailsById(id));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(PersonModel model)
         {
@@ -343,6 +378,62 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //-------------------------------------------------------
 
             return person;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PersonModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var sessionAkdnTrainingList =
+                        HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
+                        new List<AkdnTrainingModel>();
+                    var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
+                                               new List<EducationModel>();
+                    var sessionProfessionalTrainingList =
+                        HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
+                        new List<ProfessionalTrainingModel>();
+                    var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+                                              new List<LanguageProficiencyModel>();
+                    var sessionVoluntaryCommunityList =
+                        HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
+                        new List<VoluntaryCommunityModel>();
+                    var sessionVoluntaryPublicList =
+                        HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
+                        new List<VoluntaryPublicModel>();
+                    var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+                                                new List<EmploymentModel>();
+
+                    model.AkdnTrainings = sessionAkdnTrainingList;
+                    model.Educations = sessionEducationList;
+                    model.ProfessionalTrainings = sessionProfessionalTrainingList;
+                    model.LanguageProficiencies = sessionLanguageList;
+                    model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
+                    model.VoluntaryPublicServices = sessionVoluntaryPublicList;
+                    model.Employments = sessionEmploymentList;
+
+                    var success = await RestfulClient.savePersonData(model);
+                    if (success)
+                    {
+                        TempData["MessageType"] = MessageTypes.Success;
+                        TempData["Message"] = Messages.SuccessfulUserAdd;
+
+                        return RedirectToAction("Index");
+                    }
+
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = Messages.GeneralError;
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -733,14 +824,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> ValidateCnic(string cnic)
         {
-            var success = await RestfulClient.searchByCNIC(cnic);
+            var success = RestfulClient.searchByCNIC(cnic, out var person);
             return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Verify(string cnic)
-        {
-            return Json(true);
         }
 
         [HttpPost]
@@ -808,6 +893,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
 
             return PartialView("_VoluntaryPublicTablePartial", sessionVoluntaryPublicList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyCnic(string cnic)
+        {
+            var success = RestfulClient.searchByCNIC(cnic, out var person);
+            ViewBag.SalutationList = await RestfulClient.getSalutation();
+            ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+            ViewBag.RelationList = await RestfulClient.getAllRelatives();
+
+            return PartialView("_FamilyRelationPartial", person);
         }
 
         [HttpPost]

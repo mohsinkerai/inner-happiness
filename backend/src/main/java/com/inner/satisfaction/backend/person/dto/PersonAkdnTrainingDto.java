@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class PersonAkdnTrainingDto extends BaseDto {
 
   private long training; // Id
-  private long country; // Id
+  private long countryOfTraining; // Id
   private long month; // Number
   private int year;
 }

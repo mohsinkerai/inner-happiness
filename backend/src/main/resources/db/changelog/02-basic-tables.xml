@@ -122,7 +122,7 @@
       <column name="highest_level_of_study" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
-      <column name="highest_level_of_study_others" type="varchar(255)">
+      <column name="highest_level_of_study_other" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
 
@@ -142,7 +142,7 @@
         <constraints nullable="true"/>
       </column>
 
-      <column name="languages" type="json">
+      <column name="language_proficiencies" type="json">
         <constraints nullable="true"/>
       </column>
       <column name="voluntary_community_services" type="json">
@@ -154,7 +154,7 @@
       <column name="willingness_to_devote_time_in_future" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
-      <column name="field_of_interests" type="json">
+      <column name="field_of_interest" type="json">
         <constraints nullable="true"/>
       </column>
       <column name="hours_per_week" type="bigint">
@@ -167,6 +167,12 @@
         <constraints nullable="true"/>
       </column>
       <column name="employments" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="field_of_expertise" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="religious_education" type="bigint">
         <constraints nullable="true"/>
       </column>
 
@@ -214,15 +220,17 @@
       <column name="professional_trainings" value="[]" />
       <column name="skills" value="[]" />
       <column name="professional_memberships" value="[]" />
-      <column name="languages" value="[]" />
+      <column name="language_proficiencies" value="[]" />
       <column name="voluntary_community_services" value="[]" />
       <column name="voluntary_public_services" value="[]" />
       <column name="willingness_to_devote_time_in_future" value="Change institution" />
-      <column name="field_of_interests" value="[]" />
+      <column name="field_of_interest" value="[]" />
       <column name="hours_per_week" value="9" />
       <column name="plan_to_relocate" value="0" />
       <column name="occupation_type" value="2" />
       <column name="employments" value="[]" />
+      <column name="field_of_expertise" value="Software Engineering" />
+      <column name="religious_education" value="1" />
     </insert>
     <!--<insert tableName="person">-->
       <!--<column name="id" value="2"/>-->
