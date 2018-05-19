@@ -121,7 +121,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Jamati Title")]
         public string JamatiTitle { get; set; }
 
-        [Required]
+        //[Required]
         [JsonProperty(PropertyName = "jamatkhana")]
         public string Jamatkhana { get; set; }
 
@@ -130,7 +130,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "languageProficiencies")]
         public List<LanguageProficiencyModel> LanguageProficiencies { get; set; }
 
-        [Required]
+        //[Required]
         [JsonProperty(PropertyName = "localCouncil")]
         [Display(Name = "Local Council")]
         public string LocalCouncil { get; set; }
@@ -199,7 +199,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] public string Read { get; set; }
 
-        [Required]
+        //[Required]
         [JsonProperty(PropertyName = "regionalCouncil")]
         [Display(Name = "Regional Council")]
         public string RegionalCouncil { get; set; }

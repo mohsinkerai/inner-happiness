@@ -24,7 +24,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "toYear")]
         [Display(Name = "To Year")] public int? ToYear { get; set; }
 
-        [JsonProperty(PropertyName = "NameOfDegree")]
+        [JsonProperty(PropertyName = "nameOfDegree")]
         [Display(Name = "Name of Degree")] public string NameOfDegree { get; set; }
 
         [JsonIgnore] public string NameOfDegreeName { get; set; }
