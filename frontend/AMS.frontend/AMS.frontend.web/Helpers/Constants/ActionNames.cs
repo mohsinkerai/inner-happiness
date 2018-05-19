@@ -9,6 +9,7 @@
         public const string Delete = "Delete";
         public const string Detail = "Detail";
         public const string GetLocalCouncil = "GetLocalCouncil";
+        public const string VerifyCnic = "VerifyCnic";
         public const string GetJamatkhana = "GetJamatkhana";
         public const string EducationListAdd = "EducationListAdd";
         public const string EducationListDelete = "EducationListDelete";

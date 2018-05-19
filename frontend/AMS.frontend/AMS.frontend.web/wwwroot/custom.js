@@ -1,6 +1,11 @@
 ﻿jQuery.fn.exists = function () { return this.length > 0; };
 
 $(document).ready(function () {
+    Initialize();
+});
+
+function Initialize()
+{
     $(".input-validation-error").parents(".form-group").addClass("has-danger");
     $(".m-select2")
         .each(function () {
@@ -35,7 +40,7 @@ $(document).ready(function () {
             rightArrow: '<i class="la la-angle-right"></i>'
         }
     });
-});
+}
 
 function toggleNotMe() {
     $("#toggleNotMe").hide();
@@ -781,7 +786,7 @@ function InitializeDataTable(id, title) {
             //pageSize: 10,
             serverPaging: true,
             serverFiltering: true,
-            serverSorting: true,
+            serverSorting: true
         },
 
         // layout definition
@@ -809,8 +814,8 @@ function InitializeDataTable(id, title) {
         },
 
         search: {
-            input: $("#generalSearch"),
-        },
+            input: $("#generalSearch")
+        }
 
         // columns definition
         //       columns: [

@@ -767,21 +767,34 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<bool> searchByCNIC(String cnic)
+        public static bool searchByCNIC(String cnic, out PersonModel model)
         {
-            client = new HttpClient();
-            client.BaseAddress = new Uri(BASE_URL);
+            model = null;
+            client = new HttpClient {BaseAddress = new Uri(BASE_URL)};
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("person/search/cnic?value=" + cnic);
-            if (Res.IsSuccessStatusCode)
+            var res = client.GetAsync("person/search/cnic?cnic=" + cnic).Result;
+            if (res.IsSuccessStatusCode)
             {
+                var json = res.Content.ReadAsStringAsync().Result;
+
+                var familyRelation = JsonConvert.DeserializeObject<FamilyRelationModel>(json);
+                model = new PersonModel
+                {
+                    RelativeCnic = familyRelation.Cnic,
+                    RelativeSalutation = familyRelation.Salutation,
+                    RelativeFirstName = familyRelation.FirstName,
+                    RelativeDateOfBirth = familyRelation.DateOfBirth,
+                    RelativeFamilyName = familyRelation.FamilyName,
+                    RelativeFathersName = familyRelation.FathersName,
+                    RelativeJamatiTitle = familyRelation.JamatiTitle,
+                    RelativeRelation = familyRelation.Relation
+                };
+
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }
