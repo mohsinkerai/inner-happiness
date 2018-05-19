@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class LanguageDto extends BaseDto {
 
   private long language; // Id
-  private long writeProficiency; // Id
-  private long readProficiency; // Id
-  private long speakProficiency; // Id
+  private long write; // Id
+  private long read; // Id
+  private long speak; // Id
 }
