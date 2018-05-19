@@ -4,9 +4,11 @@ using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
@@ -17,6 +19,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         #region Private Fields
 
         private readonly Configuration _configuration;
+
         private readonly IMapper _mapper;
 
         #endregion Private Fields
@@ -84,41 +87,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Edit(string id)
-        {
-            try
-            {
-                ViewBag.SalutationList = await RestfulClient.getSalutation();
-                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
-                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
-                ViewBag.CityList = await RestfulClient.getCities();
-                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
-                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
-                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
-                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
-                ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
-
-                var ListOfCountries = await RestfulClient.getAllCountries();
-                ViewBag.CountryOfStudyList = ListOfCountries;
-                ViewBag.AkdnTrainingCountryList = ListOfCountries;
-                ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
-
-                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
-                ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
-                ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();
-                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.getVoluntaryInstitution();
-                ViewBag.FieldOfInterestsList = await RestfulClient.getFieldOfInterests();
-                ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
-                ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
-                ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
-            }
-            catch
-            {
-            }
-
-            return View(await RestfulClient.getPersonDetailsById(id));
-        }
-
         [HttpPost]
         public async Task<IActionResult> Add(PersonModel model)
         {
@@ -157,264 +125,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                     var success = await RestfulClient.savePersonData(PersonDummyData());
 
-                    if (success)
-                    {
-                        TempData["MessageType"] = MessageTypes.Success;
-                        TempData["Message"] = Messages.SuccessfulUserAdd;
-
-                        return RedirectToAction("Index");
-                    }
-
-                    ViewBag.MessageType = MessageTypes.Error;
-                    ViewBag.Message = Messages.GeneralError;
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.MessageType = MessageTypes.Error;
-                ViewBag.Message = Messages.GeneralError;
-            }
-
-            return View(model);
-        }
-
-        public PersonModel PersonDummyData() {
-
-            PersonModel person = new PersonModel();
-            
-            person.Cnic = "42101-9999999-3";
-            person.PassportNumber = "111-2222-3333";
-            person.Salutation = "1";
-            person.FirstName = "Saif";
-            person.FathersName = "Mehboob";
-            person.FamilyName = "Ali";
-            person.JamatiTitle = "1";
-            person.Gender = 0;
-            person.DateOfBirth = Convert.ToDateTime("2018-5-20");
-            person.MaritalStatus = "1";
-            person.ResidentalAddress = "abc.xyz";
-            person.City = "1";
-            person.ResidenceTelephone = "02136998541";
-            person.MobilePhone = "090078601";
-            person.EmailAddress = "abc.123@gmail.com";
-            person.AreaOfOrigin = "1";
-            person.RegionalCouncil = "2";
-            person.LocalCouncil = "3";
-            person.Jamatkhana = "4";
-            person.PlanToRelocate = true;
-            person.RelocationDateTime = DateTime.Now;
-            person.HighestLevelOfStudy = "1";
-            person.HighestLevelOfStudyOther = "etc";
-
-            //Educations
-            EducationModel education = new EducationModel();
-            education.EducationId = "abcdef";
-            education.Institution = "1";
-            education.CountryOfStudy = "1";
-            education.FromYear = 2010;
-            education.ToYear = 2012;
-            education.NameOfDegree = "1";
-            education.MajorAreaOfStudy = "AI";
-
-            education.CountryOfStudyName = "";
-            education.InstitutionName = "";
-            education.NameOfDegreeName = "";
-
-            List<EducationModel> educationList = new List<EducationModel>();
-            educationList.Add(education);
-
-            person.Educations = educationList;
-
-            //-------------------------------------------------
-
-            person.FieldOfExpertise = "Teaching";
-            person.ReligiousEducation = "1";
-            
-            //AkdnTraining
-            AkdnTrainingModel akdnTraining = new AkdnTrainingModel();
-            akdnTraining.TrainingId = "abcdef";
-            akdnTraining.Training = "1";
-            akdnTraining.CountryOfTraining = "1";
-            akdnTraining.Month = "1";
-            akdnTraining.Year = 2013;
-
-            akdnTraining.TrainingName = null;
-            akdnTraining.CountryOfTrainingName = null;
-
-            List<AkdnTrainingModel> akdnTrainingList = new List<AkdnTrainingModel>();
-            akdnTrainingList.Add(akdnTraining);
-
-            person.AkdnTrainings = akdnTrainingList;
-            //-------------------------------------------------
-
-            //ProfessionalTrainings
-            ProfessionalTrainingModel professionalTraining = new ProfessionalTrainingModel();
-            professionalTraining.TrainingId = "abcdef";
-            professionalTraining.Training = "Teaching";
-            professionalTraining.Institution = "HRE";
-            professionalTraining.CountryOfTraining = "1";
-            professionalTraining.Month = "January";
-            professionalTraining.Year = 2013;
-
-            professionalTraining.CountryOfTrainingName = null;
-
-            List<ProfessionalTrainingModel> professionalTrainingList = new List<ProfessionalTrainingModel>();
-            professionalTrainingList.Add(professionalTraining);
-
-            person.ProfessionalTrainings = professionalTrainingList;
-
-            //-------------------------------------------------
-
-            List<String> skillList = new List<String>();
-            skillList.Add("Designing");
-
-            List<String> professionalMembershipList = new List<String>();
-            professionalMembershipList.Add("ACM");
-
-            person.Skills = skillList;
-            person.ProfessionalMemberships = professionalMembershipList;
-
-            //Languages
-            LanguageProficiencyModel languageProficiency = new LanguageProficiencyModel();
-            languageProficiency.LanguageProficiencyId = "abcdef";
-            languageProficiency.Language = "1";
-            languageProficiency.Read = "1";
-            languageProficiency.Write = "2";
-            languageProficiency.Speak = "3";
-
-            languageProficiency.LanguageName = null;
-
-            List<LanguageProficiencyModel> languageProficiencyList = new List<LanguageProficiencyModel>();
-            languageProficiencyList.Add(languageProficiency);
-
-            person.LanguageProficiencies = languageProficiencyList;
-
-            //-------------------------------------------------        
-
-            //VoluntaryCommunityServices
-            VoluntaryCommunityModel voluntaryCommunity = new VoluntaryCommunityModel();
-            voluntaryCommunity.VoluntaryCommunityId = "abcdef";
-            voluntaryCommunity.Institution = "1";
-            voluntaryCommunity.FromYear = 2006;
-            voluntaryCommunity.ToYear = 2010;
-            voluntaryCommunity.Position = "1";
-
-            voluntaryCommunity.InstitutionName = null;
-            voluntaryCommunity.PositionName = null;
-
-            List<VoluntaryCommunityModel> voluntaryCommunityList = new List<VoluntaryCommunityModel>();
-            voluntaryCommunityList.Add(voluntaryCommunity);
-
-            person.VoluntaryCommunityServices = voluntaryCommunityList;
-            //-------------------------------------------------
-            
-            //VoluntaryPublicServices
-            VoluntaryPublicModel voluntaryPublic = new VoluntaryPublicModel();
-            voluntaryPublic.VoluntaryPublicId = "abcdef";
-            voluntaryPublic.Institution = "Welfare";
-            voluntaryPublic.FromYear = 2013;
-            voluntaryPublic.ToYear = 2014;
-            voluntaryPublic.Position = "Lead";
-
-            List<VoluntaryPublicModel> voluntaryPublicList = new List<VoluntaryPublicModel>();
-            voluntaryPublicList.Add(voluntaryPublic);
-
-            person.VoluntaryPublicServices = voluntaryPublicList;
-
-            //-------------------------------------------------
-
-            person.WillingnessToDevoteTimeInFuture = "Continue with Present Institution";
-
-            List<String> fieldofInterestList = new List<String>();
-            fieldofInterestList.Add("Pulumbering");
-
-            person.FieldOfInterest = fieldofInterestList;
-
-            person.HoursPerWeek = 10;
-            person.OccupationType = "1";
-            person.OccupationTypeOther = "Engineer";
-
-            //Employments
-            EmploymentModel employment = new EmploymentModel();
-            employment.EmploymentId = "abcdef";
-            employment.NameOfOrganization = "Agilosoft";
-            employment.Designation = "Team lead";
-            employment.Location = "Gulshan Iqbal";
-            employment.EmploymentEmailAddress = "jobs@agilosoft.com";
-            employment.EmploymentTelephone = "02136885412";
-            employment.TypeOfBusiness = "1";
-            employment.NatureOfBusiness = "1";
-            employment.NatureOfBusinessOther = "N/A";
-            employment.EmploymentStartDate = DateTime.Now;
-            employment.EmploymentEndDate = DateTime.Now;
-
-            employment.TypeOfBusinessName = null;
-            employment.NatureOfBusinessName = null;
-
-            List<EmploymentModel> employmentList = new List<EmploymentModel>();
-            employmentList.Add(employment);
-
-            person.Employments = employmentList;
-            //------------------------------------------------
-            
-            //FamilyInformation
-            FamilyRelationModel familyRelation = new FamilyRelationModel();
-            familyRelation.FamilyRelationId = "abcdef";
-            familyRelation.Cnic = "42101-9652145-9";
-            familyRelation.Salutation = "1";
-            familyRelation.FirstName = "abc";
-            familyRelation.FathersName = "xyz";
-            familyRelation.FamilyName = "abcxyz";
-            familyRelation.JamatiTitle = "1";
-            familyRelation.DateOfBirth = DateTime.Now;
-            familyRelation.Relation = "";
-
-            familyRelation.RelationName = null;
-
-            List<FamilyRelationModel> familyRelationList = new List<FamilyRelationModel>();
-            familyRelationList.Add(familyRelation);
-
-            person.FamilyRelations = familyRelationList;
-            //-------------------------------------------------------
-
-            return person;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(PersonModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var sessionAkdnTrainingList =
-                        HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
-                        new List<AkdnTrainingModel>();
-                    var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
-                                               new List<EducationModel>();
-                    var sessionProfessionalTrainingList =
-                        HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
-                        new List<ProfessionalTrainingModel>();
-                    var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
-                                              new List<LanguageProficiencyModel>();
-                    var sessionVoluntaryCommunityList =
-                        HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
-                        new List<VoluntaryCommunityModel>();
-                    var sessionVoluntaryPublicList =
-                        HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
-                        new List<VoluntaryPublicModel>();
-                    var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
-                                                new List<EmploymentModel>();
-
-                    model.AkdnTrainings = sessionAkdnTrainingList;
-                    model.Educations = sessionEducationList;
-                    model.ProfessionalTrainings = sessionProfessionalTrainingList;
-                    model.LanguageProficiencies = sessionLanguageList;
-                    model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
-                    model.VoluntaryPublicServices = sessionVoluntaryPublicList;
-                    model.Employments = sessionEmploymentList;
-
-                    var success = await RestfulClient.savePersonData(model);
                     if (success)
                     {
                         TempData["MessageType"] = MessageTypes.Success;
@@ -556,8 +266,102 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
             }
 
+            var person = await RestfulClient.getPersonDetailsById(id);
 
-            return View(await RestfulClient.getPersonDetailsById(id));
+            return View(MapPerson(person));
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                ViewBag.SalutationList = await RestfulClient.getSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
+                ViewBag.CityList = await RestfulClient.getCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
+                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
+                ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
+
+                var ListOfCountries = await RestfulClient.getAllCountries();
+                ViewBag.CountryOfStudyList = ListOfCountries;
+                ViewBag.AkdnTrainingCountryList = ListOfCountries;
+                ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
+
+                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
+                ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
+                ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.getVoluntaryInstitution();
+                ViewBag.FieldOfInterestsList = await RestfulClient.getFieldOfInterests();
+                ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
+                ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
+                ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
+            }
+            catch
+            {
+            }
+
+            var person = await RestfulClient.getPersonDetailsById(id);
+
+            return View(MapPerson(person));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PersonModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var sessionAkdnTrainingList =
+                        HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
+                        new List<AkdnTrainingModel>();
+                    var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
+                                               new List<EducationModel>();
+                    var sessionProfessionalTrainingList =
+                        HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
+                        new List<ProfessionalTrainingModel>();
+                    var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+                                              new List<LanguageProficiencyModel>();
+                    var sessionVoluntaryCommunityList =
+                        HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
+                        new List<VoluntaryCommunityModel>();
+                    var sessionVoluntaryPublicList =
+                        HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
+                        new List<VoluntaryPublicModel>();
+                    var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+                                                new List<EmploymentModel>();
+
+                    model.AkdnTrainings = sessionAkdnTrainingList;
+                    model.Educations = sessionEducationList;
+                    model.ProfessionalTrainings = sessionProfessionalTrainingList;
+                    model.LanguageProficiencies = sessionLanguageList;
+                    model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
+                    model.VoluntaryPublicServices = sessionVoluntaryPublicList;
+                    model.Employments = sessionEmploymentList;
+
+                    var success = await RestfulClient.savePersonData(model);
+                    if (success)
+                    {
+                        TempData["MessageType"] = MessageTypes.Success;
+                        TempData["Message"] = Messages.SuccessfulUserAdd;
+
+                        return RedirectToAction("Index");
+                    }
+
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = Messages.GeneralError;
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -778,6 +582,208 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
 
+        public PersonModel PersonDummyData()
+        {
+            var person = new PersonModel();
+
+            person.Cnic = "42101-9999999-3";
+            person.PassportNumber = "111-2222-3333";
+            person.Salutation = "1";
+            person.FirstName = "Saif";
+            person.FathersName = "Mehboob";
+            person.FamilyName = "Ali";
+            person.JamatiTitle = "1";
+            person.Gender = 0;
+            person.DateOfBirth = Convert.ToDateTime("2018-5-20");
+            person.MaritalStatus = "1";
+            person.ResidentalAddress = "abc.xyz";
+            person.City = "1";
+            person.ResidenceTelephone = "02136998541";
+            person.MobilePhone = "090078601";
+            person.EmailAddress = "abc.123@gmail.com";
+            person.AreaOfOrigin = "1";
+            person.RegionalCouncil = "2";
+            person.LocalCouncil = "3";
+            person.Jamatkhana = "4";
+            person.PlanToRelocate = true;
+            person.RelocationDateTime = DateTime.Now;
+            person.HighestLevelOfStudy = "1";
+            person.HighestLevelOfStudyOther = "etc";
+
+            //Educations
+            var education = new EducationModel();
+            education.EducationId = "abcdef";
+            education.Institution = "1";
+            education.CountryOfStudy = "1";
+            education.FromYear = 2010;
+            education.ToYear = 2012;
+            education.NameOfDegree = "1";
+            education.MajorAreaOfStudy = "AI";
+
+            education.CountryOfStudyName = "";
+            education.InstitutionName = "";
+            education.NameOfDegreeName = "";
+
+            var educationList = new List<EducationModel>();
+            educationList.Add(education);
+
+            person.Educations = educationList;
+
+            //-------------------------------------------------
+
+            person.FieldOfExpertise = "Teaching";
+            person.ReligiousEducation = "1";
+
+            //AkdnTraining
+            var akdnTraining = new AkdnTrainingModel();
+            akdnTraining.TrainingId = "abcdef";
+            akdnTraining.Training = "1";
+            akdnTraining.CountryOfTraining = "1";
+            akdnTraining.Month = "1";
+            akdnTraining.Year = 2013;
+
+            akdnTraining.TrainingName = null;
+            akdnTraining.CountryOfTrainingName = null;
+
+            var akdnTrainingList = new List<AkdnTrainingModel>();
+            akdnTrainingList.Add(akdnTraining);
+
+            person.AkdnTrainings = akdnTrainingList;
+            //-------------------------------------------------
+
+            //ProfessionalTrainings
+            var professionalTraining = new ProfessionalTrainingModel();
+            professionalTraining.TrainingId = "abcdef";
+            professionalTraining.Training = "Teaching";
+            professionalTraining.Institution = "HRE";
+            professionalTraining.CountryOfTraining = "1";
+            professionalTraining.Month = "January";
+            professionalTraining.Year = 2013;
+
+            professionalTraining.CountryOfTrainingName = null;
+
+            var professionalTrainingList = new List<ProfessionalTrainingModel>();
+            professionalTrainingList.Add(professionalTraining);
+
+            person.ProfessionalTrainings = professionalTrainingList;
+
+            //-------------------------------------------------
+
+            var skillList = new List<string>();
+            skillList.Add("Designing");
+
+            var professionalMembershipList = new List<string>();
+            professionalMembershipList.Add("ACM");
+
+            person.Skills = skillList;
+            person.ProfessionalMemberships = professionalMembershipList;
+
+            //Languages
+            var languageProficiency = new LanguageProficiencyModel();
+            languageProficiency.LanguageProficiencyId = "abcdef";
+            languageProficiency.Language = "1";
+            languageProficiency.Read = "1";
+            languageProficiency.Write = "2";
+            languageProficiency.Speak = "3";
+
+            languageProficiency.LanguageName = null;
+
+            var languageProficiencyList = new List<LanguageProficiencyModel>();
+            languageProficiencyList.Add(languageProficiency);
+
+            person.LanguageProficiencies = languageProficiencyList;
+
+            //-------------------------------------------------
+
+            //VoluntaryCommunityServices
+            var voluntaryCommunity = new VoluntaryCommunityModel();
+            voluntaryCommunity.VoluntaryCommunityId = "abcdef";
+            voluntaryCommunity.Institution = "1";
+            voluntaryCommunity.FromYear = 2006;
+            voluntaryCommunity.ToYear = 2010;
+            voluntaryCommunity.Position = "1";
+
+            voluntaryCommunity.InstitutionName = null;
+            voluntaryCommunity.PositionName = null;
+
+            var voluntaryCommunityList = new List<VoluntaryCommunityModel>();
+            voluntaryCommunityList.Add(voluntaryCommunity);
+
+            person.VoluntaryCommunityServices = voluntaryCommunityList;
+            //-------------------------------------------------
+
+            //VoluntaryPublicServices
+            var voluntaryPublic = new VoluntaryPublicModel();
+            voluntaryPublic.VoluntaryPublicId = "abcdef";
+            voluntaryPublic.Institution = "Welfare";
+            voluntaryPublic.FromYear = 2013;
+            voluntaryPublic.ToYear = 2014;
+            voluntaryPublic.Position = "Lead";
+
+            var voluntaryPublicList = new List<VoluntaryPublicModel>();
+            voluntaryPublicList.Add(voluntaryPublic);
+
+            person.VoluntaryPublicServices = voluntaryPublicList;
+
+            //-------------------------------------------------
+
+            person.WillingnessToDevoteTimeInFuture = "Continue with Present Institution";
+
+            var fieldofInterestList = new List<string>();
+            fieldofInterestList.Add("Pulumbering");
+
+            person.FieldOfInterest = fieldofInterestList;
+
+            person.HoursPerWeek = 10;
+            person.OccupationType = "1";
+            person.OccupationTypeOther = "Engineer";
+
+            //Employments
+            var employment = new EmploymentModel();
+            employment.EmploymentId = "abcdef";
+            employment.NameOfOrganization = "Agilosoft";
+            employment.Designation = "Team lead";
+            employment.Location = "Gulshan Iqbal";
+            employment.EmploymentEmailAddress = "jobs@agilosoft.com";
+            employment.EmploymentTelephone = "02136885412";
+            employment.TypeOfBusiness = "1";
+            employment.NatureOfBusiness = "1";
+            employment.NatureOfBusinessOther = "N/A";
+            employment.EmploymentStartDate = DateTime.Now;
+            employment.EmploymentEndDate = DateTime.Now;
+
+            employment.TypeOfBusinessName = null;
+            employment.NatureOfBusinessName = null;
+
+            var employmentList = new List<EmploymentModel>();
+            employmentList.Add(employment);
+
+            person.Employments = employmentList;
+            //------------------------------------------------
+
+            //FamilyInformation
+            var familyRelation = new FamilyRelationModel();
+            familyRelation.FamilyRelationId = "abcdef";
+            familyRelation.Cnic = "42101-9652145-9";
+            familyRelation.Salutation = "1";
+            familyRelation.FirstName = "abc";
+            familyRelation.FathersName = "xyz";
+            familyRelation.FamilyName = "abcxyz";
+            familyRelation.JamatiTitle = "1";
+            familyRelation.DateOfBirth = DateTime.Now;
+            familyRelation.Relation = "";
+
+            familyRelation.RelationName = null;
+
+            var familyRelationList = new List<FamilyRelationModel>();
+            familyRelationList.Add(familyRelation);
+
+            person.FamilyRelations = familyRelationList;
+            //-------------------------------------------------------
+
+            return person;
+        }
+
         [HttpPost]
         public async Task<IActionResult> ProfessionalTrainingListAdd(string id, string training, string institution,
             string countryOfTarining, string month, string year)
@@ -826,6 +832,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             var success = RestfulClient.searchByCNIC(cnic, out var person);
             return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyCnic(string cnic)
+        {
+            var success = RestfulClient.searchByCNIC(cnic, out var person);
+            ViewBag.SalutationList = await RestfulClient.getSalutation();
+            ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
+            ViewBag.RelationList = await RestfulClient.getAllRelatives();
+
+            return PartialView("_FamilyRelationPartial", person);
         }
 
         [HttpPost]
@@ -896,17 +913,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VerifyCnic(string cnic)
-        {
-            var success = RestfulClient.searchByCNIC(cnic, out var person);
-            ViewBag.SalutationList = await RestfulClient.getSalutation();
-            ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
-            ViewBag.RelationList = await RestfulClient.getAllRelatives();
-
-            return PartialView("_FamilyRelationPartial", person);
-        }
-
-        [HttpPost]
         public async Task<IActionResult> VoluntaryPublicListDelete(string id)
         {
             var sessionVoluntaryPublicList =
@@ -919,5 +925,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         #endregion Public Methods
+
+        #region Private Methods
+
+        private string GetText(string id, List<SelectListItem> list)
+        {
+            return list.FirstOrDefault(l => l.Value == id)?.Text;
+        }
+
+        private PersonModel MapPerson(PersonModel person)
+        {
+            //saif ali write mapping here
+            return person;
+        }
+
+        #endregion Private Methods
     }
 }
