@@ -30,6 +30,87 @@
             //$("#mainForm input").prop("disabled", true);
             //$("#mainForm select").prop("disabled", true);
 
+            $(".relative-fields").prop("disabled", true);
+            $(".relative-cnic").blur(function () {
+                var cnic = $(".relative-cnic").val();
+                $.ajax({
+                    type: "POST",
+                    url:
+                        "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new { area = AreaNames.Operations })",
+                    data: { "cnic": cnic },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    dataType: "html",
+                    error: function(xmlHttpRequest, textStatus, errorThrown) {
+                        alert("Request: " +
+                            xmlHttpRequest.toString() +
+                            "\n\nStatus: " +
+                            textStatus +
+                            "\n\nError: " +
+                            errorThrown);
+                    },
+                    success: function(result) {
+                        $("#familyRelationData").html(result);
+                        Initialize();
+                    }
+                });
+                @*$.post("@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new { area = AreaNames.Operations })", { cnic: $(".relative-cnic").val() })
+                    .done(function(data) {
+                        $("#mainForm input").prop("disabled", false);
+                        $("#mainForm select").prop("disabled", false);
+
+                        $("#RelocateLocation").prop("disabled", true);
+                        $("#RelocationDateTime").prop("disabled", true);
+
+                        $("#LocalCouncil").prop("disabled", true);
+                        $("#Jamatkhana").prop("disabled", true);
+
+                        $("#HighestLevelOfStudyOther").prop("disabled", true);
+                        $("#OccupationTypeOther").prop("disabled", true);
+                        $("#NatureOfBusinessOther").prop("disabled", true);
+
+                        $("#PassportNumber").focus();
+                    });*@
+            });
+
+            MakeCascadingDropDown("regional-select",
+                "local-select",
+                "@Url.Action(ActionNames.GetLocalCouncil, ControllerNames.Persons, new {area = AreaNames.Operations})");
+
+            MakeCascadingDropDown("local-select",
+                "jamatkhana-select",
+                "@Url.Action(ActionNames.GetJamatkhana, ControllerNames.Persons, new {area = AreaNames.Operations})");
+
+            $("#Cnic").inputmask({
+                "mask": "99999-9999999-9"
+            });
+
+            $("#RelativeCnic").inputmask({
+                "mask": "99999-9999999-9"
+            });
+
+            $(".highest-level-select").change(function() {
+                var selectedValue = $(this).val();
+                if (selectedValue === "Others") {
+                    $("#HighestLevelOfStudyOther").prop("disabled", false);
+                }
+            });
+
+            $(".occupation-type").change(function() {
+                var selectedValue = $(this).val();
+                if (selectedValue === "Others") {
+                    $("#OccupationTypeOther").prop("disabled", false);
+                }
+            });
+
+            $(".nature-of-business").change(function() {
+                var selectedValue = $(this).val();
+                if (selectedValue === "Others") {
+                    $("#NatureOfBusinessOther").prop("disabled", false);
+                }
+            });
+
+            $("#Cnic").focus();
+
             $("#education").css("min-height", "0px");
             $("#akdn-training").css("min-height", "0px");
             $("#professional-training").css("min-height", "0px");
