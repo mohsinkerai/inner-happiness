@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
@@ -113,6 +114,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public double? HoursPerWeek { get; set; }
 
         public string Id { get; set; }
+        [JsonIgnore] public IFormFile ImageUpload { get; set; }
         [JsonProperty(PropertyName = "image")] public string Image { get; set; }
 
         [JsonIgnore] public string Institution { get; set; }

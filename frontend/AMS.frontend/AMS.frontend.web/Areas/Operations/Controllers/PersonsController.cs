@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -88,12 +90,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PersonModel model)
+        public async Task<IActionResult> Add([FromForm]PersonModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await model.ImageUpload.CopyToAsync(memoryStream);
+                        model.Image = Convert.ToBase64String(memoryStream.ToArray());
+                    }
+
                     var sessionAkdnTrainingList =
                         HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                         new List<AkdnTrainingModel>();
@@ -123,7 +131,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                     //var success = await RestfulClient.savePersonData(model);
 
-                    var success = await RestfulClient.savePersonData(PersonDummyData());
+                    var success = await RestfulClient.savePersonData(PersonDummyData(model.Image));
 
                     if (success)
                     {
@@ -315,6 +323,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await model.ImageUpload.CopyToAsync(memoryStream);
+                        model.Image = Convert.ToBase64String(memoryStream.ToArray());
+                    }
+
                     var sessionAkdnTrainingList =
                         HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                         new List<AkdnTrainingModel>();
@@ -582,9 +596,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
 
-        public PersonModel PersonDummyData()
+        public PersonModel PersonDummyData(string image)
         {
-            var person = new PersonModel();
+            var person = new PersonModel{Image = image};
 
             person.Cnic = "42101-9999999-3";
             person.PassportNumber = "111-2222-3333";
