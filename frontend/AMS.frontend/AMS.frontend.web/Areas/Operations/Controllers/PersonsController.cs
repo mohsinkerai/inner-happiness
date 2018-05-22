@@ -168,6 +168,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ? string.Empty
                     : countryOfTarining.Split('-')[1],
                 Month = month,
+                MonthName = GetMonthName(month),
                 Training = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[0],
                 TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
                 Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
@@ -267,7 +268,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var person = await RestfulClient.getPersonDetailsById(id);
-
+           
             return View(MapPerson(person));
         }
 
@@ -305,7 +306,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             var person = await RestfulClient.getPersonDetailsById(id);
 
-            return View(MapPerson(person));
+            return View(person);
         }
 
         [HttpPost]
@@ -657,7 +658,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             professionalTraining.Training = "Teaching";
             professionalTraining.Institution = "HRE";
             professionalTraining.CountryOfTraining = "1";
-            professionalTraining.Month = "January";
+            professionalTraining.Month = "1";
             professionalTraining.Year = 2013;
 
             professionalTraining.CountryOfTrainingName = null;
@@ -670,10 +671,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //-------------------------------------------------
 
             var skillList = new List<string>();
-            skillList.Add("Designing");
+            skillList.Add("1");
 
             var professionalMembershipList = new List<string>();
-            professionalMembershipList.Add("ACM");
+            professionalMembershipList.Add("2");
 
             person.Skills = skillList;
             person.ProfessionalMemberships = professionalMembershipList;
@@ -730,7 +731,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             person.WillingnessToDevoteTimeInFuture = "Continue with Present Institution";
 
             var fieldofInterestList = new List<string>();
-            fieldofInterestList.Add("Pulumbering");
+            fieldofInterestList.Add("1");
 
             person.FieldOfInterest = fieldofInterestList;
 
@@ -808,6 +809,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     : countryOfTarining.Split('-')[1],
                 Institution = institution,
                 Month = month,
+                MonthName = GetMonthName(month),
                 Training = training,
                 Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
             });
@@ -930,13 +932,126 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private string GetText(string id, List<SelectListItem> list)
         {
-            return list.FirstOrDefault(l => l.Value == id)?.Text;
+            return list.FirstOrDefault(l => (string.IsNullOrWhiteSpace(l.Value) ? string.Empty : l.Value.Split('-')[0]) == id)?.Text;
         }
 
         private PersonModel MapPerson(PersonModel person)
         {
             //saif ali write mapping here
+            
+            foreach(var education in person.Educations)
+            {
+                string institutionName = GetText(education.Institution.ToString(), ViewBag.InstitutionList);
+                string country = GetText(education.CountryOfStudy.ToString(), ViewBag.CountryOfStudyList);
+                string nameOfDegree = GetText(education.NameOfDegree.ToString(), ViewBag.NameOfDegreeList);
+
+                education.InstitutionName = institutionName;
+                education.CountryOfStudyName = country;
+                education.NameOfDegreeName = nameOfDegree;
+            }
+
+            foreach (var akdnTraining in person.AkdnTrainings)
+            {
+                string training = GetText(akdnTraining.Training, ViewBag.AkdnTrainingList);
+                string country = GetText(akdnTraining.CountryOfTraining, ViewBag.AkdnTrainingCountryList);
+                string month = GetMonthName(akdnTraining.Month);
+
+                //akdnTraining.TrainingName = training;
+                akdnTraining.CountryOfTrainingName = country;
+                akdnTraining.MonthName = month;
+               
+            }
+
+            foreach (var professionalTraining in person.ProfessionalTrainings)
+            {
+                string country = GetText(professionalTraining.CountryOfTraining, ViewBag.ProfessionalTrainingCountryList);
+                string month = GetMonthName(professionalTraining.Month);
+
+                professionalTraining.CountryOfTrainingName = country;
+                //professionalTraining.CountryOfTraining = country;
+                professionalTraining.MonthName = month;
+            }
+
+            foreach (var language in person.LanguageProficiencies)
+            {
+                string languageName = GetText(language.Language, ViewBag.LanguageList);
+                string read = GetText(language.Read, ViewBag.Proficiency);
+                string write = GetText(language.Write, ViewBag.Proficiency);
+                string speak = GetText(language.Speak, ViewBag.Proficiency);
+
+                language.LanguageName = languageName;
+                language.Read = read;
+                language.Write = write;
+                language.Speak = speak;
+            }
+
+            foreach (var voluntaryService in person.VoluntaryCommunityServices)
+            {
+                string institutionName = GetText(voluntaryService.Institution, ViewBag.VoluntaryCommunityInstitutionList);
+                string position = GetText(voluntaryService.Position, ViewBag.VoluntaryCommunityPositionList);
+
+                voluntaryService.InstitutionName = institutionName;
+                voluntaryService.PositionName = position;
+            }
+
+
+
             return person;
+        }
+
+        private string GetMonthName(string id)
+        {
+            if (id == "1")
+            {
+                return "January";
+            }
+            else if (id == "2")
+            {
+                return "February";
+            }
+            else if (id == "3")
+            {
+                return "March";
+            }
+            else if (id == "4")
+            {
+                return "April";
+            }
+            else if (id == "5")
+            {
+                return "May";
+            }
+            else if (id == "6")
+            {
+                return "June";
+            }
+            else if (id == "7")
+            {
+                return "July";
+            }
+            else if (id == "8")
+            {
+                return "August";
+            }
+            else if (id == "9")
+            {
+                return "September";
+            }
+            else if (id == "10")
+            {
+                return "October";
+            }
+            else if (id == "11")
+            {
+                return "November";
+            }
+            else if (id == "12")
+            {
+                return "December";
+            }
+            else {
+                return "";
+            }
         }
 
         #endregion Private Methods

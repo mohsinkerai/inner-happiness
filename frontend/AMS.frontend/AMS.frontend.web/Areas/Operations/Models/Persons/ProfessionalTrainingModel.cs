@@ -27,5 +27,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "month")]
         public string Month { get; set; }
+
+        [JsonIgnore]
+        public string MonthName { get; set; }
     }
 }
