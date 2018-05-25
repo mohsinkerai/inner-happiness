@@ -25,6 +25,17 @@ namespace AMS.frontend.web.ViewComponents
                 ImageClass = "flaticon-information"
             });
 
+            menuModel.Add(new MenuModel
+            {
+                MenuId = 2,
+                Action = ActionNames.Index,
+                Controller = ControllerNames.Nominations,
+                SubMenu = null,
+                Title = "Nominations",
+                Area = AreaNames.Operations,
+                ImageClass = "flaticon-network"
+            });
+
             //var menu = new MenuModel
             //{
             //    MenuId = 1,
