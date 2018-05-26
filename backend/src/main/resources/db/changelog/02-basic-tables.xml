@@ -51,7 +51,7 @@
       <column name="passport_number" type="varchar(255)">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column name="image_path" type="varchar(255)">
+      <column name="image" type="varchar(255)">
         <constraints nullable="true" unique="false"/>
       </column>
 
@@ -195,7 +195,7 @@
       <column name="id" value="2"/>
 
       <column name="cnic" value="42101-1111111-2"/>
-      <column name="image_path" value="42101-1111111-2.png" />
+      <column name="image" value="42101-1111111-2.png" />
 
       <column name="salutation" value="1" />
       <column name="first_name" value="Mohsin"/>
@@ -248,7 +248,7 @@
       <!--<column name="regional_council_id" value="2"/>-->
       <!--<column name="local_council_id" value="3"/>-->
       <!--<column name="jamatkhana_id" value="4"/>-->
-      <!--<column name="image_path" value="42101-1111111-3.png" />-->
+      <!--<column name="image" value="42101-1111111-3.png" />-->
     <!--</insert>-->
   </changeSet>
   <changeSet id="02-04" author="mohsin.kerai">

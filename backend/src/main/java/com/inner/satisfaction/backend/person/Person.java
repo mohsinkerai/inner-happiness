@@ -33,7 +33,7 @@ public class Person extends BaseEntity {
 
   private String cnic;
   private String passportNumber;
-  private String imagePath;
+  private String image;
 
   private long salutation; // id
   private String firstName;
@@ -118,5 +118,5 @@ public class Person extends BaseEntity {
   private List<EmploymentHistoryDto> employments;
 
   @Transient
-  private List<ReducedPersonDto> relations;
+  private List<ReducedPersonDto> familyRelations;
 }

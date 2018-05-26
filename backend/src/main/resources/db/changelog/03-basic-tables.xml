@@ -100,7 +100,7 @@
       <!--<column name="regional_council_id" value="2"/>-->
       <!--<column name="local_council_id" value="3"/>-->
       <!--<column name="jamatkhana_id" value="4"/>-->
-      <!--<column name="image_path" value="42101-1111111-4.png" />-->
+      <!--<column name="image" value="42101-1111111-4.png" />-->
     <!--</insert>-->
     <!--<insert tableName="person">-->
       <!--<column name="id" value="4"/>-->
@@ -117,7 +117,7 @@
       <!--<column name="regional_council_id" value="2"/>-->
       <!--<column name="local_council_id" value="5"/>-->
       <!--<column name="jamatkhana_id" value="6"/>-->
-      <!--<column name="image_path" value="42101-1111111-5.png" />-->
+      <!--<column name="image" value="42101-1111111-5.png" />-->
     <!--</insert>-->
     <insert tableName="cpal_nomination">
       <column name="id" value="2"/>
