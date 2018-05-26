@@ -11,6 +11,15 @@ var databaseConfig = {
     parseJSON: true
 };
 
+//var databaseConfig = {
+//    host: "13.93.85.18",
+//    database: "inner_satisfaction",
+//    user: "amsal",
+//    password: "hp",
+//    connectionLimit: 1,
+//    parseJSON: true
+//};
+
 var pool = null;
 
 function getPool() {
