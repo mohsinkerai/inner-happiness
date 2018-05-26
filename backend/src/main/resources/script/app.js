@@ -34,7 +34,8 @@ function syncJamatiTitle() {
     getDataFromTable("Ali_tblTitle")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO jamati_titles (title, gender) VALUES ("${value['Descr']}","${value['Gender']}")`;
+            var gender = value['Gender'] == 'M' ? 'Male' : 'Female';
+            let query = `Insert INTO jamati_title (name, gender) VALUES ("${value['Descr']}","${gender}")`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -44,7 +45,7 @@ function syncSalutation() {
     getDataByQuery("SELECT DISTINCT(SalutationId) FROM Ali_tblPerson WHERE SalutationId IS NOT NULL AND SalutationId != '' ORDER BY SalutationId ASC")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO salutation (salutation) VALUES ("${value['SalutationId']}")`;
+            let query = `Insert INTO salutation (name) VALUES ("${value['SalutationId']}")`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -134,7 +135,7 @@ function syncMaritalStatus() {
     getDataByQuery("SELECT DISTINCT MaritalStatus FROM Ali_tblPerson WHERE MaritalStatus IS NOT NULL AND MaritalStatus != ''")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO marital_status (status) VALUES ("${value['MaritalStatus']}")`;
+            let query = `Insert INTO marital_status (name) VALUES ("${value['MaritalStatus']}")`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -200,6 +201,47 @@ function syncPublicServiceInstitution() {
     });
 }
 
+function syncTempRegion() {
+    getDataByQuery("SELECT DISTINCT r.RegionId, r.Descr AS RegionName, r.ShortDescr, c.Descr AS CountryName FROM Ali_tblRegion r JOIN Ali_tblCountry c ON r.CountryCode = c.CountryCode")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO temp_region (temp_id, name, name_descr, country) VALUES ("${value['RegionId']}", "${value['RegionName']}", "${value['ShortDescr']}", "${value['CountryName']}")`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncRegionalCouncil() {
+    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' ORDER BY RegionId")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO level (level_type_id, name, full_name, level_parent_id) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", 1)`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncJamatKhana() {
+    getDataByQuery("SELECT j.Population, j.Closed, j.OldCode, i.Descr, i.ShortDescr FROM Ali_tblJamatkhana j JOIN Ali_tblInstitution i ON j.InstitutionId = i.InstitutionId")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO jamatkhana (name, short_name, population, is_closed, old_code) VALUES ("${value['Descr']}", "${value['ShortDescr']}", ${value['Population']}, ${value['Closed']}, "${value['OldCode']}")`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncRegion() {
+    getDataFromTable("Ali_tblRegion")
+        .then((rows) => {
+            rows.forEach(function(value){
+            var countryId = `${value['CountryCode']}`.replace('00','');
+            let query = `Insert INTO region (old_id, name, short_name, country_id) VALUES ("${value['RegionId']}", "${value['Descr']}", "${value['ShortDescr']}", ${countryId})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
 //syncCity();
 //syncCountry();
 //syncJamatiTitle();
@@ -219,6 +261,16 @@ function syncPublicServiceInstitution() {
 //syncSecularStudyLevel();
 //syncSkills();
 //syncPublicServiceInstitution();
+//syncTempRegion();
+//syncRegionalCouncil();
+
+//syncJamatKhana();
+//syncRegion();
+
+
+
+
+
 
 /*
 Confusion: educational_institution, institution
