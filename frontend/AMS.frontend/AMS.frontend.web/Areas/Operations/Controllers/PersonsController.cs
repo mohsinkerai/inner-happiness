@@ -81,12 +81,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
                 HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
+            
             }
             catch
             {
             }
 
-            return View();
+            return View(MapPerson(PersonDummyData("")));
         }
 
         [HttpPost]
@@ -96,12 +97,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await model.ImageUpload.CopyToAsync(memoryStream);
-                        model.Image = Convert.ToBase64String(memoryStream.ToArray());
+                    if (model.Image != null)
+                    { 
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await model.ImageUpload.CopyToAsync(memoryStream);
+                            model.Image = Convert.ToBase64String(memoryStream.ToArray());
+                        }
                     }
-
+                    
                     var sessionAkdnTrainingList =
                         HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                         new List<AkdnTrainingModel>();
@@ -129,9 +133,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     model.VoluntaryPublicServices = sessionVoluntaryPublicList;
                     model.Employments = sessionEmploymentList;
 
-                    //var success = await RestfulClient.savePersonData(model);
+                    var success = await RestfulClient.savePersonData(model);
 
-                    var success = await RestfulClient.savePersonData(PersonDummyData(model.Image));
+                    //var success = await RestfulClient.savePersonData(PersonDummyData(model.Image));
 
                     if (success)
                     {
@@ -231,6 +235,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             try
             {
+
                 ViewBag.SalutationList = await RestfulClient.getSalutation();
                 ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
                 ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
@@ -270,13 +275,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
                 HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
+
             }
             catch
             {
             }
 
-            var person = await RestfulClient.getPersonDetailsById(id);
-           
+                var person = await RestfulClient.getPersonDetailsById(id);
+
+                ViewBag.LocalCouncilList = await RestfulClient.getLocalCouncil(person.RegionalCouncil);
+                ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana(person.LocalCouncil);
+
             return View(MapPerson(person));
         }
 
@@ -970,7 +979,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 string country = GetText(akdnTraining.CountryOfTraining, ViewBag.AkdnTrainingCountryList);
                 string month = GetMonthName(akdnTraining.Month);
 
-                //akdnTraining.TrainingName = training;
+                akdnTraining.TrainingName = training;
                 akdnTraining.CountryOfTrainingName = country;
                 akdnTraining.MonthName = month;
                
@@ -1008,7 +1017,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 voluntaryService.PositionName = position;
             }
 
+            foreach (var employment in person.Employments)
+            {
+                string businessNature = GetText(employment.NatureOfBusiness, ViewBag.NatureOfBusinessList);
+                string businessType = GetText(employment.TypeOfBusiness, ViewBag.TypeOfBusinessList);
 
+                employment.TypeOfBusinessName = businessType;
+                employment.NatureOfBusinessName = businessNature;
+            }
 
             return person;
         }
