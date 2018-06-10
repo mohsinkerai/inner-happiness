@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface PersonRelationPersonRepository extends BaseRepository<PersonRelationPerson> {
 
   List<PersonRelationPerson> findByFirstPersonId(long firstPersonId);
+
+  PersonRelationPerson findByFirstPersonIdAndSecondPersonIdAndRelation(long firstPersonId, long secondPersonId, long relation);
+
+  List<PersonRelationPerson> findByFirstPersonIdAndSecondPersonId(long firstPersonId, long secondPersonId);
 }

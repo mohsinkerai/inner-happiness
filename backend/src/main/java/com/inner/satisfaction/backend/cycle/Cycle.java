@@ -5,6 +5,9 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import lombok.Data;
 
+/**
+ * Represents a cycle of appointment i.e 2015-2019
+ */
 @Data
 @Entity
 public class Cycle extends BaseEntity {

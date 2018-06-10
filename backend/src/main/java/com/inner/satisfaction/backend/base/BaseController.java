@@ -43,10 +43,10 @@ public abstract class BaseController<E extends BaseEntity> {
   @ResponseStatus(HttpStatus.CREATED)
   public E putSave(
       @PathVariable("id")Long id,
-      E e
+      @RequestBody E e
   ) {
     e.setId(id);
-    return save(e);
+    return baseService.save(e);
   }
 
   @GetMapping(value = ALL)
