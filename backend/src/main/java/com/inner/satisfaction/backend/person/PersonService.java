@@ -10,9 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class PersonService extends BaseService<Person> {
 
@@ -102,10 +105,18 @@ public class PersonService extends BaseService<Person> {
   }
 
   private ReducedPersonDto findOneReducedPerson(PersonRelationPerson prp) {
-    Person second = super.findOne(prp.getSecondPersonId());
-    ReducedPersonDto reducedPersonDto = dtoConverter.convertTo(second);
-    reducedPersonDto.setRelation(prp.getRelation());
-    return reducedPersonDto;
+    try {
+      Person second = super.findOne(prp.getSecondPersonId());
+      if (second != null) {
+        ReducedPersonDto reducedPersonDto = dtoConverter.convertTo(second);
+        reducedPersonDto.setRelation(prp.getRelation());
+        return reducedPersonDto;
+      }
+    } catch(EntityNotFoundException ex) {
+      log.info("Exception aya", ex);
+      return null;
+    }
+    return null;
   }
 
   private ReducedPersonDto attachPersonId(ReducedPersonDto reducedPersonDto) {
