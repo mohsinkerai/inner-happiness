@@ -1,15 +1,12 @@
 package com.inner.satisfaction.backend.person;
 
-import com.google.common.collect.Lists;
 import com.inner.satisfaction.backend.base.BaseService;
 import com.inner.satisfaction.backend.person.dto.ReducedPersonDto;
 import com.inner.satisfaction.backend.person.relation.PersonRelationPerson;
 import com.inner.satisfaction.backend.person.relation.PersonRelationPersonService;
 import com.inner.satisfaction.backend.utils.DtoEntityConverter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +43,8 @@ public class PersonService extends BaseService<Person> {
   }
 
   /**
-   * 1. Convert all new to persons
-   * 2. Create relations (don't save)
-   * 3. Find All Relations of personIdOne.
-   * 4. Remove Extra Relations (that've ended) and Create New where needed.
+   * 1. Convert all new to persons 2. Create relations (don't save) 3. Find All Relations of
+   * personIdOne. 4. Remove Extra Relations (that've ended) and Create New where needed.
    */
   @Override
   @Transactional
@@ -57,30 +52,40 @@ public class PersonService extends BaseService<Person> {
     List<ReducedPersonDto> familyRelations = person.getFamilyRelations();
     person = super.save(person);
 
-    List<ReducedPersonDto> reducedPersonsWithId = familyRelations
-      .stream()
-      .map(this::attachPersonId)
-      .collect(Collectors.toList());
+    if (familyRelations != null) {
+      List<ReducedPersonDto> reducedPersonsWithId = familyRelations
+        .stream()
+        .filter(reducedPersonDto -> reducedPersonDto!=null)
+        .map(this::attachPersonId)
+        .collect(Collectors.toList());
 
-    List<ReducedPersonDto> personRelations = findAllRelations(person.getId());
-    managePRP(reducedPersonsWithId, personRelations, person.getId());
-
-    person.setFamilyRelations(familyRelations);
+      List<ReducedPersonDto> personRelations = findAllRelations(person.getId());
+      managePRP(reducedPersonsWithId, personRelations, person.getId());
+      person.setFamilyRelations(familyRelations);
+    } else {
+      deleteAllRelation(person.getId());
+    }
     return person;
+  }
+
+  private void deleteAllRelation(Long personId) {
+    List<PersonRelationPerson> prp = personRelationPersonService
+      .findByFirstPersonId(personId);
+    prp.stream().forEach(personRelationPerson -> personRelationPersonService.delete(personRelationPerson));
   }
 
   private void managePRP(List<ReducedPersonDto> reducedPersonsWithId,
     List<ReducedPersonDto> personRelations, long personId) {
-    for(ReducedPersonDto reducedPersonDto : personRelations){
+    for (ReducedPersonDto reducedPersonDto : personRelations) {
       personRelationPersonService.remove(personId, reducedPersonDto.getId());
     }
-    for(ReducedPersonDto reducedPersonDto : reducedPersonsWithId){
+    for (ReducedPersonDto reducedPersonDto : reducedPersonsWithId) {
       personRelationPersonService.save(
         PersonRelationPerson.builder()
-        .firstPersonId(personId)
-        .secondPersonId(reducedPersonDto.getId())
-        .relation(reducedPersonDto.getRelation())
-        .build()
+          .firstPersonId(personId)
+          .secondPersonId(reducedPersonDto.getId())
+          .relation(reducedPersonDto.getRelation())
+          .build()
       );
     }
   }
@@ -101,6 +106,7 @@ public class PersonService extends BaseService<Person> {
       .findByFirstPersonId(id)
       .stream()
       .map(this::findOneReducedPerson)
+      .filter(reducedPersonDto -> reducedPersonDto != null)
       .collect(Collectors.toList());
   }
 
@@ -112,7 +118,7 @@ public class PersonService extends BaseService<Person> {
         reducedPersonDto.setRelation(prp.getRelation());
         return reducedPersonDto;
       }
-    } catch(EntityNotFoundException ex) {
+    } catch (EntityNotFoundException ex) {
       log.info("Exception aya", ex);
       return null;
     }
@@ -121,7 +127,7 @@ public class PersonService extends BaseService<Person> {
 
   private ReducedPersonDto attachPersonId(ReducedPersonDto reducedPersonDto) {
     Person person = findByCnic(reducedPersonDto.getCnic());
-    if(person != null) {
+    if (person != null) {
       reducedPersonDto.setId(person.getId());
       return reducedPersonDto;
     }
