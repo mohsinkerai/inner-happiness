@@ -756,7 +756,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
+                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
                     list.Add(new SelectListItem { Text = name, Value = id });
@@ -795,6 +795,28 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
 
             return false;
+        }
+
+        public static async Task<bool> editPersonData(PersonModel personModel)
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string json = JsonConvert.SerializeObject(personModel);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json.ToString());
+            var Res = await client.PutAsync("person/one/"+personModel.Id, httpContent);
+
+            if (Res.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -16,7 +16,18 @@
                     </div>
                 </div>*@
             <!--begin::Form-->
-            <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
+            @{ 
+                string actionName = null;
+                if (ViewBag.Action == "Detail")
+                {
+                    actionName = ActionNames.Add;
+                }
+                else
+                {
+                    actionName = ActionNames.Edit;
+                }
+            }
+            <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@actionName" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                     <div class="m-form__actions m-form__actions--solid m--align-right">
                         @if ((ViewBag.Action == "Detail" || ViewBag.Action == "Edit") && !string.IsNullOrWhiteSpace(Model.Image))
