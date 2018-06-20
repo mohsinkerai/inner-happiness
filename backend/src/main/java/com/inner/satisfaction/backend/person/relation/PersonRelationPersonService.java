@@ -28,7 +28,8 @@ public class PersonRelationPersonService extends BaseService<PersonRelationPerso
 
   public void remove(long personOneId, long personTwoId) {
     personRelationPersonRepository
-      .findByFirstPersonIdAndSecondPersonId(personOneId, personTwoId).stream()
+      .findByFirstPersonIdAndSecondPersonId(personOneId, personTwoId)
+      .stream()
       .forEach(personRelationPersonRepository::delete);
   }
 }
