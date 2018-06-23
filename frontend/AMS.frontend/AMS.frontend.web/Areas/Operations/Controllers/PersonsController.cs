@@ -398,6 +398,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string fromYear,
             string toYear, string nameOfDegree, string majorAreaOfStudy)
         {
+            var sessionEducationList = AddEducationToSession(id, institution, countryOfStudy, fromYear, toYear, nameOfDegree, majorAreaOfStudy);
+
+            return PartialView("_EducationTablePartial", sessionEducationList);
+        }
+
+        private List<EducationModel> AddEducationToSession(string id, string institution, string countryOfStudy, string fromYear, string toYear,
+            string nameOfDegree, string majorAreaOfStudy)
+        {
             var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
                                        new List<EducationModel>();
 
@@ -413,17 +421,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
                 CountryOfStudyName =
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
                 MajorAreaOfStudy = majorAreaOfStudy,
                 NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
                 NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear)
             });
             HttpContext.Session.Set("EducationList", sessionEducationList);
-
-            return PartialView("_EducationTablePartial", sessionEducationList);
+            return sessionEducationList;
         }
 
         [HttpPost]
@@ -996,6 +1003,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         education.CountryOfStudyName = country;
                         education.NameOfDegreeName = nameOfDegree;
 
+                        //tejani mapping here
+                        AddEducationToSession(education.EducationId, education.Institution, education.CountryOfStudy,
+                            education.FromYear?.ToString(), education.ToYear?.ToString(), education.NameOfDegree,
+                            education.MajorAreaOfStudy);
                     }
                     
                     foreach (var akdnTraining in person.AkdnTrainings)
