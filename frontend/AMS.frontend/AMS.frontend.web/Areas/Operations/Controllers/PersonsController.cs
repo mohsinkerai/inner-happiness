@@ -24,6 +24,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private readonly IMapper _mapper;
 
+        const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -82,7 +84,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
 
-                HttpContext.Session.SetString("DoNotValidateCnicOnEditPage", "false");
+                HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
 
             }
             catch
@@ -167,6 +169,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> AkdnTrainingListAdd(string id, string training, string countryOfTarining,
             string month, string year)
         {
+            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, month, year);
+
+            return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
+        }
+
+        public List<AkdnTrainingModel> AddAkdnTrainingToSession(string id, string training, string countryOfTarining,
+            string month, string year)
+        {
             var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                           new List<AkdnTrainingModel>();
 
@@ -192,9 +202,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });
             HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
 
-            return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
+            return sessionAkdnTrainingList;
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> AkdnTrainingListDelete(string id)
         {
@@ -309,8 +319,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
 
-                HttpContext.Session.SetString("DoNotValidateCnicOnEditPage", "true");
-
+                HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "true");
+                
             }
             catch
             {
@@ -449,8 +459,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
+            var sessionEmploymentList = AddEmploymentToSession(id, nameOfOrganization, designation, location, employmentEmailAddress, employmentTelephone,
+                typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate);
+
+            return PartialView("_EmploymentTablePartial", sessionEmploymentList);
+        }
+
+        private List<EmploymentModel> AddEmploymentToSession(string id, string nameOfOrganization, string designation,
+            string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
+            string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
+        {
             var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
-                                        new List<EmploymentModel>();
+                            new List<EmploymentModel>();
 
             if (string.IsNullOrWhiteSpace(id))
                 id = Guid.NewGuid().ToString();
@@ -485,7 +505,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });
             HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
 
-            return PartialView("_EmploymentTablePartial", sessionEmploymentList);
+            return sessionEmploymentList;
         }
 
         [HttpPost]
@@ -505,8 +525,19 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
             string relativeDateOfBirth, string relativeRelation)
         {
+            var sessionFamilyRelationList = AddFamilyRelationToSession(id, relativeCnic, relativeSalutation, relativeFirstName, relativeFathersName,
+                relativeFamilyName, relativeJamatiTitle, relativeDateOfBirth, relativeRelation);
+
+            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
+
+        private List<FamilyRelationModel> AddFamilyRelationToSession(string id, string relativeCnic,
+            string relativeSalutation,
+            string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
+            string relativeDateOfBirth, string relativeRelation)
+        {
             var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
-                                            new List<FamilyRelationModel>();
+                                new List<FamilyRelationModel>();
 
             if (string.IsNullOrWhiteSpace(id))
                 id = Guid.NewGuid().ToString();
@@ -530,7 +561,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
 
-            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+            return sessionFamilyRelationList;
         }
 
         [HttpPost]
@@ -566,7 +597,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.Message = TempData["Message"];
             //return View(new List<PersonModel>());
 
-            HttpContext.Session.SetString("DoNotValidateCnicOnEditPage", "false");
+            HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
 
             return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
         }
@@ -586,6 +617,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         [HttpPost]
         public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
+            string write, string speak)
+        {
+            var sessionLanguageList = AddLanguageToSession(id, language, read, write, speak);
+           
+            return PartialView("_LanguageTablePartial", sessionLanguageList);
+        }
+
+        private List<LanguageProficiencyModel> AddLanguageToSession(string id, string language, string read,
             string write, string speak)
         {
             var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
@@ -610,7 +649,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });
             HttpContext.Session.Set("LanguageList", sessionLanguageList);
 
-            return PartialView("_LanguageTablePartial", sessionLanguageList);
+            return sessionLanguageList;
         }
 
         [HttpPost]
@@ -830,9 +869,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> ProfessionalTrainingListAdd(string id, string training, string institution,
             string countryOfTarining, string month, string year)
         {
+            var sessionProfessionalTrainingList = AddProfessionalTrainingToSession(id, training, institution, countryOfTarining, month, year);
+
+            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
+        }
+
+        private List<ProfessionalTrainingModel> AddProfessionalTrainingToSession(string id, string training, string institution,
+            string countryOfTarining, string month, string year)
+        {
             var sessionProfessionalTrainingList =
                 HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
-                new List<ProfessionalTrainingModel>();
                 new List<ProfessionalTrainingModel>();
 
             if (string.IsNullOrWhiteSpace(id))
@@ -857,7 +903,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });
             HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
 
-            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
+            return sessionProfessionalTrainingList;
         }
 
         [HttpPost]
@@ -874,7 +920,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> ValidateCnic(string cnic)
         {
-            var doNotValidateCnic = HttpContext.Session.GetString("DoNotValidateCnicOnEditPage");
+            var doNotValidateCnic = HttpContext.Session.GetString(SessionKeyDoNotValidateCnicOnEditPage);
 
             if (doNotValidateCnic == "true")
             {
@@ -902,6 +948,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear,
             string toYear, string position)
         {
+            var sessionVoluntaryCommunityList = AddVoluntaryCommunityToSession(id, institution, fromYear, toYear, position);
+
+            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
+        }
+
+        private List<VoluntaryCommunityModel> AddVoluntaryCommunityToSession(string id, string institution, string fromYear,
+            string toYear, string position)
+        {
             var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                 new List<VoluntaryCommunityModel>();
@@ -924,7 +978,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });
             HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
 
-            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
+            return sessionVoluntaryCommunityList;
         }
 
         [HttpPost]
@@ -941,6 +995,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         [HttpPost]
         public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear,
+            string toYear, string position)
+        {
+            var sessionVoluntaryPublicList = AddVoluntaryPublicToSession(id, institution, fromYear, toYear, position);
+
+            return PartialView("_VoluntaryPublicTablePartial", sessionVoluntaryPublicList);
+        }
+
+        private List<VoluntaryPublicModel> AddVoluntaryPublicToSession(string id, string institution, string fromYear,
             string toYear, string position)
         {
             var sessionVoluntaryPublicList =
@@ -962,7 +1024,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });
             HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
 
-            return PartialView("_VoluntaryPublicTablePartial", sessionVoluntaryPublicList);
+            return sessionVoluntaryPublicList;
         }
 
         [HttpPost]
@@ -1004,8 +1066,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         education.NameOfDegreeName = nameOfDegree;
 
                         //tejani mapping here
-                        AddEducationToSession(education.EducationId, education.Institution, education.CountryOfStudy,
-                            education.FromYear?.ToString(), education.ToYear?.ToString(), education.NameOfDegree,
+                        AddEducationToSession(education.EducationId, education.Institution+"-"+education.InstitutionName, education.CountryOfStudy+"-" +education.CountryOfStudyName,
+                            education.FromYear?.ToString(), education.ToYear?.ToString(), education.NameOfDegree+"-"+education.NameOfDegreeName,
                             education.MajorAreaOfStudy);
                     }
                     
@@ -1019,6 +1081,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         akdnTraining.CountryOfTrainingName = country;
                         akdnTraining.MonthName = month;
 
+                        AddAkdnTrainingToSession(akdnTraining.TrainingId, akdnTraining.Training+"-"+akdnTraining.TrainingName, akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
+                            akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString());
                     }
 
                     foreach (var professionalTraining in person.ProfessionalTrainings)
@@ -1029,6 +1093,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         professionalTraining.CountryOfTrainingName = country;
                         //professionalTraining.CountryOfTraining = country;
                         professionalTraining.MonthName = month;
+
+                        AddProfessionalTrainingToSession(professionalTraining.TrainingId, professionalTraining.Training, professionalTraining.Institution, professionalTraining.CountryOfTraining+"-"+professionalTraining.CountryOfTrainingName,
+                            professionalTraining.Month+"-"+professionalTraining.MonthName, professionalTraining.Year?.ToString());
                     }
 
                     foreach (var language in person.LanguageProficiencies)
@@ -1042,6 +1109,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         language.ReadName = read;
                         language.WriteName = write;
                         language.SpeakName = speak;
+
+                        AddLanguageToSession(language.LanguageProficiencyId, language.Language+"-"+language.LanguageName, language.Read+"-"+language.ReadName,
+                            language.Write+"-"+language.WriteName, language.Speak+"-"+language.SpeakName);
                     }
 
                     foreach (var voluntaryService in person.VoluntaryCommunityServices)
@@ -1051,6 +1121,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                         voluntaryService.InstitutionName = institutionName;
                         voluntaryService.PositionName = position;
+
+                        AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId, voluntaryService.Institution+"-"+ voluntaryService.InstitutionName,
+                            voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(), voluntaryService.Position+"-"+ voluntaryService.PositionName);
                     }
 
                     foreach (var employment in person.Employments)
@@ -1060,7 +1133,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                         employment.TypeOfBusinessName = businessType;
                         employment.NatureOfBusinessName = businessNature;
+
+                        AddEmploymentToSession(employment.EmploymentId, employment.NameOfOrganization, employment.Designation, employment.Location,
+                             employment.EmploymentEmailAddress, employment.EmploymentTelephone, employment.TypeOfBusiness+"-"+employment.TypeOfBusinessName,
+                             employment.NatureOfBusiness+"-"+ employment.NatureOfBusinessName, employment.NatureOfBusinessOther,
+                             employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
                     }
+                    
                 }
             }
             catch (Exception ex) {
