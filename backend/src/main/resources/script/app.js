@@ -14,7 +14,8 @@ function syncCity() {
     getDataFromTable("Ali_tblCity")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO city (name) VALUES ("${value['Descr']}")`;
+            let countryId = `${value['CountryCode']}`.replace(/^0+/, '');
+            let query = `Insert INTO city (name, country_id) VALUES ("${value['Descr']}", ${countryId})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -34,8 +35,7 @@ function syncJamatiTitle() {
     getDataFromTable("Ali_tblTitle")
         .then((rows) => {
             rows.forEach(function(value){
-            var gender = value['Gender'] == 'M' ? 'Male' : 'Female';
-            let query = `Insert INTO jamati_title (name, gender) VALUES ("${value['Descr']}","${gender}")`;
+            let query = `Insert INTO jamati_title (name, gender) VALUES ("${value['Descr']}","${value['Gender']}")`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -122,20 +122,25 @@ function syncProfessionalMembership() {
 }
 
 function syncFieldOfInterest() {
-    getDataByQuery("SELECT DISTINCT FieldOfInterest FROM Ali_tblFieldOfInterest")
-        .then((rows) => {
-            rows.forEach(function(value){
-            let query = `Insert INTO field_of_interest (name) VALUES ("${value['FieldOfInterest']}")`;
-            mysql.query(query).then(console.log("Done"));
-        });
-    });
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Any Institution", "ANY")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Concilation & Arbitration Board", "CAB")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Education Services", "EDS")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Economic Planning Board", "EPB")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Focus Humanitarian Assitance", "FOC")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Grants & Review Board", "GRB")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Health Service", "HLS")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Islmailia Charitable Trust", "ICP")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Tariqah & Religious Education Board", "ITB")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Planning and Building Services", "PBS")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Social Welfare Board", "SWB")').then(console.log("Done"));
+    mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Youth and Sports Board", "YSB")').then(console.log("Done"));
 }
 
 function syncMaritalStatus() {
     getDataByQuery("SELECT DISTINCT MaritalStatus FROM Ali_tblPerson WHERE MaritalStatus IS NOT NULL AND MaritalStatus != ''")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO marital_status (name) VALUES ("${value['MaritalStatus']}")`;
+            let query = `Insert INTO marital_status (name, code) VALUES ("", "${value['MaritalStatus']}")`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -235,9 +240,26 @@ function syncRegion() {
     getDataFromTable("Ali_tblRegion")
         .then((rows) => {
             rows.forEach(function(value){
-            var countryId = `${value['CountryCode']}`.replace('00','');
+            var countryId = `${value['CountryCode']}`.replace(/^0+/, '');
             let query = `Insert INTO region (old_id, name, short_name, country_id) VALUES ("${value['RegionId']}", "${value['Descr']}", "${value['ShortDescr']}", ${countryId})`;
             mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncLocalCouncil() {
+    getDataByQuery("SELECT * FROM Ali_tblLocalCouncil WHERE Descr != '' AND Descr != 'Non Existent' ORDER BY LocalCouncilId")
+        .then((rows) => {
+            rows.forEach(function(value){
+            var cityId = (`${value['CityCode']}`.replace(/^0+/, ''));
+            cityId = cityId != '' ? cityId : '0';
+            var oldRegionId = `${value['RegionId']}`;
+            mysql.query(`SELECT * FROM region WHERE old_id = '${oldRegionId}'`).then((rows) => {
+                rows.forEach(function(v){
+                    let query = `Insert INTO local_council (old_id, name, short_name, city_id, is_closed, region_id) VALUES ("${value['LocalCouncilId']}", "${value['Descr']}", "${value['ShortDescr']}", ${cityId}, ${value['Closed']}, ${v['id']})`;
+                    mysql.query(query).then(console.log("Done"));
+                })
+            });
         });
     });
 }
@@ -246,15 +268,16 @@ function syncRegion() {
 //syncCountry();
 //syncJamatiTitle();
 //syncSalutation();
-//syncEducationalDegree();
 //syncLanguage();
+//syncMaritalStatus();
+//syncJamatKhana();
+//syncEducationalDegree();
 //syncVoluntaryInstitution();
 //syncAreaOfStudy();
 //syncBusinessType();
 //syncBusinessNature();
 //syncProfessionalMembership();
 //syncFieldOfInterest();
-//syncMaritalStatus();
 //syncOccupation();
 //syncEducationalInstitution();
 //syncPosition();
@@ -264,25 +287,8 @@ function syncRegion() {
 //syncTempRegion();
 //syncRegionalCouncil();
 
-//syncJamatKhana();
+
 //syncRegion();
 
+//syncLocalCouncil();
 
-
-
-
-
-/*
-Confusion: educational_institution, institution
- */
-
-/*
-Left: (?)
-    akdntraining
-    areaoforigin
-    fieldofexperties
-    religiousqualification
-
-    institution (replaced with public_service_institution)
-    highestlevelstudy (should be replaced by secular_study_level)
- */
