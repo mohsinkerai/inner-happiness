@@ -27,12 +27,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "businessType")]
         public string TypeOfBusiness { get; set; }
         
-        [JsonIgnore] public string TypeOfBusinessName { get; set; }
+        public string TypeOfBusinessName { get; set; }
 
         [JsonProperty(PropertyName = "businessNature")]
         public string NatureOfBusiness { get; set; }
 
-        [JsonIgnore] public string NatureOfBusinessName { get; set; }
+        public string NatureOfBusinessName { get; set; }
 
         [JsonProperty(PropertyName = "natureOfBusinessOther")]
         public string NatureOfBusinessOther { get; set; }

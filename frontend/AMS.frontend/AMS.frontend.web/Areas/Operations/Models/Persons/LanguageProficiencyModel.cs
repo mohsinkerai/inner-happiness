@@ -10,21 +10,21 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "language")]
         public string Language { get; set; }
         
-        [JsonIgnore] public string LanguageName { get; set; }
+        public string LanguageName { get; set; }
 
         [JsonProperty(PropertyName = "read")]
         public string Read { get; set; }
 
-        [JsonIgnore] public string ReadName { get; set; }
+        public string ReadName { get; set; }
 
         [JsonProperty(PropertyName = "write")]
         public string Write { get; set; }
 
-        [JsonIgnore] public string WriteName { get; set; }
+        public string WriteName { get; set; }
 
         [JsonProperty(PropertyName = "speak")]
         public string Speak { get; set; }
 
-        [JsonIgnore] public string SpeakName { get; set; }
+        public string SpeakName { get; set; }
     }
 }

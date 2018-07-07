@@ -11,7 +11,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "institution")]
         public string Institution { get; set; }
         
-        [JsonIgnore] public string InstitutionName { get; set; }
+        public string InstitutionName { get; set; }
 
         [JsonProperty(PropertyName = "fromYear")]
         [Display(Name = "From Year")] public int? FromYear { get; set; }
@@ -23,6 +23,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string Position { get; set; }
 
         [JsonProperty(PropertyName = "positionName")]
-        [JsonIgnore] public string PositionName { get; set; }
+        public string PositionName { get; set; }
     }
 }

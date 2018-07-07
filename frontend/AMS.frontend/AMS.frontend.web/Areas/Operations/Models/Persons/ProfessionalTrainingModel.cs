@@ -15,7 +15,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Country of Training")]
         public string CountryOfTraining { get; set; }
 
-        [JsonIgnore] public string CountryOfTrainingName { get; set; }
+        public string CountryOfTrainingName { get; set; }
 
         [JsonProperty(PropertyName = "institution")]
         public string Institution { get; set; }
@@ -28,7 +28,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "month")]
         public string Month { get; set; }
 
-        [JsonIgnore]
         public string MonthName { get; set; }
     }
 }

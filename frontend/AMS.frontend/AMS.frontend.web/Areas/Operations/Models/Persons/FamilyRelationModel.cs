@@ -34,7 +34,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "relation")]
         public string Relation { get; set; }
 
-        [JsonIgnore] public string RelationName { get; set; }
+        public string RelationName { get; set; }
 
         [JsonProperty(PropertyName = "salutation")]
         public string Salutation { get; set; }
