@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AMS.frontend.web.Areas.Operations.Models.Nominations;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -43,7 +44,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
             //return View(new List<PersonModel>());
-            return View();
+
+            ViewBag.CompanyList = await RestfulClient.getAllCompanies();
+            ViewBag.RegionList = await RestfulClient.getRegionalCouncil();
+            ViewBag.LocalList = await RestfulClient.getLocalCouncil();
+            ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
+            ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
+
+            return View(new IndexNominationModel{Company = "1", Positions = new List<Position>()});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string company, string region, string local, string jamatkhana, string institution)
+        {
+            return RedirectToAction("Index");
         }
 
         #endregion Public Methods

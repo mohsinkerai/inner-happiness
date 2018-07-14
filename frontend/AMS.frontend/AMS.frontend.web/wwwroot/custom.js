@@ -941,6 +941,267 @@ function InitializeDataTable(id, title) {
     $("#m_form_status, #m_form_type").selectpicker();
 }
 
+function InitializeServerSideAdministratorDataTable(id, title, url) {
+    var table = $("#" + id);
+
+    var fixedHeaderOffset = 0;
+    if (App.getViewPort().width < App.getResponsiveBreakpoint("md")) {
+        if ($(".page-header").hasClass("page-header-fixed-mobile")) {
+            fixedHeaderOffset = $(".page-header").outerHeight(true);
+        }
+    } else if ($(".page-header").hasClass("navbar-fixed-top")) {
+        fixedHeaderOffset = $(".page-header").outerHeight(true);
+    }
+
+    var oTable = table.dataTable({
+        // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+        "language": {
+            "aria": {
+                "sortAscending": ": activate to sort column ascending",
+                "sortDescending": ": activate to sort column descending"
+            },
+            "emptyTable": "No data available in table",
+            "info": "Showing _START_ to _END_ of _TOTAL_ records",
+            "infoEmpty": "No records found",
+            "infoFiltered": "(filtered1 from _MAX_ total records)",
+            "lengthMenu": "Show _MENU_",
+            "search": "Search:",
+            "zeroRecords": "No matching records found",
+            "paginate": {
+                "previous": "Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        //"bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+        "lengthMenu": [
+            [5, 10, 20, -1],
+            [5, 10, 20, "All"] // change per page values here
+        ],
+        // set the initial value
+        "pageLength": 10,
+        "columnDefs": [
+            {
+                "targets": [10],
+                "visible": false,
+                "searchable": false,
+                "orderable": false
+            },
+            {
+                "targets": [11],
+                "visible": false,
+                "searchable": false,
+                "orderable": false
+            },
+            {
+                "targets": [12],
+                "visible": false,
+                "searchable": false,
+                "orderable": false
+            }
+        ],
+        // setup rowreorder extension: http://datatables.net/extensions/fixedheader/
+        fixedHeader: {
+            header: true,
+            headerOffset: fixedHeaderOffset
+        },
+        //"order": [
+        //    [0, "asc"]
+        //],
+        "pagingType": "bootstrap_full_number",
+        buttons: [
+            {
+                extend: "print",
+                className: "btn default blue-stripe blue-stripe",
+                exportOptions: {
+                    columns: ":visible"
+                }
+            },
+            {
+                extend: "copy",
+                className: "btn default blue-stripe",
+                exportOptions: {
+                    columns: ":visible"
+                }
+            },
+            {
+                extend: "pdf",
+                className: "btn default blue-stripe",
+                exportOptions: {
+                    columns: ":visible"
+                }
+            },
+            {
+                extend: "excel",
+                className: "btn default blue-stripe",
+                exportOptions: {
+                    columns: ":visible"
+                }
+            },
+            {
+                extend: "csv",
+                className: "btn default blue-stripe",
+                exportOptions: {
+                    columns: ":visible"
+                }
+            },
+            {
+                extend: "colvis",
+                className: "btn default blue-stripe",
+                text: "Columns"
+            }
+        ],
+        // setup responsive extension: http://datatables.net/extensions/responsive/
+        //responsive: true,
+        "dom":
+            "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+        colReorder: true,
+        processing: true,
+        serverSide: true,
+        ajax: {
+            "url": url,
+            "type": "POST"
+        },
+        //ajax: url,
+        columns: [
+            {
+                "data": "formNumber"
+            },
+            {
+                "data": "fullName"
+            },
+            {
+                "data": "enteredOnForDisplay"
+            },
+            {
+                "data": "enteredByUserForDisplay"
+            },
+            {
+                "data": "submittedForVerificationOnForDisplay"
+            },
+            {
+                "data": "sentForVerificationByUserForDisplay"
+            },
+            {
+                "data": "verifiedOnForDisplay"
+            },
+            {
+                "data": "approvedByUserForDisplay"
+            },
+            //{
+            //    "data": "comments"
+            //},
+            {
+                "data": "status"
+            },
+            {
+                "data": "completionPercentage"
+            },
+            {
+                "data": "isExported"
+            },
+            {
+                "data": "exportedOnForDisplay"
+            },
+            {
+                "data": "detailUrl"
+            }
+        ],
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (aData["formNumber"].includes("-A-")) {
+                $(nRow).addClass("adult-row");
+            } else {
+                $(nRow).addClass("young-murid-row");
+            }
+            if (aData["status"] == 0) {
+                $('td:eq(8)', nRow).html('<span class="label label-sm label-info"> New </span>');
+            } else if (aData["status"] == 1) {
+                $('td:eq(8)', nRow).html('<span class="label label-sm label-warning"> Pending </span>');
+            } else if (aData["status"] == 2) {
+                if (aData["isExported"] === true) {
+                    $('td:eq(8)', nRow)
+                        .html(
+                            '<span class="label label-sm label-success"> Approved </span>&nbsp;<span class="label label-sm label-primary"> Exported to Exelare on ' +
+                            aData["exportedOnForDisplay"] +
+                            ' </span>');
+                } else {
+                    $('td:eq(8)', nRow).html('<span class="label label-sm label-success"> Approved </span>');
+                }
+            } else if (aData["status"] == 3) {
+                $('td:eq(8)', nRow).html('<span class="label label-sm label-danger"> Rejected </span>');
+            }
+            $('td:eq(9)', nRow).html(aData["completionPercentage"] + ' %');
+            $('td:eq(0)', nRow).html('<a href=' + aData["detailUrl"] + '>' + aData["formNumber"] + '</a>');
+            // Bold the grade for all 'A' grade browsers
+            //if (aData[4] == "A") {
+            //    $('td:eq(4)', nRow).html('<b>A</b>'); // You can add your link here!!
+            //    //like $('td:eq(4)', nRow).html( '<a href="'+ aData[4] +'">Click Here</b>' );
+            //}
+        },
+        ordering: false,
+        search: {
+            'smart': true,
+            'delay': 4000,
+            'type': 'trailing' // 'blur', 'leading' could be other legal values
+        }
+    });
+}
+
+function InitializeServerSideDataTable(id, title, url) {
+    var datatable = $("#" + id).mDatatable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            "url": url,
+            "type": "POST"
+        },
+        layout: {
+            theme: "default", // datatable theme
+            class: "", // custom wrapper class
+            scroll: true, // enable/disable datatable scroll both horizontal and vertical when needed.
+            footer: false // display/hide footer
+        },
+        sortable: true,
+        pagination: true,
+        toolbar: {
+            items: {
+                pagination: {
+                    pageSizeSelect: [10, 20, 30, 50, 100],
+                }
+            }
+        },
+        search: {
+            input: $("#generalSearch"),
+            smart: true,
+            delay: 4000,
+            type: "trailing"
+        }
+    });
+
+    var query = datatable.getDataSourceQuery();
+
+    $("#m_form_status").on("change", function () {
+        // shortcode to datatable.getDataSourceParam('query');
+        var query = datatable.getDataSourceQuery();
+        query.Status = $(this).val().toLowerCase();
+        // shortcode to datatable.setDataSourceParam('query', query);
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }).val(typeof query.Status !== "undefined" ? query.Status : "");
+
+    $("#m_form_type").on("change", function () {
+        // shortcode to datatable.getDataSourceParam('query');
+        var query = datatable.getDataSourceQuery();
+        query.Type = $(this).val().toLowerCase();
+        // shortcode to datatable.setDataSourceParam('query', query);
+        datatable.setDataSourceQuery(query);
+        datatable.load();
+    }).val(typeof query.Type !== "undefined" ? query.Type : "");
+
+    $("#m_form_status, #m_form_type").selectpicker();
+}
+
 $(".delete-confirm").click(function () {
     swal({
         title: "Are you sure?",
