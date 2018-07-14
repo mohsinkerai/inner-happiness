@@ -9,4 +9,5 @@ import lombok.Data;
 public class City extends BaseEntity{
 
   private String name;
+  private Long countryId;
 }
