@@ -9,4 +9,8 @@ import lombok.Data;
 public class JamatiTitle extends BaseEntity{
 
   private String name;
+  /**
+   * applicable on which geneder, male or female
+   */
+  private String gender;
 }

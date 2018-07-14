@@ -19,4 +19,8 @@ public class LevelService extends BaseService<Level>{
   public Set<Level> findByLevelParentId(long levelParentId) {
     return levelRepository.findByLevelParentId(levelParentId);
   }
+
+  public Set<Level> findByLevelTypeId(int levelTypeId) {
+    return levelRepository.findByLevelTypeId(levelTypeId);
+  }
 }

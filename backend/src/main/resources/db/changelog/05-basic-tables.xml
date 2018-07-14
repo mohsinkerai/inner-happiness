@@ -30,15 +30,39 @@
   <changeSet author="aliahad" id="05-02">
     <insert tableName="akdn_training">
       <column name="id" value="1"/>
-      <column name="name" value="akdn_training-A"/>
+      <column name="name" value="IMAT"/>
     </insert>
     <insert tableName="akdn_training">
       <column name="id" value="2"/>
-      <column name="name" value="akdn_training-B"/>
+      <column name="name" value="ADR"/>
     </insert>
     <insert tableName="akdn_training">
       <column name="id" value="3"/>
-      <column name="name" value="akdn_training-C"/>
+      <column name="name" value="HMDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="4"/>
+      <column name="name" value="HWDP / JHWDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="5"/>
+      <column name="name" value="HRDP / WTEDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="6"/>
+      <column name="name" value="IWTP / PTEP / IAEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="7"/>
+      <column name="name" value="GPISH / WTEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="8"/>
+      <column name="name" value="STEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="9"/>
+      <column name="name" value="IIS- Summer Prog."/>
     </insert>
   </changeSet>
   <changeSet author="aliahad" id="05-03">
@@ -214,10 +238,13 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-12">
     <insert tableName="business_type">
-      <column name="name" value="Self Employed"/>
+      <column name="name" value="Government"/>
     </insert>
     <insert tableName="business_type">
-      <column name="name" value="Private Service"/>
+      <column name="name" value="Private"/>
+    </insert>
+    <insert tableName="business_type">
+      <column name="name" value="AKDN"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-13">
@@ -245,13 +272,22 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-14">
     <insert tableName="occupation">
-      <column name="name" value="Software Engineer"/>
+      <column name="name" value="Salaried"/>
     </insert>
     <insert tableName="occupation">
-      <column name="name" value="Accountant"/>
+      <column name="name" value="Self Employed"/>
     </insert>
     <insert tableName="occupation">
-      <column name="name" value="Supply Assistant"/>
+      <column name="name" value="Retired"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Home Maker"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Student"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Other"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-15">
@@ -282,16 +318,48 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-16">
     <insert tableName="field_of_interest">
-      <column name="name" value="Pulumbering"/>
-      <column name="short_name" value="PUL"/>
+      <column name="name" value="Council"/>
+      <column name="short_name" value="COUNCIL"/>
     </insert>
     <insert tableName="field_of_interest">
-      <column name="name" value="Gardening"/>
-      <column name="short_name" value="GAR"/>
+      <column name="name" value="Tariqah and Religious Education Board"/>
+      <column name="short_name" value="ITREB"/>
     </insert>
     <insert tableName="field_of_interest">
-      <column name="name" value="Story Telling"/>
-      <column name="short_name" value="STO"/>
+      <column name="name" value="Grants and Review Board"/>
+      <column name="short_name" value="GRB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Conciliation and Arbitration Board"/>
+      <column name="short_name" value="CAB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Education Board"/>
+      <column name="short_name" value="EB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Health Board"/>
+      <column name="short_name" value="HB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Habitat"/>
+      <column name="short_name" value="H"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Economic Planning Board"/>
+      <column name="short_name" value="EPB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Social Welfare Board"/>
+      <column name="short_name" value="SWB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Youth and Sports Board"/>
+      <column name="short_name" value="YSB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Any Institution"/>
+      <column name="short_name" value="ANY"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-17">
@@ -319,13 +387,31 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-18">
     <insert tableName="business_nature">
-      <column name="name" value="Private"/>
+      <column name="name" value="Agriculture"/>
     </insert>
     <insert tableName="business_nature">
-      <column name="name" value="Government"/>
+      <column name="name" value="Art/Culture"/>
     </insert>
     <insert tableName="business_nature">
-      <column name="name" value="Self Employed"/>
+      <column name="name" value="Education"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Health"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Construction"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Technology"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Bank/Services"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Transportation"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Other (Please specify)"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-19">
