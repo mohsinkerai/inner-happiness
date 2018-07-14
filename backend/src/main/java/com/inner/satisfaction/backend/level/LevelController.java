@@ -31,7 +31,7 @@ public class LevelController extends BaseController<Level> {
 
   @RequestMapping("/search/type")
   @ResponseStatus(HttpStatus.OK)
-  public Set<Level> findByLevelTypeId(@RequestParam("value") long levelTypeId) {
+  public Set<Level> findByLevelTypeId(@RequestParam("value") int levelTypeId) {
     return levelService.findByLevelTypeId(levelTypeId);
   }
 }

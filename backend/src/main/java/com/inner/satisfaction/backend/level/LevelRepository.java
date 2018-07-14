@@ -11,5 +11,5 @@ public interface LevelRepository extends BaseRepository<Level> {
 
   Set<Level> findByLevelParentId(Long levelParentId);
 
-  Set<Level> findByLevelTypeId(long levelTypeId);
+  Set<Level> findByLevelTypeId(int levelTypeId);
 }

@@ -20,7 +20,7 @@ public class LevelService extends BaseService<Level>{
     return levelRepository.findByLevelParentId(levelParentId);
   }
 
-  public Set<Level> findByLevelTypeId(long levelTypeId) {
+  public Set<Level> findByLevelTypeId(int levelTypeId) {
     return levelRepository.findByLevelTypeId(levelTypeId);
   }
 }
