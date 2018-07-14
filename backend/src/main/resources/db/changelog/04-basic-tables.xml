@@ -289,6 +289,10 @@
       <column name="id" value="2"/>
       <column name="name" value="ARE"/>
     </insert>
+    <insert tableName="religious_qualification">
+      <column name="id" value="3"/>
+      <column name="name" value="MATRIC"/>
+    </insert>
   </changeSet>
 
   <changeSet id="04-15" author="mohsin.kerai">
