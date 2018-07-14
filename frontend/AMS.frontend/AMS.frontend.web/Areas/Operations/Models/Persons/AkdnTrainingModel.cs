@@ -12,13 +12,13 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string Training { get; set; }
 
         [JsonProperty(PropertyName = "trainingName")]
-        [JsonIgnore] public string TrainingName { get; set; }
+        public string TrainingName { get; set; }
 
         [JsonProperty(PropertyName = "countryOfTraining")]
         [Display(Name = "Country of Training")]
         public string CountryOfTraining { get; set; }
 
-        [JsonIgnore] public string CountryOfTrainingName { get; set; }
+        public string CountryOfTrainingName { get; set; }
 
         [JsonProperty(PropertyName = "year")]
         [DataType(DataType.Date)]
@@ -28,7 +28,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "month")]
         public string Month { get; set; }
 
-        [JsonIgnore]
         public string MonthName { get; set; }
     }
 }

@@ -165,7 +165,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Occupation Type")]
         public string OccupationType { get; set; }
 
-        [JsonProperty(PropertyName = "occupationTypeOther")]
+        [JsonProperty(PropertyName = "occupationOthers")]
         [Display(Name = "Others")]
         public string OccupationTypeOther { get; set; }
 
@@ -201,7 +201,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] public string Read { get; set; }
 
-        //[Required]
+        [Required]
         [JsonProperty(PropertyName = "regionalCouncil")]
         [Display(Name = "Regional Council")]
         public string RegionalCouncil { get; set; }

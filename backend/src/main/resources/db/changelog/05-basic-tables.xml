@@ -263,6 +263,9 @@
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="short_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
       <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
@@ -280,12 +283,15 @@
   <changeSet author="mohsin.kerai" id="05-16">
     <insert tableName="field_of_interest">
       <column name="name" value="Pulumbering"/>
+      <column name="short_name" value="PUL"/>
     </insert>
     <insert tableName="field_of_interest">
       <column name="name" value="Gardening"/>
+      <column name="short_name" value="GAR"/>
     </insert>
     <insert tableName="field_of_interest">
       <column name="name" value="Story Telling"/>
+      <column name="short_name" value="STO"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-17">

@@ -11,12 +11,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "institution")]
         public string Institution { get; set; }
 
-        [JsonIgnore] public string InstitutionName { get; set; }
+        public string InstitutionName { get; set; }
 
         [JsonProperty(PropertyName = "countryOfStudy")]
         [Display(Name = "Country of Study")] public string CountryOfStudy { get; set; }
 
-        [JsonIgnore] public string CountryOfStudyName { get; set; }
+        public string CountryOfStudyName { get; set; }
 
         [JsonProperty(PropertyName = "fromYear")]
         [Display(Name = "From Year")] public int? FromYear { get; set; }
@@ -27,7 +27,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "nameOfDegree")]
         [Display(Name = "Name of Degree")] public string NameOfDegree { get; set; }
 
-        [JsonIgnore] public string NameOfDegreeName { get; set; }
+        public string NameOfDegreeName { get; set; }
 
         [JsonProperty(PropertyName = "majorAreaOfStudy")]
         [Display(Name = "Major Area of Study")]

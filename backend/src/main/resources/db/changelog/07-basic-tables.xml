@@ -89,4 +89,53 @@
             <column name="country_id" value="1"/>
         </insert>
     </changeSet>
+
+    <changeSet author="ali.ahad" id="07-05">
+        <createTable remarks="Local Council"
+                     tableName="local_council">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="old_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="short_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="0" name="is_closed" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column defaultValueComputed="null" name="created_by" type="datetime">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column defaultValueComputed="null" name="updated_by" type="datetime">
+                <constraints nullable="true" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ali.ahad" id="07-06">
+        <insert tableName="local_council">
+            <column name="old_id" value="001"/>
+            <column name="name" value="Karimabad LC"/>
+            <column name="short_name" value="Karimabad"/>
+            <column name="city_id" value="1"/>
+            <column name="region_id" value="1"/>
+            <column name="is_closed" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
