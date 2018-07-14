@@ -30,15 +30,39 @@
   <changeSet author="aliahad" id="05-02">
     <insert tableName="akdn_training">
       <column name="id" value="1"/>
-      <column name="name" value="akdn_training-A"/>
+      <column name="name" value="IMAT"/>
     </insert>
     <insert tableName="akdn_training">
       <column name="id" value="2"/>
-      <column name="name" value="akdn_training-B"/>
+      <column name="name" value="ADR"/>
     </insert>
     <insert tableName="akdn_training">
       <column name="id" value="3"/>
-      <column name="name" value="akdn_training-C"/>
+      <column name="name" value="HMDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="4"/>
+      <column name="name" value="HWDP / JHWDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="5"/>
+      <column name="name" value="HRDP / WTEDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="6"/>
+      <column name="name" value="IWTP / PTEP / IAEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="7"/>
+      <column name="name" value="GPISH / WTEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="8"/>
+      <column name="name" value="STEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="9"/>
+      <column name="name" value="IIS- Summer Prog."/>
     </insert>
   </changeSet>
   <changeSet author="aliahad" id="05-03">
@@ -282,16 +306,48 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-16">
     <insert tableName="field_of_interest">
-      <column name="name" value="Pulumbering"/>
-      <column name="short_name" value="PUL"/>
+      <column name="name" value="Council"/>
+      <column name="short_name" value="COUNCIL"/>
     </insert>
     <insert tableName="field_of_interest">
-      <column name="name" value="Gardening"/>
-      <column name="short_name" value="GAR"/>
+      <column name="name" value="Tariqah and Religious Education Board"/>
+      <column name="short_name" value="ITREB"/>
     </insert>
     <insert tableName="field_of_interest">
-      <column name="name" value="Story Telling"/>
-      <column name="short_name" value="STO"/>
+      <column name="name" value="Grants and Review Board"/>
+      <column name="short_name" value="GRB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Conciliation and Arbitration Board"/>
+      <column name="short_name" value="CAB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Education Board"/>
+      <column name="short_name" value="EB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Health Board"/>
+      <column name="short_name" value="HB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Habitat"/>
+      <column name="short_name" value="H"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Economic Planning Board"/>
+      <column name="short_name" value="EPB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Social Welfare Board"/>
+      <column name="short_name" value="SWB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Youth and Sports Board"/>
+      <column name="short_name" value="YSB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Any Institution"/>
+      <column name="short_name" value="ANY"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-17">
