@@ -176,6 +176,7 @@
       <column name="hours_per_week" type="bigint">
         <constraints nullable="true"/>
       </column>
+      <!--Actual Occupation, Salried, Self Employed-->
       <column name="occupation_type" type="bigint">
         <constraints nullable="true"/>
       </column>

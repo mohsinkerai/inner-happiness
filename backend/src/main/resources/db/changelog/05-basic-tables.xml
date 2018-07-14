@@ -238,10 +238,13 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-12">
     <insert tableName="business_type">
-      <column name="name" value="Self Employed"/>
+      <column name="name" value="Government"/>
     </insert>
     <insert tableName="business_type">
-      <column name="name" value="Private Service"/>
+      <column name="name" value="Private"/>
+    </insert>
+    <insert tableName="business_type">
+      <column name="name" value="AKDN"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-13">
@@ -269,13 +272,22 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-14">
     <insert tableName="occupation">
-      <column name="name" value="Software Engineer"/>
+      <column name="name" value="Salaried"/>
     </insert>
     <insert tableName="occupation">
-      <column name="name" value="Accountant"/>
+      <column name="name" value="Self Employed"/>
     </insert>
     <insert tableName="occupation">
-      <column name="name" value="Supply Assistant"/>
+      <column name="name" value="Retired"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Home Maker"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Student"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Other"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-15">
