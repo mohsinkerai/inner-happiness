@@ -387,13 +387,31 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-18">
     <insert tableName="business_nature">
-      <column name="name" value="Private"/>
+      <column name="name" value="Agriculture"/>
     </insert>
     <insert tableName="business_nature">
-      <column name="name" value="Government"/>
+      <column name="name" value="Art/Culture"/>
     </insert>
     <insert tableName="business_nature">
-      <column name="name" value="Self Employed"/>
+      <column name="name" value="Education"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Health"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Construction"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Technology"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Bank/Services"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Transportation"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Other (Please specify)"/>
     </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="05-19">
