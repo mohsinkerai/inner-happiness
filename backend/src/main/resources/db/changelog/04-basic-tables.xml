@@ -150,6 +150,33 @@
     </insert>
   </changeSet>
 
+  <changeSet id="04-06-a" author="mohsin.kerai">
+    <insert tableName="area_of_origin">
+      <column name="id" value="3"/>
+      <column name="name" value="Gilgit"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="4"/>
+      <column name="name" value="Ghizer"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="5"/>
+      <column name="name" value="Baltistan"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="6"/>
+      <column name="name" value="Chitral"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="7"/>
+      <column name="name" value="Sindh"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="8"/>
+      <column name="name" value="Outside Pakistan"/>
+    </insert>
+  </changeSet>
+
   <changeSet id="04-07" author="zeeshan.damani">
     <createTable tableName="country"
                  remarks="Country of nominated person">
