@@ -67,7 +67,7 @@
       <column name="passport_number" type="varchar(255)">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column name="image" type="varchar(255)">
+      <column name="image" type="text">
         <constraints nullable="true" unique="false"/>
       </column>
 

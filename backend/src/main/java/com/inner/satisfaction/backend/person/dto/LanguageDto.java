@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LanguageDto extends BaseDto {
 
+  private String languageProficiencyId; // Id
   private long language; // Id
   private long write; // Id
   private long read; // Id

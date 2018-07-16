@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PersonAkdnTrainingDto extends BaseDto {
 
+  private String trainingId; // Id
   private long training; // Id
   private long countryOfTraining; // Id
   private long month; // Number

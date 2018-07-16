@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmploymentHistoryDto extends BaseDto {
 
+  private String employmentId;
   private String nameOfOrganization;
   private String designation;
   private String location;

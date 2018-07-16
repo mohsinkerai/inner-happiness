@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VoluntaryPublicServiceDto extends BaseDto{
 
+  private String voluntaryPublicId;
   private String institution;// Id
   private String position;// Id
   private int fromYear;
