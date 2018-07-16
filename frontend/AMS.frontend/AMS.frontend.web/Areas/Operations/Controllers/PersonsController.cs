@@ -344,8 +344,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 CountryOfTrainingName = string.IsNullOrWhiteSpace(countryOfTarining)
                     ? string.Empty
                     : countryOfTarining.Split('-')[1],
-                Month = month,
-                MonthName = GetMonthName(month),
+                Month = month.Contains('-')? month.Split('-')[0]: month,
+                MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[0],
                 TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
                 Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
@@ -492,7 +492,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (model.Image != null)
+                    if (model.ImageUpload != null)
                     {
                         using (var memoryStream = new MemoryStream())
                         {
@@ -1046,8 +1046,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ? string.Empty
                     : countryOfTarining.Split('-')[1],
                 Institution = institution,
-                Month = month,
-                MonthName = GetMonthName(month),
+                Month = month.Contains('-') ? month.Split('-')[0] : month,
+                MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = training,
                 Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
             });

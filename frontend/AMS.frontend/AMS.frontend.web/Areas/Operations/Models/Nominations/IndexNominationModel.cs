@@ -10,7 +10,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public string Institution { get; set; }
         public string Jamatkhana { get; set; }
         public string Local { get; set; }
-        public List<Position> Positions { get; set; }
+        public List<PositionModel> Positions { get; set; }
         public string Region { get; set; }
 
         #endregion Public Properties

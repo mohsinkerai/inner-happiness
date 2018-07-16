@@ -1,6 +1,6 @@
 ﻿namespace AMS.frontend.web.Areas.Operations.Models.Nominations
 {
-    public class Position
+    public class PositionModel
     {
         #region Public Properties
 

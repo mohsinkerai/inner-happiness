@@ -51,13 +51,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
             ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
 
-            return View(new IndexNominationModel{Company = "1", Positions = new List<Position>()});
+            return View(new IndexNominationModel{Company = "1", Positions = new List<PositionModel>()});
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(string company, string region, string local, string jamatkhana, string institution)
         {
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Detail(string id)
+        {
+            return View();
         }
 
         #endregion Public Methods
