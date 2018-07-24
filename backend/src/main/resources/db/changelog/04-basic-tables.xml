@@ -328,10 +328,7 @@
       <column name="id" type="bigint" autoIncrement="true">
         <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
-      <column name="name" type="bigint">
-        <constraints nullable="false"/>
-      </column>
-      <column name="country_id" type="varchar(255)">
+      <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
       <column name="country_id" type="bigint">
