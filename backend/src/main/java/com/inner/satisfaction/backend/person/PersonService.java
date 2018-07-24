@@ -1,6 +1,7 @@
 package com.inner.satisfaction.backend.person;
 
 import com.inner.satisfaction.backend.base.BaseService;
+import com.inner.satisfaction.backend.person.base.BaseM2MProcessingService;
 import com.inner.satisfaction.backend.person.dto.ReducedPersonDto;
 import com.inner.satisfaction.backend.person.relation.PersonRelationPerson;
 import com.inner.satisfaction.backend.person.relation.PersonRelationPersonService;
@@ -10,6 +11,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -19,27 +22,30 @@ public class PersonService extends BaseService<Person> {
   private final DtoEntityConverter<ReducedPersonDto, Person> dtoConverter;
   private final PersonRelationPersonService personRelationPersonService;
   private final PersonRepository personRepository;
+  private final List<BaseM2MProcessingService> baseProcessingservices;
 
   protected PersonService(
     PersonRepository personRepository,
     PersonValidation personValidation,
     DtoEntityConverter<ReducedPersonDto, Person> dtoConverter,
-    PersonRelationPersonService personRelationPersonService) {
+    PersonRelationPersonService personRelationPersonService,
+    List<BaseM2MProcessingService> baseProcessingservices) {
     super(personRepository, personValidation);
     this.personRepository = personRepository;
     this.dtoConverter = dtoConverter;
     this.personRelationPersonService = personRelationPersonService;
+    this.baseProcessingservices = baseProcessingservices;
   }
 
   public Person findByCnic(String cnic) {
     return personRepository.findByCnic(cnic);
   }
 
-  public List<Person> findByCnicOrFirstNameOrLastName(String cnic, String firstName,
-    String lastName) {
+  public Page<Person> findByCnicOrFirstNameOrLastName(String cnic, String firstName,
+    String lastName, Pageable pageable) {
     return personRepository
       .findByCnicIgnoreCaseContainingOrFirstNameIgnoreCaseContainingOrFamilyNameIgnoreCaseContaining(
-        cnic, firstName, lastName);
+        cnic, firstName, lastName, pageable);
   }
 
   /**
@@ -49,13 +55,22 @@ public class PersonService extends BaseService<Person> {
   @Override
   @Transactional
   public Person save(Person person) {
+
     List<ReducedPersonDto> familyRelations = person.getFamilyRelations();
     person = super.save(person);
+    final Person savedPerson = person;
+
+    for (BaseM2MProcessingService bps : baseProcessingservices) {
+      bps.processList(person, person.getId());
+    }
+
+//    baseProcessingservices.stream()
+//      .forEach(bps -> bps.processList(savedPerson, savedPerson.getId()));
 
     if (familyRelations != null) {
       List<ReducedPersonDto> reducedPersonsWithId = familyRelations
         .stream()
-        .filter(reducedPersonDto -> reducedPersonDto!=null)
+        .filter(reducedPersonDto -> reducedPersonDto != null)
         .map(this::attachPersonId)
         .collect(Collectors.toList());
 
@@ -71,7 +86,8 @@ public class PersonService extends BaseService<Person> {
   private void deleteAllRelation(Long personId) {
     List<PersonRelationPerson> prp = personRelationPersonService
       .findByFirstPersonId(personId);
-    prp.stream().forEach(personRelationPerson -> personRelationPersonService.delete(personRelationPerson));
+    prp.stream()
+      .forEach(personRelationPerson -> personRelationPersonService.delete(personRelationPerson));
   }
 
   private void managePRP(List<ReducedPersonDto> reducedPersonsWithId,
@@ -98,7 +114,13 @@ public class PersonService extends BaseService<Person> {
     }
     List<ReducedPersonDto> reducedPersons = findAllRelations(id);
     one.setFamilyRelations(reducedPersons);
-    return one;
+
+    Person person = one;
+    for (BaseM2MProcessingService bps : baseProcessingservices) {
+      person = bps.populatePerson(person);
+    }
+
+    return person;
   }
 
   private List<ReducedPersonDto> findAllRelations(long id) {

@@ -3,9 +3,10 @@ package com.inner.satisfaction.backend.person;
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
-import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,11 +37,14 @@ public class PersonController extends BaseController<Person> {
 
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/findByCnicOrFirstNameOrLastName", method = RequestMethod.GET)
-  public List<Person> findByCnicOrFirstNameOrLastName(
+  public Page<Person> findByCnicOrFirstNameOrLastName(
     @RequestParam("cnic") String cnic,
     @RequestParam("firstName") String firstName,
-    @RequestParam("lastName") String lastName) {
-    return personService.findByCnicOrFirstNameOrLastName(cnic, firstName, lastName);
+    @RequestParam("lastName") String lastName,
+    @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+    @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
+    PageRequest pageRequest = PageRequest.of(page-1, size);
+    return personService.findByCnicOrFirstNameOrLastName(cnic, firstName, lastName, pageRequest);
   }
 
   @ExceptionHandler(EntityNotFoundException.class)

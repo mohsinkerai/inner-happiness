@@ -111,6 +111,9 @@
       <column name="level_parent_id" type="bigint">
         <constraints nullable="true" unique="false"/>
       </column>
+      <column name="old_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false" unique="false"/>
       </column>
