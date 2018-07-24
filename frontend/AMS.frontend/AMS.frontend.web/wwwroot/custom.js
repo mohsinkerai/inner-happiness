@@ -4,8 +4,7 @@ $(document).ready(function () {
     Initialize();
 });
 
-function Initialize()
-{
+function Initialize() {
     $(".input-validation-error").parents(".form-group").addClass("has-danger");
     $(".m-select2")
         .each(function () {
@@ -65,7 +64,7 @@ function LanguageListEdit(id, language, read, write, speak) {
     $("#language-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function EmploymentListEdit(id, nameOfOrganization,designation, location,employmentEmailAddress,employmentTelephone,typeOfBusiness,natureOfBusiness,natureOfBusinessOther,employmentStartDate, employmentEndDate) {
+function EmploymentListEdit(id, nameOfOrganization, designation, location, employmentEmailAddress, employmentTelephone, typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate) {
     $("#NameOfOrganization").val(nameOfOrganization).trigger('change');
     $("#Designation").val(designation).trigger('change');
     $("#Location").val(location).trigger('change');
@@ -620,8 +619,8 @@ function EducationListAdd(url) {
 
 function EmploymentListAdd(url) {
     if ($("#NameOfOrganization").valid() && $("#Designation").valid() && $("#Location").valid() && $("#EmploymentEmailAddress").valid() && $("#EmploymentTelephone").valid() && $("#TypeOfBusiness").valid() && $("#NatureOfBusiness").valid() && $("#NatureOfBusinessOther").valid() && $("#EmploymentStartDate").valid() && $("#EmploymentEndDate").valid()) {
-        var id =$("#employment-id").val();
-        var name= $("#NameOfOrganization").val();
+        var id = $("#employment-id").val();
+        var name = $("#NameOfOrganization").val();
         var designation = $("#Designation").val();
         var location = $("#Location").val();
         var email = $("#EmploymentEmailAddress").val();
@@ -634,7 +633,7 @@ function EmploymentListAdd(url) {
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": id, "nameOfOrganization": name, "designation": designation, "location": location, "employmentEmailAddress": email, "employmentTelephone": phone, "typeOfBusiness": type, "natureOfBusiness": nature, "NatureOfBusinessOther": other, "employmentStartDate": start, "employmentEndDate" :end  },
+            data: { "id": id, "nameOfOrganization": name, "designation": designation, "location": location, "employmentEmailAddress": email, "employmentTelephone": phone, "typeOfBusiness": type, "natureOfBusiness": nature, "NatureOfBusinessOther": other, "employmentStartDate": start, "employmentEndDate": end },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -1108,7 +1107,7 @@ function InitializeServerSideAdministratorDataTable(id, title, url) {
                 "data": "detailUrl"
             }
         ],
-        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (aData["formNumber"].includes("-A-")) {
                 $(nRow).addClass("adult-row");
             } else {
@@ -1323,6 +1322,7 @@ function MakeCascadingDropDown(primaryDropdownClass, secondaryDropdownClass, url
             });
     }
 }
+
 function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, selectedPrimaryValue, url, selectedSecondaryValue) {
     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
         $("." + primaryDropdownClass).val([]);
@@ -1361,4 +1361,46 @@ function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, sel
             }
         });
     }
+}
+
+function InitializeNewDataTable(id, title, url) {
+    var e;
+    (e = $("#" + id)).DataTable({
+        responsive: true,
+        searchDelay: 500,
+        processing: true,
+        serverSide: true,
+        ajax: url,
+        columns: [{
+            data: "fullName"
+        }, {
+            data: "cnic"
+        }, {
+            data: "Actions"
+        }],
+        columnDefs: [{
+            targets: 2,
+            title: "Actions",
+            orderable: false,
+            render: function (a, e, t, n) {
+                return '<a href=' +
+                    t["detailUrl"] +
+                    ' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details"><i class="la la-eye"></i></a><a href=' +
+                    t["editUrl"] +
+                    ' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details"><i class="la la-edit"></i></a>';
+            }
+        }],
+        colReorder: true,
+        pagingType: "full_numbers",
+        dom: "<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>\n\t\t\t<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
+        buttons: ["print", "copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        lengthMenu: [5, 10, 25, 50],
+        pageLength: 10,
+        language: {
+            lengthMenu: "Display _MENU_"
+        },
+        order: [
+            [0, "desc"]
+        ]
+    });
 }
