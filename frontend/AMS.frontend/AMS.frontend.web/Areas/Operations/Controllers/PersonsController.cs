@@ -44,14 +44,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
-                var form = await Request.ReadFormAsync(); //HttpContext.Request.Query;
+                var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
-                string search = form["search[value]"][0];
-                string draw = form["draw"][0];
+                string search = queryCollection["search[value]"][0];
+                string draw = queryCollection["draw"][0];
                 //string order = form["order[0][column]"][0];
                 //string orderDir = form["order[0][dir]"][0];
-                int startRec = Convert.ToInt32(form["start"][0]);
-                int pageSize = Convert.ToInt32(form["length"][0]);
+                int startRec = Convert.ToInt32(queryCollection["start"][0]);
+                int pageSize = Convert.ToInt32(queryCollection["length"][0]);
                 // Loading.
                 //IQueryable<NiyatForm> data = null;
                 //if (user.Category.Equals(UserCategory.NationalCouncil) && user.Role.Equals(UserRole.Administrator))
@@ -175,7 +175,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     draw = Convert.ToInt32(draw),
                     recordsTotal = conditionedData.Count,
                     recordsFiltered = conditionedData.Count,
-                    data = conditionedData
+                    data = conditionedData.Select(n => new
+                    {
+                        FullName = $"{n.FirstName} {n.FathersName} {n.FamilyName}",
+                        n.Cnic,
+                        DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
+                            new {area = AreaNames.Operations, uid = n.Id}),
+                        EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,
+                            new {area = AreaNames.Operations, uid = n.Id})
+                    })
                 });
             }
             catch (Exception ex)
@@ -252,14 +260,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 if (ModelState.IsValid)
                 {
                     if (model.Image != null)
-                    { 
+                    {
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
                     }
-                    
+
                     var sessionAkdnTrainingList =
                         HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                         new List<AkdnTrainingModel>();
@@ -344,7 +352,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 CountryOfTrainingName = string.IsNullOrWhiteSpace(countryOfTarining)
                     ? string.Empty
                     : countryOfTarining.Split('-')[1],
-                Month = month.Contains('-')? month.Split('-')[0]: month,
+                Month = month.Contains('-') ? month.Split('-')[0] : month,
                 MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[0],
                 TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
@@ -354,7 +362,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return sessionAkdnTrainingList;
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> AkdnTrainingListDelete(string id)
         {
@@ -470,7 +478,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
 
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "true");
-                
+
             }
             catch
             {
@@ -500,7 +508,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
                     }
-                    
+
                     var sessionAkdnTrainingList =
                         HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                         new List<AkdnTrainingModel>();
@@ -581,13 +589,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
                 CountryOfStudyName =
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
                 MajorAreaOfStudy = majorAreaOfStudy,
                 NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
                 NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear)
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
             });
             HttpContext.Session.Set("EducationList", sessionEducationList);
             return sessionEducationList;
@@ -770,7 +778,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string write, string speak)
         {
             var sessionLanguageList = AddLanguageToSession(id, language, read, write, speak);
-           
+
             return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
 
@@ -815,7 +823,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public PersonModel PersonDummyData(string image)
         {
-            var person = new PersonModel{Image = image};
+            var person = new PersonModel { Image = image };
 
             person.Cnic = "42101-9999999-3";
             person.PassportNumber = "111-2222-3333";
@@ -1216,11 +1224,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         education.NameOfDegreeName = nameOfDegree;
 
                         //tejani mapping here
-                        AddEducationToSession(education.EducationId, education.Institution+"-"+education.InstitutionName, education.CountryOfStudy+"-" +education.CountryOfStudyName,
-                            education.FromYear?.ToString(), education.ToYear?.ToString(), education.NameOfDegree+"-"+education.NameOfDegreeName,
+                        AddEducationToSession(education.EducationId, education.Institution + "-" + education.InstitutionName, education.CountryOfStudy + "-" + education.CountryOfStudyName,
+                            education.FromYear?.ToString(), education.ToYear?.ToString(), education.NameOfDegree + "-" + education.NameOfDegreeName,
                             education.MajorAreaOfStudy);
                     }
-                    
+
                     foreach (var akdnTraining in person.AkdnTrainings)
                     {
                         string training = GetText(akdnTraining.Training, ViewBag.AkdnTrainingList);
@@ -1231,7 +1239,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         akdnTraining.CountryOfTrainingName = country;
                         akdnTraining.MonthName = month;
 
-                        AddAkdnTrainingToSession(akdnTraining.TrainingId, akdnTraining.Training+"-"+akdnTraining.TrainingName, akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
+                        AddAkdnTrainingToSession(akdnTraining.TrainingId, akdnTraining.Training + "-" + akdnTraining.TrainingName, akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
                             akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString());
                     }
 
@@ -1244,8 +1252,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         //professionalTraining.CountryOfTraining = country;
                         professionalTraining.MonthName = month;
 
-                        AddProfessionalTrainingToSession(professionalTraining.TrainingId, professionalTraining.Training, professionalTraining.Institution, professionalTraining.CountryOfTraining+"-"+professionalTraining.CountryOfTrainingName,
-                            professionalTraining.Month+"-"+professionalTraining.MonthName, professionalTraining.Year?.ToString());
+                        AddProfessionalTrainingToSession(professionalTraining.TrainingId, professionalTraining.Training, professionalTraining.Institution, professionalTraining.CountryOfTraining + "-" + professionalTraining.CountryOfTrainingName,
+                            professionalTraining.Month + "-" + professionalTraining.MonthName, professionalTraining.Year?.ToString());
                     }
 
                     foreach (var language in person.LanguageProficiencies)
@@ -1260,8 +1268,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         language.WriteName = write;
                         language.SpeakName = speak;
 
-                        AddLanguageToSession(language.LanguageProficiencyId, language.Language+"-"+language.LanguageName, language.Read+"-"+language.ReadName,
-                            language.Write+"-"+language.WriteName, language.Speak+"-"+language.SpeakName);
+                        AddLanguageToSession(language.LanguageProficiencyId, language.Language + "-" + language.LanguageName, language.Read + "-" + language.ReadName,
+                            language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName);
                     }
 
                     foreach (var voluntaryService in person.VoluntaryCommunityServices)
@@ -1272,8 +1280,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         voluntaryService.InstitutionName = institutionName;
                         voluntaryService.PositionName = position;
 
-                        AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId, voluntaryService.Institution+"-"+ voluntaryService.InstitutionName,
-                            voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(), voluntaryService.Position+"-"+ voluntaryService.PositionName);
+                        AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId, voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
+                            voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(), voluntaryService.Position + "-" + voluntaryService.PositionName);
                     }
 
                     foreach (var employment in person.Employments)
@@ -1285,15 +1293,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         employment.NatureOfBusinessName = businessNature;
 
                         AddEmploymentToSession(employment.EmploymentId, employment.NameOfOrganization, employment.Designation, employment.Location,
-                             employment.EmploymentEmailAddress, employment.EmploymentTelephone, employment.TypeOfBusiness+"-"+employment.TypeOfBusinessName,
-                             employment.NatureOfBusiness+"-"+ employment.NatureOfBusinessName, employment.NatureOfBusinessOther,
+                             employment.EmploymentEmailAddress, employment.EmploymentTelephone, employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
+                             employment.NatureOfBusiness + "-" + employment.NatureOfBusinessName, employment.NatureOfBusinessOther,
                              employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
                     }
-                    
+
                 }
             }
-            catch (Exception ex) {
-               
+            catch (Exception ex)
+            {
+
             }
             return person;
         }
@@ -1348,7 +1357,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 return "December";
             }
-            else {
+            else
+            {
                 return "";
             }
         }

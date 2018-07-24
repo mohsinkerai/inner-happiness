@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -39,11 +41,11 @@ public class PersonService extends BaseService<Person> {
     return personRepository.findByCnic(cnic);
   }
 
-  public List<Person> findByCnicOrFirstNameOrLastName(String cnic, String firstName,
-    String lastName) {
+  public Page<Person> findByCnicOrFirstNameOrLastName(String cnic, String firstName,
+    String lastName, Pageable pageable) {
     return personRepository
       .findByCnicIgnoreCaseContainingOrFirstNameIgnoreCaseContainingOrFamilyNameIgnoreCaseContaining(
-        cnic, firstName, lastName);
+        cnic, firstName, lastName, pageable);
   }
 
   /**
