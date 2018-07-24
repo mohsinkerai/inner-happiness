@@ -43,7 +43,7 @@ public class PersonController extends BaseController<Person> {
     @RequestParam("lastName") String lastName,
     @RequestParam(required = false, defaultValue = "1", value = "page") int page,
     @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
-    PageRequest pageRequest = PageRequest.of(page, 20);
+    PageRequest pageRequest = PageRequest.of(page-1, size);
     return personService.findByCnicOrFirstNameOrLastName(cnic, firstName, lastName, pageRequest);
   }
 
