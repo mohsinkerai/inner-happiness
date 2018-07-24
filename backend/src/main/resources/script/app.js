@@ -264,6 +264,94 @@ function syncLocalCouncil() {
     });
 }
 
+function syncLevelNC() {
+    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'NAT'")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id) VALUES (1, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncLevelRC() {
+    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'RC%'")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 8, ${value['InstitutionId']})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncLevelLC() {
+    getDataByQuery("SELECT reg.InstitutionId AS 'RegionalCouncilId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'RC%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'LC%'")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RegionalCouncilId']}, ${value['InstitutionId']})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncLevelLCParent() {
+    mysql.query(`SELECT id, old_id FROM level WHERE level_type_id = 2`).then((rows) => {
+        rows.forEach(function(value){
+            mysql.query(`UPDATE level SET level_parent_id = "${value['id']}" WHERE level_parent_id = "${value['old_id']}"`)
+                .then(console.log("done"));
+        });
+    });
+}
+
+function syncLevelJK() {
+    getDataByQuery("SELECT lcl.InstitutionId AS 'LCId', jkh.* FROM Ali_tblInstitution lcl JOIN Ali_tblInstitution jkh ON lcl.LocalCouncilId = jkh.LocalCouncilId WHERE lcl.Jurisdiction = 'LCL' AND jkh.Jurisdiction = 'JKH' AND lcl.ShortDescr LIKE 'LC%' ORDER BY jkh.LocalCouncilId")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (4, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['LCId']}, ${value['InstitutionId']})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncLevelJKParent() {
+    mysql.query(`SELECT id, old_id FROM level WHERE level_type_id = 3`).then((rows) => {
+        rows.forEach(function(value){
+            mysql.query(`UPDATE level SET level_parent_id = "${value['id']}" WHERE level_parent_id = "${value['old_id']}"`)
+                .then(console.log("done"));
+        });
+    });
+}
+
+function syncLevelRegionalITREB() {
+    getDataByQuery(`SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'ITREB%'`)
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 3, ${value['InstitutionId']})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncLevelLocalITREB() {
+    getDataByQuery(`SELECT reg.InstitutionId AS 'RItrebId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'ITREB%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'ITREB%' ORDER BY lcl.RegionId`)
+        .then((rows) => {
+            rows.forEach(function(value){
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RItrebId']}, ${value['InstitutionId']})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncLevelLocalITREBParent() {
+    mysql.query(`SELECT id, old_id FROM level WHERE level_type_id = 2 AND name LIKE 'ITREB%'`).then((rows) => {
+        rows.forEach(function(value){
+            mysql.query(`UPDATE level SET level_parent_id = "${value['id']}" WHERE level_parent_id = "${value['old_id']}"`)
+                .then(console.log("done"));
+        });
+    });
+}
+
+
 //syncCity();
 //syncCountry();
 //syncJamatiTitle();
@@ -289,6 +377,15 @@ function syncLocalCouncil() {
 
 
 //syncRegion();
-
 //syncLocalCouncil();
 
+//syncLevelNC();
+//syncLevelRC();
+//syncLevelLC();
+//syncLevelLCParent();
+//syncLevelJK();
+//syncLevelJKParent();
+
+//syncLevelRegionalITREB();
+//syncLevelLocalITREB();
+//syncLevelLocalITREBParent();
