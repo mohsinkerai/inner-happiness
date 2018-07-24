@@ -80,7 +80,8 @@ public class Person extends BaseEntity {
   private List<PersonProfessionalTrainingDto> professionalTrainings;
 
   // 2.Education - Professional Training & Acheivements
-  @Convert(converter = JpaConverterJson.class)
+//  @Convert(converter = JpaConverterJson.class)
+  @Transient
   private List<String> skills;
 
   // 2.Education - Professional Training & Acheivements

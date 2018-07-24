@@ -5,7 +5,8 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
   <changeSet author="mohsin.kerai" id="08-01">
-    <createTable remarks="Institution is the actual entity where positions and things are related to."
+    <createTable
+      remarks="Institution is the actual entity where positions and things are related to."
       tableName="institution">
       <column autoIncrement="true" name="id" type="bigint">
         <constraints nullable="false" primaryKey="true" unique="true"/>
@@ -38,6 +39,73 @@
     <insert tableName="institution">
       <column name="name" value="Economic Planning Board for Pakistan"/>
       <column name="level_id" value="1"/>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="08-03">
+    <createTable remarks="Person Skill Many to Many Relation"
+      tableName="person_skill">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="skill_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-04">
+    <insert tableName="person_skill">
+      <column name="person_id" value="2"/>
+      <column name="skill_id" value="1"/>
+    </insert>
+    <insert tableName="person_skill">
+      <column name="person_id" value="2"/>
+      <column name="skill_id" value="2"/>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="08-05">
+    <createTable remarks="Skills of a Person"
+      tableName="skill">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-06">
+    <insert tableName="skill">
+      <column name="name" value="Electrition"/>
+    </insert>
+    <insert tableName="skill">
+      <column name="name" value="Pulumber"/>
     </insert>
   </changeSet>
 </databaseChangeLog>
