@@ -15,12 +15,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PersonSkillsDto extends BaseDto {
+/**
+ * Professional Membership = PM
+ */
+public class PersonPMDto extends BaseDto {
 
   @JsonIgnore
-  private long skillId;
+  private long professionalMembershipId;
   @JsonIgnore
   private long personId;
 
-  private String skill;
+  private String professionalMembership;
 }

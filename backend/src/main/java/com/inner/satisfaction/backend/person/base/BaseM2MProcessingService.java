@@ -1,5 +1,6 @@
 package com.inner.satisfaction.backend.person.base;
 
+import com.google.common.collect.Lists;
 import com.inner.satisfaction.backend.base.BaseDto;
 import com.inner.satisfaction.backend.base.BaseEntity;
 import com.inner.satisfaction.backend.person.Person;
@@ -21,12 +22,17 @@ public abstract class BaseM2MProcessingService<E extends BaseEntity, D extends B
   }
 
   private List<E> processDto(List<D> dto, long personId) {
-    return dto.stream()
-      .map(d -> setEntityId(d, getEntityId(d)))
-      .map(d -> setPersonId(d, personId))
-      .map(this::convert)
-      .map(this::saveEntity)
-      .collect(Collectors.toList());
+    List<E> entities = Lists.newArrayList();
+
+    for(D d : dto) {
+      setEntityId(d, getEntityId(d));
+      setPersonId(d, personId);
+      E e = convert(d);
+      saveEntity(e);
+      entities.add(e);
+    }
+
+    return entities;
   }
 
   /**

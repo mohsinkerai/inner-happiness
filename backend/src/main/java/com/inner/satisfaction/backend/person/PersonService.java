@@ -58,8 +58,12 @@ public class PersonService extends BaseService<Person> {
     person = super.save(person);
     final Person savedPerson = person;
 
-    baseProcessingservices.stream()
-      .forEach(bps -> bps.processList(savedPerson, savedPerson.getId()));
+    for (BaseM2MProcessingService bps : baseProcessingservices) {
+      bps.processList(person, person.getId());
+    }
+
+//    baseProcessingservices.stream()
+//      .forEach(bps -> bps.processList(savedPerson, savedPerson.getId()));
 
     if (familyRelations != null) {
       List<ReducedPersonDto> reducedPersonsWithId = familyRelations

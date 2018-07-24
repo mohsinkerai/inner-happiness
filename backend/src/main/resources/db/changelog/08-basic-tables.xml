@@ -108,4 +108,36 @@
       <column name="name" value="Pulumber"/>
     </insert>
   </changeSet>
+  <changeSet author="mohsin.kerai" id="08-07">
+    <createTable remarks="Skills of a Person"
+      tableName="person_professional_membership">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="professional_membership_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-08">
+    <insert tableName="person_professional_membership">
+      <column name="person_id" value="2"/>
+      <column name="professional_membership_id" value="3"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>

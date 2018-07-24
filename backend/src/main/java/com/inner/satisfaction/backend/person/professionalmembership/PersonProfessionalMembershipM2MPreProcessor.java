@@ -1,98 +1,99 @@
-package com.inner.satisfaction.backend.person.skills;
+package com.inner.satisfaction.backend.person.professionalmembership;
 
-import com.inner.satisfaction.backend.lookups.skill.Skill;
-import com.inner.satisfaction.backend.lookups.skill.SkillService;
+import com.inner.satisfaction.backend.lookups.professionalmembership.ProfessionalMembership;
+import com.inner.satisfaction.backend.lookups.professionalmembership.ProfessionalMembershipService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.base.BaseM2MProcessingService;
+import com.inner.satisfaction.backend.person.dto.PersonPMDto;
 import com.inner.satisfaction.backend.person.dto.PersonSkillsDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonSkillM2MPreProcessor extends
-  BaseM2MProcessingService<PersonSkill, PersonSkillsDto> {
+public class PersonProfessionalMembershipM2MPreProcessor extends
+  BaseM2MProcessingService<PersonProfessionalMembership, PersonPMDto> {
 
-  private final SkillService skillService;
-  private final PersonSkillService personSkillService;
+  private final ProfessionalMembershipService professionalMembershipService;
+  private final PersonProfessionalMembershipService personProfessionalMembershipService;
 
-  public PersonSkillM2MPreProcessor(
-    SkillService skillService,
-    PersonSkillService personSkillService) {
-    this.skillService = skillService;
-    this.personSkillService = personSkillService;
+  public PersonProfessionalMembershipM2MPreProcessor(
+    ProfessionalMembershipService professionalMembershipService,
+    PersonProfessionalMembershipService personProfessionalMembershipService) {
+    this.professionalMembershipService = professionalMembershipService;
+    this.personProfessionalMembershipService = personProfessionalMembershipService;
   }
 
   @Override
-  protected List<PersonSkill> findPersonEntities(long personId) {
-    return personSkillService.findByPersonId(personId);
+  protected List<PersonProfessionalMembership> findPersonEntities(long personId) {
+    return personProfessionalMembershipService.findByPersonId(personId);
   }
 
   @Override
-  protected Person populateEntityInPerson(Person person, List<PersonSkill> e) {
-    List<String> skills = e.stream()
-      .map(PersonSkill::getSkillId)
-      .map(skillService::findOne)
-      .map(Skill::getName)
+  protected Person populateEntityInPerson(Person person, List<PersonProfessionalMembership> e) {
+    List<String> professionalMembership = e.stream()
+      .map(PersonProfessionalMembership::getProfessionalMembershipId)
+      .map(professionalMembershipService::findOne)
+      .map(ProfessionalMembership::getName)
       .collect(Collectors.toList());
-    person.setSkills(skills);
+    person.setProfessionalMemberships(professionalMembership);
     return person;
   }
 
   @Override
-  protected long getEntityId(PersonSkillsDto dto) {
-    String skill = dto.getSkill();
+  protected long getEntityId(PersonPMDto dto) {
+    String pm = dto.getProfessionalMembership();
     try {
-      return Long.parseLong(skill);
+      return Long.parseLong(pm);
     } catch (NumberFormatException nfe) {
-      Skill skillEntity = new Skill();
-      skillEntity.setName(skill);
-      skillEntity = skillService.save(skillEntity);
-      return skillEntity.getId();
+      ProfessionalMembership professionalMembership = new ProfessionalMembership();
+      professionalMembership.setName(pm);
+      professionalMembership = professionalMembershipService.save(professionalMembership);
+      return professionalMembership.getId();
     }
   }
 
   @Override
-  protected PersonSkillsDto setPersonId(PersonSkillsDto dto, long id) {
+  protected PersonPMDto setPersonId(PersonPMDto dto, long id) {
     dto.setPersonId(id);
     return dto;
   }
 
   @Override
-  protected PersonSkillsDto setEntityId(PersonSkillsDto dto, long id) {
-    dto.setSkillId(id);
+  protected PersonPMDto setEntityId(PersonPMDto dto, long id) {
+    dto.setProfessionalMembershipId(id);
     return dto;
   }
 
   @Override
-  protected PersonSkill convert(PersonSkillsDto dto) {
-    return PersonSkill.builder()
+  protected PersonProfessionalMembership convert(PersonPMDto dto) {
+    return PersonProfessionalMembership.builder()
       .personId(dto.getPersonId())
-      .skillId(dto.getSkillId())
+      .professionalMembershipId(dto.getProfessionalMembershipId())
       .build();
   }
 
   @Override
-  protected List<PersonSkillsDto> convert(Person person) {
-    return person.getSkills()
+  protected List<PersonPMDto> convert(Person person) {
+    return person.getProfessionalMemberships()
       .stream()
       .map(this::convert)
       .collect(Collectors.toList());
   }
 
-  private PersonSkillsDto convert(String val) {
-    return PersonSkillsDto.builder()
-      .skill(val)
+  private PersonPMDto convert(String val) {
+    return PersonPMDto.builder()
+      .professionalMembership(val)
       .build();
   }
 
   @Override
   protected void removeAllEntityByPersonId(long personId) {
-    personSkillService.removeByPersonId(personId);
+    personProfessionalMembershipService.removeByPersonId(personId);
   }
 
   @Override
-  protected PersonSkill saveEntity(PersonSkill personSkill) {
-    return personSkillService.save(personSkill);
+  protected PersonProfessionalMembership saveEntity(PersonProfessionalMembership personProfessionalMembership) {
+    return personProfessionalMembershipService.save(personProfessionalMembership);
   }
 }

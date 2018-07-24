@@ -1,4 +1,4 @@
-package com.inner.satisfaction.backend.person.skills;
+package com.inner.satisfaction.backend.person.professionalmembership;
 
 import com.inner.satisfaction.backend.base.BaseEntity;
 import javax.persistence.Entity;
@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class PersonSkill extends BaseEntity {
+public class PersonProfessionalMembership extends BaseEntity {
 
   private long personId;
-  private long skillId;
+  private long professionalMembershipId;
 }

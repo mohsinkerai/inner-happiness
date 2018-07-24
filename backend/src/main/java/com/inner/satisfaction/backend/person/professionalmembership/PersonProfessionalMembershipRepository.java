@@ -1,4 +1,4 @@
-package com.inner.satisfaction.backend.person.skills;
+package com.inner.satisfaction.backend.person.professionalmembership;
 
 import com.inner.satisfaction.backend.base.BaseRepository;
 import java.util.List;
@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PersonSkillRepository extends BaseRepository<PersonSkill> {
+public interface PersonProfessionalMembershipRepository extends BaseRepository<PersonProfessionalMembership> {
 
   @Modifying
-  @Query("DELETE FROM PersonSkill ps where ps.personId = :personId")
+  @Query("DELETE FROM PersonProfessionalMembership ps where ps.personId = :personId")
   void removeByPersonId(long personId);
 
-  List<PersonSkill> findByPersonId(long personId);
+  List<PersonProfessionalMembership> findByPersonId(long personId);
 }
