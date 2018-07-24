@@ -54,6 +54,165 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View(new IndexNominationModel{Company = "1", Positions = new List<PositionModel>()});
         }
 
+        public async Task<IActionResult> ServerSideAjaxHandler()
+        {
+            try
+            {
+                var queryCollection = Request.Query; //HttpContext.Request.Query;
+                // Initialization.
+                string search = queryCollection["search[value]"][0];
+                string draw = queryCollection["draw"][0];
+                //string order = form["order[0][column]"][0];
+                //string orderDir = form["order[0][dir]"][0];
+                int startRec = Convert.ToInt32(queryCollection["start"][0]);
+                int pageSize = Convert.ToInt32(queryCollection["length"][0]);
+                // Loading.
+                //IQueryable<NiyatForm> data = null;
+                //if (user.Category.Equals(UserCategory.NationalCouncil) && user.Role.Equals(UserRole.Administrator))
+                //{
+                //    data = _dbContext.NiyatForms
+                //        .Where(n => n.Country.NationalCouncilId.Equals(user.NationalCouncilId) &&
+                //                    n.Status.Equals(NiyatFormStatus
+                //                        .Approved) /* && n.Category.Equals(NiyatFormCategory.Adult)*/);
+                //    //.ConfigureAwait(false);
+                //}
+                //else if (user.Category.Equals(UserCategory.NationalCouncil) && user.Role.Equals(UserRole.Checker))
+                //{
+                //    data = _dbContext.NiyatForms
+                //        .Where(n => n.Country.NationalCouncilId.Equals(user.NationalCouncilId) &&
+                //                    n.Status.Equals(NiyatFormStatus
+                //                        .Pending) /* && n.Category.Equals(NiyatFormCategory.Adult)*/);
+                //    //.ConfigureAwait(false);
+                //}
+                //else
+                //{
+                //    data = _dbContext.NiyatForms
+                //        .Where(n => n.Country.NationalCouncilId.Equals(user.NationalCouncilId) &&
+                //                    (n.Status.Equals(NiyatFormStatus.New) ||
+                //                     n.Status.Equals(NiyatFormStatus
+                //                         .Rejected)) /* && n.Category.Equals(NiyatFormCategory.Adult)*/);
+                //    //.ConfigureAwait(false);
+                //}
+                //// Total record count.
+                //int totalRecords = data.Count();
+                //// Verification.
+                //if (!string.IsNullOrEmpty(search) &&
+                //    !string.IsNullOrWhiteSpace(search))
+                //{
+                //    // Apply search
+                //    data = data.Where(p =>
+                //        p.FormNumber.ToLower().Contains(search.ToLower()) ||
+                //        p.FullName.ToLower().Contains(search.ToLower()));
+                //}
+                //// Sorting.
+                ////data = this.SortByColumnWithOrder(order, orderDir, data);
+                //// Filter record count.
+                //int recFilter = (string.IsNullOrEmpty(search) || string.IsNullOrWhiteSpace(search))
+                //    ? totalRecords
+                //    : data.Count();
+                //// Apply pagination.
+                //data = data.Skip(startRec).Take(pageSize);
+
+                //var finalData = data.Include(n => n.ApprovedByUser).Include(n => n.EnteredByUser)
+                //    .Include(n => n.SentForVerificationByUser).Include(n => n.VoluntaryExperiences).ToList();
+
+                //var conditionedData = finalData.Select(n => new
+                //{
+                //    n.FormNumber,
+                //    n.FullName,
+                //    n.EnteredOnForDisplay,
+                //    n.EnteredByUserForDisplay,
+                //    n.SubmittedForVerificationOnForDisplay,
+                //    n.SentForVerificationByUserForDisplay,
+                //    n.VerifiedOnForDisplay,
+                //    n.ApprovedByUserForDisplay,
+                //    //n.Comments,
+                //    n.Status,
+                //    n.CompletionPercentage,
+                //    n.IsExported,
+                //    n.ExportedOnForDisplay,
+                //    DetailUrl = n.Category == NiyatFormCategory.Adult
+                //        ? Url.Action(ActionNames.Detail, ControllerNames.NationalCouncil.NiyatForm,
+                //            new { area = AreaNames.NationalCouncil, uid = n.UId })
+                //        : Url.Action(ActionNames.Detail, ControllerNames.NationalCouncil.MinorNiyatForm,
+                //            new { area = AreaNames.NationalCouncil, uid = n.UId })
+                //});
+
+                //var jamatkhanas = new List<string>();
+                //var provinces = new List<string>();
+                //var cities = new List<string>();
+                //var volunteerRoles = new List<string>();
+                //var volunteerInstitutions = new List<string>();
+
+                //foreach (var niyatForm in finalData)
+                //{
+                //    if (!jamatkhanas.Contains(niyatForm.Jamatkhana))
+                //    {
+                //        jamatkhanas.Add(niyatForm.Jamatkhana);
+                //    }
+                //    if (!string.IsNullOrWhiteSpace(niyatForm.Province) && !provinces.Contains(niyatForm.Province))
+                //    {
+                //        provinces.Add(niyatForm.Province);
+                //    }
+                //    if (!cities.Contains(niyatForm.City))
+                //    {
+                //        cities.Add(niyatForm.City);
+                //    }
+                //    if (!cities.Contains(niyatForm.AddressCity))
+                //    {
+                //        cities.Add(niyatForm.AddressCity);
+                //    }
+                //    foreach (var voluntaryExperience in niyatForm.VoluntaryExperiences)
+                //    {
+                //        if (!volunteerInstitutions.Contains(voluntaryExperience.InstitutionOrOrganizationName))
+                //        {
+                //            volunteerInstitutions.Add(voluntaryExperience.InstitutionOrOrganizationName);
+                //        }
+                //        if (!volunteerRoles.Contains(voluntaryExperience.Role))
+                //        {
+                //            volunteerRoles.Add(voluntaryExperience.Role);
+                //        }
+                //    }
+                //}
+
+                //HttpContext.Session.Set(SessionKeys.AutoCompleteJamatkhanas, jamatkhanas);
+                //HttpContext.Session.Set(SessionKeys.AutoCompleteProvinces, provinces);
+                //HttpContext.Session.Set(SessionKeys.AutoCompleteReligiousQualifications, new List<string>());
+                //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerRoles, volunteerRoles);
+                //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerInstitutions, volunteerInstitutions);
+
+                //var conditionedData = await RestfulClient.getPersonDetails();
+                var conditionedData = new List<PositionModel>();
+
+                // Loading drop down lists.
+                return Json(new
+                {
+                    draw = Convert.ToInt32(draw),
+                    recordsTotal = conditionedData.Count,
+                    recordsFiltered = conditionedData.Count,
+                    data = conditionedData.Select(n => new
+                    {
+                        n.PositionName,
+                        n.Incubment,
+                        n.Required,
+                        n.Nominated,
+                        DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
+                            new { area = AreaNames.Operations, uid = n.Id })
+                    })
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    draw = 1,
+                    recordsTotal = 0,
+                    recordsFiltered = 0,
+                    data = new List<PositionModel>()
+                });
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Index(string company, string region, string local, string jamatkhana, string institution)
         {

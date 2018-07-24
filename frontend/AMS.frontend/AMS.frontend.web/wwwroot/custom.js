@@ -1363,13 +1363,14 @@ function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, sel
     }
 }
 
-function InitializeNewDataTable(id, title, url) {
+function InitializePersonDataTable(id, title, url) {
     var e;
     (e = $("#" + id)).DataTable({
         responsive: true,
         searchDelay: 500,
         processing: true,
         serverSide: true,
+        filter: false,
         ajax: url,
         columns: [{
             data: "fullName"
@@ -1392,6 +1393,51 @@ function InitializeNewDataTable(id, title, url) {
         }],
         colReorder: true,
         pagingType: "full_numbers",
+        dom: "<'row'<'col-sm-6 text-left'B>>\n\t\t\t<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
+        buttons: ["print", "copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        lengthMenu: [5, 10, 25, 50],
+        pageLength: 10,
+        language: {
+            lengthMenu: "Display _MENU_"
+        },
+        order: [
+            [0, "desc"]
+        ]
+    });
+}
+
+function InitializePositionDataTable(id, title, url) {
+    var e;
+    (e = $("#" + id)).DataTable({
+        responsive: true,
+        searchDelay: 500,
+        processing: true,
+        serverSide: true,
+        filter: false,
+        ajax: url,
+        columns: [{
+            data: "positionName"
+        }, {
+            data: "incubment"
+        }, {
+            data: "required"
+        }, {
+            data: "nominated"
+        }, {
+            data: "Actions"
+        }],
+        columnDefs: [{
+            targets: 4,
+            title: "Actions",
+            orderable: false,
+            render: function (a, e, t, n) {
+                return '<a href=' +
+                    t["detailUrl"] +
+                    ' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details"><i class="la la-eye"></i></a>';
+            }
+        }],
+        colReorder: true,
+        pagingType: "full_numbers",
         dom: "<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>\n\t\t\t<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
         buttons: ["print", "copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
         lengthMenu: [5, 10, 25, 50],
@@ -1402,5 +1448,14 @@ function InitializeNewDataTable(id, title, url) {
         order: [
             [0, "desc"]
         ]
+    });
+}
+
+function InitializeNewDataTableLite(id, title) {
+    var e;
+    (e = $("#" + id)).DataTable({
+        responsive: true,
+        paging: false,
+        info: false
     });
 }
