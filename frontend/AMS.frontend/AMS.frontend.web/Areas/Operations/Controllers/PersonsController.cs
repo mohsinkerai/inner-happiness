@@ -167,7 +167,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerRoles, volunteerRoles);
                 //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerInstitutions, volunteerInstitutions);
 
-                var conditionedData = await RestfulClient.getPersonDetails();
+                var conditionedData = await RestfulClient.getPersonDetails(); //yaha pe
 
                 // Loading drop down lists.
                 return Json(new
