@@ -1,5 +1,6 @@
 const mysql = require('./mysql-service');
 const mssql = require('./mssql-service');
+var os = require("os");
 
 function getDataFromTable(tableName) {
     let query = `SELECT * FROM ${tableName}`;
@@ -8,6 +9,13 @@ function getDataFromTable(tableName) {
 
 function getDataByQuery(query) {
     return mssql.query(query);
+}
+
+function getDateTime(dateTime) {
+    if(dateTime == null || dateTime == '' || dateTime == 'null') {
+        return null;
+    }
+    return (new Date(dateTime).toISOString().slice(0, 19).replace('T', ' '));
 }
 
 function syncCity() {
@@ -170,7 +178,19 @@ function syncPosition() {
     getDataFromTable("Ali_tblPosition")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO \`position\` (name) VALUES ("${value['Descr']}")`;
+            let query = `Insert INTO \`position\` (name, old_id) VALUES ("${value['Descr']}", ${value['PositionId']})`;
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
+
+function syncCycle() {
+    getDataFromTable("Ali_tblAppointmentYear")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let startDate = getDateTime(`${value['StartDate']}`);
+            let endDate = getDateTime(`${value['EndDate']}`);
+            let query = `Insert INTO cycle (name, start_date, end_date) VALUES ('', '${startDate}', '${endDate}')`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -264,11 +284,13 @@ function syncLocalCouncil() {
     });
 }
 
+//******************** LEVEL Migration *************************************************//
+
 function syncLevelNC() {
     getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'NAT'")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id) VALUES (1, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id, is_closed) VALUES (1, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -278,7 +300,7 @@ function syncLevelRC() {
     getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'RC%'")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 8, ${value['InstitutionId']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 8, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -288,7 +310,7 @@ function syncLevelLC() {
     getDataByQuery("SELECT reg.InstitutionId AS 'RegionalCouncilId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'RC%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'LC%'")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RegionalCouncilId']}, ${value['InstitutionId']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RegionalCouncilId']}, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -307,7 +329,7 @@ function syncLevelJK() {
     getDataByQuery("SELECT lcl.InstitutionId AS 'LCId', jkh.* FROM Ali_tblInstitution lcl JOIN Ali_tblInstitution jkh ON lcl.LocalCouncilId = jkh.LocalCouncilId WHERE lcl.Jurisdiction = 'LCL' AND jkh.Jurisdiction = 'JKH' AND lcl.ShortDescr LIKE 'LC%' ORDER BY jkh.LocalCouncilId")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (4, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['LCId']}, ${value['InstitutionId']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (4, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['LCId']}, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -326,7 +348,7 @@ function syncLevelRegionalITREB() {
     getDataByQuery(`SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'ITREB%'`)
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 3, ${value['InstitutionId']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 3, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -336,7 +358,7 @@ function syncLevelLocalITREB() {
     getDataByQuery(`SELECT reg.InstitutionId AS 'RItrebId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'ITREB%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'ITREB%' ORDER BY lcl.RegionId`)
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RItrebId']}, ${value['InstitutionId']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RItrebId']}, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -351,6 +373,32 @@ function syncLevelLocalITREBParent() {
     });
 }
 
+//******************** PERSON Migration *************************************************//
+
+function syncPerson() {
+    getDataFromTable("Ali_tblPerson")
+        .then((rows) => {
+            rows.forEach(function(value){
+            let birthDate = getDateTime(`${value['BirthDate']}`);
+            birthDate = birthDate == null ? null : `"${birthDate}"`;
+            let deathDate = getDateTime(`${value['DeathDate']}`);
+            deathDate = deathDate == null ? null : `"${deathDate}"`;
+            let gender = `${value['DeathDate']}`;
+            gender = gender == 'M' ? 1 : 0;
+            let hoursPerWeek = `${value['TimeCommitment']}`;
+            let address = `${value['Address']}`;
+            address = address.split('\"').join('\'');
+            hoursPerWeek = (hoursPerWeek == null || hoursPerWeek == '' || hoursPerWeek == 'null') ? null : hoursPerWeek;
+            //let skills = `${value['SkillsGot']}`;
+            //skills = (skills == null || skills == '' || skills == 'null') ? '' : JSON.parse('{"name":"' + skills.trim().split('  ').join() + '"}');
+            let query = `INSERT INTO person (old_id, cnic, old_cnic, first_name, fathers_name, family_name, date_of_birth, residential_address, residence_telephone, mobile_phone, email_address, regional_council, local_council, jamatkhana, relocate_location, highest_level_of_study, highest_level_of_study_other, hours_per_week, full_name, nc_form_no, eo_form_no, old_code, death_cause, death_date, gender, plan_to_relocate) VALUES (${value['PersonId']}, "${value['CNIC']}", "${value['OLDNIC']}", "${value['FirstName']}", "${value['MiddleName']}", "${value['LastName']}", ${birthDate}, "${address}", "${value['Phone']}", "${value['Mobile']}", "${value['EmailId']}", 0, 0, 0, "${value['RelocationAddress']}", "${value['EducationLevel']}", "${value['OtherEducation']}", ${hoursPerWeek}, "${value['FullName']}", ${value['NCFormNo']}, ${value['EOFormNo']}, "${value['OldCode']}", "${value['DeathCause']}", ${deathDate}, ${gender}, 0)`;
+            console.log(os.EOL);
+            console.log(query);
+            console.log(os.EOL);
+            mysql.query(query).then(console.log("Done"));
+        });
+    });
+}
 
 //syncCity();
 //syncCountry();
@@ -374,7 +422,7 @@ function syncLevelLocalITREBParent() {
 //syncPublicServiceInstitution();
 //syncTempRegion();
 //syncRegionalCouncil();
-
+//syncCycle();
 
 //syncRegion();
 //syncLocalCouncil();
@@ -389,3 +437,10 @@ function syncLevelLocalITREBParent() {
 //syncLevelRegionalITREB();
 //syncLevelLocalITREB();
 //syncLevelLocalITREBParent();
+
+syncPerson();
+
+//var s = "Leadership  Religious Teacher  Communication  Conflict Resolution  ";
+//var j = '{"name":"' + s.trim().split('  ').join() + '"}';
+//var json = JSON.parse(j);
+//console.log(json);

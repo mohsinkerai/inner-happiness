@@ -64,6 +64,9 @@
       <column name="cnic" type="varchar(255)">
         <constraints nullable="false" unique="false"/>
       </column>
+      <column name="old_nic" type="varchar(255)">
+        <constraints nullable="true" unique="true"/>
+      </column>
       <column name="passport_number" type="varchar(255)">
         <constraints nullable="true" unique="false"/>
       </column>
@@ -73,6 +76,9 @@
 
       <column name="salutation" type="bigint">
         <constraints nullable="true"/>
+      </column>
+      <column name="full_name" type="varchar(255)">
+        <constraints nullable="false"/>
       </column>
       <column name="first_name" type="varchar(100)">
         <constraints nullable="false"/>
@@ -90,7 +96,7 @@
       <column name="gender" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="date_of_birth" type="timestamp">
+      <column name="date_of_birth" type="datetime" defaultValueComputed="null">
         <constraints nullable="true"/>
       </column>
       <column name="residential_address" type="text">
@@ -131,7 +137,7 @@
       <column name="relocate_location" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
-      <column name="relocation_date_time" type="timestamp">
+      <column name="relocation_date_time" type="datetime" defaultValueComputed="null">
         <constraints nullable="true"/>
       </column>
 
@@ -191,6 +197,24 @@
       </column>
       <column name="religious_education" type="bigint">
         <constraints nullable="true"/>
+      </column>
+      <column name="nc_form_no" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="eo_form_no" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="death_date" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="death_cause" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column defaultValueComputed="null" name="old_code" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="old_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
       </column>
 
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
