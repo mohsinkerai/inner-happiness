@@ -6,6 +6,14 @@
 }
 @section styles{
     <link href="~/assets/vendors/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <style>
+        .m-widget5 .m-widget5__item .m-widget5__content .m-widget5__section {
+            display: table-cell;
+            vertical-align: top;
+            padding-left: 1.43rem;
+            padding-top: .3rem;
+        }
+    </style>
 }
 <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
     <div class="m-portlet__head">
@@ -15,15 +23,63 @@
                     <i class="flaticon-statistics"></i>
                 </span>
                 <h3 class="m-portlet__head-text">
-                    subtitle goes here
+                    Incubment details
                 </h3>
                 <h2 class="m-portlet__head-label m-portlet__head-label--info">
-                    <span>President National Council of Pakistan</span>
+                    <span>President - National Council of Pakistan</span>
                 </h2>
             </div>
         </div>
     </div>
     <div class="m-portlet__body">
+        <!--begin::m-widget5-->
+        <div class="m-widget5">
+            <div class="m-widget5__item" style="border-bottom: .07rem dashed #ebedf2 !important">
+                <div class="m-widget5__content">
+                    <div class="m-widget5__pic">
+                        <img class="m-widget7__img" src="~/assets/app/media/img/products/product6.jpg" alt="">
+                    </div>
+                    <div class="m-widget5__section">
+                        <h4 class="m-widget5__title">
+                            Aalija Mohsin Mansoor Ali Kerai
+                        </h4>
+                        <span class="m-widget5__desc m--font-info">
+                            Male | 51 yrs | Gilgit Baltistan
+                        </span>
+                        <div class="m-widget5__info">
+                            @*<span class="m-widget5__author">
+                                    Qualification:
+                                </span>*@
+                            <span class="m-widget5__info-label">
+                                Principal, Collaborative Design (Architect Firm)
+                            </span>
+                            @*<span class="m-widget5__info-author-name">
+                                    Fly themes
+                                </span>*@
+                            <span class="m-widget5__info-label">
+                                <b>|</b>
+                            </span>
+                            <span class="m-widget5__info-label">
+                                Masters (Architect), Massachusetts Institute of Technology (USA), 1991
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="m-widget5__content">
+                        <div class="m-widget5__stats1">
+                            <span class="m-widget5__number">19,200</span>
+                            <br>
+                            <span class="m-widget5__sales">sales</span>
+                        </div>
+                        <div class="m-widget5__stats2">
+                            <span class="m-widget5__number">1046</span>
+                            <br>
+                            <span class="m-widget5__votes">votes</span>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+        <!--end::m-widget5-->
         <div class="m-form__heading">
             <h4 class="m-form__heading-title">
                 Nominations for Cycle 2019 - 2022
@@ -47,7 +103,7 @@
                 Person Lookup
             </h4>
         </div>
-        <br/>
+        <br />
         <div class="form-group m-form__group row">
             <div class="col-lg-3">
                 <div class="form-group">
@@ -73,6 +129,15 @@
                 </button>
             </div>
         </div>
+        <table id="persons" class="table table-striped- table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th> Full Name </th>
+                    <th> CNIC </th>
+                    <th> Actions </th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 
@@ -89,6 +154,10 @@
             InitializeNewDataTableLite("nominations", "Nominations");
             $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
             $("#nominations").css("min-height", "0px");
+            InitializeLitePersonDataTable("persons",
+                "Persons",
+                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Persons, new { area = AreaNames.Operations })");
+            $("#persons").css("min-height", "0px");
         });
     </script>
 }
