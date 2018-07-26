@@ -871,5 +871,27 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 return false;
             }
         }
+
+        public static async Task<List<PersonModel>> getPersonDetailsThroughPagging(int pageNumber, int pageSize)
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName&cnic&lastName&page="+pageNumber+"&size="+pageSize);
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+
+                List<PersonModel> person = new List<PersonModel>();
+
+                JObject jsonObject = JObject.Parse(json);
+
+                person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString());
+
+                return person;
+            }
+            return null;
+        }
     }
 }
