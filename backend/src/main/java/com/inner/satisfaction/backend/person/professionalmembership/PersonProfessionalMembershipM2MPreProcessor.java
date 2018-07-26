@@ -5,8 +5,9 @@ import com.inner.satisfaction.backend.lookups.professionalmembership.Professiona
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.base.BaseM2MProcessingService;
 import com.inner.satisfaction.backend.person.dto.PersonPMDto;
-import com.inner.satisfaction.backend.person.dto.PersonSkillsDto;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -75,10 +76,16 @@ public class PersonProfessionalMembershipM2MPreProcessor extends
 
   @Override
   protected List<PersonPMDto> convert(Person person) {
-    return person.getProfessionalMemberships()
-      .stream()
-      .map(this::convert)
-      .collect(Collectors.toList());
+    Optional<List<String>> professionalMemberships = Optional
+      .ofNullable(person.getProfessionalMemberships());
+    if (professionalMemberships.isPresent()) {
+      return professionalMemberships.get()
+        .stream()
+        .map(this::convert)
+        .collect(Collectors.toList());
+    } else {
+      return Collections.emptyList();
+    }
   }
 
   private PersonPMDto convert(String val) {
@@ -93,7 +100,8 @@ public class PersonProfessionalMembershipM2MPreProcessor extends
   }
 
   @Override
-  protected PersonProfessionalMembership saveEntity(PersonProfessionalMembership personProfessionalMembership) {
+  protected PersonProfessionalMembership saveEntity(
+    PersonProfessionalMembership personProfessionalMembership) {
     return personProfessionalMembershipService.save(personProfessionalMembership);
   }
 }

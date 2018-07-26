@@ -5,7 +5,8 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
   <changeSet author="mohsin.kerai" id="06-01">
-    <createTable remarks="Language Proficiency - Depends on Lanaguage, Will be used in Write, Read, Speak, Listen"
+    <createTable
+      remarks="Language Proficiency - Depends on Lanaguage, Will be used in Write, Read, Speak, Listen"
       tableName="language_proficiency">
       <column autoIncrement="true" name="id" type="bigint">
         <constraints nullable="false" primaryKey="true" unique="true"/>
@@ -43,22 +44,82 @@
   </changeSet>
   <changeSet author="mohsin.kerai" id="06-04">
     <insert tableName="relation">
-      <column name="name" value="Sister"/>
+      <column name="id" value="1"/>
+      <column name="name" value="Child"/>
+      <column name="reverse_relation_id" value="2"/>
     </insert>
     <insert tableName="relation">
-      <column name="name" value="Brother"/>
+      <column name="id" value="2"/>
+      <column name="name" value="Parent"/>
+      <column name="reverse_relation_id" value="1"/>
     </insert>
+
     <insert tableName="relation">
-      <column name="name" value="Son"/>
+      <column name="id" value="3"/>
+      <column name="name" value="Spouse"/>
+      <column name="reverse_relation_id" value="3"/>
     </insert>
+
     <insert tableName="relation">
-      <column name="name" value="Daugher"/>
+      <column name="id" value="4"/>
+      <column name="name" value="Sibiling"/>
+      <column name="reverse_relation_id" value="4"/>
     </insert>
-    <insert tableName="relation">
-      <column name="name" value="Father"/>
-    </insert>
-    <insert tableName="relation">
-      <column name="name" value="Mother"/>
-    </insert>
+
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="1" />-->
+    <!--<column name="name" value="Sister-Brother"/>-->
+    <!--<column name="reverse_relation_id" value="2" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="2" />-->
+    <!--<column name="name" value="Brother-Sister"/>-->
+    <!--<column name="reverse_relation_id" value="1" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="3" />-->
+    <!--<column name="name" value="Son-Father"/>-->
+    <!--<column name="reverse_relation_id" value="4" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="4" />-->
+    <!--<column name="name" value="Father-Son"/>-->
+    <!--<column name="reverse_relation_id" value="3" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="5" />-->
+    <!--<column name="name" value="Brother-Brother"/>-->
+    <!--<column name="reverse_relation_id" value="5" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="6" />-->
+    <!--<column name="name" value="Sister-Sister"/>-->
+    <!--<column name="reverse_relation_id" value="6" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="7" />-->
+    <!--<column name="name" value="Father-Daugher"/>-->
+    <!--<column name="reverse_relation_id" value="8" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="8" />-->
+    <!--<column name="name" value="Daugher-Father"/>-->
+    <!--<column name="reverse_relation_id" value="7" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="9" />-->
+    <!--<column name="name" value="Husband-Wife"/>-->
+    <!--<column name="reverse_relation_id" value="10" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="10" />-->
+    <!--<column name="name" value="Wife-Husband"/>-->
+    <!--<column name="reverse_relation_id" value="9" />-->
+    <!--</insert>-->
+    <!--<insert tableName="relation">-->
+    <!--<column name="id" value="10" />-->
+    <!--<column name="name" value="Wife-Husband"/>-->
+    <!--<column name="reverse_relation_id" value="9" />-->
+    <!--</insert>-->
   </changeSet>
 </databaseChangeLog>
