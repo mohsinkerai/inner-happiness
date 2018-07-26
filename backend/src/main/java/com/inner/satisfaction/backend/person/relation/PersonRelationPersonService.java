@@ -32,4 +32,8 @@ public class PersonRelationPersonService extends BaseService<PersonRelationPerso
       .stream()
       .forEach(personRelationPersonRepository::delete);
   }
+
+  public void removeAllRelationForPerson(long personId) {
+    personRelationPersonRepository.removeByPersonId(personId);
+  }
 }

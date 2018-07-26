@@ -1,6 +1,7 @@
 package com.inner.satisfaction.backend.person.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseDto;
 import java.time.LocalDate;
@@ -26,4 +27,6 @@ public class ReducedPersonDto extends BaseDto {
   public String familyName;
   public Long jamatiTitle;
   public long relation;
+  @JsonIgnore
+  public long personId;
 }
