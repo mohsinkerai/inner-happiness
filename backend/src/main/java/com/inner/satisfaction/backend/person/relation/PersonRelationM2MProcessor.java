@@ -105,7 +105,11 @@ public class PersonRelationM2MProcessor extends
   protected PersonRelationPerson saveEntity(PersonRelationPerson personRelationPerson) {
     long relationId = personRelationPerson.getRelation();
     Relation relation = relationService.findOne(relationId);
+    if (relation == null) {
+      throw new RuntimeException("Invalid Relation");
+    }
     Long reverseRelationId = relation.getReverseRelationId();
+
     PersonRelationPerson prp = PersonRelationPerson.builder()
       .firstPersonId(personRelationPerson.getSecondPersonId())
       .relation(reverseRelationId)
