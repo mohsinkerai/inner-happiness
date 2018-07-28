@@ -17,7 +17,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         private static HttpClient client;
         private static readonly string BASE_URL = "http://13.93.85.18:8080/";
-       
+        
         public static async Task<List<SelectListItem>> getSalutation()
         {
             client = new HttpClient();
@@ -872,13 +872,14 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
         }
 
-        public static async Task<List<PersonModel>> getPersonDetailsThroughPagging(int pageNumber, int pageSize)
+        public static async Task<Tuple<List<PersonModel>,int>> getPersonDetailsThroughPagging(string firstName, string lastName, string cnic, int pageNumber, int pageSize)
         {
             client = new HttpClient();
             client.BaseAddress = new Uri(BASE_URL);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName&cnic&lastName&page="+pageNumber+"&size="+pageSize);
+            //var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName&cnic&lastName&page=1&size=1");
+            var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName="+firstName+"&cnic="+cnic+"&lastName="+lastName+"&page="+pageNumber+"&size="+pageSize);
             if (Res.IsSuccessStatusCode)
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
@@ -889,7 +890,9 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString());
 
-                return person;
+                int totalElements = Convert.ToInt32(jsonObject["totalElements"]);
+
+                return new Tuple<List<PersonModel>,int>(person,totalElements);
             }
             return null;
         }

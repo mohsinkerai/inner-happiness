@@ -25,7 +25,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private readonly IMapper _mapper;
 
         const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
-
+        
         #endregion Private Fields
 
         #region Public Constructors
@@ -166,23 +166,30 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //HttpContext.Session.Set(SessionKeys.AutoCompleteReligiousQualifications, new List<string>());
                 //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerRoles, volunteerRoles);
                 //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerInstitutions, volunteerInstitutions);
+                
+                string searching = HttpContext.Session.GetString("searching");
+                string firstName = HttpContext.Session.GetString("firstName");
+                string lastName = HttpContext.Session.GetString("lastName");
+                string cnic = HttpContext.Session.GetString("cnic");
 
-                var conditionedData = await RestfulClient.getPersonDetailsThroughPagging((((startRec+1)*pageSize)-pageSize)+1, pageSize); //yaha pe
+                var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",(((startRec+1)*pageSize)-pageSize)+1, pageSize);
+                var conditionedData = tupleData.Item1;
+                var totalRecords = tupleData.Item2;
 
                 // Loading drop down lists.
                 return Json(new
                 {
                     draw = Convert.ToInt32(draw),
-                    recordsTotal = conditionedData.Count,
-                    recordsFiltered = conditionedData.Count,
+                    recordsTotal = totalRecords,
+                    recordsFiltered = totalRecords,
                     data = conditionedData.Select(n => new
                     {
                         FullName = $"{n.FirstName} {n.FathersName} {n.FamilyName}",
                         n.Cnic,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, uid = n.Id}),
+                            new {area = AreaNames.Operations, id = n.Id}),
                         EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, uid = n.Id})
+                            new {area = AreaNames.Operations, id = n.Id})
                     })
                 });
             }
@@ -757,16 +764,33 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
 
-            return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
+            //return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
         {
+
+            HttpContext.Session.Set("searching", "true");
+            HttpContext.Session.Set("firstName", firstName);
+            HttpContext.Session.Set("lastName", lastName);
+            HttpContext.Session.Set("cnic", cnic);
+
             //return View(new List<PersonModel>());
-            return View(new IndexPersonModel
+            /*return View(new IndexPersonModel
             {
                 Persons = await RestfulClient.searchPerson(cnic, firstName, lastName),
+                Cnic = cnic,
+                FirstName = firstName,
+                LastName = lastName
+            });*/
+
+            //var persons = await RestfulClient.getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
+            return View(new IndexPersonModel
+            {
+                //Persons = await RestfulClient.searchPerson(cnic, firstName, lastName),
+                //Persons = persons.Item1,
                 Cnic = cnic,
                 FirstName = firstName,
                 LastName = lastName
@@ -1296,6 +1320,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                              employment.EmploymentEmailAddress, employment.EmploymentTelephone, employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
                              employment.NatureOfBusiness + "-" + employment.NatureOfBusinessName, employment.NatureOfBusinessOther,
                              employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
+                    }
+
+                    foreach (var relation in person.FamilyRelations)
+                    {
+                        string relationName = GetText(relation.Relation, ViewBag.RelationList);
+                        relation.RelationName = relationName;
+
+                        AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic , relation.Salutation, relation.FirstName, relation.FathersName,
+                                        relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(), relation.RelationName);
                     }
 
                 }
