@@ -1501,6 +1501,17 @@ function InitializeNewDataTableLite(id, title) {
     (e = $("#" + id)).DataTable({
         responsive: true,
         paging: false,
-        info: false
+        info: false,
+        filter: false,
+        rowReorder: true,
+        order: [
+            [0, "desc"]
+        ],
+        "columnDefs": [
+            {
+                "targets": [0],
+                "visible": false
+            }
+        ]
     });
 }
