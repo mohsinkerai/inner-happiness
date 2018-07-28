@@ -9,4 +9,5 @@ import lombok.Data;
 public class Relation extends BaseEntity{
 
   private String name;
+  private Long reverseRelationId;
 }

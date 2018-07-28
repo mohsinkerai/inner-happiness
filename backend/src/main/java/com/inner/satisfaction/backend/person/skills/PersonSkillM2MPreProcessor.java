@@ -1,11 +1,13 @@
 package com.inner.satisfaction.backend.person.skills;
 
+import com.google.common.collect.Lists;
 import com.inner.satisfaction.backend.lookups.skill.Skill;
 import com.inner.satisfaction.backend.lookups.skill.SkillService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.base.BaseM2MProcessingService;
 import com.inner.satisfaction.backend.person.dto.PersonSkillsDto;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -74,7 +76,8 @@ public class PersonSkillM2MPreProcessor extends
 
   @Override
   protected List<PersonSkillsDto> convert(Person person) {
-    return person.getSkills()
+    Optional<List<String>> skills = Optional.ofNullable(person.getSkills());
+    return skills.orElse(Lists.newArrayList())
       .stream()
       .map(this::convert)
       .collect(Collectors.toList());
