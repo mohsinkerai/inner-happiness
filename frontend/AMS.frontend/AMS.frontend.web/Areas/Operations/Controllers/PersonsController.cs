@@ -172,7 +172,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 string lastName = HttpContext.Session.GetString("lastName");
                 string cnic = HttpContext.Session.GetString("cnic");
 
-                var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",(((startRec+1)*pageSize)-pageSize)+1, pageSize);
+                var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",(startRec/pageSize)+1, pageSize);
                 var conditionedData = tupleData.Item1;
                 var totalRecords = tupleData.Item2;
 
