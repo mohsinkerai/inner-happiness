@@ -99,7 +99,7 @@
       <column name="name" type="varchar(255)">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="full_name" type="varchar(255)">
+      <column name="full_name" type="varchar(255)" defaultValue="null">
         <constraints nullable="true" unique="false"/>
       </column>
       <column name="code_eo" type="varchar(255)">
