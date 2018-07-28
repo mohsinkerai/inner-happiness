@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <changeSet id="02-01" author="mohsin.kerai">
-    <createTable tableName="position_on_institution"
-      remarks="A table to store active position w.r.t level, lets say President Exist in National Council and Chairman in Health Board">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints nullable="false" unique="true" primaryKey="true"/>
+  <changeSet author="mohsin.kerai" id="02-01">
+    <createTable remarks="A table to store active position w.r.t level, lets say President Exist in National Council and Chairman in Health Board"
+      tableName="position_on_institution">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="position_id" type="bigint">
         <constraints nullable="true"/>
@@ -28,19 +28,19 @@
       <column name="nominations" type="int">
         <constraints nullable="true"/>
       </column>
-      <column name="is_active" type="bit" defaultValue="true">
+      <column defaultValue="true" name="is_active" type="bit">
         <constraints nullable="false"/>
       </column>
-      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="created_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="created_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column name="updated_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
@@ -54,15 +54,18 @@
       <column name="desired" value="1"/> <!-- National Council -->
     </insert>
   </changeSet>
-  <changeSet id="02-02" author="mohsin.kerai">
-    <createTable tableName="person"
-      remarks="A Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints nullable="false" unique="true" primaryKey="true"/>
+  <changeSet author="mohsin.kerai" id="02-02">
+    <createTable remarks="A Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani"
+      tableName="person">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
 
       <column name="cnic" type="varchar(255)">
-        <constraints nullable="false" unique="true"/>
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="old_cnic" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
       </column>
       <column name="passport_number" type="varchar(255)">
         <constraints nullable="true" unique="false"/>
@@ -72,6 +75,9 @@
       </column>
 
       <column name="salutation" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column defaultValue="null" name="full_name" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
       <column name="first_name" type="varchar(100)">
@@ -90,7 +96,7 @@
       <column name="gender" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="date_of_birth" type="timestamp">
+      <column defaultValueComputed="null" name="date_of_birth" type="datetime">
         <constraints nullable="true"/>
       </column>
       <column name="residential_address" type="text">
@@ -131,7 +137,7 @@
       <column name="relocate_location" type="varchar(255)">
         <constraints nullable="true"/>
       </column>
-      <column name="relocation_date_time" type="timestamp">
+      <column defaultValueComputed="null" name="relocation_date_time" type="datetime">
         <constraints nullable="true"/>
       </column>
 
@@ -192,29 +198,47 @@
       <column name="religious_education" type="bigint">
         <constraints nullable="true"/>
       </column>
-
-      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
-        <constraints nullable="false" unique="false"/>
+      <column name="nc_form_no" type="bigint">
+        <constraints nullable="true"/>
       </column>
-      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
-        <constraints nullable="false" unique="false"/>
+      <column name="eo_form_no" type="bigint">
+        <constraints nullable="true"/>
       </column>
-      <column name="created_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="death_date" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column name="updated_by" type="datetime" defaultValueComputed="null">
+      <column name="death_cause" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column defaultValueComputed="null" name="old_code" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="old_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
-  <changeSet id="02-03" author="mohsin.kerai">
+  <changeSet author="mohsin.kerai" id="02-03">
     <insert tableName="person">
       <column name="id" value="2"/>
 
       <column name="cnic" value="42101-1111111-2"/>
-      <column name="image" value="42101-1111111-2.png" />
+      <column name="image" value="42101-1111111-2.png"/>
 
-      <column name="salutation" value="1" />
+      <column name="salutation" value="1"/>
       <column name="first_name" value="Mohsin"/>
       <column name="fathers_name" value="Mansoor"/>
       <column name="family_name" value="Kerai"/>
@@ -224,7 +248,8 @@
       <column name="date_of_birth" value="1993-07-27"/>
       <column name="city" value="1"/>
       <column name="marital_status" value="single"/>
-      <column name="residential_address" value="Flat # DD-108 Karimabad Colony Block 3 FB Area Karachi"/>
+      <column name="residential_address"
+        value="Flat # DD-108 Karimabad Colony Block 3 FB Area Karachi"/>
       <column name="mobile_phone" value="03312338554"/>
       <column name="email_address" value="mohsin.kerai@gmail.com"/>
       <column name="marital_status" value="1"/>
@@ -232,47 +257,47 @@
       <column name="regional_council" value="2"/>
       <column name="local_council" value="3"/>
       <column name="jamatkhana" value="4"/>
-      <column name="educations" value="[]" />
-      <column name="akdn_trainings" value="[]" />
-      <column name="professional_trainings" value="[]" />
-      <column name="skills" value="[]" />
-      <column name="professional_memberships" value="[]" />
-      <column name="language_proficiencies" value="[]" />
-      <column name="voluntary_community_services" value="[]" />
-      <column name="voluntary_public_services" value="[]" />
-      <column name="willingness_to_devote_time_in_future" value="Change institution" />
-      <column name="field_of_interest" value="[]" />
-      <column name="hours_per_week" value="9" />
-      <column name="plan_to_relocate" value="0" />
-      <column name="occupation_type" value="2" />
-      <column name="employments" value="[]" />
-      <column name="field_of_expertise" value="Software Engineering" />
-      <column name="religious_education" value="1" />
+      <column name="educations" value="[]"/>
+      <column name="akdn_trainings" value="[]"/>
+      <column name="professional_trainings" value="[]"/>
+      <column name="skills" value="[]"/>
+      <column name="professional_memberships" value="[]"/>
+      <column name="language_proficiencies" value="[]"/>
+      <column name="voluntary_community_services" value="[]"/>
+      <column name="voluntary_public_services" value="[]"/>
+      <column name="willingness_to_devote_time_in_future" value="Change institution"/>
+      <column name="field_of_interest" value="[]"/>
+      <column name="hours_per_week" value="9"/>
+      <column name="plan_to_relocate" value="0"/>
+      <column name="occupation_type" value="2"/>
+      <column name="employments" value="[]"/>
+      <column name="field_of_expertise" value="Software Engineering"/>
+      <column name="religious_education" value="1"/>
     </insert>
     <!--<insert tableName="person">-->
-      <!--<column name="id" value="2"/>-->
-      <!--<column name="cnic" value="42101-1111111-3"/>-->
-      <!--<column name="first_name" value="Zeeshan"/>-->
-      <!--<column name="fathers_name" value="Moiz"/>-->
-      <!--<column name="family_name" value="Damani"/>-->
-      <!--<column name="gender" value="1"/>-->
-      <!--<column name="date_of_birth" value="1994-10-10"/>-->
-      <!--<column name="marital_status" value="single"/>-->
-      <!--<column name="residential_address" value="KA-3 102"/>-->
-      <!--<column name="mobile_phone" value="03322359875"/>-->
-      <!--<column name="email_address" value="zeshanmoizdamani@gmail.com"/>-->
-      <!--<column name="area_of_origin" value="Karachi"/>-->
-      <!--<column name="regional_council_id" value="2"/>-->
-      <!--<column name="local_council_id" value="3"/>-->
-      <!--<column name="jamatkhana_id" value="4"/>-->
-      <!--<column name="image" value="42101-1111111-3.png" />-->
+    <!--<column name="id" value="2"/>-->
+    <!--<column name="cnic" value="42101-1111111-3"/>-->
+    <!--<column name="first_name" value="Zeeshan"/>-->
+    <!--<column name="fathers_name" value="Moiz"/>-->
+    <!--<column name="family_name" value="Damani"/>-->
+    <!--<column name="gender" value="1"/>-->
+    <!--<column name="date_of_birth" value="1994-10-10"/>-->
+    <!--<column name="marital_status" value="single"/>-->
+    <!--<column name="residential_address" value="KA-3 102"/>-->
+    <!--<column name="mobile_phone" value="03322359875"/>-->
+    <!--<column name="email_address" value="zeshanmoizdamani@gmail.com"/>-->
+    <!--<column name="area_of_origin" value="Karachi"/>-->
+    <!--<column name="regional_council_id" value="2"/>-->
+    <!--<column name="local_council_id" value="3"/>-->
+    <!--<column name="jamatkhana_id" value="4"/>-->
+    <!--<column name="image" value="42101-1111111-3.png" />-->
     <!--</insert>-->
   </changeSet>
-  <changeSet id="02-04" author="mohsin.kerai">
-    <createTable tableName="relation"
-      remarks="A Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints nullable="false" unique="true" primaryKey="true"/>
+  <changeSet author="mohsin.kerai" id="02-04">
+    <createTable remarks="A Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani"
+      tableName="relation">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
@@ -280,25 +305,25 @@
       <column name="reverse_relation_id" type="bigint">
         <constraints nullable="true"/>
       </column>
-      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="created_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="created_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column name="updated_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
-  <changeSet id="02-06" author="mohsin.kerai">
-    <createTable tableName="person_relation_person"
-      remarks="A Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints nullable="false" unique="true" primaryKey="true"/>
+  <changeSet author="mohsin.kerai" id="02-06">
+    <createTable remarks="A Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani"
+      tableName="person_relation_person">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="first_person_id" type="bigint">
         <constraints nullable="false"/>
@@ -309,32 +334,32 @@
       <column name="relation_id" type="bigint">
         <constraints nullable="false"/>
       </column>
-      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="created_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="created_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column name="updated_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
   <!--<changeSet id="02-07" author="mohsin.kerai">-->
-    <!--<insert tableName="person_relation_person">-->
-      <!--<column name="first_person_id" value="1"/>-->
-      <!--<column name="second_person_id" value="2"/>-->
-      <!--<column name="relation_id" value="1"/>-->
-    <!--</insert>-->
+  <!--<insert tableName="person_relation_person">-->
+  <!--<column name="first_person_id" value="1"/>-->
+  <!--<column name="second_person_id" value="2"/>-->
+  <!--<column name="relation_id" value="1"/>-->
+  <!--</insert>-->
   <!--</changeSet>-->
-  <changeSet id="02-08" author="mohsin.kerai">
-    <createTable tableName="cycle_position_on_institution"
-      remarks="A Triangular Table which connect Position to Cycle">
-      <column name="id" type="bigint" autoIncrement="true">
-        <constraints nullable="false" unique="true" primaryKey="true"/>
+  <changeSet author="mohsin.kerai" id="02-08">
+    <createTable remarks="A Triangular Table which connect Position to Cycle"
+      tableName="cycle_position_on_institution">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="cycle_id" type="bigint">
         <constraints nullable="false"/>
@@ -354,21 +379,21 @@
       <column name="nominations" type="int">
         <constraints nullable="true"/>
       </column>
-      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column name="created_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="created_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column name="updated_by" type="datetime" defaultValueComputed="null">
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
   </changeSet>
-  <changeSet id="02-09" author="mohsin.kerai">
+  <changeSet author="mohsin.kerai" id="02-09">
     <insert tableName="cycle_position_on_institution">
       <column name="id" value="1"/>
       <column name="cycle_id" value="1"/>
