@@ -31,6 +31,9 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person extends BaseEntity {
 
+  private String formNo;
+
+  private String oldCnic;
   private String cnic;
   private String passportNumber;
   private String image;
@@ -41,6 +44,7 @@ public class Person extends BaseEntity {
   private String familyName;
 
   private long jamatiTitle; // id
+
   // 0 male, 1 female
   private int gender;
 
