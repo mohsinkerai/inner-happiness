@@ -62,10 +62,10 @@
       </column>
 
       <column name="cnic" type="varchar(255)">
-        <constraints nullable="false" unique="false"/>
+        <constraints nullable="true" unique="false"/>
       </column>
       <column name="old_cnic" type="varchar(255)">
-        <constraints nullable="true" unique="true"/>
+        <constraints nullable="true" unique="false"/>
       </column>
       <column name="passport_number" type="varchar(255)">
         <constraints nullable="true" unique="false"/>

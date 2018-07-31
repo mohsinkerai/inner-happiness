@@ -23,7 +23,7 @@ function syncCity() {
         .then((rows) => {
             rows.forEach(function(value){
             let countryId = `${value['CountryCode']}`.replace(/^0+/, '');
-            let query = `Insert INTO city (name, country_id) VALUES ("${value['Descr']}", ${countryId})`;
+            let query = `Insert INTO city (name, country_id, old_id) VALUES ("${value['Descr']}", ${countryId}, "${value['CityCode']}")`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -43,7 +43,7 @@ function syncJamatiTitle() {
     getDataFromTable("Ali_tblTitle")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO jamati_title (name, gender) VALUES ("${value['Descr']}","${value['Gender']}")`;
+            let query = `Insert INTO jamati_title (name, gender, old_id) VALUES ("${value['Descr']}","${value['Gender']}", ${value['TitleId']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -438,7 +438,7 @@ function syncPerson() {
 //syncLevelLocalITREB();
 //syncLevelLocalITREBParent();
 
-syncPerson();
+//syncPerson();
 
 //var s = "Leadership  Religious Teacher  Communication  Conflict Resolution  ";
 //var j = '{"name":"' + s.trim().split('  ').join() + '"}';

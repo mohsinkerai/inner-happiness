@@ -48,6 +48,7 @@ exports.query = (queryString) => {
                     connection.release();
                     if (err) {
                         console.log("Error in query => " + queryString);
+                        console.error(err);
                         reject(err);
                     } else {
                         resolve(rows);

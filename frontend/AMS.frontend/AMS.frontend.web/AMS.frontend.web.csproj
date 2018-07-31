@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
@@ -22,6 +22,70 @@
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Areas\Administration\Controllers\" />
     <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\app\js\dashboard.js" />
+    <None Include="wwwroot\assets\app\js\layout-builder.js" />
+    <None Include="wwwroot\assets\app\js\my-script.js" />
+    <None Include="wwwroot\assets\app\media\img\files\css.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\csv.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\doc.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\html.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\javascript.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\jpg.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\mp4.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\pdf.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\xml.svg" />
+    <None Include="wwwroot\assets\app\media\img\files\zip.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\001-austria.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\002-belgium.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\003-switzerland.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\004-indonesia.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\005-portugal.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\006-turkey.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\007-malasya.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\008-saudi-arabia.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\009-australia.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\010-india.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\011-brazil.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\012-uk.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\013-russia.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\014-japan.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\015-china.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\016-spain.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\017-germany.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\018-south-korea.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\019-france.svg" />
+    <None Include="wwwroot\assets\app\media\img\flags\020-flag.svg" />
+    <None Include="wwwroot\assets\app\media\img\icons\exchange.svg" />
+    <None Include="wwwroot\assets\app\media\img\icons\logout.svg" />
+    <None Include="wwwroot\assets\app\media\img\icons\question.svg" />
+    <None Include="wwwroot\assets\app\media\img\icons\warning.svg" />
+    <None Include="wwwroot\assets\demo\demo6\base\scripts.bundle.js" />
+    <None Include="wwwroot\assets\snippets\apps\mail\mail.js" />
+    <None Include="wwwroot\assets\snippets\custom\apps\mail\mail.js" />
+    <None Include="wwwroot\assets\snippets\custom\pages\user\login.js" />
+    <None Include="wwwroot\assets\snippets\custom\pages\user\login6.js" />
+    <None Include="wwwroot\assets\vendors\base\fonts\flaticon\Flaticon.svg" />
+    <None Include="wwwroot\assets\vendors\base\fonts\fontawesome5\fa-brands-400.svg" />
+    <None Include="wwwroot\assets\vendors\base\fonts\fontawesome5\fa-brands-400.woff2" />
+    <None Include="wwwroot\assets\vendors\base\fonts\fontawesome5\fa-regular-400.svg" />
+    <None Include="wwwroot\assets\vendors\base\fonts\fontawesome5\fa-regular-400.woff2" />
+    <None Include="wwwroot\assets\vendors\base\fonts\fontawesome5\fa-solid-900.svg" />
+    <None Include="wwwroot\assets\vendors\base\fonts\fontawesome5\fa-solid-900.woff2" />
+    <None Include="wwwroot\assets\vendors\base\fonts\line-awesome\line-awesome.svg" />
+    <None Include="wwwroot\assets\vendors\base\fonts\line-awesome\line-awesome.woff2" />
+    <None Include="wwwroot\assets\vendors\base\fonts\metronic\Metronic_fda1334c35d0f5fe2afb3afebbb6774a.svg" />
+    <None Include="wwwroot\assets\vendors\base\fonts\metronic\Metronic_fda1334c35d0f5fe2afb3afebbb6774a.woff2" />
+    <None Include="wwwroot\assets\vendors\base\fonts\socicon\socicon.svg" />
+    <None Include="wwwroot\assets\vendors\base\vendors.bundle.js" />
+    <None Include="wwwroot\assets\vendors\custom\datatables\datatables.bundle.js" />
+    <None Include="wwwroot\assets\vendors\custom\flot\flot.bundle.js" />
+    <None Include="wwwroot\assets\vendors\custom\fullcalendar\fullcalendar.bundle.js" />
+    <None Include="wwwroot\assets\vendors\custom\gmaps\gmaps.js" />
+    <None Include="wwwroot\assets\vendors\custom\jquery-ui\jquery-ui.bundle.js" />
+    <None Include="wwwroot\assets\vendors\custom\jqvmap\jqvmap.bundle.js" />
   </ItemGroup>
 
   <ItemGroup>
