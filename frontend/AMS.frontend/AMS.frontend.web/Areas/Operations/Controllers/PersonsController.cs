@@ -172,7 +172,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 string lastName = HttpContext.Session.GetString("lastName");
                 string cnic = HttpContext.Session.GetString("cnic");
 
-                var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",(((startRec+1)*pageSize)-pageSize)+1, pageSize);
+                //var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",(((startRec+1)*pageSize)-pageSize)+1, pageSize);
+                var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",((startRec+1)-startRec), pageSize);
                 var conditionedData = tupleData.Item1;
                 var totalRecords = tupleData.Item2;
 
@@ -776,7 +777,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.Set("firstName", firstName);
             HttpContext.Session.Set("lastName", lastName);
             HttpContext.Session.Set("cnic", cnic);
-
+            
             //return View(new List<PersonModel>());
             /*return View(new IndexPersonModel
             {
