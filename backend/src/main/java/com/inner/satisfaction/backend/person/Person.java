@@ -43,7 +43,7 @@ public class Person extends BaseEntity {
   private String fathersName;
   private String familyName;
 
-  private long jamatiTitle; // id
+  private Long jamatiTitle; // id
 
   // 0 male, 1 female
   private int gender;
@@ -111,9 +111,9 @@ public class Person extends BaseEntity {
   private List<Integer> fieldOfInterest; // ID's
 
   private String fieldOfExpertise;
-  private long religiousEducation;
+  private Long religiousEducation;
 
-  private long hoursPerWeek;
+  private Long hoursPerWeek;
 
   // 6. Occupation
   private Long occupationType;
