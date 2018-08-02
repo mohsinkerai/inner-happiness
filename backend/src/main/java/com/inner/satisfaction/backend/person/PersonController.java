@@ -31,10 +31,18 @@ public class PersonController extends BaseController<Person> {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @RequestMapping(value = "/search/cnic", method = RequestMethod.GET)
+  @RequestMapping(value = {"/search/cnic", "/search/findByCnic"}, method = RequestMethod.GET)
   public Person findByCnic(@RequestParam("cnic") String cnic) {
     return Optional.ofNullable(personService.findByCnic(cnic))
       .orElseThrow(() -> new EntityNotFoundException("Person with Cnic " + cnic + " Not found"));
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByFormNo", method = RequestMethod.GET)
+  public Person findByFormNo(@RequestParam("formNo") String formNo) {
+    return Optional.ofNullable(personService.findByFormNo(formNo))
+      .orElseThrow(
+        () -> new EntityNotFoundException("Person with FormNo " + formNo + " Not found"));
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -45,7 +53,7 @@ public class PersonController extends BaseController<Person> {
     @RequestParam("lastName") String lastName,
     @RequestParam(required = false, defaultValue = "1", value = "page") int page,
     @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
-    PageRequest pageRequest = PageRequest.of(page-1, size);
+    PageRequest pageRequest = PageRequest.of(page - 1, size);
     return personService.findByCnicOrFirstNameOrLastName(cnic, firstName, lastName, pageRequest);
   }
 
@@ -53,7 +61,7 @@ public class PersonController extends BaseController<Person> {
   @GetMapping(ONE)
   public ResponseEntity<Person> findOne(@PathVariable("id") Long entityId) {
     Person entity = personService.findOneWithDetails(entityId);
-    if(entity == null) {
+    if (entity == null) {
       return ResponseEntity.status(404).body(null);
     }
     return ResponseEntity.ok(entity);
