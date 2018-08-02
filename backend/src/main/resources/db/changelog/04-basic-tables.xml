@@ -338,7 +338,7 @@
         <constraints nullable="true"/>
       </column>
       <column name="old_id" type="varchar(5)">
-        <constraints nullable="false"/>
+        <constraints nullable="true"/>
       </column>
       <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false" unique="false"/>
