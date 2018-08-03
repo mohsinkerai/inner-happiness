@@ -153,4 +153,29 @@
       <column defaultValueBoolean="false" name="is_mowla_appointee" type="tinyint"></column>
     </addColumn>
   </changeSet>
+  <changeSet author="mohsin.kerai" id="06-12">
+    <createTable
+      remarks="A Table to Store Nominations for a Person with respect to CPI. A CPI is Position with Respect to Institution in a Cycle"
+      tableName="person_cpi">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint"/>
+      <column name="cpi_id" type="bigint"/>
+      <column name="is_appointed" type="boolean"/>
+      <column name="priority" type="int"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>
