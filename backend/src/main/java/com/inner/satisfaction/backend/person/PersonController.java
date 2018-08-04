@@ -46,15 +46,17 @@ public class PersonController extends BaseController<Person> {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @RequestMapping(value = "/search/findByCnicOrFirstNameOrLastName", method = RequestMethod.GET)
+  @RequestMapping(value = "/search/findByCnicAndFirstNameAndLastNameAndFormNo", method = RequestMethod.GET)
   public Page<Person> findByCnicOrFirstNameOrLastName(
-    @RequestParam("cnic") String cnic,
-    @RequestParam("firstName") String firstName,
-    @RequestParam("lastName") String lastName,
+    @RequestParam(required = false, value = "cnic", defaultValue = "") String cnic,
+    @RequestParam(required = false, value = "firstName", defaultValue = "") String firstName,
+    @RequestParam(required = false, value = "lastName", defaultValue = "") String lastName,
+    @RequestParam(required = false, value = "formNo", defaultValue = "") String formNo,
     @RequestParam(required = false, defaultValue = "1", value = "page") int page,
     @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
     PageRequest pageRequest = PageRequest.of(page - 1, size);
-    return personService.findByCnicOrFirstNameOrLastName(cnic, firstName, lastName, pageRequest);
+    return personService
+      .findByCnicAndFirstNameAndLastNameAndFormNo(cnic, firstName, lastName, formNo, pageRequest);
   }
 
   @Override
