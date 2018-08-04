@@ -303,7 +303,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string WillingnessToDevoteTimeInFuture { get; set; }
 
         [JsonIgnore] public string Write { get; set; }
-
+      
         #endregion Public Properties
     }
 }

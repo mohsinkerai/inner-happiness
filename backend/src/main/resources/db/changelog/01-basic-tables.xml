@@ -114,6 +114,9 @@
       <column name="old_id" type="bigint">
         <constraints nullable="true" unique="false"/>
       </column>
+      <column name="old_code" type="varchar(45)">
+        <constraints nullable="true"/>
+      </column>
       <column name="is_closed" defaultValueComputed="0" type="bigint">
         <constraints nullable="false"/>
       </column>
