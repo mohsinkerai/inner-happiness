@@ -56,7 +56,7 @@
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
             <column name="old_id" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false"/>
@@ -97,7 +97,7 @@
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
             <column name="old_id" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false"/>

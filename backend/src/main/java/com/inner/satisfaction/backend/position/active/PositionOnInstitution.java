@@ -19,5 +19,6 @@ public class PositionOnInstitution extends BaseEntity {
   private int maxCount;
   private int nominations;
 
+  private boolean isMowlaAppointee;
   private boolean isActive;
 }

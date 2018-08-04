@@ -30,6 +30,10 @@ public class PersonService extends BaseService<Person> {
     return personRepository.findByCnic(cnic);
   }
 
+  public Person findByFormNo(String formNo) {
+    return personRepository.findByFormNo(formNo);
+  }
+
   public Page<Person> findByCnicOrFirstNameOrLastName(String cnic, String firstName,
     String lastName, Pageable pageable) {
     return personRepository

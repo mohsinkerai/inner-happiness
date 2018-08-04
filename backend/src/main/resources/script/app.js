@@ -290,7 +290,9 @@ function syncLevelNC() {
     getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'NAT'")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id, is_closed) VALUES (1, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']}, ${value['Closed']})`;
+            let oldCode = value['OldCode'];
+            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id, old_code, is_closed) VALUES (1, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -300,7 +302,9 @@ function syncLevelRC() {
     getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'RC%'")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 8, ${value['InstitutionId']}, ${value['Closed']})`;
+            let oldCode = value['OldCode'];
+            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
+            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, old_code, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 8, ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
     });
@@ -310,6 +314,8 @@ function syncLevelLC() {
     getDataByQuery("SELECT reg.InstitutionId AS 'RegionalCouncilId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'RC%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'LC%'")
         .then((rows) => {
             rows.forEach(function(value){
+            let oldCode = value['OldCode'];
+            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
             let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RegionalCouncilId']}, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
@@ -329,6 +335,8 @@ function syncLevelJK() {
     getDataByQuery("SELECT lcl.InstitutionId AS 'LCId', jkh.* FROM Ali_tblInstitution lcl JOIN Ali_tblInstitution jkh ON lcl.LocalCouncilId = jkh.LocalCouncilId WHERE lcl.Jurisdiction = 'LCL' AND jkh.Jurisdiction = 'JKH' AND lcl.ShortDescr LIKE 'LC%' ORDER BY jkh.LocalCouncilId")
         .then((rows) => {
             rows.forEach(function(value){
+            let oldCode = value['OldCode'];
+            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
             let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (4, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['LCId']}, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
@@ -348,6 +356,8 @@ function syncLevelRegionalITREB() {
     getDataByQuery(`SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'ITREB%'`)
         .then((rows) => {
             rows.forEach(function(value){
+            let oldCode = value['OldCode'];
+            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
             let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 3, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
@@ -358,6 +368,8 @@ function syncLevelLocalITREB() {
     getDataByQuery(`SELECT reg.InstitutionId AS 'RItrebId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'ITREB%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'ITREB%' ORDER BY lcl.RegionId`)
         .then((rows) => {
             rows.forEach(function(value){
+            let oldCode = value['OldCode'];
+            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
             let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RItrebId']}, ${value['InstitutionId']}, ${value['Closed']})`;
             mysql.query(query).then(console.log("Done"));
         });
