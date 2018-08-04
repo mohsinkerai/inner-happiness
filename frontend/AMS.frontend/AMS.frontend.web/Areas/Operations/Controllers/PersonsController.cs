@@ -40,10 +40,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #region Public Methods
 
-        public async Task<IActionResult> ServerSideAjaxHandler()
+        public async Task<IActionResult> ServerSideAjaxHandler(IndexPersonModel searchingData)
         {
             try
             {
+                string firstName = searchingData.FirstName;
+                string lastName = searchingData.LastName;
+                string cnic = searchingData.Cnic;
+
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
                 string search = queryCollection["search[value]"][0];
@@ -52,128 +56,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //string orderDir = form["order[0][dir]"][0];
                 int startRec = Convert.ToInt32(queryCollection["start"][0]);
                 int pageSize = Convert.ToInt32(queryCollection["length"][0]);
-                // Loading.
-                //IQueryable<NiyatForm> data = null;
-                //if (user.Category.Equals(UserCategory.NationalCouncil) && user.Role.Equals(UserRole.Administrator))
-                //{
-                //    data = _dbContext.NiyatForms
-                //        .Where(n => n.Country.NationalCouncilId.Equals(user.NationalCouncilId) &&
-                //                    n.Status.Equals(NiyatFormStatus
-                //                        .Approved) /* && n.Category.Equals(NiyatFormCategory.Adult)*/);
-                //    //.ConfigureAwait(false);
-                //}
-                //else if (user.Category.Equals(UserCategory.NationalCouncil) && user.Role.Equals(UserRole.Checker))
-                //{
-                //    data = _dbContext.NiyatForms
-                //        .Where(n => n.Country.NationalCouncilId.Equals(user.NationalCouncilId) &&
-                //                    n.Status.Equals(NiyatFormStatus
-                //                        .Pending) /* && n.Category.Equals(NiyatFormCategory.Adult)*/);
-                //    //.ConfigureAwait(false);
-                //}
-                //else
-                //{
-                //    data = _dbContext.NiyatForms
-                //        .Where(n => n.Country.NationalCouncilId.Equals(user.NationalCouncilId) &&
-                //                    (n.Status.Equals(NiyatFormStatus.New) ||
-                //                     n.Status.Equals(NiyatFormStatus
-                //                         .Rejected)) /* && n.Category.Equals(NiyatFormCategory.Adult)*/);
-                //    //.ConfigureAwait(false);
-                //}
-                //// Total record count.
-                //int totalRecords = data.Count();
-                //// Verification.
-                //if (!string.IsNullOrEmpty(search) &&
-                //    !string.IsNullOrWhiteSpace(search))
-                //{
-                //    // Apply search
-                //    data = data.Where(p =>
-                //        p.FormNumber.ToLower().Contains(search.ToLower()) ||
-                //        p.FullName.ToLower().Contains(search.ToLower()));
-                //}
-                //// Sorting.
-                ////data = this.SortByColumnWithOrder(order, orderDir, data);
-                //// Filter record count.
-                //int recFilter = (string.IsNullOrEmpty(search) || string.IsNullOrWhiteSpace(search))
-                //    ? totalRecords
-                //    : data.Count();
-                //// Apply pagination.
-                //data = data.Skip(startRec).Take(pageSize);
 
-                //var finalData = data.Include(n => n.ApprovedByUser).Include(n => n.EnteredByUser)
-                //    .Include(n => n.SentForVerificationByUser).Include(n => n.VoluntaryExperiences).ToList();
-
-                //var conditionedData = finalData.Select(n => new
-                //{
-                //    n.FormNumber,
-                //    n.FullName,
-                //    n.EnteredOnForDisplay,
-                //    n.EnteredByUserForDisplay,
-                //    n.SubmittedForVerificationOnForDisplay,
-                //    n.SentForVerificationByUserForDisplay,
-                //    n.VerifiedOnForDisplay,
-                //    n.ApprovedByUserForDisplay,
-                //    //n.Comments,
-                //    n.Status,
-                //    n.CompletionPercentage,
-                //    n.IsExported,
-                //    n.ExportedOnForDisplay,
-                //    DetailUrl = n.Category == NiyatFormCategory.Adult
-                //        ? Url.Action(ActionNames.Detail, ControllerNames.NationalCouncil.NiyatForm,
-                //            new { area = AreaNames.NationalCouncil, uid = n.UId })
-                //        : Url.Action(ActionNames.Detail, ControllerNames.NationalCouncil.MinorNiyatForm,
-                //            new { area = AreaNames.NationalCouncil, uid = n.UId })
-                //});
-
-                //var jamatkhanas = new List<string>();
-                //var provinces = new List<string>();
-                //var cities = new List<string>();
-                //var volunteerRoles = new List<string>();
-                //var volunteerInstitutions = new List<string>();
-
-                //foreach (var niyatForm in finalData)
-                //{
-                //    if (!jamatkhanas.Contains(niyatForm.Jamatkhana))
-                //    {
-                //        jamatkhanas.Add(niyatForm.Jamatkhana);
-                //    }
-                //    if (!string.IsNullOrWhiteSpace(niyatForm.Province) && !provinces.Contains(niyatForm.Province))
-                //    {
-                //        provinces.Add(niyatForm.Province);
-                //    }
-                //    if (!cities.Contains(niyatForm.City))
-                //    {
-                //        cities.Add(niyatForm.City);
-                //    }
-                //    if (!cities.Contains(niyatForm.AddressCity))
-                //    {
-                //        cities.Add(niyatForm.AddressCity);
-                //    }
-                //    foreach (var voluntaryExperience in niyatForm.VoluntaryExperiences)
-                //    {
-                //        if (!volunteerInstitutions.Contains(voluntaryExperience.InstitutionOrOrganizationName))
-                //        {
-                //            volunteerInstitutions.Add(voluntaryExperience.InstitutionOrOrganizationName);
-                //        }
-                //        if (!volunteerRoles.Contains(voluntaryExperience.Role))
-                //        {
-                //            volunteerRoles.Add(voluntaryExperience.Role);
-                //        }
-                //    }
-                //}
-
-                //HttpContext.Session.Set(SessionKeys.AutoCompleteJamatkhanas, jamatkhanas);
-                //HttpContext.Session.Set(SessionKeys.AutoCompleteProvinces, provinces);
-                //HttpContext.Session.Set(SessionKeys.AutoCompleteReligiousQualifications, new List<string>());
-                //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerRoles, volunteerRoles);
-                //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerInstitutions, volunteerInstitutions);
-                
-                string searching = HttpContext.Session.GetString("searching");
-                string firstName = HttpContext.Session.GetString("firstName");
-                string lastName = HttpContext.Session.GetString("lastName");
-                string cnic = HttpContext.Session.GetString("cnic");
-
-                //var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",(((startRec+1)*pageSize)-pageSize)+1, pageSize);
-                var tupleData = await RestfulClient.getPersonDetailsThroughPagging("","","",((startRec+1)-startRec), pageSize);
+                var tupleData = await RestfulClient.getPersonDetailsThroughPagging(firstName, lastName, cnic, ((startRec / pageSize) + 1), pageSize);
                 var conditionedData = tupleData.Item1;
                 var totalRecords = tupleData.Item2;
 
@@ -188,9 +72,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         FullName = $"{n.FirstName} {n.FathersName} {n.FamilyName}",
                         n.Cnic,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, id = n.Id}),
+                            new { area = AreaNames.Operations, id = n.Id }),
                         EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, id = n.Id})
+                            new { area = AreaNames.Operations, id = n.Id })
                     })
                 });
             }
@@ -205,7 +89,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 });
             }
         }
-
+        
         public async Task<IActionResult> Add()
         {
             try
@@ -762,7 +646,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
             //return View(new List<PersonModel>());
-
+        
             HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
 
             //return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
@@ -773,11 +657,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
         {
 
-            HttpContext.Session.Set("searching", "true");
-            HttpContext.Session.Set("firstName", firstName);
-            HttpContext.Session.Set("lastName", lastName);
-            HttpContext.Session.Set("cnic", cnic);
-            
             //return View(new List<PersonModel>());
             /*return View(new IndexPersonModel
             {
@@ -786,6 +665,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 FirstName = firstName,
                 LastName = lastName
             });*/
+
+            bool isSearching = false;
+            if (cnic == null && firstName == null && lastName == null)
+            {
+                isSearching = false;
+            }
+            else
+            {
+                isSearching = true;
+            }
 
             //var persons = await RestfulClient.getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
             return View(new IndexPersonModel
