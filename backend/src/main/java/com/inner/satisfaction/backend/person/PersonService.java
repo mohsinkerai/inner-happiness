@@ -30,11 +30,19 @@ public class PersonService extends BaseService<Person> {
     return personRepository.findByCnic(cnic);
   }
 
-  public Page<Person> findByCnicOrFirstNameOrLastName(String cnic, String firstName,
-    String lastName, Pageable pageable) {
+  public Person findByFormNo(String formNo) {
+    return personRepository.findByFormNo(formNo);
+  }
+
+  public Page<Person> findByCnicAndFirstNameAndLastNameAndFormNo(
+    String cnic,
+    String firstName,
+    String lastName,
+    String formNo,
+    Pageable pageable) {
     return personRepository
-      .findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContaining(
-        cnic, firstName, lastName, pageable);
+      .findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingAndFormNoIgnoreCaseContaining(
+        cnic, firstName, lastName, formNo, pageable);
   }
 
   /**
