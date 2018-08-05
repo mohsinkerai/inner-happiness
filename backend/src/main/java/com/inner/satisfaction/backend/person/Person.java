@@ -14,6 +14,7 @@ import com.inner.satisfaction.backend.person.dto.VoluntaryCommunityServiceDto;
 import com.inner.satisfaction.backend.person.dto.VoluntaryPublicServiceDto;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person extends BaseEntity {
 
+  @Column(name = "nc_form_no")
   private String formNo;
 
   private String oldCnic;

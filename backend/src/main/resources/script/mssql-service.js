@@ -5,7 +5,9 @@ const mssql = require('mssql');
 var databaseConfig = {
     user: "sa",
     password: "admin",
+//    password: "D1lpas@nd",
     server: "ALIAHAD-B",
+//    server: "localhost",
     database: "AliAppointments",
     parseJSON: true
 };
@@ -38,6 +40,7 @@ exports.query = (queryString) => {
                     if(err) {
                         reject(err);
                     } else {
+                        exports.end();
                         resolve(recordSet);
                     }
                 });

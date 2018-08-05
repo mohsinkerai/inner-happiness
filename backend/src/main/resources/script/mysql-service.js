@@ -6,7 +6,7 @@ var databaseConfig = {
     host: "localhost",
     database: "inner_satisfaction",
     user: "root",
-    password: "",
+    password: "123",
     connectionLimit: 1,
     parseJSON: true
 };

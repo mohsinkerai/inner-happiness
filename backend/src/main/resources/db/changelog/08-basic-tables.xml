@@ -140,14 +140,6 @@
       <column name="professional_membership_id" value="3"/>
     </insert>
   </changeSet>
-  <changeSet author="mohsin.kerai" id="06-09">
-    <addColumn tableName="person">
-      <column name="form_no" type="varchar(255)"></column>
-    </addColumn>
-  </changeSet>
-  <changeSet author="mohsin.kerai" id="06-10">
-    <addUniqueConstraint columnNames="form_no" constraintName="unique_form_no" tableName="person"/>
-  </changeSet>
   <changeSet author="mohsin.kerai" id="06-11">
     <addColumn tableName="position_on_institution">
       <column defaultValueBoolean="false" name="is_mowla_appointee" type="tinyint"></column>
