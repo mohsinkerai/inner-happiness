@@ -1515,3 +1515,39 @@ function InitializeNewDataTableLite(id, title) {
         ]
     });
 }
+
+function LoadDropDownViaAjax(dropDownClass, url, selectedValue, secondarySelectedValue, tertiarySelectedValue) {
+    $("." + dropDownClass)
+        .empty()
+        .append("<option></option>");
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: url,
+        data: { "level" : selectedValue, "subLevel": secondarySelectedValue, "type" : tertiarySelectedValue },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            $("." + dropDownClass)
+                .empty()
+                .append("<option></option>");
+            $.each(result,
+                function (key, value) {
+                    $("." + dropDownClass)
+                        .append($("<option></option>")
+                            .attr("value", value.value)
+                            .text(value.text));
+                });
+            $("." + dropDownClass).prop("disabled", false);
+            $("." + dropDownClass).focus();
+        }
+    });
+}

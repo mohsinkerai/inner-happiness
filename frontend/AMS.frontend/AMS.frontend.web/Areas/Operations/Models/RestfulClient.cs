@@ -349,6 +349,33 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
+        public static async Task<List<SelectListItem>> getRegionalInstitutions()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("level/search/parent?value=1");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+
+            return null;
+        }
+
         public static async Task<List<SelectListItem>> getLocalCouncil(string uid = "")
         {
             client = new HttpClient();
@@ -374,6 +401,43 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
 
             return null;
+        }
+
+        public static async Task<List<SelectListItem>> GetLocalInstitutions(string uid = "")
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync(string.IsNullOrWhiteSpace(uid) ? "level/search/type?value=3" : "level/search/parent?value=" + uid);
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> GetInstitutionTypes(string level = "", string subLevel = "")
+        {
+            var list = new List<SelectListItem>
+            {
+                new SelectListItem {Text = "Council", Value = "Council"},
+                new SelectListItem {Text = "ITREB", Value = "ITREB"}
+            };
+            return list;
         }
 
         public static async Task<List<SelectListItem>> getJamatkhana(string uid = "")
@@ -403,6 +467,32 @@ namespace AMS.frontend.web.Areas.Operations.Models
         }
 
         public static async Task<List<SelectListItem>> getPositionInstitution()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var Res = await client.GetAsync("institution/all");
+            if (Res.IsSuccessStatusCode)
+            {
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> GetInstitutions(string level = "", string subLevel = "" , string type = "")
         {
             client = new HttpClient();
             client.BaseAddress = new Uri(BASE_URL);

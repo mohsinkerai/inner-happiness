@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Nominations
 {
@@ -6,9 +7,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
     {
         #region Public Properties
 
-        public string Company { get; set; }
         public string Institution { get; set; }
-        public string Jamatkhana { get; set; }
+
+        [Display(Name = "Institution Type")] public string InstitutionType { get; set; }
+
+        public string Level { get; set; }
         public string Local { get; set; }
         public List<PositionModel> Positions { get; set; }
         public string Region { get; set; }
