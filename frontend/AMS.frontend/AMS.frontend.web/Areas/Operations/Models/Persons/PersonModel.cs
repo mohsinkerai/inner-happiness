@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -37,8 +37,14 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Required]
         [JsonProperty(PropertyName = "cnic")]
         [Display(Name = "CNIC")]
-        [Remote("ValidateCnic", "Persons","Operations")]
+        [Remote("ValidateCnic", "Persons", "Operations")]
         public string Cnic { get; set; }
+
+        [Required]
+        [JsonProperty(PropertyName = "formnumber")]
+        [Display(Name = "From Number")]
+        [Remote("ValidateFormNumber", "Persons", "Operations")]
+        public string FormNumber { get; set; }
 
         [JsonIgnore]
         [Display(Name = "Country of Study")]
@@ -61,12 +67,14 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string EmailAddress { get; set; }
 
         [JsonIgnore] public string EmploymentEmailAddress { get; set; }
+
         [JsonIgnore] public DateTime? EmploymentEndDate { get; set; }
 
         [JsonProperty(PropertyName = "employments")]
         public List<EmploymentModel> Employments { get; set; }
 
         [JsonIgnore] public DateTime? EmploymentStartDate { get; set; }
+
         [JsonIgnore] public string EmploymentTelephone { get; set; }
 
         [JsonProperty(PropertyName = "familyName")]
@@ -94,6 +102,16 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string FirstName { get; set; }
 
         [JsonIgnore]
+        public string FullName
+        {
+            get
+            {
+                var salutation = !string.IsNullOrWhiteSpace(JamatiTitle) ? JamatiTitle : Salutation;
+                return $"{salutation} {FirstName} {FathersName} {FamilyName}";
+            }
+        }
+
+        [JsonIgnore]
         [Display(Name = "From Year")]
         public int? FromYear { get; set; }
 
@@ -114,8 +132,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public double? HoursPerWeek { get; set; }
 
         public string Id { get; set; }
-        [JsonIgnore] public IFormFile ImageUpload { get; set; }
+
         [JsonProperty(PropertyName = "image")] public string Image { get; set; }
+
+        [JsonIgnore] public IFormFile ImageUpload { get; set; }
 
         [JsonIgnore] public string Institution { get; set; }
 
@@ -169,8 +189,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Others")]
         public string OccupationTypeOther { get; set; }
 
+        [JsonProperty(PropertyName = "oldcnic")]
+        [Display(Name = "Old CNIC")]
+        public string OldCnic { get; set; }
+
         [JsonProperty(PropertyName = "passportNumber")]
-        [Display(Name = "Passport Number (for foreign nationals)")]
+        [Display(Name = "Passport Number")]
         public string PassportNumber { get; set; }
 
         [JsonProperty(PropertyName = "planToRelocate")]
@@ -235,7 +259,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string RelocateLocation { get; set; }
 
         [JsonProperty(PropertyName = "relocationDateTime")]
-        [Display(Name = "Relocation Date Time")]
+        [Display(Name = "Relocation Date")]
         public DateTime? RelocationDateTime { get; set; }
 
         [JsonProperty(PropertyName = "residenceTelephone")]
