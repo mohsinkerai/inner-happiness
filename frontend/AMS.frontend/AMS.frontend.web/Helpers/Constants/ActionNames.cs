@@ -27,5 +27,9 @@
         public const string EmploymentListDelete = "EmploymentListDelete";
         public const string FamilyRelationListAdd = "FamilyRelationListAdd";
         public const string FamilyRelationListDelete = "FamilyRelationListDelete";
+        public const string GetRegionalInstitutions = "GetRegionalInstitutions";
+        public const string GetLocalInstitutions = "GetLocalInstitutions";
+        public const string GetInstitutionTypes = "GetInstitutionTypes";
+        public const string GetInstitutions = "GetInstitutions";
     }
 }

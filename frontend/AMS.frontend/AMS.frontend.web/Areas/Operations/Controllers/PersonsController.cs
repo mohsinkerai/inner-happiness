@@ -25,7 +25,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private readonly IMapper _mapper;
 
         const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
-        
+        const string SessionKeyDoNotValidateFormNumberOnEditPage = "_DoNotValidateFormNumberOnEditPage";
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -47,6 +48,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 string firstName = searchingData.FirstName;
                 string lastName = searchingData.LastName;
                 string cnic = searchingData.Cnic;
+                string formNumber = searchingData.FormNumber;
 
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
@@ -57,7 +59,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 int startRec = Convert.ToInt32(queryCollection["start"][0]);
                 int pageSize = Convert.ToInt32(queryCollection["length"][0]);
 
-                var tupleData = await RestfulClient.getPersonDetailsThroughPagging(firstName, lastName, cnic, ((startRec / pageSize) + 1), pageSize);
+                var tupleData = await RestfulClient.getPersonDetailsThroughPagging(firstName, lastName, cnic, formNumber, ((startRec / pageSize) + 1), pageSize);
                 var conditionedData = tupleData.Item1;
                 var totalRecords = tupleData.Item2;
 
@@ -69,7 +71,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     recordsFiltered = totalRecords,
                     data = conditionedData.Select(n => new
                     {
-                        FullName = $"{n.FirstName} {n.FathersName} {n.FamilyName}",
+                        n.FullName,
                         n.Cnic,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
                             new { area = AreaNames.Operations, id = n.Id }),
@@ -135,7 +137,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
 
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
-
+                HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
             }
             catch
             {
@@ -370,7 +372,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
 
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "true");
-
+                HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "true");
             }
             catch
             {
@@ -648,13 +650,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //return View(new List<PersonModel>());
         
             HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
+            HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
 
             //return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
+        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName)
         {
 
             //return View(new List<PersonModel>());
@@ -667,7 +670,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });*/
 
             bool isSearching = false;
-            if (cnic == null && firstName == null && lastName == null)
+            if (cnic == null && firstName == null && lastName == null && formNumber == null)
             {
                 isSearching = false;
             }
@@ -683,7 +686,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //Persons = persons.Item1,
                 Cnic = cnic,
                 FirstName = firstName,
-                LastName = lastName
+                LastName = lastName,
+                FormNumber = formNumber
             });
         }
 
@@ -1003,6 +1007,21 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var success = RestfulClient.searchByCNIC(cnic, out var person);
                 return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
             }
+        }
+
+        public async Task<IActionResult> ValidateFormNumber(string formnumber)
+        {
+            var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
+
+            //if (doNotValidateFormNumber == "true")
+            //{
+                return Json("true");
+            //}
+            //else
+            //{
+            //    var success = RestfulClient.searchByFormNumber(cnic, out var person);
+            //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
+            //}
         }
 
         [HttpPost]
