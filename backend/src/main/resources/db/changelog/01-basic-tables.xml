@@ -103,10 +103,10 @@
         <constraints nullable="true" unique="false"/>
       </column>
       <column name="code_eo" type="varchar(255)">
-        <constraints nullable="false" unique="false"/>
+        <constraints nullable="true" unique="false"/>
       </column>
       <column name="code_nc" type="varchar(255)">
-        <constraints nullable="false" unique="false"/>
+        <constraints nullable="true" unique="false"/>
       </column>
       <column name="level_parent_id" type="bigint">
         <constraints nullable="true" unique="false"/>
