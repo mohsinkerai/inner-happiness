@@ -47,6 +47,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 string firstName = searchingData.FirstName;
                 string lastName = searchingData.LastName;
                 string cnic = searchingData.Cnic;
+                string formNumber = searchingData.FormNumber;
 
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
@@ -57,7 +58,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 int startRec = Convert.ToInt32(queryCollection["start"][0]);
                 int pageSize = Convert.ToInt32(queryCollection["length"][0]);
 
-                var tupleData = await RestfulClient.getPersonDetailsThroughPagging(firstName, lastName, cnic, ((startRec / pageSize) + 1), pageSize);
+                var tupleData = await RestfulClient.getPersonDetailsThroughPagging(firstName, lastName, cnic, formNumber, ((startRec / pageSize) + 1), pageSize);
                 var conditionedData = tupleData.Item1;
                 var totalRecords = tupleData.Item2;
 
@@ -654,7 +655,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string cnic, string firstName, string lastName)
+        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName)
         {
 
             //return View(new List<PersonModel>());
@@ -667,7 +668,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             });*/
 
             bool isSearching = false;
-            if (cnic == null && firstName == null && lastName == null)
+            if (cnic == null && firstName == null && lastName == null && formNumber == null)
             {
                 isSearching = false;
             }
@@ -683,7 +684,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //Persons = persons.Item1,
                 Cnic = cnic,
                 FirstName = firstName,
-                LastName = lastName
+                LastName = lastName,
+                FormNumber = formNumber
             });
         }
 
