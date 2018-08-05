@@ -58,9 +58,23 @@
                     <div class="form-group m-form__group row">
                         <div class="col-lg-4">
                             <div class="form-group">
+                                <label asp-for="FormNumber" class="control-label"></label><span class="required">*</span>
+                                <input type="text" asp-for="FormNumber" class="form-control formnumber">
+                                <span asp-validation-for="FormNumber" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
                                 <label asp-for="Cnic" class="control-label"></label><span class="required">*</span>
                                 <input type="text" asp-for="Cnic" class="form-control cnic">
                                 <span asp-validation-for="Cnic" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="OldCnic" class="control-label"></label>
+                                <input type="text" asp-for="OldCnic" class="form-control oldcnic">
+                                <span asp-validation-for="OldCnic" class="form-control-feedback"></span>
                             </div>
                         </div>
                         <div class="col-lg-4">

@@ -45,13 +45,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.Message = TempData["Message"];
             //return View(new List<PersonModel>());
 
-            ViewBag.CompanyList = await RestfulClient.getAllCompanies();
-            ViewBag.RegionList = await RestfulClient.getRegionalCouncil();
-            ViewBag.LocalList = await RestfulClient.getLocalCouncil();
-            ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
-            ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
+            //ViewBag.CompanyList = await RestfulClient.getAllCompanies();
+            //ViewBag.RegionList = await RestfulClient.getRegionalCouncil();
+            //ViewBag.LocalList = await RestfulClient.getLocalCouncil();
+            //ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
+            //ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
 
-            return View(new IndexNominationModel{Company = "1", Positions = new List<PositionModel>()});
+            return View(new IndexNominationModel{Positions = new List<PositionModel>()});
         }
 
         public async Task<IActionResult> ServerSideAjaxHandler()
@@ -222,6 +222,34 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> Detail(string id)
         {
             return View();
+        }
+
+        public async Task<JsonResult> GetRegionalInstitutions()
+        {
+            var list = await RestfulClient.getRegionalInstitutions();
+
+            return new JsonResult(list);
+        }
+
+        public async Task<JsonResult> GetLocalInstitutions()
+        {
+            var list = await RestfulClient.GetLocalInstitutions();
+
+            return new JsonResult(list);
+        }
+
+        public async Task<JsonResult> GetInstitutionTypes(string level, string subLevel)
+        {
+            var list = await RestfulClient.GetInstitutionTypes(level, subLevel);
+
+            return new JsonResult(list);
+        }
+
+        public async Task<JsonResult> GetInstitutions(string level, string subLevel, string type)
+        {
+            var list = await RestfulClient.GetInstitutions(level, subLevel, type);
+
+            return new JsonResult(list);
         }
 
         #endregion Public Methods

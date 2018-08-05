@@ -25,7 +25,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private readonly IMapper _mapper;
 
         const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
-        
+        const string SessionKeyDoNotValidateFormNumberOnEditPage = "_DoNotValidateFormNumberOnEditPage";
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -70,7 +71,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     recordsFiltered = totalRecords,
                     data = conditionedData.Select(n => new
                     {
-                        FullName = $"{n.FirstName} {n.FathersName} {n.FamilyName}",
+                        n.FullName,
                         n.Cnic,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
                             new { area = AreaNames.Operations, id = n.Id }),
@@ -136,7 +137,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
 
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
-
+                HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
             }
             catch
             {
@@ -371,7 +372,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
 
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "true");
-
+                HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "true");
             }
             catch
             {
@@ -649,6 +650,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //return View(new List<PersonModel>());
         
             HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
+            HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
 
             //return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
             return View();
@@ -1005,6 +1007,21 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var success = RestfulClient.searchByCNIC(cnic, out var person);
                 return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
             }
+        }
+
+        public async Task<IActionResult> ValidateFormNumber(string formnumber)
+        {
+            var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
+
+            //if (doNotValidateFormNumber == "true")
+            //{
+                return Json("true");
+            //}
+            //else
+            //{
+            //    var success = RestfulClient.searchByFormNumber(cnic, out var person);
+            //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
+            //}
         }
 
         [HttpPost]
