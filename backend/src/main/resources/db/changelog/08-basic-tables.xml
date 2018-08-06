@@ -170,4 +170,31 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet author="mohsin.kerai" id="06-13">
+    <createTable
+      remarks="Table to store application configuration"
+      tableName="application_configuration">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="key" type="varchar(255)"/>
+      <column name="value" type="varchar(255)"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+    <addUniqueConstraint columnNames="key" tableName="application_configuration"/>
+    <createIndex indexName="index-key-app-config" tableName="application_configuration">
+      <column name="key"></column>
+    </createIndex>
+  </changeSet>
 </databaseChangeLog>
