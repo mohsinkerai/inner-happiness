@@ -76,10 +76,43 @@
       <column name="position_id" value="2"/> <!-- Member Finance -->
       <column name="institution_id" value="1"/> <!-- National Council -->
     </insert>
+    <insert tableName="position_on_institution">
+      <column name="id" value="3"/>
+      <column name="position_id" value="1"/> <!-- President -->
+      <column name="institution_id" value="5"/> <!-- Council for Southern Region -->
+    </insert>
+    <insert tableName="position_on_institution">
+      <column name="id" value="4"/>
+      <column name="position_id" value="2"/> <!-- Member Finance -->
+      <column name="institution_id" value="5"/> <!-- Council for Southern Region -->
+    </insert>
+    <insert tableName="position_on_institution">
+      <column name="id" value="5"/>
+      <column name="position_id" value="3"/> <!-- Member -->
+      <column name="institution_id" value="5"/> <!-- Council for Southern Region -->
+    </insert>
     <insert tableName="cycle_position_on_institution">
       <column name="id" value="2"/>
       <column name="cycle_id" value="2"/>
       <column name="position_on_institution_id" value="2"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="3"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="4"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="4"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="5"/>
       <column name="min_count" value="1"/>
       <column name="desired" value="1"/>
       <column name="max_count" value="1"/>
