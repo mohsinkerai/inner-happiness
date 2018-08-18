@@ -368,7 +368,7 @@ function EducationListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#education-table").html(result);
-                InitializeDataTableLite("education", "Education");
+                InitializeDataTableLiteWithRowReordering("education", "Education");
                 $("#Institution").val('').trigger('change');
                 $("#CountryOfStudy").val('').trigger('change');
                 $("#FromYear").val('').trigger('change');
@@ -600,7 +600,7 @@ function EducationListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#education-table").html(result);
-                    InitializeDataTableLite("education", "Education");
+                    InitializeDataTableLiteWithRowReordering("education", "Education");
                     $("#Institution").val('').trigger('change');
                     $("#CountryOfStudy").val('').trigger('change');
                     $("#FromYear").val('').trigger('change');
@@ -755,8 +755,45 @@ function AkdnTrainingListAdd(url) {
 }
 
 function InitializeDataTableLite(id, title) {
-    var datatable = $("#" + id).mDatatable({
-        pagination: false
+    var e;
+    (e = $("#" + id)).DataTable({
+        responsive: true,
+        paging: false,
+        info: false,
+        filter: false
+    });
+}
+
+function InitializeDataTableLiteWithRowReordering(id, title) {
+    var table = $("#" + id).DataTable({
+        responsive: true,
+        paging: false,
+        info: false,
+        filter: false,
+        rowReorder: true,
+        order: [
+            [0, "asc"]
+        ]
+    });
+
+    table.on("row-reorder", function (e, diff, edit) {
+        var primary = table.row(diff[0].node).data()[1];
+        var primaryId = diff[0].node.getAttribute("id").substring(14);
+        var primaryPosition = diff[0].newData;
+        var secondary = table.row(diff[1].node).data()[1];
+        var secondaryId = diff[1].node.getAttribute("id").substring(14);
+        var secondaryPosition = diff[1].newData;
+
+        //var result = "Reorder started on row: " + edit.triggerRow.data()[1] + "<br>";
+
+        //for (var i = 0, ien = diff.length; i < ien; i++) {
+        //    var rowData = table.row(diff[i].node).data();
+
+        //    result += rowData[1] + " updated to be in position " +
+        //        diff[i].newData + " (was " + diff[i].oldData + ")<br>";
+        //}
+
+        //alert("Event result:<br>" + result);
     });
 }
 
@@ -1451,7 +1488,7 @@ function InitializeLitePersonDataTable(id, title, url) {
     });
 }
 
-function InitializePositionDataTable(id, title, url) {
+function InitializeInstitutionDataTable(id, title, url) {
     var e;
     (e = $("#" + id)).DataTable({
         responsive: true,
@@ -1461,11 +1498,11 @@ function InitializePositionDataTable(id, title, url) {
         filter: false,
         ajax: url,
         columns: [{
-            data: "positionName"
+            data: "institution"
         }, {
-            data: "incubment"
+            data: "totalpositions"
         }, {
-            data: "required"
+            data: "nominations"
         }, {
             data: "nominated"
         }, {

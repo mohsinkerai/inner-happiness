@@ -151,6 +151,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
+                var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
+                model.RelocationDateTime = DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
+
                 if (ModelState.IsValid)
                 {
                     if (model.Image != null)
@@ -392,6 +396,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
+                var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
+                model.RelocationDateTime = DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
+
                 if (ModelState.IsValid)
                 {
                     if (model.ImageUpload != null)
@@ -491,6 +499,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
                 ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
             });
+
+            for (var counter = 0; counter < sessionEducationList.Count; counter++)
+            {
+                sessionEducationList[counter].Priority = counter + 1;
+            }
+
             HttpContext.Session.Set("EducationList", sessionEducationList);
             return sessionEducationList;
         }

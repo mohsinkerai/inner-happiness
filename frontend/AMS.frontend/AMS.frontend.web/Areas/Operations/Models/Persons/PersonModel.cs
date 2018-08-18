@@ -52,9 +52,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
+        //[DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
         [JsonProperty(PropertyName = "dateOfBirth")]
         [Display(Name = "Date of Birth")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DateOfBirth { get; set; }
 
         [JsonIgnore] public string Designation { get; set; }
@@ -260,6 +261,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "relocationDateTime")]
         [Display(Name = "Relocation Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? RelocationDateTime { get; set; }
 
         [JsonProperty(PropertyName = "residenceTelephone")]
