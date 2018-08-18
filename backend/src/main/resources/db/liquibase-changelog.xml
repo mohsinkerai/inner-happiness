@@ -13,6 +13,7 @@
   <include file="changelog/07-basic-tables.xml" relativeToChangelogFile="true"/>
   <include file="changelog/08-basic-tables.xml" relativeToChangelogFile="true"/>
   <include file="changelog/09-configurations.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/10-basic-e2e-dummy-data.xml" relativeToChangelogFile="true"/>
   <!--<include file="changelog/02-insert-data-authors.xml" relativeToChangelogFile="true"/>-->
   <!--<include file="changelog/02-insert-data-books.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>
