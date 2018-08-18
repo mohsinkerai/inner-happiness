@@ -40,6 +40,18 @@
       <column name="name" value="Economic Planning Board for Pakistan"/>
       <column name="level_id" value="1"/>
     </insert>
+    <insert tableName="institution">
+      <column name="name" value="Local Council for Karimabad"/>
+      <column name="level_id" value="3"/>
+    </insert>
+    <insert tableName="institution">
+      <column name="name" value="Local ITREB for Karimabad"/>
+      <column name="level_id" value="3"/>
+    </insert>
+    <insert tableName="institution">
+      <column name="name" value="Council for Southern Region"/>
+      <column name="level_id" value="2"/>
+    </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="08-03">
     <createTable remarks="Person Skill Many to Many Relation"
@@ -140,14 +152,6 @@
       <column name="professional_membership_id" value="3"/>
     </insert>
   </changeSet>
-  <changeSet author="mohsin.kerai" id="06-09">
-    <addColumn tableName="person">
-      <column name="form_no" type="varchar(255)"></column>
-    </addColumn>
-  </changeSet>
-  <changeSet author="mohsin.kerai" id="06-10">
-    <addUniqueConstraint columnNames="form_no" constraintName="unique_form_no" tableName="person"/>
-  </changeSet>
   <changeSet author="mohsin.kerai" id="06-11">
     <addColumn tableName="position_on_institution">
       <column defaultValueBoolean="false" name="is_mowla_appointee" type="tinyint"></column>
@@ -163,6 +167,7 @@
       <column name="person_id" type="bigint"/>
       <column name="cpi_id" type="bigint"/>
       <column name="is_appointed" type="boolean"/>
+      <column name="is_recommended" type="boolean"/>
       <column name="priority" type="int"/>
       <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>
@@ -177,5 +182,32 @@
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-13">
+    <createTable
+      remarks="Table to store application configuration"
+      tableName="application_configuration">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="key" type="varchar(255)"/>
+      <column name="value" type="varchar(255)"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+    <addUniqueConstraint columnNames="key" tableName="application_configuration"/>
+    <createIndex indexName="index-key-app-config" tableName="application_configuration">
+      <column name="key"></column>
+    </createIndex>
   </changeSet>
 </databaseChangeLog>

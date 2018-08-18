@@ -103,10 +103,10 @@
         <constraints nullable="true" unique="false"/>
       </column>
       <column name="code_eo" type="varchar(255)">
-        <constraints nullable="false" unique="false"/>
+        <constraints nullable="true" unique="false"/>
       </column>
       <column name="code_nc" type="varchar(255)">
-        <constraints nullable="false" unique="false"/>
+        <constraints nullable="true" unique="false"/>
       </column>
       <column name="level_parent_id" type="bigint">
         <constraints nullable="true" unique="false"/>
@@ -271,6 +271,10 @@
       <column name="id" value="2"/>
       <column name="name" value="Member Finance"/>
     </insert>
+    <insert tableName="position">
+      <column name="id" value="3"/>
+      <column name="name" value="Member"/>
+    </insert>
   </changeSet>
   <changeSet id="01-5" author="mohsin.kerai">
     <createTable tableName="cycle"
@@ -303,8 +307,14 @@
     <insert tableName="cycle">
       <column name="id" value="1"/>
       <column name="name" value="Cycle#38"/>
+      <column name="start_date" value="2012-07-11"/>
+      <column name="end_date" value="2015-07-10"/>
+    </insert>
+    <insert tableName="cycle">
+      <column name="id" value="2"/>
+      <column name="name" value="Cycle#39"/>
       <column name="start_date" value="2015-07-11"/>
-      <column name="end_date" value="2018-07-10"/>
+      <column name="end_date" value="2019-07-10"/>
     </insert>
   </changeSet>
 </databaseChangeLog>

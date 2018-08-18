@@ -4,6 +4,7 @@ const mysql = require('mysql');
 
 var databaseConfig = {
     host: "localhost",
+//    host: "13.93.85.18",
     database: "inner_satisfaction",
     user: "root",
     password: "",

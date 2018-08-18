@@ -12,7 +12,7 @@ public class PersonCPIController extends BaseController<PersonCPI> {
 
   public static final String PATH = "person/cpi";
 
-  public PersonCPIController(PeresonCPIService peresonCPIService) {
-    super(peresonCPIService);
+  public PersonCPIController(PersonCPIService personCPIService) {
+    super(personCPIService);
   }
 }

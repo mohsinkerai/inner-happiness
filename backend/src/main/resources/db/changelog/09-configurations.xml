@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="09-01">
+    <insert tableName="application_configuration">
+      <column name="key" value="TOP_LEVEL_ID"></column>
+      <column name="value" value="1"></column>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="09-02">
+    <insert tableName="application_configuration">
+      <column name="key" value="CURRENT_CYCLE_ID"></column>
+      <column name="value" value="2"></column>
+    </insert>
+    <insert tableName="application_configuration">
+      <column name="key" value="PREVIOUS_CYCLE_ID"></column>
+      <column name="value" value="1"></column>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

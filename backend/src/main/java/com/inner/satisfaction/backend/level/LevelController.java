@@ -3,7 +3,6 @@ package com.inner.satisfaction.backend.level;
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
-import com.inner.satisfaction.backend.person.Person;
 import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +22,13 @@ public class LevelController extends BaseController<Level> {
     this.levelService = levelService;
   }
 
-  @RequestMapping("/search/parent")
+  @RequestMapping({"/search/parent", "/search/findByParentId"})
   @ResponseStatus(HttpStatus.OK)
   public Set<Level> findByLevelParentId(@RequestParam("value") long levelParentId) {
     return levelService.findByLevelParentId(levelParentId);
   }
 
-  @RequestMapping("/search/type")
+  @RequestMapping({"/search/type", "/search/findByLevelTypeId"})
   @ResponseStatus(HttpStatus.OK)
   public Set<Level> findByLevelTypeId(@RequestParam("value") int levelTypeId) {
     return levelService.findByLevelTypeId(levelTypeId);

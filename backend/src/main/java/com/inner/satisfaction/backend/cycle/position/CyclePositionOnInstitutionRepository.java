@@ -4,6 +4,9 @@ import com.inner.satisfaction.backend.base.BaseRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CyclePositionOnInstitutionRepository extends BaseRepository<CyclePositionOnInstitution> {
+public interface CyclePositionOnInstitutionRepository extends
+  BaseRepository<CyclePositionOnInstitution> {
 
+  CyclePositionOnInstitution findByCycleIdAndPositionOnInstitutionId(long cycleId,
+    long positionOnInstitutionId);
 }
