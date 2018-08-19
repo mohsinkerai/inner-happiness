@@ -214,7 +214,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string company, string region, string local, string jamatkhana, string institution)
+        public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
         {
             return RedirectToAction("Index");
         }
@@ -245,12 +245,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return new JsonResult(list);
         }
 
-        public async Task<JsonResult> GetInstitutions(string level, string subLevel, string type)
+        /*public async Task<JsonResult> GetInstitutions(string level, string subLevel, string type)
         {
             var list = await RestfulClient.GetInstitutions(level, subLevel, type);
 
             return new JsonResult(list);
-        }
+        }*/
 
         #endregion Public Methods
     }
