@@ -40,6 +40,18 @@
       <column name="name" value="Economic Planning Board for Pakistan"/>
       <column name="level_id" value="1"/>
     </insert>
+    <insert tableName="institution">
+      <column name="name" value="Local Council for Karimabad"/>
+      <column name="level_id" value="3"/>
+    </insert>
+    <insert tableName="institution">
+      <column name="name" value="Local ITREB for Karimabad"/>
+      <column name="level_id" value="3"/>
+    </insert>
+    <insert tableName="institution">
+      <column name="name" value="Council for Southern Region"/>
+      <column name="level_id" value="2"/>
+    </insert>
   </changeSet>
   <changeSet author="mohsin.kerai" id="08-03">
     <createTable remarks="Person Skill Many to Many Relation"
@@ -154,7 +166,8 @@
       </column>
       <column name="person_id" type="bigint"/>
       <column name="cpi_id" type="bigint"/>
-      <column name="is_appointed" type="boolean"/>
+      <column name="is_appointed" type="tinyint"/>
+      <column name="is_recommended" type="tinyint"/>
       <column name="priority" type="int"/>
       <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>

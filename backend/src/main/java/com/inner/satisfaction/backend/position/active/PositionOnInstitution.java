@@ -14,10 +14,10 @@ public class PositionOnInstitution extends BaseEntity {
   private Long positionId;
   private Long institutionId;
 
-  private int minCount;
-  private int desired;
-  private int maxCount;
-  private int nominations;
+  private Integer minCount;
+  private Integer desired;
+  private Integer maxCount;
+  private Integer nominations;
 
   private boolean isMowlaAppointee;
   private boolean isActive;

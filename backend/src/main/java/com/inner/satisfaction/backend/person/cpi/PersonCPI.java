@@ -11,5 +11,6 @@ public class PersonCPI extends BaseEntity {
   private long personId;
   private long cpiId;
   private boolean isAppointed;
+  private boolean isRecommended;
   private int priority;
 }

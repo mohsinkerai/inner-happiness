@@ -8,6 +8,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "educationId")]
         public string EducationId { get; set; }
 
+        [JsonProperty(PropertyName = "priority")]
+        public int Priority { get; set; }
+
         [JsonProperty(PropertyName = "institution")]
         public string Institution { get; set; }
 

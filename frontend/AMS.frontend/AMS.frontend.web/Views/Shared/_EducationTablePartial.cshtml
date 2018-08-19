@@ -1,38 +1,40 @@
 @model IEnumerable<EducationModel>
-<table id="education">
+<table id="education" class="table table-striped- table-bordered table-hover">
     <thead>
-    <tr>
-        <th> Institution </th>
-        <th> Country </th>
-        <th> From </th>
-        <th> To </th>
-        <th> Degree </th>
-        <th> Major Area </th>
-        <th> Actions </th>
-    </tr>
+        <tr>
+            <th> Seq </th>
+            <th> Institution </th>
+            <th> Country </th>
+            <th> From </th>
+            <th> To </th>
+            <th> Degree </th>
+            <th> Major Area </th>
+            <th> Actions </th>
+        </tr>
     </thead>
     <tbody>
-    @if (Model != null)
-    {
-        foreach (var item in Model)
+        @if (Model != null)
         {
-            <tr id="education-row-@item.EducationId">
-                <td> @item.InstitutionName </td>
-                <td> @item.CountryOfStudyName </td>
-                <td> @item.FromYear </td>
-                <td> @item.ToYear </td>
-                <td> @item.NameOfDegreeName </td>
-                <td> @item.MajorAreaOfStudy </td>
-                <td>
-                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return EducationListEdit("@item.EducationId", "@item.Institution-@item.InstitutionName", "@item.CountryOfStudy-@item.CountryOfStudyName", "@item.FromYear", "@item.ToYear", "@item.NameOfDegree-@item.NameOfDegreeName", "@item.MajorAreaOfStudy");'>
-                        <i class="la la-edit"></i>
-                    </button>
-                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return EducationListDelete("@Url.Action(ActionNames.EducationListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.EducationId");'>
-                        <i class="la la-trash"></i>
-                    </button>
-                </td>
-            </tr>
+            foreach (var item in Model)
+            {
+                <tr id="education-row-@item.EducationId">
+                    <td> @item.Priority </td>
+                    <td> @item.InstitutionName </td>
+                    <td> @item.CountryOfStudyName </td>
+                    <td> @item.FromYear </td>
+                    <td> @item.ToYear </td>
+                    <td> @item.NameOfDegreeName </td>
+                    <td> @item.MajorAreaOfStudy </td>
+                    <td>
+                        <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return EducationListEdit("@item.EducationId", "@item.Institution-@item.InstitutionName", "@item.CountryOfStudy-@item.CountryOfStudyName", "@item.FromYear", "@item.ToYear", "@item.NameOfDegree-@item.NameOfDegreeName", "@item.MajorAreaOfStudy");'>
+                            <i class="la la-edit"></i>
+                        </button>
+                        <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return EducationListDelete("@Url.Action(ActionNames.EducationListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.EducationId");'>
+                            <i class="la la-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
         }
-    }
     </tbody>
 </table>
