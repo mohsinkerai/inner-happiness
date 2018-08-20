@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="11-01">
+    <createIndex tableName="cycle_position_on_institution" indexName="cycle_position_on_institution_cycle_id_index">
+      <column name="cycle_id"></column>
+    </createIndex>
+    <createIndex tableName="cycle_position_on_institution" indexName="cycle_position_on_institution_poi_id_index">
+      <column name="position_on_institution_id"></column>
+    </createIndex>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="11-02">
+    <createIndex tableName="position_on_institution" indexName="position_on_institution_institution_id_index">
+      <column name="institution_id"></column>
+    </createIndex>
+    <createIndex tableName="position_on_institution" indexName="position_on_institution_position_id_index">
+      <column name="position_id"></column>
+    </createIndex>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="11-03">
+    <createIndex tableName="person_cpi" indexName="person_cpi_cpi_id_index">
+      <column name="cpi_id"></column>
+    </createIndex>
+    <createIndex tableName="person_cpi" indexName="person_cpi_person_id_index">
+      <column name="person_id"></column>
+    </createIndex>
+    <createIndex tableName="person_cpi" indexName="person_cpi_is_appointed_index">
+      <column name="is_appointed"></column>
+    </createIndex>
+    <createIndex tableName="person_cpi" indexName="person_cpi_is_recommended_index">
+      <column name="is_recommended"></column>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>
