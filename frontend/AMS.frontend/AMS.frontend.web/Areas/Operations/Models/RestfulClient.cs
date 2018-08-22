@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -430,7 +431,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetInstitutionTypes(string level, string subLevel)
+        public static async Task<List<PositionModel>> GetInstitutionTypes(string level, string subLevel)
         {
 
             client = new HttpClient();
@@ -446,14 +447,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
                 var json = Res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                var list = new List<PositionModel>();
+
 
                 foreach (var item in myObject)
                 {
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem { Text = name, Value = id });
+                    PositionModel positionModel = new PositionModel();
+                    positionModel.Id = id;
+                    positionModel.PositionName = name;
+
+                    list.Add(positionModel);
                 }
 
                 return list;

@@ -1489,48 +1489,42 @@ function InitializeLitePersonDataTable(id, title, url) {
 }
 
 function InitializeInstitutionDataTable(id, title, url) {
-    var e;
-    (e = $("#" + id)).DataTable({
-        responsive: true,
-        searchDelay: 500,
-        processing: true,
-        serverSide: true,
-        filter: false,
-        ajax: url,
-        columns: [{
-            data: "institution"
-        }, {
-            data: "totalpositions"
-        }, {
-            data: "nominations"
-        }, {
-            data: "nominated"
-        }, {
-            data: "Actions"
-        }],
-        columnDefs: [{
-            targets: 4,
-            title: "Actions",
-            orderable: false,
-            render: function (a, e, t, n) {
-                return '<a href=' +
-                    t["detailUrl"] +
-                    ' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details"><i class="la la-eye"></i></a>';
-            }
-        }],
-        colReorder: true,
-        pagingType: "full_numbers",
-        dom: "<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>\n\t\t\t<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
-        buttons: ["print", "copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
-        lengthMenu: [5, 10, 25, 50],
-        pageLength: 10,
-        language: {
-            lengthMenu: "Display _MENU_"
-        },
-        order: [
-            [0, "desc"]
-        ]
-    });
+	var e;
+	(e = $("#" + id)).DataTable({
+		responsive: true,
+		searchDelay: 500,
+		processing: true,
+		serverSide: true,
+		filter: false,
+		ajax: url,
+		columns: [{
+			data: "positionName"
+		}, {
+			data: "Actions"
+		}],
+		columnDefs: [{
+			targets: 1,
+			title: "Actions",
+			orderable: false,
+			render: function (a, e, t, n) {
+				return '<a href=' +
+					t["detailUrl"] +
+					' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details"><i class="la la-eye"></i></a>';
+			}
+		}],
+		colReorder: true,
+		pagingType: "full_numbers",
+		dom: "<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>\n\t\t\t<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
+		buttons: ["print", "copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+		lengthMenu: [5, 10, 25, 50],
+		pageLength: 10,
+		language: {
+			lengthMenu: "Display _MENU_"
+		},
+		order: [
+			[0, "desc"]
+		]
+	});
 }
 
 function InitializeNewDataTableLite(id, title) {
@@ -1579,8 +1573,8 @@ function LoadDropDownViaAjax(dropDownClass, url, selectedValue, secondarySelecte
             $.each(result,
                 function (key, value) {
                     $("." + dropDownClass)
-                        .append($("<option></option>")
-                            .attr("value", value.value)
+						.append($("<option></option>")
+							.attr("value", value.value)
                             .text(value.text));
                 });
             $("." + dropDownClass).prop("disabled", false);

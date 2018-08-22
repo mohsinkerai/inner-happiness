@@ -132,9 +132,9 @@
             <thead>
                 <tr>
                     <th> Institution </th>
-                    <th> Total Positions </th>
+                    @*<th> Total Positions </th>
                     <th> Nominations </th>
-                    <th> Nominated </th>
+                    <th> Nominated </th>*@
                     <th> Actions </th>
                 </tr>
             </thead>
@@ -160,10 +160,17 @@
 
 @section scripts{
     <script type="text/javascript">
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
+            
+            $(".region")
+                .change(function () {
+                    var selectedPrimaryValue = $(this).val();
+                    alert(selectedPrimaryValue);
+                });
+
             InitializeInstitutionDataTable("institutions",
                 "Institutions",
-                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Nominations, new {area = AreaNames.Operations})");
+                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Nominations, Model)");
 
             $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
 
@@ -180,7 +187,7 @@
                     $(".local").empty().append("<option></option>").prop("disabled", true);
                     //$(".institution").empty().append("<option></option>").prop("disabled", true);
                     if (selectedPrimaryValue === "National") {
-                        LoadInstitutionTypes("National", "");
+                        //LoadInstitutionTypes("National", "");
                     } else if (selectedPrimaryValue === "Regional") {
                         LoadRegionalInstitutions();
                     } else if (selectedPrimaryValue === "Local") {
@@ -188,27 +195,28 @@
                     }
                 });
 
-            $(".region")
+            /*$(".region")
                 .change(function() {
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".region").val([]);
-                        $(".institution-type").empty().append("<option></option>").prop("disabled", true);
+                        //$(".institution-type").empty().append("<option></option>").prop("disabled", true);
                         //$(".institution").empty().append("<option></option>").prop("disabled", true);
                     }
-                    LoadInstitutionTypes("Regional", selectedPrimaryValue);
-                });
+                    
+                    //LoadInstitutionTypes("Regional", selectedPrimaryValue);
+                });*/
 
-            $(".local")
+            /*$(".local")
                 .change(function() {
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".local").val([]);
-                        $(".institution-type").empty().append("<option></option>").prop("disabled", true);
+                        //$(".institution-type").empty().append("<option></option>").prop("disabled", true);
                         //$(".institution").empty().append("<option></option>").prop("disabled", true);
                     }
-                    LoadInstitutionTypes("Local", selectedPrimaryValue);
-                });
+                    //LoadInstitutionTypes("Local", selectedPrimaryValue);
+                });*/
 
             /*$(".institution-type")
                 .change(function() {
@@ -244,13 +252,13 @@
                 "");
         }
 
-        function LoadInstitutionTypes(level, subLevel) {
+        @*function LoadInstitutionTypes(level, subLevel) {
             LoadDropDownViaAjax("institution-type",
                 "@Url.Action(ActionNames.GetInstitutionTypes, ControllerNames.Nominations, new {area = AreaNames.Operations})",
                 level,
                 subLevel,
                 "");
-        }
+        }*@
 
         @*function LoadInstitutions(level, subLevel, type) {
             LoadDropDownViaAjax("institution",

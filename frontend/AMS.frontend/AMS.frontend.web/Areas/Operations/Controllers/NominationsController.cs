@@ -54,10 +54,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View(new IndexNominationModel{Positions = new List<PositionModel>()});
         }
 
-        public async Task<IActionResult> ServerSideAjaxHandler()
+        public async Task<IActionResult> ServerSideAjaxHandler(IndexNominationModel indexNominationModel)
         {
             try
             {
+                string level = indexNominationModel.Level;
+                string subLevel = string.IsNullOrWhiteSpace(indexNominationModel.Region) ? indexNominationModel.Local : indexNominationModel.Region;
+
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
                 string search = queryCollection["search[value]"][0];
@@ -182,7 +185,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //HttpContext.Session.Set(SessionKeys.AutoCompleteVolunteerInstitutions, volunteerInstitutions);
 
                 //var conditionedData = await RestfulClient.getPersonDetails();
-                var conditionedData = new List<PositionModel>();
+                //var conditionedData = new List<PositionModel>();
+                
+                var conditionedData = await RestfulClient.GetInstitutionTypes(level,subLevel);
 
                 // Loading drop down lists.
                 return Json(new
@@ -190,12 +195,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     draw = Convert.ToInt32(draw),
                     recordsTotal = conditionedData.Count,
                     recordsFiltered = conditionedData.Count,
-                    data = conditionedData.Select(n => new
+                    /*data = conditionedData.Select(n => new
                     {
                         n.PositionName,
                         n.Incubment,
                         n.Required,
                         n.Nominated,
+                        DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
+                            new { area = AreaNames.Operations, uid = n.Id })
+                    })*/
+                    data = conditionedData.Select(n => new
+                    {
+                        n.PositionName,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
                             new { area = AreaNames.Operations, uid = n.Id })
                     })
@@ -216,7 +227,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
         {
-            return RedirectToAction("Index");
+            return View(indexNominationModel);
         }
 
         public async Task<IActionResult> Detail(string id)
