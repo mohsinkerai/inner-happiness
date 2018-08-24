@@ -6,10 +6,7 @@ namespace AMS.frontend.web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        #region Public Methods
 
         public IActionResult About()
         {
@@ -29,5 +26,12 @@ namespace AMS.frontend.web.Controllers
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        #endregion Public Methods
     }
 }

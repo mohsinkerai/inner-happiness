@@ -9,14 +9,15 @@ namespace AMS.frontend.web.Controllers
 {
     public class AuthenticateController : Controller
     {
+        #region Public Methods
+
         public IActionResult Index()
         {
             var model = new LoginModel();
             if (Request.Cookies.TryGetValue(CookieNames.RememberMe, out var rememberMe))
             {
                 model.RememberMe = true;
-                if (Request.Cookies.TryGetValue(CookieNames.Company, out var company))
-                    model.Company = company;
+                if (Request.Cookies.TryGetValue(CookieNames.Company, out var company)) model.Company = company;
             }
 
             return View(model);
@@ -54,5 +55,7 @@ namespace AMS.frontend.web.Controllers
 
             return Json("Success");
         }
+
+        #endregion Public Methods
     }
 }

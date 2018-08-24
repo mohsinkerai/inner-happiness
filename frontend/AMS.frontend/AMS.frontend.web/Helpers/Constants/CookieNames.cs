@@ -2,8 +2,12 @@
 {
     public static class CookieNames
     {
-        public const string RememberMe = "RememberMe";
+        #region Public Fields
+
         public const string Company = "Company";
         public const string CustomerName = "CustomerName";
+        public const string RememberMe = "RememberMe";
+
+        #endregion Public Fields
     }
 }

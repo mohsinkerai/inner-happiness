@@ -1,15 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using AMS.frontend.web.Extensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
     public class PersonModel
     {
         #region Public Properties
+
+        public int Age => DateOfBirth.GetAge();
 
         [JsonIgnore]
         [Display(Name = "Training")]
@@ -30,6 +34,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Area of Origin")]
         public string AreaOfOrigin { get; set; }
 
+        public string AreaOfOriginForDisplay { get; set; }
+
         [JsonProperty(PropertyName = "city")]
         [Display(Name = "City or Village")]
         public string City { get; set; }
@@ -39,12 +45,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "CNIC")]
         [Remote("ValidateCnic", "Persons", "Operations")]
         public string Cnic { get; set; }
-
-        [Required]
-        [JsonProperty(PropertyName = "formnumber")]
-        [Display(Name = "From Number")]
-        [Remote("ValidateFormNumber", "Persons", "Operations")]
-        public string FormNumber { get; set; }
 
         [JsonIgnore]
         [Display(Name = "Country of Study")]
@@ -102,19 +102,27 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [Required]
+        [JsonProperty(PropertyName = "formnumber")]
+        [Display(Name = "From Number")]
+        [Remote("ValidateFormNumber", "Persons", "Operations")]
+        public string FormNumber { get; set; }
+
+        [JsonIgnore]
+        [Display(Name = "From Year")]
+        public int? FromYear { get; set; }
+
         [JsonIgnore]
         public string FullName
         {
             get
             {
-                var salutation = !string.IsNullOrWhiteSpace(JamatiTitle) ? JamatiTitle : Salutation;
+                var salutation = !string.IsNullOrWhiteSpace(JamatiTitleForDisplay)
+                    ? JamatiTitleForDisplay
+                    : SalutationForDisplay;
                 return $"{salutation} {FirstName} {FathersName} {FamilyName}";
             }
         }
-
-        [JsonIgnore]
-        [Display(Name = "From Year")]
-        public int? FromYear { get; set; }
 
         [Required]
         [JsonProperty(PropertyName = "gender")]
@@ -144,6 +152,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Jamati Title")]
         public string JamatiTitle { get; set; }
 
+        public string JamatiTitleForDisplay { get; set; }
+
         //[Required]
         [JsonProperty(PropertyName = "jamatkhana")]
         public string Jamatkhana { get; set; }
@@ -152,6 +162,24 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "languageProficiencies")]
         public List<LanguageProficiencyModel> LanguageProficiencies { get; set; }
+
+        public string LatestEducation
+        {
+            get
+            {
+                var education = Educations.First();
+                return $"{education.NameOfDegreeName}, {education.InstitutionName}, {education.ToYear}";
+            }
+        }
+
+        public string LatestEmplopyment
+        {
+            get
+            {
+                var employment = Employments.First();
+                return $"{employment.Designation}, {employment.NameOfOrganization}";
+            }
+        }
 
         //[Required]
         [JsonProperty(PropertyName = "localCouncil")]
@@ -168,6 +196,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Marital Status")]
         public string MaritalStatus { get; set; }
 
+        public string MaritalStatusForDisplay { get; set; }
+
         [JsonProperty(PropertyName = "mobilePhone")]
         [Display(Name = "Mobile No")]
         public string MobilePhone { get; set; }
@@ -177,9 +207,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string NameOfDegree { get; set; }
 
         [JsonIgnore] public string NameOfOrganization { get; set; }
-
         [JsonIgnore] public string NatureOfBusiness { get; set; }
-
         [JsonIgnore] public string NatureOfBusinessOther { get; set; }
 
         [JsonProperty(PropertyName = "occupationType")]
@@ -223,7 +251,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public List<ProfessionalTrainingModel> ProfessionalTrainings { get; set; }
 
         [JsonIgnore] [Display(Name = "Year")] public string ProfessionalTrainingYear { get; set; }
-
         [JsonIgnore] public string Read { get; set; }
 
         [Required]
@@ -232,15 +259,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string RegionalCouncil { get; set; }
 
         [Display(Name = "Cnic")] [JsonIgnore] public string RelativeCnic { get; set; }
-
         [Display(Name = "Date of Birth")] public DateTime? RelativeDateOfBirth { get; set; }
-
         [Display(Name = "Last Name")] public string RelativeFamilyName { get; set; }
-
         [Display(Name = "Father Name")] public string RelativeFathersName { get; set; }
-
         [Display(Name = "First Name")] public string RelativeFirstName { get; set; }
-
         [Display(Name = "Jamati Title")] public string RelativeJamatiTitle { get; set; }
 
         [Display(Name = "Relation")]
@@ -274,6 +296,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "salutation")]
         public string Salutation { get; set; }
+
+        public string SalutationForDisplay { get; set; }
 
         [JsonProperty(PropertyName = "skills")]
         public List<string> Skills { get; set; }
@@ -329,7 +353,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string WillingnessToDevoteTimeInFuture { get; set; }
 
         [JsonIgnore] public string Write { get; set; }
-      
+
         #endregion Public Properties
     }
 }

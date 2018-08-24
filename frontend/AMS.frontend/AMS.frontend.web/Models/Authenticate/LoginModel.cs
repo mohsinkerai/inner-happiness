@@ -4,6 +4,8 @@ namespace AMS.frontend.web.Models.Authenticate
 {
     public class LoginModel
     {
+        #region Public Properties
+
         [Required] [Display(Name = "Company")] public string Company { get; set; }
 
         [Required]
@@ -14,5 +16,7 @@ namespace AMS.frontend.web.Models.Authenticate
         [Required] public string Password { get; set; }
 
         [Display(Name = "Remember Me")] public bool RememberMe { get; set; }
+
+        #endregion Public Properties
     }
 }

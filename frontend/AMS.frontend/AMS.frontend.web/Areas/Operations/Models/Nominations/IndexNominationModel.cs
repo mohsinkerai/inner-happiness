@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Nominations
@@ -15,7 +14,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public string Level { get; set; }
         public string Local { get; set; }
         public List<PositionModel> Positions { get; set; }
-        
+
         public string Region { get; set; }
 
         #endregion Public Properties
