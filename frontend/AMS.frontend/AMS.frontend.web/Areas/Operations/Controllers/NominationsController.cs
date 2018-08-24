@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AMS.frontend.web.Areas.Operations.Models;
+﻿using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Helpers.Constants;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -52,7 +52,69 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         PreviousCycle = "2015 - 2018",
                         Required = 3,
                         Id = "123",
-                        Incubment = PersonDummyData(string.Empty)
+                        Incubment = PersonDummyData(string.Empty),
+                        Nominations = new List<NominationModel>
+                        {
+                            new NominationModel
+                            {
+                                IsAppointed = false,
+                                IsRecommended = false,
+                                Priority = 1,
+                                Person = PersonDummyData(string.Empty)
+                            },
+
+                            new NominationModel
+                            {
+                                IsAppointed = false,
+                                IsRecommended = false,
+                                Priority = 2,
+                                Person = PersonDummyData(string.Empty)
+                            },
+
+                            new NominationModel
+                            {
+                                IsAppointed = false,
+                                IsRecommended = false,
+                                Priority = 3,
+                                Person = PersonDummyData(string.Empty)
+                            }
+                        }
+                    },
+                    new PositionModel
+                    {
+                        PositionName = "Chairman Education Board",
+                        CurrentCycle = "2018 - 2020",
+                        CycleStatus = "On going",
+                        PreviousCycle = "2015 - 2018",
+                        Required = 3,
+                        Id = "456",
+                        Incubment = PersonDummyData(string.Empty),
+                        Nominations = new List<NominationModel>
+                        {
+                            new NominationModel
+                            {
+                                IsAppointed = false,
+                                IsRecommended = false,
+                                Priority = 1,
+                                Person = PersonDummyData(string.Empty)
+                            },
+
+                            new NominationModel
+                            {
+                                IsAppointed = false,
+                                IsRecommended = false,
+                                Priority = 2,
+                                Person = PersonDummyData(string.Empty)
+                            },
+
+                            new NominationModel
+                            {
+                                IsAppointed = false,
+                                IsRecommended = false,
+                                Priority = 3,
+                                Person = PersonDummyData(string.Empty)
+                            }
+                        }
                     }
                 }
             };
@@ -93,7 +155,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
             //ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
 
-            return View(new IndexNominationModel {Positions = new List<PositionModel>()});
+            return View(new IndexNominationModel { Positions = new List<PositionModel>() });
         }
 
         [HttpPost]
@@ -258,7 +320,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     {
                         n.PositionName,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
-                            new {area = AreaNames.Operations, uid = n.Id})
+                            new { area = AreaNames.Operations, uid = n.Id })
                     })
                 });
             }
