@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -8,8 +8,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
     {
         #region Public Properties
 
-        [JsonProperty(PropertyName = "cnic")]
-        public string Cnic { get; set; }
+        [JsonProperty(PropertyName = "cnic")] public string Cnic { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]

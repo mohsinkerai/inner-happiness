@@ -5,10 +5,7 @@ namespace AMS.frontend.web
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
-        }
+        #region Public Methods
 
         public static IWebHost BuildWebHost(string[] args)
         {
@@ -17,5 +14,12 @@ namespace AMS.frontend.web
                 .UseStartup<Startup>()
                 .Build();
         }
+
+        public static void Main(string[] args)
+        {
+            BuildWebHost(args).Run();
+        }
+
+        #endregion Public Methods
     }
 }

@@ -1,34 +1,23 @@
-﻿using AMS.frontend.web.Areas.Operations.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
     [Area(AreaNames.Operations)]
-    public class PersonsController : Controller
+    public class PersonsController : BaseController
     {
-        #region Private Fields
-
-        private readonly Configuration _configuration;
-
-        private readonly IMapper _mapper;
-
-        const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
-        const string SessionKeyDoNotValidateFormNumberOnEditPage = "_DoNotValidateFormNumberOnEditPage";
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public PersonsController(IMapper mapper, IOptions<Configuration> configuration)
@@ -39,93 +28,52 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #endregion Public Constructors
 
+        #region Private Fields
+
+        private const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
+        private const string SessionKeyDoNotValidateFormNumberOnEditPage = "_DoNotValidateFormNumberOnEditPage";
+        private readonly Configuration _configuration;
+
+        private readonly IMapper _mapper;
+
+        #endregion Private Fields
+
         #region Public Methods
 
-        public async Task<IActionResult> ServerSideAjaxHandler(IndexPersonModel searchingData)
-        {
-            try
-            {
-                string firstName = searchingData.FirstName;
-                string lastName = searchingData.LastName;
-                string cnic = searchingData.Cnic;
-                string formNumber = searchingData.FormNumber;
-
-                var queryCollection = Request.Query; //HttpContext.Request.Query;
-                // Initialization.
-                string search = queryCollection["search[value]"][0];
-                string draw = queryCollection["draw"][0];
-                //string order = form["order[0][column]"][0];
-                //string orderDir = form["order[0][dir]"][0];
-                int startRec = Convert.ToInt32(queryCollection["start"][0]);
-                int pageSize = Convert.ToInt32(queryCollection["length"][0]);
-
-                var tupleData = await RestfulClient.getPersonDetailsThroughPagging(firstName, lastName, cnic, formNumber, ((startRec / pageSize) + 1), pageSize);
-                var conditionedData = tupleData.Item1;
-                var totalRecords = tupleData.Item2;
-
-                // Loading drop down lists.
-                return Json(new
-                {
-                    draw = Convert.ToInt32(draw),
-                    recordsTotal = totalRecords,
-                    recordsFiltered = totalRecords,
-                    data = conditionedData.Select(n => new
-                    {
-                        n.FullName,
-                        n.Cnic,
-                        DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
-                            new { area = AreaNames.Operations, id = n.Id }),
-                        EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,
-                            new { area = AreaNames.Operations, id = n.Id })
-                    })
-                });
-            }
-            catch (Exception ex)
-            {
-                return Json(new
-                {
-                    draw = 1,
-                    recordsTotal = 0,
-                    recordsFiltered = 0,
-                    data = new List<PersonModel>()
-                });
-            }
-        }
-        
         public async Task<IActionResult> Add()
         {
             try
             {
-                ViewBag.SalutationList = await RestfulClient.getSalutation();
-                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
-                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
-                ViewBag.CityList = await RestfulClient.getCities();
-                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
-                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
-                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
-                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
-                ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
+                ViewBag.SalutationList = await RestfulClient.GetSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.GetJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.GetMartialStatuses();
+                ViewBag.CityList = await RestfulClient.GetCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.GetAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.GetAllInstitutions();
+                ViewBag.NameOfDegreeList = await RestfulClient.GetEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.GetReligiousEducation();
+                ViewBag.RegionalCouncilList = await RestfulClient.GetRegionalCouncil();
 
-                var ListOfCountries = await RestfulClient.getAllCountries();
-                ViewBag.CountryOfStudyList = ListOfCountries;
-                ViewBag.AkdnTrainingCountryList = ListOfCountries;
-                ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
+                var listOfCountries = await RestfulClient.GetAllCountries();
+                ViewBag.CountryOfStudyList = listOfCountries;
+                ViewBag.AkdnTrainingCountryList = listOfCountries;
+                ViewBag.ProfessionalTrainingCountryList = listOfCountries;
 
-                var ListOfLanguageProficiency = await RestfulClient.getLanguageProficiency();
-                ViewBag.Proficiency = ListOfLanguageProficiency;
+                var listOfLanguageProficiency = await RestfulClient.GetLanguageProficiency();
+                ViewBag.Proficiency = listOfLanguageProficiency;
 
-                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
-                ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
-                ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();
-                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.getVoluntaryInstitution();
-                ViewBag.FieldOfInterestsList = await RestfulClient.getFieldOfInterests();
-                ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
-                ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
-                ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
-                ViewBag.ProfessionalMembershipsList = await RestfulClient.getProfessionalMemeberShipDetails();
-                ViewBag.LanguageList = await RestfulClient.getLanguages();
-                ViewBag.SkillsList = await RestfulClient.getSkills();
-                ViewBag.RelationList = await RestfulClient.getAllRelatives();
+                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.GetPositions();
+                ViewBag.HighestLevelOfStudyList = await RestfulClient.GetHighestLevelOfStudy();
+                ViewBag.AkdnTrainingList = await RestfulClient.GetAkdnTraining();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                ViewBag.FieldOfInterestsList = await RestfulClient.GetFieldOfInterests();
+                ViewBag.OccupationTypeList = await RestfulClient.GetOcupations();
+                ViewBag.TypeOfBusinessList = await RestfulClient.GetBussinessType();
+                ViewBag.NatureOfBusinessList = await RestfulClient.GetBussinessNature();
+                ViewBag.ProfessionalMembershipsList = await RestfulClient.GetProfessionalMemeberShipDetails();
+                ViewBag.LanguageList = await RestfulClient.GetLanguages();
+                ViewBag.SkillsList = await RestfulClient.GetSkills();
+                ViewBag.RelationList = await RestfulClient.GetAllRelatives();
 
                 HttpContext.Session.Set("EducationList", new List<EducationModel>());
                 HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
@@ -147,24 +95,23 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromForm]PersonModel model)
+        public async Task<IActionResult> Add([FromForm] PersonModel model)
         {
             try
             {
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
-                model.RelocationDateTime = DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                model.RelocationDateTime =
+                    DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
                 model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
 
                 if (ModelState.IsValid)
                 {
                     if (model.Image != null)
-                    {
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
-                    }
 
                     var sessionAkdnTrainingList =
                         HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
@@ -184,8 +131,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         new List<VoluntaryPublicModel>();
                     var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                                 new List<EmploymentModel>();
-                    var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
-                                new List<FamilyRelationModel>();
+                    var sessionFamilyRelationList =
+                        HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
+                        new List<FamilyRelationModel>();
 
                     model.AkdnTrainings = sessionAkdnTrainingList;
                     model.Educations = sessionEducationList;
@@ -196,7 +144,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     model.Employments = sessionEmploymentList;
                     model.FamilyRelations = sessionFamilyRelationList;
 
-                    var success = await RestfulClient.savePersonData(model);
+                    var success = await RestfulClient.SavePersonData(model);
 
                     //var success = await RestfulClient.savePersonData(PersonDummyData(model.Image));
 
@@ -212,22 +160,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ViewBag.Message = Messages.GeneralError;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
             }
 
             return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AkdnTrainingListAdd(string id, string training, string countryOfTarining,
-            string month, string year)
-        {
-            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, month, year);
-
-            return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
 
         public List<AkdnTrainingModel> AddAkdnTrainingToSession(string id, string training, string countryOfTarining,
@@ -254,11 +193,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[0],
                 TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
-                Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
+                Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year)
             });
             HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
 
             return sessionAkdnTrainingList;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AkdnTrainingListAdd(string id, string training, string countryOfTarining,
+            string month, string year)
+        {
+            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, month, year);
+
+            return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
 
         [HttpPost]
@@ -276,37 +224,36 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
+                ViewBag.SalutationList = await RestfulClient.GetSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.GetJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.GetMartialStatuses();
+                ViewBag.CityList = await RestfulClient.GetCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.GetAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.GetAllInstitutions();
+                ViewBag.NameOfDegreeList = await RestfulClient.GetEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.GetReligiousEducation();
+                ViewBag.RegionalCouncilList = await RestfulClient.GetRegionalCouncil();
 
-                ViewBag.SalutationList = await RestfulClient.getSalutation();
-                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
-                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
-                ViewBag.CityList = await RestfulClient.getCities();
-                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
-                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
-                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
-                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
-                ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
+                var listOfCountries = await RestfulClient.GetAllCountries();
+                ViewBag.CountryOfStudyList = listOfCountries;
+                ViewBag.AkdnTrainingCountryList = listOfCountries;
+                ViewBag.ProfessionalTrainingCountryList = listOfCountries;
 
-                var ListOfCountries = await RestfulClient.getAllCountries();
-                ViewBag.CountryOfStudyList = ListOfCountries;
-                ViewBag.AkdnTrainingCountryList = ListOfCountries;
-                ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
+                var listOfLanguageProficiency = await RestfulClient.GetLanguageProficiency();
+                ViewBag.Proficiency = listOfLanguageProficiency;
 
-                var ListOfLanguageProficiency = await RestfulClient.getLanguageProficiency();
-                ViewBag.Proficiency = ListOfLanguageProficiency;
-
-                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
-                ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
-                ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();
-                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.getVoluntaryInstitution();
-                ViewBag.FieldOfInterestsList = await RestfulClient.getFieldOfInterests();
-                ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
-                ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
-                ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
-                ViewBag.ProfessionalMembershipsList = await RestfulClient.getProfessionalMemeberShipDetails();
-                ViewBag.LanguageList = await RestfulClient.getLanguages();
-                ViewBag.SkillsList = await RestfulClient.getSkills();
-                ViewBag.RelationList = await RestfulClient.getAllRelatives();
+                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.GetPositions();
+                ViewBag.HighestLevelOfStudyList = await RestfulClient.GetHighestLevelOfStudy();
+                ViewBag.AkdnTrainingList = await RestfulClient.GetAkdnTraining();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                ViewBag.FieldOfInterestsList = await RestfulClient.GetFieldOfInterests();
+                ViewBag.OccupationTypeList = await RestfulClient.GetOcupations();
+                ViewBag.TypeOfBusinessList = await RestfulClient.GetBussinessType();
+                ViewBag.NatureOfBusinessList = await RestfulClient.GetBussinessNature();
+                ViewBag.ProfessionalMembershipsList = await RestfulClient.GetProfessionalMemeberShipDetails();
+                ViewBag.LanguageList = await RestfulClient.GetLanguages();
+                ViewBag.SkillsList = await RestfulClient.GetSkills();
+                ViewBag.RelationList = await RestfulClient.GetAllRelatives();
 
                 HttpContext.Session.Set("EducationList", new List<EducationModel>());
                 HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
@@ -316,17 +263,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
                 HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
-
             }
             catch
             {
             }
 
-            var person = await RestfulClient.getPersonDetailsById(id);
+            var person = await RestfulClient.GetPersonDetailsById(id);
 
-            ViewBag.LocalCouncilList = await RestfulClient.getLocalCouncil(person.RegionalCouncil);
-            ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana(person.LocalCouncil);
-
+            ViewBag.LocalCouncilList = await RestfulClient.GetLocalCouncil(person.RegionalCouncil);
+            ViewBag.JamatkhanaList = await RestfulClient.GetJamatkhana(person.LocalCouncil);
 
             return View(MapPerson(person));
         }
@@ -335,36 +280,36 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
-                ViewBag.SalutationList = await RestfulClient.getSalutation();
-                ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
-                ViewBag.MaritalStatusList = await RestfulClient.getMartialStatuses();
-                ViewBag.CityList = await RestfulClient.getCities();
-                ViewBag.AreaOfOriginList = await RestfulClient.getAreaOfOrigin();
-                ViewBag.InstitutionList = await RestfulClient.getAllInstitutions();
-                ViewBag.NameOfDegreeList = await RestfulClient.getEducationalDegree();
-                ViewBag.ReligiousEducationList = await RestfulClient.getReligiousEducation();
-                ViewBag.RegionalCouncilList = await RestfulClient.getRegionalCouncil();
+                ViewBag.SalutationList = await RestfulClient.GetSalutation();
+                ViewBag.JamatiTitleList = await RestfulClient.GetJamatiTitles();
+                ViewBag.MaritalStatusList = await RestfulClient.GetMartialStatuses();
+                ViewBag.CityList = await RestfulClient.GetCities();
+                ViewBag.AreaOfOriginList = await RestfulClient.GetAreaOfOrigin();
+                ViewBag.InstitutionList = await RestfulClient.GetAllInstitutions();
+                ViewBag.NameOfDegreeList = await RestfulClient.GetEducationalDegree();
+                ViewBag.ReligiousEducationList = await RestfulClient.GetReligiousEducation();
+                ViewBag.RegionalCouncilList = await RestfulClient.GetRegionalCouncil();
 
-                var ListOfCountries = await RestfulClient.getAllCountries();
-                ViewBag.CountryOfStudyList = ListOfCountries;
-                ViewBag.AkdnTrainingCountryList = ListOfCountries;
-                ViewBag.ProfessionalTrainingCountryList = ListOfCountries;
+                var listOfCountries = await RestfulClient.GetAllCountries();
+                ViewBag.CountryOfStudyList = listOfCountries;
+                ViewBag.AkdnTrainingCountryList = listOfCountries;
+                ViewBag.ProfessionalTrainingCountryList = listOfCountries;
 
-                var ListOfLanguageProficiency = await RestfulClient.getLanguageProficiency();
-                ViewBag.Proficiency = ListOfLanguageProficiency;
+                var listOfLanguageProficiency = await RestfulClient.GetLanguageProficiency();
+                ViewBag.Proficiency = listOfLanguageProficiency;
 
-                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.getPositions();
-                ViewBag.HighestLevelOfStudyList = await RestfulClient.getHighestLevelOfStudy();
-                ViewBag.AkdnTrainingList = await RestfulClient.getAkdnTraining();
-                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.getVoluntaryInstitution();
-                ViewBag.FieldOfInterestsList = await RestfulClient.getFieldOfInterests();
-                ViewBag.OccupationTypeList = await RestfulClient.getOcupations();
-                ViewBag.TypeOfBusinessList = await RestfulClient.getBussinessType();
-                ViewBag.NatureOfBusinessList = await RestfulClient.getBussinessNature();
-                ViewBag.ProfessionalMembershipsList = await RestfulClient.getProfessionalMemeberShipDetails();
-                ViewBag.LanguageList = await RestfulClient.getLanguages();
-                ViewBag.SkillsList = await RestfulClient.getSkills();
-                ViewBag.RelationList = await RestfulClient.getAllRelatives();
+                ViewBag.VoluntaryCommunityPositionList = await RestfulClient.GetPositions();
+                ViewBag.HighestLevelOfStudyList = await RestfulClient.GetHighestLevelOfStudy();
+                ViewBag.AkdnTrainingList = await RestfulClient.GetAkdnTraining();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                ViewBag.FieldOfInterestsList = await RestfulClient.GetFieldOfInterests();
+                ViewBag.OccupationTypeList = await RestfulClient.GetOcupations();
+                ViewBag.TypeOfBusinessList = await RestfulClient.GetBussinessType();
+                ViewBag.NatureOfBusinessList = await RestfulClient.GetBussinessNature();
+                ViewBag.ProfessionalMembershipsList = await RestfulClient.GetProfessionalMemeberShipDetails();
+                ViewBag.LanguageList = await RestfulClient.GetLanguages();
+                ViewBag.SkillsList = await RestfulClient.GetSkills();
+                ViewBag.RelationList = await RestfulClient.GetAllRelatives();
 
                 HttpContext.Session.Set("EducationList", new List<EducationModel>());
                 HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
@@ -382,11 +327,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
             }
 
-            var person = await RestfulClient.getPersonDetailsById(id);
+            var person = await RestfulClient.GetPersonDetailsById(id);
 
-            ViewBag.LocalCouncilList = await RestfulClient.getLocalCouncil(person.RegionalCouncil);
-            ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana(person.LocalCouncil);
-
+            ViewBag.LocalCouncilList = await RestfulClient.GetLocalCouncil(person.RegionalCouncil);
+            ViewBag.JamatkhanaList = await RestfulClient.GetJamatkhana(person.LocalCouncil);
 
             return View(MapPerson(person));
         }
@@ -397,19 +341,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             try
             {
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
-                model.RelocationDateTime = DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                model.RelocationDateTime =
+                    DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
                 model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
 
                 if (ModelState.IsValid)
                 {
                     if (model.ImageUpload != null)
-                    {
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
-                    }
 
                     var sessionAkdnTrainingList =
                         HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
@@ -429,8 +372,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         new List<VoluntaryPublicModel>();
                     var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                                 new List<EmploymentModel>();
-                    var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
-                                new List<FamilyRelationModel>();
+                    var sessionFamilyRelationList =
+                        HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
+                        new List<FamilyRelationModel>();
 
                     model.AkdnTrainings = sessionAkdnTrainingList;
                     model.Educations = sessionEducationList;
@@ -441,7 +385,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     model.Employments = sessionEmploymentList;
                     model.FamilyRelations = sessionFamilyRelationList;
 
-                    var success = await RestfulClient.editPersonData(model);
+                    var success = await RestfulClient.EditPersonData(model);
                     if (success)
                     {
                         TempData["MessageType"] = MessageTypes.Success;
@@ -454,7 +398,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ViewBag.Message = Messages.GeneralError;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
@@ -468,45 +412,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string fromYear,
             string toYear, string nameOfDegree, string majorAreaOfStudy)
         {
-            var sessionEducationList = AddEducationToSession(id, institution, countryOfStudy, fromYear, toYear, nameOfDegree, majorAreaOfStudy);
+            var sessionEducationList = AddEducationToSession(id, institution, countryOfStudy, fromYear, toYear,
+                nameOfDegree, majorAreaOfStudy);
 
             return PartialView("_EducationTablePartial", sessionEducationList);
-        }
-
-        private List<EducationModel> AddEducationToSession(string id, string institution, string countryOfStudy, string fromYear, string toYear,
-            string nameOfDegree, string majorAreaOfStudy)
-        {
-            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
-                                       new List<EducationModel>();
-
-            if (string.IsNullOrWhiteSpace(id))
-                id = Guid.NewGuid().ToString();
-            else
-                sessionEducationList.Remove(sessionEducationList.Find(e => e.EducationId == id));
-
-            sessionEducationList.Add(new EducationModel
-            {
-                EducationId = id,
-                CountryOfStudy =
-                    string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
-                CountryOfStudyName =
-                    string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
-                Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
-                InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
-                MajorAreaOfStudy = majorAreaOfStudy,
-                NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
-                NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
-            });
-
-            for (var counter = 0; counter < sessionEducationList.Count; counter++)
-            {
-                sessionEducationList[counter].Priority = counter + 1;
-            }
-
-            HttpContext.Session.Set("EducationList", sessionEducationList);
-            return sessionEducationList;
         }
 
         [HttpPost]
@@ -525,53 +434,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
-            var sessionEmploymentList = AddEmploymentToSession(id, nameOfOrganization, designation, location, employmentEmailAddress, employmentTelephone,
+            var sessionEmploymentList = AddEmploymentToSession(id, nameOfOrganization, designation, location,
+                employmentEmailAddress, employmentTelephone,
                 typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate);
 
             return PartialView("_EmploymentTablePartial", sessionEmploymentList);
-        }
-
-        private List<EmploymentModel> AddEmploymentToSession(string id, string nameOfOrganization, string designation,
-            string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
-            string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
-        {
-            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
-                            new List<EmploymentModel>();
-
-            if (string.IsNullOrWhiteSpace(id))
-                id = Guid.NewGuid().ToString();
-            else
-                sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
-
-            sessionEmploymentList.Add(new EmploymentModel
-            {
-                EmploymentId = id,
-                NameOfOrganization = nameOfOrganization,
-                Designation = designation,
-                Location = location,
-                TypeOfBusiness =
-                    string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[0],
-                TypeOfBusinessName =
-                    string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[1],
-                EmploymentEmailAddress = employmentEmailAddress,
-                EmploymentEndDate = string.IsNullOrWhiteSpace(employmentStartDate)
-                    ? (DateTime?)null
-                    : Convert.ToDateTime(employmentStartDate),
-                NatureOfBusiness = string.IsNullOrWhiteSpace(natureOfBusiness)
-                    ? string.Empty
-                    : natureOfBusiness.Split('-')[0],
-                NatureOfBusinessName = string.IsNullOrWhiteSpace(natureOfBusiness)
-                    ? string.Empty
-                    : natureOfBusiness.Split('-')[1],
-                EmploymentStartDate = string.IsNullOrWhiteSpace(employmentStartDate)
-                    ? (DateTime?)null
-                    : Convert.ToDateTime(employmentEndDate),
-                EmploymentTelephone = employmentTelephone,
-                NatureOfBusinessOther = natureOfBusinessOther
-            });
-            HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
-
-            return sessionEmploymentList;
         }
 
         [HttpPost]
@@ -591,10 +458,325 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
             string relativeDateOfBirth, string relativeRelation)
         {
-            var sessionFamilyRelationList = AddFamilyRelationToSession(id, relativeCnic, relativeSalutation, relativeFirstName, relativeFathersName,
+            var sessionFamilyRelationList = AddFamilyRelationToSession(id, relativeCnic, relativeSalutation,
+                relativeFirstName, relativeFathersName,
                 relativeFamilyName, relativeJamatiTitle, relativeDateOfBirth, relativeRelation);
 
             return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FamilyRelationListDelete(string id)
+        {
+            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
+                                            new List<FamilyRelationModel>();
+            sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
+            HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
+
+            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
+        }
+
+        public async Task<JsonResult> GetJamatkhana(string uid)
+        {
+            //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            var list = await RestfulClient.GetJamatkhana(uid);
+
+            return new JsonResult(list);
+        }
+
+        public async Task<JsonResult> GetLocalCouncil(string uid)
+        {
+            //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
+            var list = await RestfulClient.GetLocalCouncil(uid);
+
+            return new JsonResult(list);
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+            //return View(new List<PersonModel>());
+
+            HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
+            HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
+
+            //return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName)
+        {
+            if (cnic == null && firstName == null && lastName == null && formNumber == null)
+            {
+            }
+
+            //var persons = await RestfulClient.getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
+            return View(new IndexPersonModel
+            {
+                //Persons = await RestfulClient.searchPerson(cnic, firstName, lastName),
+                //Persons = persons.Item1,
+                Cnic = cnic,
+                FirstName = firstName,
+                LastName = lastName,
+                FormNumber = formNumber
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
+            string write, string speak)
+        {
+            var sessionLanguageList = AddLanguageToSession(id, language, read, write, speak);
+
+            return PartialView("_LanguageTablePartial", sessionLanguageList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LanguageListDelete(string id)
+        {
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+                                      new List<LanguageProficiencyModel>();
+            sessionLanguageList.Remove(sessionLanguageList.Find(e => e.LanguageProficiencyId == id));
+            HttpContext.Session.Set("LanguageList", sessionLanguageList);
+
+            return PartialView("_LanguageTablePartial", sessionLanguageList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProfessionalTrainingListAdd(string id, string training, string institution,
+            string countryOfTarining, string month, string year)
+        {
+            var sessionProfessionalTrainingList =
+                AddProfessionalTrainingToSession(id, training, institution, countryOfTarining, month, year);
+
+            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProfessionalTrainingListDelete(string id)
+        {
+            var sessionProfessionalTrainingList =
+                HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
+                new List<ProfessionalTrainingModel>();
+            sessionProfessionalTrainingList.Remove(sessionProfessionalTrainingList.Find(e => e.TrainingId == id));
+            HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
+
+            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
+        }
+
+        public async Task<IActionResult> ServerSideAjaxHandler(IndexPersonModel searchingData)
+        {
+            try
+            {
+                var firstName = searchingData.FirstName;
+                var lastName = searchingData.LastName;
+                var cnic = searchingData.Cnic;
+                var formNumber = searchingData.FormNumber;
+
+                var queryCollection = Request.Query; //HttpContext.Request.Query;
+                // Initialization.
+                var search = queryCollection["search[value]"][0];
+                var draw = queryCollection["draw"][0];
+                //string order = form["order[0][column]"][0];
+                //string orderDir = form["order[0][dir]"][0];
+                var startRec = Convert.ToInt32(queryCollection["start"][0]);
+                var pageSize = Convert.ToInt32(queryCollection["length"][0]);
+
+                var tupleData = await RestfulClient.GetPersonDetailsThroughPagging(firstName, lastName, cnic,
+                    formNumber, startRec / pageSize + 1, pageSize);
+                var conditionedData = tupleData.Item1;
+                var totalRecords = tupleData.Item2;
+
+                // Loading drop down lists.
+                return Json(new
+                {
+                    draw = Convert.ToInt32(draw),
+                    recordsTotal = totalRecords,
+                    recordsFiltered = totalRecords,
+                    data = conditionedData.Select(n => new
+                    {
+                        n.FullName,
+                        n.Cnic,
+                        DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
+                            new {area = AreaNames.Operations, id = n.Id}),
+                        EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,
+                            new {area = AreaNames.Operations, id = n.Id})
+                    })
+                });
+            }
+            catch (Exception)
+            {
+                return Json(new
+                {
+                    draw = 1,
+                    recordsTotal = 0,
+                    recordsFiltered = 0,
+                    data = new List<PersonModel>()
+                });
+            }
+        }
+
+        public async Task<IActionResult> ValidateCnic(string cnic)
+        {
+            var doNotValidateCnic = HttpContext.Session.GetString(SessionKeyDoNotValidateCnicOnEditPage);
+
+            if (doNotValidateCnic == "true") return Json("true");
+
+            var success = RestfulClient.SearchByCnic(cnic, out var person);
+            return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
+        }
+
+        public async Task<IActionResult> ValidateFormNumber(string formnumber)
+        {
+            var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
+
+            //if (doNotValidateFormNumber == "true")
+            //{
+            return Json("true");
+            //}
+            //else
+            //{
+            //    var success = RestfulClient.searchByFormNumber(cnic, out var person);
+            //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
+            //}
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerifyCnic(string cnic)
+        {
+            var success = RestfulClient.SearchByCnic(cnic, out var person);
+            ViewBag.SalutationList = await RestfulClient.GetSalutation();
+            ViewBag.JamatiTitleList = await RestfulClient.GetJamatiTitles();
+            ViewBag.RelationList = await RestfulClient.GetAllRelatives();
+
+            return PartialView("_FamilyRelationPartial", person);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear,
+            string toYear, string position)
+        {
+            var sessionVoluntaryCommunityList =
+                AddVoluntaryCommunityToSession(id, institution, fromYear, toYear, position);
+
+            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VoluntaryCommunityListDelete(string id)
+        {
+            var sessionVoluntaryCommunityList =
+                HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
+                new List<VoluntaryCommunityModel>();
+            sessionVoluntaryCommunityList.Remove(sessionVoluntaryCommunityList.Find(e => e.VoluntaryCommunityId == id));
+            HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
+
+            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear,
+            string toYear, string position)
+        {
+            var sessionVoluntaryPublicList = AddVoluntaryPublicToSession(id, institution, fromYear, toYear, position);
+
+            return PartialView("_VoluntaryPublicTablePartial", sessionVoluntaryPublicList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VoluntaryPublicListDelete(string id)
+        {
+            var sessionVoluntaryPublicList =
+                HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
+                new List<VoluntaryPublicModel>();
+            sessionVoluntaryPublicList.Remove(sessionVoluntaryPublicList.Find(e => e.VoluntaryPublicId == id));
+            HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
+
+            return PartialView("_VoluntaryPublicTablePartial", new List<VoluntaryPublicModel>());
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private List<EducationModel> AddEducationToSession(string id, string institution, string countryOfStudy,
+            string fromYear, string toYear,
+            string nameOfDegree, string majorAreaOfStudy)
+        {
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
+                                       new List<EducationModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+                id = Guid.NewGuid().ToString();
+            else
+                sessionEducationList.Remove(sessionEducationList.Find(e => e.EducationId == id));
+
+            sessionEducationList.Add(new EducationModel
+            {
+                EducationId = id,
+                CountryOfStudy =
+                    string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
+                CountryOfStudyName =
+                    string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
+                InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
+                MajorAreaOfStudy = majorAreaOfStudy,
+                NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
+                NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear)
+            });
+
+            for (var counter = 0; counter < sessionEducationList.Count; counter++)
+                sessionEducationList[counter].Priority = counter + 1;
+
+            HttpContext.Session.Set("EducationList", sessionEducationList);
+            return sessionEducationList;
+        }
+
+        private List<EmploymentModel> AddEmploymentToSession(string id, string nameOfOrganization, string designation,
+            string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
+            string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
+        {
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+                                        new List<EmploymentModel>();
+
+            if (string.IsNullOrWhiteSpace(id))
+                id = Guid.NewGuid().ToString();
+            else
+                sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
+
+            sessionEmploymentList.Add(new EmploymentModel
+            {
+                EmploymentId = id,
+                NameOfOrganization = nameOfOrganization,
+                Designation = designation,
+                Location = location,
+                TypeOfBusiness =
+                    string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[0],
+                TypeOfBusinessName =
+                    string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[1],
+                EmploymentEmailAddress = employmentEmailAddress,
+                EmploymentEndDate = string.IsNullOrWhiteSpace(employmentStartDate)
+                    ? (DateTime?) null
+                    : Convert.ToDateTime(employmentStartDate),
+                NatureOfBusiness = string.IsNullOrWhiteSpace(natureOfBusiness)
+                    ? string.Empty
+                    : natureOfBusiness.Split('-')[0],
+                NatureOfBusinessName = string.IsNullOrWhiteSpace(natureOfBusiness)
+                    ? string.Empty
+                    : natureOfBusiness.Split('-')[1],
+                EmploymentStartDate = string.IsNullOrWhiteSpace(employmentStartDate)
+                    ? (DateTime?) null
+                    : Convert.ToDateTime(employmentEndDate),
+                EmploymentTelephone = employmentTelephone,
+                NatureOfBusinessOther = natureOfBusinessOther
+            });
+            HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
+
+            return sessionEmploymentList;
         }
 
         private List<FamilyRelationModel> AddFamilyRelationToSession(string id, string relativeCnic,
@@ -603,7 +785,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string relativeDateOfBirth, string relativeRelation)
         {
             var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
-                                new List<FamilyRelationModel>();
+                                            new List<FamilyRelationModel>();
 
             if (string.IsNullOrWhiteSpace(id))
                 id = Guid.NewGuid().ToString();
@@ -628,90 +810,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
 
             return sessionFamilyRelationList;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> FamilyRelationListDelete(string id)
-        {
-            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
-                                            new List<FamilyRelationModel>();
-            sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
-            HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
-
-            return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
-        }
-
-        public async Task<JsonResult> GetJamatkhana(string uid)
-        {
-            //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            var list = await RestfulClient.getJamatkhana(uid);
-
-            return new JsonResult(list);
-        }
-
-        public async Task<JsonResult> GetLocalCouncil(string uid)
-        {
-            //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            var list = await RestfulClient.getLocalCouncil(uid);
-
-            return new JsonResult(list);
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            ViewBag.MessageType = TempData["MessageType"];
-            ViewBag.Message = TempData["Message"];
-            //return View(new List<PersonModel>());
-        
-            HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
-            HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
-
-            //return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName)
-        {
-
-            //return View(new List<PersonModel>());
-            /*return View(new IndexPersonModel
-            {
-                Persons = await RestfulClient.searchPerson(cnic, firstName, lastName),
-                Cnic = cnic,
-                FirstName = firstName,
-                LastName = lastName
-            });*/
-
-            bool isSearching = false;
-            if (cnic == null && firstName == null && lastName == null && formNumber == null)
-            {
-                isSearching = false;
-            }
-            else
-            {
-                isSearching = true;
-            }
-
-            //var persons = await RestfulClient.getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
-            return View(new IndexPersonModel
-            {
-                //Persons = await RestfulClient.searchPerson(cnic, firstName, lastName),
-                //Persons = persons.Item1,
-                Cnic = cnic,
-                FirstName = firstName,
-                LastName = lastName,
-                FormNumber = formNumber
-            });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
-            string write, string speak)
-        {
-            var sessionLanguageList = AddLanguageToSession(id, language, read, write, speak);
-
-            return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
 
         private List<LanguageProficiencyModel> AddLanguageToSession(string id, string language, string read,
@@ -742,229 +840,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return sessionLanguageList;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> LanguageListDelete(string id)
-        {
-            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
-                                      new List<LanguageProficiencyModel>();
-            sessionLanguageList.Remove(sessionLanguageList.Find(e => e.LanguageProficiencyId == id));
-            HttpContext.Session.Set("LanguageList", sessionLanguageList);
-
-            return PartialView("_LanguageTablePartial", sessionLanguageList);
-        }
-
-        public PersonModel PersonDummyData(string image)
-        {
-            var person = new PersonModel { Image = image };
-
-            person.Cnic = "42101-9999999-3";
-            person.PassportNumber = "111-2222-3333";
-            person.Salutation = "1";
-            person.FirstName = "Saif";
-            person.FathersName = "Mehboob";
-            person.FamilyName = "Ali";
-            person.JamatiTitle = "1";
-            person.Gender = 0;
-            person.DateOfBirth = Convert.ToDateTime("2018-5-20").Date;
-            person.MaritalStatus = "1";
-            person.ResidentalAddress = "abc.xyz";
-            person.City = "1";
-            person.ResidenceTelephone = "02136998541";
-            person.MobilePhone = "090078601";
-            person.EmailAddress = "abc.123@gmail.com";
-            person.AreaOfOrigin = "1";
-            person.RegionalCouncil = "2";
-            person.LocalCouncil = "3";
-            person.Jamatkhana = "4";
-            person.PlanToRelocate = true;
-            person.RelocationDateTime = Convert.ToDateTime("2018-5-20").Date;
-            person.HighestLevelOfStudy = "1";
-            person.HighestLevelOfStudyOther = "etc";
-
-            //Educations
-            var education = new EducationModel();
-            education.EducationId = "abcdef";
-            education.Institution = "1";
-            education.CountryOfStudy = "1";
-            education.FromYear = 2010;
-            education.ToYear = 2012;
-            education.NameOfDegree = "1";
-            education.MajorAreaOfStudy = "AI";
-
-            education.CountryOfStudyName = "";
-            education.InstitutionName = "";
-            education.NameOfDegreeName = "";
-
-            var educationList = new List<EducationModel>();
-            educationList.Add(education);
-
-            person.Educations = educationList;
-
-            //-------------------------------------------------
-
-            person.FieldOfExpertise = "Teaching";
-            person.ReligiousEducation = "1";
-
-            //AkdnTraining
-            var akdnTraining = new AkdnTrainingModel();
-            akdnTraining.TrainingId = "abcdef";
-            akdnTraining.Training = "1";
-            akdnTraining.CountryOfTraining = "1";
-            akdnTraining.Month = "1";
-            akdnTraining.Year = 2013;
-
-            akdnTraining.TrainingName = null;
-            akdnTraining.CountryOfTrainingName = null;
-
-            var akdnTrainingList = new List<AkdnTrainingModel>();
-            akdnTrainingList.Add(akdnTraining);
-
-            person.AkdnTrainings = akdnTrainingList;
-            //-------------------------------------------------
-
-            //ProfessionalTrainings
-            var professionalTraining = new ProfessionalTrainingModel();
-            professionalTraining.TrainingId = "abcdef";
-            professionalTraining.Training = "Teaching";
-            professionalTraining.Institution = "HRE";
-            professionalTraining.CountryOfTraining = "1";
-            professionalTraining.Month = "1";
-            professionalTraining.Year = 2013;
-
-            professionalTraining.CountryOfTrainingName = null;
-
-            var professionalTrainingList = new List<ProfessionalTrainingModel>();
-            professionalTrainingList.Add(professionalTraining);
-
-            person.ProfessionalTrainings = professionalTrainingList;
-
-            //-------------------------------------------------
-
-            var skillList = new List<string>();
-            skillList.Add("1");
-
-            var professionalMembershipList = new List<string>();
-            professionalMembershipList.Add("2");
-
-            person.Skills = skillList;
-            person.ProfessionalMemberships = professionalMembershipList;
-
-            //Languages
-            var languageProficiency = new LanguageProficiencyModel();
-            languageProficiency.LanguageProficiencyId = "abcdef";
-            languageProficiency.Language = "1";
-            languageProficiency.Read = "1";
-            languageProficiency.Write = "2";
-            languageProficiency.Speak = "3";
-
-            languageProficiency.LanguageName = null;
-
-            var languageProficiencyList = new List<LanguageProficiencyModel>();
-            languageProficiencyList.Add(languageProficiency);
-
-            person.LanguageProficiencies = languageProficiencyList;
-
-            //-------------------------------------------------
-
-            //VoluntaryCommunityServices
-            var voluntaryCommunity = new VoluntaryCommunityModel();
-            voluntaryCommunity.VoluntaryCommunityId = "abcdef";
-            voluntaryCommunity.Institution = "1";
-            voluntaryCommunity.FromYear = 2006;
-            voluntaryCommunity.ToYear = 2010;
-            voluntaryCommunity.Position = "1";
-
-            voluntaryCommunity.InstitutionName = null;
-            voluntaryCommunity.PositionName = null;
-
-            var voluntaryCommunityList = new List<VoluntaryCommunityModel>();
-            voluntaryCommunityList.Add(voluntaryCommunity);
-
-            person.VoluntaryCommunityServices = voluntaryCommunityList;
-            //-------------------------------------------------
-
-            //VoluntaryPublicServices
-            var voluntaryPublic = new VoluntaryPublicModel();
-            voluntaryPublic.VoluntaryPublicId = "abcdef";
-            voluntaryPublic.Institution = "Welfare";
-            voluntaryPublic.FromYear = 2013;
-            voluntaryPublic.ToYear = 2014;
-            voluntaryPublic.Position = "Lead";
-
-            var voluntaryPublicList = new List<VoluntaryPublicModel>();
-            voluntaryPublicList.Add(voluntaryPublic);
-
-            person.VoluntaryPublicServices = voluntaryPublicList;
-
-            //-------------------------------------------------
-
-            person.WillingnessToDevoteTimeInFuture = "Continue with Present Institution";
-
-            var fieldofInterestList = new List<string>();
-            fieldofInterestList.Add("1");
-
-            person.FieldOfInterest = fieldofInterestList;
-
-            person.HoursPerWeek = 10;
-            person.OccupationType = "1";
-            person.OccupationTypeOther = "Engineer";
-
-            //Employments
-            var employment = new EmploymentModel();
-            employment.EmploymentId = "abcdef";
-            employment.NameOfOrganization = "Agilosoft";
-            employment.Designation = "Team lead";
-            employment.Location = "Gulshan Iqbal";
-            employment.EmploymentEmailAddress = "jobs@agilosoft.com";
-            employment.EmploymentTelephone = "02136885412";
-            employment.TypeOfBusiness = "1";
-            employment.NatureOfBusiness = "1";
-            employment.NatureOfBusinessOther = "N/A";
-            employment.EmploymentStartDate = Convert.ToDateTime("2018-5-20").Date;
-            employment.EmploymentEndDate = Convert.ToDateTime("2018-5-20").Date;
-
-            employment.TypeOfBusinessName = null;
-            employment.NatureOfBusinessName = null;
-
-            var employmentList = new List<EmploymentModel>();
-            employmentList.Add(employment);
-
-            person.Employments = employmentList;
-            //------------------------------------------------
-
-            //FamilyInformation
-            var familyRelation = new FamilyRelationModel();
-            familyRelation.FamilyRelationId = "abcdef";
-            familyRelation.Cnic = "42101-9652145-9";
-            familyRelation.Salutation = "1";
-            familyRelation.FirstName = "abc";
-            familyRelation.FathersName = "xyz";
-            familyRelation.FamilyName = "abcxyz";
-            familyRelation.JamatiTitle = "1";
-            familyRelation.DateOfBirth = Convert.ToDateTime("2018-5-20").Date;
-            familyRelation.Relation = "";
-
-            familyRelation.RelationName = null;
-
-            var familyRelationList = new List<FamilyRelationModel>();
-            familyRelationList.Add(familyRelation);
-
-            person.FamilyRelations = familyRelationList;
-            //-------------------------------------------------------
-
-            return person;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ProfessionalTrainingListAdd(string id, string training, string institution,
-            string countryOfTarining, string month, string year)
-        {
-            var sessionProfessionalTrainingList = AddProfessionalTrainingToSession(id, training, institution, countryOfTarining, month, year);
-
-            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
-        }
-
-        private List<ProfessionalTrainingModel> AddProfessionalTrainingToSession(string id, string training, string institution,
+        private List<ProfessionalTrainingModel> AddProfessionalTrainingToSession(string id, string training,
+            string institution,
             string countryOfTarining, string month, string year)
         {
             var sessionProfessionalTrainingList =
@@ -989,76 +866,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 Month = month.Contains('-') ? month.Split('-')[0] : month,
                 MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = training,
-                Year = string.IsNullOrWhiteSpace(year) ? (int?)null : Convert.ToInt32(year)
+                Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year)
             });
             HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
 
             return sessionProfessionalTrainingList;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ProfessionalTrainingListDelete(string id)
-        {
-            var sessionProfessionalTrainingList =
-                HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
-                new List<ProfessionalTrainingModel>();
-            sessionProfessionalTrainingList.Remove(sessionProfessionalTrainingList.Find(e => e.TrainingId == id));
-            HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
-
-            return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
-        }
-
-        public async Task<IActionResult> ValidateCnic(string cnic)
-        {
-            var doNotValidateCnic = HttpContext.Session.GetString(SessionKeyDoNotValidateCnicOnEditPage);
-
-            if (doNotValidateCnic == "true")
-            {
-                return Json("true");
-            }
-            else
-            {
-                var success = RestfulClient.searchByCNIC(cnic, out var person);
-                return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
-            }
-        }
-
-        public async Task<IActionResult> ValidateFormNumber(string formnumber)
-        {
-            var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
-
-            //if (doNotValidateFormNumber == "true")
-            //{
-                return Json("true");
-            //}
-            //else
-            //{
-            //    var success = RestfulClient.searchByFormNumber(cnic, out var person);
-            //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
-            //}
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> VerifyCnic(string cnic)
-        {
-            var success = RestfulClient.searchByCNIC(cnic, out var person);
-            ViewBag.SalutationList = await RestfulClient.getSalutation();
-            ViewBag.JamatiTitleList = await RestfulClient.getJamatiTitles();
-            ViewBag.RelationList = await RestfulClient.getAllRelatives();
-
-            return PartialView("_FamilyRelationPartial", person);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear,
-            string toYear, string position)
-        {
-            var sessionVoluntaryCommunityList = AddVoluntaryCommunityToSession(id, institution, fromYear, toYear, position);
-
-            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
-        }
-
-        private List<VoluntaryCommunityModel> AddVoluntaryCommunityToSession(string id, string institution, string fromYear,
+        private List<VoluntaryCommunityModel> AddVoluntaryCommunityToSession(string id, string institution,
+            string fromYear,
             string toYear, string position)
         {
             var sessionVoluntaryCommunityList =
@@ -1074,37 +890,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             sessionVoluntaryCommunityList.Add(new VoluntaryCommunityModel
             {
                 VoluntaryCommunityId = id,
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear),
                 Position = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[0],
                 PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1]
             });
             HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
 
             return sessionVoluntaryCommunityList;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> VoluntaryCommunityListDelete(string id)
-        {
-            var sessionVoluntaryCommunityList =
-                HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
-                new List<VoluntaryCommunityModel>();
-            sessionVoluntaryCommunityList.Remove(sessionVoluntaryCommunityList.Find(e => e.VoluntaryCommunityId == id));
-            HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
-
-            return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear,
-            string toYear, string position)
-        {
-            var sessionVoluntaryPublicList = AddVoluntaryPublicToSession(id, institution, fromYear, toYear, position);
-
-            return PartialView("_VoluntaryPublicTablePartial", sessionVoluntaryPublicList);
         }
 
         private List<VoluntaryPublicModel> AddVoluntaryPublicToSession(string id, string institution, string fromYear,
@@ -1122,9 +917,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             sessionVoluntaryPublicList.Add(new VoluntaryPublicModel
             {
                 VoluntaryPublicId = id,
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
                 Institution = institution,
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear),
                 Position = position
             });
             HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
@@ -1132,25 +927,37 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return sessionVoluntaryPublicList;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> VoluntaryPublicListDelete(string id)
+        private string GetMonthName(string id)
         {
-            var sessionVoluntaryPublicList =
-                HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
-                new List<VoluntaryPublicModel>();
-            sessionVoluntaryPublicList.Remove(sessionVoluntaryPublicList.Find(e => e.VoluntaryPublicId == id));
-            HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
-
-            return PartialView("_VoluntaryPublicTablePartial", new List<VoluntaryPublicModel>());
+            if (id == "1")
+                return "January";
+            if (id == "2")
+                return "February";
+            if (id == "3")
+                return "March";
+            if (id == "4")
+                return "April";
+            if (id == "5")
+                return "May";
+            if (id == "6")
+                return "June";
+            if (id == "7")
+                return "July";
+            if (id == "8")
+                return "August";
+            if (id == "9")
+                return "September";
+            if (id == "10")
+                return "October";
+            if (id == "11")
+                return "November";
+            return id == "12" ? "December" : "";
         }
-
-        #endregion Public Methods
-
-        #region Private Methods
 
         private string GetText(string id, List<SelectListItem> list)
         {
-            return list.FirstOrDefault(l => (string.IsNullOrWhiteSpace(l.Value) ? string.Empty : l.Value.Split('-')[0]) == id)?.Text;
+            return list.FirstOrDefault(l =>
+                (string.IsNullOrWhiteSpace(l.Value) ? string.Empty : l.Value.Split('-')[0]) == id)?.Text;
         }
 
         private PersonModel MapPerson(PersonModel person)
@@ -1162,17 +969,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     foreach (var education in person.Educations)
                     {
-                        string institutionName = GetText(education.Institution.ToString(), ViewBag.InstitutionList);
-                        string country = GetText(education.CountryOfStudy.ToString(), ViewBag.CountryOfStudyList);
-                        string nameOfDegree = GetText(education.NameOfDegree.ToString(), ViewBag.NameOfDegreeList);
+                        string institutionName = GetText(education.Institution, ViewBag.InstitutionList);
+                        string country = GetText(education.CountryOfStudy, ViewBag.CountryOfStudyList);
+                        string nameOfDegree = GetText(education.NameOfDegree, ViewBag.NameOfDegreeList);
 
                         education.InstitutionName = institutionName;
                         education.CountryOfStudyName = country;
                         education.NameOfDegreeName = nameOfDegree;
 
                         //tejani mapping here
-                        AddEducationToSession(education.EducationId, education.Institution + "-" + education.InstitutionName, education.CountryOfStudy + "-" + education.CountryOfStudyName,
-                            education.FromYear?.ToString(), education.ToYear?.ToString(), education.NameOfDegree + "-" + education.NameOfDegreeName,
+                        AddEducationToSession(education.EducationId,
+                            education.Institution + "-" + education.InstitutionName,
+                            education.CountryOfStudy + "-" + education.CountryOfStudyName,
+                            education.FromYear?.ToString(), education.ToYear?.ToString(),
+                            education.NameOfDegree + "-" + education.NameOfDegreeName,
                             education.MajorAreaOfStudy);
                     }
 
@@ -1180,27 +990,33 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     {
                         string training = GetText(akdnTraining.Training, ViewBag.AkdnTrainingList);
                         string country = GetText(akdnTraining.CountryOfTraining, ViewBag.AkdnTrainingCountryList);
-                        string month = GetMonthName(akdnTraining.Month);
+                        var month = GetMonthName(akdnTraining.Month);
 
                         akdnTraining.TrainingName = training;
                         akdnTraining.CountryOfTrainingName = country;
                         akdnTraining.MonthName = month;
 
-                        AddAkdnTrainingToSession(akdnTraining.TrainingId, akdnTraining.Training + "-" + akdnTraining.TrainingName, akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
+                        AddAkdnTrainingToSession(akdnTraining.TrainingId,
+                            akdnTraining.Training + "-" + akdnTraining.TrainingName,
+                            akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
                             akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString());
                     }
 
                     foreach (var professionalTraining in person.ProfessionalTrainings)
                     {
-                        string country = GetText(professionalTraining.CountryOfTraining, ViewBag.ProfessionalTrainingCountryList);
-                        string month = GetMonthName(professionalTraining.Month);
+                        string country = GetText(professionalTraining.CountryOfTraining,
+                            ViewBag.ProfessionalTrainingCountryList);
+                        var month = GetMonthName(professionalTraining.Month);
 
                         professionalTraining.CountryOfTrainingName = country;
                         //professionalTraining.CountryOfTraining = country;
                         professionalTraining.MonthName = month;
 
-                        AddProfessionalTrainingToSession(professionalTraining.TrainingId, professionalTraining.Training, professionalTraining.Institution, professionalTraining.CountryOfTraining + "-" + professionalTraining.CountryOfTrainingName,
-                            professionalTraining.Month + "-" + professionalTraining.MonthName, professionalTraining.Year?.ToString());
+                        AddProfessionalTrainingToSession(professionalTraining.TrainingId, professionalTraining.Training,
+                            professionalTraining.Institution,
+                            professionalTraining.CountryOfTraining + "-" + professionalTraining.CountryOfTrainingName,
+                            professionalTraining.Month + "-" + professionalTraining.MonthName,
+                            professionalTraining.Year?.ToString());
                     }
 
                     foreach (var language in person.LanguageProficiencies)
@@ -1215,20 +1031,24 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         language.WriteName = write;
                         language.SpeakName = speak;
 
-                        AddLanguageToSession(language.LanguageProficiencyId, language.Language + "-" + language.LanguageName, language.Read + "-" + language.ReadName,
+                        AddLanguageToSession(language.LanguageProficiencyId,
+                            language.Language + "-" + language.LanguageName, language.Read + "-" + language.ReadName,
                             language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName);
                     }
 
                     foreach (var voluntaryService in person.VoluntaryCommunityServices)
                     {
-                        string institutionName = GetText(voluntaryService.Institution, ViewBag.VoluntaryCommunityInstitutionList);
+                        string institutionName = GetText(voluntaryService.Institution,
+                            ViewBag.VoluntaryCommunityInstitutionList);
                         string position = GetText(voluntaryService.Position, ViewBag.VoluntaryCommunityPositionList);
 
                         voluntaryService.InstitutionName = institutionName;
                         voluntaryService.PositionName = position;
 
-                        AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId, voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
-                            voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(), voluntaryService.Position + "-" + voluntaryService.PositionName);
+                        AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId,
+                            voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
+                            voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
+                            voluntaryService.Position + "-" + voluntaryService.PositionName);
                     }
 
                     foreach (var employment in person.Employments)
@@ -1239,10 +1059,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         employment.TypeOfBusinessName = businessType;
                         employment.NatureOfBusinessName = businessNature;
 
-                        AddEmploymentToSession(employment.EmploymentId, employment.NameOfOrganization, employment.Designation, employment.Location,
-                             employment.EmploymentEmailAddress, employment.EmploymentTelephone, employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
-                             employment.NatureOfBusiness + "-" + employment.NatureOfBusinessName, employment.NatureOfBusinessOther,
-                             employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
+                        AddEmploymentToSession(employment.EmploymentId, employment.NameOfOrganization,
+                            employment.Designation, employment.Location,
+                            employment.EmploymentEmailAddress, employment.EmploymentTelephone,
+                            employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
+                            employment.NatureOfBusiness + "-" + employment.NatureOfBusinessName,
+                            employment.NatureOfBusinessOther,
+                            employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
                     }
 
                     foreach (var relation in person.FamilyRelations)
@@ -1250,73 +1073,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         string relationName = GetText(relation.Relation, ViewBag.RelationList);
                         relation.RelationName = relationName;
 
-                        AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic , relation.Salutation, relation.FirstName, relation.FathersName,
-                                        relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(), relation.RelationName);
+                        AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic, relation.Salutation,
+                            relation.FirstName, relation.FathersName,
+                            relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
+                            relation.RelationName);
                     }
-
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
             }
+
             return person;
-        }
-
-        private string GetMonthName(string id)
-        {
-            if (id == "1")
-            {
-                return "January";
-            }
-            else if (id == "2")
-            {
-                return "February";
-            }
-            else if (id == "3")
-            {
-                return "March";
-            }
-            else if (id == "4")
-            {
-                return "April";
-            }
-            else if (id == "5")
-            {
-                return "May";
-            }
-            else if (id == "6")
-            {
-                return "June";
-            }
-            else if (id == "7")
-            {
-                return "July";
-            }
-            else if (id == "8")
-            {
-                return "August";
-            }
-            else if (id == "9")
-            {
-                return "September";
-            }
-            else if (id == "10")
-            {
-                return "October";
-            }
-            else if (id == "11")
-            {
-                return "November";
-            }
-            else if (id == "12")
-            {
-                return "December";
-            }
-            else
-            {
-                return "";
-            }
         }
 
         #endregion Private Methods

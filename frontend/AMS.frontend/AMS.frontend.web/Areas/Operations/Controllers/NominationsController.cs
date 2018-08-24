@@ -1,32 +1,19 @@
-﻿using AMS.frontend.web.Areas.Operations.Models;
-using AMS.frontend.web.Areas.Operations.Models.Persons;
-using AMS.frontend.web.Extensions;
-using AMS.frontend.web.Helpers.Constants;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.IO;
+using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
+using AMS.frontend.web.Helpers.Constants;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
     [Area(AreaNames.Operations)]
-    public class NominationsController : Controller
+    public class NominationsController : BaseController
     {
-        #region Private Fields
-
-        private readonly Configuration _configuration;
-
-        private readonly IMapper _mapper;
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public NominationsController(IMapper mapper, IOptions<Configuration> configuration)
@@ -37,7 +24,62 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #endregion Public Constructors
 
+        #region Private Fields
+
+        private readonly Configuration _configuration;
+
+        private readonly IMapper _mapper;
+
+        #endregion Private Fields
+
         #region Public Methods
+
+        public async Task<IActionResult> Detail(string id)
+        {
+            var model = new NominationDetailModel
+            {
+                Institution = new InstitutionModel
+                {
+                    Name = "Council for Karimabad"
+                },
+                Positions = new List<PositionModel>
+                {
+                    new PositionModel
+                    {
+                        PositionName = "President",
+                        CurrentCycle = "2018 - 2020",
+                        CycleStatus = "On going",
+                        PreviousCycle = "2015 - 2018",
+                        Required = 3,
+                        Id = "123",
+                        Incubment = PersonDummyData(string.Empty)
+                    }
+                }
+            };
+
+            return View(model);
+        }
+
+        public async Task<JsonResult> GetInstitutionTypes(string level, string subLevel)
+        {
+            var list = await RestfulClient.GetInstitutionTypes(level, subLevel);
+
+            return new JsonResult(list);
+        }
+
+        public async Task<JsonResult> GetLocalInstitutions()
+        {
+            var list = await RestfulClient.GetLocalInstitutions();
+
+            return new JsonResult(list);
+        }
+
+        public async Task<JsonResult> GetRegionalInstitutions()
+        {
+            var list = await RestfulClient.GetRegionalInstitutions();
+
+            return new JsonResult(list);
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -51,25 +93,32 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
             //ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
 
-            //return View(new IndexNominationModel{Positions = new List<PositionModel>()});
-            return View();
+            return View(new IndexNominationModel {Positions = new List<PositionModel>()});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
+        {
+            return View(indexNominationModel);
         }
 
         public async Task<IActionResult> ServerSideAjaxHandler(IndexNominationModel indexNominationModel)
         {
             try
             {
-                string level = indexNominationModel.Level;
-                string subLevel = string.IsNullOrWhiteSpace(indexNominationModel.Region) ? indexNominationModel.Local : indexNominationModel.Region;
-                
+                var level = indexNominationModel.Level;
+                var subLevel = string.IsNullOrWhiteSpace(indexNominationModel.Region)
+                    ? indexNominationModel.Local
+                    : indexNominationModel.Region;
+
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
-                string search = queryCollection["search[value]"][0];
-                string draw = queryCollection["draw"][0];
+                var search = queryCollection["search[value]"][0];
+                var draw = queryCollection["draw"][0];
                 //string order = form["order[0][column]"][0];
                 //string orderDir = form["order[0][dir]"][0];
-                int startRec = Convert.ToInt32(queryCollection["start"][0]);
-                int pageSize = Convert.ToInt32(queryCollection["length"][0]);
+                var startRec = Convert.ToInt32(queryCollection["start"][0]);
+                var pageSize = Convert.ToInt32(queryCollection["length"][0]);
                 // Loading.
                 //IQueryable<NiyatForm> data = null;
                 //if (user.Category.Equals(UserCategory.NationalCouncil) && user.Role.Equals(UserRole.Administrator))
@@ -187,8 +236,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                 //var conditionedData = await RestfulClient.getPersonDetails();
                 //var conditionedData = new List<PositionModel>();
-                
-                var conditionedData = await RestfulClient.GetInstitutionTypes(level,subLevel);
+
+                var conditionedData = await RestfulClient.GetInstitutionTypes(level, subLevel);
 
                 // Loading drop down lists.
                 return Json(new
@@ -209,11 +258,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     {
                         n.PositionName,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
-                            new { area = AreaNames.Operations, uid = n.Id })
+                            new {area = AreaNames.Operations, uid = n.Id})
                     })
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new
                 {
@@ -225,37 +274,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
-        {
-            return View(indexNominationModel);
-        }
-
-        public async Task<IActionResult> Detail(string id)
-        {
-            return View();
-        }
-
-        public async Task<JsonResult> GetRegionalInstitutions()
-        {
-            var list = await RestfulClient.getRegionalInstitutions();
-
-            return new JsonResult(list);
-        }
-
-        public async Task<JsonResult> GetLocalInstitutions()
-        {
-            var list = await RestfulClient.GetLocalInstitutions();
-
-            return new JsonResult(list);
-        }
-
-        public async Task<JsonResult> GetInstitutionTypes(string level, string subLevel)
-        {
-            var list = await RestfulClient.GetInstitutionTypes(level, subLevel);
-
-            return new JsonResult(list);
-        }
+        #endregion Public Methods
 
         /*public async Task<JsonResult> GetInstitutions(string level, string subLevel, string type)
         {
@@ -263,7 +282,5 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return new JsonResult(list);
         }*/
-
-        #endregion Public Methods
     }
 }

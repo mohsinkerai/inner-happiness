@@ -31,14 +31,14 @@
             //$("#mainForm input").prop("disabled", true);
             //$("#mainForm select").prop("disabled", true);
             //$(".cnic").prop("disabled", false);
-            
+
             $(".relative-fields").prop("disabled", true);
-            $(".relative-cnic").blur(function () {
+            $(".relative-cnic").blur(function() {
                 var cnic = $(".relative-cnic").val();
                 $.ajax({
                     type: "POST",
                     url:
-                        "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new { area = AreaNames.Operations })",
+                        "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new {area = AreaNames.Operations})",
                     data: { "cnic": cnic },
                     contentType: "application/x-www-form-urlencoded; charset=utf-8",
                     dataType: "html",
@@ -61,12 +61,12 @@
                         $("#RelativeCnic").inputmask({
                             "mask": "99999-9999999-9"
                         });
-                        $(".relative-cnic").blur(function () {
+                        $(".relative-cnic").blur(function() {
                             var cnic = $(".relative-cnic").val();
                             $.ajax({
                                 type: "POST",
                                 url:
-                                    "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new { area = AreaNames.Operations })",
+                                    "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new {area = AreaNames.Operations})",
                                 data: { "cnic": cnic },
                                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                                 dataType: "html",

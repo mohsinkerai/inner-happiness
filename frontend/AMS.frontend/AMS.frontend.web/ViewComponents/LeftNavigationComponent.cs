@@ -10,31 +10,34 @@ namespace AMS.frontend.web.ViewComponents
     [ViewComponent(Name = "LeftNavigation")]
     public class LeftNavigationComponent : ViewComponent
     {
+        #region Public Methods
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            IList menuModel = new List<MenuModel>();
-
-            menuModel.Add(new MenuModel
+            IList menuModel = new List<MenuModel>
             {
-                MenuId = 1,
-                Action = ActionNames.Index,
-                Controller = ControllerNames.Persons,
-                SubMenu = null,
-                Title = "Basic Information Form",
-                Area = AreaNames.Operations,
-                ImageClass = "flaticon-information"
-            });
+                new MenuModel
+                {
+                    MenuId = 1,
+                    Action = ActionNames.Index,
+                    Controller = ControllerNames.Persons,
+                    SubMenu = null,
+                    Title = "Basic Information Form",
+                    Area = AreaNames.Operations,
+                    ImageClass = "flaticon-information"
+                },
 
-            menuModel.Add(new MenuModel
-            {
-                MenuId = 2,
-                Action = ActionNames.Index,
-                Controller = ControllerNames.Nominations,
-                SubMenu = null,
-                Title = "Nominations",
-                Area = AreaNames.Operations,
-                ImageClass = "flaticon-network"
-            });
+                new MenuModel
+                {
+                    MenuId = 2,
+                    Action = ActionNames.Index,
+                    Controller = ControllerNames.Nominations,
+                    SubMenu = null,
+                    Title = "Nominations",
+                    Area = AreaNames.Operations,
+                    ImageClass = "flaticon-network"
+                }
+            };
 
             //var menu = new MenuModel
             //{
@@ -117,5 +120,7 @@ namespace AMS.frontend.web.ViewComponents
 
             return View(menuModel);
         }
+
+        #endregion Public Methods
     }
 }

@@ -2,9 +2,13 @@
 {
     public static class MessageTypes
     {
-        public const string Success = "success";
+        #region Public Fields
+
         public const string Error = "error";
-        public const string Warn = "warning";
         public const string Info = "info";
+        public const string Success = "success";
+        public const string Warn = "warning";
+
+        #endregion Public Fields
     }
 }
