@@ -103,7 +103,7 @@
     <insert tableName="cycle_position_on_institution">
       <column name="id" value="3"/>
       <column name="cycle_id" value="2"/>
-      <column name="position_on_institution_id" value="4"/>
+      <column name="position_on_institution_id" value="3"/>
       <column name="min_count" value="1"/>
       <column name="desired" value="1"/>
       <column name="max_count" value="1"/>
@@ -112,6 +112,42 @@
     <insert tableName="cycle_position_on_institution">
       <column name="id" value="4"/>
       <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="4"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="5"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="5"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="6"/>
+      <column name="cycle_id" value="1"/>
+      <column name="position_on_institution_id" value="3"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="7"/>
+      <column name="cycle_id" value="1"/>
+      <column name="position_on_institution_id" value="4"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="8"/>
+      <column name="cycle_id" value="1"/>
       <column name="position_on_institution_id" value="5"/>
       <column name="min_count" value="1"/>
       <column name="desired" value="1"/>

@@ -31,7 +31,7 @@
         <div class="m-portlet__body">
             <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Nominations" asp-action="@ActionNames.Index" method="post">
                 <div class="form-group m-form__group row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label asp-for="Level" class="control-label"></label>
                             <select asp-for="Level" class="form-control m-select2 level" placeholder="Select a Level">
@@ -42,7 +42,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label asp-for="Region" class="control-label"></label>
                             <select asp-for="Region" class="form-control m-select2 region" placeholder="Select" disabled="disabled">
@@ -50,7 +50,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label asp-for="Local" class="control-label"></label>
                             <select asp-for="Local" class="form-control m-select2 local" placeholder="Select" disabled="disabled">
@@ -58,7 +58,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label asp-for="InstitutionType" class="control-label"></label>
                             <select asp-for="InstitutionType" class="form-control m-select2 institution-type" placeholder="Select" disabled="disabled">
@@ -66,14 +66,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    @*<div class="col-lg-4">
                         <div class="form-group">
                             <label asp-for="Institution" class="control-label"></label>
                             <select asp-for="Institution" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
                                 <option></option>
                             </select>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                     <div class="m-form__actions m-form__actions--solid">
@@ -132,9 +132,9 @@
             <thead>
                 <tr>
                     <th> Institution </th>
-                    <th> Total Positions </th>
+                    @*<th> Total Positions </th>
                     <th> Nominations </th>
-                    <th> Nominated </th>
+                    <th> Nominated </th>*@
                     <th> Actions </th>
                 </tr>
             </thead>
@@ -160,10 +160,17 @@
 
 @section scripts{
     <script type="text/javascript">
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
+            
+            $(".region")
+                .change(function () {
+                    var selectedPrimaryValue = $(this).val();
+                    alert(selectedPrimaryValue);
+                });
+
             InitializeInstitutionDataTable("institutions",
                 "Institutions",
-                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Nominations, new {area = AreaNames.Operations})");
+                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Nominations, Model)");
 
             $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
 
@@ -178,9 +185,9 @@
                     $(".institution-type").empty().append("<option></option>").prop("disabled", true);
                     $(".region").empty().append("<option></option>").prop("disabled", true);
                     $(".local").empty().append("<option></option>").prop("disabled", true);
-                    $(".institution").empty().append("<option></option>").prop("disabled", true);
+                    //$(".institution").empty().append("<option></option>").prop("disabled", true);
                     if (selectedPrimaryValue === "National") {
-                        LoadInstitutionTypes("National", "");
+                        //LoadInstitutionTypes("National", "");
                     } else if (selectedPrimaryValue === "Regional") {
                         LoadRegionalInstitutions();
                     } else if (selectedPrimaryValue === "Local") {
@@ -188,29 +195,30 @@
                     }
                 });
 
-            $(".region")
+            /*$(".region")
                 .change(function() {
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".region").val([]);
-                        $(".institution-type").empty().append("<option></option>").prop("disabled", true);
-                        $(".institution").empty().append("<option></option>").prop("disabled", true);
+                        //$(".institution-type").empty().append("<option></option>").prop("disabled", true);
+                        //$(".institution").empty().append("<option></option>").prop("disabled", true);
                     }
-                    LoadInstitutionTypes("Regional", selectedPrimaryValue);
-                });
+                    
+                    //LoadInstitutionTypes("Regional", selectedPrimaryValue);
+                });*/
 
-            $(".local")
+            /*$(".local")
                 .change(function() {
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".local").val([]);
-                        $(".institution-type").empty().append("<option></option>").prop("disabled", true);
-                        $(".institution").empty().append("<option></option>").prop("disabled", true);
+                        //$(".institution-type").empty().append("<option></option>").prop("disabled", true);
+                        //$(".institution").empty().append("<option></option>").prop("disabled", true);
                     }
-                    LoadInstitutionTypes("Local", selectedPrimaryValue);
-                });
+                    //LoadInstitutionTypes("Local", selectedPrimaryValue);
+                });*/
 
-            $(".institution-type")
+            /*$(".institution-type")
                 .change(function() {
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
@@ -225,7 +233,7 @@
                         subLevel = $(".local").val();
                     }
                     LoadInstitutions(level, subLevel, selectedPrimaryValue);
-                });
+                });*/
         });
 
         function LoadRegionalInstitutions() {
@@ -244,20 +252,20 @@
                 "");
         }
 
-        function LoadInstitutionTypes(level, subLevel) {
+        @*function LoadInstitutionTypes(level, subLevel) {
             LoadDropDownViaAjax("institution-type",
                 "@Url.Action(ActionNames.GetInstitutionTypes, ControllerNames.Nominations, new {area = AreaNames.Operations})",
                 level,
                 subLevel,
                 "");
-        }
+        }*@
 
-        function LoadInstitutions(level, subLevel, type) {
+        @*function LoadInstitutions(level, subLevel, type) {
             LoadDropDownViaAjax("institution",
                 "@Url.Action(ActionNames.GetInstitutions, ControllerNames.Nominations, new {area = AreaNames.Operations})",
                 level,
                 subLevel,
                 type);
-        }
+        }*@
     </script>
 }

@@ -166,8 +166,8 @@
       </column>
       <column name="person_id" type="bigint"/>
       <column name="cpi_id" type="bigint"/>
-      <column name="is_appointed" type="boolean"/>
-      <column name="is_recommended" type="boolean"/>
+      <column name="is_appointed" type="tinyint"/>
+      <column name="is_recommended" type="tinyint"/>
       <column name="priority" type="int"/>
       <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>

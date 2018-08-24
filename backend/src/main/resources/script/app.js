@@ -1,6 +1,5 @@
 const mysql = require('./mysql-service');
 const mssql = require('./mssql-service');
-var os = require("os");
 
 function getDataFromTable(tableName) {
     let query = `SELECT * FROM ${tableName}`;
@@ -159,7 +158,7 @@ function syncMaritalStatus() {
     getDataByQuery("SELECT DISTINCT MaritalStatus FROM Ali_tblPerson WHERE MaritalStatus IS NOT NULL AND MaritalStatus != ''")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO marital_status (name, code) VALUES ("", "${value['MaritalStatus']}")`;
+            let query = `Insert INTO marital_status (name) VALUES ("${value['MaritalStatus']}")`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Marital Status");
@@ -216,7 +215,7 @@ function syncSecularStudyLevel() {
     getDataByQuery("SELECT DISTINCT EducationLevel FROM Ali_tblPerson WHERE EducationLevel IS NOT NULL AND EducationLevel != ''")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO secular_study_level (level) VALUES ("${value['EducationLevel']}")`;
+            let query = `Insert INTO secular_study_level (name) VALUES ("${value['EducationLevel']}")`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Education Level");
@@ -316,7 +315,7 @@ function syncLevelNC() {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
             oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id, old_code, is_closed) VALUES (1, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, old_id, old_code, is_closed) VALUES (1, "${value['ShortDescr']}", "${value['Descr']}", ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Level 2");
@@ -329,7 +328,7 @@ function syncLevelRC() {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
             oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, old_code, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 8, ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, level_parent_id, old_id, old_code, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", 8, ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Level 3");
@@ -342,7 +341,7 @@ function syncLevelLC() {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
             oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RegionalCouncilId']}, ${value['InstitutionId']}, ${value['Closed']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, level_parent_id, old_id, old_code, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", ${value['RegionalCouncilId']}, ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Level 4");
@@ -364,8 +363,8 @@ function syncLevelJK() {
         .then((rows) => {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
-            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (4, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['LCId']}, ${value['InstitutionId']}, ${value['Closed']})`;
+            oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? '' : oldCode;
+            let query = `Insert INTO level (level_type_id, name, full_name, level_parent_id, old_id, old_code, is_closed) VALUES (4, "${value['ShortDescr']}", "${value['Descr']}", ${value['LCId']}, ${value['InstitutionId']}, "${oldCode}", ${value['Closed']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Level 6")
@@ -388,7 +387,7 @@ function syncLevelRegionalITREB() {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
             oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 3, ${value['InstitutionId']}, ${value['Closed']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, level_parent_id, old_id, old_code, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", 3, ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Level 8")
@@ -401,7 +400,7 @@ function syncLevelLocalITREB() {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
             oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
-            let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['RItrebId']}, ${value['InstitutionId']}, ${value['Closed']})`;
+            let query = `Insert INTO level (level_type_id, name, full_name, level_parent_id, old_id, old_code, is_closed) VALUES (3, "${value['ShortDescr']}", "${value['Descr']}", ${value['RItrebId']}, ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Level 9")
@@ -411,322 +410,78 @@ function syncLevelLocalITREB() {
 function syncLevelLocalITREBParent() {
     mysql.query(`SELECT id, old_id FROM level WHERE level_type_id = 2 AND name LIKE 'ITREB%'`).then((rows) => {
         rows.forEach(function(value){
-            mysql.query(`UPDATE level SET level_parent_id = "${value['id']}" WHERE level_parent_id = "${value['old_id']}"`)
-                .then(/*console.log("done")*/);
-        });
-        console.log("Synced Level 10")
+        mysql.query(`UPDATE level SET level_parent_id = "${value['id']}" WHERE level_parent_id = "${value['old_id']}"`)
+            .then(/*console.log("done")*/);
     });
+    console.log("Synced Level 10")
+});
 }
 
-//******************** PERSON Migration *************************************************//
-
-function syncPerson() {
-    getDataFromTable("Ali_tblPerson")
+function syncLevelRegionalCAB() {
+    getDataByQuery(`SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'CAB%'`)
         .then((rows) => {
-            rows.forEach(function(value){
-            let birthDate = getDateTime(`${value['BirthDate']}`);
-            birthDate = birthDate == null ? null : `"${birthDate}"`;
-            let deathDate = getDateTime(`${value['DeathDate']}`);
-            deathDate = deathDate == null ? null : `"${deathDate}"`;
-            let gender = `${value['DeathDate']}`;
-            gender = gender == 'M' ? 1 : 0;
-            let hoursPerWeek = `${value['TimeCommitment']}`;
-            let address = `${value['Address']}`;
-            address = address.split('\"').join('\'');
-            hoursPerWeek = (hoursPerWeek == null || hoursPerWeek == '' || hoursPerWeek == 'null') ? null : hoursPerWeek;
-            //let skills = `${value['SkillsGot']}`;
-            //skills = (skills == null || skills == '' || skills == 'null') ? '' : JSON.parse('{"name":"' + skills.trim().split('  ').join() + '"}');
-            let query = `INSERT INTO person (old_id, cnic, old_cnic, first_name, fathers_name, family_name, date_of_birth, residential_address, residence_telephone, mobile_phone, email_address, regional_council, local_council, jamatkhana, relocate_location, highest_level_of_study, highest_level_of_study_other, hours_per_week, full_name, nc_form_no, eo_form_no, old_code, death_cause, death_date, gender, plan_to_relocate) VALUES (${value['PersonId']}, "${value['CNIC']}", "${value['OLDNIC']}", "${value['FirstName']}", "${value['MiddleName']}", "${value['LastName']}", ${birthDate}, "${address}", "${value['Phone']}", "${value['Mobile']}", "${value['EmailId']}", 0, 0, 0, "${value['RelocationAddress']}", "${value['EducationLevel']}", "${value['OtherEducation']}", ${hoursPerWeek}, "${value['FullName']}", ${value['NCFormNo']}, ${value['EOFormNo']}, "${value['OldCode']}", "${value['DeathCause']}", ${deathDate}, ${gender}, 0)`;
-//            console.log(os.EOL);
-//            console.log(query);
-//            console.log(os.EOL);
-            mysql.query(query).then(/*console.log("Done")*/);
-        });
-        console.log("Synced Person")
+        rows.forEach(function(value){
+        let oldCode = value['OldCode'];
+        oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
+        let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, level_parent_id, old_id, old_code, is_closed) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", '', '', 1, ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
+        mysql.query(query).then(/*console.log("Done")*/);
     });
+    console.log("Synced Level 11")
+});
 }
 
-var timer = 1000;
+function syncLevelGRS() {
+    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'GRS'")
+        .then((rows) => {
+        rows.forEach(function(value){
+        let oldCode = value['OldCode'];
+        oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
+        let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id, old_code, is_closed) VALUES (5, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
+        mysql.query(query).then(/*console.log("Done")*/);
+    });
+    console.log("Synced Level 12")
+});
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //syncCity();
-setTimeout(function() {
-  syncCity();
-  console.log('Sync City, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
 //syncCountry();
-setTimeout(function() {
-  syncCountry();
-  console.log('Sync Country, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
 //syncJamatiTitle();
-setTimeout(function() {
-  syncJamatiTitle();
-  console.log('Sync Jamati Title, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
+//syncLanguage();
 //syncSalutation();
-setTimeout(function() {
-  syncSalutation();
-  console.log('Sync Salutation, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//  syncLanguage();
-setTimeout(function() {
-  syncLanguage();
-  console.log('Sync Language, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
 //syncMaritalStatus();
-setTimeout(function() {
-  syncMaritalStatus();
-  console.log('Sync Marital Status, Waiting for 1 Second');
-}, timer);
+//syncCycle();
+//syncOccupation();
+//syncAreaOfStudy();
+//syncBusinessNature();
+//syncBusinessType();
+//syncEducationalDegree();
+//syncEducationalInstitution();
+//syncFieldOfInterest();
+//syncProfessionalMembership();
+//syncPublicServiceInstitution();
+//syncSecularStudyLevel();
+//syncVoluntaryInstitution();
+syncPosition();
 
-timer = timer + 1000
 
 //syncJamatKhana();
-setTimeout(function() {
-  syncJamatKhana();
-  console.log('Sync Jamatkhana, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncEducationalDegree();
-setTimeout(function() {
-  syncEducationalDegree();
-  console.log('Sync Educational Degree, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncVoluntaryInstitution();
-setTimeout(function() {
-  syncVoluntaryInstitution();
-  console.log('Sync Voluntary Institution, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncAreaOfStudy();
-setTimeout(function() {
-  syncAreaOfStudy();
-  console.log('Sync Area of Study, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncBusinessType();
-setTimeout(function() {
-  syncBusinessType();
-  console.log('Sync Business Type, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-setTimeout(function() {
-  syncBusinessNature();
-  console.log('Sync Business Nature, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//  syncProfessionalMembership();
-setTimeout(function() {
-  syncProfessionalMembership();
-  console.log('Sync Professional Membership, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncFieldOfInterest();
-setTimeout(function() {
-  syncFieldOfInterest();
-  console.log('Sync Field of Interest, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncOccupation();
-setTimeout(function() {
-  syncOccupation();
-  console.log('Sync Occupation, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncEducationalInstitution();
-setTimeout(function() {
-  syncEducationalInstitution();
-  console.log('Sync Educational Institution, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncPosition();
-setTimeout(function() {
-  syncPosition();
-  console.log('Sync syncPosition, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncSecularStudyLevel();
-setTimeout(function() {
-  syncSecularStudyLevel();
-  console.log('Sync syncSecularStudyLevel, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncSkills();
-setTimeout(function() {
-  syncSkills();
-  console.log('Sync syncSkills, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncPublicServiceInstitution();
-setTimeout(function() {
-  syncPublicServiceInstitution();
-  console.log('Sync syncPublicServiceInstitution, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncTempRegion();
-setTimeout(function() {
-  syncTempRegion();
-  console.log('Sync syncTempRegion, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncRegionalCouncil();
-setTimeout(function() {
-  syncRegionalCouncil();
-  console.log('Sync syncRegionalCouncil, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncCycle();
-setTimeout(function() {
-  syncCycle();
-  console.log('Sync syncCycle, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
-//syncRegion();
-setTimeout(function() {
-  syncRegion();
-  console.log('Sync syncRegion, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
 //syncLocalCouncil();
-setTimeout(function() {
-  syncLocalCouncil();
-  console.log('Sync syncLocalCouncil, Waiting for 1 Second');
-}, timer);
-
-
-timer = timer + 1000
-
-//
+//syncRegion();
+//syncRegionalCouncil();
+//syncSkills();
+//syncTempRegion();
 //syncLevelNC();
-setTimeout(function() {
-  syncLevelNC();
-  console.log('Sync syncLevelNC, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 1000
-
 //syncLevelRC();
-setTimeout(function() {
-  syncLevelRC();
-  console.log('Sync syncLevelRC, Waiting for 1 Second');
-}, timer);
-
-timer = timer + 2000
-
 //syncLevelLC();
-setTimeout(function() {
-  syncLevelLC();
-  console.log('Sync syncLevelLC, Waiting for 2 Second');
-}, timer);
-
-timer = timer + 2000
-
 //syncLevelLCParent();
-setTimeout(function() {
-  syncLevelLCParent();
-  console.log('Sync syncLevelLCParent, Waiting for 2 Second');
-}, timer);
-
-
-
-timer = timer + 2000
-
 //syncLevelJK();
-setTimeout(function() {
-  syncLevelLCParent();
-  console.log('Sync syncLevelLCParent, Waiting for 2 Second');
-}, timer);
-
-timer = timer + 1000
 //syncLevelJKParent();
-setTimeout(function() {
-  syncLevelLCParent();
-  console.log('Sync syncLevelLCParent, Waiting for 2 Second');
-}, timer);
-
-timer = timer + 1000
-//
 //syncLevelRegionalITREB();
-setTimeout(function() {
-  syncLevelLCParent();
-  console.log('Sync syncLevelLCParent, Waiting for 2 Second');
-}, timer);
-
-timer = timer + 1000
 //syncLevelLocalITREB();
-setTimeout(function() {
-  syncLevelLCParent();
-  console.log('Sync syncLevelLCParent, Waiting for 2 Second');
-}, timer);
-
-timer = timer + 1000
 //syncLevelLocalITREBParent();
-setTimeout(function() {
-  syncLevelLCParent();
-  console.log('Sync syncLevelLCParent, Waiting for 2 Second');
-}, timer);
+//syncLevelRegionalCAB();
+//syncLevelGRS();
 
-timer = timer + 1000
-//syncPerson();
-setTimeout(function() {
-  syncPerson();
-  console.log('Sync syncPerson, Waiting for 2 Second');
-}, timer);
-
-
-//var s = "Leadership  Religious Teacher  Communication  Conflict Resolution  ";
-//var j = '{"name":"' + s.trim().split('  ').join() + '"}';
-//var json = JSON.parse(j);
-//console.log(json);

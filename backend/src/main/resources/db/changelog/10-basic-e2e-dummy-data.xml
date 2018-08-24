@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="10-01">
+    <insert tableName="person_cpi">
+      <!--For CPI 3 Nominations-->
+      <column name="person_id" value="2"></column>
+      <column name="cpi_id" value="3"></column>
+      <column name="is_appointed" value="0"></column>
+      <column name="is_recommended" value="1"></column>
+      <column name="priority" value="1"></column>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="10-02">
+    <insert tableName="person_cpi">
+      <!--For CPI 4 Nominations-->
+      <column name="person_id" value="2"></column>
+      <column name="cpi_id" value="4"></column>
+      <column name="is_appointed" value="0"></column>
+      <column name="is_recommended" value="1"></column>
+      <column name="priority" value="1"></column>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="10-03">
+    <insert tableName="person_cpi">
+      <!--For CPI 5 Nominations-->
+      <column name="person_id" value="2"></column>
+      <column name="cpi_id" value="5"></column>
+      <column name="is_appointed" value="0"></column>
+      <column name="is_recommended" value="1"></column>
+      <column name="priority" value="1"></column>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="10-04">
+    <insert tableName="person_cpi">
+      <!--For CPI 6 Nominations (Previous Cycle)-->
+      <column name="person_id" value="3"></column>
+      <column name="cpi_id" value="6"></column>
+      <column name="is_appointed" value="1"></column>
+      <column name="is_recommended" value="1"></column>
+      <column name="priority" value="1"></column>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="10-05">
+    <insert tableName="person_cpi">
+      <!--For CPI 7 Nominations (Previous Cycle)-->
+      <column name="person_id" value="3"></column>
+      <column name="cpi_id" value="7"></column>
+      <column name="is_appointed" value="1"></column>
+      <column name="is_recommended" value="1"></column>
+      <column name="priority" value="1"></column>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="10-06">
+    <insert tableName="person_cpi">
+      <!--For CPI 8 Nominations (Previous Cycle)-->
+      <column name="person_id" value="3"></column>
+      <column name="cpi_id" value="8"></column>
+      <column name="is_appointed" value="1"></column>
+      <column name="is_recommended" value="1"></column>
+      <column name="priority" value="1"></column>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -430,14 +431,41 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetInstitutionTypes(string level = "", string subLevel = "")
+        public static async Task<List<PositionModel>> GetInstitutionTypes(string level, string subLevel)
         {
-            var list = new List<SelectListItem>
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri(BASE_URL);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
+            //var Res = await client.GetAsync("institution/search/findByLevelType?levelTypeId="+subLevel);
+            //var Res = await client.GetAsync("institution/search/findByLevelId?levelId=" + subLevel);
+
+            var Res = await client.GetAsync(string.IsNullOrWhiteSpace(subLevel) ? "institution/search/findByLevelType?levelTypeId=1" : "institution/search/findByLevelId?levelId=" + subLevel);
+
+            if (Res.IsSuccessStatusCode)
             {
-                new SelectListItem {Text = "Council", Value = "Council"},
-                new SelectListItem {Text = "ITREB", Value = "ITREB"}
-            };
-            return list;
+                var json = Res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<PositionModel>();
+
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    PositionModel positionModel = new PositionModel();
+                    positionModel.Id = id;
+                    positionModel.PositionName = name;
+
+                    list.Add(positionModel);
+                }
+
+                return list;
+            }
+
+            return null;
         }
 
         public static async Task<List<SelectListItem>> getJamatkhana(string uid = "")
@@ -492,7 +520,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetInstitutions(string level = "", string subLevel = "" , string type = "")
+        /*public static async Task<List<SelectListItem>> GetInstitutions(string level = "", string subLevel = "" , string type = "")
         {
             client = new HttpClient();
             client.BaseAddress = new Uri(BASE_URL);
@@ -516,7 +544,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 return list;
             }
             return null;
-        }
+        }*/
 
         public static async Task<List<SelectListItem>> getHighestLevelOfStudy()
         {

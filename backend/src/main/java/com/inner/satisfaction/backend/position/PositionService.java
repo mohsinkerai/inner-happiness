@@ -88,6 +88,7 @@ public class PositionService extends BaseService<Position> {
       positionDetailsDto.setCpiId(cpi.getId());
       positionDetailsDto.setPersonsNominated(pdpd);
       positionDetailsDto.setIncumbent(incumbent);
+      positionDetailsDto.setPoi(poi);
       positionDetails.add(positionDetailsDto);
     }
 
