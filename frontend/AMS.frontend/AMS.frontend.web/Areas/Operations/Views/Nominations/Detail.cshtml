@@ -1,25 +1,32 @@
 ﻿@model PositionModel
 @{
     ViewBag.ModuleTitle = "Nominations Management";
-    ViewBag.PageTitle = "Nominations";
+    ViewBag.PageTitle = "Nominations - Council for Karimabad";
     ViewBag.Action = "Detail";
 }
 @section styles{
 }
-<div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+<div class="m-portlet m-portlet--collapsed m-portlet--info m-portlet--head-solid-bg m-portlet--head-sm" m-portlet="true">
     <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
-                <span class="m-portlet__head-icon m--hide">
-                    <i class="flaticon-statistics"></i>
+                <span class="m-portlet__head-icon">
+                    <i class="flaticon-avatar"></i>
                 </span>
                 <h3 class="m-portlet__head-text">
-                    Incubment details
+                    President&nbsp;&nbsp;<span class="m-badge m-badge--light m-badge--wide m-badge--rounded">3 nominations required</span>
                 </h3>
-                <h2 class="m-portlet__head-label m-portlet__head-label--warning">
-                    <span>President - Local Council for Karimabad</span>
-                </h2>
             </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <a href="" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-plus"></i></a>
+                </li>
+                <li class="m-portlet__nav-item">
+                    <a href="#" m-portlet-tool="fullscreen" class="m-portlet__nav-link m-portlet__nav-link--icon"><i class="la la-expand"></i></a>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="m-portlet__body">
@@ -97,113 +104,114 @@
                 <span class="m-badge m-badge--success m-badge--wide m-badge--rounded">completed</span>
             </div>
         </div>
+
+        <table id="nominations" class="table table-striped- table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th> Priority </th>
+                    <th> Name </th>
+                    <th> Occupation </th>
+                    <th> Education </th>
+                    <th> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <div class="m-card-user m-card-user--sm">
+                            <div class="m-card-user__pic">
+                                <img src="~/images/naveed.jpg" class="m--img-rounded m--marginless" alt="photo">
+                            </div>
+                            <div class="m-card-user__details">
+                                <span class="m-card-user__name">Naveed Zulfiqar Ali Tejani</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
+                                @*<a href="" class="m-card-user__email m-link">Brakus-Hansen</a>*@
+                            </div>
+                        </div>
+                    </td>
+                    <td> Software Engineer, Careem Pakistan </td>
+                    <td> Masters (Computer Sciences), 2019 </td>
+                    <td>
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                            <i class="la la-eye"></i>
+                        </a>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                            <i class="la la-edit"></i>
+                        </a>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
+                            <i class="la la-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>
+                        <div class="m-card-user m-card-user--sm">
+                            <div class="m-card-user__pic">
+                                <div class="m-card-user__no-photo m--bg-fill-info"><span>SM</span></div>
+                            </div>
+                            <div class="m-card-user__details">
+                                <span class="m-card-user__name">Saif Ali Momin</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
+                                @*<a href="" class="m-card-user__email m-link">Brakus-McCullough</a>*@
+                            </div>
+                        </div>
+                    </td>
+                    <td> Software Engineer, Careem Pakistan </td>
+                    <td> Masters (Computer Sciences), 2019 </td>
+                    <td>
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                            <i class="la la-eye"></i>
+                        </a>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                            <i class="la la-edit"></i>
+                        </a>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
+                            <i class="la la-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>
+                        <div class="m-card-user m-card-user--sm">
+                            <div class="m-card-user__pic">
+                                <div class="m-card-user__no-photo m--bg-fill-info"><span>AN</span></div>
+                            </div>
+                            <div class="m-card-user__details">
+                                <span class="m-card-user__name">Ali Ahad Nayani</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
+                                @*<a href="" class="m-card-user__email m-link">Brakus-McCullough</a>*@
+                            </div>
+                        </div>
+                    </td>
+                    <td> Software Engineer, Careem Pakistan </td>
+                    <td> Masters (Computer Sciences), 2019 </td>
+                    <td>
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                            <i class="la la-eye"></i>
+                        </a>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                            <i class="la la-edit"></i>
+                        </a>
+                        <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
+                            <i class="la la-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <div class="form-group m-form__group row" style="border-bottom: .07rem dashed #ebedf2 !important">
-            <table id="nominations" class="table table-striped- table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th> Priority </th>
-                        <th> Name </th>
-                        <th> Occupation </th>
-                        <th> Education </th>
-                        <th> Actions </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="m-card-user m-card-user--sm">
-                                <div class="m-card-user__pic">
-                                    <img src="~/images/naveed.jpg" class="m--img-rounded m--marginless" alt="photo">
-                                </div>
-                                <div class="m-card-user__details">
-                                    <span class="m-card-user__name">Naveed Zulfiqar Ali Tejani</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
-                                    @*<a href="" class="m-card-user__email m-link">Brakus-Hansen</a>*@
-                                </div>
-                            </div>
-                        </td>
-                        <td> Software Engineer, Careem Pakistan </td>
-                        <td> Masters (Computer Sciences), 2019 </td>
-                        <td>
-                            <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                                <i class="la la-eye"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
-                                <i class="la la-edit"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
-                                <i class="la la-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <div class="m-card-user m-card-user--sm">
-                                <div class="m-card-user__pic">
-                                    <div class="m-card-user__no-photo m--bg-fill-info"><span>SM</span></div>
-                                </div>
-                                <div class="m-card-user__details">
-                                    <span class="m-card-user__name">Saif Ali Momin</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
-                                    @*<a href="" class="m-card-user__email m-link">Brakus-McCullough</a>*@
-                                </div>
-                            </div>
-                        </td>
-                        <td> Software Engineer, Careem Pakistan </td>
-                        <td> Masters (Computer Sciences), 2019 </td>
-                        <td>
-                            <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                                <i class="la la-eye"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
-                                <i class="la la-edit"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
-                                <i class="la la-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <div class="m-card-user m-card-user--sm">
-                                <div class="m-card-user__pic">
-                                    <div class="m-card-user__no-photo m--bg-fill-info"><span>AN</span></div>
-                                </div>
-                                <div class="m-card-user__details">
-                                    <span class="m-card-user__name">Ali Ahad Nayani</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
-                                    <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
-                                    @*<a href="" class="m-card-user__email m-link">Brakus-McCullough</a>*@
-                                </div>
-                            </div>
-                        </td>
-                        <td> Software Engineer, Careem Pakistan </td>
-                        <td> Masters (Computer Sciences), 2019 </td>
-                        <td>
-                            <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                                <i class="la la-eye"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
-                                <i class="la la-edit"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
-                                <i class="la la-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
         <div class="m-form__heading">
             <h4 class="m-form__heading-title">
