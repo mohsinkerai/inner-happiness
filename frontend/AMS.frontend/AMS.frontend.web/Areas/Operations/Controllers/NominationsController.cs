@@ -51,7 +51,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
             //ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
 
-            return View(new IndexNominationModel{Positions = new List<PositionModel>()});
+            //return View(new IndexNominationModel{Positions = new List<PositionModel>()});
+            return View();
         }
 
         public async Task<IActionResult> ServerSideAjaxHandler(IndexNominationModel indexNominationModel)
@@ -60,7 +61,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 string level = indexNominationModel.Level;
                 string subLevel = string.IsNullOrWhiteSpace(indexNominationModel.Region) ? indexNominationModel.Local : indexNominationModel.Region;
-
+                
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
                 string search = queryCollection["search[value]"][0];
