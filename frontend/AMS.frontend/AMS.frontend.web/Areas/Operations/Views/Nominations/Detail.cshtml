@@ -1,4 +1,5 @@
-﻿@model NominationDetailModel
+﻿@using Microsoft.EntityFrameworkCore.Internal
+@model NominationDetailModel
 @{
     ViewBag.ModuleTitle = "Nominations Management";
     ViewBag.PageTitle = $"Nominations - {Model.Institution.Name}";
@@ -11,289 +12,239 @@
 @foreach (var position in Model.Positions)
 {
     <div class="m-portlet m-portlet--collapsed m-portlet--info m-portlet--head-solid-bg m-portlet--head-sm" m-portlet="true">
-    <div class="m-portlet__head">
-        <div class="m-portlet__head-caption">
-            <div class="m-portlet__head-title">
-                <span class="m-portlet__head-icon">
-                    <i class="flaticon-avatar"></i>
-                </span>
-                <h3 class="m-portlet__head-text">
-                    @position.PositionName&nbsp;&nbsp;<span class="m-badge m-badge--light m-badge--wide m-badge--rounded">@position.NominationsMessage</span>
-                </h3>
-            </div>
-        </div>
-        <div class="m-portlet__head-tools">
-            <ul class="m-portlet__nav">
-                <li class="m-portlet__nav-item">
-                    <a href="" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
-                        <i class="la la-plus"></i>
-                    </a>
-                </li>
-                <li class="m-portlet__nav-item">
-                    <a href="#" m-portlet-tool="fullscreen" class="m-portlet__nav-link m-portlet__nav-link--icon">
-                        <i class="la la-expand"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="m-portlet__body">
-    <!--begin::m-widget5-->
-    <div class="m-widget5">
-        <div class="m-widget5__item" style="background: #F7F8FC !important; border-bottom: .07rem dashed #ebedf2 !important; border-top: .07rem dashed #ebedf2 !important; padding-top: 1.57rem !important;">
-            <div class="m-widget5__content" style="padding-left: 1.57rem !important;">
-                <div class="m-widget5__pic">
-                    <img class="m-widget7__img" src="data:image/jpeg;base64,@position.Incubment.Image" alt="">
-                </div>
-                <div class="m-widget5__section">
-                    <h4 class="m-widget5__title">
-                        @position.Incubment.FullName
-                    </h4>
-                    <span class="m-widget5__desc m--font-info">
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.Gender</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.Age yrs</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.MaritalStatusForDisplay</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.AreaOfOriginForDisplay</span>
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <span class="m-portlet__head-icon">
+                        <i class="flaticon-avatar"></i>
                     </span>
-                    <div class="m-widget5__info">
-                        @*<span class="m-widget5__author">
+                    <h3 class="m-portlet__head-text">
+                        @position.PositionName&nbsp;&nbsp;<span class="m-badge m-badge--light m-badge--wide m-badge--rounded">@position.NominationsMessage</span>
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <a href="" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                            <i class="la la-plus"></i>
+                        </a>
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        <a href="#" m-portlet-tool="fullscreen" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                            <i class="la la-expand"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin::m-widget5-->
+            <div class="m-widget5">
+                <div class="m-widget5__item" style="background: #F7F8FC !important; border-bottom: .07rem dashed #ebedf2 !important; border-top: .07rem dashed #ebedf2 !important; padding-top: 1.57rem !important;">
+                    <div class="m-widget5__content" style="padding-left: 1.57rem !important;">
+                        <div class="m-widget5__pic">
+                            <img class="m-widget7__img" src="data:image/jpeg;base64,@position.Incubment.Image" alt="">
+                        </div>
+                        <div class="m-widget5__section">
+                            <h4 class="m-widget5__title">
+                                @position.Incubment.FullName
+                            </h4>
+                            <span class="m-widget5__desc m--font-info">
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.Gender</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.Age yrs</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.MaritalStatusForDisplay</span>
+                                <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@position.Incubment.AreaOfOriginForDisplay</span>
+                            </span>
+                            <div class="m-widget5__info">
+                                @*<span class="m-widget5__author">
                                         Qualification:
                                     </span>*@
-                        <span class="m-widget5__info-label">
-                            @position.Incubment.LatestEmplopyment
-                        </span>
-                        @*<span class="m-widget5__info-author-name">
+                                <span class="m-widget5__info-label">
+                                    @position.Incubment.LatestEmplopyment
+                                </span>
+                                @*<span class="m-widget5__info-author-name">
                                         Fly themes
                                     </span>*@
-                        @*<span class="m-widget5__info-label">
+                                @*<span class="m-widget5__info-label">
                                         <b>|</b>
                                     </span>
                                     <span class="m-widget5__info-label">
                                         Masters (Architect), Massachusetts Institute of Technology (USA), 1991
                                     </span>*@
+                            </div>
+                            <div class="m-widget5__info">
+                                @*<span class="m-widget5__author">
+                                        Qualification:
+                                    </span>*@
+                                <span class="m-widget5__info-label">
+                                    @position.Incubment.LatestEducation
+                                </span>
+                                @*<span class="m-widget5__info-author-name">
+                                        Fly themes
+                                    </span>*@
+                                @*<span class="m-widget5__info-label">
+                                        <b>|</b>
+                                    </span>
+                                    <span class="m-widget5__info-label">
+                                        Masters (Architect), Massachusetts Institute of Technology (USA), 1991
+                                    </span>*@
+                            </div>
+                        </div>
                     </div>
-                    <div class="m-widget5__info">
-                        @*<span class="m-widget5__author">
-                                        Qualification:
-                                    </span>*@
-                        <span class="m-widget5__info-label">
-                            @position.Incubment.LatestEducation
-                        </span>
-                        @*<span class="m-widget5__info-author-name">
-                                        Fly themes
-                                    </span>*@
-                        @*<span class="m-widget5__info-label">
-                                        <b>|</b>
-                                    </span>
-                                    <span class="m-widget5__info-label">
-                                        Masters (Architect), Massachusetts Institute of Technology (USA), 1991
-                                    </span>*@
+                    <div class="m-widget5__content" style="padding-right: 1.57rem !important;">
+                        <div class="m-widget5__stats1">
+                            <span class="m-widget5__number m--font-success">@position.Required</span>
+                            <br>
+                            <span class="m-widget5__sales">Required</span>
+                        </div>
+                        <div class="m-widget5__stats2">
+                            @if (position.Nominations == null)
+                            {
+                                <span class="m-widget5__number  m--font-danger">0</span>
+                            }
+                            else
+                            {
+                                <span class="m-widget5__number  m--font-danger">@position.Nominations.Count</span>
+                            }
+                            <br>
+                            <span class="m-widget5__votes">Nominated</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="m-widget5__content" style="padding-right: 1.57rem !important;">
-                <div class="m-widget5__stats1">
-                    <span class="m-widget5__number m--font-success">@position.Required</span>
-                    <br>
-                    <span class="m-widget5__sales">Required</span>
-                </div>
-                <div class="m-widget5__stats2">
-                    @if (position.Nominations == null)
+            <!--end::m-widget5-->
+            <div class="m-form__heading">
+                <div class="m-form__heading-title">
+                    <h4>Nominations for Cycle @position.CurrentCycle</h4>
+                    @if (position.CycleStatus == "On going")
                     {
-                        <span class="m-widget5__number  m--font-danger">0</span>
+                        <span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">on going</span>
                     }
                     else
                     {
-                        <span class="m-widget5__number  m--font-danger">@position.Nominations.Count</span>
+                        <span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">completed</span>
                     }
-                    <br>
-                    <span class="m-widget5__votes">Nominated</span>
                 </div>
             </div>
-        </div>
-    </div>
-    <!--end::m-widget5-->
-    <div class="m-form__heading">
-        <div class="m-form__heading-title">
-            <h4>Nominations for Cycle @position.CurrentCycle</h4>
-            @if (position.CycleStatus == "On going")
-            {
-                <span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">on going</span>
-            }
-            else
-            {
-                <span class="m-badge m-badge--warning m-badge--wide m-badge--rounded">completed</span>
-            }
-        </div>
-    </div>
 
-    <table id="nominations" class="table table-striped- table-bordered table-hover">
-        <thead>
-        <tr>
-            <th> Priority </th>
-            <th> Name </th>
-            <th> Occupation </th>
-            <th> Education </th>
-            <th> Actions </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>
-                <div class="m-card-user m-card-user--sm">
-                    <div class="m-card-user__pic">
-                        <img src="~/images/naveed.jpg" class="m--img-rounded m--marginless" alt="photo">
-                    </div>
-                    <div class="m-card-user__details">
-                        <span class="m-card-user__name">Naveed Zulfiqar Ali Tejani</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
-                        @*<a href="" class="m-card-user__email m-link">Brakus-Hansen</a>*@
-                    </div>
+            <table id="nominations-@position.Id" class="table table-striped- table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th> Priority </th>
+                        <th> Name </th>
+                        <th> Occupation </th>
+                        <th> Education </th>
+                        <th> Actions </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (position.Nominations != null)
+                    {
+                        foreach (var nomination in position.Nominations)
+                        {
+                            <tr>
+                                <td>@nomination.Priority</td>
+                                <td>
+                                    <div class="m-card-user m-card-user--sm">
+                                        <div class="m-card-user__pic">
+                                            <img src="data:image/jpeg;base64,@nomination.Person.Image" class="m--img-rounded m--marginless" alt="photo">
+                                        </div>
+                                        <div class="m-card-user__details">
+                                            <span class="m-card-user__name">@nomination.Person.FullName</span>
+                                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.Gender</span>
+                                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.Age yrs</span>
+                                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.MaritalStatusForDisplay</span>
+                                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.AreaOfOriginForDisplay</span>
+                                            @*<a href="" class="m-card-user__email m-link">Brakus-Hansen</a>*@
+                                        </div>
+                                    </div>
+                                </td>
+                                <td> @nomination.Person.LatestEmplopyment </td>
+                                <td> @nomination.Person.LatestEducation </td>
+                                <td>
+                                    <a target="_blank" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@nomination.Person.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                                        <i class="la la-eye"></i>
+                                    </a>
+                                    <a target="_blank" asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@nomination.Person.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                                        <i class="la la-edit"></i>
+                                    </a>
+                                    <a href="javascript:RemoveNomination(@position.Id, @nomination.Person.Id);" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
+                                        <i class="la la-user-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @*<div class="form-group m-form__group row" style="border-bottom: .07rem dashed #ebedf2 !important">
                 </div>
-            </td>
-            <td> Software Engineer, Careem Pakistan </td>
-            <td> Masters (Computer Sciences), 2019 </td>
-            <td>
-                <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                    <i class="la la-eye"></i>
-                </a>
-                <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
-                    <i class="la la-edit"></i>
-                </a>
-                <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
-                    <i class="la la-trash"></i>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>
-                <div class="m-card-user m-card-user--sm">
-                    <div class="m-card-user__pic">
-                        <div class="m-card-user__no-photo m--bg-fill-info">
-                            <span>SM</span>
+                <div class="m-form__heading">
+                    <h4 class="m-form__heading-title">
+                        Person Lookup
+                    </h4>
+                </div>
+                <br/>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label class="control-label">Form Number</label>
+                                <input type="text" name="formNumber" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label class="control-label">CNIC</label>
+                                <input type="text" name="cnic" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">First Name</label>
+                                <input type="text" name="firstName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="control-label">Last Name</label>
+                                <input type="text" name="lastName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="m-form__actions m-form__actions--solid" style="padding-left: 15px !important; padding-top: 28px !important">
+                            <button type="button" class="btn btn-primary btn-info">
+                                <i class="fa fa-search"></i> Search
+                            </button>
                         </div>
                     </div>
-                    <div class="m-card-user__details">
-                        <span class="m-card-user__name">Saif Ali Momin</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
-                        @*<a href="" class="m-card-user__email m-link">Brakus-McCullough</a>*@
-                    </div>
-                </div>
-            </td>
-            <td> Software Engineer, Careem Pakistan </td>
-            <td> Masters (Computer Sciences), 2019 </td>
-            <td>
-                <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                    <i class="la la-eye"></i>
-                </a>
-                <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
-                    <i class="la la-edit"></i>
-                </a>
-                <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
-                    <i class="la la-trash"></i>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>
-                <div class="m-card-user m-card-user--sm">
-                    <div class="m-card-user__pic">
-                        <div class="m-card-user__no-photo m--bg-fill-info">
-                            <span>AN</span>
-                        </div>
-                    </div>
-                    <div class="m-card-user__details">
-                        <span class="m-card-user__name">Ali Ahad Nayani</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Male</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">23 yrs</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Single</span>
-                        <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">Karachi</span>
-                        @*<a href="" class="m-card-user__email m-link">Brakus-McCullough</a>*@
-                    </div>
-                </div>
-            </td>
-            <td> Software Engineer, Careem Pakistan </td>
-            <td> Masters (Computer Sciences), 2019 </td>
-            <td>
-                <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                    <i class="la la-eye"></i>
-                </a>
-                <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
-                    <i class="la la-edit"></i>
-                </a>
-                <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="1" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
-                    <i class="la la-trash"></i>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="form-group m-form__group row" style="border-bottom: .07rem dashed #ebedf2 !important">
-    </div>
-    <div class="m-form__heading">
-        <h4 class="m-form__heading-title">
-            Person Lookup
-        </h4>
-    </div>
-    <br/>
-    <div class="form-group m-form__group row">
-        <div class="col-lg-3">
-            <div class="form-group">
-                <label class="control-label">CNIC</label>
-                <input type="text" name="cnic" class="form-control">
-            </div>
+                <table id="persons" class="table table-striped- table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th> Name </th>
+                        <th> CNIC </th>
+                        <th> Actions </th>
+                    </tr>
+                    </thead>
+                </table>*@
         </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label class="control-label">First Name</label>
-                <input type="text" name="firstName" class="form-control">
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="form-group">
-                <label class="control-label">Last Name</label>
-                <input type="text" name="lastName" class="form-control">
-            </div>
-        </div>
-        <div class="m-form__actions m-form__actions--solid" style="padding-left: 15px !important; padding-top: 28px !important">
-            <button type="button" class="btn btn-primary btn-info">
-                <i class="fa fa-search"></i> Search
-            </button>
-        </div>
-    </div>
-    <table id="persons" class="table table-striped- table-bordered table-hover">
-        <thead>
-        <tr>
-            <th> Name </th>
-            <th> CNIC </th>
-            <th> Actions </th>
-        </tr>
-        </thead>
-    </table>
-    </div>
     </div>
     <!--end::Portlet-->
 }
 
 @section scripts{
     <script type="text/javascript">
-        jQuery(document).ready(function() {
-            InitializeNewDataTableLite("nominations", "Nominations");
+        jQuery(document).ready(function () {
+            var positionIds = '@Model.Positions.Select(p => p.Id).Join()';
+            var positionArray = positionIds.split(',');
+            for (var i = 0; i < positionArray.length; i++) {
+                InitializeNewDataTableLite("nominations-" + positionArray[i], "Nominations");
+                $("#nominations-" + positionArray[i]).css("min-height", "0px");
+            }
             $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
-            $("#nominations").css("min-height", "0px");
-            InitializeLitePersonDataTable("persons",
+            @*InitializeLitePersonDataTable("persons",
                 "Persons",
                 "@Url.Action("ServerSideAjaxHandler", ControllerNames.Persons, new {area = AreaNames.Operations})");
-            $("#persons").css("min-height", "0px");
+            $("#persons").css("min-height", "0px");*@
         });
     </script>
 }
