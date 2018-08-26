@@ -161,17 +161,11 @@
 
 @section scripts{
     <script type="text/javascript">
-        jQuery(document).ready(function() {
-
-            $(".region")
-                .change(function() {
-                    var selectedPrimaryValue = $(this).val();
-                    alert(selectedPrimaryValue);
-                });
-
+        jQuery(document).ready(function () {
+        
             InitializeInstitutionDataTable("institutions",
                 "Institutions",
-                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Nominations, Model)");
+                "@Html.Raw(Url.Action("ServerSideAjaxHandler", ControllerNames.Nominations, Model))");
 
             $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
 
