@@ -40,7 +40,7 @@ public class Person extends BaseEntity {
   private String passportNumber;
   private String image;
 
-  private long salutation; // id
+  private Long salutation; // id
   private String firstName;
   private String fathersName;
   private String familyName;
@@ -48,7 +48,7 @@ public class Person extends BaseEntity {
   private Long jamatiTitle; // id
 
   // 0 male, 1 female
-  private int gender;
+  private Integer gender;
 
   // Should Represent UTC
   private LocalDate dateOfBirth;
@@ -62,10 +62,10 @@ public class Person extends BaseEntity {
   private Long areaOfOrigin; // id
 
   // LevelID To be Exact
-  private long regionalCouncil;
-  private long localCouncil;
-  private long jamatkhana;
-  private boolean planToRelocate;
+  private Long regionalCouncil;
+  private Long localCouncil;
+  private Long jamatkhana;
+  private Boolean planToRelocate;
   private String relocateLocation;
   // Should Represent UTC
   private LocalDate relocationDateTime;
