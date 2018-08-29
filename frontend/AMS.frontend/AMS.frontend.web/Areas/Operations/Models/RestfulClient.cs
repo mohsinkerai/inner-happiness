@@ -17,7 +17,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         #region Private Fields
 
-        private static readonly string BaseUrl = "http://13.93.85.18:8080/";
+        private static readonly string BaseUrl = "http://52.49.183.67:8080/";
         private static HttpClient _client;
 
         #endregion Private Fields
@@ -399,6 +399,11 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             //var Res = await client.GetAsync("institution/search/findByLevelType?levelTypeId="+subLevel);
             //var Res = await client.GetAsync("institution/search/findByLevelId?levelId=" + subLevel);
+
+            if (level == null)
+            {
+                return null;
+            }
 
             var res = await _client.GetAsync(string.IsNullOrWhiteSpace(subLevel)
                 ? "institution/search/findByLevelType?levelTypeId=1"
