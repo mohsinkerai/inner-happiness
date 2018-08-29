@@ -179,6 +179,9 @@ function syncPerson() {
                                 skills = '{"skills":' + str.trim() + '}';
                             }
 
+                            //let image = value['PhotoImage'];
+                            //image = (image == null || image == '') ? '' : image;
+
                             var query = `INSERT INTO person (old_id, cnic, old_cnic, city, salutation, first_name, fathers_name, family_name, jamati_title, date_of_birth, residential_address, residence_telephone, mobile_phone, email_address, marital_status, regional_council, local_council, jamatkhana, relocate_location, highest_level_of_study, highest_level_of_study_other, hours_per_week, full_name, nc_form_no, eo_form_no, old_code, death_cause, death_date, gender, plan_to_relocate, skills) VALUES (${value['PersonId']}, "${value['CNIC']}", "${value['OLDNIC']}", ${cityId}, ${salutationId}, "${value['FirstName']}", "${value['MiddleName']}", "${value['LastName']}", ${jamatiTitleId}, ${birthDate}, "${address}", "${value['Phone']}", "${value['Mobile']}", "${value['EmailId']}", ${maritalStatusId}, 0, 0, 0, "${value['RelocationAddress']}", "${value['EducationLevel']}", "${value['OtherEducation']}", ${hoursPerWeek}, "${value['FullName']}", ${value['NCFormNo']}, ${value['EOFormNo']}, "${value['OldCode']}", "${value['DeathCause']}", ${deathDate}, ${gender}, 0, '${skills}')`;
                             mysql.query(query).then(console.log("Done"));
                         });

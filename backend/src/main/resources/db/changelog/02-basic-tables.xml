@@ -10,9 +10,6 @@
       <column autoIncrement="true" name="id" type="bigint">
         <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
-      <column name="cycle_id" type="bigint">
-        <constraints nullable="true"/>
-      </column>
       <column name="position_id" type="bigint">
         <constraints nullable="true"/>
       </column>
