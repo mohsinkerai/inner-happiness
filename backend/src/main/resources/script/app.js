@@ -17,6 +17,14 @@ function getDateTime(dateTime) {
     return (new Date(dateTime).toISOString().slice(0, 19).replace('T', ' '));
 }
 
+function syncLevelType() {
+    mysql.query('INSERT INTO level_type (name) VALUES ("NAT")').then(console.log("Done"));
+    mysql.query('INSERT INTO level_type (name) VALUES ("REG")').then(console.log("Done"));
+    mysql.query('INSERT INTO level_type (name) VALUES ("LCL")').then(console.log("Done"));
+    mysql.query('INSERT INTO level_type (name) VALUES ("JKH")').then(console.log("Done"));
+    mysql.query('INSERT INTO level_type (name) VALUES ("GRS")').then(console.log("Done"));
+}
+
 function syncCity() {
     getDataFromTable("Ali_tblCity")
         .then((rows) => {
@@ -443,9 +451,32 @@ function syncLevelGRS() {
 });
 }
 
+function syncLevelInstitution() {
+    mysql.query(`SELECT * FROM level`).then((rows) => {
+        rows.forEach(function(value){
+            mysql.query(`INSERT INTO institution (name, level_id, old_institution_id) VALUES ("${value['name']}", ${value['id']}, ${value['old_id']})`)
+                .then(/*console.log("done")*/);
+        });
+        console.log("Synced Level Institution")
+    });
+}
+
+function syncInstitutionOnPosition() {
+    getDataByQuery("SELECT * FROM Ali_tblInstitutionPosition")
+        .then((rows) => {
+            rows.forEach(function(value){
+                let oldCode = value['OldCode'];
+                oldCode = (oldCode == null || oldCode == '' || oldCode == ' ') ? null : oldCode;
+                let query = `Insert INTO level (level_type_id, name, full_name, code_eo, code_nc, old_id, old_code, is_closed) VALUES (5, "${value['ShortDescr']}", "${value['Descr']}", '', '', ${value['InstitutionId']}, ${oldCode}, ${value['Closed']})`;
+                mysql.query(query).then(/*console.log("Done")*/);
+            });
+            console.log("Synced Level 12")
+        });
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//syncLevelType();
 //syncCity();
 //syncCountry();
 //syncJamatiTitle();
@@ -464,7 +495,8 @@ function syncLevelGRS() {
 //syncPublicServiceInstitution();
 //syncSecularStudyLevel();
 //syncVoluntaryInstitution();
-syncPosition();
+//syncPosition();
+//syncLevelInstitution();
 
 
 //syncJamatKhana();
