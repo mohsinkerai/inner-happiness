@@ -53,7 +53,7 @@ public class Person extends BaseEntity {
   // Should Represent UTC
   private LocalDate dateOfBirth;
   private String residentialAddress;
-  private long city; // id
+  private Long city; // id
   private String residenceTelephone;
   private String mobilePhone;
   private String emailAddress;
