@@ -26,7 +26,7 @@ public class CycleController extends BaseController<Cycle> {
     cycleService.closeCycle();
   }
 
-  @RequestMapping(method = RequestMethod.POST, value = "close")
+  @RequestMapping(method = RequestMethod.POST, value = "open")
   public void open(@RequestBody long cycleId) {
     cycleService.openCycle(cycleId);
   }
