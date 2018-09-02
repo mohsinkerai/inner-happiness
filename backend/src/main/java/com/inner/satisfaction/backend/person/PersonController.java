@@ -3,6 +3,7 @@ package com.inner.satisfaction.backend.person;
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,11 @@ public class PersonController extends BaseController<Person> {
   public PersonController(PersonService personService) {
     super(personService);
     this.personService = personService;
+  }
+
+  @Override
+  public List<Person> findAll() {
+    throw new RuntimeException("Please use search method for listing");
   }
 
   @ResponseStatus(HttpStatus.OK)
