@@ -17,7 +17,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         #region Private Fields
 
-        private static readonly string BaseUrl = "http://52.49.183.67:8080/";
+        private static readonly string BaseUrl = "http://34.254.242.5:8080/";
         private static HttpClient _client;
 
         #endregion Private Fields
@@ -1112,6 +1112,31 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 return person;
             }
 
+            return null;
+        }
+
+        public static async Task<List<NominationDetailModel>> GetInstitutionDetails(string id)
+        {
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        
+            var res = await _client.GetAsync("position/search/findByInstitutionId?institutionId="+id);
+        
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+
+                var instituitonDetail  = new List<NominationDetailModel>();
+
+               
+
+                //instituitonDetail = JsonConvert.DeserializeObject<List<IndexNominationModel>>(json);
+
+                return instituitonDetail;
+            }
             return null;
         }
 
