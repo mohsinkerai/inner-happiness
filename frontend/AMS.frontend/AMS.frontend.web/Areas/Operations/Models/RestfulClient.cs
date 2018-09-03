@@ -17,7 +17,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         #region Private Fields
 
-        private static readonly string BaseUrl = "http://34.254.242.5:8080/";
+        private static readonly string BaseUrl = "http://is.bismagreens.com:8080";
         private static HttpClient _client;
 
         #endregion Private Fields

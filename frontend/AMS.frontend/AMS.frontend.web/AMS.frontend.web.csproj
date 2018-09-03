@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <ApplicationInsightsResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourcegroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourcegroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>393a4026-082c-4368-9c37-82f152cd6e45</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
