@@ -39,6 +39,17 @@ function Initialize() {
             rightArrow: '<i class="la la-angle-right"></i>'
         }
     });
+    $(".date-picker-year-only").datepicker({
+        todayHighlight: true,
+        orientation: "bottom left",
+        templates: {
+            leftArrow: '<i class="la la-angle-left"></i>',
+            rightArrow: '<i class="la la-angle-right"></i>'
+        },
+        format: "yyyy",
+        viewMode: "years",
+        minViewMode: "years"
+    });
 }
 
 function toggleNotMe() {

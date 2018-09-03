@@ -34,8 +34,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #region Public Methods
 
-        public async Task<IActionResult> Detail(string id)
+        public async Task<IActionResult> Detail(string uid)
         {
+
             var model = new NominationDetailModel
             {
                 Institution = new InstitutionModel
@@ -119,6 +120,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             };
 
+            var conditionedData = await RestfulClient.GetInstitutionDetails(uid);
+
             return View(model);
         }
 
@@ -154,7 +157,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //ViewBag.LocalList = await RestfulClient.getLocalCouncil();
             //ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
             //ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
-
+            
             return View(new IndexNominationModel { Positions = new List<PositionModel>() });
         }
 
