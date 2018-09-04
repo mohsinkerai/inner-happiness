@@ -14,10 +14,10 @@ using Newtonsoft.Json.Linq;
 namespace AMS.frontend.web.Areas.Operations.Models
 {
     public static class RestfulClient
-    {
+    {   
         #region Private Fields
 
-        private static readonly string BaseUrl = "http://is.bismagreens.com:8080";
+        private static readonly string BaseUrl = "http://is.bismagreens.com:8080/";
         private static HttpClient _client;
 
         #endregion Private Fields
@@ -1115,8 +1115,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<NominationDetailModel>> GetInstitutionDetails(string id)
+        public static async Task<NominationDetailModel> GetInstitutionDetails(string id)
         {
+            NominationDetailModel nominationDetailModel = new NominationDetailModel();
+            nominationDetailModel.Positions = new List<PositionModel>();
+            nominationDetailModel.Institution = new InstitutionModel();
+
             _client = new HttpClient
             {
                 BaseAddress = new Uri(BaseUrl)
@@ -1129,13 +1133,31 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
                 var json = res.Content.ReadAsStringAsync().Result;
 
-                var instituitonDetail  = new List<NominationDetailModel>();
+                JArray arr = JArray.Parse(json);
 
-               
+                for(int positionindex = 0; positionindex < arr.Count; positionindex++)
+                {
+                    var person = arr[positionindex]["incumbent"]["person"];
+                    nominationDetailModel.Positions[positionindex].Incubment = person;
+
+                    var required = arr[positionindex]["poi"]["desired"];
+                    nominationDetailModel.Positions[positionindex].Required = Convert.ToInt32(required);
+
+                    var data = arr[positionindex]["personsNominated"];
+
+                    int index = -1;
+                    foreach (JObject Jobj in data)
+                    {
+                        index++;
+                        PersonModel nominatedPerson = Jobj["person"];
+                        nominationDetailModel.Positions[positionindex].Nominations[index].Person = nominatedPerson;
+                    }
+                }
+
 
                 //instituitonDetail = JsonConvert.DeserializeObject<List<IndexNominationModel>>(json);
 
-                return instituitonDetail;
+                return nominationDetailModel;
             }
             return null;
         }

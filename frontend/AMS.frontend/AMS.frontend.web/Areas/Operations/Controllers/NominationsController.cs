@@ -120,9 +120,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             };
 
-            var conditionedData = await RestfulClient.GetInstitutionDetails(uid);
+            NominationDetailModel nominationModel = await RestfulClient.GetInstitutionDetails(uid);
 
-            return View(model);
+            return View(nominationModel);
         }
 
         public async Task<JsonResult> GetInstitutionTypes(string level, string subLevel)

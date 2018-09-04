@@ -6,6 +6,7 @@ using AMS.frontend.web.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -353,6 +354,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string WillingnessToDevoteTimeInFuture { get; set; }
 
         [JsonIgnore] public string Write { get; set; }
+
+        public static implicit operator PersonModel(JToken v)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion Public Properties
     }

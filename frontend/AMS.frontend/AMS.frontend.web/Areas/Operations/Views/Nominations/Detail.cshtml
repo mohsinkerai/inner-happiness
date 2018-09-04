@@ -2,7 +2,7 @@
 @model NominationDetailModel
 @{
     ViewBag.ModuleTitle = "Nominations Management";
-    ViewBag.PageTitle = $"Nominations - {Model.Institution.Name}";
+    ViewBag.PageTitle = $"Nominations - {Model?.Institution.Name}";
     ViewBag.Action = "Detail";
 }
 
