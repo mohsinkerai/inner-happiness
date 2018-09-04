@@ -65,31 +65,33 @@ public class PositionService extends BaseService<Position> {
         .findByCycleIdAndPositionOnInstitutionId(poi.getId(),
           previousCycleId);
 
-      Assert.notNull(cpi, "Either Cycle is not configured correctly or some other error resulting on CPI null");
-      Assert.notNull(lastCpi, "Either Previous Cycle is not configured correctly or some other error resulting on Previous CPI null");
+//      Assert.notNull(cpi, "Either Cycle is not configured correctly or some other error resulting on CPI null");
+//      Assert.notNull(lastCpi, "Either Previous Cycle is not configured correctly or some other error resulting on Previous CPI null");
 
-      PositionDetailsDto positionDetailsDto = new PositionDetailsDto();
-      List<PositionDetailsPersonDto> pdpd = Lists.newArrayList();
+      if (lastCpi != null) {
+        PositionDetailsDto positionDetailsDto = new PositionDetailsDto();
+        List<PositionDetailsPersonDto> pdpd = Lists.newArrayList();
 
-      List<PersonCPI> cpis = personCPIService.findByCpiId(cpi.getId());
+        // Person Incumbent
+        PersonCPI incumbentPersonCpi = personCPIService
+          .findByCpiIdAndIsAppointedTrue(lastCpi.getId());
+        Person incumbentPerson = getPerson(incumbentPersonCpi.getPersonId());
+        PositionDetailsPersonDto incumbent = positionDetailsDto.new PositionDetailsPersonDto(
+          incumbentPerson, incumbentPersonCpi);
+        positionDetailsDto.setIncumbent(incumbent);
 
-      for (PersonCPI cpi1 : cpis) {
-        Person one = getPerson(cpi1.getPersonId());
-        pdpd.add(positionDetailsDto.new PositionDetailsPersonDto(one, cpi1));
+        if (cpi != null) {
+          List<PersonCPI> cpis = personCPIService.findByCpiId(cpi.getId());
+          for (PersonCPI cpi1 : cpis) {
+            Person one = getPerson(cpi1.getPersonId());
+            pdpd.add(positionDetailsDto.new PositionDetailsPersonDto(one, cpi1));
+          }
+          positionDetailsDto.setCpiId(cpi.getId());
+          positionDetailsDto.setPersonsNominated(pdpd);
+          positionDetailsDto.setPoi(poi);
+          positionDetails.add(positionDetailsDto);
+        }
       }
-
-      PersonCPI incumbentPersonCpi = personCPIService
-        .findByCpiIdAndIsAppointedTrue(lastCpi.getId());
-      Person incumbentPerson = getPerson(incumbentPersonCpi.getPersonId());
-      PositionDetailsPersonDto incumbent = positionDetailsDto.new PositionDetailsPersonDto(
-        incumbentPerson, incumbentPersonCpi);
-      // Incumbent Logic Here
-
-      positionDetailsDto.setCpiId(cpi.getId());
-      positionDetailsDto.setPersonsNominated(pdpd);
-      positionDetailsDto.setIncumbent(incumbent);
-      positionDetailsDto.setPoi(poi);
-      positionDetails.add(positionDetailsDto);
     }
 
     return positionDetails;
