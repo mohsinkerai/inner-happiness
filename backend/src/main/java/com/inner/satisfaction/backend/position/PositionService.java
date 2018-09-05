@@ -5,8 +5,12 @@ import com.inner.satisfaction.backend.appconfiguration.ApplicationConfiguration;
 import com.inner.satisfaction.backend.appconfiguration.ApplicationConfigurationKeys;
 import com.inner.satisfaction.backend.appconfiguration.ApplicationConfigurationService;
 import com.inner.satisfaction.backend.base.BaseService;
+import com.inner.satisfaction.backend.cycle.Cycle;
+import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.cycle.position.CyclePositionOnInstitution;
 import com.inner.satisfaction.backend.cycle.position.CyclePositionOnInstitutionService;
+import com.inner.satisfaction.backend.institution.Institution;
+import com.inner.satisfaction.backend.institution.InstitutionService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
 import com.inner.satisfaction.backend.person.cpi.PersonCPI;
@@ -25,7 +29,9 @@ import org.springframework.util.Assert;
 public class PositionService extends BaseService<Position> {
 
   private final PositionRepository positionRepository;
+  private final InstitutionService institutionService;
   private final PersonService personService;
+  private final CycleService cycleService;
   private final PersonCPIService personCPIService;
   private final PositionOnInstitutionService positionOnInstitutionService;
   private final CyclePositionOnInstitutionService cyclePositionOnInstitutionService;
@@ -34,13 +40,18 @@ public class PositionService extends BaseService<Position> {
   protected PositionService(
     PositionRepository baseRepository,
     PositionValidation positionValidation,
+    InstitutionService institutionService,
     PersonService personService,
+    CycleService cycleService,
     PersonCPIService personCPIService,
     PositionOnInstitutionService positionOnInstitutionService,
     CyclePositionOnInstitutionService cyclePositionOnInstitutionService,
     ApplicationConfigurationService applicationConfigurationService) {
+
     super(baseRepository, positionValidation);
+    this.institutionService = institutionService;
     this.personService = personService;
+    this.cycleService = cycleService;
     this.personCPIService = personCPIService;
     this.positionOnInstitutionService = positionOnInstitutionService;
     this.positionRepository = baseRepository;
@@ -48,7 +59,13 @@ public class PositionService extends BaseService<Position> {
     this.applicationConfigurationService = applicationConfigurationService;
   }
 
-  public List<PositionDetailsDto> findByInstitutionId(long institutionId) {
+  /**
+   * Returns All the Inc
+   */
+  public PositionRecommendationResponse findByInstitutionId(long institutionId) {
+    Institution institution = institutionService.findOne(institutionId);
+    Assert.notNull(institution, "Invalid Institution Id Given, doesn't exist in db");
+
     List<PositionOnInstitution> positionOnInstitutions = positionOnInstitutionService
       .findByInstitutionId(institutionId);
 
@@ -57,7 +74,10 @@ public class PositionService extends BaseService<Position> {
     Integer currentCycleId = getKeyInteger(ApplicationConfigurationKeys.CURRENT_CYCLE_ID.name());
     Integer previousCycleId = getKeyInteger(ApplicationConfigurationKeys.PREVIOUS_CYCLE_ID.name());
 
+    Cycle cycle = cycleService.findOne((long) currentCycleId);
+
     for (PositionOnInstitution poi : positionOnInstitutions) {
+      Position position = findOne(poi.getPositionId());
       CyclePositionOnInstitution cpi = cyclePositionOnInstitutionService
         .findByCycleIdAndPositionOnInstitutionId(poi.getId(),
           currentCycleId);
@@ -70,6 +90,7 @@ public class PositionService extends BaseService<Position> {
 
       if (lastCpi != null) {
         PositionDetailsDto positionDetailsDto = new PositionDetailsDto();
+        positionDetailsDto.setPosition(position);
         List<PositionDetailsPersonDto> pdpd = Lists.newArrayList();
 
         // Person Incumbent
@@ -94,7 +115,7 @@ public class PositionService extends BaseService<Position> {
       }
     }
 
-    return positionDetails;
+    return new PositionRecommendationResponse(positionDetails, institution, cycle);
   }
 
   private Person getPerson(long personId) {

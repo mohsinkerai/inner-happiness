@@ -30,7 +30,7 @@ public class PositionController extends BaseController<Position> {
    */
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/findByInstitutionId", method = RequestMethod.GET)
-  public List<PositionDetailsDto> findByInstitutionId(@RequestParam("institutionId") long institutionId) {
+  public PositionRecommendationResponse findByInstitutionId(@RequestParam("institutionId") long institutionId) {
     return positionService.findByInstitutionId(institutionId);
   }
 }
