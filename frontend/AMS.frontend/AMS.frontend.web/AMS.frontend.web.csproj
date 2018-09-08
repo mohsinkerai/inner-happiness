@@ -12,8 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.3" />
@@ -23,6 +21,7 @@
     <Folder Include="Areas\Administration\Views\" />
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Areas\Administration\Controllers\" />
+    <Folder Include="Connected Services\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 

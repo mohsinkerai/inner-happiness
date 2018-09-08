@@ -12,7 +12,7 @@ namespace AMS.frontend.web.ViewComponents
     {
         #region Public Methods
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public IViewComponentResult Invoke()
         {
             IList menuModel = new List<MenuModel>
             {

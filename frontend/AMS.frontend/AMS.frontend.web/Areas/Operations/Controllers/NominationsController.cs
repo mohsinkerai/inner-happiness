@@ -1,7 +1,6 @@
 ﻿using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Helpers.Constants;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
@@ -16,9 +15,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         #region Public Constructors
 
-        public NominationsController(IMapper mapper, IOptions<Configuration> configuration)
+        public NominationsController(IOptions<Configuration> configuration)
         {
-            _mapper = mapper;
             _configuration = configuration.Value;
         }
 
@@ -27,8 +25,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         #region Private Fields
 
         private readonly Configuration _configuration;
-
-        private readonly IMapper _mapper;
 
         #endregion Private Fields
 
@@ -146,7 +142,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return new JsonResult(list);
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
@@ -157,12 +153,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //ViewBag.LocalList = await RestfulClient.getLocalCouncil();
             //ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
             //ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
-            
+
             return View(new IndexNominationModel { Positions = new List<PositionModel>() });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
+        public IActionResult Index(IndexNominationModel indexNominationModel)
         {
             return View(indexNominationModel);
         }

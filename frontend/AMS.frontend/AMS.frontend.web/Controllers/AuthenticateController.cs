@@ -24,13 +24,13 @@ namespace AMS.frontend.web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(LoginModel model)
+        public IActionResult Index(LoginModel model)
         {
             if (ModelState.IsValid)
             {
                 if (model.RememberMe)
                 {
-                    var cookieOptions = new CookieOptions {HttpOnly = false};
+                    var cookieOptions = new CookieOptions { HttpOnly = false };
                     Response.Cookies.Append(CookieNames.RememberMe, Convert.ToString(model.RememberMe), cookieOptions);
                     Response.Cookies.Append(CookieNames.Company, model.Company, cookieOptions);
                 }
@@ -49,7 +49,7 @@ namespace AMS.frontend.web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Reset(LoginModel model)
+        public IActionResult Reset(LoginModel model)
         {
             //todo by aa - call forget password api
 

@@ -11,8 +11,8 @@
 
 @section scripts{
 
-    @Html.Partial(PartialNames.ValidationScripts)
-    @Html.Partial(PartialNames.DateTimePickerScripts)
+    @{ @(await Html.PartialAsync(PartialNames.ValidationScripts)) }
+    @{ @(await Html.PartialAsync(PartialNames.DateTimePickerScripts)) }
 
     <script type="text/javascript">
         jQuery(document).ready(function() {

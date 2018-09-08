@@ -7,7 +7,6 @@ using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,9 +19,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         #region Public Constructors
 
-        public PersonsController(IMapper mapper, IOptions<Configuration> configuration)
+        public PersonsController(IOptions<Configuration> configuration)
         {
-            _mapper = mapper;
             _configuration = configuration.Value;
         }
 
@@ -33,8 +31,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
         private const string SessionKeyDoNotValidateFormNumberOnEditPage = "_DoNotValidateFormNumberOnEditPage";
         private readonly Configuration _configuration;
-
-        private readonly IMapper _mapper;
 
         #endregion Private Fields
 
@@ -201,7 +197,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AkdnTrainingListAdd(string id, string training, string countryOfTarining,
+        public IActionResult AkdnTrainingListAdd(string id, string training, string countryOfTarining,
             string month, string year)
         {
             var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, month, year);
@@ -210,7 +206,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AkdnTrainingListDelete(string id)
+        public IActionResult AkdnTrainingListDelete(string id)
         {
             var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                           new List<AkdnTrainingModel>();
@@ -408,7 +404,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EducationListAdd(string id, string institution, string countryOfStudy,
+        public IActionResult EducationListAdd(string id, string institution, string countryOfStudy,
             string fromYear,
             string toYear, string nameOfDegree, string majorAreaOfStudy)
         {
@@ -419,7 +415,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EducationListDelete(string id)
+        public IActionResult EducationListDelete(string id)
         {
             var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
                                        new List<EducationModel>();
@@ -430,7 +426,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EmploymentListAdd(string id, string nameOfOrganization, string designation,
+        public IActionResult EmploymentListAdd(string id, string nameOfOrganization, string designation,
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
@@ -442,7 +438,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EmploymentListDelete(string id)
+        public IActionResult EmploymentListDelete(string id)
         {
             var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                         new List<EmploymentModel>();
@@ -453,7 +449,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FamilyRelationListAdd(string id, string relativeCnic,
+        public IActionResult FamilyRelationListAdd(string id, string relativeCnic,
             string relativeSalutation,
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
             string relativeDateOfBirth, string relativeRelation)
@@ -466,7 +462,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FamilyRelationListDelete(string id)
+        public IActionResult FamilyRelationListDelete(string id)
         {
             var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
                                             new List<FamilyRelationModel>();
@@ -492,7 +488,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return new JsonResult(list);
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
@@ -506,7 +502,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName)
+        public IActionResult Index(string formNumber, string cnic, string firstName, string lastName)
         {
             if (cnic == null && firstName == null && lastName == null && formNumber == null)
             {
@@ -525,7 +521,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LanguageListAdd(string id, string language, string read,
+        public IActionResult LanguageListAdd(string id, string language, string read,
             string write, string speak)
         {
             var sessionLanguageList = AddLanguageToSession(id, language, read, write, speak);
@@ -534,7 +530,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LanguageListDelete(string id)
+        public IActionResult LanguageListDelete(string id)
         {
             var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
                                       new List<LanguageProficiencyModel>();
@@ -545,7 +541,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProfessionalTrainingListAdd(string id, string training, string institution,
+        public IActionResult ProfessionalTrainingListAdd(string id, string training, string institution,
             string countryOfTarining, string month, string year)
         {
             var sessionProfessionalTrainingList =
@@ -555,7 +551,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProfessionalTrainingListDelete(string id)
+        public IActionResult ProfessionalTrainingListDelete(string id)
         {
             var sessionProfessionalTrainingList =
                 HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
@@ -618,7 +614,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
         }
 
-        public async Task<IActionResult> ValidateCnic(string cnic)
+        public IActionResult ValidateCnic(string cnic)
         {
             var doNotValidateCnic = HttpContext.Session.GetString(SessionKeyDoNotValidateCnicOnEditPage);
 
@@ -628,7 +624,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
         }
 
-        public async Task<IActionResult> ValidateFormNumber(string formnumber)
+        public IActionResult ValidateFormNumber(string formnumber)
         {
             var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
 
@@ -655,7 +651,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryCommunityListAdd(string id, string institution, string fromYear,
+        public IActionResult VoluntaryCommunityListAdd(string id, string institution, string fromYear,
             string toYear, string position)
         {
             var sessionVoluntaryCommunityList =
@@ -665,7 +661,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryCommunityListDelete(string id)
+        public IActionResult VoluntaryCommunityListDelete(string id)
         {
             var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
@@ -677,7 +673,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryPublicListAdd(string id, string institution, string fromYear,
+        public IActionResult VoluntaryPublicListAdd(string id, string institution, string fromYear,
             string toYear, string position)
         {
             var sessionVoluntaryPublicList = AddVoluntaryPublicToSession(id, institution, fromYear, toYear, position);
@@ -686,7 +682,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> VoluntaryPublicListDelete(string id)
+        public IActionResult VoluntaryPublicListDelete(string id)
         {
             var sessionVoluntaryPublicList =
                 HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??

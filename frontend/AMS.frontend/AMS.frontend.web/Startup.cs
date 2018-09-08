@@ -1,5 +1,4 @@
 ﻿using System;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -71,16 +70,12 @@ namespace AMS.frontend.web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMemoryCache();
-
-            services.AddAutoMapper();
+            
             services.Configure<Configuration>(Configuration);
 
             services.AddSession(options =>
             {
-                // Set a short timeout for easy testing.
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
-                //options.CookieName = ".TKNBackOffice.Session";
-                //options.CookieHttpOnly = true;
             });
         }
 
