@@ -4,6 +4,33 @@ $(document).ready(function () {
     Initialize();
 });
 
+function InitializeTypeAhead(id, name, prefetchJson, remoteUrl) {
+    try {
+        //var json = JSON.parse(prefetchJson.replace(/&quot;/g, '"'));;
+        //var localData = $.map(json, function (el) { return el });
+
+        var dataSource = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: remoteUrl,
+            //local: localData,
+            remote: {
+                url: remoteUrl + "/%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $("#" + id).typeahead(null, {
+            name: name,
+            hint: true,
+            highlight: true,
+            minLength: 3,
+            source: dataSource
+        });
+    }
+    catch (err) { }
+}
+
 function Initialize() {
     $(".input-validation-error").parents(".form-group").addClass("has-danger");
     $(".m-select2")

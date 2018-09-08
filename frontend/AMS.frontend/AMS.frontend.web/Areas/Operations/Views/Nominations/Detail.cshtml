@@ -128,6 +128,17 @@
                 </div>
             </div>
 
+            <br/>
+
+            <div class="form-group m-form__group row">
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    <div class="m-typeahead">
+                        <input class="form-control m-input" id="m_typeahead_4" type="text" dir="ltr" placeholder="Form number">
+                    </div>
+                    <div class="m-form__help" style="color: red">Search using form number to nominate a person</div>
+                </div>
+            </div>
+
             <table id="nominations-@position.Id" class="table table-striped- table-bordered table-hover">
                 <thead>
                     <tr>
@@ -245,6 +256,8 @@
                 "Persons",
                 "@Url.Action("ServerSideAjaxHandler", ControllerNames.Persons, new {area = AreaNames.Operations})");
             $("#persons").css("min-height", "0px");*@
+
+            InitializeTypeAhead("m_typeahead_4", "m_typeahead_4", "", "@Url.Action("GetPersons", ControllerNames.Nominations, new { area = AreaNames.Operations })");
         });
     </script>
 }
