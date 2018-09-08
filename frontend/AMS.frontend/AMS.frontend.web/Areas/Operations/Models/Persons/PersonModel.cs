@@ -168,8 +168,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         {
             get
             {
-                var education = Educations.First();
-                return $"{education.NameOfDegreeName}, {education.InstitutionName}, {education.ToYear}";
+                var education = Educations?.FirstOrDefault();
+                return $"{education?.NameOfDegreeName}, {education?.InstitutionName}, {education?.ToYear}";
             }
         }
 
@@ -177,8 +177,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         {
             get
             {
-                var employment = Employments.First();
-                return $"{employment.Designation}, {employment.NameOfOrganization}";
+                var employment = Employments?.FirstOrDefault();
+                return $"{employment?.Designation}, {employment?.NameOfOrganization}";
             }
         }
 
