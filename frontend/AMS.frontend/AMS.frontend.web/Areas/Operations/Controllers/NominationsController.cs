@@ -122,7 +122,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             NominationDetailModel nominationModel = await RestfulClient.GetInstitutionDetails(uid);
 
-            return View(nominationModel);
+            return View(model);
         }
 
         public async Task<JsonResult> GetInstitutionTypes(string level, string subLevel)

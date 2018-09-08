@@ -1127,39 +1127,52 @@ namespace AMS.frontend.web.Areas.Operations.Models
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         
-            var res = await _client.GetAsync("position/search/findByInstitutionId?institutionId="+id);
-        
+            var res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=5");
+
             if (res.IsSuccessStatusCode)
             {
                 var json = res.Content.ReadAsStringAsync().Result;
 
                 JArray arr = JArray.Parse(json);
 
-                for(int positionindex = 0; positionindex < arr.Count; positionindex++)
+                List<PositionModel> listPositionModel = new List<PositionModel>();
+                
+                for (int positionindex = 0; positionindex < arr.Count; positionindex++)
                 {
+                    List<NominationModel> listNominationModel = new List<NominationModel>();
+                    PositionModel positionModel = new PositionModel();
+
                     var person = arr[positionindex]["incumbent"]["person"];
-                    nominationDetailModel.Positions[positionindex].Incubment = person;
-
                     var required = arr[positionindex]["poi"]["desired"];
-                    nominationDetailModel.Positions[positionindex].Required = Convert.ToInt32(required);
-
-                    var data = arr[positionindex]["personsNominated"];
-
-                    int index = -1;
-                    foreach (JObject Jobj in data)
+                    var personNominated = arr[positionindex]["personsNominated"];
+                    var positionId = arr[positionindex]["poi"]["positionId"];
+                    
+                    positionModel.Incubment = person.ToObject<PersonModel>();
+                    positionModel.Id = positionId.ToString();
+                    
+                    foreach (JObject Jobj in personNominated)
                     {
-                        index++;
-                        PersonModel nominatedPerson = Jobj["person"];
-                        nominationDetailModel.Positions[positionindex].Nominations[index].Person = nominatedPerson;
+                        NominationModel nominationModel = new NominationModel();
+
+                        var nominatedPerson = Jobj["person"];
+                        var priority = Jobj["personCPI"]["priority"];
+                        nominationModel.Person = nominatedPerson.ToObject<PersonModel>();
+                        nominationModel.Priority = Convert.ToInt32(priority);
+                        listNominationModel.Add(nominationModel);
                     }
+
+                    listNominationModel.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
+
+                    positionModel.Nominations = listNominationModel;
+
+                    listPositionModel.Add(positionModel);
                 }
 
-
-                //instituitonDetail = JsonConvert.DeserializeObject<List<IndexNominationModel>>(json);
-
+                nominationDetailModel.Positions = listPositionModel;
+                
                 return nominationDetailModel;
             }
-            return null;
+            return nominationDetailModel;
         }
 
         #endregion Public Methods

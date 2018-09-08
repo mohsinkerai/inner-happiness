@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
+using Newtonsoft.Json.Linq;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Nominations
 {
@@ -35,6 +37,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public string PositionName { get; set; }
         public string PreviousCycle { get; set; }
         public int Required { get; set; }
+
+        public static implicit operator PositionModel(JToken v)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion Public Properties
     }
