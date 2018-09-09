@@ -44,31 +44,11 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
                         errorThrown);
                 },
                 success: function (result) {
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: { "id": id },
-                        contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                        dataType: "html",
-                        error: function (xmlHttpRequest, textStatus, errorThrown) {
-                            alert("Request: " +
-                                xmlHttpRequest.toString() +
-                                "\n\nStatus: " +
-                                textStatus +
-                                "\n\nError: " +
-                                errorThrown);
-                        },
-                        success: function (result) {
-                            if (result.length !== 4) {
-                                $("#nominations-table-" + positionId).html(result);
-                                InitializeNewDataTableLite("nominations-" + positionId, "Nominations");
-                                $("#nominations-" + positionId).css("min-height", "0px");
-                            }
-                            //else {
-                            //    window.location.replace(window.loginUrl);
-                            //}
-                        }
-                    });
+                    if (result.length !== 4) {
+                        $("#nominations-table-" + positionId).html(result);
+                        InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+                        $("#nominations-" + positionId).css("min-height", "0px");
+                    }
                 }
             });
         });
@@ -1610,23 +1590,90 @@ function InitializeInstitutionDataTable(id, title, url) {
 	});
 }
 
-function InitializeNewDataTableLite(id, title) {
-    var e;
-    (e = $("#" + id)).DataTable({
+function InitializeNominationDataTableLite(id, title, url, positionId) {
+    var table = $("#" + id).DataTable({
         responsive: true,
         paging: false,
         info: false,
         filter: false,
         rowReorder: true,
         order: [
-            [0, "desc"]
-        ],
-        "columnDefs": [
-            {
-                "targets": [0],
-                "visible": false
-            }
+            [0, "asc"]
         ]
+        //"columnDefs": [
+        //    {
+        //        "targets": [0],
+        //        "visible": false
+        //    }
+        //]
+    });
+
+    table.on("row-reorder", function (e, diff, edit) {
+        var primary = table.row(diff[0].node).data()[1];
+        var primaryId = diff[0].node.getAttribute("id").substring(15);
+        var primaryPosition = diff[0].newData;
+        var secondary = table.row(diff[1].node).data()[1];
+        var secondaryId = diff[1].node.getAttribute("id").substring(15);
+        var secondaryPosition = diff[1].newData;
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "positionId": positionId ,"primaryId": primaryId, "primaryPosition": primaryPosition, "secondaryId": secondaryId, "secondaryPosition": secondaryPosition },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#nominations-table-" + positionId).html(result);
+                    InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+                    $("#nominations-" + positionId).css("min-height", "0px");
+                }
+            }
+        });
+
+        //var result = "Reorder started on row: " + edit.triggerRow.data()[1] + "<br>";
+
+        //for (var i = 0, ien = diff.length; i < ien; i++) {
+        //    var rowData = table.row(diff[i].node).data();
+
+        //    result += rowData[1] + " updated to be in position " +
+        //        diff[i].newData + " (was " + diff[i].oldData + ")<br>";
+        //}
+
+        //alert("Event result:<br>" + result);
+    });
+}
+
+function RemoveNomination(url, positionId, personId) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "positionId": positionId, "personId": personId },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function(xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function(result) {
+            if (result.length !== 4) {
+                $("#nominations-table-" + positionId).html(result);
+                InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+                $("#nominations-" + positionId).css("min-height", "0px");
+            }
+        }
     });
 }
 

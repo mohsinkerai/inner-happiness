@@ -10,6 +10,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public bool IsRecommended { get; set; }
         public PersonModel Person { get; set; }
         public int Priority { get; set; }
+        public string Id { get; set; }
 
         #endregion Public Properties
     }

@@ -50,19 +50,81 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         IsAppointed = false,
                         IsRecommended = false,
                         Priority = 1,
-                        Person = PersonDummyData(string.Empty)
+                        Person = PersonDummyData(string.Empty),
+                        Id = "1111"
                     },
                     new NominationModel
                     {
                         IsAppointed = false,
                         IsRecommended = false,
                         Priority = 2,
-                        Person = PersonDummyData(string.Empty)
+                        Person = PersonDummyData(string.Empty),
+                        Id = "2222"
                     }
                 }
             });
         }
 
+        [HttpPost]
+        public IActionResult ReOrderNominations(string positionId, string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            //saif integration goes here
+            return PartialView("_NominationsTablePartial", new PositionModel
+            {
+                PositionName = "President",
+                CurrentCycle = "2018 - 2020",
+                CycleStatus = "On going",
+                PreviousCycle = "2015 - 2018",
+                Required = 3,
+                Id = "123",
+                Incubment = PersonDummyData(string.Empty),
+                Nominations = new List<NominationModel>
+                {
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 1,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "1111"
+                    },
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 2,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "2222"
+                    }
+                }
+            });
+        }
+        [HttpPost]
+        public IActionResult RemoveNomination(string positionId, string personId)
+        {
+            //saif integration goes here
+            return PartialView("_NominationsTablePartial", new PositionModel
+            {
+                PositionName = "President",
+                CurrentCycle = "2018 - 2020",
+                CycleStatus = "On going",
+                PreviousCycle = "2015 - 2018",
+                Required = 3,
+                Id = "123",
+                Incubment = PersonDummyData(string.Empty),
+                Nominations = new List<NominationModel>
+                {
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 1,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "1111"
+                    }
+                }
+            });
+        }
         public async Task<JsonResult> GetPersons(string uid)
         {
             var personTuple = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, uid, 1, 9999);
@@ -101,7 +163,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 IsAppointed = false,
                                 IsRecommended = false,
                                 Priority = 1,
-                                Person = PersonDummyData(string.Empty)
+                                Person = PersonDummyData(string.Empty),
+                                Id = "1111"
                             },
 
                             new NominationModel
@@ -109,7 +172,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 IsAppointed = false,
                                 IsRecommended = false,
                                 Priority = 2,
-                                Person = PersonDummyData(string.Empty)
+                                Person = PersonDummyData(string.Empty),
+                                Id = "2222"
                             },
 
                             new NominationModel
@@ -117,7 +181,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 IsAppointed = false,
                                 IsRecommended = false,
                                 Priority = 3,
-                                Person = PersonDummyData(string.Empty)
+                                Person = PersonDummyData(string.Empty),
+                                Id = "3333"
                             }
                         }
                     },
@@ -137,7 +202,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 IsAppointed = false,
                                 IsRecommended = false,
                                 Priority = 1,
-                                Person = PersonDummyData(string.Empty)
+                                Person = PersonDummyData(string.Empty),
+                                Id = "4444"
                             },
 
                             new NominationModel
@@ -145,7 +211,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 IsAppointed = false,
                                 IsRecommended = false,
                                 Priority = 2,
-                                Person = PersonDummyData(string.Empty)
+                                Person = PersonDummyData(string.Empty),
+                                Id = "5555"
                             },
 
                             new NominationModel
@@ -153,7 +220,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 IsAppointed = false,
                                 IsRecommended = false,
                                 Priority = 3,
-                                Person = PersonDummyData(string.Empty)
+                                Person = PersonDummyData(string.Empty),
+                                Id = "6666"
                             }
                         }
                     }

@@ -207,7 +207,7 @@
             var positionIds = '@Model.Positions.Select(p => p.Id).Join()';
             var positionArray = positionIds.split(',');
             for (var i = 0; i < positionArray.length; i++) {
-                InitializeNewDataTableLite("nominations-" + positionArray[i], "Nominations");
+                InitializeNominationDataTableLite("nominations-" + positionArray[i], "Nominations", "@Url.Action("ReOrderNominations", ControllerNames.Nominations, new { area = AreaNames.Operations })", positionArray[i]);
                 $("#nominations-" + positionArray[i]).css("min-height", "0px");
                 InitializeTypeAhead("person-lookup-" + positionArray[i],
                     "person-lookup-" + positionArray[i],
