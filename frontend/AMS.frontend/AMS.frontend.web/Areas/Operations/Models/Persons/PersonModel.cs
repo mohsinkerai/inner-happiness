@@ -14,7 +14,14 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
     {
         #region Public Properties
 
-        public int Age => DateOfBirth.GetAge();
+        public int Age
+        {
+            get
+            {
+                if (DateOfBirth != null) return DateOfBirth.Value.GetAge();
+                return 0;
+            }
+        }
 
         [JsonIgnore]
         [Display(Name = "Training")]
@@ -57,7 +64,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "dateOfBirth")]
         [Display(Name = "Date of Birth")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [JsonIgnore] public string Designation { get; set; }
 

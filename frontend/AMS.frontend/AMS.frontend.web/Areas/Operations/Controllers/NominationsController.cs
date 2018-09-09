@@ -30,11 +30,19 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #region Public Methods
 
+        [HttpPost]
+        public IActionResult Nominate(string id, string personId)
+        {
+            return Json("Hello");
+        }
+
         public async Task<JsonResult> GetPersons(string uid)
         {
             var personTuple = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, uid, 1, 9999);
-            var persons = personTuple.Item1.Select(p => new {Name = $"{p.FormNumber}-{p.FullName}"})
+            var persons = personTuple.Item1.Select(p => new { Name = $"{p.FormNumber}-{p.FullName}" })
                 .Select(p => p.Name);
+
+            //var persons = new List<string> {"Naveed", "Mohsin", "Saif"};
 
             return Json(persons);
         }

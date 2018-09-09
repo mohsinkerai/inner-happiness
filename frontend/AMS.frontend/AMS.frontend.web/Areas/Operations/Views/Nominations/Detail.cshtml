@@ -133,7 +133,7 @@
             <div class="form-group m-form__group row">
                 <div class="col-lg-4 col-md-9 col-sm-12">
                     <div class="m-typeahead">
-                        <input class="form-control m-input" id="m_typeahead_4" type="text" dir="ltr" placeholder="Form number">
+                        <input class="form-control m-input" id="person-lookup-@position.Id" type="text" dir="ltr" placeholder="Form number">
                     </div>
                     <div class="m-form__help" style="color: red">Search using form number to nominate a person</div>
                 </div>
@@ -250,14 +250,18 @@
             for (var i = 0; i < positionArray.length; i++) {
                 InitializeNewDataTableLite("nominations-" + positionArray[i], "Nominations");
                 $("#nominations-" + positionArray[i]).css("min-height", "0px");
+                InitializeTypeAhead("person-lookup-" + positionArray[i],
+                    "person-lookup-" + positionArray[i],
+                    "",
+                    "@Url.Action("GetPersons", ControllerNames.Nominations, new { area = AreaNames.Operations })",
+                    positionArray[i],
+                    "@Url.Action("Nominate", ControllerNames.Nominations, new { area = AreaNames.Operations })");
             }
             $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
             @*InitializeLitePersonDataTable("persons",
                 "Persons",
                 "@Url.Action("ServerSideAjaxHandler", ControllerNames.Persons, new {area = AreaNames.Operations})");
             $("#persons").css("min-height", "0px");*@
-
-            InitializeTypeAhead("m_typeahead_4", "m_typeahead_4", "", "@Url.Action("GetPersons", ControllerNames.Nominations, new { area = AreaNames.Operations })");
         });
     </script>
 }
