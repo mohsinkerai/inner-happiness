@@ -44,7 +44,31 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
                         errorThrown);
                 },
                 success: function (result) {
-                    alert(positionId + '-' + suggestion + '-' + result);
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { "id": id },
+                        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                        dataType: "html",
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            alert("Request: " +
+                                xmlHttpRequest.toString() +
+                                "\n\nStatus: " +
+                                textStatus +
+                                "\n\nError: " +
+                                errorThrown);
+                        },
+                        success: function (result) {
+                            if (result.length !== 4) {
+                                $("#nominations-table-" + positionId).html(result);
+                                InitializeNewDataTableLite("nominations-" + positionId, "Nominations");
+                                $("#nominations-" + positionId).css("min-height", "0px");
+                            }
+                            //else {
+                            //    window.location.replace(window.loginUrl);
+                            //}
+                        }
+                    });
                 }
             });
         });
@@ -207,7 +231,35 @@ function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, na
 }
 
 function LanguageListDelete(url, id) {
-    c
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#language-table").html(result);
+                InitializeDataTableLite("language", "Languages");
+                $("#Language").val('').trigger('change');
+                $("#Read").val('').trigger('change');
+                $("#Write").val('').trigger('change');
+                $("#Speak").val('').trigger('change');
+                $("#language-id").val('');
+            }
+            //else {
+            //    window.location.replace(window.loginUrl);
+            //}
+        }
+    });
 }
 
 function EmploymentListDelete(url, id) {

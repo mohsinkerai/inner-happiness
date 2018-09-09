@@ -33,7 +33,34 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult Nominate(string id, string personId)
         {
-            return Json("Hello");
+            //saif integration goes here
+            return PartialView("_NominationsTablePartial", new PositionModel
+            {
+                PositionName = "President",
+                CurrentCycle = "2018 - 2020",
+                CycleStatus = "On going",
+                PreviousCycle = "2015 - 2018",
+                Required = 3,
+                Id = "123",
+                Incubment = PersonDummyData(string.Empty),
+                Nominations = new List<NominationModel>
+                {
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 1,
+                        Person = PersonDummyData(string.Empty)
+                    },
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 2,
+                        Person = PersonDummyData(string.Empty)
+                    }
+                }
+            });
         }
 
         public async Task<JsonResult> GetPersons(string uid)
