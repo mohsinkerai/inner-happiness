@@ -4,6 +4,54 @@ $(document).ready(function () {
     Initialize();
 });
 
+function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url) {
+    try {
+        //var json = JSON.parse(prefetchJson.replace(/&quot;/g, '"'));;
+        //var localData = $.map(json, function (el) { return el });
+
+        var dataSource = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: remoteUrl,
+            //local: localData,
+            remote: {
+                url: remoteUrl + "/%QUERY",
+                wildcard: '%QUERY'
+            }
+        });
+
+        $("#" + id).typeahead(null, {
+            name: name,
+            hint: true,
+            highlight: true,
+            minLength: 3,
+            source: dataSource
+        });
+
+        $("#" + id).bind('typeahead:select', function (ev, suggestion) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: { "id": positionId, "personId": suggestion },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "html",
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " +
+                        xmlHttpRequest.toString() +
+                        "\n\nStatus: " +
+                        textStatus +
+                        "\n\nError: " +
+                        errorThrown);
+                },
+                success: function (result) {
+                    alert(positionId + '-' + suggestion + '-' + result);
+                }
+            });
+        });
+    }
+    catch (err) { }
+}
+
 function Initialize() {
     $(".input-validation-error").parents(".form-group").addClass("has-danger");
     $(".m-select2")
@@ -159,35 +207,7 @@ function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, na
 }
 
 function LanguageListDelete(url, id) {
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: { "id": id },
-        contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        dataType: "html",
-        error: function (xmlHttpRequest, textStatus, errorThrown) {
-            alert("Request: " +
-                xmlHttpRequest.toString() +
-                "\n\nStatus: " +
-                textStatus +
-                "\n\nError: " +
-                errorThrown);
-        },
-        success: function (result) {
-            if (result.length !== 4) {
-                $("#language-table").html(result);
-                InitializeDataTableLite("language", "Languages");
-                $("#Language").val('').trigger('change');
-                $("#Read").val('').trigger('change');
-                $("#Write").val('').trigger('change');
-                $("#Speak").val('').trigger('change');
-                $("#language-id").val('');
-            }
-            //else {
-            //    window.location.replace(window.loginUrl);
-            //}
-        }
-    });
+    c
 }
 
 function EmploymentListDelete(url, id) {
