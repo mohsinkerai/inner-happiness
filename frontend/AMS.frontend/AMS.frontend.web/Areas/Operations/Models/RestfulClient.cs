@@ -1137,17 +1137,23 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 List<PositionModel> listPositionModel = new List<PositionModel>();
                 
-                for (int positionindex = 0; positionindex < arr.Count; positionindex++)
+                foreach (JObject positionArray in arr)
                 {
                     List<NominationModel> listNominationModel = new List<NominationModel>();
                     PositionModel positionModel = new PositionModel();
 
-                    var person = arr[positionindex]["incumbent"]["person"];
-                    var required = arr[positionindex]["poi"]["desired"];
-                    var personNominated = arr[positionindex]["personsNominated"];
-                    var positionId = arr[positionindex]["poi"]["positionId"];
+                    var person = positionArray["incumbent"]["person"];
+                    var required = positionArray["poi"]["desired"];
+                    var personNominated = positionArray["personsNominated"];
+                    var positionId = positionArray["poi"]["positionId"];
                     
                     positionModel.Incubment = person.ToObject<PersonModel>();
+
+                    //-----------Hard coded values need to call APi for this---------
+                    positionModel.Incubment.MaritalStatusForDisplay = "Single";
+                    positionModel.Incubment.AreaOfOriginForDisplay = "Karachi";
+                    //---------------------------------------------------------------
+
                     positionModel.Id = positionId.ToString();
                     
                     foreach (JObject Jobj in personNominated)
@@ -1157,6 +1163,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         var nominatedPerson = Jobj["person"];
                         var priority = Jobj["personCPI"]["priority"];
                         nominationModel.Person = nominatedPerson.ToObject<PersonModel>();
+
+                        //--------------adding maritalStatusForDisplay-----------------
+                        nominationModel.Person.MaritalStatusForDisplay = "Single";
+                        nominationModel.Person.AreaOfOriginForDisplay = "Karachi";
+                        //-------------------------------------------------------------
+
                         nominationModel.Priority = Convert.ToInt32(priority);
                         listNominationModel.Add(nominationModel);
                     }
