@@ -133,7 +133,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             };
 
-            //NominationDetailModel nominationModel = await RestfulClient.GetInstitutionDetails(uid);
+            NominationDetailModel nominationModel = await RestfulClient.GetInstitutionDetails(uid);
 
             return View(nominationModel);
         }

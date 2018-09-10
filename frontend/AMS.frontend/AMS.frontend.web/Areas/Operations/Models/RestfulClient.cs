@@ -1137,6 +1137,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 List<PositionModel> listPositionModel = new List<PositionModel>();
                 
+
                 foreach (JObject positionArray in arr)
                 {
                     List<NominationModel> listNominationModel = new List<NominationModel>();
