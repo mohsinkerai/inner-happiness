@@ -8,10 +8,10 @@ import lombok.Data;
 @Entity
 public class CyclePositionOnInstitution extends BaseEntity {
 
-  private int minCount;
-  private int desired;
-  private int maxCount;
-  private int nominations;
+  private Integer minCount;
+  private Integer desired;
+  private Integer maxCount;
+  private Integer nominations;
 
   private Long cycleId;
   private Long positionOnInstitutionId;

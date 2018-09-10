@@ -1,0 +1,51 @@
+@model AMS.frontend.web.Areas.Operations.Models.Nominations.PositionModel
+<table id="nominations-@Model.Id" class="table table-striped- table-bordered table-hover">
+    <thead>
+    <tr>
+        <th> Priority </th>
+        <th> Name </th>
+        <th> Occupation </th>
+        <th> Education </th>
+        <th> Actions </th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model.Nominations != null)
+    {
+        foreach (var nomination in Model.Nominations)
+        {
+            <tr id="nomination-row-@nomination.Id">
+                <td>@nomination.Priority</td>
+                <td>
+                    <div class="m-card-user m-card-user--sm">
+                        <div class="m-card-user__pic">
+                            <img src="data:image/jpeg;base64,@nomination.Person.Image" class="m--img-rounded m--marginless" alt="photo">
+                        </div>
+                        <div class="m-card-user__details">
+                            <span class="m-card-user__name">@nomination.Person.FullName</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.Gender</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.Age yrs</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.MaritalStatusForDisplay</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.AreaOfOriginForDisplay</span>
+                            @*<a href="" class="m-card-user__email m-link">Brakus-Hansen</a>*@
+                        </div>
+                    </div>
+                </td>
+                <td> @nomination.Person.LatestEmplopyment </td>
+                <td> @nomination.Person.LatestEducation </td>
+                <td>
+                    <a target="_blank" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@nomination.Person.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                        <i class="la la-eye"></i>
+                    </a>
+                    <a target="_blank" asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@nomination.Person.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                        <i class="la la-edit"></i>
+                    </a>
+                    <a href='javascript:RemoveNomination("@Url.Action("RemoveNomination", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@Model.Id", "@nomination.Person.Id");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
+                        <i class="la la-user-times"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
