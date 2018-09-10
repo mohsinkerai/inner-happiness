@@ -1133,12 +1133,13 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
                 var json = res.Content.ReadAsStringAsync().Result;
 
-                JArray arr = JArray.Parse(json);
+                //JArray arr = JArray.Parse(json);
+                JObject arr = JObject.Parse(json);
+                var positionDeatilsDto = arr["positionDetailsDto"];
 
                 List<PositionModel> listPositionModel = new List<PositionModel>();
-                
-
-                foreach (JObject positionArray in arr)
+               
+                foreach (JObject positionArray in positionDeatilsDto)
                 {
                     List<NominationModel> listNominationModel = new List<NominationModel>();
                     PositionModel positionModel = new PositionModel();
@@ -1147,6 +1148,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var required = positionArray["poi"]["desired"];
                     var personNominated = positionArray["personsNominated"];
                     var positionId = positionArray["poi"]["positionId"];
+                    var currentCycle = arr["currentCycle"]["name"];
                     
                     positionModel.Incubment = person.ToObject<PersonModel>();
 
@@ -1156,6 +1158,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     //---------------------------------------------------------------
 
                     positionModel.Id = positionId.ToString();
+                    positionModel.CurrentCycle = currentCycle.ToString();
                     
                     foreach (JObject Jobj in personNominated)
                     {
@@ -1182,10 +1185,65 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 }
 
                 nominationDetailModel.Positions = listPositionModel;
+
+                var institutionId = arr["institution"]["id"];
+                var institutionName = arr["institution"]["name"];
+                nominationDetailModel.Institution.Id = institutionId.ToString();
+                nominationDetailModel.Institution.Name = institutionName.ToString();
                 
                 return nominationDetailModel;
             }
             return nominationDetailModel;
+        }
+
+        public static async Task<PersonModel> searchPersonByFormNumber(string formNumber, string personId, string id)
+        {
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var res = await _client.GetAsync("person/search/findByFormNo?formNo=" + formNumber);
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+                
+                return null;
+            }
+
+            return null;
+        }
+
+        public static async Task<PersonModel> nominate(string personId, string positionId)
+        {
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            JObject jObject = new JObject();
+            jObject.Add("appointed", true);
+            jObject.Add("cpiId", positionId);
+            jObject.Add("id", 0);
+            jObject.Add("personId", personId);
+            jObject.Add("priority", 0);
+            jObject.Add("recommended", true);
+
+            var json = JsonConvert.SerializeObject(jObject);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var res = await _client.PostAsync("/person/cpi",httpContent);
+
+            if (res.IsSuccessStatusCode)
+            {
+                var response = res.Content.ReadAsStringAsync().Result;
+                
+                return null;
+            }
+
+            return null;
         }
 
         #endregion Public Methods
