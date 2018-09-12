@@ -33,6 +33,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult Nominate(string id, string personId)
         {
+            var person = RestfulClient.nominate(id, personId);
+        
             //saif integration goes here
             return PartialView("_NominationsTablePartial", new PositionModel
             {
@@ -68,6 +70,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReOrderNominations(string positionId, string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
+
+
             //saif integration goes here
             return PartialView("_NominationsTablePartial", new PositionModel
             {
