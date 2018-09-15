@@ -53,9 +53,10 @@ function executeMigration() {
                     getDataFromTable("Ali_tblAppointmentYear").then((rows) => {
                         console.log("Migrating Cycle - Total Records: ", rows.length);
                         rows.forEach(function(value){
-                            let startDate = getDateTime(`${value['StartDate']}`);
-                            let endDate = getDateTime(`${value['EndDate']}`);
-                            let query = `Insert INTO cycle (name, start_date, end_date) VALUES ('', '${startDate}', '${endDate}')`;
+                            let startDate = getDateTime(`${value['NextStartDate']}`);
+                            let endDate = getDateTime(`${value['NextEndDate']}`);
+                            let name = ((new Date(startDate)).getFullYear() + '-' + (new Date(endDate)).getFullYear());
+                            let query = `Insert INTO cycle (name, start_date, end_date) VALUES ('${name}', '${startDate}', '${endDate}')`;
                             mysql.query(query).then(/*console.log("Done")*/);
                         });
                         console.log("Migrated Cycle");
@@ -79,10 +80,10 @@ function executeMigration() {
                             return Promise.resolve(null);
 
                         }).then(response => {
-                            getDataByQuery("SELECT DISTINCT(Descr) FROM Ali_tblDegree WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC").then((rows) => {
+                            getDataByQuery("SELECT DISTINCT(Descr), DegreeId FROM Ali_tblDegree WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC").then((rows) => {
                                 console.log("Migrating EducationalDegree - Total Records: ", rows.length);
                                 rows.forEach(function(value){
-                                    let query = `Insert INTO educational_degree (name) VALUES ("${value['Descr']}")`;
+                                    let query = `Insert INTO educational_degree (name, old_id) VALUES ("${value['Descr']}", ${value['DegreeId']})`;
                                     mysql.query(query).then(/*console.log("Done")*/);
                                 });
                                 console.log("Migrated EducationalDegree");
@@ -102,7 +103,7 @@ function executeMigration() {
                                     getDataFromTable("Ali_tblMajorStudyArea").then((rows) => {
                                         console.log("Migrating AreaOfStudy - Total Records: ", rows.length);
                                         rows.forEach(function(value){
-                                            let query = `Insert INTO area_of_study (name) VALUES ("${value['Descr']}")`;
+                                            let query = `Insert INTO area_of_study (name, old_id) VALUES ("${value['Descr']}", ${value['MajorStudyAreaId']})`;
                                             mysql.query(query).then(/*console.log("Done")*/);
                                         });
                                         console.log("Migrated AreaOfStudy");
@@ -149,10 +150,10 @@ function executeMigration() {
                                                         return Promise.resolve(null);
 
                                                     }).then(response => {
-                                                        getDataByQuery("SELECT DISTINCT(Descr) FROM Ali_tblAcademicInstitution WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC").then((rows) => {
+                                                        getDataByQuery("SELECT DISTINCT(Descr), AcademicInstitutionId FROM Ali_tblAcademicInstitution WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC").then((rows) => {
                                                             console.log("Migrating EducationalInstitution - Total Records: ", rows.length);
                                                             rows.forEach(function(value){
-                                                                let query = `Insert INTO educational_institution (name) VALUES ("${value['Descr']}")`;
+                                                                let query = `Insert INTO educational_institution (name, old_id) VALUES ("${value['Descr']}", ${value['AcademicInstitutionId']})`;
                                                                 mysql.query(query).then(/*console.log("Done")*/);
                                                             });
                                                             console.log("Migrated EducationalInstitution");
@@ -188,6 +189,8 @@ function executeMigration() {
                                                                         console.log("Migrated PublicServiceInstitution");
                                                                         return Promise.resolve(null);
 
+                                                                    }).then(response => {
+                                                                        console.log("MIGRATION COMPLETED");
                                                                     });
                                                                 })
                                                             })

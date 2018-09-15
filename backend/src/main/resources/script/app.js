@@ -71,10 +71,10 @@ function syncSalutation() {
 }
 
 function syncEducationalDegree() {
-    getDataByQuery("SELECT DISTINCT(Descr) FROM Ali_tblDegree WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC")
+    getDataByQuery("SELECT DISTINCT(Descr), DegreeId FROM Ali_tblDegree WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO educational_degree (name) VALUES ("${value['Descr']}")`;
+            let query = `Insert INTO educational_degree (name, old_id) VALUES ("${value['Descr']}", ${value['DegreeId']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Done Educational Degree");
@@ -93,7 +93,7 @@ function syncLanguage() {
 }
 
 function syncVoluntaryInstitution() {
-    getDataFromTable("Ali_tblInstitution")
+    getDataFromTable("My_tblInstitution")
         .then((rows) => {
             rows.forEach(function(value){
             let query = `Insert INTO voluntary_institution (name) VALUES ("${value['Descr']}")`;
@@ -107,7 +107,7 @@ function syncAreaOfStudy() {
     getDataFromTable("Ali_tblMajorStudyArea")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO area_of_study (name) VALUES ("${value['Descr']}")`;
+            let query = `Insert INTO area_of_study (name, old_id) VALUES ("${value['Descr']}", ${value['MajorStudyAreaId']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Done Major Study Area");
@@ -162,6 +162,11 @@ function syncFieldOfInterest() {
     mysql.query('INSERT INTO field_of_interest (name, short_name) VALUES ("Youth and Sports Board", "YSB")').then(console.log("Done"));
 }
 
+function syncRelation() {
+    let query = 'INSERT INTO relation (name, reverse_relation_id) VALUES ("FTH", 2), ("MTH", 1), ("BRO", 4), ("SIS", 3), ("SON", 6), ("DTR", 5), ("HSB", 8), ("WIF", 7)';
+    mysql.query(query).then(console.log("Done"));
+}
+
 function syncMaritalStatus() {
     getDataByQuery("SELECT DISTINCT MaritalStatus FROM Ali_tblPerson WHERE MaritalStatus IS NOT NULL AND MaritalStatus != ''")
         .then((rows) => {
@@ -185,10 +190,10 @@ function syncOccupation() {
 }
 
 function syncEducationalInstitution() {
-    getDataByQuery("SELECT DISTINCT(Descr) FROM Ali_tblAcademicInstitution WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC")
+    getDataByQuery("SELECT DISTINCT(Descr), AcademicInstitutionId FROM Ali_tblAcademicInstitution WHERE Descr IS NOT NULL AND Descr != '' ORDER BY Descr ASC")
         .then((rows) => {
             rows.forEach(function(value){
-            let query = `Insert INTO educational_institution (name) VALUES ("${value['Descr']}")`;
+            let query = `Insert INTO educational_institution (name, old_id) VALUES ("${value['Descr']}", ${value['AcademicInstitutionId']})`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Educational Institution");
@@ -210,9 +215,10 @@ function syncCycle() {
     getDataFromTable("Ali_tblAppointmentYear")
         .then((rows) => {
             rows.forEach(function(value){
-            let startDate = getDateTime(`${value['StartDate']}`);
-            let endDate = getDateTime(`${value['EndDate']}`);
-            let query = `Insert INTO cycle (name, start_date, end_date) VALUES ('', '${startDate}', '${endDate}')`;
+            let startDate = getDateTime(`${value['NextStartDate']}`);
+            let endDate = getDateTime(`${value['NextEndDate']}`);
+            var name = ((new Date(startDate)).getFullYear() + '-' + (new Date(endDate)).getFullYear());
+            let query = `Insert INTO cycle (name, start_date, end_date) VALUES ('${name}', '${startDate}', '${endDate}')`;
             mysql.query(query).then(/*console.log("Done")*/);
         });
         console.log("Synced Cycle");
@@ -264,7 +270,7 @@ function syncTempRegion() {
 }
 
 function syncRegionalCouncil() {
-    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' ORDER BY RegionId")
+    getDataByQuery("SELECT * FROM My_tblInstitution WHERE Jurisdiction = 'REG' ORDER BY RegionId")
         .then((rows) => {
             rows.forEach(function(value){
             let query = `Insert INTO level (level_type_id, name, full_name, level_parent_id) VALUES (2, "${value['ShortDescr']}", "${value['Descr']}", 1)`;
@@ -275,7 +281,7 @@ function syncRegionalCouncil() {
 }
 
 function syncJamatKhana() {
-    getDataByQuery("SELECT j.Population, j.Closed, j.OldCode, i.Descr, i.ShortDescr FROM Ali_tblJamatkhana j JOIN Ali_tblInstitution i ON j.InstitutionId = i.InstitutionId")
+    getDataByQuery("SELECT j.Population, j.Closed, j.OldCode, i.Descr, i.ShortDescr FROM Ali_tblJamatkhana j JOIN My_tblInstitution i ON j.InstitutionId = i.InstitutionId")
         .then((rows) => {
             rows.forEach(function(value){
             let query = `Insert INTO jamatkhana (name, short_name, population, is_closed, old_code) VALUES ("${value['Descr']}", "${value['ShortDescr']}", ${value['Population']}, ${value['Closed']}, "${value['OldCode']}")`;
@@ -318,7 +324,7 @@ function syncLocalCouncil() {
 //******************** LEVEL Migration *************************************************//
 
 function syncLevelNC() {
-    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'NAT'")
+    getDataByQuery("SELECT * FROM My_tblInstitution WHERE Jurisdiction = 'NAT'")
         .then((rows) => {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
@@ -331,7 +337,7 @@ function syncLevelNC() {
 }
 
 function syncLevelRC() {
-    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'RC%'")
+    getDataByQuery("SELECT * FROM My_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'RC%'")
         .then((rows) => {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
@@ -344,7 +350,7 @@ function syncLevelRC() {
 }
 
 function syncLevelLC() {
-    getDataByQuery("SELECT reg.InstitutionId AS 'RegionalCouncilId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'RC%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'LC%'")
+    getDataByQuery("SELECT reg.InstitutionId AS 'RegionalCouncilId', lcl.* FROM My_tblInstitution reg JOIN My_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'RC%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'LC%'")
         .then((rows) => {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
@@ -367,7 +373,7 @@ function syncLevelLCParent() {
 }
 
 function syncLevelJK() {
-    getDataByQuery("SELECT lcl.InstitutionId AS 'LCId', jkh.* FROM Ali_tblInstitution lcl JOIN Ali_tblInstitution jkh ON lcl.LocalCouncilId = jkh.LocalCouncilId WHERE lcl.Jurisdiction = 'LCL' AND jkh.Jurisdiction = 'JKH' AND lcl.ShortDescr LIKE 'LC%' ORDER BY jkh.LocalCouncilId")
+    getDataByQuery("SELECT lcl.InstitutionId AS 'LCId', jkh.* FROM My_tblInstitution lcl JOIN My_tblInstitution jkh ON lcl.LocalCouncilId = jkh.LocalCouncilId WHERE lcl.Jurisdiction = 'LCL' AND jkh.Jurisdiction = 'JKH' AND lcl.ShortDescr LIKE 'LC%' AND lcl.Closed != 1 ORDER BY jkh.InstitutionId")
         .then((rows) => {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
@@ -390,7 +396,7 @@ function syncLevelJKParent() {
 }
 
 function syncLevelRegionalITREB() {
-    getDataByQuery(`SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'ITREB%'`)
+    getDataByQuery(`SELECT * FROM My_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'ITREB%'`)
         .then((rows) => {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
@@ -403,7 +409,7 @@ function syncLevelRegionalITREB() {
 }
 
 function syncLevelLocalITREB() {
-    getDataByQuery(`SELECT reg.InstitutionId AS 'RItrebId', lcl.* FROM Ali_tblInstitution reg JOIN Ali_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'ITREB%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'ITREB%' ORDER BY lcl.RegionId`)
+    getDataByQuery(`SELECT reg.InstitutionId AS 'RItrebId', lcl.* FROM My_tblInstitution reg JOIN My_tblInstitution lcl ON reg.RegionId = lcl.RegionId WHERE reg.Jurisdiction = 'REG' AND reg.ShortDescr LIKE 'ITREB%' AND lcl.Jurisdiction = 'LCL' AND lcl.ShortDescr LIKE 'ITREB%' ORDER BY lcl.RegionId`)
         .then((rows) => {
             rows.forEach(function(value){
             let oldCode = value['OldCode'];
@@ -426,7 +432,7 @@ function syncLevelLocalITREBParent() {
 }
 
 function syncLevelRegionalCAB() {
-    getDataByQuery(`SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'CAB%'`)
+    getDataByQuery(`SELECT * FROM My_tblInstitution WHERE Jurisdiction = 'REG' AND ShortDescr LIKE 'CAB%'`)
         .then((rows) => {
         rows.forEach(function(value){
         let oldCode = value['OldCode'];
@@ -439,7 +445,7 @@ function syncLevelRegionalCAB() {
 }
 
 function syncLevelGRS() {
-    getDataByQuery("SELECT * FROM Ali_tblInstitution WHERE Jurisdiction = 'GRS'")
+    getDataByQuery("SELECT * FROM My_tblInstitution WHERE Jurisdiction = 'GRS'")
         .then((rows) => {
         rows.forEach(function(value){
         let oldCode = value['OldCode'];
@@ -462,7 +468,7 @@ function syncLevelInstitution() {
 }
 
 function syncInstitutionOnPosition() {
-    getDataByQuery("SELECT * FROM Ali_tblInstitutionPosition")
+    getDataByQuery("SELECT * FROM My_tblInstitutionPosition")
         .then((rows) => {
             rows.forEach(function(value){
                 let oldCode = value['OldCode'];
@@ -497,14 +503,16 @@ function syncInstitutionOnPosition() {
 //syncVoluntaryInstitution();
 //syncPosition();
 //syncLevelInstitution();
+//syncRelation();
 
 
-//syncJamatKhana();
+//syncJamatKhana(ss);
 //syncLocalCouncil();
 //syncRegion();
 //syncRegionalCouncil();
 //syncSkills();
 //syncTempRegion();
+
 //syncLevelNC();
 //syncLevelRC();
 //syncLevelLC();
@@ -516,4 +524,3 @@ function syncInstitutionOnPosition() {
 //syncLevelLocalITREBParent();
 //syncLevelRegionalCAB();
 //syncLevelGRS();
-
