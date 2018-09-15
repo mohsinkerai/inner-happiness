@@ -4,18 +4,28 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <include file="changelog/01-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/02-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/03-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/04-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/05-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/06-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/07-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/08-basic-tables.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/09-configurations.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/10-basic-e2e-dummy-data.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/11-indexes-keys.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/12-db-migration.xml" relativeToChangelogFile="true"/>
+  <!--<include file="changelog/01-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/02-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/03-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/04-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/05-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/06-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/07-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/08-basic-tables.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/09-configurations.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/10-basic-e2e-dummy-data.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/11-indexes-keys.xml" relativeToChangelogFile="true"/>-->
+  <!--<include file="changelog/12-db-migration.xml" relativeToChangelogFile="true"/>-->
   <!--<include file="changelog/02-insert-data-authors.xml" relativeToChangelogFile="true"/>-->
   <!--<include file="changelog/02-insert-data-books.xml" relativeToChangelogFile="true"/>-->
+
+  <include file="changelog/enhanced/01-person.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/02-level-type.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/03-level.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/04-company.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/05-institution.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/06-position.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/07-cycle.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/08-appointment-position.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/09-person-appointment.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

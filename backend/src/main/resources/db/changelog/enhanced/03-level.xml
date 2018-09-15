@@ -1,0 +1,53 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="level-01" author="mohsin.kerai">
+    <createTable tableName="level"
+      remarks="Stores Specific Level at Level Type. Think of level type as class and level as its object. Lets say Level type Jamatkhana, you can have Karimabad Jamatkhana, Dubai Jamatkhana. Similarly lets say Level Type Regional, you can have Southern Region, Central Region, Uppar Chitral Region.">
+
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="level_type_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="full_name" type="varchar(255)" defaultValue="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="code_eo" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="code_nc" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="level_parent_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="old_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="old_code" type="varchar(45)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="is_closed" defaultValueComputed="0" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

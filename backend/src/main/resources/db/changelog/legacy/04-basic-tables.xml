@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <!--<changeSet id="04-01" author="mohsin.kerai">-->
+    <!--<addColumn-->
+      <!--tableName="person">-->
+      <!--<column name="cnic" type="varchar(255)"/>-->
+    <!--</addColumn>-->
+  <!--</changeSet>-->
+  <!--<changeSet author="mohsin.kerai" id="04-02">-->
+    <!--<addUniqueConstraint-->
+      <!--columnNames="cnic"-->
+      <!--constraintName="cnic_unique"-->
+      <!--deferrable="true"-->
+      <!--disabled="true"-->
+      <!--initiallyDeferred="true"-->
+      <!--tableName="person"-->
+      <!--tablespace="A String"/>-->
+  <!--</changeSet>-->
+  <!--<changeSet id="04-03" author="mohsin.kerai">-->
+    <!--<insert tableName="person">-->
+      <!--<column name="id" value="5"/>-->
+      <!--<column name="name" value="Amsal Akber v2"/>-->
+      <!--<column name="date_of_birth" value="1995-05-13"/>-->
+      <!--<column name="cnic" value="42101-1111111-1"/>-->
+    <!--</insert>-->
+  <!--</changeSet>-->
+  <changeSet id="04-01" author="zeeshan.damani">
+    <createTable tableName="jamati_title"
+      remarks="Jamati Title awarded to nominated khidmatgars">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="gender" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="old_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-02" author="zeeshan.damani">
+    <insert tableName="jamati_title">
+      <column name="id" value="1"/>
+      <column name="name" value="Huzur Mukhi"/>
+      <column name="gender" value="Male"/>
+    </insert>
+    <insert tableName="jamati_title">
+      <column name="id" value="2"/>
+      <column name="name" value="Huzur Mukhiani"/>
+      <column name="gender" value="female"/>
+    </insert>
+    <insert tableName="jamati_title">
+      <column name="id" value="3"/>
+      <column name="name" value="Alija"/>
+      <column name="gender" value="Male"/>
+    </insert>
+  </changeSet>
+  <changeSet id="04-03" author="zeeshan.damani">
+    <createTable tableName="marital_status"
+      remarks="Marital status of nominated person">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-04" author="zeeshan.damani">
+    <insert tableName="marital_status">
+      <column name="id" value="1"/>
+      <column name="name" value="Single"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="2"/>
+      <column name="name" value="Widowed"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="3"/>
+      <column name="name" value="Married"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="4"/>
+      <column name="name" value="Divorced"/>
+    </insert>
+    <insert tableName="marital_status">
+      <column name="id" value="5"/>
+      <column name="name" value="Separated"/>
+    </insert>
+  </changeSet>
+  <changeSet id="04-05" author="zeeshan.damani">
+    <createTable tableName="area_of_origin"
+                 remarks="Area of Origin of nominated person">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-06" author="zeeshan.damani">
+    <insert tableName="area_of_origin">
+      <column name="id" value="1"/>
+      <column name="name" value="Hunza"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="2"/>
+      <column name="name" value="Punjab"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-06-a" author="mohsin.kerai">
+    <insert tableName="area_of_origin">
+      <column name="id" value="3"/>
+      <column name="name" value="Gilgit"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="4"/>
+      <column name="name" value="Ghizer"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="5"/>
+      <column name="name" value="Baltistan"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="6"/>
+      <column name="name" value="Chitral"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="7"/>
+      <column name="name" value="Sindh"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="8"/>
+      <column name="name" value="Outside Pakistan"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-07" author="zeeshan.damani">
+    <createTable tableName="country"
+                 remarks="Country of nominated person">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="code" type="varchar(55)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-08" author="zeeshan.damani">
+    <insert tableName="country">
+      <column name="id" value="1"/>
+      <column name="name" value="Pakistan"/>
+      <column name="code" value="PK"/>
+    </insert>
+    <insert tableName="country">
+      <column name="id" value="2"/>
+      <column name="name" value="India"/>
+      <column name="code" value="IND"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-09" author="zeeshan.damani">
+    <createTable tableName="salutation"
+                 remarks="all salutations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      </createTable>
+  </changeSet>
+  <changeSet id="04-10" author="zeeshan.damani">
+    <insert tableName="salutation">
+      <column name="id" value="1"/>
+      <column name="name" value="Mr."/>
+      </insert>
+    <insert tableName="salutation">
+      <column name="id" value="2"/>
+      <column name="name" value="Mrs."/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-11" author="zeeshan.damani">
+    <createTable tableName="secular_study_level"
+                 remarks="all salutations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-12" author="zeeshan.damani">
+    <insert tableName="secular_study_level">
+      <column name="id" value="1"/>
+      <column name="name" value="PHD"/>
+    </insert>
+    <insert tableName="secular_study_level">
+      <column name="id" value="2"/>
+      <column name="name" value="Masters"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-13" author="zeeshan.damani">
+  <createTable tableName="religious_qualification"
+    remarks="all salutations">
+    <column name="id" type="bigint" autoIncrement="true">
+      <constraints nullable="false" unique="true" primaryKey="true"/>
+    </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <constraints nullable="false" unique="false"/>
+    </column>
+    <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+      <constraints nullable="false" unique="false"/>
+    </column>
+    <column name="created_by" type="datetime" defaultValueComputed="null">
+      <constraints nullable="true" unique="false"/>
+    </column>
+    <column name="updated_by" type="datetime" defaultValueComputed="null">
+      <constraints nullable="true" unique="false"/>
+    </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-14" author="zeeshan.damani">
+    <insert tableName="religious_qualification">
+      <column name="id" value="1"/>
+      <column name="name" value="HRE"/>
+    </insert>
+    <insert tableName="religious_qualification">
+      <column name="id" value="2"/>
+      <column name="name" value="ARE"/>
+    </insert>
+    <insert tableName="religious_qualification">
+      <column name="id" value="3"/>
+      <column name="name" value="MATRIC"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-15" author="mohsin.kerai">
+    <createTable tableName="city"
+      remarks="all cities">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="country_id" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="old_id" type="varchar(5)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-16" author="mohsin.kerai">
+    <insert tableName="city">
+      <column name="id" value="1"/>
+      <column name="name" value="Karachi"/>
+    </insert>
+    <insert tableName="city">
+      <column name="id" value="2"/>
+      <column name="name" value="Lahore"/>
+    </insert>
+    <insert tableName="city">
+      <column name="id" value="3"/>
+      <column name="name" value="Peshawar"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-17" author="mohsin.kerai">
+    <createTable tableName="public_service_institution"
+      remarks="All Educational Institution, In Pakistan or Anywhere in this world">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-18" author="mohsin.kerai">
+    <insert tableName="public_service_institution">
+      <column name="id" value="1"/>
+      <column name="name" value="IBA"/>
+    </insert>
+    <insert tableName="public_service_institution">
+      <column name="id" value="2"/>
+      <column name="name" value="FAST"/>
+    </insert>
+    <insert tableName="public_service_institution">
+      <column name="id" value="3"/>
+      <column name="name" value="CBM"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="04-19" author="mohsin.kerai">
+    <createTable tableName="educational_degree"
+      remarks="All Educational Degrees like BBA, MBA, BSCS, BCom">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="04-20" author="mohsin.kerai">
+    <insert tableName="educational_degree">
+      <column name="id" value="1"/>
+      <column name="name" value="BBA"/>
+    </insert>
+    <insert tableName="educational_degree">
+      <column name="id" value="2"/>
+      <column name="name" value="MBA"/>
+    </insert>
+    <insert tableName="educational_degree">
+      <column name="id" value="3"/>
+      <column name="name" value="BSCS"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

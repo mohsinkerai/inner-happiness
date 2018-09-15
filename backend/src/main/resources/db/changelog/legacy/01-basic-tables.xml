@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <!--Table CyclePositionOnInstitution and Its Basic Data Population-->
+
+  <!--Table LevelType and Its Basic Data Population-->
+  <!--Table level and Its Basic Data Population-->
+  <changeSet id="01-2" author="mohsin.kerai">
+    <createTable tableName="level"
+      remarks="A table to store actual levels, Council for Pakistan, Southern Council">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="level_type_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="full_name" type="varchar(255)" defaultValue="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="code_eo" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="code_nc" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="level_parent_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="old_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="old_code" type="varchar(45)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="is_closed" defaultValueComputed="0" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+    <insert
+      tableName="level">
+      <column name="id" value="1"/>
+      <column name="level_type_id" value="1"/>
+      <column name="name" value="Pakistan"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Pakistan"/>
+      <column name="code_nc" value="PK"/>
+      <column name="code_eo" value="EO.PK"/>
+      <column name="level_parent_id" value="null"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="2"/>
+      <column name="level_type_id" value="2"/>
+      <column name="name" value="Southern"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Southern Region"/>
+      <column name="code_nc" value="SO"/>
+      <column name="code_eo" value="EO.SO"/>
+      <column name="level_parent_id" value="1"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="3"/>
+      <column name="level_type_id" value="3"/>
+      <column name="name" value="Karimabad"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Karimabad"/>
+      <column name="code_nc" value="SO.03"/>
+      <column name="code_eo" value="EO.SO.03"/>
+      <column name="level_parent_id" value="2"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="4"/>
+      <column name="level_type_id" value="4"/>
+      <column name="name" value="Karimabad Jamatkhana"/>
+      <column name="full_name" value="Karimabad Jamatkhana"/>
+      <column name="code_eo" value="EO.SO.03.03"/>
+      <column name="code_nc" value="SO.03.03"/>
+      <column name="level_parent_id" value="3"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="5"/>
+      <column name="level_type_id" value="3"/>
+      <column name="name" value="Gulshan"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Gulshan-e-Noor"/>
+      <column name="code_eo" value="EO.SO.04"/>
+      <column name="code_nc" value="SO.04"/>
+      <column name="level_parent_id" value="2"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="6"/>
+      <column name="level_type_id" value="4"/>
+      <column name="name" value="Noorabad"/>
+      <column name="full_name" value="Noorabad Jamatkhana"/>
+      <column name="code_eo" value="EO.SO.04.01"/>
+      <column name="code_nc" value="SO.04.01"/>
+      <column name="level_parent_id" value="5"/>
+    </insert>
+  </changeSet>
+  <changeSet id="01-4" author="mohsin.kerai">
+    <createTable tableName="position"
+      remarks="Stores Positions Available at Any Levels, Lets say President, Chairman, Sec, Hon. Sec, It Consultant">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="old_id" type="bigint">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+    <insert tableName="position">
+      <column name="id" value="1"/>
+      <column name="name" value="President"/>
+    </insert>
+    <insert tableName="position">
+      <column name="id" value="2"/>
+      <column name="name" value="Member Finance"/>
+    </insert>
+    <insert tableName="position">
+      <column name="id" value="3"/>
+      <column name="name" value="Member"/>
+    </insert>
+  </changeSet>
+  <changeSet id="01-5" author="mohsin.kerai">
+    <createTable tableName="cycle"
+      remarks="Cycles Available, Lets say Cycle 2018-2019">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="start_date" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="end_date" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+    <insert tableName="cycle">
+      <column name="id" value="1"/>
+      <column name="name" value="Cycle#38"/>
+      <column name="start_date" value="2012-07-11"/>
+      <column name="end_date" value="2015-07-10"/>
+    </insert>
+    <insert tableName="cycle">
+      <column name="id" value="2"/>
+      <column name="name" value="Cycle#39"/>
+      <column name="start_date" value="2015-07-11"/>
+      <column name="end_date" value="2019-07-10"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="03-05" author="mohsin.kerai">
+    <insert tableName="position_on_institution">
+      <column name="id" value="2"/>
+      <column name="position_id" value="2"/> <!-- Member Finance -->
+      <column name="institution_id" value="1"/> <!-- National Council -->
+    </insert>
+    <insert tableName="position_on_institution">
+      <column name="id" value="3"/>
+      <column name="position_id" value="1"/> <!-- President -->
+      <column name="institution_id" value="5"/> <!-- Council for Southern Region -->
+    </insert>
+    <insert tableName="position_on_institution">
+      <column name="id" value="4"/>
+      <column name="position_id" value="2"/> <!-- Member Finance -->
+      <column name="institution_id" value="5"/> <!-- Council for Southern Region -->
+    </insert>
+    <insert tableName="position_on_institution">
+      <column name="id" value="5"/>
+      <column name="position_id" value="3"/> <!-- Member -->
+      <column name="institution_id" value="5"/> <!-- Council for Southern Region -->
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="2"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="2"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="3"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="3"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="4"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="4"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="5"/>
+      <column name="cycle_id" value="2"/>
+      <column name="position_on_institution_id" value="5"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="6"/>
+      <column name="cycle_id" value="1"/>
+      <column name="position_on_institution_id" value="3"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="7"/>
+      <column name="cycle_id" value="1"/>
+      <column name="position_on_institution_id" value="4"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <insert tableName="cycle_position_on_institution">
+      <column name="id" value="8"/>
+      <column name="cycle_id" value="1"/>
+      <column name="position_on_institution_id" value="5"/>
+      <column name="min_count" value="1"/>
+      <column name="desired" value="1"/>
+      <column name="max_count" value="1"/>
+      <column name="nominations" value="3"/>
+    </insert>
+    <!--<insert tableName="person">-->
+      <!--<column name="id" value="3"/>-->
+      <!--<column name="cnic" value="42101-1111111-4"/>-->
+      <!--<column name="first_name" value="Naveed"/>-->
+      <!--<column name="family_name" value="Tejani"/>-->
+      <!--<column name="gender" value="1"/>-->
+      <!--<column name="date_of_birth" value="1989-11-07"/>-->
+      <!--<column name="marital_status" value="single"/>-->
+      <!--<column name="residential_address" value="DD 95"/>-->
+      <!--<column name="mobile_phone" value="03135489948"/>-->
+      <!--<column name="email_address" value="tejaninaveed@gmail.com"/>-->
+      <!--<column name="area_of_origin" value="Karachi"/>-->
+      <!--<column name="regional_council_id" value="2"/>-->
+      <!--<column name="local_council_id" value="3"/>-->
+      <!--<column name="jamatkhana_id" value="4"/>-->
+      <!--<column name="image" value="42101-1111111-4.png" />-->
+    <!--</insert>-->
+    <!--<insert tableName="person">-->
+      <!--<column name="id" value="4"/>-->
+      <!--<column name="cnic" value="42101-1111111-5"/>-->
+      <!--<column name="first_name" value="Amsal"/>-->
+      <!--<column name="fathers_name" value="Akber"/>-->
+      <!--<column name="gender" value="1"/>-->
+      <!--<column name="date_of_birth" value="1995-05-13"/>-->
+      <!--<column name="marital_status" value="single"/>-->
+      <!--<column name="residential_address" value="A-32 Noorabad"/>-->
+      <!--<column name="mobile_phone" value="03059789964"/>-->
+      <!--<column name="email_address" value="amsalakber@hotmail.com"/>-->
+      <!--<column name="area_of_origin" value="Karachi"/>-->
+      <!--<column name="regional_council_id" value="2"/>-->
+      <!--<column name="local_council_id" value="5"/>-->
+      <!--<column name="jamatkhana_id" value="6"/>-->
+      <!--<column name="image" value="42101-1111111-5.png" />-->
+    <!--</insert>-->
+  </changeSet>
+  <changeSet id="03-06" author="mohsin.kerai">
+    <createTable tableName="pal_rules"
+      remarks="Award of Position, lets say Who Becomes President">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="bean_name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="forced_apply" type="tinyint" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

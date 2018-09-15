@@ -1,0 +1,166 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <!--This file only contain changes and updates related to person table-->
+  <!--REMEMBER: No Seed Data should be placed here-->
+  <changeSet author="mohsin.kerai" id="person-01">
+    <createTable
+      remarks="Represents Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani. Each person has a number of attributes and supports his profile. Those attriubtes are his education, certifications, work experience, area of origin, birth details, etc. There along with person, there are supported tables of persons, which should start with 'person' prefix"
+      tableName="person">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="cnic" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="old_cnic" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="passport_number" type="varchar(255)">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="image" type="MEDIUMTEXT">
+        <constraints nullable="true" unique="false"/>
+      </column>
+
+      <column name="salutation" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column defaultValue="null" name="full_name" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="first_name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="fathers_name" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="family_name" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="jamati_title" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="gender" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column defaultValueComputed="null" name="date_of_birth" type="datetime">
+        <constraints nullable="true"/>
+      </column>
+      <column name="residential_address" type="text">
+        <constraints nullable="true"/>
+      </column>
+      <column name="city" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="residence_telephone" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="mobile_phone" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="email_address" type="varchar(100)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="marital_status" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="area_of_origin" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="regional_council" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="local_council" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="jamatkhana" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="plan_to_relocate" type="tinyint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="relocate_location" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column defaultValueComputed="null" name="relocation_date_time" type="datetime">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="highest_level_of_study" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="highest_level_of_study_other" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="educations" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="akdn_trainings" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="professional_trainings" type="json">
+        <constraints nullable="true"/>
+      </column>
+
+      <column name="language_proficiencies" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="voluntary_community_services" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="voluntary_public_services" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="willingness_to_devote_time_in_future" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="field_of_interest" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="hours_per_week" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <!--Actual Occupation, Salried, Self Employed-->
+      <column name="occupation_type" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column name="occupation_others" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="employments" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="field_of_expertise" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="religious_education" type="bigint">
+        <constraints nullable="true"/>
+      </column>
+      <column defaultValueComputed="null" name="death_date" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="death_cause" type="varchar(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

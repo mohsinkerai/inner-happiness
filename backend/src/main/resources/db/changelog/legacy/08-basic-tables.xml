@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="08-03">
+    <createTable remarks="Person Skill Many to Many Relation"
+      tableName="person_skill">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="skill_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-04">
+    <insert tableName="person_skill">
+      <column name="person_id" value="2"/>
+      <column name="skill_id" value="1"/>
+    </insert>
+    <insert tableName="person_skill">
+      <column name="person_id" value="2"/>
+      <column name="skill_id" value="2"/>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="08-05">
+    <createTable remarks="Skills of a Person"
+      tableName="skill">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-06">
+    <insert tableName="skill">
+      <column name="name" value="Electrition"/>
+    </insert>
+    <insert tableName="skill">
+      <column name="name" value="Pulumber"/>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="08-07">
+    <createTable remarks="Skills of a Person"
+      tableName="person_professional_membership">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="professional_membership_id" type="bigint">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-08">
+    <insert tableName="person_professional_membership">
+      <column name="person_id" value="2"/>
+      <column name="professional_membership_id" value="3"/>
+    </insert>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-11">
+    <addColumn tableName="position_on_institution">
+      <column defaultValueBoolean="false" name="is_mowla_appointee" type="tinyint"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-12">
+    <createTable
+      remarks="A Table to Store Nominations for a Person with respect to CPI. A CPI is Position with Respect to Institution in a Cycle"
+      tableName="person_cpi">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint"/>
+      <column name="cpi_id" type="bigint"/>
+      <column name="is_appointed" type="tinyint"/>
+      <column name="is_recommended" type="tinyint"/>
+      <column name="priority" type="int"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="06-13">
+    <createTable
+      remarks="Table to store application configuration"
+      tableName="application_configuration">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="key" type="varchar(255)"/>
+      <column name="value" type="varchar(255)"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+    <addUniqueConstraint columnNames="key" tableName="application_configuration"/>
+    <createIndex indexName="index-key-app-config" tableName="application_configuration">
+      <column name="key"></column>
+    </createIndex>
+  </changeSet>
+</databaseChangeLog>

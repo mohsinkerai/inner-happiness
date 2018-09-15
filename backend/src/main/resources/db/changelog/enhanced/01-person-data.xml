@@ -1,0 +1,86 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <!--This file is intended for sample data-->
+  <changeSet author="mohsin.kerai" id="person-data-01">
+    <insert tableName="person">
+      <column name="id" value="2"/>
+
+      <column name="cnic" value="42101-1111111-2"/>
+      <column name="image" value="42101-1111111-2.png"/>
+
+      <column name="salutation" value="1"/>
+      <column name="first_name" value="Mohsin"/>
+      <column name="fathers_name" value="Mansoor"/>
+      <column name="family_name" value="Kerai"/>
+
+      <column name="jamati_title" value="1"/>
+      <column name="gender" value="0"/>
+      <column name="date_of_birth" value="1993-07-27"/>
+      <column name="city" value="1"/>
+      <column name="marital_status" value="single"/>
+      <column name="residential_address"
+        value="Flat # DD-108 Karimabad Colony Block 3 FB Area Karachi"/>
+      <column name="mobile_phone" value="03312338554"/>
+      <column name="email_address" value="mohsin.kerai@gmail.com"/>
+      <column name="marital_status" value="1"/>
+      <column name="area_of_origin" value="1"/>
+      <column name="regional_council" value="2"/>
+      <column name="local_council" value="3"/>
+      <column name="jamatkhana" value="4"/>
+      <column name="educations" value="[]"/>
+      <column name="akdn_trainings" value="[]"/>
+      <column name="professional_trainings" value="[]"/>
+      <column name="language_proficiencies" value="[]"/>
+      <column name="voluntary_community_services" value="[]"/>
+      <column name="voluntary_public_services" value="[]"/>
+      <column name="willingness_to_devote_time_in_future" value="Change institution"/>
+      <column name="field_of_interest" value="[]"/>
+      <column name="hours_per_week" value="9"/>
+      <column name="plan_to_relocate" value="0"/>
+      <column name="occupation_type" value="2"/>
+      <column name="employments" value="[]"/>
+      <column name="field_of_expertise" value="Software Engineering"/>
+      <column name="religious_education" value="1"/>
+    </insert>
+
+    <insert tableName="person">
+      <column name="id" value="3"/>
+      <column name="cnic" value="42101-1111112-2"/>
+      <column name="image" value="42101-1111112-2.png"/>
+      <column name="salutation" value="1"/>
+      <column name="first_name" value="Naveed"/>
+      <column name="family_name" value="Tejani"/>
+      <column name="jamati_title" value="3"/>
+      <column name="gender" value="1"/>
+      <column name="date_of_birth" value="1987-04-05"/>
+      <column name="city" value="1"/>
+      <column name="marital_status" value="single"/>
+      <column name="residential_address"
+        value="Flat # DD-97 Karimabad Colony Block 3 FB Area Karachi"/>
+      <column name="mobile_phone" value="03214569874"/>
+      <column name="email_address" value="naveed.tejani@gmail.com"/>
+      <column name="marital_status" value="1"/>
+      <column name="area_of_origin" value="1"/>
+      <column name="regional_council" value="2"/>
+      <column name="local_council" value="3"/>
+      <column name="jamatkhana" value="4"/>
+      <column name="educations" value="[]"/>
+      <column name="akdn_trainings" value="[]"/>
+      <column name="professional_trainings" value="[]"/>
+      <column name="language_proficiencies" value="[]"/>
+      <column name="voluntary_community_services" value="[]"/>
+      <column name="voluntary_public_services" value="[]"/>
+      <column name="willingness_to_devote_time_in_future" value="Change institution"/>
+      <column name="field_of_interest" value="[]"/>
+      <column name="hours_per_week" value="9"/>
+      <column name="plan_to_relocate" value="0"/>
+      <column name="occupation_type" value="2"/>
+      <column name="employments" value="[]"/>
+      <column name="field_of_expertise" value="Software Engineering"/>
+      <column name="religious_education" value="1"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

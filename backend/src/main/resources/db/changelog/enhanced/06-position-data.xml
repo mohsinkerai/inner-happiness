@@ -1,0 +1,19 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="position-data-01" author="mohsin.kerai">
+    <insert tableName="position">
+      <column name="id" value="1"/>
+      <column name="name" value="President"/>
+    </insert>
+    <insert tableName="position">
+      <column name="id" value="2"/>
+      <column name="name" value="Member Finance"/>
+    </insert>
+    <insert tableName="position">
+      <column name="id" value="3"/>
+      <column name="name" value="Member"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>
