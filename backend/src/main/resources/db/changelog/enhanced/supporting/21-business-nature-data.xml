@@ -1,0 +1,35 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="business-nature-data-01">
+    <insert tableName="business_nature">
+      <column name="name" value="Agriculture"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Art/Culture"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Education"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Health"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Construction"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Technology"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Bank/Services"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Transportation"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Other (Please specify)"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

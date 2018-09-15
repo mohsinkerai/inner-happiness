@@ -1,22 +1,28 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <databaseChangeLog
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-
-  <changeSet author="mohsin.kerai" id="06-02">
+  <changeSet author="mohsin.kerai" id="language-proficiency-data-01">
     <insert tableName="language_proficiency">
       <column name="name" value="Native"/>
+      <column name="short_code" value="N"/>
     </insert>
     <insert tableName="language_proficiency">
       <column name="name" value="Excellent"/>
+      <column name="short_code" value="E"/>
     </insert>
     <insert tableName="language_proficiency">
       <column name="name" value="Good"/>
+      <column name="short_code" value="G"/>
     </insert>
     <insert tableName="language_proficiency">
       <column name="name" value="Fair"/>
+      <column name="short_code" value="F"/>
+    </insert>
+    <insert tableName="language_proficiency">
+      <column name="name" value="Not Available"/>
+      <column name="short_code" value="X"/>
     </insert>
   </changeSet>
 </databaseChangeLog>
