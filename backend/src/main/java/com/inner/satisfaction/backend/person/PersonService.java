@@ -2,6 +2,7 @@ package com.inner.satisfaction.backend.person;
 
 import com.inner.satisfaction.backend.base.BaseService;
 import com.inner.satisfaction.backend.person.lookup.base.BaseM2MProcessingService;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
@@ -43,6 +44,13 @@ public class PersonService extends BaseService<Person> {
     return personRepository
       .findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingOrIdEquals(
         cnic, firstName, lastName, Long.valueOf(formNo), pageable);
+  }
+
+  public List<Person> findByIdOrCnic(
+    String cnic,
+    Long id) {
+    return personRepository
+      .findByIdOrCnicIgnoreCaseContaining(id, cnic);
   }
 
   /**

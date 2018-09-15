@@ -52,6 +52,14 @@ public class PersonController extends BaseController<Person> {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByIdOrCnic", method = RequestMethod.GET)
+  public List<Person> findByFormNo(@RequestParam("id") Long id, @RequestParam("cnic") String cnic) {
+    return Optional.ofNullable(personService.findByIdOrCnic(cnic, id))
+      .orElseThrow(
+        () -> new EntityNotFoundException("Person with FormNo " + cnic + " " + id + " Not found"));
+  }
+
+  @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/findByCnicAndFirstNameAndLastNameAndFormNo", method = RequestMethod.GET)
   public Page<Person> findByCnicOrFirstNameOrLastName(
     @RequestParam(required = false, value = "cnic", defaultValue = "") String cnic,
