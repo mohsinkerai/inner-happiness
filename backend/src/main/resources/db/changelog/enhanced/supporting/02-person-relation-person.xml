@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <databaseChangeLog
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-
-  <changeSet author="mohsin.kerai" id="06-01">
-    <createTable
-      remarks="Language Proficiency - Depends on Lanaguage, Will be used in Write, Read, Speak, Listen"
-      tableName="language_proficiency">
+  <changeSet id="person-relation-person-01" author="mohsin.kerai">
+    <createTable remarks="A Person in the real world, i.e. Mohsin Kerai or Zeeshan Damani"
+      tableName="person_relation_person">
       <column autoIncrement="true" name="id" type="bigint">
         <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
-      <column name="name" type="varchar(255)">
+      <column name="first_person_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="second_person_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="relation_id" type="bigint">
         <constraints nullable="false"/>
       </column>
       <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
@@ -27,19 +30,5 @@
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
-  </changeSet>
-  <changeSet author="mohsin.kerai" id="06-02">
-    <insert tableName="language_proficiency">
-      <column name="name" value="Native"/>
-    </insert>
-    <insert tableName="language_proficiency">
-      <column name="name" value="Excellent"/>
-    </insert>
-    <insert tableName="language_proficiency">
-      <column name="name" value="Good"/>
-    </insert>
-    <insert tableName="language_proficiency">
-      <column name="name" value="Fair"/>
-    </insert>
   </changeSet>
 </databaseChangeLog>

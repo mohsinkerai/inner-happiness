@@ -3,5 +3,27 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
   <changeSet id="person-appointment-data-01" author="mohsin.kerai">
+    <insert tableName="relation">
+      <column name="id" value="1"/>
+      <column name="name" value="Child"/>
+      <column name="reverse_relation_id" value="2"/>
+    </insert>
+    <insert tableName="relation">
+      <column name="id" value="2"/>
+      <column name="name" value="Parent"/>
+      <column name="reverse_relation_id" value="1"/>
+    </insert>
+
+    <insert tableName="relation">
+      <column name="id" value="3"/>
+      <column name="name" value="Spouse"/>
+      <column name="reverse_relation_id" value="3"/>
+    </insert>
+
+    <insert tableName="relation">
+      <column name="id" value="4"/>
+      <column name="name" value="Sibiling"/>
+      <column name="reverse_relation_id" value="4"/>
+    </insert>
   </changeSet>
 </databaseChangeLog>

@@ -2,28 +2,29 @@
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-  <changeSet id="person-appointment-01" author="mohsin.kerai">
-    <createTable remarks="LOOKUP: Relationships for a Person"
-      tableName="relation">
-      <column autoIncrement="true" name="id" type="bigint">
-        <constraints nullable="false" primaryKey="true" unique="true"/>
+
+  <changeSet id="country-01" author="zeeshan.damani">
+    <createTable tableName="country"
+      remarks="LOOKUP: Country of nominated person">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
       </column>
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="reverse_relation_id" type="bigint">
-        <constraints nullable="true"/>
+      <column name="code" type="varchar(55)">
+        <constraints nullable="false"/>
       </column>
-      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false" unique="false"/>
       </column>
-      <column defaultValueComputed="null" name="created_by" type="datetime">
+      <column name="created_by" type="datetime" defaultValueComputed="null">
         <constraints nullable="true" unique="false"/>
       </column>
-      <column defaultValueComputed="null" name="updated_by" type="datetime">
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
