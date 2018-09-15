@@ -3,8 +3,7 @@ package com.inner.satisfaction.backend.position;
 import com.inner.satisfaction.backend.base.BaseDto;
 import com.inner.satisfaction.backend.institution.Institution;
 import com.inner.satisfaction.backend.person.Person;
-import com.inner.satisfaction.backend.person.cpi.PersonCPI;
-import com.inner.satisfaction.backend.position.active.PositionOnInstitution;
+import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +19,6 @@ public class PositionDetailsDto extends BaseDto {
   private long cpiId;
   private List<PositionDetailsPersonDto> personsNominated;
   private PositionDetailsPersonDto incumbent;
-  private PositionOnInstitution poi;
   private Institution institution;
   private Position position;
 
@@ -30,6 +28,6 @@ public class PositionDetailsDto extends BaseDto {
   public class PositionDetailsPersonDto extends BaseDto {
 
     private Person person;
-    private PersonCPI personCPI;
+    private PersonAppointment personAppointment;
   }
 }

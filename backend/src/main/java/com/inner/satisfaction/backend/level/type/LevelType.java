@@ -9,4 +9,5 @@ import lombok.Data;
 public class LevelType extends BaseEntity{
 
   private String name;
+  private Long parentLevelTypeId;
 }

@@ -1,7 +1,7 @@
 package com.inner.satisfaction.backend.person;
 
 import com.inner.satisfaction.backend.base.BaseService;
-import com.inner.satisfaction.backend.person.base.BaseM2MProcessingService;
+import com.inner.satisfaction.backend.person.lookup.base.BaseM2MProcessingService;
 import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;

@@ -1,7 +1,7 @@
 package com.inner.satisfaction.backend.utils;
 
 import com.inner.satisfaction.backend.person.Person;
-import com.inner.satisfaction.backend.person.dto.ReducedPersonDto;
+import com.inner.satisfaction.backend.person.lookup.dto.ReducedPersonDto;
 import org.springframework.stereotype.Component;
 
 @Component
