@@ -16,11 +16,12 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PersonEducationDto extends BaseDto {
 
-  private String educationId;
-  private long institution;// Id
-  private long countryOfStudy;// Id
-  private long nameOfDegree;// Id
-  private int fromYear;
-  private int toYear;
-  private String majorAreaOfStudy;
+  private String educationId; // Ignore for now
+  private Long institution;// Id Lookup
+  private Long countryOfStudy;// Id Lookup
+  private Long nameOfDegree;// Id lookup
+  private Integer fromYear;
+  private Integer toYear;
+  private Long majorAreaOfStudy; // Id lookup
+  private int priority;
 }

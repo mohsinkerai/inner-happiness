@@ -52,4 +52,5 @@
   <include file="changelog/enhanced/supporting-relation/02-person-professional-membership.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting-relation/03-person-relation-person.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting-relation/03-person-relation-person-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting-relation/04-person-field-of-expertise.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

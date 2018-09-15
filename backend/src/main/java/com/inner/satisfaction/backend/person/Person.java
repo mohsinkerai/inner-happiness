@@ -14,7 +14,6 @@ import com.inner.satisfaction.backend.person.lookup.dto.VoluntaryCommunityServic
 import com.inner.satisfaction.backend.person.lookup.dto.VoluntaryPublicServiceDto;
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -32,45 +31,42 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person extends BaseEntity {
 
-  @Column(name = "nc_form_no")
-  private String formNo;
-
-  private String oldCnic;
   private String cnic;
+  private String oldCnic;
   private String passportNumber;
   private String image;
 
-  private Long salutation; // id
+  private Long salutation; // id, Lookup
   private String firstName;
   private String fathersName;
   private String familyName;
 
-  private Long jamatiTitle; // id
+  private Long jamatiTitle; // id Lookup
 
   // 0 male, 1 female
   private Integer gender;
 
   // Should Represent UTC
   private LocalDate dateOfBirth;
+  private Long maritalStatus; //id Lookup
   private String residentialAddress;
-  private Long city; // id
+  private Long city; // id Lookup
   private String residenceTelephone;
   private String mobilePhone;
   private String emailAddress;
 
-  private Long maritalStatus; //id
-  private Long areaOfOrigin; // id
+  private Long areaOfOrigin; // id Lookup
 
   // LevelID To be Exact
-  private Long regionalCouncil;
-  private Long localCouncil;
-  private Long jamatkhana;
+  private Long regionalCouncil; // id Lookup
+  private Long localCouncil; // id Lookup
+  private Long jamatkhana; // id Lookup
   private Boolean planToRelocate;
   private String relocateLocation;
   // Should Represent UTC
   private LocalDate relocationDateTime;
 
-  private String highestLevelOfStudy;
+  private Long highestLevelOfStudy; // id Lookup
   private String highestLevelOfStudyOther;
 
   // 2.Education - Graduation & Post Graduation
@@ -95,6 +91,9 @@ public class Person extends BaseEntity {
   @Transient
   private List<String> professionalMemberships;
 
+  @Transient
+  private List<String> fieldOfExpertise;
+
   // 2.Education - Professional Training & Acheivements
   @Convert(converter = JpaConverterJson.class)
   private List<LanguageDto> languageProficiencies;
@@ -112,7 +111,6 @@ public class Person extends BaseEntity {
   @Convert(converter = JpaConverterJson.class)
   private List<Integer> fieldOfInterest; // ID's
 
-  private String fieldOfExpertise;
   private Long religiousEducation;
 
   private Long hoursPerWeek;
