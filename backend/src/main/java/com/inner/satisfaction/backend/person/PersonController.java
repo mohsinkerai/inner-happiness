@@ -57,7 +57,7 @@ public class PersonController extends BaseController<Person> {
     @RequestParam(required = false, value = "cnic", defaultValue = "") String cnic,
     @RequestParam(required = false, value = "firstName", defaultValue = "") String firstName,
     @RequestParam(required = false, value = "lastName", defaultValue = "") String lastName,
-    @RequestParam(required = false, value = "formNo", defaultValue = "") String formNo,
+    @RequestParam(required = false, value = "formNo", defaultValue = "0") String formNo,
     @RequestParam(required = false, defaultValue = "1", value = "page") int page,
     @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
     PageRequest pageRequest = PageRequest.of(page - 1, size);

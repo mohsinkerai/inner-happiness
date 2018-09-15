@@ -31,7 +31,7 @@ public class PersonService extends BaseService<Person> {
   }
 
   public Person findByFormNo(String formNo) {
-    return personRepository.findByFormNo(formNo);
+    return findOne(Long.valueOf(formNo));
   }
 
   public Page<Person> findByCnicAndFirstNameAndLastNameAndFormNo(
@@ -41,8 +41,8 @@ public class PersonService extends BaseService<Person> {
     String formNo,
     Pageable pageable) {
     return personRepository
-      .findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingAndFormNoIgnoreCaseContaining(
-        cnic, firstName, lastName, formNo, pageable);
+      .findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingOrIdEquals(
+        cnic, firstName, lastName, Long.valueOf(formNo), pageable);
   }
 
   /**

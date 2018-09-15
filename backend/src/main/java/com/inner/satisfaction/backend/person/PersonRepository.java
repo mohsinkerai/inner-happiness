@@ -11,8 +11,8 @@ public interface PersonRepository extends BasePagingAndSortingRepository<Person>
   Person findByCnic(String cnic);
 
   // TODO: Full Text search index on CNIC, FirstName and LastName
-  Page<Person> findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingAndFormNoIgnoreCaseContaining(
-    String cnic, String firstName, String familyName, String formNo, Pageable pageable);
+  Page<Person> findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingOrIdEquals(
+    String cnic, String firstName, String familyName, Long id, Pageable pageable);
 
-  Person findByFormNo(String formNo);
+  Person findByIdOrCnic(String formNo, String cnic);
 }
