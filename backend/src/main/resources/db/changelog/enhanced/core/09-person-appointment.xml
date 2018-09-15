@@ -45,4 +45,9 @@
       <column name="is_recommended"></column>
     </createIndex>
   </changeSet>
+  <changeSet id="person-appointment-03" author="mohsin.kerai">
+    <addColumn tableName="person_appointment">
+      <column name="remarks" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

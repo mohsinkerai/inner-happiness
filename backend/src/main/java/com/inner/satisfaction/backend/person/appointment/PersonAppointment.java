@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import lombok.Data;
 
 @Data
-@Entity(name = "person_cpi")
+@Entity(name = "person_appointment")
 public class PersonAppointment extends BaseEntity {
 
   private long personId;
@@ -13,4 +13,5 @@ public class PersonAppointment extends BaseEntity {
   private boolean isAppointed;
   private boolean isRecommended;
   private int priority;
+  private String remarks;
 }
