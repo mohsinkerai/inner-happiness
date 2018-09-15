@@ -2,6 +2,7 @@
   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
   <changeSet id="appointment-position-01" author="mohsin.kerai">
     <createTable tableName="appointment_position" remarks="This table is intended to store all appointments that needs to took place. Each appointment can be represented as 1. Cycle 2. Position 3. Institution 4. Seat">
       <column autoIncrement="true" name="id" type="bigint">
@@ -41,5 +42,19 @@
         <constraints nullable="true" unique="false"/>
       </column>
     </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="appointment-position-02">
+    <createIndex tableName="appointment_position" indexName="appointment_position_cycle_id_index">
+      <column name="cycle_id"></column>
+    </createIndex>
+    <createIndex tableName="appointment_position" indexName="appointment_position_institution_id_index">
+      <column name="institution_id"></column>
+    </createIndex>
+    <createIndex tableName="appointment_position" indexName="appointment_position_position_id_index">
+      <column name="position_id"></column>
+    </createIndex>
+    <createIndex tableName="is_mowla_appointee" indexName="appointment_position_is_mowla_appointee_index">
+      <column name="is_mowla_appointee"></column>
+    </createIndex>
   </changeSet>
 </databaseChangeLog>
