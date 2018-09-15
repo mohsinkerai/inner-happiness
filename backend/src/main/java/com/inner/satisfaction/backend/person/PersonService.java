@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,13 +16,15 @@ import org.springframework.stereotype.Service;
 public class PersonService extends BaseService<Person> {
 
   private final PersonRepository personRepository;
-  private Set<BaseM2MProcessingService> baseProcessingservices;
+  private final Set<BaseM2MProcessingService> baseProcessingservices;
 
   protected PersonService(
     PersonRepository personRepository,
-    PersonValidation personValidation) {
+    PersonValidation personValidation,
+    Set<BaseM2MProcessingService> baseProcessingservices) {
     super(personRepository, personValidation);
     this.personRepository = personRepository;
+    this.baseProcessingservices = baseProcessingservices;
   }
 
 
@@ -84,11 +85,5 @@ public class PersonService extends BaseService<Person> {
 
   public Page<Person> findAll(Pageable pageable) {
     return personRepository.findAll(pageable);
-  }
-
-  @Autowired
-  public void setBaseProcessingservices(
-    Set<BaseM2MProcessingService> baseProcessingservices) {
-    this.baseProcessingservices = baseProcessingservices;
   }
 }

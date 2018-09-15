@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.inner.satisfaction.backend.lookups.relation.Relation;
 import com.inner.satisfaction.backend.lookups.relation.RelationService;
 import com.inner.satisfaction.backend.person.Person;
-import com.inner.satisfaction.backend.person.PersonService;
+import com.inner.satisfaction.backend.person.PersonServiceCrud;
 import com.inner.satisfaction.backend.person.lookup.base.BaseM2MProcessingService;
 import com.inner.satisfaction.backend.person.lookup.dto.ReducedPersonDto;
 import com.inner.satisfaction.backend.utils.DtoEntityConverter;
@@ -18,13 +18,13 @@ public class PersonRelationM2MProcessor extends
   BaseM2MProcessingService<PersonRelationPerson, ReducedPersonDto> {
 
   private final RelationService relationService;
-  private final PersonService personService;
+  private final PersonServiceCrud personService;
   private final PersonRelationPersonService prpService;
   private final DtoEntityConverter<ReducedPersonDto, Person> entityConverter;
 
   public PersonRelationM2MProcessor(
     RelationService relationService,
-    PersonService personService,
+    PersonServiceCrud personService,
     PersonRelationPersonService prpService,
     DtoEntityConverter<ReducedPersonDto, Person> entityConverter) {
     this.relationService = relationService;
