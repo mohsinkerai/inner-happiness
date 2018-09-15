@@ -1,4 +1,4 @@
-package com.is.migration.updatefields.jk;
+package com.is.migration.updatefields.jk.migrator.jamatkhana;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,25 +1,25 @@
-package com.is.migration.updatefields.jk.persistance;
+package com.is.migration.updatefields.jk.persistance.position;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity(name="level")
-public class JamatkhanaEntity {
+@Entity(name = "position")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Position {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private Long levelTypeId;
   private String name;
-  private String fullName;
-  private String codeEo;
-  private String codeNc;
-  private Long levelParentId;
+  private Long seatId;
   private Long oldId;
-  private String oldCode;
-  private boolean isClosed;
 }

@@ -1,7 +1,7 @@
-package com.is.migration.updatefields.jk;
+package com.is.migration.updatefields.jk.migrator.jamatkhana;
 
-import com.is.migration.updatefields.jk.persistance.JamatkhanaEntity;
-import com.is.migration.updatefields.jk.persistance.JamatkhanaRepository;
+import com.is.migration.updatefields.jk.persistance.jamatkhana.JamatkhanaEntity;
+import com.is.migration.updatefields.jk.persistance.jamatkhana.JamatkhanaRepository;
 import com.opencsv.CSVReader;
 import java.io.IOException;
 import java.io.Reader;

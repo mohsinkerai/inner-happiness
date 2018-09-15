@@ -19,4 +19,12 @@ public class PositionOnInstitutionService extends BaseService<PositionOnInstitut
   public List<PositionOnInstitution> findByInstitutionId(long institutionId) {
     return positionOnInstitutionRepository.findByInstitutionId(institutionId);
   }
+
+  public List<PositionOnInstitution> findByInstitutionIdAndCycleId(long institutionId, long cycleId) {
+    return positionOnInstitutionRepository.findByCycleIdAndInstitutionId(cycleId, institutionId);
+  }
+
+  public PositionOnInstitution findByInstitutionIdAndCycleIdAndPositionId(long institutionId, long cycleId, long positionId) {
+    return positionOnInstitutionRepository.findByCycleIdAndInstitutionIdAndPositionId(cycleId,institutionId,positionId);
+  }
 }
