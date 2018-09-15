@@ -1,0 +1,31 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="person-appointment-01" author="mohsin.kerai">
+    <createTable
+      remarks="It stores nominations for a Person with respect to appointment position."
+      tableName="person_appointment">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint"/>
+      <column name="appointment_position_id" type="bigint"/>
+      <column name="is_appointed" type="tinyint"/>
+      <column name="is_recommended" type="tinyint"/>
+      <column name="priority" type="int"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

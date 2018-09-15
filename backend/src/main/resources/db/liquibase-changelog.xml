@@ -19,13 +19,13 @@
   <!--<include file="changelog/02-insert-data-authors.xml" relativeToChangelogFile="true"/>-->
   <!--<include file="changelog/02-insert-data-books.xml" relativeToChangelogFile="true"/>-->
 
-  <include file="changelog/enhanced/01-person.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/02-level-type.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/03-level.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/04-company.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/05-institution.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/06-position.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/07-cycle.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/08-appointment-position.xml" relativeToChangelogFile="true"/>
-  <include file="changelog/enhanced/09-person-appointment.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/01-person.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/02-level-type.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/03-level.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/04-company.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/05-institution.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/06-position.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/07-cycle.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/08-appointment-position.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/core/09-person-appointment.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
