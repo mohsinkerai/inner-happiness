@@ -19,17 +19,19 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmploymentHistoryDto extends BaseDto {
 
-  private String employmentId;
+  private String employmentId; // Ignoreable
   private String nameOfOrganization;
   private String designation;
   private String location;
   private String employmentEmailAddress;
   private String employmentTelephone;
-  private long businessType; // ID
-  private long businessNature; // ID
+  private Long businessType; // ID
+  private Long businessNature; // ID
 
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate employmentStartDate;
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate employmentEndDate;
+
+  private int priority;
 }

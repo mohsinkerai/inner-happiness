@@ -18,6 +18,7 @@
   <!--Supporting Files-->
   <include file="changelog/enhanced/supporting/01-relation.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/01-relation-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/02-skill.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/03-jamati-title.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/04-marital-status.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/05-area-of-origin.xml" relativeToChangelogFile="true"/>

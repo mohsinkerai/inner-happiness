@@ -111,12 +111,12 @@ public class Person extends BaseEntity {
   @Convert(converter = JpaConverterJson.class)
   private List<Integer> fieldOfInterest; // ID's
 
-  private Long religiousEducation;
+  private Long religiousEducation; // Id Lookup
 
   private Long hoursPerWeek;
 
   // 6. Occupation
-  private Long occupationType;
+  private Long occupationType; // Id Lookup
   private String occupationOthers;
 
   // EmploymentHistory
