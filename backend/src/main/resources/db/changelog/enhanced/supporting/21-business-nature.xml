@@ -26,4 +26,9 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="business-nature-02" author="mohsin.kerai">
+    <addColumn tableName="business_nature">
+      <column name="short_name" type="varchar(10)"/>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

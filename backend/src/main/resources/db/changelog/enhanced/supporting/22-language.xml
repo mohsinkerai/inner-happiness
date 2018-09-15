@@ -26,4 +26,9 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="language-02" author="mohsin.kerai">
+    <addColumn tableName="language">
+      <column name="short_name" type="varchar(10)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

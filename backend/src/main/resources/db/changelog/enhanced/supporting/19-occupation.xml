@@ -26,4 +26,10 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="occupation-02" author="mohsin.kerai">
+    <addColumn tableName="occupation">
+      <column name="short_name" type="varchar(10)"/>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

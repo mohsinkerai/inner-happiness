@@ -34,4 +34,9 @@
       <!--constraintName="parent_level_type_id"-->
       <!--referencedTableName="level_type" referencedColumnNames="id"/>-->
   </changeSet>
+  <changeSet id="level-type-02" author="mohsin.kerai">
+    <addColumn tableName="level_type">
+      <column name="short_name" type="varchar(10)"/>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
