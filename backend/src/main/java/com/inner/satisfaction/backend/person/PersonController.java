@@ -37,6 +37,15 @@ public class PersonController extends BaseController<Person> {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/all/paginated", method = RequestMethod.GET)
+  public Page<Person> findAllPaginated(
+    @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+    @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
+    PageRequest pageRequest = PageRequest.of(page - 1, size);
+    return personService.findAll(pageRequest);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = {"/search/cnic", "/search/findByCnic"}, method = RequestMethod.GET)
   public Person findByCnic(@RequestParam("cnic") String cnic) {
     return Optional.ofNullable(personService.findByCnic(cnic))
