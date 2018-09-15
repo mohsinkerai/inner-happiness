@@ -4,21 +4,7 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <!--<include file="changelog/01-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/02-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/03-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/04-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/05-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/06-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/07-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/08-basic-tables.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/09-configurations.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/10-basic-e2e-dummy-data.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/11-indexes-keys.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/12-db-migration.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/02-insert-data-authors.xml" relativeToChangelogFile="true"/>-->
-  <!--<include file="changelog/02-insert-data-books.xml" relativeToChangelogFile="true"/>-->
-
+  <!--Core Files-->
   <include file="changelog/enhanced/core/01-person.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/core/02-level-type.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/core/03-level.xml" relativeToChangelogFile="true"/>
@@ -28,4 +14,42 @@
   <include file="changelog/enhanced/core/07-cycle.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/core/08-appointment-position.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/core/09-person-appointment.xml" relativeToChangelogFile="true"/>
+
+  <!--Supporting Files-->
+  <include file="changelog/enhanced/supporting/01-relation.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/01-relation-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/03-jamati-title.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/04-marital-status.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/05-area-of-origin.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/06-country.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/07-salutation.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/08-city.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/09-secular-study-level.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/10-religious-qualification.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/10-religious-qualification-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/11-public-service-institution.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/12-educational-degree.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/13-akdn-training.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/13-akdn-training-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/14-area-of-study.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/15-educational-institution.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/16-field-of-expertise.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/17-voluntary-institution.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/18-business-type.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/19-occupation.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/19-occupation-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/20-field-of-interest.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/20-field-of-interest-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/21-business-nature.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/21-business-nature-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/22-language.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/23-professional-membership.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/24-language-proficiency.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/24-language-proficiency-data.xml" relativeToChangelogFile="true"/>
+
+  <!--Supporting Relation files-->
+  <include file="changelog/enhanced/supporting-relation/01-person-skill.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting-relation/02-person-professional-membership.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting-relation/02-person-relation-person.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting-relation/02-person-relation-person-data.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
