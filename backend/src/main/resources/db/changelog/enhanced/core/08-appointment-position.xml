@@ -53,7 +53,7 @@
     <createIndex tableName="appointment_position" indexName="appointment_position_position_id_index">
       <column name="position_id"></column>
     </createIndex>
-    <createIndex tableName="is_mowla_appointee" indexName="appointment_position_is_mowla_appointee_index">
+    <createIndex tableName="appointment_position" indexName="appointment_position_is_mowla_appointee_index">
       <column name="is_mowla_appointee"></column>
     </createIndex>
   </changeSet>
