@@ -25,4 +25,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="public-service-institution-02" author="mohsin.kerai">
+    <addColumn tableName="public_service_institution">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

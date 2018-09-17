@@ -27,4 +27,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="secular-study-level-02" author="mohsin.kerai">
+    <addColumn tableName="secular_study_level">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

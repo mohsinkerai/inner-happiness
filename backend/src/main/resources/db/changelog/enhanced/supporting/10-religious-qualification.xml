@@ -25,4 +25,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="religious-qualification-02" author="mohsin.kerai">
+    <addColumn tableName="religious_qualification">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -26,4 +26,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="professional-membership-02" author="mohsin.kerai">
+    <addColumn tableName="professional_membership">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
