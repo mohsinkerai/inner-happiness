@@ -147,7 +147,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "hoursPerWeek")]
         [Display(Name = "Hours per Week")]
         public double? HoursPerWeek { get; set; }
-
+        
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "image")] public string Image { get; set; }
