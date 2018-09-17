@@ -28,4 +28,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="person-skill-03" author="mohsin.kerai">
+    <addColumn tableName="person_skill">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

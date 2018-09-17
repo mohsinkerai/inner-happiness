@@ -31,4 +31,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="person-relation-person-03" author="mohsin.kerai">
+    <addColumn tableName="person_relation_person">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
