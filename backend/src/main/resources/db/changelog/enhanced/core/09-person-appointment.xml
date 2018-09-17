@@ -50,4 +50,11 @@
       <column name="remarks" type="varchar(255)"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="person-appointment-04" author="mohsin.kerai">
+    <addColumn tableName="person_appointment">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
