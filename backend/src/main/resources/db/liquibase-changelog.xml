@@ -22,6 +22,7 @@
   <include file="changelog/enhanced/supporting/03-jamati-title.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/04-marital-status.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/05-area-of-origin.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/05-area-of-origin-data.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/06-country.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/07-salutation.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/08-city.xml" relativeToChangelogFile="true"/>

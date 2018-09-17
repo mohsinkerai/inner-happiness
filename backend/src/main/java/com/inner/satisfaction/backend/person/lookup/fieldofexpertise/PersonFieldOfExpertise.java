@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class PersonFieldOfExpertise extends BaseEntity {
 
   private long personId;
-  private long fieldIfExpertiseId;
+  private long fieldOfExpertiseId;
 }

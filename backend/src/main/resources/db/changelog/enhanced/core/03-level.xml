@@ -50,4 +50,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="level-02" author="mohsin.kerai">
+    <addColumn tableName="level">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

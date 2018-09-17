@@ -35,7 +35,7 @@ public class PersonFieldOfExpertiseM2MPreProcessor extends
   @Override
   protected Person populateEntityInPerson(Person person, List<PersonFieldOfExpertise> e) {
     List<String> skills = e.stream()
-      .map(PersonFieldOfExpertise::getFieldIfExpertiseId)
+      .map(PersonFieldOfExpertise::getFieldOfExpertiseId)
       .map(fieldOfExpertiseService::findOne)
       .map(FieldOfExpertise::getName)
       .collect(Collectors.toList());
@@ -72,7 +72,7 @@ public class PersonFieldOfExpertiseM2MPreProcessor extends
   protected PersonFieldOfExpertise convert(PersonSkillsDto dto) {
     return PersonFieldOfExpertise.builder()
       .personId(dto.getPersonId())
-      .fieldIfExpertiseId(dto.getSkillId())
+      .fieldOfExpertiseId(dto.getSkillId())
       .build();
   }
 
