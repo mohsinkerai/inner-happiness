@@ -5,22 +5,28 @@
 
   <changeSet author="mohsin.kerai" id="occupation-data-01">
     <insert tableName="occupation">
-      <column name="name" value="Salaried"/>
-    </insert>
-    <insert tableName="occupation">
-      <column name="name" value="Self Employed"/>
-    </insert>
-    <insert tableName="occupation">
-      <column name="name" value="Retired"/>
-    </insert>
-    <insert tableName="occupation">
       <column name="name" value="Home Maker"/>
-    </insert>
-    <insert tableName="occupation">
-      <column name="name" value="Student"/>
+      <column name="short_name" value="HMB"/>
     </insert>
     <insert tableName="occupation">
       <column name="name" value="Other"/>
+      <column name="short_name" value="OTH"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Retired"/>
+      <column name="short_name" value="RTD"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Salaried"/>
+      <column name="short_name" value="SAL"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Self Employed"/>
+      <column name="short_name" value="SLF"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Student"/>
+      <column name="short_name" value="STD"/>
     </insert>
   </changeSet>
 </databaseChangeLog>

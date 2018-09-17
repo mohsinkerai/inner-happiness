@@ -12,6 +12,9 @@
       <column name="name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+      <column name="short_name" type="varchar(10)">
+        <constraints nullable="true"/>
+      </column>
       <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
         <constraints nullable="false" unique="false"/>
       </column>
@@ -26,13 +29,7 @@
       </column>
     </createTable>
   </changeSet>
-
   <changeSet id="occupation-02" author="mohsin.kerai">
-    <addColumn tableName="occupation">
-      <column name="short_name" type="varchar(10)"/>
-    </addColumn>
-  </changeSet>
-  <changeSet id="occupation-03" author="mohsin.kerai">
     <addColumn tableName="occupation">
       <column name="is_active" defaultValue="1" type="bit">
         <constraints nullable="false" />

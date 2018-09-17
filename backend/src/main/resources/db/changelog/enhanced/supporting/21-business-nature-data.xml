@@ -11,25 +11,33 @@
       <column name="name" value="Art/Culture"/>
     </insert>
     <insert tableName="business_nature">
+      <column name="name" value="Bank/Services"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Business"/>
+      <column name="short_name" value="BUS"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Construction"/>
+    </insert>
+    <insert tableName="business_nature">
       <column name="name" value="Education"/>
     </insert>
     <insert tableName="business_nature">
       <column name="name" value="Health"/>
     </insert>
     <insert tableName="business_nature">
-      <column name="name" value="Construction"/>
+      <column name="name" value="Other (Please specify)"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Policy/Development"/>
+      <column name="short_name" value="POL"/>
     </insert>
     <insert tableName="business_nature">
       <column name="name" value="Technology"/>
     </insert>
     <insert tableName="business_nature">
-      <column name="name" value="Bank/Services"/>
-    </insert>
-    <insert tableName="business_nature">
       <column name="name" value="Transportation"/>
-    </insert>
-    <insert tableName="business_nature">
-      <column name="name" value="Other (Please specify)"/>
     </insert>
   </changeSet>
   <changeSet id="business-nature-data-02" author="mohsin.kerai">
