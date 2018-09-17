@@ -27,6 +27,7 @@
   <include file="changelog/enhanced/supporting/07-salutation.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/08-city.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/09-secular-study-level.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/supporting/09-secular-study-level-data.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/10-religious-qualification.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/10-religious-qualification-data.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting/11-public-service-institution.xml" relativeToChangelogFile="true"/>

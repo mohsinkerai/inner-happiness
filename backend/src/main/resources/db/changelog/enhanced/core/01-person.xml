@@ -92,7 +92,7 @@
         <constraints nullable="true"/>
       </column>
 
-      <column name="highest_level_of_study" type="varchar(255)">
+      <column name="highest_level_of_study" type="bigint">
         <constraints nullable="true"/>
       </column>
       <column name="highest_level_of_study_other" type="varchar(255)">
