@@ -26,4 +26,11 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="area-of-origin-02" author="mohsin.kerai">
+    <addColumn tableName="area_of_origin">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
