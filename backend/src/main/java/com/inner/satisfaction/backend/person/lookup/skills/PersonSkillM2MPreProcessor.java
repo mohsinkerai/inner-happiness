@@ -34,8 +34,7 @@ public class PersonSkillM2MPreProcessor extends
   protected Person populateEntityInPerson(Person person, List<PersonSkill> e) {
     List<String> skills = e.stream()
       .map(PersonSkill::getSkillId)
-      .map(skillService::findOne)
-      .map(Skill::getName)
+      .map(String::valueOf)
       .collect(Collectors.toList());
     person.setSkills(skills);
     return person;
@@ -83,12 +82,6 @@ public class PersonSkillM2MPreProcessor extends
       .collect(Collectors.toList());
   }
 
-  private PersonSkillsDto convert(String val) {
-    return PersonSkillsDto.builder()
-      .skill(val)
-      .build();
-  }
-
   @Override
   protected void removeAllEntityByPersonId(long personId) {
     personSkillService.removeByPersonId(personId);
@@ -97,5 +90,11 @@ public class PersonSkillM2MPreProcessor extends
   @Override
   protected PersonSkill saveEntity(PersonSkill personSkill) {
     return personSkillService.save(personSkill);
+  }
+
+  private PersonSkillsDto convert(String val) {
+    return PersonSkillsDto.builder()
+      .skill(val)
+      .build();
   }
 }

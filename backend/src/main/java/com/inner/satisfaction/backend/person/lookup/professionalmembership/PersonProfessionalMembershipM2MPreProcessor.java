@@ -34,8 +34,7 @@ public class PersonProfessionalMembershipM2MPreProcessor extends
   protected Person populateEntityInPerson(Person person, List<PersonProfessionalMembership> e) {
     List<String> professionalMembership = e.stream()
       .map(PersonProfessionalMembership::getProfessionalMembershipId)
-      .map(professionalMembershipService::findOne)
-      .map(ProfessionalMembership::getName)
+      .map(String::valueOf)
       .collect(Collectors.toList());
     person.setProfessionalMemberships(professionalMembership);
     return person;

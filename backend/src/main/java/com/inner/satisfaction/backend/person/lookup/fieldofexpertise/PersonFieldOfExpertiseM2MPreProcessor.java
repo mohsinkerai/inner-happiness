@@ -3,8 +3,6 @@ package com.inner.satisfaction.backend.person.lookup.fieldofexpertise;
 import com.google.common.collect.Lists;
 import com.inner.satisfaction.backend.lookups.fieldofexperties.FieldOfExpertise;
 import com.inner.satisfaction.backend.lookups.fieldofexperties.FieldOfExpertiseService;
-import com.inner.satisfaction.backend.lookups.skill.Skill;
-import com.inner.satisfaction.backend.lookups.skill.SkillService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.lookup.base.BaseM2MProcessingService;
 import com.inner.satisfaction.backend.person.lookup.dto.PersonSkillsDto;
@@ -36,8 +34,7 @@ public class PersonFieldOfExpertiseM2MPreProcessor extends
   protected Person populateEntityInPerson(Person person, List<PersonFieldOfExpertise> e) {
     List<String> skills = e.stream()
       .map(PersonFieldOfExpertise::getFieldOfExpertiseId)
-      .map(fieldOfExpertiseService::findOne)
-      .map(FieldOfExpertise::getName)
+      .map(String::valueOf)
       .collect(Collectors.toList());
     person.setSkills(skills);
     return person;
