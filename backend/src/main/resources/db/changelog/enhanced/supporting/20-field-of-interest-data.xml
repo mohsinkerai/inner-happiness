@@ -1,0 +1,52 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="field-of-interest-data-01">
+    <insert tableName="field_of_interest">
+      <column name="name" value="Council"/>
+      <column name="short_name" value="COUNCIL"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Tariqah and Religious Education Board"/>
+      <column name="short_name" value="ITREB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Grants and Review Board"/>
+      <column name="short_name" value="GRB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Conciliation and Arbitration Board"/>
+      <column name="short_name" value="CAB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Education Board"/>
+      <column name="short_name" value="EB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Health Board"/>
+      <column name="short_name" value="HB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Habitat"/>
+      <column name="short_name" value="H"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Economic Planning Board"/>
+      <column name="short_name" value="EPB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Social Welfare Board"/>
+      <column name="short_name" value="SWB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Youth and Sports Board"/>
+      <column name="short_name" value="YSB"/>
+    </insert>
+    <insert tableName="field_of_interest">
+      <column name="name" value="Any Institution"/>
+      <column name="short_name" value="ANY"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

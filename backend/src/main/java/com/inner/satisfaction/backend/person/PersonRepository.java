@@ -1,6 +1,7 @@
 package com.inner.satisfaction.backend.person;
 
 import com.inner.satisfaction.backend.base.BasePagingAndSortingRepository;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -11,8 +12,8 @@ public interface PersonRepository extends BasePagingAndSortingRepository<Person>
   Person findByCnic(String cnic);
 
   // TODO: Full Text search index on CNIC, FirstName and LastName
-  Page<Person> findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingAndFormNoIgnoreCaseContaining(
-    String cnic, String firstName, String familyName, String formNo, Pageable pageable);
+  Page<Person> findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingOrIdEquals(
+    String cnic, String firstName, String familyName, Long id, Pageable pageable);
 
-  Person findByFormNo(String formNo);
+  List<Person> findByIdOrCnicIgnoreCaseContaining(Long id, String cnic);
 }

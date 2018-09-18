@@ -61,13 +61,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.VoluntaryCommunityPositionList = await RestfulClient.GetPositions();
                 ViewBag.HighestLevelOfStudyList = await RestfulClient.GetHighestLevelOfStudy();
                 ViewBag.AkdnTrainingList = await RestfulClient.GetAkdnTraining();
-                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                //ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetPositionInstitution();
                 ViewBag.FieldOfInterestsList = await RestfulClient.GetFieldOfInterests();
                 ViewBag.OccupationTypeList = await RestfulClient.GetOcupations();
                 ViewBag.TypeOfBusinessList = await RestfulClient.GetBussinessType();
                 ViewBag.NatureOfBusinessList = await RestfulClient.GetBussinessNature();
                 ViewBag.ProfessionalMembershipsList = await RestfulClient.GetProfessionalMemeberShipDetails();
-                ViewBag.LanguageList = await RestfulClient.GetLanguages();
+                ViewBag.LanguageList = await RestfulClient.GetLanguages();  
                 ViewBag.SkillsList = await RestfulClient.GetSkills();
                 ViewBag.RelationList = await RestfulClient.GetAllRelatives();
 
@@ -245,7 +246,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.VoluntaryCommunityPositionList = await RestfulClient.GetPositions();
                 ViewBag.HighestLevelOfStudyList = await RestfulClient.GetHighestLevelOfStudy();
                 ViewBag.AkdnTrainingList = await RestfulClient.GetAkdnTraining();
-                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                //ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetPositionInstitution();
                 ViewBag.FieldOfInterestsList = await RestfulClient.GetFieldOfInterests();
                 ViewBag.OccupationTypeList = await RestfulClient.GetOcupations();
                 ViewBag.TypeOfBusinessList = await RestfulClient.GetBussinessType();
@@ -264,14 +266,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
                 HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
             }
-            catch
+            catch (Exception ex)
             {
             }
 
             var person = await RestfulClient.GetPersonDetailsById(id);
 
-            ViewBag.LocalCouncilList = await RestfulClient.GetLocalCouncil(person.RegionalCouncil);
-            ViewBag.JamatkhanaList = await RestfulClient.GetJamatkhana(person.LocalCouncil);
+            if (person.RegionalCouncil != null)
+            {
+                ViewBag.LocalCouncilList = await RestfulClient.GetLocalCouncil(person.RegionalCouncil);
+                ViewBag.JamatkhanaList = await RestfulClient.GetJamatkhana(person.LocalCouncil);
+            }
 
             return View(MapPerson(person));
         }
@@ -301,7 +306,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.VoluntaryCommunityPositionList = await RestfulClient.GetPositions();
                 ViewBag.HighestLevelOfStudyList = await RestfulClient.GetHighestLevelOfStudy();
                 ViewBag.AkdnTrainingList = await RestfulClient.GetAkdnTraining();
-                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                //ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetVoluntaryInstitution();
+                ViewBag.VoluntaryCommunityInstitutionList = await RestfulClient.GetPositionInstitution();
                 ViewBag.FieldOfInterestsList = await RestfulClient.GetFieldOfInterests();
                 ViewBag.OccupationTypeList = await RestfulClient.GetOcupations();
                 ViewBag.TypeOfBusinessList = await RestfulClient.GetBussinessType();
@@ -323,7 +329,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "true");
                 HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "true");
             }
-            catch
+            catch (Exception ex)
             {
             }
 
@@ -342,8 +348,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
                 model.RelocationDateTime =
-                    DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
-                model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
+                    DateTime.ParseExact(formCollection["RelocationDateTime"], "MM/dd/yyyy", null);
+                model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "MM/dd/yyyy", null);
 
                 if (ModelState.IsValid)
                 {
@@ -398,7 +404,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ViewBag.Message = Messages.GeneralError;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
@@ -1047,121 +1053,142 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (person != null)
                 {
-                    foreach (var education in person.Educations)
-                    {
-                        string institutionName = GetText(education.Institution, ViewBag.InstitutionList);
-                        string country = GetText(education.CountryOfStudy, ViewBag.CountryOfStudyList);
-                        string nameOfDegree = GetText(education.NameOfDegree, ViewBag.NameOfDegreeList);
+                    if (person.Educations != null)
+                    { 
+                        foreach (var education in person.Educations)
+                        {
+                            string institutionName = GetText(education.Institution, ViewBag.InstitutionList);
+                            string country = GetText(education.CountryOfStudy, ViewBag.CountryOfStudyList);
+                            string nameOfDegree = GetText(education.NameOfDegree, ViewBag.NameOfDegreeList);
 
-                        education.InstitutionName = institutionName;
-                        education.CountryOfStudyName = country;
-                        education.NameOfDegreeName = nameOfDegree;
+                            education.InstitutionName = institutionName;
+                            education.CountryOfStudyName = country;
+                            education.NameOfDegreeName = nameOfDegree;
 
-                        //tejani mapping here
-                        AddEducationToSession(education.EducationId,
-                            education.Institution + "-" + education.InstitutionName,
-                            education.CountryOfStudy + "-" + education.CountryOfStudyName,
-                            education.FromYear?.ToString(), education.ToYear?.ToString(),
-                            education.NameOfDegree + "-" + education.NameOfDegreeName,
-                            education.MajorAreaOfStudy);
+                            //tejani mapping here
+                            AddEducationToSession(education.EducationId,
+                                education.Institution + "-" + education.InstitutionName,
+                                education.CountryOfStudy + "-" + education.CountryOfStudyName,
+                                education.FromYear?.ToString(), education.ToYear?.ToString(),
+                                education.NameOfDegree + "-" + education.NameOfDegreeName,
+                                education.MajorAreaOfStudy);
+                        }
                     }
 
-                    foreach (var akdnTraining in person.AkdnTrainings)
+                    if (person.AkdnTrainings != null)
                     {
-                        string training = GetText(akdnTraining.Training, ViewBag.AkdnTrainingList);
-                        string country = GetText(akdnTraining.CountryOfTraining, ViewBag.AkdnTrainingCountryList);
-                        var month = GetMonthName(akdnTraining.Month);
+                        foreach (var akdnTraining in person.AkdnTrainings)
+                        {
+                            string training = GetText(akdnTraining.Training, ViewBag.AkdnTrainingList);
+                            string country = GetText(akdnTraining.CountryOfTraining, ViewBag.AkdnTrainingCountryList);
+                            var month = GetMonthName(akdnTraining.Month);
 
-                        akdnTraining.TrainingName = training;
-                        akdnTraining.CountryOfTrainingName = country;
-                        akdnTraining.MonthName = month;
+                            akdnTraining.TrainingName = training;
+                            akdnTraining.CountryOfTrainingName = country;
+                            akdnTraining.MonthName = month;
 
-                        AddAkdnTrainingToSession(akdnTraining.TrainingId,
-                            akdnTraining.Training + "-" + akdnTraining.TrainingName,
-                            akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
-                            akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString());
+                            AddAkdnTrainingToSession(akdnTraining.TrainingId,
+                                akdnTraining.Training + "-" + akdnTraining.TrainingName,
+                                akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
+                                akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString());
+                        }
                     }
 
-                    foreach (var professionalTraining in person.ProfessionalTrainings)
+                    if (person.ProfessionalTrainings != null)
                     {
-                        string country = GetText(professionalTraining.CountryOfTraining,
-                            ViewBag.ProfessionalTrainingCountryList);
-                        var month = GetMonthName(professionalTraining.Month);
+                        foreach (var professionalTraining in person.ProfessionalTrainings)
+                        {
+                            string country = GetText(professionalTraining.CountryOfTraining,
+                                ViewBag.ProfessionalTrainingCountryList);
+                            var month = GetMonthName(professionalTraining.Month);
 
-                        professionalTraining.CountryOfTrainingName = country;
-                        //professionalTraining.CountryOfTraining = country;
-                        professionalTraining.MonthName = month;
+                            professionalTraining.CountryOfTrainingName = country;
+                            //professionalTraining.CountryOfTraining = country;
+                            professionalTraining.MonthName = month;
 
-                        AddProfessionalTrainingToSession(professionalTraining.TrainingId, professionalTraining.Training,
-                            professionalTraining.Institution,
-                            professionalTraining.CountryOfTraining + "-" + professionalTraining.CountryOfTrainingName,
-                            professionalTraining.Month + "-" + professionalTraining.MonthName,
-                            professionalTraining.Year?.ToString());
+                            AddProfessionalTrainingToSession(professionalTraining.TrainingId, professionalTraining.Training,
+                                professionalTraining.Institution,
+                                professionalTraining.CountryOfTraining + "-" + professionalTraining.CountryOfTrainingName,
+                                professionalTraining.Month + "-" + professionalTraining.MonthName,
+                                professionalTraining.Year?.ToString());
+                        }
                     }
 
-                    foreach (var language in person.LanguageProficiencies)
+                    if (person.LanguageProficiencies != null)
                     {
-                        string languageName = GetText(language.Language, ViewBag.LanguageList);
-                        string read = GetText(language.Read, ViewBag.Proficiency);
-                        string write = GetText(language.Write, ViewBag.Proficiency);
-                        string speak = GetText(language.Speak, ViewBag.Proficiency);
+                        foreach (var language in person.LanguageProficiencies)
+                        {
+                            string languageName = GetText(language.Language, ViewBag.LanguageList);
+                            string read = GetText(language.Read, ViewBag.Proficiency);
+                            string write = GetText(language.Write, ViewBag.Proficiency);
+                            string speak = GetText(language.Speak, ViewBag.Proficiency);
 
-                        language.LanguageName = languageName;
-                        language.ReadName = read;
-                        language.WriteName = write;
-                        language.SpeakName = speak;
+                            language.LanguageName = languageName;
+                            language.ReadName = read;
+                            language.WriteName = write;
+                            language.SpeakName = speak;
 
-                        AddLanguageToSession(language.LanguageProficiencyId,
-                            language.Language + "-" + language.LanguageName, language.Read + "-" + language.ReadName,
-                            language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName);
+                            AddLanguageToSession(language.LanguageProficiencyId,
+                                language.Language + "-" + language.LanguageName, language.Read + "-" + language.ReadName,
+                                language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName);
+                        }
                     }
 
-                    foreach (var voluntaryService in person.VoluntaryCommunityServices)
+                    if (person.VoluntaryCommunityServices != null)
                     {
-                        string institutionName = GetText(voluntaryService.Institution,
-                            ViewBag.VoluntaryCommunityInstitutionList);
-                        string position = GetText(voluntaryService.Position, ViewBag.VoluntaryCommunityPositionList);
+                        foreach (var voluntaryService in person.VoluntaryCommunityServices)
+                        {
+                            string institutionName = GetText(voluntaryService.Institution,
+                                ViewBag.VoluntaryCommunityInstitutionList);
+                            string position = GetText(voluntaryService.Position, ViewBag.VoluntaryCommunityPositionList);
 
-                        voluntaryService.InstitutionName = institutionName;
-                        voluntaryService.PositionName = position;
+                            voluntaryService.InstitutionName = institutionName;
+                            voluntaryService.PositionName = position;
 
-                        AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId,
-                            voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
-                            voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
-                            voluntaryService.Position + "-" + voluntaryService.PositionName);
+                            AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId,
+                                voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
+                                voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
+                                voluntaryService.Position + "-" + voluntaryService.PositionName);
+                        }
                     }
 
-                    foreach (var employment in person.Employments)
+                    if (person.Employments != null)
                     {
-                        string businessNature = GetText(employment.NatureOfBusiness, ViewBag.NatureOfBusinessList);
-                        string businessType = GetText(employment.TypeOfBusiness, ViewBag.TypeOfBusinessList);
+                        foreach (var employment in person.Employments)
+                        {
+                            string businessNature = GetText(employment.NatureOfBusiness, ViewBag.NatureOfBusinessList);
+                            string businessType = GetText(employment.TypeOfBusiness, ViewBag.TypeOfBusinessList);
 
-                        employment.TypeOfBusinessName = businessType;
-                        employment.NatureOfBusinessName = businessNature;
+                            employment.TypeOfBusinessName = businessType;
+                            employment.NatureOfBusinessName = businessNature;
 
-                        AddEmploymentToSession(employment.EmploymentId, employment.NameOfOrganization,
-                            employment.Designation, employment.Location,
-                            employment.EmploymentEmailAddress, employment.EmploymentTelephone,
-                            employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
-                            employment.NatureOfBusiness + "-" + employment.NatureOfBusinessName,
-                            employment.NatureOfBusinessOther,
-                            employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
+                            AddEmploymentToSession(employment.EmploymentId, employment.NameOfOrganization,
+                                employment.Designation, employment.Location,
+                                employment.EmploymentEmailAddress, employment.EmploymentTelephone,
+                                employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
+                                employment.NatureOfBusiness + "-" + employment.NatureOfBusinessName,
+                                employment.NatureOfBusinessOther,
+                                employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
+                        }
                     }
 
-                    foreach (var relation in person.FamilyRelations)
+                    if (person.FamilyRelations != null)
                     {
-                        string relationName = GetText(relation.Relation, ViewBag.RelationList);
-                        relation.RelationName = relationName;
+                        foreach (var relation in person.FamilyRelations)
+                        {
+                            string relationName = GetText(relation.Relation, ViewBag.RelationList);
+                            relation.RelationName = relationName;
 
-                        AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic, relation.Salutation,
-                            relation.FirstName, relation.FathersName,
-                            relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
-                            relation.RelationName);
+                            AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic, relation.Salutation,
+                                relation.FirstName, relation.FathersName,
+                                relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
+                                relation.RelationName);
+                        }
                     }
                 }
             }
-            catch (Exception)
-            {
+            catch (Exception ex)
+            { 
             }
 
             return person;

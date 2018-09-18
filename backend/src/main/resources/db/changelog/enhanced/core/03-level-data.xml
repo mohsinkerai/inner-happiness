@@ -1,0 +1,71 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="level-data-01" author="mohsin.kerai">
+    <insert
+      tableName="level">
+      <column name="id" value="1"/>
+      <column name="level_type_id" value="1"/>
+      <column name="name" value="Pakistan"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Pakistan"/>
+      <column name="code_nc" value="PK"/>
+      <column name="code_eo" value="EO.PK"/>
+      <column name="level_parent_id" value="null"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="2"/>
+      <column name="level_type_id" value="2"/>
+      <column name="name" value="Southern"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Southern Region"/>
+      <column name="code_nc" value="SO"/>
+      <column name="code_eo" value="EO.SO"/>
+      <column name="level_parent_id" value="1"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="3"/>
+      <column name="level_type_id" value="3"/>
+      <column name="name" value="Karimabad"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Karimabad"/>
+      <column name="code_nc" value="SO.03"/>
+      <column name="code_eo" value="EO.SO.03"/>
+      <column name="level_parent_id" value="2"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="4"/>
+      <column name="level_type_id" value="4"/>
+      <column name="name" value="Karimabad Jamatkhana"/>
+      <column name="full_name" value="Karimabad Jamatkhana"/>
+      <column name="code_eo" value="EO.SO.03.03"/>
+      <column name="code_nc" value="SO.03.03"/>
+      <column name="level_parent_id" value="3"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="5"/>
+      <column name="level_type_id" value="3"/>
+      <column name="name" value="Gulshan"/>
+      <column name="full_name"
+        value="His Highness Prince Aga Khan Shia Imami Ismaili Council for Gulshan-e-Noor"/>
+      <column name="code_eo" value="EO.SO.04"/>
+      <column name="code_nc" value="SO.04"/>
+      <column name="level_parent_id" value="2"/>
+    </insert>
+    <insert
+      tableName="level">
+      <column name="id" value="6"/>
+      <column name="level_type_id" value="4"/>
+      <column name="name" value="Noorabad"/>
+      <column name="full_name" value="Noorabad Jamatkhana"/>
+      <column name="code_eo" value="EO.SO.04.01"/>
+      <column name="code_nc" value="SO.04.01"/>
+      <column name="level_parent_id" value="5"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,60 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="person-appointment-01" author="mohsin.kerai">
+    <createTable
+      remarks="It stores nominations for a Person with respect to appointment position."
+      tableName="person_appointment">
+      <column autoIncrement="true" name="id" type="bigint">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="person_id" type="bigint"/>
+      <column name="appointment_position_id" type="bigint"/>
+      <column name="is_appointed" type="tinyint"/>
+      <column name="is_recommended" type="tinyint"/>
+      <column name="priority" type="int"/>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="CURRENT_TIMESTAMP" name="updated_on" type="datetime">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="created_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column defaultValueComputed="null" name="updated_by" type="datetime">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mohsin.kerai" id="person-appointment-02">
+    <createIndex tableName="person_appointment" indexName="person_appointment_position_id_index">
+      <column name="appointment_position_id"></column>
+    </createIndex>
+    <createIndex tableName="person_appointment"
+      indexName="person_appointment_position_person_id_index">
+      <column name="person_id"></column>
+    </createIndex>
+    <createIndex tableName="person_appointment"
+      indexName="person_appointment_position_is_appointed_index">
+      <column name="is_appointed"></column>
+    </createIndex>
+    <createIndex tableName="person_appointment"
+      indexName="person_appointment_position_is_recommended_index">
+      <column name="is_recommended"></column>
+    </createIndex>
+  </changeSet>
+  <changeSet id="person-appointment-03" author="mohsin.kerai">
+    <addColumn tableName="person_appointment">
+      <column name="remarks" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="person-appointment-04" author="mohsin.kerai">
+    <addColumn tableName="person_appointment">
+      <column name="is_active" defaultValue="1" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+</databaseChangeLog>

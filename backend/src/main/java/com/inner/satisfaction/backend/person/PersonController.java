@@ -37,6 +37,15 @@ public class PersonController extends BaseController<Person> {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/all/paginated", method = RequestMethod.GET)
+  public Page<Person> findAllPaginated(
+    @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+    @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
+    PageRequest pageRequest = PageRequest.of(page - 1, size);
+    return personService.findAll(pageRequest);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = {"/search/cnic", "/search/findByCnic"}, method = RequestMethod.GET)
   public Person findByCnic(@RequestParam("cnic") String cnic) {
     return Optional.ofNullable(personService.findByCnic(cnic))
@@ -52,12 +61,20 @@ public class PersonController extends BaseController<Person> {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByIdOrCnic", method = RequestMethod.GET)
+  public List<Person> findByFormNo(@RequestParam("id") Long id, @RequestParam("cnic") String cnic) {
+    return Optional.ofNullable(personService.findByIdOrCnic(cnic, id))
+      .orElseThrow(
+        () -> new EntityNotFoundException("Person with FormNo " + cnic + " " + id + " Not found"));
+  }
+
+  @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/findByCnicAndFirstNameAndLastNameAndFormNo", method = RequestMethod.GET)
   public Page<Person> findByCnicOrFirstNameOrLastName(
     @RequestParam(required = false, value = "cnic", defaultValue = "") String cnic,
     @RequestParam(required = false, value = "firstName", defaultValue = "") String firstName,
     @RequestParam(required = false, value = "lastName", defaultValue = "") String lastName,
-    @RequestParam(required = false, value = "formNo", defaultValue = "") String formNo,
+    @RequestParam(required = false, value = "formNo", defaultValue = "0") String formNo,
     @RequestParam(required = false, defaultValue = "1", value = "page") int page,
     @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
     PageRequest pageRequest = PageRequest.of(page - 1, size);
