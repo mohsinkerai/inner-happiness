@@ -21,4 +21,5 @@ public class LanguageDto extends BaseDto {
   private long write; // Id
   private long read; // Id
   private long speak; // Id
+  private int priority;
 }

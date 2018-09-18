@@ -25,4 +25,5 @@ public class PersonProfessionalTrainingDto extends BaseDto {
   private long countryOfTraining;// Id
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate date;
+  private int priority;
 }

@@ -21,4 +21,5 @@ public class VoluntaryPublicServiceDto extends BaseDto{
   private String position;// Id
   private int fromYear;
   private int toYear;
+  private int priority;
 }

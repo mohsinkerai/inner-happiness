@@ -21,4 +21,5 @@ public class VoluntaryCommunityServiceDto extends BaseDto{
   private long position;// Id
   private int fromYear;
   private int toYear;
+  private int priority;
 }
