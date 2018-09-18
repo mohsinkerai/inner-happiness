@@ -27,7 +27,7 @@ public class MyTestExecutionListener {
   public void setUp() {
     MysqldConfig config = MysqldConfig.aMysqldConfig(v5_6_23)
         .withCharset(UTF8)
-        .withPort(3302)
+        .withPort(3301)
         .withTimeZone(TimeZone.getDefault())
         .withTempDir(System.getProperty("java.io.tmpdir"))
         .build();
