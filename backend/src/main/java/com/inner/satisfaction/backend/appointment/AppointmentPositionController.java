@@ -24,7 +24,7 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
 
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/findAppointmentOfPersonIdAndIsMowlaAppointee", method = RequestMethod.GET)
-  public List<AppointmentPosition> findAppointmentsOfPersonIdAndIsMowlaAppointee(
+  public List<AppointmentPositionDto> findAppointmentsOfPersonIdAndIsMowlaAppointee(
     @RequestParam("personId") long personId,
     @RequestParam("isMowlaAppointee") boolean isMowlaAppointee) {
     return appointmentPositionService.findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
