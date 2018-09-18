@@ -18,7 +18,7 @@
             <!--begin::Form-->
             @{
                 string actionName = null;
-                actionName = ViewBag.Action == "Detail" ? ActionNames.Add : ActionNames.Edit;
+                actionName = ViewBag.Action == "Add" ? ActionNames.Add : ActionNames.Edit;
             }
             <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@actionName" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
                 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label asp-for="FormNumber" class="control-label"></label><span class="required">*</span>
                                 <input type="text" asp-for="Id" class="form-control formnumber">
-                                <span asp-validation-for="FormNumber" class="form-control-feedback"></span>
+                                <span asp-validation-for="Id" class="form-control-feedback"></span>
                             </div>
                         </div>
                         <div class="col-lg-4">

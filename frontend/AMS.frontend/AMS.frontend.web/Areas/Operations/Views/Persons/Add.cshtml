@@ -96,6 +96,14 @@
                 });
             });
 
+            if ($("#PlanToRelocate").checked) {
+                $("#RelocateLocation").prop("disabled", false);
+                $("#RelocationDateTime").prop("disabled", false);
+            } else {
+                $("#RelocateLocation").prop("disabled", true);
+                $("#RelocationDateTime").prop("disabled", true);
+            }
+
             $("#PlanToRelocate").change(function() {
                 if (this.checked) {
                     $("#RelocateLocation").prop("disabled", false);
