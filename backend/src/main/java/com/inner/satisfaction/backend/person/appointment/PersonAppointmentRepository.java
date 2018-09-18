@@ -10,4 +10,6 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
   List<PersonAppointment> findByCpiId(long cpiId);
 
   PersonAppointment findByCpiIdAndIsAppointedTrue(long cpiId);
+
+  List<PersonAppointment> findByPersonIdAndIsAppointedTrue(long personId);
 }

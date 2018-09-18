@@ -10,7 +10,7 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
   private final PersonAppointmentRepository personAppointmentRepository;
 
   protected PersonAppointmentService(
-      PersonAppointmentRepository baseRepository) {
+    PersonAppointmentRepository baseRepository) {
     super(baseRepository);
     this.personAppointmentRepository = baseRepository;
   }
@@ -21,5 +21,9 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
 
   public PersonAppointment findByCpiIdAndIsAppointedTrue(long cpiId) {
     return personAppointmentRepository.findByCpiIdAndIsAppointedTrue(cpiId);
+  }
+
+  public List<PersonAppointment> findAppointmentsOfPerson(long personId) {
+    return personAppointmentRepository.findByPersonIdAndIsAppointedTrue(personId);
   }
 }
