@@ -38,7 +38,7 @@
                         }
                         else
                         {
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" onclick="return CustomPersonValidation();" class="btn btn-success">
                                 <i class="fa fa-save"></i> Save
                             </button>
                             <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
@@ -52,7 +52,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="FormNumber" class="control-label"></label><span class="required">*</span>
-                                <input type="text" asp-for="FormNumber" class="form-control formnumber">
+                                <input type="text" asp-for="Id" class="form-control formnumber">
                                 <span asp-validation-for="FormNumber" class="form-control-feedback"></span>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                     <div class="form-group m-form__group row">
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label asp-for="Salutation" class="control-label"></label>
+                                <label asp-for="Salutation" class="control-label"></label><span class="required">*</span>
                                 <select asp-for="Salutation" asp-items="@ViewBag.SalutationList" class="form-control m-select2" placeholder="Select">
                                     <option></option>
                                 </select>
@@ -162,7 +162,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label asp-for="Gender" class="control-label"></label>
+                                <label asp-for="Gender" class="control-label"></label><span class="required">*</span>
                                 <div class="m-radio-inline">
                                     <label class="m-radio">
                                         <input asp-for="Gender" type="radio" value="@Gender.Male"> Male
@@ -178,7 +178,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="DateOfBirth" class="control-label"></label>
+                                <label asp-for="DateOfBirth" class="control-label"></label><span class="required">*</span>
                                 <div class="input-group">
                                     <input type="text" asp-for="DateOfBirth" class="form-control date-picker" placeholder="Select date">
                                     <div class="input-group-append">
@@ -285,7 +285,7 @@
                                             </label>
                                         </span>
                                     </div>
-                                    <input id="RelocateLocation" type="text" asp-for="RelocateLocation" class="form-control" placeholder="Location">
+                                    <input id="RelocateLocation" type="text" asp-for="RelocateLocation" class="form-control" placeholder="Location" disabled="disabled">
                                 </div>
                                 <span asp-validation-for="PlanToRelocate" class="form-control-feedback"></span>
                                 <span asp-validation-for="RelocateLocation" class="form-control-feedback"></span>
@@ -295,7 +295,7 @@
                             <div class="form-group">
                                 <label asp-for="RelocationDateTime" class="control-label"></label>
                                 <div class="input-group">
-                                    <input type="text" asp-for="RelocationDateTime" class="form-control date-picker" readonly placeholder="Select date">
+                                    <input type="text" asp-for="RelocationDateTime" class="form-control date-picker" placeholder="Select date" disabled="disabled">
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">
                                             <i class="la la-calendar"></i>
@@ -404,7 +404,7 @@
                             </div>
                             <input type="hidden" id="education-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button id="education-button" type="button" class="btn btn-warning" onclick='return EducationListAdd("@Url.Action(ActionNames.EducationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <button id="education-button" type="button" class="btn btn-warning" onclick='return EducationListAdd("@Url.Action(ActionNames.EducationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderEducation", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
@@ -499,7 +499,7 @@
                             </div>
                             <input type="hidden" id="akdn-training-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return AkdnTrainingListAdd("@Url.Action(ActionNames.AkdnTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <button type="button" class="btn btn-warning" onclick='return AkdnTrainingListAdd("@Url.Action(ActionNames.AkdnTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
@@ -581,7 +581,7 @@
                             </div>
                             <input type="hidden" id="professional-training-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <button type="button" class="btn btn-warning" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
@@ -1010,7 +1010,7 @@
                         }
                         else
                         {
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" onclick="return CustomPersonValidation();"  class="btn btn-success">
                                 <i class="fa fa-save"></i> Save
                             </button>
                             <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">

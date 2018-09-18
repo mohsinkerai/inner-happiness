@@ -19,9 +19,9 @@
 
             $("#menu-1").addClass("m-menu__item--open m-menu__item--expanded");
 
-            InitializeDataTableLiteWithRowReordering("education", "Education");
-            InitializeDataTableLite("akdn-training", "AKDN Trainings");
-            InitializeDataTableLite("professional-training", "Professional Trainings");
+            InitializeDataTableLiteWithRowReordering("education", "Education", "@Url.Action("ReorderEducation", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("professional-training", "Professional Trainings", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
             InitializeDataTableLite("language", "Language");
             InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
             InitializeDataTableLite("voluntary-public", "Voluntary Public Service");

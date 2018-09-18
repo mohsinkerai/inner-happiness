@@ -26,6 +26,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string WriteName { get; set; }
 
+        [JsonProperty(PropertyName = "priority")]
+        public int Priority { get; set; }
+
         #endregion Public Properties
     }
 }

@@ -52,6 +52,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "cnic")]
         [Display(Name = "CNIC")]
         [Remote("ValidateCnic", "Persons", "Operations")]
+        [RegularExpression("^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$")]
         public string Cnic { get; set; }
 
         [JsonIgnore]
@@ -73,6 +74,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "emailAddress")]
         [Display(Name = "Email Address")]
+        [EmailAddress]
         public string EmailAddress { get; set; }
 
         [JsonIgnore] public string EmploymentEmailAddress { get; set; }
@@ -303,6 +305,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string ResidentalAddress { get; set; }
 
         [JsonProperty(PropertyName = "salutation")]
+        [Required]
         public string Salutation { get; set; }
 
         public string SalutationForDisplay { get; set; }

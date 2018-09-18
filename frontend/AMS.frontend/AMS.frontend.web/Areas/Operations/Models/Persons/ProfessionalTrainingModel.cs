@@ -31,6 +31,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Year")]
         public int? Year { get; set; }
 
+        [JsonProperty(PropertyName = "priority")]
+        public int Priority { get; set; }
+
         #endregion Public Properties
     }
 }

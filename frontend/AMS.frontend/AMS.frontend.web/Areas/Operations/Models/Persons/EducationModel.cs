@@ -34,7 +34,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string NameOfDegree { get; set; }
 
         public string NameOfDegreeName { get; set; }
-
+        
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
 
