@@ -15,12 +15,12 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
     this.personAppointmentRepository = baseRepository;
   }
 
-  public List<PersonAppointment> findByCpiId(long cpiId) {
-    return personAppointmentRepository.findByCpiId(cpiId);
+  public List<PersonAppointment> findByAppointmentPositionId(long cpiId) {
+    return personAppointmentRepository.findByAppointmentPositionId(cpiId);
   }
 
-  public PersonAppointment findByCpiIdAndIsAppointedTrue(long cpiId) {
-    return personAppointmentRepository.findByCpiIdAndIsAppointedTrue(cpiId);
+  public PersonAppointment findByAppointmentPositionIdAndIsAppointedTrue(long cpiId) {
+    return personAppointmentRepository.findByAppointmentPositionIdAndIsAppointedTrue(cpiId);
   }
 
   public List<PersonAppointment> findAppointmentsOfPerson(long personId) {

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonAppointmentRepository extends BaseRepository<PersonAppointment> {
 
-  List<PersonAppointment> findByCpiId(long cpiId);
+  List<PersonAppointment> findByAppointmentPositionId(long appointmentPositionId);
 
-  PersonAppointment findByCpiIdAndIsAppointedTrue(long cpiId);
+  PersonAppointment findByAppointmentPositionIdAndIsAppointedTrue(long appointmentPositionId);
 
   List<PersonAppointment> findByPersonIdAndIsAppointedTrue(long personId);
 }

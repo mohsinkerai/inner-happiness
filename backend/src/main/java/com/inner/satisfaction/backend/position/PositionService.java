@@ -82,14 +82,14 @@ public class PositionService extends BaseService<Position> {
 //
 //        // Person Incumbent
 //        PersonAppointment incumbentPersonAppointment = personAppointmentService
-//          .findByCpiIdAndIsAppointedTrue(lastCpi.getId());
+//          .findByAppointmentPositionIdAndIsAppointedTrue(lastCpi.getId());
 //        Person incumbentPerson = getPerson(incumbentPersonAppointment.getPersonId());
 //        PositionDetailsPersonDto incumbent = positionDetailsDto.new PositionDetailsPersonDto(
 //          incumbentPerson, incumbentPersonAppointment);
 //        positionDetailsDto.setIncumbent(incumbent);
 //
 //        if (cpi != null) {
-//          List<PersonAppointment> cpis = personAppointmentService.findByCpiId(cpi.getId());
+//          List<PersonAppointment> cpis = personAppointmentService.findByAppointmentPositionId(cpi.getId());
 //          for (PersonAppointment cpi1 : cpis) {
 //            Person one = getPerson(cpi1.getPersonId());
 //            pdpd.add(positionDetailsDto.new PositionDetailsPersonDto(one, cpi1));

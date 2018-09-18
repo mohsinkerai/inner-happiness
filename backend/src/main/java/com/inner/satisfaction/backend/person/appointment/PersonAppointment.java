@@ -9,7 +9,7 @@ import lombok.Data;
 public class PersonAppointment extends BaseEntity {
 
   private long personId;
-  private long cpiId;
+  private long appointmentPositionId;
   private boolean isAppointed;
   private boolean isRecommended;
   private int priority;

@@ -24,7 +24,7 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
     long personId, boolean isMowlaAppointee) {
     return personAppointmentService.findAppointmentsOfPerson(personId)
       .stream()
-      .map(PersonAppointment::getCpiId)
+      .map(PersonAppointment::getAppointmentPositionId)
       .map(this::findOne)
       .filter((o) -> o.isMowlaAppointee() == isMowlaAppointee)
       .collect(Collectors.toList());
