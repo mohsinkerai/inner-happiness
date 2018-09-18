@@ -52,6 +52,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "cnic")]
         [Display(Name = "CNIC")]
         [Remote("ValidateCnic", "Persons", "Operations")]
+        [RegularExpression("^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$")]
         public string Cnic { get; set; }
 
         [JsonIgnore]
@@ -59,11 +60,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string CountryOfStudy { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
         [JsonProperty(PropertyName = "dateOfBirth")]
         [Display(Name = "Date of Birth")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
         [JsonIgnore] public string Designation { get; set; }
@@ -73,6 +74,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "emailAddress")]
         [Display(Name = "Email Address")]
+        [EmailAddress]
         public string EmailAddress { get; set; }
 
         [JsonIgnore] public string EmploymentEmailAddress { get; set; }
@@ -110,7 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required]
+        //[Required]
         [JsonProperty(PropertyName = "formnumber")]
         [Display(Name = "From Number")]
         [Remote("ValidateFormNumber", "Persons", "Operations")]
@@ -148,6 +150,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Hours per Week")]
         public double? HoursPerWeek { get; set; }
         
+        [Remote("ValidateId", "Persons", "Operations")]
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "image")] public string Image { get; set; }
@@ -303,6 +306,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string ResidentalAddress { get; set; }
 
         [JsonProperty(PropertyName = "salutation")]
+        [Required]
         public string Salutation { get; set; }
 
         public string SalutationForDisplay { get; set; }

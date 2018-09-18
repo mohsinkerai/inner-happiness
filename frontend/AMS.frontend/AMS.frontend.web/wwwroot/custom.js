@@ -316,7 +316,7 @@ function FamilyInformationListDelete(url, id) {
     });
 }
 
-function ProfessionalTrainingListDelete(url, id) {
+function ProfessionalTrainingListDelete(url, id, reOrderUrl) {
     $.ajax({
         type: "POST",
         url: url,
@@ -334,7 +334,7 @@ function ProfessionalTrainingListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#professional-training-table").html(result);
-                InitializeDataTableLite("professional-training", "Professional Trainings");
+                InitializeDataTableLiteWithRowReordering("professional-training", "Professional Trainings", reOrderUrl);
                 $("#ProfesisonalTraining").val('').trigger('change');
                 $("#ProfessionalTrainingInstitution").val('').trigger('change');
                 $("#ProfessionalTrainingCountry").val('').trigger('change');
@@ -413,7 +413,7 @@ function VoluntaryPublicListDelete(url, id) {
     });
 }
 
-function EducationListDelete(url, id) {
+function EducationListDelete(url, id, reOrderUrl) {
     $.ajax({
         type: "POST",
         url: url,
@@ -431,7 +431,7 @@ function EducationListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#education-table").html(result);
-                InitializeDataTableLiteWithRowReordering("education", "Education");
+                InitializeDataTableLiteWithRowReordering("education", "Education", reOrderUrl);
                 $("#Institution").val('').trigger('change');
                 $("#CountryOfStudy").val('').trigger('change');
                 $("#FromYear").val('').trigger('change');
@@ -447,7 +447,7 @@ function EducationListDelete(url, id) {
     });
 }
 
-function AkdnTrainingListDelete(url, id) {
+function AkdnTrainingListDelete(url, id, reOrderUrl) {
     $.ajax({
         type: "POST",
         url: url,
@@ -465,7 +465,7 @@ function AkdnTrainingListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#akdn-training-table").html(result);
-                InitializeDataTableLite("akdn-training", "AKDN Trainings");
+                InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", reOrderUrl);
                 $("#AkdnTraining").val('').trigger('change');
                 $("#AkdnTrainingCountry").val('').trigger('change');
                 $("#AkdnTrainingMonth").val('').trigger('change');
@@ -518,7 +518,7 @@ function LanguageListAdd(url) {
     }
 }
 
-function ProfessionalTrainingListAdd(url) {
+function ProfessionalTrainingListAdd(url, reOrderUrl) {
     if ($("#ProfesisonalTraining").valid() && $("#ProfessionalTrainingInstitution").valid() && $("#ProfessionalTrainingCountry").valid() && $("#ProfessionalTrainingMonth").valid() && $("#ProfessionalTrainingYear").valid()) {
         var trainingId = $("#professional-training-id").val();
         var training = $("#ProfesisonalTraining").val();
@@ -543,7 +543,7 @@ function ProfessionalTrainingListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#professional-training-table").html(result);
-                    InitializeDataTableLite("professional-training", "Professional Trainings");
+                    InitializeDataTableLiteWithRowReordering("professional-training", "Professional Trainings", reOrderUrl);
                     $("#ProfesisonalTraining").val('').trigger('change');
                     $("#ProfessionalTrainingInstitution").val('').trigger('change');
                     $("#ProfessionalTrainingCountry").val('').trigger('change');
@@ -637,7 +637,7 @@ function VoluntaryPublicListAdd(url) {
     }
 }
 
-function EducationListAdd(url) {
+function EducationListAdd(url, reOrderUrl) {
     if ($("#Institution").valid() && $("#CountryOfStudy").valid() && $("#FromYear").valid() && $("#ToYear").valid() && $("#NameOfDegree").valid() && $("#MajorAreaOfStudy").valid()) {
         var educationId = $("#education-id").val();
         var institution = $("#Institution").val();
@@ -663,7 +663,7 @@ function EducationListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#education-table").html(result);
-                    InitializeDataTableLiteWithRowReordering("education", "Education");
+                    InitializeDataTableLiteWithRowReordering("education", "Education", reOrderUrl);
                     $("#Institution").val('').trigger('change');
                     $("#CountryOfStudy").val('').trigger('change');
                     $("#FromYear").val('').trigger('change');
@@ -778,7 +778,7 @@ function FamilyInformationListAdd(url) {
     }
 }
 
-function AkdnTrainingListAdd(url) {
+function AkdnTrainingListAdd(url, reOrderUrl) {
     if ($("#AkdnTraining").valid() && $("#AkdnTrainingCountry").valid() && $("#AkdnTrainingMonth").valid() && $("#AkdnTrainingYear").valid()) {
         var trainingId = $("#akdn-training-id").val();
         var training = $("#AkdnTraining").val();
@@ -802,7 +802,7 @@ function AkdnTrainingListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#akdn-training-table").html(result);
-                    InitializeDataTableLite("akdn-training", "AKDN Trainings");
+                    InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", reOrderUrl);
                     $("#AkdnTraining").val('').trigger('change');
                     $("#AkdnTrainingCountry").val('').trigger('change');
                     $("#AkdnTrainingMonth").val('').trigger('change');
@@ -827,7 +827,7 @@ function InitializeDataTableLite(id, title) {
     });
 }
 
-function InitializeDataTableLiteWithRowReordering(id, title) {
+function InitializeDataTableLiteWithRowReordering(id, title, url) {
     var table = $("#" + id).DataTable({
         responsive: true,
         paging: false,
@@ -841,22 +841,36 @@ function InitializeDataTableLiteWithRowReordering(id, title) {
 
     table.on("row-reorder", function (e, diff, edit) {
         var primary = table.row(diff[0].node).data()[1];
-        var primaryId = diff[0].node.getAttribute("id").substring(14);
+        var primaryId = diff[0].node.getAttribute("id")
+            .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
         var primaryPosition = diff[0].newData;
         var secondary = table.row(diff[1].node).data()[1];
-        var secondaryId = diff[1].node.getAttribute("id").substring(14);
+        var secondaryId = diff[1].node.getAttribute("id")
+            .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
         var secondaryPosition = diff[1].newData;
 
-        //var result = "Reorder started on row: " + edit.triggerRow.data()[1] + "<br>";
-
-        //for (var i = 0, ien = diff.length; i < ien; i++) {
-        //    var rowData = table.row(diff[i].node).data();
-
-        //    result += rowData[1] + " updated to be in position " +
-        //        diff[i].newData + " (was " + diff[i].oldData + ")<br>";
-        //}
-
-        //alert("Event result:<br>" + result);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "primaryId": primaryId, "primaryPosition": primaryPosition, "secondaryId": secondaryId, "secondaryPosition": secondaryPosition },
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "html",
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                alert("Request: " +
+                    xmlHttpRequest.toString() +
+                    "\n\nStatus: " +
+                    textStatus +
+                    "\n\nError: " +
+                    errorThrown);
+            },
+            success: function (result) {
+                if (result.length !== 4) {
+                    $("#" + id + "-table").html(result);
+                    InitializeDataTableLiteWithRowReordering(id, title, url);
+                    $("#" + id).css("min-height", "0px");
+                }
+            }
+        });
     });
 }
 
@@ -1711,4 +1725,16 @@ function LoadDropDownViaAjax(dropDownClass, url, selectedValue, secondarySelecte
             $("." + dropDownClass).focus();
         }
     });
+}
+
+function CustomPersonValidation() {
+    if ($("#mainForm").valid()) {
+        $("#mainForm").off("submit");
+        $("#mainForm").submit();
+    } else {
+        $('html, body').animate({
+            scrollTop: ($('.field-validation-error').offset().top - 300)
+        }, 2000);
+        return false;
+    }
 }
