@@ -348,8 +348,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
                 model.RelocationDateTime =
-                    DateTime.ParseExact(formCollection["RelocationDateTime"], "MM/dd/yyyy", null);
-                model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "MM/dd/yyyy", null);
+                    DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
 
                 if (ModelState.IsValid)
                 {
