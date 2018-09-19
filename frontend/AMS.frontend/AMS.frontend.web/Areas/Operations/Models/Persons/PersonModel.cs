@@ -101,7 +101,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "fieldOfExpertise")]
         [Display(Name = "Field of Expertise")]
-        public string FieldOfExpertise { get; set; }
+        public List<string> FieldOfExpertise { get; set; }
 
         [JsonProperty(PropertyName = "fieldOfInterest")]
         [Display(Name = "Fields of Interest (in order of preference)")]

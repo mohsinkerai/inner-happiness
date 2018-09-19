@@ -95,6 +95,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.SkillsList = await RestfulClient.GetSkills();
             ViewBag.RelationList = await RestfulClient.GetAllRelatives();
             ViewBag.MajorAreaOfStudy = await RestfulClient.GetMajorAreaOfStudy();
+            ViewBag.FieldOfExpertiseList = await RestfulClient.GetFieldOfExpertise();
         }
 
         [HttpPost]

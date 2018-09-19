@@ -1017,6 +1017,37 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
+        public static async Task<List<SelectListItem>> GetFieldOfExpertise()
+        {
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //var res = await _client.GetAsync("constants/field-of-expertise/all");
+            var res = await _client.GetAsync("constants/field-of-expertise/all");
+
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+
+            return null;
+        }
+
         public static async Task<List<SelectListItem>> GetVoluntaryInstitution()
         {
             _client = new HttpClient

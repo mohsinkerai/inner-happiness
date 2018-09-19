@@ -64,6 +64,7 @@ public class Person extends BaseEntity {
   private Boolean planToRelocate;
   private String relocateLocation;
   // Should Represent UTC
+  // yyyy-MM-dd
   private LocalDate relocationDateTime;
 
   private Long highestLevelOfStudy; // id Lookup

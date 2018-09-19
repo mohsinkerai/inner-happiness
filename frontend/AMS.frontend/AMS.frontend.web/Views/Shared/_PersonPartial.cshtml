@@ -423,7 +423,9 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label asp-for="FieldOfExpertise" class="control-label"></label>
-                                <input type="text" asp-for="FieldOfExpertise" class="form-control">
+                                <select asp-for="FieldOfExpertise" asp-items="@ViewBag.FieldOfExpertiseList" class="form-control m-select2-multiple" placeholder="Select or add a field of expertise" multiple name="FieldOfExpertise">
+                                    <option></option>
+                                </select>
                                 <span asp-validation-for="FieldOfExpertise" class="form-control-feedback"></span>
                             </div>
                         </div>
