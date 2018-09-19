@@ -61,7 +61,8 @@ public class PersonService extends BaseService<Person> {
   @Override
   @Transactional
   public Person save(Person person) {
-    person = super.save(person);
+    Person personCopy = super.save(person);
+    person.setId(personCopy.getId());
 
     for (BaseM2MProcessingService bps : baseProcessingservices) {
       bps.processList(person, person.getId());

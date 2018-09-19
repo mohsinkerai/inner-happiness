@@ -11,6 +11,7 @@ spring:
   jpa:
     properties:
       hibernate:
+        id.new_generator_mappings: false
         dialect: org.hibernate.dialect.MySQL5Dialect
     generate-ddl: false
     hibernate.ddl-auto: none

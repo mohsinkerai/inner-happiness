@@ -5,7 +5,6 @@ import com.inner.satisfaction.backend.lookups.fieldofexperties.FieldOfExpertise;
 import com.inner.satisfaction.backend.lookups.fieldofexperties.FieldOfExpertiseService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.lookup.base.BaseM2MProcessingService;
-import com.inner.satisfaction.backend.person.lookup.dto.PersonSkillsDto;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PersonFieldOfExpertiseM2MPreProcessor extends
-  BaseM2MProcessingService<PersonFieldOfExpertise, PersonSkillsDto> {
+  BaseM2MProcessingService<PersonFieldOfExpertise, FieldOfExpertiseDto> {
 
   private final FieldOfExpertiseService fieldOfExpertiseService;
   private final PersonFieldOfExpertiseService personFieldOfExpertiseService;
@@ -36,13 +35,13 @@ public class PersonFieldOfExpertiseM2MPreProcessor extends
       .map(PersonFieldOfExpertise::getFieldOfExpertiseId)
       .map(String::valueOf)
       .collect(Collectors.toList());
-    person.setSkills(skills);
+    person.setFieldOfExpertise(skills);
     return person;
   }
 
   @Override
-  protected long getEntityId(PersonSkillsDto dto) {
-    String skill = dto.getSkill();
+  protected long getEntityId(FieldOfExpertiseDto dto) {
+    String skill = dto.getFieldOfExpertise();
     try {
       return Long.parseLong(skill);
     } catch (NumberFormatException nfe) {
@@ -54,37 +53,37 @@ public class PersonFieldOfExpertiseM2MPreProcessor extends
   }
 
   @Override
-  protected PersonSkillsDto setPersonId(PersonSkillsDto dto, long id) {
+  protected FieldOfExpertiseDto setPersonId(FieldOfExpertiseDto dto, long id) {
     dto.setPersonId(id);
     return dto;
   }
 
   @Override
-  protected PersonSkillsDto setEntityId(PersonSkillsDto dto, long id) {
-    dto.setSkillId(id);
+  protected FieldOfExpertiseDto setEntityId(FieldOfExpertiseDto dto, long id) {
+    dto.setFieldOfExpertiseId(id);
     return dto;
   }
 
   @Override
-  protected PersonFieldOfExpertise convert(PersonSkillsDto dto) {
+  protected PersonFieldOfExpertise convert(FieldOfExpertiseDto dto) {
     return PersonFieldOfExpertise.builder()
       .personId(dto.getPersonId())
-      .fieldOfExpertiseId(dto.getSkillId())
+      .fieldOfExpertiseId(dto.getFieldOfExpertiseId())
       .build();
   }
 
   @Override
-  protected List<PersonSkillsDto> convert(Person person) {
-    Optional<List<String>> skills = Optional.ofNullable(person.getSkills());
+  protected List<FieldOfExpertiseDto> convert(Person person) {
+    Optional<List<String>> skills = Optional.ofNullable(person.getFieldOfExpertise());
     return skills.orElse(Lists.newArrayList())
       .stream()
       .map(this::convert)
       .collect(Collectors.toList());
   }
 
-  private PersonSkillsDto convert(String val) {
-    return PersonSkillsDto.builder()
-      .skill(val)
+  private FieldOfExpertiseDto convert(String val) {
+    return FieldOfExpertiseDto.builder()
+      .fieldOfExpertise(val)
       .build();
   }
 
