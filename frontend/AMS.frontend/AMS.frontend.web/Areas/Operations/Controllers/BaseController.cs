@@ -58,7 +58,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         NameOfDegreeName = "BSc (Computer Sciences)"
                     }
                 },
-                FieldOfExpertise = "Teaching",
+                FieldOfExpertise = new List<string>
+                {
+                    "1"
+                },
                 ReligiousEducation = "1",
                 AkdnTrainings = new List<AkdnTrainingModel>
                 {

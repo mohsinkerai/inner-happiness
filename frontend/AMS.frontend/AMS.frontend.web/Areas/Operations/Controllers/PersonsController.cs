@@ -94,6 +94,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.LanguageList = await RestfulClient.GetLanguages();
             ViewBag.SkillsList = await RestfulClient.GetSkills();
             ViewBag.RelationList = await RestfulClient.GetAllRelatives();
+            ViewBag.FieldOfExpertiseList = await RestfulClient.GetFieldOfExpertise();
         }
 
         [HttpPost]
