@@ -368,7 +368,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/highest-level-of-study/all");
+            var res = await _client.GetAsync("constants/secular-study-level/all");
             if (res.IsSuccessStatusCode)
             {
                 var json = res.Content.ReadAsStringAsync().Result;
@@ -1243,6 +1243,35 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 var response = res.Content.ReadAsStringAsync().Result;
                 
                 return null;
+            }
+
+            return null;
+        }
+
+        public static async Task<List<SelectListItem>> GetMajorAreaOfStudy()
+        {
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var res = await _client.GetAsync("constants/area-of-study/all");
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
             }
 
             return null;

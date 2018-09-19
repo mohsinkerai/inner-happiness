@@ -29,6 +29,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Major Area of Study")]
         public string MajorAreaOfStudy { get; set; }
 
+        public string MajorAreaOfStudyName { get; set; }
+
         [JsonProperty(PropertyName = "nameOfDegree")]
         [Display(Name = "Name of Degree")]
         public string NameOfDegree { get; set; }
