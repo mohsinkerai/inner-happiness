@@ -1030,7 +1030,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             education.InstitutionName = institutionName;
                             education.CountryOfStudyName = country;
                             education.NameOfDegreeName = nameOfDegree;
-                            education.MajorAreaOfStudy = majorAreaOfStudy;
+                            education.MajorAreaOfStudyName = majorAreaOfStudy;
 
                             //tejani mapping here
                             AddEducationToSession(education.EducationId,
