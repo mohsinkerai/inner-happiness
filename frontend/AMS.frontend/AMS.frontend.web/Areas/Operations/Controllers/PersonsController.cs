@@ -447,7 +447,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return new JsonResult(list);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
@@ -455,6 +455,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
             HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
+
+            ViewBag.JamatiTitleList = await RestfulClient.GetJamatiTitles();
+            ViewBag.InstitutionList = await RestfulClient.GetAllInstitutions();
+            ViewBag.NameOfDegreeList = await RestfulClient.GetEducationalDegree();
+            ViewBag.MajorAreaOfStudy = await RestfulClient.GetMajorAreaOfStudy();
 
             //return View(new IndexPersonModel { Persons = await RestfulClient.getPersonDetails() });
             return View();

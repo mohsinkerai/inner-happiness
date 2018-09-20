@@ -57,6 +57,42 @@
                         <input asp-for="LastName" type="text" name="lastName" class="form-control">
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label">Jamati Title</label>
+                        <select asp-for="JamatiTitle" asp-items="@ViewBag.JamatiTitleList" class="form-control m-select2" placeholder="Select">
+                            <option></option>
+                        </select>
+                        @*<input asp-for="JamatiTitle" type="text" name="jamatiTitle" class="form-control">*@
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label">Degree</label>
+                        <select asp-for="Degree" asp-items="@ViewBag.NameOfDegreeList" class="form-control m-select2" placeholder="Select">
+                            <option></option>
+                        </select>
+                        @*<input asp-for="Degree" type="text" name="degree" class="form-control">*@
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label">Major Area of Study</label>
+                        <select asp-for="MajorAreaOfStudy" asp-items="@ViewBag.MajorAreaOfStudy" class="form-control m-select2" placeholder="Select">
+                            <option></option>
+                        </select>
+                        @*<input asp-for="MajorAreaOfStudy" type="text" name="majorAreaOfStudy" class="form-control">*@
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label">Academic Institution</label>
+                        <select asp-for="AcademicInstitution" asp-items="@ViewBag.InstitutionList" class="form-control m-select2" placeholder="Select">
+                            <option></option>
+                        </select>
+                        @*<input asp-for="AcademicInstitution" type="text" name="academicInstitution" class="form-control">*@
+                    </div>
+                </div>
             </div>
             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                 <div class="m-form__actions m-form__actions--solid">
