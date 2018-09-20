@@ -74,7 +74,7 @@ namespace AMS.frontend.web
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromMinutes(60);
+                options.IdleTimeout = TimeSpan.FromDays(1);
                 //options.CookieName = ".TKNBackOffice.Session";
                 //options.CookieHttpOnly = true;
             });

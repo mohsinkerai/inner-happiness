@@ -78,7 +78,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Email Address")]
         [EmailAddress]
         public string EmailAddress { get; set; }
-
+        
         [JsonIgnore] public string EmploymentEmailAddress { get; set; }
 
         [JsonIgnore] public DateTime? EmploymentEndDate { get; set; }
@@ -231,7 +231,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Others")]
         public string OccupationTypeOther { get; set; }
 
-        [JsonProperty(PropertyName = "oldcnic")]
+        [JsonProperty(PropertyName = "oldCnic")]
         [Display(Name = "Old CNIC")]
         public string OldCnic { get; set; }
 

@@ -2,6 +2,7 @@
 <table id="voluntary-community" class="table table-striped- table-bordered table-hover">
     <thead>
     <tr>
+        <th> Priority </th>
         <th> Institution </th>
         <th> From </th>
         <th> To </th>
@@ -15,6 +16,7 @@
         foreach (var item in Model)
         {
             <tr id="voluntary-community-row-@item.VoluntaryCommunityId">
+                <td> @item.Priority </td>
                 <td> @item.InstitutionName </td>
                 <td> @item.FromYear </td>
                 <td> @item.ToYear </td>
@@ -23,7 +25,7 @@
                     <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return VoluntaryCommunityListEdit("@item.VoluntaryCommunityId", "@item.Institution-@item.InstitutionName", "@item.FromYear", "@item.ToYear", "@item.Position-@item.PositionName");'>
                         <i class="la la-edit"></i>
                     </button>
-                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return VoluntaryCommunityListDelete("@Url.Action(ActionNames.VoluntaryCommunityListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.VoluntaryCommunityId");'>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return VoluntaryCommunityListDelete("@Url.Action(ActionNames.VoluntaryCommunityListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.VoluntaryCommunityId", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                         <i class="la la-trash"></i>
                     </button>
                 </td>
