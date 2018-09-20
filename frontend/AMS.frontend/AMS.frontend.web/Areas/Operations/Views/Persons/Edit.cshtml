@@ -129,24 +129,30 @@
                 "mask": "99999-9999999-9"
             });
 
-            $(".highest-level-select").change(function() {
-                var selectedValue = $(this).val();
-                if (selectedValue === "Others") {
+            $(".highest-level-select").change(function () {
+                var selectedValue = $(".highest-level-select option:selected").text();
+                if (selectedValue.includes("Other")) {
                     $("#HighestLevelOfStudyOther").prop("disabled", false);
+                } else {
+                    $("#HighestLevelOfStudyOther").prop("disabled", true);
                 }
             });
 
-            $(".occupation-type").change(function() {
-                var selectedValue = $(this).val();
-                if (selectedValue === "Others") {
+            $(".occupation-type").change(function () {
+                var selectedValue = $(".occupation-type option:selected").text();
+                if (selectedValue.includes("Other")) {
                     $("#OccupationTypeOther").prop("disabled", false);
+                } else {
+                    $("#OccupationTypeOther").prop("disabled", true);
                 }
             });
 
-            $(".nature-of-business").change(function() {
-                var selectedValue = $(this).val();
-                if (selectedValue === "Others") {
+            $(".nature-of-business").change(function () {
+                var selectedValue = $(".nature-of-business option:selected").text();
+                if (selectedValue.includes("Other")) {
                     $("#NatureOfBusinessOther").prop("disabled", false);
+                } else {
+                    $("#NatureOfBusinessOther").prop("disabled", true);
                 }
             });
 
