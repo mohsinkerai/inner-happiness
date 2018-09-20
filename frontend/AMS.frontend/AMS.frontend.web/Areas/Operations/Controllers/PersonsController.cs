@@ -502,6 +502,38 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
+        public IActionResult ReorderLanguage(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var sessionLanguageList = ReOrderLanguageInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+
+            return PartialView("_LanguageTablePartial", sessionLanguageList);
+        }
+
+        [HttpPost]
+        public IActionResult ReorderVoluntaryCommunityService(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var voluntaryCommunityServiceInSession = ReorderVoluntaryCommunityServiceInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+
+            return PartialView("_VoluntaryCommunityTablePartial", voluntaryCommunityServiceInSession);
+        }
+
+        [HttpPost]
+        public IActionResult ReorderVoluntaryPublicService(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var voluntaryPublicServiceInSession = ReorderVoluntaryPublicServiceInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+
+            return PartialView("_VoluntaryPublicTablePartial", voluntaryPublicServiceInSession);
+        }
+
+        [HttpPost]
+        public IActionResult ReorderEmployment(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var employmentInSession = ReorderEmploymentInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+
+            return PartialView("_EmploymentTablePartial", employmentInSession);
+        }
+
+        [HttpPost]
         public IActionResult ReorderAkdnTraining(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
             var sessionAkdnTrainingList = ReOrderAkdnTrainingInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
@@ -746,6 +778,54 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             HttpContext.Session.Set("EducationList", sessionEducationList);
             return sessionEducationList;
+        }
+
+        private List<LanguageProficiencyModel> ReOrderLanguageInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+                                       new List<LanguageProficiencyModel>();
+
+            sessionLanguageList.FirstOrDefault(e => e.LanguageProficiencyId == primaryId).Priority = Convert.ToInt32(primaryPosition);
+            sessionLanguageList.FirstOrDefault(e => e.LanguageProficiencyId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            HttpContext.Session.Set("LanguageList", sessionLanguageList);
+            return sessionLanguageList;
+        }
+
+        private List<VoluntaryCommunityModel> ReorderVoluntaryCommunityServiceInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var voluntaryCommunityModels = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
+                                       new List<VoluntaryCommunityModel>();
+
+            voluntaryCommunityModels.FirstOrDefault(e => e.VoluntaryCommunityId == primaryId).Priority = Convert.ToInt32(primaryPosition);
+            voluntaryCommunityModels.FirstOrDefault(e => e.VoluntaryCommunityId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            HttpContext.Session.Set("VoluntaryCommunityList", voluntaryCommunityModels);
+            return voluntaryCommunityModels;
+        }
+
+        private List<VoluntaryPublicModel> ReorderVoluntaryPublicServiceInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var voluntaryPublicModels = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
+                                       new List<VoluntaryPublicModel>();
+
+            voluntaryPublicModels.FirstOrDefault(e => e.VoluntaryPublicId == primaryId).Priority = Convert.ToInt32(primaryPosition);
+            voluntaryPublicModels.FirstOrDefault(e => e.VoluntaryPublicId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            HttpContext.Session.Set("VoluntaryPublicList", voluntaryPublicModels);
+            return voluntaryPublicModels;
+        }
+
+        private List<EmploymentModel> ReorderEmploymentInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        {
+            var employmentModels = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+                                       new List<EmploymentModel>();
+
+            employmentModels.FirstOrDefault(e => e.EmploymentId == primaryId).Priority = Convert.ToInt32(primaryPosition);
+            employmentModels.FirstOrDefault(e => e.EmploymentId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            HttpContext.Session.Set("EmploymentList", employmentModels);
+            return employmentModels;
         }
 
         private List<AkdnTrainingModel> ReOrderAkdnTrainingInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)

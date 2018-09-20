@@ -77,6 +77,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [EmailAddress]
         public string EmailAddress { get; set; }
 
+        [EmailAddress]
         [JsonIgnore] public string EmploymentEmailAddress { get; set; }
 
         [JsonIgnore] public DateTime? EmploymentEndDate { get; set; }

@@ -227,7 +227,7 @@ function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, na
     $("#education-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function LanguageListDelete(url, id) {
+function LanguageListDelete(url, id, reOrderUrl) {
     $.ajax({
         type: "POST",
         url: url,
@@ -245,7 +245,7 @@ function LanguageListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#language-table").html(result);
-                InitializeDataTableLite("language", "Languages");
+                InitializeDataTableLiteWithRowReordering("language", "Languages", reOrderUrl);
                 $("#Language").val('').trigger('change');
                 $("#Read").val('').trigger('change');
                 $("#Write").val('').trigger('change');
@@ -259,7 +259,7 @@ function LanguageListDelete(url, id) {
     });
 }
 
-function EmploymentListDelete(url, id) {
+function EmploymentListDelete(url, id, reOrderUrl) {
     $.ajax({
         type: "POST",
         url: url,
@@ -277,7 +277,7 @@ function EmploymentListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#employment-table").html(result);
-                InitializeDataTableLite("employment", "Employments");
+                InitializeDataTableLiteWithRowReordering("employment", "Employments", reOrderUrl);
                 $("#NameOfOrganization").val('').trigger('change');
                 $("#Designation").val('').trigger('change');
                 $("#Location").val('').trigger('change');
@@ -366,7 +366,7 @@ function ProfessionalTrainingListDelete(url, id, reOrderUrl) {
     });
 }
 
-function VoluntaryCommunityListDelete(url, id) {
+function VoluntaryCommunityListDelete(url, id, reOrderUrl) {
     $.ajax({
         type: "POST",
         url: url,
@@ -384,7 +384,7 @@ function VoluntaryCommunityListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#voluntary-community-table").html(result);
-                InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
+                InitializeDataTableLiteWithRowReordering("voluntary-community", "Voluntary Community Service", reOrderUrl);
                 $("#VoluntaryCommunityInstitution").val('').trigger('change');
                 $("#VoluntaryCommunityFromYear").val('').trigger('change');
                 $("#VoluntaryCommunityToYear").val('').trigger('change');
@@ -398,7 +398,7 @@ function VoluntaryCommunityListDelete(url, id) {
     });
 }
 
-function VoluntaryPublicListDelete(url, id) {
+function VoluntaryPublicListDelete(url, id, reOrderUrl) {
     $.ajax({
         type: "POST",
         url: url,
@@ -416,7 +416,7 @@ function VoluntaryPublicListDelete(url, id) {
         success: function (result) {
             if (result.length !== 4) {
                 $("#voluntary-public-table").html(result);
-                InitializeDataTableLite("voluntary-public", "Voluntary Public Service");
+                InitializeDataTableLiteWithRowReordering("voluntary-public", "Voluntary Public Service", reOrderUrl);
                 $("#VoluntaryPublicInstitution").val('').trigger('change');
                 $("#VoluntaryPublicFromYear").val('').trigger('change');
                 $("#VoluntaryPublicToYear").val('').trigger('change');
@@ -496,7 +496,7 @@ function AkdnTrainingListDelete(url, id, reOrderUrl) {
     });
 }
 
-function LanguageListAdd(url) {
+function LanguageListAdd(url, reOrderUrl) {
     if ($("#Language").valid() && $("#Read").valid() && $("#Write").valid() && $("#Speak").valid()) {
         var languageId = $("#language-id").val();
         var language = $("#Language").val();
@@ -520,7 +520,7 @@ function LanguageListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#language-table").html(result);
-                    InitializeDataTableLite("language", "Languages");
+                    InitializeDataTableLiteWithRowReordering("language", "Languages", reOrderUrl);
                     $("#Language").val('').trigger('change');
                     $("#Read").val('').trigger('change');
                     $("#Write").val('').trigger('change');
@@ -576,7 +576,7 @@ function ProfessionalTrainingListAdd(url, reOrderUrl) {
     }
 }
 
-function VoluntaryCommunityListAdd(url) {
+function VoluntaryCommunityListAdd(url, reOrderUrl) {
     if ($("#VoluntaryCommunityInstitution").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityToYear").valid() && $("#VoluntaryCommunityPosition").valid()) {
         var voluntaryCommunityId = $("#voluntary-community-id").val();
         var institution = $("#VoluntaryCommunityInstitution").val();
@@ -600,7 +600,7 @@ function VoluntaryCommunityListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#voluntary-community-table").html(result);
-                    InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
+                    InitializeDataTableLiteWithRowReordering("voluntary-community", "Voluntary Community Service", reOrderUrl);
                     $("#VoluntaryCommunityInstitution").val('').trigger('change');
                     $("#VoluntaryCommunityFromYear").val('').trigger('change');
                     $("#VoluntaryCommunityToYear").val('').trigger('change');
@@ -615,7 +615,7 @@ function VoluntaryCommunityListAdd(url) {
     }
 }
 
-function VoluntaryPublicListAdd(url) {
+function VoluntaryPublicListAdd(url, reOrderUrl) {
     if ($("#VoluntaryPublicInstitution").valid() && $("#VoluntaryPublicFromYear").valid() && $("#VoluntaryPublicFromYear").valid() && $("#VoluntaryPublicToYear").valid() && $("#VoluntaryPublicPosition").valid()) {
         var voluntaryPublicId = $("#voluntary-public-id").val();
         var institution = $("#VoluntaryPublicInstitution").val();
@@ -639,7 +639,7 @@ function VoluntaryPublicListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#voluntary-public-table").html(result);
-                    InitializeDataTableLite("voluntary-public", "Voluntary Public Service");
+                    InitializeDataTableLiteWithRowReordering("voluntary-public", "Voluntary Public Service", reOrderUrl);
                     $("#VoluntaryPublicInstitution").val('').trigger('change');
                     $("#VoluntaryPublicFromYear").val('').trigger('change');
                     $("#VoluntaryPublicToYear").val('').trigger('change');
@@ -697,7 +697,7 @@ function EducationListAdd(url, reOrderUrl) {
     }
 }
 
-function EmploymentListAdd(url) {
+function EmploymentListAdd(url, reOrderUrl) {
     if ($("#NameOfOrganization").valid() && $("#Designation").valid() && $("#Location").valid() && $("#EmploymentEmailAddress").valid() && $("#EmploymentTelephone").valid() && $("#TypeOfBusiness").valid() && $("#NatureOfBusiness").valid() && $("#NatureOfBusinessOther").valid() && $("#EmploymentStartDate").valid() && $("#EmploymentEndDate").valid()) {
         var id = $("#employment-id").val();
         var name = $("#NameOfOrganization").val();
@@ -727,7 +727,7 @@ function EmploymentListAdd(url) {
             success: function (result) {
                 if (result.length !== 4) {
                     $("#employment-table").html(result);
-                    InitializeDataTableLite("employment", "Employments");
+                    InitializeDataTableLiteWithRowReordering("employment", "Employments", reOrderUrl);
                     $("#NameOfOrganization").val('').trigger('change');
                     $("#Designation").val('').trigger('change');
                     $("#Location").val('').trigger('change');

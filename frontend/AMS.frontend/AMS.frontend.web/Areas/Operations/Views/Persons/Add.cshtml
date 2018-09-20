@@ -3,7 +3,7 @@
     ViewBag.ModuleTitle = "Person Management";
     ViewBag.PageTitle = "Basic Information Form";
     ViewBag.Action = "Add";
-}
+}.
 
 @{
     await Html.RenderPartialAsync("_PersonPartial", Model).ConfigureAwait(false);
@@ -22,10 +22,10 @@
             InitializeDataTableLiteWithRowReordering("education", "Education", "@Url.Action("ReorderEducation", ControllerNames.Persons, new {area = AreaNames.Operations})");
             InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
             InitializeDataTableLiteWithRowReordering("professional-training", "Professional Trainings", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
-            InitializeDataTableLite("language", "Language");
-            InitializeDataTableLite("voluntary-community", "Voluntary Community Service");
-            InitializeDataTableLite("voluntary-public", "Voluntary Public Service");
-            InitializeDataTableLite("employment", "Employment");
+            InitializeDataTableLiteWithRowReordering("language", "Language", "@Url.Action("ReorderLanguage", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("voluntary-community", "Voluntary Community Service", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("voluntary-public", "Voluntary Public Service", "@Url.Action("ReorderVoluntaryPublicService", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("employment", "Employment", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");
             InitializeDataTableLite("family-relation", "Family Information");
 
             //$("#mainForm input").prop("disabled", true);

@@ -664,7 +664,7 @@
                             </div>
                             <input type="hidden" id="language-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return LanguageListAdd("@Url.Action(ActionNames.LanguageListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <button type="button" class="btn btn-warning" onclick='return LanguageListAdd("@Url.Action(ActionNames.LanguageListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderLanguage", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
@@ -735,7 +735,7 @@
                             </div>
                             <input type="hidden" id="voluntary-community-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <button type="button" class="btn btn-warning" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
@@ -802,7 +802,7 @@
                             </div>
                             <input type="hidden" id="voluntary-public-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return VoluntaryPublicListAdd("@Url.Action(ActionNames.VoluntaryPublicListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <button type="button" class="btn btn-warning" onclick='return VoluntaryPublicListAdd("@Url.Action(ActionNames.VoluntaryPublicListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderVoluntaryPublicService", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
@@ -966,7 +966,7 @@
                             </div>
                             <input type="hidden" id="employment-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <button type="button" class="btn btn-warning" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
                                     <i class="fa fa-save"></i> Save
                                 </button>
                             </div>
