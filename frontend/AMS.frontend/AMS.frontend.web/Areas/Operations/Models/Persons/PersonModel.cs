@@ -38,6 +38,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] [Display(Name = "Year")] public string AkdnTrainingYear { get; set; }
 
+        [JsonIgnore] [Display(Name = "Date")] public DateTime? AkdnTrainingDate { get; set; }
+
         [JsonProperty(PropertyName = "areaOfOrigin")]
         [Display(Name = "Area of Origin")]
         public string AreaOfOrigin { get; set; }

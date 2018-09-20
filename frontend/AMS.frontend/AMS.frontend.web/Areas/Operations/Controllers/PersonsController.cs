@@ -192,7 +192,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         public List<AkdnTrainingModel> AddAkdnTrainingToSession(string id, string training, string countryOfTarining,
-            string month, string year)
+            string month, string year, string date)
         {
             var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                           new List<AkdnTrainingModel>();
@@ -215,8 +215,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[0],
                 TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
-                Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year)
-            });
+                Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year),
+                Date = string.IsNullOrWhiteSpace(date) ? DateTime.ParseExact("00/00/00", "MM/dd/yyyy", null) : DateTime.ParseExact(date, "MM/dd/yyyy", null)
+
+
+        });
 
             for (var counter = 0; counter < sessionAkdnTrainingList.Count; counter++)
                 sessionAkdnTrainingList[counter].Priority = counter + 1;
@@ -228,9 +231,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         [HttpPost]
         public IActionResult AkdnTrainingListAdd(string id, string training, string countryOfTarining,
-            string month, string year)
+            string month, string year, string date)
         {
-            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, month, year);
+            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, month, year, date);
 
             return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
@@ -1057,7 +1060,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             AddAkdnTrainingToSession(akdnTraining.TrainingId,
                                 akdnTraining.Training + "-" + akdnTraining.TrainingName,
                                 akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
-                                akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString());
+                                akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString(), "");
                         }
                     }
 

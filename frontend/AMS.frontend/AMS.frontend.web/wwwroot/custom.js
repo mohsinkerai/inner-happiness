@@ -169,11 +169,12 @@ function ProfessionalTrainingListEdit(id, training, institution, country, month,
     $("#professional-training-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function AkdnTrainingListEdit(id, training, country, month, year) {
+function AkdnTrainingListEdit(id, training, country, month, year, date) {
     $("#AkdnTraining").val(training).trigger('change');
     $("#AkdnTrainingCountry").val(country).trigger('change');
     $("#AkdnTrainingMonth").val(month).trigger('change');
-    $("#AkdnTrainingYear").val(year).trigger('change');
+	$("#AkdnTrainingYear").val(year).trigger('change');
+	$("#AkdnTrainingDate").val(date).trigger('change');
     $("#akdn-training-id").val(id);
 
     $("#akdn-training-row-" + id).addClass("m-datatable__row--hover");
@@ -785,11 +786,13 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
         var training = $("#AkdnTraining").val();
         var country = $("#AkdnTrainingCountry").val();
         var month = $("#AkdnTrainingMonth").val();
-        var year = $("#AkdnTrainingYear").val();
+		var year = $("#AkdnTrainingYear").val();
+		var date = $("#AkdnTrainingDate").val();
+
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": trainingId, "training": training, "countryOfTarining": country, "month": month, "year": year },
+            data: { "id": trainingId, "training": training, "countryOfTarining": country, "month": month, "year": year, "date": date },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -807,7 +810,8 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
                     $("#AkdnTraining").val('').trigger('change');
                     $("#AkdnTrainingCountry").val('').trigger('change');
                     $("#AkdnTrainingMonth").val('').trigger('change');
-                    $("#AkdnTrainingYear").val('').trigger('change');
+					$("#AkdnTrainingYear").val('').trigger('change');
+					$("#AkdnTrainingDate").val('').trigger('change');
                     $("#akdn-training-id").val('');
                 }
                 //else {
