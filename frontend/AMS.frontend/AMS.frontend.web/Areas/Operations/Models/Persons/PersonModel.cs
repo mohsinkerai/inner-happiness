@@ -264,6 +264,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public List<ProfessionalTrainingModel> ProfessionalTrainings { get; set; }
 
         [JsonIgnore] [Display(Name = "Year")] public string ProfessionalTrainingYear { get; set; }
+
+        [JsonIgnore] [Display(Name = "Date")] public DateTime? ProfessionalTrainingDate { get; set; }
+
         [JsonIgnore] public string Read { get; set; }
 
         [Required]

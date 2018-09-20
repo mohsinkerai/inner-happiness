@@ -447,7 +447,7 @@
                     @if (ViewBag.Action != "Detail")
                     {
                     <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label asp-for="AkdnTraining" class="control-label"></label>
                                 <select asp-for="AkdnTraining" asp-items="@ViewBag.AkdnTrainingList" class="form-control m-select2" placeholder="Select a training">
@@ -456,7 +456,7 @@
                                 <span asp-validation-for="AkdnTraining" class="form-control-feedback"></span>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label asp-for="AkdnTrainingCountry" class="control-label"></label>
                                 <select asp-for="AkdnTrainingCountry" asp-items="@ViewBag.AkdnTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
@@ -465,7 +465,7 @@
                                 <span asp-validation-for="AkdnTrainingCountry" class="form-control-feedback"></span>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <!--<div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="AkdnTrainingMonth" class="control-label"></label>
                                 <select asp-for="AkdnTrainingMonth" class="form-control m-select2" placeholder="Select a month">
@@ -485,8 +485,8 @@
                                 </select>
                                 <span asp-validation-for="AkdnTrainingYear" class="form-control-feedback"></span>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
+                        </div>-->
+                        <!--<div class="col-lg-4">
                             <div class="form-group">
                                 <label asp-for="AkdnTrainingYear" class="control-label"></label>
                                 @*<input type="text" asp-for="AkdnTrainingYear" class="form-control">*@
@@ -500,8 +500,8 @@
                                 </div>
                                 <span asp-validation-for="AkdnTrainingYear" class="form-control-feedback"></span>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
+                        </div>-->
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label asp-for="AkdnTrainingDate" class="control-label"></label>
                                 <div class="input-group">
@@ -537,73 +537,87 @@
                     </div>
                     @if (ViewBag.Action != "Detail")
                     {
-                        <div class="form-group m-form__group row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="ProfesisonalTraining" class="control-label"></label>
-                                    <input type="text" asp-for="ProfesisonalTraining" class="form-control">
-                                    <span asp-validation-for="ProfesisonalTraining" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="ProfessionalTrainingInstitution" class="control-label"></label>
-                                    <input type="text" asp-for="ProfessionalTrainingInstitution" class="form-control">
-                                    <span asp-validation-for="ProfessionalTrainingInstitution" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="ProfessionalTrainingCountry" class="control-label"></label>
-                                    <select asp-for="ProfessionalTrainingCountry" asp-items="@ViewBag.ProfessionalTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
-                                        <option></option>
-                                    </select>
-                                    <span asp-validation-for="ProfessionalTrainingCountry" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="ProfessionalTrainingMonth" class="control-label"></label>
-                                    <select asp-for="ProfessionalTrainingMonth" class="form-control m-select2" placeholder="Select a month">
-                                        <option></option>
-                                        <option value="1">Januray</option>
-                                        <option value="2">February</option>
-                                        <option value="3">March</option>
-                                        <option value="4">April</option>
-                                        <option value="5">May</option>
-                                        <option value="6">June</option>
-                                        <option value="7">July</option>
-                                        <option value="8">August</option>
-                                        <option value="9">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
-                                    </select>
-                                    <span asp-validation-for="ProfessionalTrainingMonth" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="ProfessionalTrainingYear" class="control-label"></label>
-                                    @*<input type="text" asp-for="ProfessionalTrainingYear" class="form-control">*@
-                                    <div class="input-group">
-                                        <input type="text" asp-for="ProfessionalTrainingYear" class="form-control date-picker-year-only" placeholder="Select year">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">
-                                                <i class="la la-calendar"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span asp-validation-for="ProfessionalTrainingYear" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <input type="hidden" id="professional-training-id" />
-                            <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
-                                </button>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="ProfesisonalTraining" class="control-label"></label>
+                                <input type="text" asp-for="ProfesisonalTraining" class="form-control">
+                                <span asp-validation-for="ProfesisonalTraining" class="form-control-feedback"></span>
                             </div>
                         </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="ProfessionalTrainingInstitution" class="control-label"></label>
+                                <input type="text" asp-for="ProfessionalTrainingInstitution" class="form-control">
+                                <span asp-validation-for="ProfessionalTrainingInstitution" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="ProfessionalTrainingCountry" class="control-label"></label>
+                                <select asp-for="ProfessionalTrainingCountry" asp-items="@ViewBag.ProfessionalTrainingCountryList" class="form-control m-select2" placeholder="Select a country">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="ProfessionalTrainingCountry" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <!--<div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="ProfessionalTrainingMonth" class="control-label"></label>
+                                <select asp-for="ProfessionalTrainingMonth" class="form-control m-select2" placeholder="Select a month">
+                                    <option></option>
+                                    <option value="1">Januray</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                                <span asp-validation-for="ProfessionalTrainingMonth" class="form-control-feedback"></span>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="ProfessionalTrainingYear" class="control-label"></label>
+                                @*<input type="text" asp-for="ProfessionalTrainingYear" class="form-control">*@
+                                <div class="input-group">
+                                    <input type="text" asp-for="ProfessionalTrainingYear" class="form-control date-picker-year-only" placeholder="Select year">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="ProfessionalTrainingYear" class="form-control-feedback"></span>
+                            </div>
+                        </div>-->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="ProfessionalTrainingDate" class="control-label"></label>
+                                <div class="input-group">
+                                    <input type="text" asp-for="ProfessionalTrainingDate" class="form-control date-picker" readonly placeholder="Select end date">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="ProfessionalTrainingDate" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="professional-training-id" />
+                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+                            <button type="button" class="btn btn-warning" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                        </div>
+                    </div>
                     }
                     <div class="form-group m-form__group row">
                         <div class="col-lg-12" id="professional-training-table">

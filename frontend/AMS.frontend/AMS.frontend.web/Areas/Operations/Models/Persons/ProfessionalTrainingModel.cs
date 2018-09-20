@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
@@ -33,6 +34,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
+
+        [JsonProperty(PropertyName = "date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? Date { get; set; }
 
         #endregion Public Properties
     }

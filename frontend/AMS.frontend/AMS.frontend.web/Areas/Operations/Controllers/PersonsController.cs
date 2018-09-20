@@ -192,7 +192,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         public List<AkdnTrainingModel> AddAkdnTrainingToSession(string id, string training, string countryOfTarining,
-            string month, string year, string date)
+            string date)
         {
             var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                           new List<AkdnTrainingModel>();
@@ -201,6 +201,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 id = Guid.NewGuid().ToString();
             else
                 sessionAkdnTrainingList.Remove(sessionAkdnTrainingList.Find(e => e.TrainingId == id));
+
+
+            DateTime? dt = null;
+            if (!string.IsNullOrWhiteSpace(date))
+            {
+                // dt = DateTime.ParseExact(date, "MM/dd/yyyy", null);
+                dt = Convert.ToDateTime(date);
+            }
+
 
             sessionAkdnTrainingList.Add(new AkdnTrainingModel
             {
@@ -211,15 +220,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 CountryOfTrainingName = string.IsNullOrWhiteSpace(countryOfTarining)
                     ? string.Empty
                     : countryOfTarining.Split('-')[1],
-                Month = month.Contains('-') ? month.Split('-')[0] : month,
-                MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
+                //Month = month.Contains('-') ? month.Split('-')[0] : month,
+                //MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[0],
                 TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
-                Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year),
-                Date = string.IsNullOrWhiteSpace(date) ? DateTime.ParseExact("00/00/00", "MM/dd/yyyy", null) : DateTime.ParseExact(date, "MM/dd/yyyy", null)
-
-
-        });
+                //Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year),
+                //Date = string.IsNullOrWhiteSpace(date) ? DateTime.ParseExact("00/00/00", "MM/dd/yyyy", null) : DateTime.ParseExact(date, "MM/dd/yyyy", null)
+                Date = dt
+            });
 
             for (var counter = 0; counter < sessionAkdnTrainingList.Count; counter++)
                 sessionAkdnTrainingList[counter].Priority = counter + 1;
@@ -231,9 +239,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         [HttpPost]
         public IActionResult AkdnTrainingListAdd(string id, string training, string countryOfTarining,
-            string month, string year, string date)
+            string date)
         {
-            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, month, year, date);
+            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, date);
 
             return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
@@ -565,10 +573,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         [HttpPost]
         public IActionResult ProfessionalTrainingListAdd(string id, string training, string institution,
-            string countryOfTarining, string month, string year)
+            string countryOfTarining, string month, string year, string date)
         {
             var sessionProfessionalTrainingList =
-                AddProfessionalTrainingToSession(id, training, institution, countryOfTarining, month, year);
+                AddProfessionalTrainingToSession(id, training, institution, countryOfTarining, month, year, date);
 
             return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
         }
@@ -969,7 +977,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<ProfessionalTrainingModel> AddProfessionalTrainingToSession(string id, string training,
             string institution,
-            string countryOfTarining, string month, string year)
+            string countryOfTarining, string month, string year, string date)
         {
             var sessionProfessionalTrainingList =
                 HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
@@ -979,6 +987,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 id = Guid.NewGuid().ToString();
             else
                 sessionProfessionalTrainingList.Remove(sessionProfessionalTrainingList.Find(e => e.TrainingId == id));
+
+
+            DateTime? dt = null;
+            if (!string.IsNullOrWhiteSpace(date))
+            {
+                dt = Convert.ToDateTime(date);
+            }
+
 
             sessionProfessionalTrainingList.Add(new ProfessionalTrainingModel
             {
@@ -990,10 +1006,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ? string.Empty
                     : countryOfTarining.Split('-')[1],
                 Institution = institution,
-                Month = month.Contains('-') ? month.Split('-')[0] : month,
-                MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
+                //Month = month.Contains('-') ? month.Split('-')[0] : month,
+                //MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = training,
-                Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year)
+                //Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year),
+                Date = dt
             });
 
             for (var counter = 0; counter < sessionProfessionalTrainingList.Count; counter++)
@@ -1102,12 +1119,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private PersonModel MapPerson(PersonModel person)
         {
             //saif ali write mapping here
-            try
+            if (person != null)
             {
-                if (person != null)
+                try
                 {
                     if (person.Educations != null)
-                    { 
+                    {
                         foreach (var education in person.Educations)
                         {
                             string institutionName = GetText(education.Institution, ViewBag.InstitutionList);
@@ -1129,7 +1146,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 education.MajorAreaOfStudy + "-" + education.MajorAreaOfStudyName);
                         }
                     }
+                }
+                catch (Exception ex)
+                { }
 
+                try
+                {
                     if (person.AkdnTrainings != null)
                     {
                         foreach (var akdnTraining in person.AkdnTrainings)
@@ -1140,15 +1162,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                             akdnTraining.TrainingName = training;
                             akdnTraining.CountryOfTrainingName = country;
-                            akdnTraining.MonthName = month;
+                            //akdnTraining.MonthName = month;
 
                             AddAkdnTrainingToSession(akdnTraining.TrainingId,
                                 akdnTraining.Training + "-" + akdnTraining.TrainingName,
                                 akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
-                                akdnTraining.Month + "-" + akdnTraining.MonthName, akdnTraining.Year?.ToString(), "");
+                                akdnTraining.Date?.ToString());
                         }
                     }
+                }
+                catch (Exception ex)
+                { }
 
+                try
+                {
                     if (person.ProfessionalTrainings != null)
                     {
                         foreach (var professionalTraining in person.ProfessionalTrainings)
@@ -1165,10 +1192,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 professionalTraining.Institution,
                                 professionalTraining.CountryOfTraining + "-" + professionalTraining.CountryOfTrainingName,
                                 professionalTraining.Month + "-" + professionalTraining.MonthName,
-                                professionalTraining.Year?.ToString());
+                                professionalTraining.Year?.ToString(), professionalTraining.Date.ToString());
                         }
                     }
+                }
+                catch (Exception ex)
+                { }
 
+                try
+                {
                     if (person.LanguageProficiencies != null)
                     {
                         foreach (var language in person.LanguageProficiencies)
@@ -1188,7 +1220,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName);
                         }
                     }
+                }
+                catch (Exception ex)
+                { }
 
+                try
+                {
                     if (person.VoluntaryCommunityServices != null)
                     {
                         foreach (var voluntaryService in person.VoluntaryCommunityServices)
@@ -1206,7 +1243,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 voluntaryService.Position + "-" + voluntaryService.PositionName);
                         }
                     }
+                }
+                catch (Exception ex)
+                { }
 
+                try
+                {
                     if (person.Employments != null)
                     {
                         foreach (var employment in person.Employments)
@@ -1226,7 +1268,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
                         }
                     }
+                }
+                catch (Exception ex)
+                { }
 
+                try
+                {
                     if (person.FamilyRelations != null)
                     {
                         foreach (var relation in person.FamilyRelations)
@@ -1241,9 +1288,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            { 
+                catch (Exception ex)
+                { }
             }
 
             return person;

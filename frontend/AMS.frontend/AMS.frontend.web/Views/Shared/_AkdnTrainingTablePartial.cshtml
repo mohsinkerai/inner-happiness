@@ -5,8 +5,6 @@
             <th> Priority </th>
             <th> Training </th>
             <th> Country </th>
-            <th> Month </th>
-            <th> Year </th>
             <th> Date </th>
             <th> Action </th>
         </tr>
@@ -20,8 +18,6 @@
             <td> @item.Priority </td>
             <td> @item.TrainingName </td>
             <td> @item.CountryOfTrainingName </td>
-            <td> @item.MonthName </td>
-            <td> @item.Year </td>
             <td> @item.Date </td>
             <td>
                 <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return AkdnTrainingListEdit("@item.TrainingId", "@item.Training-@item.TrainingName", "@item.CountryOfTraining-@item.CountryOfTrainingName", "@item.Month", "@item.Year", "@item.Date");'>

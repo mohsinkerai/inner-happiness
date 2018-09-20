@@ -91,7 +91,8 @@ function Initialize() {
             rightArrow: '<i class="la la-angle-right"></i>'
         },
         autoclose: true
-    });
+	});
+	
     $(".date-picker-year-only").datepicker({
         todayHighlight: true,
         orientation: "bottom left",
@@ -174,12 +175,13 @@ function FamilyInformationListEdit(id, relativeCnic, relativeSalutation, relativ
     $("#family-relation-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function ProfessionalTrainingListEdit(id, training, institution, country, month, year) {
+function ProfessionalTrainingListEdit(id, training, institution, country, month, year, date) {
     $("#ProfesisonalTraining").val(training).trigger('change');
     $("#ProfessionalTrainingInstitution").val(institution).trigger('change');
     $("#ProfessionalTrainingCountry").val(country).trigger('change');
-    $("#ProfessionalTrainingMonth").val(month).trigger('change');
-    $("#ProfessionalTrainingYear").val(year).trigger('change');
+    //$("#ProfessionalTrainingMonth").val(month).trigger('change');
+	//$("#ProfessionalTrainingYear").val(year).trigger('change');
+	$("#ProfessionalTrainingDate").val(date).trigger('change');
     $("#professional-training-id").val(id);
 
     $("#professional-training-row-" + id).addClass("m-datatable__row--hover");
@@ -188,8 +190,8 @@ function ProfessionalTrainingListEdit(id, training, institution, country, month,
 function AkdnTrainingListEdit(id, training, country, month, year, date) {
     $("#AkdnTraining").val(training).trigger('change');
     $("#AkdnTrainingCountry").val(country).trigger('change');
-    $("#AkdnTrainingMonth").val(month).trigger('change');
-	$("#AkdnTrainingYear").val(year).trigger('change');
+    //$("#AkdnTrainingMonth").val(month).trigger('change');
+	//$("#AkdnTrainingYear").val(year).trigger('change');
 	$("#AkdnTrainingDate").val(date).trigger('change');
     $("#akdn-training-id").val(id);
 
@@ -537,17 +539,19 @@ function LanguageListAdd(url, reOrderUrl) {
 }
 
 function ProfessionalTrainingListAdd(url, reOrderUrl) {
-    if ($("#ProfesisonalTraining").valid() && $("#ProfessionalTrainingInstitution").valid() && $("#ProfessionalTrainingCountry").valid() && $("#ProfessionalTrainingMonth").valid() && $("#ProfessionalTrainingYear").valid()) {
+	if ($("#ProfesisonalTraining").valid() && $("#ProfessionalTrainingInstitution").valid() && $("#ProfessionalTrainingCountry").valid() && $("#ProfessionalTrainingDate").valid()) {
         var trainingId = $("#professional-training-id").val();
         var training = $("#ProfesisonalTraining").val();
         var institution = $("#ProfessionalTrainingInstitution").val();
         var country = $("#ProfessionalTrainingCountry").val();
-        var month = $("#ProfessionalTrainingMonth").val();
-        var year = $("#ProfessionalTrainingYear").val();
+        //var month = $("#ProfessionalTrainingMonth").val();
+		//var year = $("#ProfessionalTrainingYear").val();
+		var date = $("#ProfessionalTrainingDate").val();
+
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": trainingId, "training": training, "institution": institution, "countryOfTarining": country, "month": month, "year": year },
+            data: { "id": trainingId, "training": training, "institution": institution, "countryOfTarining": country, "date": date },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -565,8 +569,9 @@ function ProfessionalTrainingListAdd(url, reOrderUrl) {
                     $("#ProfesisonalTraining").val('').trigger('change');
                     $("#ProfessionalTrainingInstitution").val('').trigger('change');
                     $("#ProfessionalTrainingCountry").val('').trigger('change');
-                    $("#ProfessionalTrainingMonth").val('').trigger('change');
-                    $("#ProfessionalTrainingYear").val('').trigger('change');
+                    //$("#ProfessionalTrainingMonth").val('').trigger('change');
+					//$("#ProfessionalTrainingYear").val('').trigger('change');
+					$("#ProfessionalTrainingDate").val('').trigger('change');
                     $("#professional-training-id").val('');
                 }
                 //else {
@@ -797,18 +802,18 @@ function FamilyInformationListAdd(url) {
 }
 
 function AkdnTrainingListAdd(url, reOrderUrl) {
-    if ($("#AkdnTraining").valid() && $("#AkdnTrainingCountry").valid() && $("#AkdnTrainingMonth").valid() && $("#AkdnTrainingYear").valid()) {
+	if ($("#AkdnTraining").valid() && $("#AkdnTrainingCountry").valid() && $("#AkdnTrainingDate").valid()) {
         var trainingId = $("#akdn-training-id").val();
         var training = $("#AkdnTraining").val();
         var country = $("#AkdnTrainingCountry").val();
-        var month = $("#AkdnTrainingMonth").val();
-		var year = $("#AkdnTrainingYear").val();
+        //var month = $("#AkdnTrainingMonth").val();
+		//var year = $("#AkdnTrainingYear").val();
 		var date = $("#AkdnTrainingDate").val();
 
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": trainingId, "training": training, "countryOfTarining": country, "month": month, "year": year, "date": date },
+            data: { "id": trainingId, "training": training, "countryOfTarining": country, "date": date },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -825,8 +830,6 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
                     InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", reOrderUrl);
                     $("#AkdnTraining").val('').trigger('change');
                     $("#AkdnTrainingCountry").val('').trigger('change');
-                    $("#AkdnTrainingMonth").val('').trigger('change');
-					$("#AkdnTrainingYear").val('').trigger('change');
 					$("#AkdnTrainingDate").val('').trigger('change');
                     $("#akdn-training-id").val('');
                 }
