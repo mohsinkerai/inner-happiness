@@ -94,6 +94,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.LanguageList = await RestfulClient.GetLanguages();
             ViewBag.SkillsList = await RestfulClient.GetSkills();
             ViewBag.RelationList = await RestfulClient.GetAllRelatives();
+            ViewBag.MajorAreaOfStudy = await RestfulClient.GetMajorAreaOfStudy();
             ViewBag.FieldOfExpertiseList = await RestfulClient.GetFieldOfExpertise();
         }
 
@@ -716,7 +717,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
-                MajorAreaOfStudy = majorAreaOfStudy,
+                MajorAreaOfStudy = string.IsNullOrWhiteSpace(majorAreaOfStudy) ? string.Empty : majorAreaOfStudy.Split('-')[0],
+                MajorAreaOfStudyName = string.IsNullOrWhiteSpace(majorAreaOfStudy) ? string.Empty : majorAreaOfStudy.Split('-')[1],
                 NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
                 NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
                 ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear)
@@ -1023,10 +1025,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             string institutionName = GetText(education.Institution, ViewBag.InstitutionList);
                             string country = GetText(education.CountryOfStudy, ViewBag.CountryOfStudyList);
                             string nameOfDegree = GetText(education.NameOfDegree, ViewBag.NameOfDegreeList);
+                            string majorAreaOfStudy = GetText(education.MajorAreaOfStudy, ViewBag.MajorAreaOfStudy);
 
                             education.InstitutionName = institutionName;
                             education.CountryOfStudyName = country;
                             education.NameOfDegreeName = nameOfDegree;
+                            education.MajorAreaOfStudy = majorAreaOfStudy;
 
                             //tejani mapping here
                             AddEducationToSession(education.EducationId,
@@ -1034,7 +1038,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 education.CountryOfStudy + "-" + education.CountryOfStudyName,
                                 education.FromYear?.ToString(), education.ToYear?.ToString(),
                                 education.NameOfDegree + "-" + education.NameOfDegreeName,
-                                education.MajorAreaOfStudy);
+                                education.MajorAreaOfStudy + "-" + education.MajorAreaOfStudyName);
                         }
                     }
 
