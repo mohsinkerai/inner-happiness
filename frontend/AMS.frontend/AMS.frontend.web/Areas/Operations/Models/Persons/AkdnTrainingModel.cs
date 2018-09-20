@@ -26,7 +26,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "trainingName")]
         public string TrainingName { get; set; }
 
-        [JsonProperty(PropertyName = "year")]
+        [JsonProperty(PropertyName = "date")]
         [DataType(DataType.Date)]
         [Display(Name = "Year")]
         public int? Year { get; set; }

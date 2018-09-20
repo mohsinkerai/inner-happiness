@@ -101,7 +101,8 @@ function Initialize() {
         format: "yyyy",
         viewMode: "years",
         minViewMode: "years"
-    });
+	});
+
 }
 
 function toggleNotMe() {
