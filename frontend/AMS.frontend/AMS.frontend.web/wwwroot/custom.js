@@ -89,7 +89,8 @@ function Initialize() {
         templates: {
             leftArrow: '<i class="la la-angle-left"></i>',
             rightArrow: '<i class="la la-angle-right"></i>'
-        }
+        },
+        autoclose: true
     });
     $(".date-picker-year-only").datepicker({
         todayHighlight: true,
@@ -99,9 +100,24 @@ function Initialize() {
             rightArrow: '<i class="la la-angle-right"></i>'
         },
         format: "yyyy",
-        viewMode: "years",
-        minViewMode: "years"
-	});
+        minViewMode: "years",
+        autoclose: true
+    });
+    $(".date-picker-month-year-only").datepicker({
+        todayHighlight: true,
+        orientation: "bottom left",
+        templates: {
+            leftArrow: '<i class="la la-angle-left"></i>',
+            rightArrow: '<i class="la la-angle-right"></i>'
+        },
+        format: "MM-yyyy",
+        startView: "years",
+        minViewMode: "months",
+        autoclose: true,
+        onClose: function (dateText, inst) {
+            $(this).datepicker("setDate", new Date(inst.selectedYear, inst.selectedMonth, 1));
+        }
+    });
 
 }
 
