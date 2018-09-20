@@ -95,7 +95,7 @@
                 });
             });
 
-            if ($("#PlanToRelocate").checked) {
+            if ($("#PlanToRelocate")[0].checked) {
                 $("#RelocateLocation").prop("disabled", false);
                 $("#RelocationDateTime").prop("disabled", false);
             } else {
@@ -160,6 +160,8 @@
             $("#voluntary-public").css("min-height", "0px");
             $("#employment").css("min-height", "0px");
             $("#family-relation").css("min-height", "0px");
+
+            $(".formnumber").prop("disabled", true);
         });
     </script>
 }

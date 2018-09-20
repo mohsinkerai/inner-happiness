@@ -1745,6 +1745,7 @@ function LoadDropDownViaAjax(dropDownClass, url, selectedValue, secondarySelecte
 }
 
 function CustomPersonValidation() {
+    $(".formnumber").prop("disabled", false);
     if ($("#mainForm").valid()) {
         $("#mainForm").off("submit");
         $("#mainForm").submit();
@@ -1752,6 +1753,7 @@ function CustomPersonValidation() {
         $('html, body').animate({
             scrollTop: ($('.field-validation-error').offset().top - 300)
         }, 2000);
+        $(".formnumber").prop("disabled", true);
         return false;
     }
 }
