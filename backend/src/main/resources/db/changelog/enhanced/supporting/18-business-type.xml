@@ -38,7 +38,7 @@
       </column>
     </addColumn>
   </changeSet>
-  <changeSet id="business-type-03" author="mohsin.kerai">
+  <changeSet id="business-type-04" author="mohsin.kerai">
     <sql>
       ALTER TABLE business_type AUTO_INCREMENT = 10000;
     </sql>
