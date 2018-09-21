@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Slf4j
 @Service
@@ -61,6 +62,7 @@ public class PersonService extends BaseService<Person> {
   @Override
   @Transactional
   public Person save(Person person) {
+    validate(person);
     Person personCopy = super.save(person);
     person.setId(personCopy.getId());
 
@@ -86,5 +88,11 @@ public class PersonService extends BaseService<Person> {
 
   public Page<Person> findAll(Pageable pageable) {
     return personRepository.findAll(pageable);
+  }
+
+  public void validate(Person entity) {
+    Assert.notNull(entity.getJamatkhana(), "Person jamatkhana should not be null");
+    Assert.notNull(entity.getLocalCouncil(), "Person local council should not be null");
+    Assert.notNull(entity.getRegionalCouncil(), "Person regional council should not be null");
   }
 }

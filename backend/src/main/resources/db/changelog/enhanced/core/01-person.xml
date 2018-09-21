@@ -174,4 +174,9 @@
     <dropNotNullConstraint columnDataType="tinyint" tableName="person" columnName="plan_to_relocate" />
     <dropNotNullConstraint columnDataType="int" tableName="person" columnName="gender" />
   </changeSet>
+  <changeSet id="person-04" author="mohsin.kerai">
+    <dropNotNullConstraint columnDataType="bigint" tableName="person" columnName="jamatkhana" />
+    <dropNotNullConstraint columnDataType="bigint" tableName="person" columnName="local_council" />
+    <dropNotNullConstraint columnDataType="bigint" tableName="person" columnName="regional_council" />
+  </changeSet>
 </databaseChangeLog>

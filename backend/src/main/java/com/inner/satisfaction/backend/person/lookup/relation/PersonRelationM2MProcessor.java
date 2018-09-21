@@ -35,7 +35,7 @@ public class PersonRelationM2MProcessor extends
 
   @Override
   protected List<PersonRelationPerson> findPersonEntities(long personId) {
-      return prpService.findByFirstPersonId(personId);
+    return prpService.findByFirstPersonId(personId);
   }
 
   @Override
