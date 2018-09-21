@@ -765,10 +765,11 @@ function FamilyInformationListAdd(url) {
         var relativeJamatiTitle = $("#RelativeJamatiTitle").val();
         var relativeDateOfBirth = $("#RelativeDateOfBirth").val();
         var relativeRelation = $("#RelativeRelation").val();
+        var personId = $("#RelativePersonId").val();
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": id, "relativeCnic": relativeCnic, "relativeSalutation": relativeSalutation, "relativeFirstName": relativeFirstName, "relativeFathersName": relativeFathersName, "relativeFamilyName": relativeFamilyName, "relativeJamatiTitle": relativeJamatiTitle, "relativeDateOfBirth": relativeDateOfBirth, "relativeRelation": relativeRelation },
+            data: { "id": id, "relativeCnic": relativeCnic, "relativeSalutation": relativeSalutation, "relativeFirstName": relativeFirstName, "relativeFathersName": relativeFathersName, "relativeFamilyName": relativeFamilyName, "relativeJamatiTitle": relativeJamatiTitle, "relativeDateOfBirth": relativeDateOfBirth, "relativeRelation": relativeRelation, "personId": personId },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {

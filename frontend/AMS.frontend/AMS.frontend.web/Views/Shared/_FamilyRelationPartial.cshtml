@@ -62,13 +62,14 @@
 <div class="col-lg-2">
     <div class="form-group">
         <label asp-for="RelativeRelation" class="control-label"></label>
-        <select asp-for="RelativeRelation" asp-items="@ViewBag.RelationList" class="form-control m-select2 relative-fields" placeholder="Select">
+        <select asp-for="RelativeRelation" asp-items="@ViewBag.RelationList" class="form-control m-select2" placeholder="Select">
             <option></option>
         </select>
         <span asp-validation-for="RelativeRelation" class="form-control-feedback"></span>
     </div>
 </div>
 <input type="hidden" id="family-information-id"/>
+<input type="hidden" asp-for="RelativePersonId" />
 <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
     <button type="button" class="btn btn-warning" onclick='return FamilyInformationListAdd("@Url.Action(ActionNames.FamilyRelationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>
         <i class="fa fa-save"></i> Save

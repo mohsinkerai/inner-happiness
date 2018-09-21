@@ -422,11 +422,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public IActionResult FamilyRelationListAdd(string id, string relativeCnic,
             string relativeSalutation,
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
-            string relativeDateOfBirth, string relativeRelation)
+            string relativeDateOfBirth, string relativeRelation, string personId)
         {
             var sessionFamilyRelationList = AddFamilyRelationToSession(id, relativeCnic, relativeSalutation,
                 relativeFirstName, relativeFathersName,
-                relativeFamilyName, relativeJamatiTitle, relativeDateOfBirth, relativeRelation);
+                relativeFamilyName, relativeJamatiTitle, relativeDateOfBirth, relativeRelation, personId);
 
             return PartialView("_FamilyRelationTablePartial", sessionFamilyRelationList);
         }
@@ -645,53 +645,82 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
         }
 
-        public IActionResult ValidateCnic(string cnic)
+        public async Task<IActionResult> ValidateCnic(string cnic)
         {
             var doNotValidateCnic = HttpContext.Session.GetString(SessionKeyDoNotValidateCnicOnEditPage);
 
             if (doNotValidateCnic == "true") return Json("true");
 
-            var success = RestfulClient.SearchByCnic(cnic, out var person);
-            return Json(!success ? "true" : string.Format("A record against {0} already exists.", cnic));
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, 1, 1);
+            var list = success.Item1;
+
+            return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", cnic));
         }
 
-        public IActionResult ValidateFormNumber(string formnumber)
+        public async Task<IActionResult> ValidateFormNumber(string formnumber)
         {
             var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
 
             //if (doNotValidateFormNumber == "true")
             //{
-            return Json("true");
+            //return Json("true");
             //}
             //else
             //{
             //    var success = RestfulClient.searchByFormNumber(cnic, out var person);
             //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
             //}
+
+            if (doNotValidateFormNumber == "true") return Json("true");
+
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, formnumber, 1, 1);
+            var list = success.Item1;
+
+            return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", formnumber));
         }
 
-        public IActionResult ValidateId(string id)
+        public async Task<IActionResult> ValidateId(string id)
         {
             var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
 
             //if (doNotValidateFormNumber == "true")
             //{
-            return Json("true");
+            //return Json("true");
             //}
             //else
             //{
             //    var success = RestfulClient.searchByFormNumber(cnic, out var person);
             //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
             //}
+
+            if (doNotValidateFormNumber == "true") return Json("true");
+
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, 1, 1);
+            var list = success.Item1;
+
+            return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", id));
         }
 
         [HttpPost]
         public async Task<IActionResult> VerifyCnic(string cnic)
         {
-            var success = RestfulClient.SearchByCnic(cnic, out var person);
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, 1, 1);
             ViewBag.SalutationList = await RestfulClient.GetSalutation();
             ViewBag.JamatiTitleList = await RestfulClient.GetJamatiTitles();
             ViewBag.RelationList = await RestfulClient.GetAllRelatives();
+
+            var person = success.Item1.FirstOrDefault();
+            if (person != null)
+            {
+                person.RelativeCnic = person.Cnic;
+                person.RelativeSalutation = person.Salutation;
+                person.RelativeFirstName = person.FirstName;
+                person.RelativeFathersName = person.FathersName;
+                person.RelativeFamilyName = person.FamilyName;
+                person.RelativeJamatiTitle = person.JamatiTitle;
+                person.RelativeDateOfBirth = person.DateOfBirth;
+                person.RelativePersonId = person.Id;
+            }
 
             return PartialView("_FamilyRelationPartial", person);
         }
@@ -913,7 +942,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private List<FamilyRelationModel> AddFamilyRelationToSession(string id, string relativeCnic,
             string relativeSalutation,
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
-            string relativeDateOfBirth, string relativeRelation)
+            string relativeDateOfBirth, string relativeRelation, string personId)
         {
             var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
                                             new List<FamilyRelationModel>();
@@ -936,7 +965,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 FamilyName = relativeFamilyName,
                 JamatiTitle = relativeJamatiTitle,
                 Relation = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[0],
-                Salutation = relativeSalutation
+                Salutation = relativeSalutation,
+                Id = personId
             });
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
 
@@ -1285,7 +1315,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic, relation.Salutation,
                                 relation.FirstName, relation.FathersName,
                                 relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
-                                relation.RelationName);
+                                relation.RelationName, relation.Id);
                         }
                     }
                 }

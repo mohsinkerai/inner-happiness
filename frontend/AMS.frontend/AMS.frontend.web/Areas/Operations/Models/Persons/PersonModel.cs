@@ -167,7 +167,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string JamatiTitleForDisplay { get; set; }
 
-        //[Required]
+        [Required]
         [JsonProperty(PropertyName = "jamatkhana")]
         public string Jamatkhana { get; set; }
 
@@ -194,7 +194,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             }
         }
 
-        //[Required]
+        [Required]
         [JsonProperty(PropertyName = "localCouncil")]
         [Display(Name = "Local Council")]
         public string LocalCouncil { get; set; }
@@ -284,6 +284,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Relation")]
         [JsonIgnore]
         public string RelativeRelation { get; set; }
+
+        [Display(Name = "Relation")]
+        [JsonIgnore]
+        public string RelativePersonId { get; set; }
 
         [Display(Name = "Salutation")]
         [JsonIgnore]

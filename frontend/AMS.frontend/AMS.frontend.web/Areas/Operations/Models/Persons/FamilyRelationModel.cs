@@ -38,6 +38,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "salutation")]
         public string Salutation { get; set; }
 
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
         #endregion Public Properties
     }
 }
