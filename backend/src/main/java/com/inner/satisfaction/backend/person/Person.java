@@ -14,6 +14,7 @@ import com.inner.satisfaction.backend.person.lookup.dto.VoluntaryCommunityServic
 import com.inner.satisfaction.backend.person.lookup.dto.VoluntaryPublicServiceDto;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -126,4 +127,11 @@ public class Person extends BaseEntity {
 
   @Transient
   private List<ReducedPersonDto> familyRelations;
+
+  @Column(insertable = false, updatable =  false)
+  private String genDegree;
+  @Column(insertable = false, updatable =  false)
+  private String genInstitution;
+  @Column(insertable = false, updatable =  false)
+  private String genMajorAreaOfStudy;
 }

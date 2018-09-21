@@ -82,6 +82,28 @@ public class PersonController extends BaseController<Person> {
       .findByCnicAndFirstNameAndLastNameAndFormNo(cnic, firstName, lastName, formNo, pageRequest);
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos", method = RequestMethod.GET)
+  public Page<Person> findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrAos(
+    @RequestParam(required = false, value = "cnic", defaultValue = "") String cnic,
+    @RequestParam(required = false, value = "firstName", defaultValue = "") String firstName,
+    @RequestParam(required = false, value = "lastName", defaultValue = "") String lastName,
+    @RequestParam(required = false, value = "id", defaultValue = "0") Long id, // formNo
+    @RequestParam(required = false, value = "degree", defaultValue = "0") Long degree, // Degree
+    // Academic Institution
+    @RequestParam(required = false, value = "inst", defaultValue = "0") Long institution,
+    // Jamati Title
+    @RequestParam(required = false, value = "jamatiTitle", defaultValue = "0") Long jamatiTitle,
+    // Major Area of Study
+    @RequestParam(required = false, value = "maos", defaultValue = "0") Long maos,
+    @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+    @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
+    PageRequest pageRequest = PageRequest.of(page - 1, size);
+    return personService
+      .findByFistNameOrLastNameOrFormNoOrCnicOrJamatiTitleOrDegreeOrMajorAreaOfStudyOrAcademicInstitution(
+        cnic, firstName, lastName, id, degree, maos, institution, jamatiTitle, pageRequest);
+  }
+
   @Override
   @GetMapping(ONE)
   public ResponseEntity<Person> findOne(@PathVariable("id") Long entityId) {

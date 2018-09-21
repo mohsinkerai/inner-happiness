@@ -179,4 +179,26 @@
     <dropNotNullConstraint columnDataType="bigint" tableName="person" columnName="local_council" />
     <dropNotNullConstraint columnDataType="bigint" tableName="person" columnName="regional_council" />
   </changeSet>
+  <changeSet id="person-05" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE person
+      ADD COLUMN gen_degree VARCHAR(255)
+      GENERATED ALWAYS AS (CAST(educations -> "$[*].nameOfDegree" as CHAR)) STORED;
+    </sql>
+  </changeSet>
+  <changeSet id="person-06" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE person
+      ADD COLUMN gen_institution VARCHAR(255)
+      GENERATED ALWAYS AS (CAST(educations -> "$[*].institution" as CHAR)) STORED;
+    </sql>
+  </changeSet>
+  <changeSet id="person-07" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE person
+      ADD COLUMN gen_major_area_of_study VARCHAR(255)
+      GENERATED ALWAYS AS (CAST(educations -> "$[*].majorAreaOfStudy" as CHAR)) STORED;
+    </sql>
+  </changeSet>
+  <!--Using SQL Tag, create full text inde, same goes for firstName-->
 </databaseChangeLog>

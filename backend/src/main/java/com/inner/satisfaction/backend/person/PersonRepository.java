@@ -16,4 +16,8 @@ public interface PersonRepository extends BasePagingAndSortingRepository<Person>
     String cnic, String firstName, String familyName, Long id, Pageable pageable);
 
   List<Person> findByIdOrCnicIgnoreCaseContaining(Long id, String cnic);
+
+  Page<Person> findByCnicIgnoreCaseContainingOrFirstNameIgnoreCaseContainingOrFamilyNameIgnoreCaseContainingOrIdEqualsOrJamatiTitleEqualsOrGenDegreeContainingOrGenInstitutionContainingOrGenMajorAreaOfStudyContaining(
+    String cnic, String firstName, String lastName, Long id, Long jamatiTitle, String genDegree,
+    String genInstitution, String genMajorAreaOfStudy, Pageable pageable);
 }

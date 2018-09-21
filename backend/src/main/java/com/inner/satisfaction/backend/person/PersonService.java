@@ -7,10 +7,12 @@ import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Service
@@ -46,6 +48,48 @@ public class PersonService extends BaseService<Person> {
     return personRepository
       .findByCnicIgnoreCaseContainingAndFirstNameIgnoreCaseContainingAndFamilyNameIgnoreCaseContainingOrIdEquals(
         cnic, firstName, lastName, Long.valueOf(formNo), pageable);
+  }
+
+  public Page<Person> findByFistNameOrLastNameOrFormNoOrCnicOrJamatiTitleOrDegreeOrMajorAreaOfStudyOrAcademicInstitution(
+    String cnic,
+    String firstName,
+    String lastName,
+    Long formNo,
+    Long degree,
+    Long majorAreaOfStudy,
+    Long academicInstitution,
+    Long jamatiTitle,
+    Pageable pageable
+  ) {
+    String areaOfStudyString = String.valueOf(majorAreaOfStudy);
+    String academicInstitutionString = String.valueOf(academicInstitution);
+    String degreeString = String.valueOf(degree);
+
+    if (StringUtils.isEmpty(firstName)) {
+      firstName = RandomStringUtils.random(5);
+    }
+    if (StringUtils.isEmpty(lastName)) {
+      lastName = RandomStringUtils.random(5);
+    }
+    if (StringUtils.isEmpty(cnic)) {
+      cnic = RandomStringUtils.random(5);
+    }
+    if (StringUtils.isEmpty(cnic)) {
+      cnic = RandomStringUtils.random(5);
+    }
+    if (areaOfStudyString.equals("0")) {
+      areaOfStudyString = RandomStringUtils.random(5);
+    }
+    if (academicInstitutionString.equals("0")) {
+      academicInstitutionString = RandomStringUtils.random(5);
+    }
+    if (degreeString.equals("0")) {
+      degreeString = RandomStringUtils.random(5);
+    }
+    return personRepository
+      .findByCnicIgnoreCaseContainingOrFirstNameIgnoreCaseContainingOrFamilyNameIgnoreCaseContainingOrIdEqualsOrJamatiTitleEqualsOrGenDegreeContainingOrGenInstitutionContainingOrGenMajorAreaOfStudyContaining(
+        cnic, firstName, lastName, formNo, jamatiTitle, degreeString,
+        academicInstitutionString, areaOfStudyString, pageable);
   }
 
   public List<Person> findByIdOrCnic(
