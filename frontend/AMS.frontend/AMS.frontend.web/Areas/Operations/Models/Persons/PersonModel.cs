@@ -38,7 +38,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] [Display(Name = "Year")] public string AkdnTrainingYear { get; set; }
 
-        [JsonIgnore] [Display(Name = "Date")] public DateTime? AkdnTrainingDate { get; set; }
+        [JsonIgnore] [Display(Name = "Month and Year")] public DateTime? AkdnTrainingDate { get; set; }
 
         [JsonProperty(PropertyName = "areaOfOrigin")]
         [Display(Name = "Area of Origin")]
@@ -265,7 +265,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] [Display(Name = "Year")] public string ProfessionalTrainingYear { get; set; }
 
-        [JsonIgnore] [Display(Name = "Date")] public DateTime? ProfessionalTrainingDate { get; set; }
+        [JsonIgnore] [Display(Name = "Month and Year")] public DateTime? ProfessionalTrainingDate { get; set; }
 
         [JsonIgnore] public string Read { get; set; }
 

@@ -206,8 +206,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             DateTime? dt = null;
             if (!string.IsNullOrWhiteSpace(date))
             {
-                // dt = DateTime.ParseExact(date, "MM/dd/yyyy", null);
-                dt = Convert.ToDateTime(date);
+                dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                //dt = Convert.ToDateTime(date);
             }
 
 
@@ -992,7 +992,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             DateTime? dt = null;
             if (!string.IsNullOrWhiteSpace(date))
             {
-                dt = Convert.ToDateTime(date);
+                dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                //dt = Convert.ToDateTime(date);
             }
 
 
