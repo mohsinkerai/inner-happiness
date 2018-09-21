@@ -32,4 +32,9 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="public-service-institution-03" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE public_service_institution AUTO_INCREMENT = 10000;
+    </sql>
+  </changeSet>
 </databaseChangeLog>

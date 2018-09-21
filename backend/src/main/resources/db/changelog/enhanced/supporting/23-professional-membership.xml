@@ -33,4 +33,9 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="professional-membership-03" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE professional_membership AUTO_INCREMENT = 10000;
+    </sql>
+  </changeSet>
 </databaseChangeLog>

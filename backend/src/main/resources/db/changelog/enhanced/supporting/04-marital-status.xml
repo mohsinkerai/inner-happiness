@@ -33,4 +33,9 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="marital-status-03" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE marital_status AUTO_INCREMENT = 10000;
+    </sql>
+  </changeSet>
 </databaseChangeLog>

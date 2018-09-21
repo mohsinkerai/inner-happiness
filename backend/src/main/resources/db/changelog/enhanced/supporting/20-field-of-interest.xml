@@ -35,4 +35,9 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="field-of-interest-03" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE field_of_interest AUTO_INCREMENT = 10000;
+    </sql>
+  </changeSet>
 </databaseChangeLog>
