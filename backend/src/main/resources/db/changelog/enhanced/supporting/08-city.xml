@@ -39,4 +39,9 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="city-03" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE city AUTO_INCREMENT = 10000;
+    </sql>
+  </changeSet>
 </databaseChangeLog>

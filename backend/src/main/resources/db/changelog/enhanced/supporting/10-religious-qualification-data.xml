@@ -5,15 +5,15 @@
 
   <changeSet id="religious-qualification-data-01" author="zeeshan.damani">
     <insert tableName="religious_qualification">
-      <column name="id" value="1"/>
+      <column name="id" value="10001"/>
       <column name="name" value="HRE"/>
     </insert>
     <insert tableName="religious_qualification">
-      <column name="id" value="2"/>
+      <column name="id" value="10002"/>
       <column name="name" value="ARE"/>
     </insert>
     <insert tableName="religious_qualification">
-      <column name="id" value="3"/>
+      <column name="id" value="10003"/>
       <column name="name" value="MATRIC"/>
     </insert>
   </changeSet>

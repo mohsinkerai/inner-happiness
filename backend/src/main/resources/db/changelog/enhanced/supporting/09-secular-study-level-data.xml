@@ -5,27 +5,27 @@
 
   <changeSet id="secular-study-level-data-01" author="zeeshan.damani">
     <insert tableName="secular_study_level">
-      <column name="id" value="1"/>
+      <column name="id" value="10001"/>
       <column name="name" value="Post Graduate"/>
       <column name="short_name" value="PGD"/>
     </insert>
     <insert tableName="secular_study_level">
-      <column name="id" value="2"/>
+      <column name="id" value="10002"/>
       <column name="name" value="Graduate"/>
       <column name="short_name" value="GRD"/>
     </insert>
     <insert tableName="secular_study_level">
-      <column name="id" value="3"/>
+      <column name="id" value="10003"/>
       <column name="name" value="Intermediate"/>
       <column name="short_name" value="INT"/>
     </insert>
     <insert tableName="secular_study_level">
-      <column name="id" value="4"/>
+      <column name="id" value="10004"/>
       <column name="name" value="Matric"/>
       <column name="short_name" value="MAT"/>
     </insert>
     <insert tableName="secular_study_level">
-      <column name="id" value="5"/>
+      <column name="id" value="10005"/>
       <column name="name" value="Others"/>
       <column name="short_name" value="OTH"/>
     </insert>

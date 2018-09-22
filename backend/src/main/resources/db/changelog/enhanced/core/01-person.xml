@@ -200,5 +200,20 @@
       GENERATED ALWAYS AS (CAST(educations -> "$[*].majorAreaOfStudy" as CHAR)) STORED;
     </sql>
   </changeSet>
+  <changeSet id="person-08" author="mohsin.kerai">
+    <sql>
+      CREATE FULLTEXT INDEX gen_degree_text_index ON person(gen_degree);
+    </sql>
+  </changeSet>
+  <changeSet id="person-09" author="mohsin.kerai">
+    <sql>
+      CREATE FULLTEXT INDEX gen_institution_text_index ON person(gen_institution);
+    </sql>
+  </changeSet>
+  <changeSet id="person-10" author="mohsin.kerai">
+    <sql>
+      CREATE FULLTEXT INDEX gen_major_area_of_study_text_index ON person(gen_major_area_of_study);
+    </sql>
+  </changeSet>
   <!--Using SQL Tag, create full text inde, same goes for firstName-->
 </databaseChangeLog>

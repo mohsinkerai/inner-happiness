@@ -37,4 +37,9 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="language-proficiency-03" author="mohsin.kerai">
+    <sql>
+      ALTER TABLE language_proficiency AUTO_INCREMENT = 10000;
+    </sql>
+  </changeSet>
 </databaseChangeLog>

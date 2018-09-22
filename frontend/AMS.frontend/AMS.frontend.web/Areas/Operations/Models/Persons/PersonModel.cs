@@ -138,7 +138,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Required]
         [JsonProperty(PropertyName = "gender")]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [JsonProperty(PropertyName = "highestLevelOfStudy")]
         [Display(Name = "Highest Level of Study")]

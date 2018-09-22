@@ -502,7 +502,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string formNumber, string cnic, string firstName, string lastName)
+        public IActionResult Index(string formNumber, string cnic, string firstName, string lastName, string jamatiTitle, string degree,
+            string majorAreaOfStudy, string academicInstitution)
         {
             if (cnic == null && firstName == null && lastName == null && formNumber == null)
             {
@@ -516,7 +517,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 Cnic = cnic,
                 FirstName = firstName,
                 LastName = lastName,
-                FormNumber = formNumber
+                FormNumber = formNumber,
+                JamatiTitle = jamatiTitle,
+                Degree = degree,
+                MajorAreaOfStudy = majorAreaOfStudy,
+                AcademicInstitution = academicInstitution
             });
         }
 
@@ -626,6 +631,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var lastName = searchingData.LastName;
                 var cnic = searchingData.Cnic;
                 var formNumber = searchingData.FormNumber;
+                var jamatiTitle = searchingData.JamatiTitle;
+                var degree = searchingData.Degree;
+                var majorAreaOfStudy = searchingData.MajorAreaOfStudy;
+                var academicIstitution = searchingData.AcademicInstitution;
 
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
@@ -637,7 +646,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var pageSize = Convert.ToInt32(queryCollection["length"][0]);
 
                 var tupleData = await RestfulClient.GetPersonDetailsThroughPagging(firstName, lastName, cnic,
-                    formNumber, startRec / pageSize + 1, pageSize);
+                    formNumber, jamatiTitle, degree, majorAreaOfStudy, academicIstitution, startRec / pageSize + 1, pageSize);
+
                 var conditionedData = tupleData.Item1;
                 var totalRecords = tupleData.Item2;
 
@@ -676,7 +686,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (doNotValidateCnic == "true") return Json("true");
 
-            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, 1, 1);
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", cnic));
@@ -698,7 +708,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (doNotValidateFormNumber == "true") return Json("true");
 
-            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, formnumber, 1, 1);
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, formnumber, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", formnumber));
@@ -720,7 +730,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (doNotValidateFormNumber == "true") return Json("true");
 
-            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, 1, 1);
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", id));
@@ -729,7 +739,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> VerifyCnic(string cnic)
         {
-            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, 1, 1);
+            var success = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             ViewBag.SalutationList = await RestfulClient.GetSalutation();
             ViewBag.JamatiTitleList = await RestfulClient.GetJamatiTitles();
             ViewBag.RelationList = await RestfulClient.GetAllRelatives();

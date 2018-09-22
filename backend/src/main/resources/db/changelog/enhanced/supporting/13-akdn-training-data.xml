@@ -5,39 +5,39 @@
 
   <changeSet author="aliahad" id="akdn-training-data-01">
     <insert tableName="akdn_training">
-      <column name="id" value="1"/>
+      <column name="id" value="10001"/>
       <column name="name" value="IMAT"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="2"/>
+      <column name="id" value="10002"/>
       <column name="name" value="ADR"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="3"/>
+      <column name="id" value="10003"/>
       <column name="name" value="HMDP"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="4"/>
+      <column name="id" value="10004"/>
       <column name="name" value="HWDP / JHWDP"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="5"/>
+      <column name="id" value="10005"/>
       <column name="name" value="HRDP / WTEDP"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="6"/>
+      <column name="id" value="10006"/>
       <column name="name" value="IWTP / PTEP / IAEP"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="7"/>
+      <column name="id" value="10007"/>
       <column name="name" value="GPISH / WTEP"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="8"/>
+      <column name="id" value="10008"/>
       <column name="name" value="STEP"/>
     </insert>
     <insert tableName="akdn_training">
-      <column name="id" value="9"/>
+      <column name="id" value="10009"/>
       <column name="name" value="IIS- Summer Prog."/>
     </insert>
   </changeSet>
