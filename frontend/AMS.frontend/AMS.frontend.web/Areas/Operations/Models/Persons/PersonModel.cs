@@ -78,7 +78,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Email Address")]
         [EmailAddress]
         public string EmailAddress { get; set; }
-        
+
         [JsonIgnore] public string EmploymentEmailAddress { get; set; }
 
         [JsonIgnore] public DateTime? EmploymentEndDate { get; set; }
@@ -151,7 +151,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "hoursPerWeek")]
         [Display(Name = "Hours per Week")]
         public double? HoursPerWeek { get; set; }
-        
+
         [Remote("ValidateId", "Persons", "Operations")]
         public string Id { get; set; }
 
@@ -241,8 +241,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "planToRelocate")]
         [Display(Name = "Plan to Relocate")]
-        public bool PlanToRelocate { get; set; }
-
+        public bool? PlanToRelocate { get; set; }
+        
         [JsonIgnore]
         [Display(Name = "Training")]
         public string ProfesisonalTraining { get; set; }
