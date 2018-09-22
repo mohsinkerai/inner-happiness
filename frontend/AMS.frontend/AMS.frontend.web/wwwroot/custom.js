@@ -233,6 +233,7 @@ function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, na
 }
 
 function LanguageListDelete(url, id, reOrderUrl) {
+    mApp.block("#language-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -262,9 +263,11 @@ function LanguageListDelete(url, id, reOrderUrl) {
             //}
         }
     });
+    mApp.unblock("#language-table", {});
 }
 
 function EmploymentListDelete(url, id, reOrderUrl) {
+    mApp.block("#employment-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -300,9 +303,11 @@ function EmploymentListDelete(url, id, reOrderUrl) {
             //}
         }
     });
+    mApp.unblock("#employment-table", {});
 }
 
 function FamilyInformationListDelete(url, id) {
+    mApp.block("#family-relation-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -336,9 +341,11 @@ function FamilyInformationListDelete(url, id) {
             //}
         }
     });
+    mApp.unblock("#family-relation-table", {});
 }
 
 function ProfessionalTrainingListDelete(url, id, reOrderUrl) {
+    mApp.block("#professional-training-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -369,9 +376,11 @@ function ProfessionalTrainingListDelete(url, id, reOrderUrl) {
             //}
         }
     });
+    mApp.unblock("#professional-training-table", {});
 }
 
 function VoluntaryCommunityListDelete(url, id, reOrderUrl) {
+    mApp.block("#voluntary-community-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -401,9 +410,11 @@ function VoluntaryCommunityListDelete(url, id, reOrderUrl) {
             //}
         }
     });
+    mApp.unblock("#voluntary-community-table", {});
 }
 
 function VoluntaryPublicListDelete(url, id, reOrderUrl) {
+    mApp.block("#voluntary-public-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -433,9 +444,11 @@ function VoluntaryPublicListDelete(url, id, reOrderUrl) {
             //}
         }
     });
+    mApp.unblock("#voluntary-public-table", {});
 }
 
 function EducationListDelete(url, id, reOrderUrl) {
+    mApp.block("#education-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -467,9 +480,11 @@ function EducationListDelete(url, id, reOrderUrl) {
             //}
         }
     });
+    mApp.unblock("#education-table", {});
 }
 
 function AkdnTrainingListDelete(url, id, reOrderUrl) {
+    mApp.block("#akdn-training-table", {});
     $.ajax({
         type: "POST",
         url: url,
@@ -499,9 +514,11 @@ function AkdnTrainingListDelete(url, id, reOrderUrl) {
             //}
         }
     });
+    mApp.unblock("#akdn-training-table", {});
 }
 
 function LanguageListAdd(url, reOrderUrl) {
+    mApp.block("#language-table", {});
     if ($("#Language").valid() && $("#Read").valid() && $("#Write").valid() && $("#Speak").valid()) {
         var languageId = $("#language-id").val();
         var language = $("#Language").val();
@@ -538,9 +555,11 @@ function LanguageListAdd(url, reOrderUrl) {
             }
         });
     }
+    mApp.unblock("#language-table", {});
 }
 
 function ProfessionalTrainingListAdd(url, reOrderUrl) {
+    mApp.block("#professional-training-table", {});
 	if ($("#ProfesisonalTraining").valid() && $("#ProfessionalTrainingInstitution").valid() && $("#ProfessionalTrainingCountry").valid() && $("#ProfessionalTrainingDate").valid()) {
         var trainingId = $("#professional-training-id").val();
         var training = $("#ProfesisonalTraining").val();
@@ -582,9 +601,11 @@ function ProfessionalTrainingListAdd(url, reOrderUrl) {
             }
         });
     }
+    mApp.unblock("#professional-training-table", {});
 }
 
 function VoluntaryCommunityListAdd(url, reOrderUrl) {
+    mApp.block("#voluntary-community-table", {});
     if ($("#VoluntaryCommunityInstitution").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityFromYear").valid() && $("#VoluntaryCommunityToYear").valid() && $("#VoluntaryCommunityPosition").valid()) {
         var voluntaryCommunityId = $("#voluntary-community-id").val();
         var institution = $("#VoluntaryCommunityInstitution").val();
@@ -621,9 +642,11 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
             }
         });
     }
+    mApp.unblock("#voluntary-community-table", {});
 }
 
 function VoluntaryPublicListAdd(url, reOrderUrl) {
+    mApp.block("#voluntary-public-table", {});
     if ($("#VoluntaryPublicInstitution").valid() && $("#VoluntaryPublicFromYear").valid() && $("#VoluntaryPublicFromYear").valid() && $("#VoluntaryPublicToYear").valid() && $("#VoluntaryPublicPosition").valid()) {
         var voluntaryPublicId = $("#voluntary-public-id").val();
         var institution = $("#VoluntaryPublicInstitution").val();
@@ -660,9 +683,11 @@ function VoluntaryPublicListAdd(url, reOrderUrl) {
             }
         });
     }
+    mApp.unblock("#voluntary-public-table", {});
 }
 
 function EducationListAdd(url, reOrderUrl) {
+    mApp.block("#education-table", {});
     if ($("#Institution").valid() && $("#CountryOfStudy").valid() && $("#FromYear").valid() && $("#ToYear").valid() && $("#NameOfDegree").valid() && $("#MajorAreaOfStudy").valid()) {
         var educationId = $("#education-id").val();
         var institution = $("#Institution").val();
@@ -703,9 +728,11 @@ function EducationListAdd(url, reOrderUrl) {
             }
         });
     }
+    mApp.unblock("#education-table", {});
 }
 
 function EmploymentListAdd(url, reOrderUrl) {
+    mApp.block("#employment-table", {});
     if ($("#NameOfOrganization").valid() && $("#Designation").valid() && $("#Location").valid() && $("#EmploymentEmailAddress").valid() && $("#EmploymentTelephone").valid() && $("#TypeOfBusiness").valid() && $("#NatureOfBusiness").valid() && $("#NatureOfBusinessOther").valid() && $("#EmploymentStartDate").valid() && $("#EmploymentEndDate").valid()) {
         var id = $("#employment-id").val();
         var name = $("#NameOfOrganization").val();
@@ -754,9 +781,11 @@ function EmploymentListAdd(url, reOrderUrl) {
             }
         });
     }
+    mApp.unblock("#employment-table", {});
 }
 
 function FamilyInformationListAdd(url) {
+    mApp.block("#family-relation-table", {});
     if ($("#RelativeCnic").valid() && $("#RelativeSalutation").valid() && $("#RelativeFirstName").valid() && $("#RelativeFathersName").valid() && $("#RelativeFamilyName").valid() && $("#RelativeJamatiTitle").valid() && $("#RelativeDateOfBirth").valid() && $("#RelativeRelation").valid()) {
         var id = $("#family-information-id").val();
         var relativeCnic = $("#RelativeCnic").val();
@@ -802,9 +831,11 @@ function FamilyInformationListAdd(url) {
             }
         });
     }
+    mApp.unblock("#family-relation-table", {});
 }
 
 function AkdnTrainingListAdd(url, reOrderUrl) {
+    mApp.block("#akdn-training-table", {});
 	if ($("#AkdnTraining").valid() && $("#AkdnTrainingCountry").valid() && $("#AkdnTrainingDate").valid()) {
         var trainingId = $("#akdn-training-id").val();
         var training = $("#AkdnTraining").val();
@@ -842,6 +873,7 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
             }
         });
     }
+    mApp.unblock("#akdn-training-table", {});
 }
 
 function InitializeDataTableLite(id, title) {
@@ -867,6 +899,7 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
     });
 
     table.on("row-reorder", function (e, diff, edit) {
+        mApp.block("#" + id + "-table", {});
         var primary = table.row(diff[0].node).data()[1];
         var primaryId = diff[0].node.getAttribute("id")
             .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
@@ -898,6 +931,8 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
                 }
             }
         });
+
+        mApp.unblock("#" + id + "-table", {});
     });
 }
 
@@ -1458,8 +1493,10 @@ function MakeCascadingDropDown(primaryDropdownClass, secondaryDropdownClass, url
     if ($("." + primaryDropdownClass).exists() && $("." + secondaryDropdownClass).exists()) {
         $("." + primaryDropdownClass)
             .change(function () {
+                mApp.block("." + secondaryDropdownClass, {});
                 var selectedPrimaryValue = $(this).val();
                 LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, selectedPrimaryValue, url, "");
+                mApp.unblock("." + secondaryDropdownClass, {});
             });
     }
 }
