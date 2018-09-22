@@ -63,7 +63,8 @@ function Initialize() {
             var placeholder = $(this).attr("placeholder");
             $(this)
                 .select2({
-                    placeholder: placeholder
+                    placeholder: placeholder,
+                    allowClear: true
                 });
         });
     $(".m-select2-multiple")
@@ -72,7 +73,8 @@ function Initialize() {
             $(this)
                 .select2({
                     placeholder: placeholder,
-                    tags: true
+                    tags: true,
+                    allowClear: true
                 });
         });
     $(".preserve-order").on("select2:select", function (evt) {
