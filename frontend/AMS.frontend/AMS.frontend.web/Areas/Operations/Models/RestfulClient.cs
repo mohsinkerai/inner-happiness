@@ -711,7 +711,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 var person = new PersonModel();
 
-                person = JsonConvert.DeserializeObject<PersonModel>(json);
+                var settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                };
+
+                person = JsonConvert.DeserializeObject<PersonModel>(json,settings);
                 
                 return person;
             }
@@ -755,7 +760,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 try
                 {
-                    person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString());
+                    var settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    };
+
+                    person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString(),settings);
                 }
                 catch (Exception ex)
                 { }
