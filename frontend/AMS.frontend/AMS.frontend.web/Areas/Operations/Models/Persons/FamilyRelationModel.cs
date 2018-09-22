@@ -41,6 +41,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
+        public string Position { get; set; }
+        public string Cycle { get; set; }
+
         #endregion Public Properties
     }
 }

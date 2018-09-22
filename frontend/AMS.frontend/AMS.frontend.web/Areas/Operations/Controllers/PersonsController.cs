@@ -42,14 +42,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 await InitializePerson();
 
-                HttpContext.Session.Set("EducationList", new List<EducationModel>());
-                HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
-                HttpContext.Session.Set("ProfessionalTrainingList", new List<ProfessionalTrainingModel>());
-                HttpContext.Session.Set("LanguageList", new List<LanguageProficiencyModel>());
-                HttpContext.Session.Set("VoluntaryCommunityList", new List<VoluntaryCommunityModel>());
-                HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
-                HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
-                HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
+                ResetSession();
 
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "false");
                 HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
@@ -59,6 +52,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             return View();
+        }
+
+        private void ResetSession()
+        {
+            HttpContext.Session.Set("EducationList", new List<EducationModel>());
+            HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
+            HttpContext.Session.Set("ProfessionalTrainingList", new List<ProfessionalTrainingModel>());
+            HttpContext.Session.Set("LanguageList", new List<LanguageProficiencyModel>());
+            HttpContext.Session.Set("VoluntaryCommunityList", new List<VoluntaryCommunityModel>());
+            HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
+            HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
+            HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
         }
 
         private async Task InitializePerson()
@@ -263,14 +268,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 await InitializePerson();
 
-                HttpContext.Session.Set("EducationList", new List<EducationModel>());
-                HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
-                HttpContext.Session.Set("ProfessionalTrainingList", new List<ProfessionalTrainingModel>());
-                HttpContext.Session.Set("LanguageList", new List<LanguageProficiencyModel>());
-                HttpContext.Session.Set("VoluntaryCommunityList", new List<VoluntaryCommunityModel>());
-                HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
-                HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
-                HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
+                ResetSession();
             }
             catch (Exception ex)
             {
@@ -282,9 +280,26 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 ViewBag.LocalCouncilList = await RestfulClient.GetLocalCouncil(person.RegionalCouncil);
                 ViewBag.JamatkhanaList = await RestfulClient.GetJamatkhana(person.LocalCouncil);
+
+                var appointments = await GetPastImamatAppointments(person.Id);
+                if (!string.IsNullOrWhiteSpace(appointments.Item1))
+                {
+                    if (person.VoluntaryCommunityServices == null)
+                    {
+                        person.VoluntaryCommunityServices = new List<VoluntaryCommunityModel>();
+                    }
+                    person.VoluntaryCommunityServices.Add(new VoluntaryCommunityModel
+                    {
+                        Position = appointments.Item3,
+                        Institution = appointments.Item4,
+                        FromYear = Convert.ToInt32(appointments.Item5),
+                        ToYear = Convert.ToInt32(appointments.Item6),
+                        Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
+                    });
+                }
             }
 
-            return View(MapPerson(person));
+            return View(await MapPerson(person));
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -293,14 +308,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 await InitializePerson();
 
-                HttpContext.Session.Set("EducationList", new List<EducationModel>());
-                HttpContext.Session.Set("AkdnTrainingList", new List<AkdnTrainingModel>());
-                HttpContext.Session.Set("ProfessionalTrainingList", new List<ProfessionalTrainingModel>());
-                HttpContext.Session.Set("LanguageList", new List<LanguageProficiencyModel>());
-                HttpContext.Session.Set("VoluntaryCommunityList", new List<VoluntaryCommunityModel>());
-                HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
-                HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
-                HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
+                ResetSession();
 
                 HttpContext.Session.SetString(SessionKeyDoNotValidateCnicOnEditPage, "true");
                 HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "true");
@@ -314,7 +322,24 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.LocalCouncilList = await RestfulClient.GetLocalCouncil(person.RegionalCouncil);
             ViewBag.JamatkhanaList = await RestfulClient.GetJamatkhana(person.LocalCouncil);
 
-            return View(MapPerson(person));
+            var appointments = await GetPastImamatAppointments(person.Id);
+            if (!string.IsNullOrWhiteSpace(appointments.Item1))
+            {
+                if (person.VoluntaryCommunityServices == null)
+                {
+                    person.VoluntaryCommunityServices = new List<VoluntaryCommunityModel>();
+                }
+                person.VoluntaryCommunityServices.Add(new VoluntaryCommunityModel
+                {
+                    Position = appointments.Item3,
+                    Institution = appointments.Item4,
+                    FromYear = Convert.ToInt32(appointments.Item5),
+                    ToYear = Convert.ToInt32(appointments.Item6),
+                    Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
+                });
+            }
+
+            return View(await MapPerson(person));
         }
 
         [HttpPost]
@@ -419,12 +444,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public IActionResult FamilyRelationListAdd(string id, string relativeCnic,
+        public async Task<IActionResult> FamilyRelationListAdd(string id, string relativeCnic,
             string relativeSalutation,
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
             string relativeDateOfBirth, string relativeRelation, string personId)
         {
-            var sessionFamilyRelationList = AddFamilyRelationToSession(id, relativeCnic, relativeSalutation,
+            var sessionFamilyRelationList = await AddFamilyRelationToSession(id, relativeCnic, relativeSalutation,
                 relativeFirstName, relativeFathersName,
                 relativeFamilyName, relativeJamatiTitle, relativeDateOfBirth, relativeRelation, personId);
 
@@ -949,10 +974,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return sessionEmploymentList;
         }
 
-        private List<FamilyRelationModel> AddFamilyRelationToSession(string id, string relativeCnic,
+        private async Task<List<FamilyRelationModel>> AddFamilyRelationToSession(string id, string relativeCnic,
             string relativeSalutation,
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
-            string relativeDateOfBirth, string relativeRelation, string personId)
+            string relativeDateOfBirth, string relativeRelation, string personId, string position = "", string cycle = "")
         {
             var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
                                             new List<FamilyRelationModel>();
@@ -961,6 +986,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 id = Guid.NewGuid().ToString();
             else
                 sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
+
+            if (!string.IsNullOrWhiteSpace(personId))
+            {
+                if (string.IsNullOrWhiteSpace(position) && string.IsNullOrWhiteSpace(cycle))
+                {
+                    var tuple = await GetPastImamatAppointments(personId);
+                    cycle = tuple.Item1;
+                    position = tuple.Item2;
+                }
+            }
 
             sessionFamilyRelationList.Add(new FamilyRelationModel
             {
@@ -976,11 +1011,38 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 JamatiTitle = relativeJamatiTitle,
                 Relation = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[0],
                 Salutation = relativeSalutation,
-                Id = personId
+                Id = personId,
+                Cycle = cycle,
+                Position = position
             });
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
 
             return sessionFamilyRelationList;
+        }
+
+        private static async Task<Tuple<string,string, string, string, string, string>> GetPastImamatAppointments(string personId)
+        {
+            var position = string.Empty;
+            var cycle = string.Empty;
+            var rawPosition = string.Empty;
+            var rawInstitution = string.Empty;
+            var fromYear = string.Empty;
+            var toYear = string.Empty;
+
+            var appointments = await RestfulClient.GetAppointments(personId, true);
+            if (appointments?.Count > 0 && appointments.Any(a => a.Active))
+            {
+                var appointment = appointments.FirstOrDefault(a => a.Active);
+                position = appointment?.PositionName;
+                cycle = appointment?.CycleName;
+                rawPosition = appointment?.Position?.Id.ToString();
+                rawInstitution = appointment?.Institution?.Id.ToString();
+                fromYear = appointment?.CycleId?.StartDate.Year.ToString();
+                toYear = appointment?.CycleId?.EndDate.Year.ToString();
+            }
+
+            return new Tuple<string, string, string, string, string, string>(cycle, position, rawPosition,
+                rawInstitution, fromYear, toYear);
         }
 
         private List<LanguageProficiencyModel> AddLanguageToSession(string id, string language, string read,
@@ -1157,7 +1219,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 (string.IsNullOrWhiteSpace(l.Value) ? string.Empty : l.Value.Split('-')[0]) == id)?.Text;
         }
 
-        private PersonModel MapPerson(PersonModel person)
+        private async Task<PersonModel> MapPerson(PersonModel person)
         {
             //saif ali write mapping here
             if (person != null)
@@ -1322,10 +1384,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             string relationName = GetText(relation.Relation, ViewBag.RelationList);
                             relation.RelationName = relationName;
 
-                            AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic, relation.Salutation,
-                                relation.FirstName, relation.FathersName,
-                                relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
-                                relation.RelationName, relation.Id);
+                            var tuple = await GetPastImamatAppointments(relation.Id);
+                            var cycle = tuple.Item1;
+                            var position = tuple.Item2;
+
+                            relation.Position = position;
+                            relation.Cycle = cycle;
+
+                            await AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic,
+                                    relation.Salutation,
+                                    relation.FirstName, relation.FathersName,
+                                    relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
+                                    relation.RelationName, relation.Id, position, cycle);
                         }
                     }
                 }

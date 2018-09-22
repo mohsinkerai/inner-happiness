@@ -1326,6 +1326,100 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
+        public static async Task<List<PastAppointment>> GetAppointments(string personId, bool isMawlaAppointee)
+        {
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var res = await _client.GetAsync(
+                $"appointment-position/search/findAppointmentOfPersonIdAndIsMowlaAppointee?personId={personId}&isMowlaAppointee={isMawlaAppointee}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+
+                var appointments = new List<PastAppointment>();
+
+                appointments = JsonConvert.DeserializeObject<List<PastAppointment>>(json);
+
+                return appointments;
+            }
+
+            return null;
+        }
+
         #endregion Public Methods
+    }
+
+    public class PastAppointment
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("position")]
+        public Position Position { get; set; }
+
+        [JsonProperty("institution")]
+        public Institution Institution { get; set; }
+
+        [JsonProperty("seatNo")]
+        public long SeatNo { get; set; }
+
+        [JsonProperty("cycleId")]
+        public CycleId CycleId { get; set; }
+
+        [JsonProperty("nominationsRequired")]
+        public long NominationsRequired { get; set; }
+
+        [JsonProperty("mowlaAppointee")]
+        public bool MowlaAppointee { get; set; }
+
+        [JsonProperty("active")]
+        public bool Active { get; set; }
+
+        [JsonIgnore]
+        public string PositionName => $"{Position.Name} - {Institution.Name}";
+
+        [JsonIgnore]
+        public string CycleName => $"{CycleId.StartDate.Year.ToString()} - {CycleId.EndDate.Year.ToString()}";
+    }
+
+    public class CycleId
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("startDate")]
+        public DateTime StartDate { get; set; }
+
+        [JsonProperty("endDate")]
+        public DateTime EndDate { get; set; }
+    }
+
+    public class Institution
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("levelId")]
+        public long LevelId { get; set; }
+    }
+
+    public class Position
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
     }
 }
