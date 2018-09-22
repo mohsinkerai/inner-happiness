@@ -720,7 +720,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
         }
 
         public static async Task<Tuple<List<PersonModel>, int>> GetPersonDetailsThroughPagging(string firstName,
-            string lastName, string cnic, string formNo, int pageNumber, int pageSize)
+            string lastName, string cnic, string formNo, string jamatiTitle, string degree, string majorAreaOfStudy, string academicInstitution,
+            int pageNumber, int pageSize)
         {
             _client = new HttpClient
             {
@@ -729,9 +730,21 @@ namespace AMS.frontend.web.Areas.Operations.Models
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName&cnic&lastName&page=1&size=1");
-            var res = await _client.GetAsync("/person/search/findByCnicAndFirstNameAndLastNameAndFormNo?cnic=" + cnic +
-                                             "&firstName=" + firstName + "&lastName=" + lastName + "&formNo=" + formNo +
-                                             "&page=" + pageNumber + "&size=" + pageSize);
+
+            string url = "";
+            if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(cnic) &&
+                string.IsNullOrWhiteSpace(formNo) && string.IsNullOrWhiteSpace(jamatiTitle) && string.IsNullOrWhiteSpace(degree) &&
+                string.IsNullOrWhiteSpace(majorAreaOfStudy) && string.IsNullOrWhiteSpace(academicInstitution))
+            {
+                url = "/person/all/paginated?page=" + pageNumber + "&size=" + pageSize;
+            }
+            else
+            {
+                url = "/person/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos?cnic="+cnic+"&firstName=" + firstName+"&lastName="+lastName+"&id="+formNo+"&degree="+degree+
+                    "&inst="+academicInstitution+"&jamatiTitle="+jamatiTitle+"&maos="+majorAreaOfStudy+"&page="+pageNumber+"&size="+pageSize;
+            }
+
+            var res = await _client.GetAsync(url);
             if (res.IsSuccessStatusCode)
             {
                 var json = res.Content.ReadAsStringAsync().Result;
@@ -740,7 +753,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 var jsonObject = JObject.Parse(json);
 
-                person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString());
+                try
+                {
+                    person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString());
+                }
+                catch (Exception ex)
+                { }
 
                 var totalElements = Convert.ToInt32(jsonObject["totalElements"]);
 
