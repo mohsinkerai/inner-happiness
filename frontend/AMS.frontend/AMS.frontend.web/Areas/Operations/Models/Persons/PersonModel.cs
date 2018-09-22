@@ -241,7 +241,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "planToRelocate")]
         [Display(Name = "Plan to Relocate")]
-        public bool? PlanToRelocate { get; set; }
+        public bool PlanToRelocate { get; set; }
         
         [JsonIgnore]
         [Display(Name = "Training")]

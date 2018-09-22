@@ -712,13 +712,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 var person = new PersonModel();
 
                 person = JsonConvert.DeserializeObject<PersonModel>(json);
-
-                //this is done to handle null value of type bool.
-                if (person.PlanToRelocate == null)
-                {
-                    person.PlanToRelocate = false;
-                }
-
+                
                 return person;
             }
 
