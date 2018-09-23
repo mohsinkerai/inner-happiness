@@ -288,14 +288,21 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     {
                         person.VoluntaryCommunityServices = new List<VoluntaryCommunityModel>();
                     }
-                    person.VoluntaryCommunityServices.Add(new VoluntaryCommunityModel
+
+                    if (!person.VoluntaryCommunityServices.Any(v =>
+                        v.Position == appointments.Item3 && v.Institution == appointments.Item4 &&
+                        v.FromYear == Convert.ToInt32(appointments.Item5) &&
+                        v.ToYear == Convert.ToInt32(appointments.Item6)))
                     {
-                        Position = appointments.Item3,
-                        Institution = appointments.Item4,
-                        FromYear = Convert.ToInt32(appointments.Item5),
-                        ToYear = Convert.ToInt32(appointments.Item6),
-                        Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
-                    });
+                        person.VoluntaryCommunityServices.Add(new VoluntaryCommunityModel
+                        {
+                            Position = appointments.Item3,
+                            Institution = appointments.Item4,
+                            FromYear = Convert.ToInt32(appointments.Item5),
+                            ToYear = Convert.ToInt32(appointments.Item6),
+                            Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
+                        });
+                    }
                 }
             }
 
@@ -329,14 +336,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     person.VoluntaryCommunityServices = new List<VoluntaryCommunityModel>();
                 }
-                person.VoluntaryCommunityServices.Add(new VoluntaryCommunityModel
+                if (!person.VoluntaryCommunityServices.Any(v =>
+                    v.Position == appointments.Item3 && v.Institution == appointments.Item4 &&
+                    v.FromYear == Convert.ToInt32(appointments.Item5) &&
+                    v.ToYear == Convert.ToInt32(appointments.Item6)))
                 {
-                    Position = appointments.Item3,
-                    Institution = appointments.Item4,
-                    FromYear = Convert.ToInt32(appointments.Item5),
-                    ToYear = Convert.ToInt32(appointments.Item6),
-                    Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
-                });
+                    person.VoluntaryCommunityServices.Add(new VoluntaryCommunityModel
+                    {
+                        Position = appointments.Item3,
+                        Institution = appointments.Item4,
+                        FromYear = Convert.ToInt32(appointments.Item5),
+                        ToYear = Convert.ToInt32(appointments.Item6),
+                        Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
+                    });
+                }
             }
 
             return View(await MapPerson(person));
