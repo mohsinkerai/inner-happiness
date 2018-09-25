@@ -152,7 +152,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Hours per Week")]
         public double? HoursPerWeek { get; set; }
 
-        [Remote("ValidateId", "Persons", "Operations")]
+        //[Remote("ValidateId", "Persons", "Operations")]
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "image")] public string Image { get; set; }
