@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(PREFIX + AuthenticationTokenController.PATH)
 public class AuthenticationTokenController extends BaseController<AuthenticationToken> {
 
-  public static final String PATH = "authentication-user";
+  public static final String PATH = "authentication-token";
 
   public AuthenticationTokenController(AuthenticationTokenService authenticationTokenService) {
     super(authenticationTokenService);

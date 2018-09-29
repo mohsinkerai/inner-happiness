@@ -35,3 +35,4 @@ server:
 person:
   images:
     path: images
+logging.level.org.springframework.security: DEBUG

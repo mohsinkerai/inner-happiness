@@ -56,4 +56,8 @@
   <include file="changelog/enhanced/supporting-relation/03-person-relation-person.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting-relation/03-person-relation-person-data.xml" relativeToChangelogFile="true"/>
   <include file="changelog/enhanced/supporting-relation/04-person-field-of-expertise.xml" relativeToChangelogFile="true"/>
+
+  <!--App files-->
+  <include file="changelog/enhanced/app/01-authentication-user.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/enhanced/app/02-authentication-token.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
