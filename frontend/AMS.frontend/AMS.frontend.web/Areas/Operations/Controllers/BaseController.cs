@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
+using AMS.frontend.web.Helpers.CustomAttributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
+    [Authenticate]
     public class BaseController : Controller
     {
         #region Public Methods

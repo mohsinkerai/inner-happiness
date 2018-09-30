@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
+using AMS.frontend.web.Helpers.CustomAttributes;
 using AMS.frontend.web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.frontend.web.Controllers
 {
+    [Authenticate]
     public class HomeController : Controller
     {
         #region Public Methods

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AMS.frontend.web.Models.Authenticate;
 using Microsoft.AspNetCore.Http;
@@ -41,6 +42,7 @@ namespace AMS.frontend.web.Controllers
                 }
 
                 //todo by aa - call login api
+                HttpContext.Session.Set("AuthenticationToken", "asdghjaskdhjaskd");
 
                 return RedirectToAction(ActionNames.Index, ControllerNames.Home);
             }
