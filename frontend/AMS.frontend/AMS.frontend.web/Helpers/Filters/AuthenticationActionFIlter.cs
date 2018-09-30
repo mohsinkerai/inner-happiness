@@ -1,11 +1,9 @@
-﻿using AMS.frontend.web.Extensions;
+﻿using AMS.frontend.web.Areas.Operations.Models;
+using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Helpers.Filters
@@ -14,9 +12,9 @@ namespace AMS.frontend.web.Helpers.Filters
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var token = context.HttpContext.Session.Get<string>("AuthenticationToken");
+            AuthenticationResponse authReponse = context.HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
 
-            if (!string.IsNullOrWhiteSpace(token))
+            if (authReponse != null && !string.IsNullOrWhiteSpace(authReponse.Token) && authReponse.Expiry > DateTime.Now)
             {
                 ActionExecutedContext resultContext = await next();
             }

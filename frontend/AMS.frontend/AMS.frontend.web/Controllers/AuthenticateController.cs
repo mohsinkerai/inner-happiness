@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AMS.frontend.web.Models.Authenticate;
@@ -14,6 +15,9 @@ namespace AMS.frontend.web.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
             var model = new LoginModel();
             if (Request.Cookies.TryGetValue(CookieNames.RememberMe, out var rememberMe))
             {
@@ -25,7 +29,7 @@ namespace AMS.frontend.web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(LoginModel model)
+        public async Task<IActionResult> Index(LoginModel model)
         {
             if (ModelState.IsValid)
             {
@@ -41,10 +45,18 @@ namespace AMS.frontend.web.Controllers
                     Response.Cookies.Delete(CookieNames.Company);
                 }
 
-                //todo by aa - call login api
-                HttpContext.Session.Set("AuthenticationToken", "asdghjaskdhjaskd");
+                var response = await new RestfulClient(string.Empty).GetToken(model);
 
-                return RedirectToAction(ActionNames.Index, ControllerNames.Home);
+                if (response != null)
+                {
+                    HttpContext.Session.Set("AuthenticationResponse", response);
+                    return RedirectToAction(ActionNames.Index, ControllerNames.Home);
+                }
+                else
+                {
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
             }
 
             return View(model);
