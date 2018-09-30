@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    db: inner_satisfaction
+    url: jdbc:mysql://localhost:3302/${spring.datasource.db}?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: auser
+    password: sa
+    driver-class-name: com.mysql.jdbc.Driver
+liquibase:
+  enabled: true
+  drop-first: false

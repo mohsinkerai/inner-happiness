@@ -1,0 +1,36 @@
+@model IEnumerable<ProfessionalTrainingModel>
+<table id="professional-training" class="table table-striped- table-bordered table-hover">
+    <thead>
+        <tr>
+            <th> Priority </th>
+            <th> Training </th>
+            <th> Institution </th>
+            <th> Country </th>
+            <th> Date </th>
+            <th> Action </th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+        <tr id="professional-training-row-@item.TrainingId">
+            <td> @item.Priority </td>
+            <td> @item.Training </td>
+            <td> @item.Institution </td>
+            <td> @item.CountryOfTrainingName </td>
+            <td> @item.Date </td>
+            <td>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return ProfessionalTrainingListEdit("@item.TrainingId", "@item.Training", "@item.Institution", "@item.CountryOfTraining-@item.CountryOfTrainingName","@item.Date");'>
+                    <i class="la la-edit"></i>
+                </button>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return ProfessionalTrainingListDelete("@Url.Action(ActionNames.ProfessionalTrainingListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.TrainingId", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                    <i class="la la-trash"></i>
+                </button>
+            </td>
+        </tr>
+        }
+    }
+    </tbody>
+</table>

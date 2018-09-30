@@ -21,3 +21,9 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .idea
+/frontend/AMS.frontend/.vs/AMS.frontend/v15
+/frontend/AMS.frontend/AMS.frontend.web/obj
+/frontend/AMS.frontend/AMS.frontend.web/bin
+app.log* 
+/.vs
+*.dtbcache

@@ -1,0 +1,81 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="business-nature-data-01">
+    <insert tableName="business_nature">
+      <column name="name" value="Agriculture"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Art/Culture"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Bank/Services"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Business"/>
+      <column name="short_name" value="BUS"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Construction"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Education"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Health"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Other (Please specify)"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Policy/Development"/>
+      <column name="short_name" value="POL"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Technology"/>
+    </insert>
+    <insert tableName="business_nature">
+      <column name="name" value="Transportation"/>
+    </insert>
+  </changeSet>
+  <changeSet id="business-nature-data-02" author="mohsin.kerai">
+    <update tableName="business_nature">
+      <column name="short_name" value="OTH" />
+      <where>name = 'Other (Please specify)'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="TRN" />
+      <where>name = 'Transportation'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="BNK" />
+      <where>name = 'Bank/Services'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="TEC" />
+      <where>name = 'Technology'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="CON" />
+      <where>name = 'Construction'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="HLT" />
+      <where>name = 'Health'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="EDU" />
+      <where>name = 'Education'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="ART" />
+      <where>name = 'Art/Culture'</where>
+    </update>
+    <update tableName="business_nature">
+      <column name="short_name" value="AGR" />
+      <where>name = 'Agriculture'</where>
+    </update>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,34 @@
+@model IEnumerable<AkdnTrainingModel>
+<table id="akdn-training" class="table table-striped- table-bordered table-hover">
+    <thead>
+        <tr>
+            <th> Priority </th>
+            <th> Training </th>
+            <th> Country </th>
+            <th> Date </th>
+            <th> Action </th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+        <tr id="akdn-training-row-@item.TrainingId">
+            <td> @item.Priority </td>
+            <td> @item.TrainingName </td>
+            <td> @item.CountryOfTrainingName </td>
+            <td> @item.Date </td>
+            <td>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return AkdnTrainingListEdit("@item.TrainingId", "@item.Training-@item.TrainingName", "@item.CountryOfTraining-@item.CountryOfTrainingName", "@item.Month", "@item.Year", "@item.Date");'>
+                    <i class="la la-edit"></i>
+                </button>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return AkdnTrainingListDelete("@Url.Action(ActionNames.AkdnTrainingListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.TrainingId", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                    <i class="la la-trash"></i>
+                </button>
+            </td>
+        </tr>
+        }
+    }
+    </tbody>
+</table>

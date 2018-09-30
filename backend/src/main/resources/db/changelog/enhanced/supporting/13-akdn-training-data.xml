@@ -1,0 +1,44 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="aliahad" id="akdn-training-data-01">
+    <insert tableName="akdn_training">
+      <column name="id" value="10001"/>
+      <column name="name" value="IMAT"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10002"/>
+      <column name="name" value="ADR"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10003"/>
+      <column name="name" value="HMDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10004"/>
+      <column name="name" value="HWDP / JHWDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10005"/>
+      <column name="name" value="HRDP / WTEDP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10006"/>
+      <column name="name" value="IWTP / PTEP / IAEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10007"/>
+      <column name="name" value="GPISH / WTEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10008"/>
+      <column name="name" value="STEP"/>
+    </insert>
+    <insert tableName="akdn_training">
+      <column name="id" value="10009"/>
+      <column name="name" value="IIS- Summer Prog."/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

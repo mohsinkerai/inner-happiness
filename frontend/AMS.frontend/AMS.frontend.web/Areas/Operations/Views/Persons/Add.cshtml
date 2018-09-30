@@ -1,0 +1,172 @@
+﻿@model PersonModel
+@{
+    ViewBag.ModuleTitle = "Person Management";
+    ViewBag.PageTitle = "Basic Information Form";
+    ViewBag.Action = "Add";
+}.
+
+@{
+    await Html.RenderPartialAsync("_PersonPartial", Model).ConfigureAwait(false);
+}
+
+@section scripts{
+
+    @{ @(await Html.PartialAsync(PartialNames.ValidationScripts)) }
+    @{ @(await Html.PartialAsync(PartialNames.DateTimePickerScripts)) }
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+            $("#menu-1").addClass("m-menu__item--open m-menu__item--expanded");
+
+            InitializeDataTableLiteWithRowReordering("education", "Education", "@Url.Action("ReorderEducation", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("professional-training", "Professional Trainings", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("language", "Language", "@Url.Action("ReorderLanguage", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("voluntary-community", "Voluntary Community Service", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("voluntary-public", "Voluntary Public Service", "@Url.Action("ReorderVoluntaryPublicService", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("employment", "Employment", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLite("family-relation", "Family Information");
+
+            //$("#mainForm input").prop("disabled", true);
+            //$("#mainForm select").prop("disabled", true);
+            //$(".cnic").prop("disabled", false);
+
+            $(".relative-fields").prop("disabled", true);
+            $(".relative-cnic").blur(function() {
+                var cnic = $(".relative-cnic").val();
+                $.ajax({
+                    type: "POST",
+                    url:
+                        "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new {area = AreaNames.Operations})",
+                    data: { "cnic": cnic },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    dataType: "html",
+                    error: function(xmlHttpRequest, textStatus, errorThrown) {
+                        alert("Request: " +
+                            xmlHttpRequest.toString() +
+                            "\n\nStatus: " +
+                            textStatus +
+                            "\n\nError: " +
+                            errorThrown);
+                    },
+                    success: function(result) {
+                        $("#familyRelationData").html(result);
+                        Initialize();
+                        if (!($("#RelativeFirstName").val() === "")) {
+                            $(".relative-fields").prop("disabled", true);
+                        } else {
+                            $("#RelativeCnic").val(cnic);
+                        }
+                        $("#RelativeCnic").inputmask({
+                            "mask": "99999-9999999-9"
+                        });
+                        $(".relative-cnic").blur(function() {
+                            var cnic = $(".relative-cnic").val();
+                            $.ajax({
+                                type: "POST",
+                                url:
+                                    "@Url.Action(ActionNames.VerifyCnic, ControllerNames.Persons, new {area = AreaNames.Operations})",
+                                data: { "cnic": cnic },
+                                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                                dataType: "html",
+                                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                                    alert("Request: " +
+                                        xmlHttpRequest.toString() +
+                                        "\n\nStatus: " +
+                                        textStatus +
+                                        "\n\nError: " +
+                                        errorThrown);
+                                },
+                                success: function(result) {
+                                    $("#familyRelationData").html(result);
+                                    Initialize();
+                                    if (!($("#RelativeFirstName").val() === "")) {
+                                        $(".relative-fields").prop("disabled", true);
+                                    } else {
+                                        $("#RelativeCnic").val(cnic);
+                                    }
+                                    $("#RelativeCnic").inputmask({
+                                        "mask": "99999-9999999-9"
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+
+            if ($("#PlanToRelocate")[0].checked) {
+                $("#RelocateLocation").prop("disabled", false);
+                $("#RelocationDateTime").prop("disabled", false);
+            } else {
+                $("#RelocateLocation").prop("disabled", true);
+                $("#RelocationDateTime").prop("disabled", true);
+            }
+
+            $("#PlanToRelocate").change(function() {
+                if (this.checked) {
+                    $("#RelocateLocation").prop("disabled", false);
+                    $("#RelocationDateTime").prop("disabled", false);
+                } else {
+                    $("#RelocateLocation").prop("disabled", true);
+                    $("#RelocationDateTime").prop("disabled", true);
+                }
+            });
+
+            MakeCascadingDropDown("regional-select",
+                "local-select",
+                "@Url.Action(ActionNames.GetLocalCouncil, ControllerNames.Persons, new {area = AreaNames.Operations})");
+
+            MakeCascadingDropDown("local-select",
+                "jamatkhana-select",
+                "@Url.Action(ActionNames.GetJamatkhana, ControllerNames.Persons, new {area = AreaNames.Operations})");
+
+            $("#Cnic").inputmask({
+                "mask": "99999-9999999-9"
+            });
+
+            $("#RelativeCnic").inputmask({
+                "mask": "99999-9999999-9"
+            });
+
+            $(".highest-level-select").change(function () {
+                var selectedValue = $(".highest-level-select option:selected").text();
+                if (selectedValue.includes("Other")) {
+                    $("#HighestLevelOfStudyOther").prop("disabled", false);
+                } else {
+                    $("#HighestLevelOfStudyOther").prop("disabled", true);
+                }
+            });
+
+            $(".occupation-type").change(function () {
+                var selectedValue = $(".occupation-type option:selected").text();
+                if (selectedValue.includes("Other")) {
+                    $("#OccupationTypeOther").prop("disabled", false);
+                } else {
+                    $("#OccupationTypeOther").prop("disabled", true);
+                }
+            });
+
+            $(".nature-of-business").change(function () {
+                var selectedValue = $(".nature-of-business option:selected").text();
+                if (selectedValue.includes("Other")) {
+                    $("#NatureOfBusinessOther").prop("disabled", false);
+                } else {
+                    $("#NatureOfBusinessOther").prop("disabled", true);
+                }
+            });
+
+            $("#Cnic").focus();
+
+            $("#education").css("min-height", "0px");
+            $("#akdn-training").css("min-height", "0px");
+            $("#professional-training").css("min-height", "0px");
+            $("#language").css("min-height", "0px");
+            $("#voluntary-community").css("min-height", "0px");
+            $("#voluntary-public").css("min-height", "0px");
+            $("#employment").css("min-height", "0px");
+            $("#family-relation").css("min-height", "0px");
+        });
+    </script>
+}

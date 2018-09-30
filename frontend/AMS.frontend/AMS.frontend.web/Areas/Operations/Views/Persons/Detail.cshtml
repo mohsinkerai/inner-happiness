@@ -1,0 +1,44 @@
+﻿@model PersonModel
+@{
+    ViewBag.ModuleTitle = "Person Management";
+    ViewBag.PageTitle = "Basic Information Form";
+    ViewBag.Action = "Detail";
+}
+
+@{
+    await Html.RenderPartialAsync("_PersonPartial", Model).ConfigureAwait(false);
+}
+
+@section scripts{
+
+    @{ @(await Html.PartialAsync(PartialNames.ValidationScripts)) }
+    @{ @(await Html.PartialAsync(PartialNames.DateTimePickerScripts)) }
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+
+            $("#menu-1").addClass("m-menu__item--open m-menu__item--expanded");
+
+            InitializeDataTableLiteWithRowReordering("education", "Education", "@Url.Action("ReorderEducation", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("professional-training", "Professional Trainings", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("language", "Language", "@Url.Action("ReorderLanguage", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("voluntary-community", "Voluntary Community Service", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("voluntary-public", "Voluntary Public Service", "@Url.Action("ReorderVoluntaryPublicService", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLiteWithRowReordering("employment", "Employment", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");
+            InitializeDataTableLite("family-relation", "Family Information");
+
+            $("#mainForm input").prop("disabled", true);
+            $("#mainForm select").prop("disabled", true);
+
+            $("#education").css("min-height", "0px");
+            $("#akdn-training").css("min-height", "0px");
+            $("#professional-training").css("min-height", "0px");
+            $("#language").css("min-height", "0px");
+            $("#voluntary-community").css("min-height", "0px");
+            $("#voluntary-public").css("min-height", "0px");
+            $("#employment").css("min-height", "0px");
+            $("#family-relation").css("min-height", "0px");
+        });
+    </script>
+}

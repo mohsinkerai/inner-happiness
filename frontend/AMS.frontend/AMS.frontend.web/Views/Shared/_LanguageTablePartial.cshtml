@@ -1,0 +1,36 @@
+@model IEnumerable<LanguageProficiencyModel>
+<table id="language" class="table table-striped- table-bordered table-hover">
+    <thead>
+    <tr>
+        <th> Priority </th>
+        <th> Language </th>
+        <th> Read </th>
+        <th> Write </th>
+        <th> Speak </th>
+        <th> Action </th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr id="language-row-@item.LanguageProficiencyId">
+                <td> @item.Priority </td>
+                <td> @item.LanguageName </td>
+                <td> @item.ReadName </td>
+                <td> @item.WriteName </td>
+                <td> @item.SpeakName </td>
+                <td>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return LanguageListEdit("@item.LanguageProficiencyId", "@item.Language-@item.LanguageName", "@item.Read-@item.ReadName", "@item.Write-@item.WriteName", "@item.Speak-@item.SpeakName");'>
+                        <i class="la la-edit"></i>
+                    </button>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return LanguageListDelete("@Url.Action(ActionNames.LanguageListDelete, ControllerNames.Persons, new {area = AreaNames.Operations})", "@item.LanguageProficiencyId", "@Url.Action("ReorderLanguage", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                        <i class="la la-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

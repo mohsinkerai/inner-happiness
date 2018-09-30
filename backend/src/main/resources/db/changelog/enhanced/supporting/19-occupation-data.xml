@@ -1,0 +1,32 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet author="mohsin.kerai" id="occupation-data-01">
+    <insert tableName="occupation">
+      <column name="name" value="Home Maker"/>
+      <column name="short_name" value="HMB"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Other"/>
+      <column name="short_name" value="OTH"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Retired"/>
+      <column name="short_name" value="RTD"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Salaried"/>
+      <column name="short_name" value="SAL"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Self Employed"/>
+      <column name="short_name" value="SLF"/>
+    </insert>
+    <insert tableName="occupation">
+      <column name="name" value="Student"/>
+      <column name="short_name" value="STD"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

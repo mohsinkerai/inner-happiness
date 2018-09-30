@@ -1,0 +1,43 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="area-of-origin-data-01" author="zeeshan.damani">
+    <insert tableName="area_of_origin">
+      <column name="id" value="10001"/>
+      <column name="name" value="Hunza"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="10002"/>
+      <column name="name" value="Punjab"/>
+    </insert>
+  </changeSet>
+
+  <changeSet id="area-of-origin-data-02" author="mohsin.kerai">
+    <insert tableName="area_of_origin">
+      <column name="id" value="10003"/>
+      <column name="name" value="Gilgit"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="10004"/>
+      <column name="name" value="Ghizer"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="10005"/>
+      <column name="name" value="Baltistan"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="10006"/>
+      <column name="name" value="Chitral"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="10007"/>
+      <column name="name" value="Sindh"/>
+    </insert>
+    <insert tableName="area_of_origin">
+      <column name="id" value="10008"/>
+      <column name="name" value="Outside Pakistan"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

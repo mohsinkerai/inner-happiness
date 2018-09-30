@@ -1,0 +1,46 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="authentication-user-01" author="mohsin.kerai">
+    <createTable tableName="authentication_user"
+      remarks="User for Authentication and Crud Operations">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="username" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="password" type="text">
+        <constraints nullable="false"/>
+      </column>
+      <column name="is_active" type="bit" defaultValue="1">
+        <constraints nullable="false"/>
+      </column>
+      <column name="roles" type="json">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="updated_on" type="datetime" defaultValueComputed="CURRENT_TIMESTAMP">
+        <constraints nullable="false" unique="false"/>
+      </column>
+      <column name="created_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+      <column name="updated_by" type="datetime" defaultValueComputed="null">
+        <constraints nullable="true" unique="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="authentication-user-02" author="mohsin.kerai">
+    <insert tableName="authentication_user">
+      <column name="username" value="adminuser"></column>
+      <column name="password"
+        value="$2a$10$CqXdfKNje7QRWjpWzrr0tO7HnQxdrxZ05xZBu.u/0sZzYN1npYUje"></column>
+      <column name="is_active" valueBoolean="true"/>
+      <column name="roles" value="[&quot;ADMIN&quot;]"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

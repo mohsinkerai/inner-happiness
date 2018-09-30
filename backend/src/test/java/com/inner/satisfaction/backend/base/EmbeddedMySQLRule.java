@@ -1,6 +1,7 @@
 package com.inner.satisfaction.backend.base;
 
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
+import static com.wix.mysql.ScriptResolver.classPathScript;
 import static com.wix.mysql.config.Charset.UTF8;
 import static com.wix.mysql.distribution.Version.v5_6_23;
 
@@ -53,7 +54,7 @@ public class EmbeddedMySQLRule implements TestRule {
           config.getPassword());
 
       mysqld = anEmbeddedMysql(config)
-          .addSchema("inner_satisfaction")
+          .addSchema("inner_satisfaction", classPathScript("dump.sql"))
           .start();
     }
 
