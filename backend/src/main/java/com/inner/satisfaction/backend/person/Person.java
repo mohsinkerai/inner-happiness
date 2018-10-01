@@ -134,4 +134,6 @@ public class Person extends BaseEntity {
   private String genInstitution;
   @Column(insertable = false, updatable =  false)
   private String genMajorAreaOfStudy;
+
+  private String remarks;
 }
