@@ -29,4 +29,12 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
     @RequestParam("isMowlaAppointee") boolean isMowlaAppointee) {
     return appointmentPositionService.findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByCycleIdAndInstitutionId", method = RequestMethod.GET)
+  public List<ApptPositionDto> findByCycleIdAndInstitutionId(
+    @RequestParam("cycleId") long cycleId,
+    @RequestParam("institutionId") long institutionId) {
+    return appointmentPositionService.findByCycleIdAndInstitutionId(cycleId, institutionId);
+  }
 }
