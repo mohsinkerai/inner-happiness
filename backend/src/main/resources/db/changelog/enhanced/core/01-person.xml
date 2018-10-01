@@ -215,5 +215,10 @@
       CREATE FULLTEXT INDEX gen_major_area_of_study_text_index ON person(gen_major_area_of_study);
     </sql>
   </changeSet>
+  <changeSet id="person-11" author="mohsin.kerai">
+    <addColumn tableName="person">
+      <column name="remarks" type="varchar(255)" afterColumn="educations"></column>
+    </addColumn>
+  </changeSet>
   <!--Using SQL Tag, create full text inde, same goes for firstName-->
 </databaseChangeLog>
