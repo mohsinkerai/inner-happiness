@@ -1,5 +1,6 @@
 ﻿using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
+using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public NominationsController(IOptions<Configuration> configuration)
         {
             _configuration = configuration.Value;
+            RestfulClient = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token);
         }
 
         #endregion Public Constructors
@@ -25,6 +27,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         #region Private Fields
 
         private readonly Configuration _configuration;
+        private readonly RestfulClient RestfulClient;
 
         #endregion Private Fields
 

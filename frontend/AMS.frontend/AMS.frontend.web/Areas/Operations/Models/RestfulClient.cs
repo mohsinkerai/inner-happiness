@@ -1,67 +1,66 @@
-﻿using System;
+﻿using AMS.frontend.web.Areas.Operations.Models.Nominations;
+using AMS.frontend.web.Areas.Operations.Models.Persons;
+using AMS.frontend.web.Models.Authenticate;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using AMS.frontend.web.Areas.Operations.Models.Nominations;
-using AMS.frontend.web.Areas.Operations.Models.Persons;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace AMS.frontend.web.Areas.Operations.Models
 {
-    public static class RestfulClient
-    {   
+    public class RestfulClient
+    {
         #region Private Fields
 
-        private static readonly string BaseUrl = "http://is.bismagreens.com:8080/";
-        private static HttpClient _client;
+        private readonly string BaseUrl = "http://is.bismagreens.com/";
+        private HttpClient _client;
 
         #endregion Private Fields
 
-        #region Public Methods
-
-        public static async Task<bool> EditPersonData(PersonModel personModel)
+        public RestfulClient(string token)
         {
             _client = new HttpClient
             {
                 BaseAddress = new Uri(BaseUrl)
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
 
-            var json = JsonConvert.SerializeObject(personModel);
+        #region Public Methods
 
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PutAsync("person/one/" + personModel.Id, httpContent);
+        public async Task<bool> EditPersonData(PersonModel personModel)
+        {
+            string json = JsonConvert.SerializeObject(personModel);
+
+            StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(json);
+            HttpResponseMessage res = await _client.PutAsync("person/one/" + personModel.Id, httpContent);
 
             return res.IsSuccessStatusCode ? true : false;
         }
 
-        public static async Task<List<SelectListItem>> GetAkdnTraining()
+        public async Task<List<SelectListItem>> GetAkdnTraining()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var res = await _client.GetAsync("constants/akdn-training/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/akdn-training/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -70,27 +69,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetAllCompanies()
+        public async Task<List<SelectListItem>> GetAllCompanies()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("company/all");
+            HttpResponseMessage res = await _client.GetAsync("company/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -99,27 +93,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetAllCountries()
+        public async Task<List<SelectListItem>> GetAllCountries()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/country/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/country/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -128,27 +117,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetAllInstitutions()
+        public async Task<List<SelectListItem>> GetAllInstitutions()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/educational-publicserviceinstitution/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/educational-publicserviceinstitution/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -157,27 +141,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetAllRelatives()
+        public async Task<List<SelectListItem>> GetAllRelatives()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/relation/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/relation/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -186,27 +165,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetAreaOfOrigin()
+        public async Task<List<SelectListItem>> GetAreaOfOrigin()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/area-of-origin/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/area-of-origin/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -215,27 +189,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetBussinessNature()
+        public async Task<List<SelectListItem>> GetBussinessNature()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/business-nature/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/business-nature/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -244,27 +213,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetBussinessType()
+        public async Task<List<SelectListItem>> GetBussinessType()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/business-type/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/business-type/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -273,27 +237,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetCities()
+        public async Task<List<SelectListItem>> GetCities()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/city/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/city/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -302,27 +261,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetEducationalDegree()
+        public async Task<List<SelectListItem>> GetEducationalDegree()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/educational-degree/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/educational-degree/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -331,27 +285,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetFieldOfInterests()
+        public async Task<List<SelectListItem>> GetFieldOfInterests()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/field-of-interest/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/field-of-interest/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -360,27 +309,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetHighestLevelOfStudy()
+        public async Task<List<SelectListItem>> GetHighestLevelOfStudy()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/secular-study-level/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/secular-study-level/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -389,13 +333,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<PositionModel>> GetInstitutionTypes(string level, string subLevel)
+        public async Task<List<PositionModel>> GetInstitutionTypes(string level, string subLevel)
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //var Res = await client.GetAsync("institution/search/findByLevelType?levelTypeId="+subLevel);
             //var Res = await client.GetAsync("institution/search/findByLevelId?levelId=" + subLevel);
@@ -405,22 +344,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 return null;
             }
 
-            var res = await _client.GetAsync(string.IsNullOrWhiteSpace(subLevel)
+            HttpResponseMessage res = await _client.GetAsync(string.IsNullOrWhiteSpace(subLevel)
                 ? "institution/search/findByLevelType?levelTypeId=1"
                 : "institution/search/findByLevelId?levelId=" + subLevel);
 
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<PositionModel>();
+                List<PositionModel> list = new List<PositionModel>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    var positionModel = new PositionModel
+                    PositionModel positionModel = new PositionModel
                     {
                         Id = id,
                         PositionName = name
@@ -435,27 +374,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetJamatiTitles()
+        public async Task<List<SelectListItem>> GetJamatiTitles()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/jamati-title/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/jamati-title/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -464,29 +398,24 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetJamatkhana(string uid = "")
+        public async Task<List<SelectListItem>> GetJamatkhana(string uid = "")
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync(string.IsNullOrWhiteSpace(uid)
+            HttpResponseMessage res = await _client.GetAsync(string.IsNullOrWhiteSpace(uid)
                 ? "level/search/type?value=4"
                 : "level/search/parent?value=" + uid);
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -495,27 +424,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetLanguageProficiency()
+        public async Task<List<SelectListItem>> GetLanguageProficiency()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("/constants/language-proficiency/all");
+            HttpResponseMessage res = await _client.GetAsync("/constants/language-proficiency/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -524,27 +448,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetLanguages()
+        public async Task<List<SelectListItem>> GetLanguages()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/language/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/language/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -553,29 +472,24 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetLocalCouncil(string uid = "")
+        public async Task<List<SelectListItem>> GetLocalCouncil(string uid = "")
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync(string.IsNullOrWhiteSpace(uid)
+            HttpResponseMessage res = await _client.GetAsync(string.IsNullOrWhiteSpace(uid)
                 ? "level/search/type?value=3"
                 : "level/search/parent?value=" + uid);
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -584,29 +498,24 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetLocalInstitutions(string uid = "")
+        public async Task<List<SelectListItem>> GetLocalInstitutions(string uid = "")
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync(string.IsNullOrWhiteSpace(uid)
+            HttpResponseMessage res = await _client.GetAsync(string.IsNullOrWhiteSpace(uid)
                 ? "level/search/type?value=3"
                 : "level/search/parent?value=" + uid);
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -615,27 +524,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetMartialStatuses()
+        public async Task<List<SelectListItem>> GetMartialStatuses()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/marital-status/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/marital-status/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -644,27 +548,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetOcupations()
+        public async Task<List<SelectListItem>> GetOcupations()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/occupation/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/occupation/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -673,20 +572,15 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<PersonModel>> GetPersonDetails()
+        public async Task<List<PersonModel>> GetPersonDetails()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("person/all");
+            HttpResponseMessage res = await _client.GetAsync("person/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
 
-                var person = new List<PersonModel>();
+                List<PersonModel> person = new List<PersonModel>();
 
                 person = JsonConvert.DeserializeObject<List<PersonModel>>(json);
 
@@ -696,43 +590,33 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<PersonModel> GetPersonDetailsById(string id)
+        public async Task<PersonModel> GetPersonDetailsById(string id)
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("person/one/" + id);
+            HttpResponseMessage res = await _client.GetAsync("person/one/" + id);
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
 
-                var person = new PersonModel();
+                PersonModel person = new PersonModel();
 
-                var settings = new JsonSerializerSettings
+                JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 };
 
-                person = JsonConvert.DeserializeObject<PersonModel>(json,settings);
-                
+                person = JsonConvert.DeserializeObject<PersonModel>(json, settings);
+
                 return person;
             }
 
             return null;
         }
 
-        public static async Task<Tuple<List<PersonModel>, int>> GetPersonDetailsThroughPagging(string firstName,
+        public async Task<Tuple<List<PersonModel>, int>> GetPersonDetailsThroughPagging(string firstName,
             string lastName, string cnic, string formNo, string jamatiTitle, string degree, string majorAreaOfStudy, string academicInstitution,
             int pageNumber, int pageSize)
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName&cnic&lastName&page=1&size=1");
 
@@ -745,32 +629,32 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             else
             {
-                url = "/person/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos?cnic="+cnic+"&firstName=" + firstName+"&lastName="+lastName+"&id="+formNo+"&degree="+degree+
-                    "&inst="+academicInstitution+"&jamatiTitle="+jamatiTitle+"&maos="+majorAreaOfStudy+"&page="+pageNumber+"&size="+pageSize;
+                url = "/person/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos?cnic=" + cnic + "&firstName=" + firstName + "&lastName=" + lastName + "&id=" + formNo + "&degree=" + degree +
+                    "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy + "&page=" + pageNumber + "&size=" + pageSize;
             }
 
-            var res = await _client.GetAsync(url);
+            HttpResponseMessage res = await _client.GetAsync(url);
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
 
-                var person = new List<PersonModel>();
+                List<PersonModel> person = new List<PersonModel>();
 
-                var jsonObject = JObject.Parse(json);
+                JObject jsonObject = JObject.Parse(json);
 
                 try
                 {
-                    var settings = new JsonSerializerSettings
+                    JsonSerializerSettings settings = new JsonSerializerSettings
                     {
                         NullValueHandling = NullValueHandling.Ignore
                     };
 
-                    person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString(),settings);
+                    person = JsonConvert.DeserializeObject<List<PersonModel>>(jsonObject["content"].ToString(), settings);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 { }
 
-                var totalElements = Convert.ToInt32(jsonObject["totalElements"]);
+                int totalElements = Convert.ToInt32(jsonObject["totalElements"]);
 
                 return new Tuple<List<PersonModel>, int>(person, totalElements);
             }
@@ -778,27 +662,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetPositionInstitution()
+        public async Task<List<SelectListItem>> GetPositionInstitution()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("institution/all");
+            HttpResponseMessage res = await _client.GetAsync("institution/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -807,27 +686,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetPositions()
+        public async Task<List<SelectListItem>> GetPositions()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("position/all");
+            HttpResponseMessage res = await _client.GetAsync("position/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -836,27 +710,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetProfessionalMemeberShipDetails()
+        public async Task<List<SelectListItem>> GetProfessionalMemeberShipDetails()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/professional-membership/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/professional-membership/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -865,27 +734,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetRegionalCouncil()
+        public async Task<List<SelectListItem>> GetRegionalCouncil()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("level/search/parent?value=1");
+            HttpResponseMessage res = await _client.GetAsync("level/search/parent?value=1");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -894,27 +758,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetRegionalInstitutions()
+        public async Task<List<SelectListItem>> GetRegionalInstitutions()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("level/search/parent?value=1");
+            HttpResponseMessage res = await _client.GetAsync("level/search/parent?value=1");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -923,27 +782,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetReligiousEducation()
+        public async Task<List<SelectListItem>> GetReligiousEducation()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/religious-qualification/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/religious-qualification/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -952,28 +806,23 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetSalutation()
+        public async Task<List<SelectListItem>> GetSalutation()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             try
             {
-                var res = await _client.GetAsync("constants/salutation/all");
+                HttpResponseMessage res = await _client.GetAsync("constants/salutation/all");
                 if (res.IsSuccessStatusCode)
                 {
-                    var json = res.Content.ReadAsStringAsync().Result;
+                    string json = res.Content.ReadAsStringAsync().Result;
                     dynamic myObject = JArray.Parse(json);
-                    var list = new List<SelectListItem>();
+                    List<SelectListItem> list = new List<SelectListItem>();
 
-                    foreach (var item in myObject)
+                    foreach (dynamic item in myObject)
                     {
-                        var id = Convert.ToString(item.id);
-                        var name = Convert.ToString(item.name);
-                        list.Add(new SelectListItem {Text = name, Value = id});
+                        dynamic id = Convert.ToString(item.id);
+                        dynamic name = Convert.ToString(item.name);
+                        list.Add(new SelectListItem { Text = name, Value = id });
                     }
 
                     return list;
@@ -988,7 +837,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
         }
 
-        /*public static async Task<List<SelectListItem>> GetInstitutions(string level = "", string subLevel = "" , string type = "")
+        /*public async Task<List<SelectListItem>> GetInstitutions(string level = "", string subLevel = "" , string type = "")
         {
             client = new HttpClient();
             client.BaseAddress = new Uri(BASE_URL);
@@ -1014,58 +863,22 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }*/
 
-        public static async Task<List<SelectListItem>> GetSkills()
+        public async Task<List<SelectListItem>> GetSkills()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             //var res = await _client.GetAsync("constants/field-of-expertise/all");
-            var res = await _client.GetAsync("constants/skill/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/skill/all");
 
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
-
-                    list.Add(new SelectListItem {Text = name, Value = id});
-                }
-
-                return list;
-            }
-
-            return null;
-        }
-
-        public static async Task<List<SelectListItem>> GetFieldOfExpertise()
-        {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //var res = await _client.GetAsync("constants/field-of-expertise/all");
-            var res = await _client.GetAsync("constants/field-of-expertise/all");
-
-            if (res.IsSuccessStatusCode)
-            {
-                var json = res.Content.ReadAsStringAsync().Result;
-                dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
-
-                foreach (var item in myObject)
-                {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -1076,27 +889,24 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetVoluntaryInstitution()
+        public async Task<List<SelectListItem>> GetFieldOfExpertise()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/voluntary-publicserviceinstitution/all");
+            //var res = await _client.GetAsync("constants/field-of-expertise/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/field-of-expertise/all");
+
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1105,35 +915,75 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<bool> SavePersonData(PersonModel personModel)
+        public async Task<List<SelectListItem>> GetVoluntaryInstitution()
         {
-            _client = new HttpClient
+
+            HttpResponseMessage res = await _client.GetAsync("constants/voluntary-publicserviceinstitution/all");
+            if (res.IsSuccessStatusCode)
             {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                List<SelectListItem> list = new List<SelectListItem>();
 
-            var json = JsonConvert.SerializeObject(personModel);
+                foreach (dynamic item in myObject)
+                {
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("person", httpContent);
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+
+            return null;
+        }
+
+        public async Task<bool> SavePersonData(PersonModel personModel)
+        {
+
+            string json = JsonConvert.SerializeObject(personModel);
+
+            StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(json);
+            HttpResponseMessage res = await _client.PostAsync("person", httpContent);
 
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }
 
-        public static bool SearchByCnic(string cnic, out PersonModel model)
+        public async Task<AuthenticationResponse> GetToken(LoginModel model)
         {
-            model = null;
-            _client = new HttpClient {BaseAddress = new Uri(BaseUrl)};
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = _client.GetAsync("person/search/cnic?cnic=" + cnic).Result;
+            string json = JsonConvert.SerializeObject(model);
+
+            StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(json);
+            HttpResponseMessage res = await _client.PostAsync("auth/login", httpContent);
+
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string responseJson = res.Content.ReadAsStringAsync().Result;
 
-                var familyRelation = JsonConvert.DeserializeObject<FamilyRelationModel>(json);
+                AuthenticationResponse response = new AuthenticationResponse();
+
+                response = JsonConvert.DeserializeObject<AuthenticationResponse>(responseJson);
+
+                return response;
+            }
+
+            return null;
+        }
+
+        public bool SearchByCnic(string cnic, out PersonModel model)
+        {
+            model = null;
+
+            HttpResponseMessage res = _client.GetAsync("person/search/cnic?cnic=" + cnic).Result;
+            if (res.IsSuccessStatusCode)
+            {
+                string json = res.Content.ReadAsStringAsync().Result;
+
+                FamilyRelationModel familyRelation = JsonConvert.DeserializeObject<FamilyRelationModel>(json);
                 model = new PersonModel
                 {
                     RelativeCnic = familyRelation.Cnic,
@@ -1152,21 +1002,16 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return false;
         }
 
-        public static async Task<List<PersonModel>> SearchPerson(string cnic, string firstName, string lastName)
+        public async Task<List<PersonModel>> SearchPerson(string cnic, string firstName, string lastName)
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("person/search/findByCnicOrFirstNameOrLastName?cnic=" + cnic +
+            HttpResponseMessage res = await _client.GetAsync("person/search/findByCnicOrFirstNameOrLastName?cnic=" + cnic +
                                              "&firstName=" + firstName + "&lastName=" + lastName);
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
 
-                var person = new List<PersonModel>();
+                List<PersonModel> person = new List<PersonModel>();
 
                 person = JsonConvert.DeserializeObject<List<PersonModel>>(json);
 
@@ -1176,41 +1021,38 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<NominationDetailModel> GetInstitutionDetails(string id)
+        public async Task<NominationDetailModel> GetInstitutionDetails(string id)
         {
-            NominationDetailModel nominationDetailModel = new NominationDetailModel();
-            nominationDetailModel.Positions = new List<PositionModel>();
-            nominationDetailModel.Institution = new InstitutionModel();
-
-            _client = new HttpClient
+            NominationDetailModel nominationDetailModel = new NominationDetailModel
             {
-                BaseAddress = new Uri(BaseUrl)
+                Positions = new List<PositionModel>(),
+                Institution = new InstitutionModel()
             };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        
-            var res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=5");
+
+
+            HttpResponseMessage res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=5");
 
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
 
                 //JArray arr = JArray.Parse(json);
                 JObject arr = JObject.Parse(json);
-                var positionDeatilsDto = arr["positionDetailsDto"];
+                JToken positionDeatilsDto = arr["positionDetailsDto"];
 
                 List<PositionModel> listPositionModel = new List<PositionModel>();
-               
+
                 foreach (JObject positionArray in positionDeatilsDto)
                 {
                     List<NominationModel> listNominationModel = new List<NominationModel>();
                     PositionModel positionModel = new PositionModel();
 
-                    var person = positionArray["incumbent"]["person"];
-                    var required = positionArray["poi"]["desired"];
-                    var personNominated = positionArray["personsNominated"];
-                    var positionId = positionArray["poi"]["positionId"];
-                    var currentCycle = arr["currentCycle"]["name"];
-                    
+                    JToken person = positionArray["incumbent"]["person"];
+                    JToken required = positionArray["poi"]["desired"];
+                    JToken personNominated = positionArray["personsNominated"];
+                    JToken positionId = positionArray["poi"]["positionId"];
+                    JToken currentCycle = arr["currentCycle"]["name"];
+
                     positionModel.Incubment = person.ToObject<PersonModel>();
 
                     //-----------Hard coded values need to call APi for this---------
@@ -1220,13 +1062,13 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                     positionModel.Id = positionId.ToString();
                     positionModel.CurrentCycle = currentCycle.ToString();
-                    
+
                     foreach (JObject Jobj in personNominated)
                     {
                         NominationModel nominationModel = new NominationModel();
 
-                        var nominatedPerson = Jobj["person"];
-                        var priority = Jobj["personCPI"]["priority"];
+                        JToken nominatedPerson = Jobj["person"];
+                        JToken priority = Jobj["personCPI"]["priority"];
                         nominationModel.Person = nominatedPerson.ToObject<PersonModel>();
 
                         //--------------adding maritalStatusForDisplay-----------------
@@ -1247,85 +1089,72 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 nominationDetailModel.Positions = listPositionModel;
 
-                var institutionId = arr["institution"]["id"];
-                var institutionName = arr["institution"]["name"];
+                JToken institutionId = arr["institution"]["id"];
+                JToken institutionName = arr["institution"]["name"];
                 nominationDetailModel.Institution.Id = institutionId.ToString();
                 nominationDetailModel.Institution.Name = institutionName.ToString();
-                
+
                 return nominationDetailModel;
             }
             return nominationDetailModel;
         }
 
-        public static async Task<PersonModel> searchPersonByFormNumber(string formNumber, string personId, string id)
+        public async Task<PersonModel> searchPersonByFormNumber(string formNumber, string personId, string id)
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("person/search/findByFormNo?formNo=" + formNumber);
+            HttpResponseMessage res = await _client.GetAsync("person/search/findByFormNo?formNo=" + formNumber);
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
-                
+                string json = res.Content.ReadAsStringAsync().Result;
+
                 return null;
             }
 
             return null;
         }
 
-        public static async Task<PersonModel> nominate(string personId, string positionId)
+        public async Task<PersonModel> nominate(string personId, string positionId)
         {
-            _client = new HttpClient
+
+            JObject jObject = new JObject
             {
-                BaseAddress = new Uri(BaseUrl)
+                { "appointed", true },
+                { "cpiId", positionId },
+                { "id", 0 },
+                { "personId", personId },
+                { "priority", 0 },
+                { "recommended", true }
             };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            JObject jObject = new JObject();
-            jObject.Add("appointed", true);
-            jObject.Add("cpiId", positionId);
-            jObject.Add("id", 0);
-            jObject.Add("personId", personId);
-            jObject.Add("priority", 0);
-            jObject.Add("recommended", true);
+            string json = JsonConvert.SerializeObject(jObject);
+            StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var json = JsonConvert.SerializeObject(jObject);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var res = await _client.PostAsync("/person/cpi",httpContent);
+            HttpResponseMessage res = await _client.PostAsync("/person/cpi", httpContent);
 
             if (res.IsSuccessStatusCode)
             {
-                var response = res.Content.ReadAsStringAsync().Result;
-                
+                string response = res.Content.ReadAsStringAsync().Result;
+
                 return null;
             }
 
             return null;
         }
 
-        public static async Task<List<SelectListItem>> GetMajorAreaOfStudy()
+        public async Task<List<SelectListItem>> GetMajorAreaOfStudy()
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync("constants/area-of-study/all");
+            HttpResponseMessage res = await _client.GetAsync("constants/area-of-study/all");
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
                 dynamic myObject = JArray.Parse(json);
-                var list = new List<SelectListItem>();
+                List<SelectListItem> list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                foreach (dynamic item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    string id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    dynamic name = Convert.ToString(item.name);
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -1336,22 +1165,17 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public static async Task<List<PastAppointment>> GetAppointments(string personId, bool isMawlaAppointee)
+        public async Task<List<PastAppointment>> GetAppointments(string personId, bool isMawlaAppointee)
         {
-            _client = new HttpClient
-            {
-                BaseAddress = new Uri(BaseUrl)
-            };
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var res = await _client.GetAsync(
+            HttpResponseMessage res = await _client.GetAsync(
                 $"appointment-position/search/findAppointmentOfPersonIdAndIsMowlaAppointee?personId={personId}&isMowlaAppointee={isMawlaAppointee}");
 
             if (res.IsSuccessStatusCode)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                string json = res.Content.ReadAsStringAsync().Result;
 
-                var appointments = new List<PastAppointment>();
+                List<PastAppointment> appointments = new List<PastAppointment>();
 
                 appointments = JsonConvert.DeserializeObject<List<PastAppointment>>(json);
 
@@ -1362,6 +1186,54 @@ namespace AMS.frontend.web.Areas.Operations.Models
         }
 
         #endregion Public Methods
+    }
+
+    public partial class AuthenticationResponse
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("user")]
+        public string User { get; set; }
+
+        [JsonProperty("token")]
+        public string Token { get; set; }
+
+        [JsonProperty("expiry")]
+        public DateTime Expiry { get; set; }
+
+        [JsonProperty("roles")]
+        public string[] Roles { get; set; }
+
+        [JsonProperty("authenticated")]
+        public bool Authenticated { get; set; }
+
+        [JsonProperty("principal")]
+        public string Principal { get; set; }
+
+        [JsonProperty("details")]
+        public object Details { get; set; }
+
+        [JsonProperty("authorities")]
+        public Authority[] Authorities { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("active")]
+        public bool Active { get; set; }
+
+        [JsonProperty("credentials")]
+        public string Credentials { get; set; }
+    }
+
+    public partial class Authority
+    {
+        [JsonProperty("amsAuthority")]
+        public string AmsAuthority { get; set; }
+
+        [JsonProperty("authority")]
+        public string AuthorityAuthority { get; set; }
     }
 
     public class PastAppointment
