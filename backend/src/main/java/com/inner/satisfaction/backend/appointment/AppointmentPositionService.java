@@ -74,6 +74,7 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   private ApptPositionDto convertToApptPositionDto(AppointmentPosition appointmentPosition) {
     return ApptPositionDto.builder()
+      .appointmentPositionId(appointmentPosition.getId())
       .cycle(cycleService.findOne(appointmentPosition.getCycleId()))
       .institution(institutionService.findOne(appointmentPosition.getInstitutionId()))
       .position(positionService.findOne(appointmentPosition.getPositionId()))

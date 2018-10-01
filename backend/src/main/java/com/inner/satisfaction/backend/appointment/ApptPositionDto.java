@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApptPositionDto extends BaseDto {
 
+  private long appointmentPositionId;
   private long seatId;
   private int nominationsRequired;
   private boolean isMowlaAppointee;
