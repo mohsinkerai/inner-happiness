@@ -4,3 +4,9 @@ sudo: false
 script:
   - cd backend
   - mvn clean install -DskipTests=true
+
+deploy:
+  provider: script
+  script: bash backend/deploy-qa.sh
+  on:
+    branch: SNAPSHOT-0.1
