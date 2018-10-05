@@ -24,4 +24,4 @@ EOF
 #ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print $2}' | xargs -r kill -9
 
 echo "Removing Keys"
-rm Inner-Satisfaction.pem
+rm -rf Inner-Satisfaction.pem
