@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Decrypting SSH Keys"
-openssl enc -d -aes-256-cbc -in "Inner-Satisfaction.pem.enc" -out "Inner-Satisfaction.pem" -pass pass:$MY_SECRET_PASS
+openssl enc -d -aes-256-cbc -in "Inner-Satisfaction.pem.enc" -out "Inner-Satisfaction.pem" -pass pass:$SSH_KEY_PASSWORD
 
 echo "Changing Permissions for PEM Keys"
 sudo chmod 400 Inner-Satisfaction.pem.enc
