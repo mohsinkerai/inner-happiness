@@ -4,9 +4,10 @@ sudo: false
 
 before_install:
   - echo "Building Backend of Inner Satisfaction"
+  - cd backend
+  - echo $MY_VAR
 
 script:
-  - cd backend
   - mvn clean install -DskipTests=true
 
 after_success:
