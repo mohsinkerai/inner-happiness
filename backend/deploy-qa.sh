@@ -8,7 +8,7 @@ sudo chmod 400 Inner-Satisfaction.pem.enc
 
 ## Server Commands Start
 echo "SSH to Server"
-ssh -i Inner-Satisfaction.pem ubuntu@is.bismagreens.com
+ssh -i Inner-Satisfaction.pem ubuntu@34.242.122.236
 
 echo "Exiting Server"
 logout
