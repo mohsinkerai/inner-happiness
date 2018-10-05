@@ -2,13 +2,19 @@ language: java
 jdk: oraclejdk8
 sudo: false
 
+before_install:
+  - echo "Building Backend of Inner Satisfaction"
+
 script:
   - cd backend
   - mvn clean install -DskipTests=true
 
+after_success:
+  - echo "Build Successful for Backend of Inner Satisfaction"
+  - bash backend/deploy-qa.sh
+
 deploy:
-  -
-    on:
-      branch: SNAPSHOT-0.1
-    provider: script
+  - provider: script
     script: bash backend/deploy-qa.sh
+    on:
+      all_branches: true
