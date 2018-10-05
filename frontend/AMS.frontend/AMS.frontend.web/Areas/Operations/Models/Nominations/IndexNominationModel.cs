@@ -17,6 +17,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
 
         public string Region { get; set; }
 
+        public string Cycle { get; set; }
+
         #endregion Public Properties
     }
 }

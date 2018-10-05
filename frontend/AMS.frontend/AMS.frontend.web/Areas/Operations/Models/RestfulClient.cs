@@ -1021,7 +1021,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<NominationDetailModel> GetInstitutionDetails(string id)
+        public async Task<NominationDetailModel> GetInstitutionDetails(string id, string cycle)
         {
             NominationDetailModel nominationDetailModel = new NominationDetailModel
             {
@@ -1030,7 +1030,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
             };
 
 
-            HttpResponseMessage res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=5");
+            //HttpResponseMessage res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=5");
+            HttpResponseMessage res = await _client.GetAsync("appointment-position/search/findByCycleIdAndInstitutionId?cycleId="+cycle+"&institutionId="+id);
 
             if (res.IsSuccessStatusCode)
             {
@@ -1180,6 +1181,30 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 appointments = JsonConvert.DeserializeObject<List<PastAppointment>>(json);
 
                 return appointments;
+            }
+
+            return null;
+        }
+
+        public async Task<List<SelectListItem>> GetCycles()
+        {
+
+            HttpResponseMessage res = await _client.GetAsync("cycle/all");
+            if (res.IsSuccessStatusCode)
+            {
+                string json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                List<SelectListItem> list = new List<SelectListItem>();
+
+                foreach (dynamic item in myObject)
+                {
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
             }
 
             return null;
