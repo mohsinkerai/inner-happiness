@@ -8,5 +8,3 @@ script:
 deploy:
   provider: script
   script: bash backend/deploy-qa.sh
-  on:
-    branch: SNAPSHOT-0.1
