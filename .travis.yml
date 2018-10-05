@@ -1,0 +1,26 @@
+language: java
+jdk: oraclejdk8
+sudo: required
+
+addons:
+  ssh_known_hosts:
+  - is.bismagreens.com
+  - 34.242.122.236
+
+before_install:
+  - echo "Building Backend of Inner Satisfaction"
+  - cd backend
+  - echo $MY_VAR
+
+script:
+  - mvn clean install -DskipTests=true
+
+after_success:
+  - echo "Build Successful for Backend of Inner Satisfaction"
+  - bash deploy-qa.sh
+
+deploy:
+  - provider: script
+    script: bash deploy-qa.sh
+    on:
+      all_branches: true
