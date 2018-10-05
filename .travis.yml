@@ -1,4 +1,5 @@
 language: java
+jdk: oraclejdk8
 sudo: false
 
 script:
@@ -6,5 +7,8 @@ script:
   - mvn clean install -DskipTests=true
 
 deploy:
-  provider: script
-  script: bash backend/deploy-qa.sh
+  -
+    on:
+      branch: SNAPSHOT-0.1
+    provider: script
+    script: bash backend/deploy-qa.sh
