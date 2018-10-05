@@ -11,13 +11,12 @@ echo "Copying Jar to Server"
 scp -i Inner-Satisfaction.pem target/inner-satisfaction-backend-0.0.1-SNAPSHOT.jar ubuntu@34.242.122.236:~/qa-build.jar
 
 echo "SSH to Server"
-ssh -i Inner-Satisfaction.pem ubuntu@34.242.122.236
+ssh -i Inner-Satisfaction.pem ubuntu@34.242.122.236 <<EOF
 
-echo "Killing existing process"
-ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print $2}'# | xargs -r kill -9
+  echo "Killing existing process"
+  ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print $2}'# | xargs -r kill -9
 
-echo "Exiting Server"
-logout
+EOF
 ## Server Commands End
 
 echo "Removing Keys"
