@@ -11,10 +11,10 @@ script:
 
 after_success:
   - echo "Build Successful for Backend of Inner Satisfaction"
-  - bash backend/deploy-qa.sh
+  - bash deploy-qa.sh
 
 deploy:
   - provider: script
-    script: bash backend/deploy-qa.sh
+    script: bash deploy-qa.sh
     on:
       all_branches: true
