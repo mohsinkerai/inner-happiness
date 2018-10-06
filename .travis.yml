@@ -24,3 +24,7 @@ deploy:
     script: bash deploy-qa.sh
     on:
       all_branches: true
+  - provider: script
+    script: bash deploy-prod.sh
+    on:
+      branch: master
