@@ -46,6 +46,21 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string AreaOfOriginForDisplay { get; set; }
 
+        public string AreaOfOriginForUi
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(AreaOfOriginForDisplay))
+                {
+                    return "No origin specified";
+                }
+                else
+                {
+                    return AreaOfOriginForDisplay;
+                }
+            }
+        }
+
         [JsonProperty(PropertyName = "city")]
         [Display(Name = "City or Village")]
         public string City { get; set; }
@@ -181,7 +196,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             get
             {
                 var education = Educations?.FirstOrDefault();
-                return $"{education?.NameOfDegreeName}, {education?.InstitutionName}, {education?.ToYear}";
+                if (education != null)
+                {
+                    return $"{education?.NameOfDegreeName}, {education?.InstitutionName}, {education?.ToYear}";
+                }
+
+                return string.Empty;
             }
         }
 
@@ -190,7 +210,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             get
             {
                 var employment = Employments?.FirstOrDefault();
-                return $"{employment?.Designation}, {employment?.NameOfOrganization}";
+                if (employment != null)
+                {
+                    return $"{employment?.Designation}, {employment?.NameOfOrganization}";
+                }
+
+                return string.Empty;
             }
         }
 
