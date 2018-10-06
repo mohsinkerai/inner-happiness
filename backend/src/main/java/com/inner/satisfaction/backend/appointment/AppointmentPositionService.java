@@ -100,7 +100,7 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
       .isRecommended(personAppointment.isRecommended())
       .priority(personAppointment.getPriority())
       .remarks(personAppointment.getRemarks())
-      .person(personService.findOne(personAppointment.getId()))
+      .person(personService.findOne(personAppointment.getPersonId()))
       .build();
   }
 }
