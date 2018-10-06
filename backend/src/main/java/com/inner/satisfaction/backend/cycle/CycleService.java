@@ -1,9 +1,14 @@
 package com.inner.satisfaction.backend.cycle;
 
-import com.inner.satisfaction.backend.appconfiguration.ApplicationConfiguration;
-import com.inner.satisfaction.backend.appconfiguration.ApplicationConfigurationKeys;
-import com.inner.satisfaction.backend.appconfiguration.ApplicationConfigurationService;
+import com.inner.satisfaction.backend.appointment.AppointmentPosition;
+import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
+import com.inner.satisfaction.backend.base.BaseEntity;
 import com.inner.satisfaction.backend.base.BaseService;
+import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
+import com.inner.satisfaction.backend.person.appointment.PersonAppointmentService;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -11,47 +16,89 @@ import org.springframework.util.Assert;
 @Service
 public class CycleService extends BaseService<Cycle> {
 
-  private final ApplicationConfigurationService appConfigurationService;
+  private final AppointmentPositionService appointmentPositionService;
+  private final PersonAppointmentService personAppointmentService;
 
   protected CycleService(
-    ApplicationConfigurationService appConfigurationService,
+    AppointmentPositionService appointmentPositionService,
     CycleRepository baseRepository,
-    CycleValidation cycleValidation) {
+    CycleValidation cycleValidation,
+    PersonAppointmentService personAppointmentService) {
     super(baseRepository, cycleValidation);
-    this.appConfigurationService = appConfigurationService;
+    this.appointmentPositionService = appointmentPositionService;
+    this.personAppointmentService = personAppointmentService;
   }
 
   @Transactional
-  public void closeCycle() {
-    // Validation of Cycle
-    ApplicationConfiguration currentCycle = appConfigurationService
-      .findByKey(ApplicationConfigurationKeys.CURRENT_CYCLE_ID.name());
-    if (currentCycle == null) {
-      throw new RuntimeException("Cycle is Already Closed");
-    }
-    ApplicationConfiguration previousCycle = appConfigurationService
-      .findByKey(ApplicationConfigurationKeys.PREVIOUS_CYCLE_ID.name());
-    if (previousCycle == null) {
-      throw new RuntimeException("Something is wrong in state, previous cycle should not be null");
-    }
-    previousCycle.setValue(currentCycle.getValue());
-    appConfigurationService.save(previousCycle);
-    appConfigurationService.delete(currentCycle);
+  public void closeCycle(long cycleId) {
+    Cycle one = findOne(cycleId);
+    Assert.notNull(one, "Invalid Previous Cycle Given");
+
+    // Setting every recommended to appointee
+    List<AppointmentPosition> aps = appointmentPositionService.findByCycleId(cycleId);
+    List<Long> apIds = aps.stream().map(BaseEntity::getId).collect(Collectors.toList());
+    personAppointmentService.appointRecommendedPeople(apIds);
 
     // POST Actions
   }
 
   @Transactional
-  public void openCycle(long cycleId) {
-    Cycle cycle = findOne(cycleId);
-    Assert.notNull(cycle, "Cycle which needs to be open, should exist");
-    ApplicationConfiguration currentCycle = appConfigurationService
-      .findByKey(ApplicationConfigurationKeys.CURRENT_CYCLE_ID.name());
-    Assert.isNull(currentCycle, "Current Cycle should not Exist");
-    ApplicationConfiguration applicationConfiguration = ApplicationConfiguration.builder()
-      .key(ApplicationConfigurationKeys.CURRENT_CYCLE_ID.name())
-      .value(String.valueOf(cycleId))
+  public void openCycle(CycleCreateRequestDto cycleRequestDto) {
+    Cycle one = findOne(cycleRequestDto.getPreviousCycleId());
+    Assert.notNull(one, "Invalid Previous Cycle Given");
+
+    Cycle savedCycle = save(cycleRequestDto.getCycleDetails());
+    List<AppointmentPosition> newPositions = appointmentPositionService
+      .findByCycleId(cycleRequestDto.getPreviousCycleId())
+      .stream()
+      .map(ap -> copy(ap, savedCycle.getId()))
+      .map(appointmentPositionService::save)
+      .collect(Collectors.toList());
+
+    // Previous Appointee as current Incumbtee
+    for(AppointmentPosition ap : newPositions) {
+      Optional<Long> incumbentId = fetchIncumbentId(cycleRequestDto.getPreviousCycleId(),
+        ap.getInstitutionId(), ap.getPositionId(), ap.getSeatNo());
+      if(incumbentId.isPresent()) {
+        personAppointmentService.save(
+          PersonAppointment.builder()
+          .appointmentPositionId(ap.getId())
+          .personId(incumbentId.get())
+          .isAppointed(false)
+          .isRecommended(false)
+          .priority(0)
+          .build()
+        );
+      }
+    }
+  }
+
+  @Transactional
+  public void dismissCycle(long cycleId) {
+    // Dismiss cycle
+  }
+
+  /**
+   * There exist a case where incumbent doesn't exist for a cycle.
+   */
+  private Optional<Long> fetchIncumbentId(long cycleId, long institutionId, long positionId, long seatNo) {
+    AppointmentPosition ap = appointmentPositionService
+      .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(cycleId, institutionId, seatNo,
+        positionId);
+    PersonAppointment pa = personAppointmentService
+      .findByAppointmentPositionIdAndIsAppointedTrue(ap.getId());
+    return Optional.ofNullable(pa).map(BaseEntity::getId);
+  }
+
+  private AppointmentPosition copy(AppointmentPosition appointmentPosition, long newCycleId) {
+    return AppointmentPosition.builder()
+      .cycleId(newCycleId)
+      .institutionId(appointmentPosition.getInstitutionId())
+      .positionId(appointmentPosition.getPositionId())
+      .seatNo(appointmentPosition.getSeatNo())
+      .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
+      .nominationsRequired(appointmentPosition.getNominationsRequired())
+      .isActive(true)
       .build();
-    appConfigurationService.save(applicationConfiguration);
   }
 }
