@@ -1098,7 +1098,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                             {
                                 positionModel.Incubment = incubment.ToObject<PersonModel>();
                                 SetDetails(list, listAreaOfOrigin, SalutationList, JamatiTitleList, NameOfDegreeList, VoluntaryCommunityInstitutionList,
-                                    OccupationTypeList, positionModel.Incubment);
+                                    OccupationTypeList, InstitutionList, positionModel.Incubment);
                             }
                             else
                             {
@@ -1109,7 +1109,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                                 nominationModel.Person = person.ToObject<PersonModel>();
 
                                 SetDetails(list, listAreaOfOrigin, SalutationList, JamatiTitleList, NameOfDegreeList, VoluntaryCommunityInstitutionList,
-                                OccupationTypeList, nominationModel.Person);
+                                OccupationTypeList, InstitutionList, nominationModel.Person);
                                
                                 listNominations.Add(nominationModel);
                             }
@@ -1129,54 +1129,66 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             catch (Exception ex)
             {
-
+ 
             }
             return nominationDetailModel;
         }
 
         private static void SetDetails(List<SelectListItem> list, List<SelectListItem> listAreaOfOrigin, List<SelectListItem> SalutationList, List<SelectListItem> JamatiTitleList,
-            List<SelectListItem> NameOfDegreeList,List<SelectListItem> VoluntaryCommunityInstitutionList, List<SelectListItem> OccupationTypeList, PersonModel personModel)
+            List<SelectListItem> NameOfDegreeList,List<SelectListItem> VoluntaryCommunityInstitutionList, List<SelectListItem> OccupationTypeList,
+            List<SelectListItem> InstitutionList, PersonModel personModel)
         {
-            if (personModel.MaritalStatus != null)
+            try
             {
-                SelectListItem item = list.Find(x => x.Value == personModel.MaritalStatus);
-                personModel.MaritalStatusForDisplay = item.Text;
-            }
-            if (personModel.AreaOfOrigin != null)
-            {
-                SelectListItem item1 = listAreaOfOrigin.Find(x => x.Value == personModel.AreaOfOrigin);
-                personModel.AreaOfOriginForDisplay = item1.Text;
-            }
-            if (personModel.Salutation != null)
-            {
-                SelectListItem salutation = SalutationList.Find(x => x.Value == personModel.Salutation);
-                personModel.SalutationForDisplay = salutation.Text;
-            }
-            if (personModel.JamatiTitle != null)
-            {
-                SelectListItem jamatiTitle = JamatiTitleList.Find(x => x.Value == personModel.JamatiTitle);
-                personModel.JamatiTitleForDisplay = jamatiTitle.Text;
-            }
-            if (personModel.Educations != null)
-            {
-                foreach (EducationModel education in personModel.Educations)
+                if (personModel.MaritalStatus != null)
                 {
-                    SelectListItem edu = NameOfDegreeList.Find(x => x.Value.StartsWith($"{education.NameOfDegree}-"));
-                    education.NameOfDegreeName = edu.Text;
+                    SelectListItem item = list.Find(x => x.Value == personModel.MaritalStatus);
+                    personModel.MaritalStatusForDisplay = item.Text;
+                }
+                if (personModel.AreaOfOrigin != null)
+                {
+                    SelectListItem item1 = listAreaOfOrigin.Find(x => x.Value == personModel.AreaOfOrigin);
+                    personModel.AreaOfOriginForDisplay = item1.Text;
+                }
+                if (personModel.Salutation != null)
+                {
+                    SelectListItem salutation = SalutationList.Find(x => x.Value == personModel.Salutation);
+                    personModel.SalutationForDisplay = salutation.Text;
+                }
+                if (personModel.JamatiTitle != null)
+                {
+                    SelectListItem jamatiTitle = JamatiTitleList.Find(x => x.Value == personModel.JamatiTitle);
+                    personModel.JamatiTitleForDisplay = jamatiTitle.Text;
+                }
+                if (personModel.Educations != null)
+                {
+                    foreach (EducationModel education in personModel.Educations)
+                    {
+
+                        SelectListItem edu = NameOfDegreeList.Find(x => x.Value.StartsWith($"{education.NameOfDegree}-"));
+                        education.NameOfDegreeName = edu.Text;
+
+                        SelectListItem institute = InstitutionList.Find(x => x.Value.StartsWith($"{education.Institution}-"));
+                        education.InstitutionName = institute.Text;
+                    }
+                }
+                if (personModel.VoluntaryCommunityServices != null)
+                {
+                    foreach (VoluntaryCommunityModel communityInstituion in personModel.VoluntaryCommunityServices)
+                    {
+                        SelectListItem institution = VoluntaryCommunityInstitutionList.Find(x => x.Value == communityInstituion.Institution);
+                        communityInstituion.InstitutionName = institution.Text;
+                    }
+                }
+                if (personModel.OccupationType != null)
+                {
+                    SelectListItem ocupation = OccupationTypeList.Find(x => x.Value == personModel.OccupationType);
+                    personModel.OccupationTypeName = ocupation.Text;
                 }
             }
-            if (personModel.VoluntaryCommunityServices != null)
+            catch (Exception ex)
             {
-                foreach(VoluntaryCommunityModel communityInstituion in personModel.VoluntaryCommunityServices)
-                {
-                    SelectListItem institution = VoluntaryCommunityInstitutionList.Find(x => x.Value == communityInstituion.Institution);
-                    communityInstituion.InstitutionName = institution.Text;
-                }
-            }
-            if (personModel.OccupationType != null)
-            {
-                SelectListItem ocupation = OccupationTypeList.Find(x => x.Value == personModel.OccupationType);
-                personModel.OccupationTypeName = ocupation.Text;
+
             }
         }
 
