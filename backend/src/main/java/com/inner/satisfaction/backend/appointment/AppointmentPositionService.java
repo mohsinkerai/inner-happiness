@@ -61,12 +61,9 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
     return appointmentPositionRepository.findByCycleId(cycleId);
   }
 
-  public List<ApptPositionDto> findByCycleIdAndInstitutionId(long cycleId,
+  public List<AppointmentPosition> findByCycleIdAndInstitutionId(long cycleId,
     long institutionId) {
-    return appointmentPositionRepository.findByCycleIdAndInstitutionId(cycleId, institutionId)
-      .stream()
-      .map(this::convertToApptPositionDto)
-      .collect(Collectors.toList());
+    return appointmentPositionRepository.findByCycleIdAndInstitutionId(cycleId, institutionId);
   }
 
   private AppointmentPositionDto convert(AppointmentPosition appointmentPosition) {
@@ -79,38 +76,6 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
       .nominationsRequired(appointmentPosition.getNominationsRequired())
       .position(positionService.findOne(appointmentPosition.getPositionId()))
       .seatNo(appointmentPosition.getSeatNo())
-      .build();
-  }
-
-  private ApptPositionDto convertToApptPositionDto(AppointmentPosition appointmentPosition) {
-    return ApptPositionDto.builder()
-      .appointmentPositionId(appointmentPosition.getId())
-      .cycle(cycleService.findOne(appointmentPosition.getCycleId()))
-      .institution(institutionService.findOne(appointmentPosition.getInstitutionId()))
-      .position(positionService.findOne(appointmentPosition.getPositionId()))
-      .seatId(appointmentPosition.getSeatNo())
-      .personAppointmentList(fetchPersonAppointments(appointmentPosition.getId()))
-      .nominationsRequired(appointmentPosition.getNominationsRequired())
-      .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
-      .build();
-  }
-
-  private List<PersonAppointmentDto> fetchPersonAppointments(long appointmentPositionId) {
-    return personAppointmentService
-      .findByAppointmentPositionId(appointmentPositionId)
-      .stream()
-      .map(this::convert)
-      .collect(Collectors.toList());
-  }
-
-  private PersonAppointmentDto convert(PersonAppointment personAppointment) {
-    return PersonAppointmentDto
-      .builder()
-      .isAppointed(personAppointment.isAppointed())
-      .isRecommended(personAppointment.isRecommended())
-      .priority(personAppointment.getPriority())
-      .remarks(personAppointment.getRemarks())
-      .person(personService.findOne(personAppointment.getPersonId()))
       .build();
   }
 }
