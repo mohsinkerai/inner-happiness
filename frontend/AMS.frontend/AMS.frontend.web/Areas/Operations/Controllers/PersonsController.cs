@@ -1352,6 +1352,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 education.NameOfDegree + "-" + education.NameOfDegreeName,
                                 education.MajorAreaOfStudy + "-" + education.MajorAreaOfStudyName);
                         }
+
+                        person.Educations = HttpContext.Session.Get<List<EducationModel>>("EducationList");
                     }
                 }
                 catch (Exception)
@@ -1376,6 +1378,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
                                 akdnTraining.Date?.ToString());
                         }
+
+                        person.AkdnTrainings = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList");
                     }
                 }
                 catch (Exception)
@@ -1401,6 +1405,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 professionalTraining.Month + "-" + professionalTraining.MonthName,
                                 professionalTraining.Year?.ToString(), professionalTraining.Date.ToString());
                         }
+
+                        person.ProfessionalTrainings = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList");
                     }
                 }
                 catch (Exception)
@@ -1426,6 +1432,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 language.Language + "-" + language.LanguageName, language.Read + "-" + language.ReadName,
                                 language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName);
                         }
+
+                        person.LanguageProficiencies = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList");
                     }
                 }
                 catch (Exception)
@@ -1449,6 +1457,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
                                 voluntaryService.Position + "-" + voluntaryService.PositionName);
                         }
+
+                        person.VoluntaryCommunityServices = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList");
                     }
                 }
                 catch (Exception)
@@ -1474,6 +1484,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 employment.NatureOfBusinessOther,
                                 employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
                         }
+
+                        person.Employments = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList");
                     }
                 }
                 catch (Exception)
@@ -1501,6 +1513,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                     relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
                                     relation.RelationName, relation.Id, position, cycle);
                         }
+
+                        person.FamilyRelations = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList");
                     }
                 }
                 catch (Exception)

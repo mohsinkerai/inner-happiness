@@ -27,3 +27,5 @@ hs_err_pid*
 app.log* 
 /.vs
 *.dtbcache
+/frontend/AMS.frontend/ImageConversionUtility/obj
+/frontend/AMS.frontend/ImageConversionUtility/bin/Debug/netcoreapp2.1

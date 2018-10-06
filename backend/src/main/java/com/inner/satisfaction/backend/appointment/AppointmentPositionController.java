@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(PREFIX + "appointment-position")
 public class AppointmentPositionController extends BaseController<AppointmentPosition> {
 
+  private final AppointmentPositionFacade appointmentPositionFacade;
   private final AppointmentPositionService appointmentPositionService;
 
-  public AppointmentPositionController(AppointmentPositionService appointmentPositionService) {
+  public AppointmentPositionController(
+    AppointmentPositionFacade appointmentPositionFacade,
+    AppointmentPositionService appointmentPositionService) {
     super(appointmentPositionService);
+    this.appointmentPositionFacade = appointmentPositionFacade;
     this.appointmentPositionService = appointmentPositionService;
   }
 
@@ -27,7 +31,7 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
   public List<AppointmentPositionDto> findAppointmentsOfPersonIdAndIsMowlaAppointee(
     @RequestParam("personId") long personId,
     @RequestParam("isMowlaAppointee") boolean isMowlaAppointee) {
-    return appointmentPositionService.findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
+    return appointmentPositionFacade.findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -35,6 +39,6 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
   public List<ApptPositionDto> findByCycleIdAndInstitutionId(
     @RequestParam("cycleId") long cycleId,
     @RequestParam("institutionId") long institutionId) {
-    return appointmentPositionService.findByCycleIdAndInstitutionId(cycleId, institutionId);
+    return appointmentPositionFacade.findByCycleIdAndInstitutionId(cycleId, institutionId);
   }
 }

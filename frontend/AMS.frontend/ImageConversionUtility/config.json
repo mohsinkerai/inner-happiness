@@ -1,0 +1,3 @@
+{
+  "connectionString": "Data Source=localhost, 15789;Initial Catalog=AliAppointments;Persist Security Info=True;User ID=sa;Password=jarvis-786"
+}
