@@ -15,19 +15,29 @@ public class CycleController extends BaseController<Cycle> {
   public static final String PATH = "cycle";
   private final CycleService cycleService;
 
-
   public CycleController(CycleService cycleService) {
     super(cycleService);
     this.cycleService = cycleService;
   }
 
-  @RequestMapping(method = RequestMethod.POST, value = "close")
-  public void close() {
-    cycleService.closeCycle();
+  @RequestMapping(method = RequestMethod.POST, value = "dismiss")
+  public void dismiss(@RequestBody long cycleId) {
+    cycleService.dismissCycle(cycleId);
   }
 
-  @RequestMapping(method = RequestMethod.POST, value = "open")
-  public void open(@RequestBody long cycleId) {
-    cycleService.openCycle(cycleId);
+  @RequestMapping(method = RequestMethod.POST, value = "close")
+  public void close(@RequestBody long cycleId) {
+    cycleService.closeCycle(cycleId);
+  }
+
+  @RequestMapping(method = RequestMethod.POST, value = "create")
+  public void open(@RequestBody CycleCreateRequestDto cycleRequestDto) {
+    cycleService.openCycle(cycleRequestDto);
+  }
+
+  @Override
+  public Cycle save(Cycle cycle) {
+    throw new RuntimeException(
+      "Comeon !! You can't create cycle like this, use the proper way, that is cycle open api");
   }
 }
