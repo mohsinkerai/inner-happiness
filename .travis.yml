@@ -22,9 +22,11 @@ after_success:
 deploy:
   - provider: script
     script: bash deploy-qa.sh
+    skip_cleanup: true
     on:
       all_branches: true
   - provider: script
     script: bash deploy-prod.sh
+    skip_cleanup: true
     on:
       branch: master
