@@ -359,11 +359,13 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 {
                     dynamic id = Convert.ToString(item.id);
                     dynamic name = Convert.ToString(item.name);
+                    dynamic fullName = Convert.ToString(item.fullName);
 
                     PositionModel positionModel = new PositionModel
                     {
                         Id = id,
-                        PositionName = name
+                        PositionName = name,
+                        FullName = fullName
                     };
 
                     list.Add(positionModel);

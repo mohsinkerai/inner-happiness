@@ -454,6 +454,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     data = conditionedData.Select(n => new
                     {
                         n.PositionName,
+                        n.FullName,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
                             new { area = AreaNames.Operations, uid = n.Id })
                     })
