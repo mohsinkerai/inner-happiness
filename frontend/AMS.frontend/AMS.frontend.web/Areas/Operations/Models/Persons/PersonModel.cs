@@ -198,7 +198,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
                 var education = Educations?.FirstOrDefault();
                 if (education != null)
                 {
-                    return $"{education?.NameOfDegreeName}, {education?.InstitutionName}, {education?.ToYear}";
+                    return $"{education?.NameOfDegreeName}, {education?.InstitutionName} {education?.YearForDisplay}";
                 }
 
                 return string.Empty;

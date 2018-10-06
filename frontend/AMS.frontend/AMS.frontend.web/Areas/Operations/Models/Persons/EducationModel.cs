@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -36,13 +36,36 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string NameOfDegree { get; set; }
 
         public string NameOfDegreeName { get; set; }
-        
+
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
 
         [JsonProperty(PropertyName = "toYear")]
         [Display(Name = "To Year")]
         public int? ToYear { get; set; }
+
+        public string YearForDisplay
+        {
+            get
+            {
+                if (FromYear == null && ToYear == null)
+                {
+                    return string.Empty;
+                }
+
+                if (FromYear == null && ToYear != null)
+                {
+                    return $", {ToYear}";
+                }
+
+                if (ToYear == null && FromYear != null)
+                {
+                    return $", {FromYear} - continued";
+                }
+
+                return $", {FromYear} - {ToYear}";
+            }
+        }
 
         #endregion Public Properties
     }

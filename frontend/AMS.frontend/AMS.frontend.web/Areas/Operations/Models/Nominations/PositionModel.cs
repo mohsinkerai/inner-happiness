@@ -35,6 +35,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         }
 
         public string PositionName { get; set; }
+        public string FullName { get; set; }
         public string PreviousCycle { get; set; }
         public int Required { get; set; }
 
