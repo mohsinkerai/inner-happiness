@@ -39,4 +39,18 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="institution-03" author="mohsin.kerai">
+    <addColumn tableName="institution">
+      <column name="full_name" type="varchar(255)" afterColumn="name"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="institution-04" author="mohsin.kerai">
+    <sql>
+      UPDATE institution SET institution.full_name = (
+      SELECT `level`.full_name
+      FROM `level`
+      WHERE `level`.id = institution.id)
+    </sql>
+  </changeSet>
+
 </databaseChangeLog>
