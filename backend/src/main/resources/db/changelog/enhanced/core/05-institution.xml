@@ -39,4 +39,10 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="institution-03" author="mohsin.kerai">
+    <addColumn tableName="institution">
+      <column name="full_name" type="varchar(255)" afterColumn="name"/>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>

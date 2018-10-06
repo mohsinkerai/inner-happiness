@@ -25,7 +25,7 @@ public class AuthenticationUserService extends SimpleBaseService<AuthenticationU
   protected AuthenticationUserService(
     Clock clock, AuthenticationUserRepository baseRepository,
     PasswordEncoder passwordEncoder,
-    @Value("${token.expiry-in-minutes:120}") long expiryInMinutes,
+    @Value("${token.expiry-in-minutes:1000}") long expiryInMinutes,
     AuthenticationTokenService authenticationTokenService) {
     super(baseRepository);
     this.clock = clock;
