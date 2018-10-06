@@ -16,7 +16,7 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
 
   List<PersonAppointment> findByPersonIdAndIsAppointedTrue(long personId);
 
-//  @Modifying
-//  @Query("UPDATE PersonAppointment SET isAppointed=true WHERE isRecommended=true AND appointmentPositionId IN :appointmentPositionId")
-//  void appointRecommendedPeople(List<Long> appointmentPositionId);
+  @Modifying
+  @Query("UPDATE person_appointment p SET p.isAppointed = true WHERE p.isRecommended=true AND p.appointmentPositionId IN :appointmentPositionId")
+  void appointRecommendedPeople(List<Long> appointmentPositionId);
 }

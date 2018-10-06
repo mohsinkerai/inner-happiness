@@ -30,6 +30,6 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
   }
 
   public void appointRecommendedPeople(List<Long> appointmentPositionId) {
-//    personAppointmentRepository.appointRecommendedPeople(appointmentPositionId);
+    personAppointmentRepository.appointRecommendedPeople(appointmentPositionId);
   }
 }

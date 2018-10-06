@@ -79,8 +79,8 @@ public class AppointmentPositionFacade {
   private PersonAppointmentDto convert(PersonAppointment personAppointment) {
     return PersonAppointmentDto
       .builder()
-      .isAppointed(personAppointment.isAppointed())
-      .isRecommended(personAppointment.isRecommended())
+      .isAppointed(personAppointment.getAppointed())
+      .isRecommended(personAppointment.getRecommended())
       .priority(personAppointment.getPriority())
       .remarks(personAppointment.getRemarks())
       .person(personService.findOne(personAppointment.getPersonId()))
