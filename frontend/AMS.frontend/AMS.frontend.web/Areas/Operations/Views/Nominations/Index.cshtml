@@ -61,20 +61,12 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label asp-for="InstitutionType" class="control-label"></label>
-                        <select asp-for="InstitutionType" class="form-control m-select2 institution-type" placeholder="Select" disabled="disabled">
+                        <label asp-for="Cycle" class="control-label"></label>
+                        <select asp-for="Cycle" asp-items="@ViewBag.Cycle" class="form-control m-select2" placeholder="Select">
                             <option></option>
                         </select>
                     </div>
                 </div>
-                @*<div class="col-lg-4">
-                        <div class="form-group">
-                            <label asp-for="Institution" class="control-label"></label>
-                            <select asp-for="Institution" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
-                                <option></option>
-                            </select>
-                        </div>
-                    </div>*@
             </div>
             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                 <div class="m-form__actions m-form__actions--solid">

@@ -2,6 +2,7 @@
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
@@ -19,7 +20,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public NominationsController(IOptions<Configuration> configuration)
         {
             _configuration = configuration.Value;
-            RestfulClient = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token);
+            //RestfulClient = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token);
         }
 
         #endregion Public Constructors
@@ -28,6 +29,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private readonly Configuration _configuration;
         private readonly RestfulClient RestfulClient;
+        private const string SelectedCycle = "_cycle";
 
         #endregion Private Fields
 
@@ -134,7 +136,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
         public async Task<JsonResult> GetPersons(string uid)
         {
-            var personTuple = await RestfulClient.GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, uid, string.Empty, string.Empty, string.Empty, string.Empty, 1, 9999);
+            var personTuple = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, uid, string.Empty, string.Empty, string.Empty, string.Empty, 1, 9999);
             var persons = personTuple.Item1.Select(p => new { Name = $"{p.FormNumber}-{p.FullName}" })
                 .Select(p => p.Name);
 
@@ -235,9 +237,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             };
 
-            //NominationDetailModel nominationModel = await RestfulClient.GetInstitutionDetails(uid);
+            string cycle = HttpContext.Session.GetString(SelectedCycle);
 
-            return View(model);
+            NominationDetailModel nominationModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionDetails(uid,cycle);
+
+            return View(nominationModel);
         }
 
         public async Task<JsonResult> GetInstitutionTypes(string level, string subLevel)
@@ -249,22 +253,24 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetLocalInstitutions()
         {
-            var list = await RestfulClient.GetLocalInstitutions();
+            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
 
             return new JsonResult(list);
         }
 
         public async Task<JsonResult> GetRegionalInstitutions()
         {
-            var list = await RestfulClient.GetRegionalInstitutions();
+            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalInstitutions();
 
             return new JsonResult(list);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
+
+            ViewBag.Cycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             //return View(new List<PersonModel>());
 
             //ViewBag.CompanyList = await RestfulClient.getAllCompanies();
@@ -279,6 +285,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult Index(IndexNominationModel indexNominationModel)
         {
+            //Store Cycle in session
+            HttpContext.Session.SetString(SelectedCycle, indexNominationModel.Cycle);
+
             return View(indexNominationModel);
         }
 
@@ -417,7 +426,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //var conditionedData = await RestfulClient.getPersonDetails();
                 //var conditionedData = new List<PositionModel>();
 
-                var conditionedData = await RestfulClient.GetInstitutionTypes(level, subLevel);
+                var conditionedData = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionTypes(level, subLevel);
 
                 // Loading drop down lists.
                 return Json(new
@@ -442,7 +451,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     })
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(new
                 {

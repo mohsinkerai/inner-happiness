@@ -28,7 +28,7 @@
   <changeSet id="educational-institution-02" author="mohsin.kerai">
     <addColumn tableName="educational_institution">
       <column name="is_active" defaultValue="1" type="bit">
-        <constraints nullable="false" />
+        <constraints nullable="false"/>
       </column>
     </addColumn>
   </changeSet>
@@ -36,5 +36,10 @@
     <sql>
       ALTER TABLE educational_institution AUTO_INCREMENT = 10000;
     </sql>
+  </changeSet>
+  <changeSet id="educational-institution-04" author="mohsin.kerai">
+    <addColumn tableName="educational_institution">
+      <column name="old_id" type="bigint" afterColumn="name"></column>
+    </addColumn>
   </changeSet>
 </databaseChangeLog>

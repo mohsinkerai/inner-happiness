@@ -127,6 +127,14 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <configuration>
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+          <excludeProperties>git.build.user.*,git.commit.user.*,git.remote.*,git.closest.*</excludeProperties>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
 

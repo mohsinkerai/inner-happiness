@@ -1,6 +1,7 @@
 ﻿using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,7 +19,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         #region Private Fields
 
-        private readonly string BaseUrl = "http://is.bismagreens.com/";
+        private readonly string BaseUrl = "http://is.bismagreens.com:8080/";
         private HttpClient _client;
 
         #endregion Private Fields
@@ -1021,7 +1022,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<NominationDetailModel> GetInstitutionDetails(string id)
+        public async Task<NominationDetailModel> GetInstitutionDetails(string id, string cycle)
         {
             NominationDetailModel nominationDetailModel = new NominationDetailModel
             {
@@ -1029,72 +1030,100 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 Institution = new InstitutionModel()
             };
 
+            List<SelectListItem> list = await GetMartialStatuses();
+            List<SelectListItem> listAreaOfOrigin = await GetAreaOfOrigin();
 
-            HttpResponseMessage res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=5");
-
-            if (res.IsSuccessStatusCode)
+            try
             {
-                string json = res.Content.ReadAsStringAsync().Result;
+                //HttpResponseMessage res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=5");
+                HttpResponseMessage res = await _client.GetAsync("appointment-position/search/findByCycleIdAndInstitutionId?cycleId=" + cycle + "&institutionId=" + id);
 
-                //JArray arr = JArray.Parse(json);
-                JObject arr = JObject.Parse(json);
-                JToken positionDeatilsDto = arr["positionDetailsDto"];
-
-                List<PositionModel> listPositionModel = new List<PositionModel>();
-
-                foreach (JObject positionArray in positionDeatilsDto)
+                if (res.IsSuccessStatusCode)
                 {
-                    List<NominationModel> listNominationModel = new List<NominationModel>();
-                    PositionModel positionModel = new PositionModel();
+                    string json = res.Content.ReadAsStringAsync().Result;
 
-                    JToken person = positionArray["incumbent"]["person"];
-                    JToken required = positionArray["poi"]["desired"];
-                    JToken personNominated = positionArray["personsNominated"];
-                    JToken positionId = positionArray["poi"]["positionId"];
-                    JToken currentCycle = arr["currentCycle"]["name"];
+                    JArray arr = JArray.Parse(json);
 
-                    positionModel.Incubment = person.ToObject<PersonModel>();
+                    List<PositionModel> listPositions = new List<PositionModel>();
+                    PositionModel positionModel = null;
+                    List<NominationModel> listNominations = null;
+                    NominationModel nominationModel = null;
 
-                    //-----------Hard coded values need to call APi for this---------
-                    positionModel.Incubment.MaritalStatusForDisplay = "Single";
-                    positionModel.Incubment.AreaOfOriginForDisplay = "Karachi";
-                    //---------------------------------------------------------------
-
-                    positionModel.Id = positionId.ToString();
-                    positionModel.CurrentCycle = currentCycle.ToString();
-
-                    foreach (JObject Jobj in personNominated)
+                    foreach (JObject positionArray in arr)
                     {
-                        NominationModel nominationModel = new NominationModel();
+                        positionModel = new PositionModel();
 
-                        JToken nominatedPerson = Jobj["person"];
-                        JToken priority = Jobj["personCPI"]["priority"];
-                        nominationModel.Person = nominatedPerson.ToObject<PersonModel>();
+                        JToken personAppointmentList = positionArray["personAppointmentList"];
+                        JToken currentCycle = positionArray["cycle"];
+                        JToken positionName = positionArray["position"];
+                        JToken instituion = positionArray["institution"];
 
-                        //--------------adding maritalStatusForDisplay-----------------
-                        nominationModel.Person.MaritalStatusForDisplay = "Single";
-                        nominationModel.Person.AreaOfOriginForDisplay = "Karachi";
-                        //-------------------------------------------------------------
+                        positionModel.Id = Convert.ToString(positionArray["appointmentPositionId"]);
+                        positionModel.CurrentCycle = Convert.ToString(currentCycle["name"]);
+                        positionModel.PositionName = Convert.ToString(positionName["name"]);
+                        positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
 
-                        nominationModel.Priority = Convert.ToInt32(priority);
-                        listNominationModel.Add(nominationModel);
+                        int index = 0;
+                        foreach (JObject personsAppointed in personAppointmentList)
+                        {
+                            listNominations = new List<NominationModel>();
+                            nominationModel = new NominationModel();
+
+                            JToken incubment = personsAppointed["person"];
+                            if (index == 0)
+                            {
+                                positionModel.Incubment = incubment.ToObject<PersonModel>();
+
+                                if (positionModel.Incubment.MaritalStatus != null)
+                                {
+                                    SelectListItem item = list.Find(x => x.Value == positionModel.Incubment.MaritalStatus);
+                                    positionModel.Incubment.MaritalStatusForDisplay = item.Text;
+                                }
+                                if (positionModel.Incubment.AreaOfOrigin != null)
+                                {
+                                    SelectListItem item1 = listAreaOfOrigin.Find(x => x.Value == positionModel.Incubment.AreaOfOrigin);
+                                    positionModel.Incubment.AreaOfOriginForDisplay = item1.Text;
+                                }
+                            }
+                            else
+                            {
+                                nominationModel.Priority = Convert.ToInt32(personsAppointed["priority"]);
+                                nominationModel.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
+                                nominationModel.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
+                                JToken person = personsAppointed["person"];
+                                nominationModel.Person = person.ToObject<PersonModel>();
+
+
+                                if (positionModel.Incubment.MaritalStatus != null)
+                                {
+                                    SelectListItem item = list.Find(x => x.Value == nominationModel.Person.MaritalStatus);
+                                    nominationModel.Person.MaritalStatusForDisplay = item.Text;
+                                }
+                                if (positionModel.Incubment.AreaOfOrigin != null)
+                                {
+                                    SelectListItem item1 = listAreaOfOrigin.Find(x => x.Value == nominationModel.Person.AreaOfOrigin);
+                                    nominationModel.Person.AreaOfOriginForDisplay = item1.Text;
+                                }
+
+                                listNominations.Add(nominationModel);
+                            }
+                            index++;
+                        }
+                        listNominations.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
+                        positionModel.Nominations = listNominations;
+
+                        listPositions.Add(positionModel);
+
+                        nominationDetailModel.Institution.Id = Convert.ToString(instituion["id"]);
+                        nominationDetailModel.Institution.Name = Convert.ToString(instituion["name"]);
                     }
 
-                    listNominationModel.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
-
-                    positionModel.Nominations = listNominationModel;
-
-                    listPositionModel.Add(positionModel);
+                    nominationDetailModel.Positions = listPositions;
                 }
+            }
+            catch (Exception ex)
+            {
 
-                nominationDetailModel.Positions = listPositionModel;
-
-                JToken institutionId = arr["institution"]["id"];
-                JToken institutionName = arr["institution"]["name"];
-                nominationDetailModel.Institution.Id = institutionId.ToString();
-                nominationDetailModel.Institution.Name = institutionName.ToString();
-
-                return nominationDetailModel;
             }
             return nominationDetailModel;
         }
@@ -1180,6 +1209,30 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 appointments = JsonConvert.DeserializeObject<List<PastAppointment>>(json);
 
                 return appointments;
+            }
+
+            return null;
+        }
+
+        public async Task<List<SelectListItem>> GetCycles()
+        {
+
+            HttpResponseMessage res = await _client.GetAsync("cycle/all");
+            if (res.IsSuccessStatusCode)
+            {
+                string json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                List<SelectListItem> list = new List<SelectListItem>();
+
+                foreach (dynamic item in myObject)
+                {
+                    dynamic id = Convert.ToString(item.id);
+                    dynamic name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
             }
 
             return null;

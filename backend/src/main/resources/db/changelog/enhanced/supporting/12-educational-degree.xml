@@ -37,4 +37,9 @@
       ALTER TABLE educational_degree AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="educational-degree-04" author="mohsin.kerai">
+    <addColumn tableName="educational_degree">
+      <column name="old_id" type="bigint" afterColumn="name"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -33,23 +33,24 @@ namespace AMS.frontend.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.RememberMe)
-                {
-                    var cookieOptions = new CookieOptions { HttpOnly = false };
-                    Response.Cookies.Append(CookieNames.RememberMe, Convert.ToString(model.RememberMe), cookieOptions);
-                    Response.Cookies.Append(CookieNames.Company, model.Company, cookieOptions);
-                }
-                else
-                {
-                    Response.Cookies.Delete(CookieNames.RememberMe);
-                    Response.Cookies.Delete(CookieNames.Company);
-                }
-
                 var response = await new RestfulClient(string.Empty).GetToken(model);
 
                 if (response != null)
                 {
                     HttpContext.Session.Set("AuthenticationResponse", response);
+
+                    if (model.RememberMe)
+                    {
+                        var cookieOptions = new CookieOptions { HttpOnly = false };
+                        Response.Cookies.Append(CookieNames.RememberMe, Convert.ToString(model.RememberMe), cookieOptions);
+                        Response.Cookies.Append(CookieNames.Company, response.Name, cookieOptions);
+                    }
+                    else
+                    {
+                        Response.Cookies.Delete(CookieNames.RememberMe);
+                        Response.Cookies.Delete(CookieNames.Company);
+                    }
+
                     return RedirectToAction(ActionNames.Index, ControllerNames.Home);
                 }
                 else
