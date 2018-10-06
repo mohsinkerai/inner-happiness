@@ -44,6 +44,17 @@ public class AppointmentPositionFacade {
       .collect(Collectors.toList());
   }
 
+  public List<AppointmentPositionDto> findAppointmentsOfPersonIdAndIsMowlaAppointee(
+    long personId, boolean isMowlaAppointee) {
+    return personAppointmentService.findAppointmentsOfPerson(personId)
+      .stream()
+      .map(PersonAppointment::getAppointmentPositionId)
+      .map(appointmentPositionService::findOne)
+      .filter((o) -> o.isMowlaAppointee() == isMowlaAppointee)
+      .map(this::convert)
+      .collect(Collectors.toList());
+  }
+
   private ApptPositionDto convertToApptPositionDto(AppointmentPosition appointmentPosition) {
     return ApptPositionDto.builder()
       .appointmentPositionId(appointmentPosition.getId())
@@ -73,6 +84,19 @@ public class AppointmentPositionFacade {
       .priority(personAppointment.getPriority())
       .remarks(personAppointment.getRemarks())
       .person(personService.findOne(personAppointment.getPersonId()))
+      .build();
+  }
+
+  private AppointmentPositionDto convert(AppointmentPosition appointmentPosition) {
+    return AppointmentPositionDto.builder()
+      .id(appointmentPosition.getId())
+      .cycleId(cycleService.findOne(appointmentPosition.getCycleId()))
+      .institution(institutionService.findOne(appointmentPosition.getInstitutionId()))
+      .isActive(appointmentPosition.isActive())
+      .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
+      .nominationsRequired(appointmentPosition.getNominationsRequired())
+      .position(positionService.findOne(appointmentPosition.getPositionId()))
+      .seatNo(appointmentPosition.getSeatNo())
       .build();
   }
 }

@@ -17,38 +17,11 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   private final AppointmentPositionRepository appointmentPositionRepository;
 
-  private final CycleService cycleService;
-  private final PersonService personService;
-  private final PositionService positionService;
-  private final InstitutionService institutionService;
-  private final PersonAppointmentService personAppointmentService;
-
   protected AppointmentPositionService(
     AppointmentPositionRepository baseRepository,
-    AppointmentPositionValidation appointmentPositionValidation,
-    CycleService cycleService,
-    PersonService personService,
-    PositionService positionService,
-    InstitutionService institutionService,
-    PersonAppointmentService personAppointmentService) {
+    AppointmentPositionValidation appointmentPositionValidation) {
     super(baseRepository, appointmentPositionValidation);
-    this.cycleService = cycleService;
-    this.personService = personService;
-    this.positionService = positionService;
-    this.institutionService = institutionService;
-    this.personAppointmentService = personAppointmentService;
     this.appointmentPositionRepository = baseRepository;
-  }
-
-  public List<AppointmentPositionDto> findAppointmentsOfPersonIdAndIsMowlaAppointee(
-    long personId, boolean isMowlaAppointee) {
-    return personAppointmentService.findAppointmentsOfPerson(personId)
-      .stream()
-      .map(PersonAppointment::getAppointmentPositionId)
-      .map(this::findOne)
-      .filter((o) -> o.isMowlaAppointee() == isMowlaAppointee)
-      .map(this::convert)
-      .collect(Collectors.toList());
   }
 
   public AppointmentPosition findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long cycleId, long institutionId, long seatNo, long positionId) {
@@ -64,18 +37,5 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
   public List<AppointmentPosition> findByCycleIdAndInstitutionId(long cycleId,
     long institutionId) {
     return appointmentPositionRepository.findByCycleIdAndInstitutionId(cycleId, institutionId);
-  }
-
-  private AppointmentPositionDto convert(AppointmentPosition appointmentPosition) {
-    return AppointmentPositionDto.builder()
-      .id(appointmentPosition.getId())
-      .cycleId(cycleService.findOne(appointmentPosition.getCycleId()))
-      .institution(institutionService.findOne(appointmentPosition.getInstitutionId()))
-      .isActive(appointmentPosition.isActive())
-      .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
-      .nominationsRequired(appointmentPosition.getNominationsRequired())
-      .position(positionService.findOne(appointmentPosition.getPositionId()))
-      .seatNo(appointmentPosition.getSeatNo())
-      .build();
   }
 }

@@ -31,7 +31,7 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
   public List<AppointmentPositionDto> findAppointmentsOfPersonIdAndIsMowlaAppointee(
     @RequestParam("personId") long personId,
     @RequestParam("isMowlaAppointee") boolean isMowlaAppointee) {
-    return appointmentPositionService.findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
+    return appointmentPositionFacade.findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
   }
 
   @ResponseStatus(HttpStatus.OK)
