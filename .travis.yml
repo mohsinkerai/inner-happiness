@@ -27,5 +27,6 @@ deploy:
       all_branches: true
   - provider: script
     script: bash deploy-prod.sh
+    skip_cleanup: true
     on:
       branch: master
