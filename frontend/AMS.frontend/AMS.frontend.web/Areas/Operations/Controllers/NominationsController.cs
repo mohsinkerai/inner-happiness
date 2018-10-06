@@ -38,7 +38,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult Nominate(string id, string personId)
         {
-            var person = RestfulClient.nominate(id, personId);
+            var person = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).nominate(id, personId);
         
             //saif integration goes here
             return PartialView("_NominationsTablePartial", new PositionModel
@@ -134,9 +134,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             });
         }
-        public async Task<JsonResult> GetPersons(string uid)
+        public async Task<JsonResult> GetPersons(string id)
         {
-            var personTuple = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, uid, string.Empty, string.Empty, string.Empty, string.Empty, 1, 9999);
+            var personTuple = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, string.Empty, 1, 9999);
             var persons = personTuple.Item1.Select(p => new { Name = $"{p.FormNumber}-{p.FullName}" })
                 .Select(p => p.Name);
 
@@ -283,14 +283,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(IndexNominationModel indexNominationModel)
+        public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
         {
-            //Store Cycle in session
-            HttpContext.Session.SetString(SelectedCycle, indexNominationModel.Cycle);
-
-            return View(indexNominationModel);
+            ViewBag.Cycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+            if (ModelState.IsValid)
+            {
+                //Store Cycle in session
+                HttpContext.Session.SetString(SelectedCycle, indexNominationModel.Cycle);
+                
+                return View(indexNominationModel);
+            }
+            else
+            {
+                return View();
+            }
         }
-
+        
         public async Task<IActionResult> ServerSideAjaxHandler(IndexNominationModel indexNominationModel)
         {
             try

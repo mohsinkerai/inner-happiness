@@ -227,6 +227,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Occupation Type")]
         public string OccupationType { get; set; }
 
+        [JsonIgnore]
+        public string OccupationTypeName { get; set; }
+
         [JsonProperty(PropertyName = "occupationOthers")]
         [Display(Name = "Others")]
         public string OccupationTypeOther { get; set; }
