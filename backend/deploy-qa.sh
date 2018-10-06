@@ -12,8 +12,12 @@ scp -i Inner-Satisfaction.pem target/inner-satisfaction-backend-0.0.1-SNAPSHOT.j
 
 echo "SSH to Server"
 ssh -i Inner-Satisfaction.pem ubuntu@34.242.122.236 <<EOF
+sleep 1s
+echo "Killing Process of Existing Java QA"
 ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print \$2}' | xargs -r kill -9
+echo "Starting Process of QA"
 java -jar qa-build.jar --server.port=8080 --spring.datasource.password=${DB_QA_PW} --spring.datasource.host=${DB_QA_HOST} --spring.datasource.username=${DB_QA_USER} --spring.datasource.db=inner_satisfaction -Xmx500m > startup_log.out 2>&1 &
+sleep 10s
 EOF
 
 #ssh -i Inner-Satisfaction.pem ubuntu@34.242.122.236 "ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print \$2}'"
@@ -22,7 +26,6 @@ EOF
 ## Server Commands End
 
 #ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print $2}' | xargs -r kill -9
-
 
 echo "Removing Keys"
 rm -rf Inner-Satisfaction.pem
