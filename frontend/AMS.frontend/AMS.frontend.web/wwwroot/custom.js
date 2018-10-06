@@ -1687,6 +1687,7 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
     });
 
     table.on("row-reorder", function (e, diff, edit) {
+        mApp.block("#nominations-table-" + positionId, {});
         var primary = table.row(diff[0].node).data()[1];
         var primaryId = diff[0].node.getAttribute("id").substring(15);
         var primaryPosition = diff[0].newData;
@@ -1717,16 +1718,7 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
             }
         });
 
-        //var result = "Reorder started on row: " + edit.triggerRow.data()[1] + "<br>";
-
-        //for (var i = 0, ien = diff.length; i < ien; i++) {
-        //    var rowData = table.row(diff[i].node).data();
-
-        //    result += rowData[1] + " updated to be in position " +
-        //        diff[i].newData + " (was " + diff[i].oldData + ")<br>";
-        //}
-
-        //alert("Event result:<br>" + result);
+        mApp.unblock("#nominations-table-" + positionId, {});
     });
 }
 

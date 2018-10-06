@@ -23,6 +23,7 @@ namespace AMS.frontend.web.Controllers
             {
                 model.RememberMe = true;
                 if (Request.Cookies.TryGetValue(CookieNames.Company, out var company)) model.Company = company;
+                if (Request.Cookies.TryGetValue(CookieNames.CustomerName, out var customerName)) model.Username = customerName;
             }
 
             return View(model);
@@ -43,12 +44,14 @@ namespace AMS.frontend.web.Controllers
                     {
                         var cookieOptions = new CookieOptions { HttpOnly = false };
                         Response.Cookies.Append(CookieNames.RememberMe, Convert.ToString(model.RememberMe), cookieOptions);
-                        Response.Cookies.Append(CookieNames.Company, response.Name, cookieOptions);
+                        Response.Cookies.Append(CookieNames.Company, model.Company, cookieOptions);
+                        Response.Cookies.Append(CookieNames.CustomerName, model.Username, cookieOptions);
                     }
                     else
                     {
                         Response.Cookies.Delete(CookieNames.RememberMe);
                         Response.Cookies.Delete(CookieNames.Company);
+                        Response.Cookies.Delete(CookieNames.CustomerName);
                     }
 
                     return RedirectToAction(ActionNames.Index, ControllerNames.Home);
