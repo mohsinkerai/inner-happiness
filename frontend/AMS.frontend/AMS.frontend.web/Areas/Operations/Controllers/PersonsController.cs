@@ -534,12 +534,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string formNumber, string cnic, string firstName, string lastName, string jamatiTitle, string degree,
+        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName, string jamatiTitle, string degree,
             string majorAreaOfStudy, string academicInstitution)
         {
             if (cnic == null && firstName == null && lastName == null && formNumber == null)
             {
             }
+
+            ViewBag.JamatiTitleList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
+            ViewBag.InstitutionList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllInstitutions();
+            ViewBag.NameOfDegreeList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetEducationalDegree();
+            ViewBag.MajorAreaOfStudy = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetMajorAreaOfStudy();
 
             //var persons = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
             return View(new IndexPersonModel
