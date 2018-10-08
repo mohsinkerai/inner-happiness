@@ -216,11 +216,19 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             DateTime? dt = null;
-            if (!string.IsNullOrWhiteSpace(date))
+            try
             {
-                dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
-                //dt = Convert.ToDateTime(date);
+                if (!string.IsNullOrWhiteSpace(date))
+                {
+                    dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                    //dt = Convert.ToDateTime(date);
+                }
             }
+            catch (Exception)
+            {
+                dt = Convert.ToDateTime(date);
+            }
+
 
 
             sessionAkdnTrainingList.Add(new AkdnTrainingModel
@@ -291,7 +299,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ViewBag.JamatkhanaList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatkhana(person.LocalCouncil);
 
                 var appointments = await GetPastImamatAppointments(person.Id);
-                foreach(var appointment in appointments)
+                foreach (var appointment in appointments)
                 {
                     if (person.VoluntaryCommunityServices == null)
                     {
@@ -978,6 +986,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 id = Guid.NewGuid().ToString();
             }
             else
+
             {
                 sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
             }
@@ -1041,29 +1050,40 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 if (string.IsNullOrWhiteSpace(position) && string.IsNullOrWhiteSpace(cycle))
                 {
                     var appointment = (await GetPastImamatAppointments(personId)).OrderByDescending(a => a.ToYear).FirstOrDefault();
-                    cycle = appointment.Cycle;
-                    position = appointment.Position;
+                    if (appointment != null)
+                    {
+                        cycle = appointment.Cycle;
+                        position = appointment.Position;
+                    }
                 }
             }
 
-            sessionFamilyRelationList.Add(new FamilyRelationModel
+            try
             {
-                FamilyRelationId = id,
-                Cnic = relativeCnic,
-                DateOfBirth = Convert.ToDateTime(relativeDateOfBirth),
-                FathersName = relativeFathersName,
-                FirstName = relativeFirstName,
-                RelationName = string.IsNullOrWhiteSpace(relativeRelation)
-                    ? string.Empty
-                    : relativeRelation.Split('-')[1],
-                FamilyName = relativeFamilyName,
-                JamatiTitle = relativeJamatiTitle,
-                Relation = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[0],
-                Salutation = relativeSalutation,
-                Id = personId,
-                Cycle = cycle,
-                Position = position
-            });
+                sessionFamilyRelationList.Add(new FamilyRelationModel
+                {
+                    FamilyRelationId = id,
+                    Cnic = relativeCnic,
+                    DateOfBirth = Convert.ToDateTime(relativeDateOfBirth),
+                    FathersName = relativeFathersName,
+                    FirstName = relativeFirstName,
+                    RelationName = string.IsNullOrWhiteSpace(relativeRelation)
+                        ? string.Empty
+                        : relativeRelation.Split('-')[1],
+                    FamilyName = relativeFamilyName,
+                    JamatiTitle = relativeJamatiTitle,
+                    Relation = string.IsNullOrWhiteSpace(relativeRelation) ? string.Empty : relativeRelation.Split('-')[0],
+                    Salutation = relativeSalutation,
+                    Id = personId,
+                    Cycle = cycle,
+                    Position = position
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
 
             return sessionFamilyRelationList;
@@ -1149,10 +1169,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             DateTime? dt = null;
-            if (!string.IsNullOrWhiteSpace(date))
+            try
             {
-                dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
-                //dt = Convert.ToDateTime(date);
+                if (!string.IsNullOrWhiteSpace(date))
+                {
+                    dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                    //dt = Convert.ToDateTime(date);
+                }
+            }
+            catch (Exception)
+            {
+                dt = Convert.ToDateTime(date);
             }
 
 
@@ -1325,6 +1352,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private async Task<PersonModel> MapPerson(PersonModel person)
         {
+            ResetSession();
             //saif ali write mapping here
             if (person != null)
             {
@@ -1501,17 +1529,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             relation.RelationName = relationName;
 
                             var appointment = (await GetPastImamatAppointments(relation.Id)).OrderByDescending(a => a.ToYear).FirstOrDefault();
-                            var cycle = appointment.Cycle;
-                            var position = appointment.Position;
+                            if (appointment != null)
+                            {
+                                var cycle = appointment.Cycle;
+                                var position = appointment.Position;
 
-                            relation.Position = position;
-                            relation.Cycle = cycle;
+                                relation.Position = position;
+                                relation.Cycle = cycle;
+                            }
 
                             await AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic,
                                     relation.Salutation,
                                     relation.FirstName, relation.FathersName,
                                     relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
-                                    relation.RelationName, relation.Id, position, cycle);
+                                    relation.Relation+"-"+relation.RelationName, relation.Id, relation.Position, relation.Cycle);
                         }
 
                         person.FamilyRelations = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList");
