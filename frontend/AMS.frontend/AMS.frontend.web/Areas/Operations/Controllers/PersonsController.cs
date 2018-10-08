@@ -125,7 +125,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    if (model.Image != null)
+                    if (model.ImageUpload != null)
                     {
                         using (MemoryStream memoryStream = new MemoryStream())
                         {
