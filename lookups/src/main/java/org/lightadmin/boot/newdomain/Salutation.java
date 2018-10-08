@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class City {
+public class Salutation {
 
   private static final long serialVersionUID = 1L;
 
@@ -17,21 +17,17 @@ public class City {
   @Column
   private String name;
 
-  @Column
-  private Long countryId;
-
-  public City() {
+  public Salutation() {
   }
 
-  public City(String name, Long countryId) {
+  public Salutation(String name) {
     this.name = name;
-    this.countryId = countryId;
   }
 
   @Override
   public String toString() {
     return String.format(
-        "CityAdministration[id=%d, name='%s'']",
+        "Salutation[id=%d, name='%s'']",
         id, name);
   }
 
@@ -41,9 +37,5 @@ public class City {
 
   public String getName() {
     return name;
-  }
-
-  public Long getCountryId() {
-    return countryId;
   }
 }

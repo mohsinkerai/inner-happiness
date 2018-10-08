@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class City {
+public class Relation {
 
   private static final long serialVersionUID = 1L;
 
@@ -18,20 +18,20 @@ public class City {
   private String name;
 
   @Column
-  private Long countryId;
+  private Long reverseRelationId;
 
-  public City() {
+  public Relation() {
   }
 
-  public City(String name, Long countryId) {
+  public Relation(String name, Long reverseRelationId) {
     this.name = name;
-    this.countryId = countryId;
+    this.reverseRelationId = reverseRelationId;
   }
 
   @Override
   public String toString() {
     return String.format(
-        "CityAdministration[id=%d, name='%s'']",
+        "Relation[id=%d, name='%s'']",
         id, name);
   }
 
@@ -43,7 +43,7 @@ public class City {
     return name;
   }
 
-  public Long getCountryId() {
-    return countryId;
+  public Long getReverseRelationId() {
+    return reverseRelationId;
   }
 }

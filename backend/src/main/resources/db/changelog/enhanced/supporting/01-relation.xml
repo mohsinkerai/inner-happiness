@@ -31,13 +31,18 @@
   <changeSet id="relation-02" author="mohsin.kerai">
     <addColumn tableName="relation">
       <column name="is_active" defaultValue="1" type="bit">
-        <constraints nullable="false" />
+        <constraints nullable="false"/>
       </column>
     </addColumn>
   </changeSet>
   <changeSet id="relation-03" author="mohsin.kerai">
     <sql>
       ALTER TABLE relation AUTO_INCREMENT = 10000;
+    </sql>
+  </changeSet>
+  <changeSet id="relation-04" author="mohsin.kerai">
+    <sql>
+      UPDATE relation SET reverse_relation_id = reverse_relation_id + 10000 WHERE reverse_relation_id &lt;= 10000
     </sql>
   </changeSet>
 </databaseChangeLog>
