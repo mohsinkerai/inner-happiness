@@ -1494,6 +1494,25 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                 try
                 {
+                    if (person.VoluntaryPublicServices != null)
+                    {
+                        foreach (VoluntaryPublicModel voluntaryService in person.VoluntaryPublicServices)
+                        {
+
+                            AddVoluntaryPublicToSession(voluntaryService.VoluntaryPublicId,
+                                voluntaryService.Institution,
+                                voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
+                                voluntaryService.Position);
+                        }
+
+                        person.VoluntaryPublicServices = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList");
+                    }
+                }
+                catch (Exception)
+                { }
+
+                try
+                {
                     if (person.Employments != null)
                     {
                         foreach (EmploymentModel employment in person.Employments)
