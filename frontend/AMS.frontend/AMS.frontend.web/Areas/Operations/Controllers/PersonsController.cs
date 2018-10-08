@@ -691,6 +691,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     recordsFiltered = totalRecords,
                     data = conditionedData.Select(n => new
                     {
+                        n.Id,
                         n.FullName,
                         n.Cnic,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
@@ -1561,7 +1562,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                     relation.Salutation,
                                     relation.FirstName, relation.FathersName,
                                     relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
-                                    relation.Relation+"-"+relation.RelationName, relation.Id, relation.Position, relation.Cycle);
+                                    relation.Relation + "-" + relation.RelationName, relation.Id, relation.Position, relation.Cycle);
                         }
 
                         person.FamilyRelations = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList");

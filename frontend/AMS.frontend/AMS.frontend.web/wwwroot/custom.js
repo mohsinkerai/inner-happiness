@@ -1551,6 +1551,8 @@ function InitializePersonDataTable(id, title, url) {
         filter: false,
         ajax: url,
         columns: [{
+            data: "id"
+        }, {
             data: "fullName"
         }, {
             data: "cnic"
@@ -1558,7 +1560,7 @@ function InitializePersonDataTable(id, title, url) {
             data: "Actions"
         }],
         columnDefs: [{
-            targets: 2,
+            targets: 3,
             title: "Actions",
             orderable: false,
             render: function (a, e, t, n) {
