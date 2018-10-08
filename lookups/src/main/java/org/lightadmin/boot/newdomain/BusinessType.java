@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class City {
+public class BusinessType {
 
   private static final long serialVersionUID = 1L;
 
@@ -17,17 +17,17 @@ public class City {
   @Column
   private String name;
 
-  public City() {
+  public BusinessType() {
   }
 
-  public City(String name) {
+  public BusinessType(String name) {
     this.name = name;
   }
 
   @Override
   public String toString() {
     return String.format(
-        "CityAdministration[id=%d, name='%s'']",
+        "BusinessType[id=%d, name='%s'']",
         id, name);
   }
 
