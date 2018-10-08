@@ -125,7 +125,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    if (model.Image != null)
+                    if (model.ImageUpload != null)
                     {
                         using (MemoryStream memoryStream = new MemoryStream())
                         {
@@ -1492,6 +1492,25 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         }
 
                         person.VoluntaryCommunityServices = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList");
+                    }
+                }
+                catch (Exception)
+                { }
+
+                try
+                {
+                    if (person.VoluntaryPublicServices != null)
+                    {
+                        foreach (VoluntaryPublicModel voluntaryService in person.VoluntaryPublicServices)
+                        {
+
+                            AddVoluntaryPublicToSession(voluntaryService.VoluntaryPublicId,
+                                voluntaryService.Institution,
+                                voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
+                                voluntaryService.Position);
+                        }
+
+                        person.VoluntaryPublicServices = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList");
                     }
                 }
                 catch (Exception)
