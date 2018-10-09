@@ -22,6 +22,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 @Data
 @Entity
@@ -30,6 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Indexed
 public class Person extends BaseEntity {
 
   private String cnic;
@@ -38,6 +41,7 @@ public class Person extends BaseEntity {
   private String image;
 
   private Long salutation; // id, Lookup
+  @Field
   private String firstName;
   private String fathersName;
   private String familyName;
@@ -128,11 +132,11 @@ public class Person extends BaseEntity {
   @Transient
   private List<ReducedPersonDto> familyRelations;
 
-  @Column(insertable = false, updatable =  false)
+  @Column(insertable = false, updatable = false)
   private String genDegree;
-  @Column(insertable = false, updatable =  false)
+  @Column(insertable = false, updatable = false)
   private String genInstitution;
-  @Column(insertable = false, updatable =  false)
+  @Column(insertable = false, updatable = false)
   private String genMajorAreaOfStudy;
 
   private String remarks;

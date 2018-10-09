@@ -92,6 +92,22 @@ public class PersonService extends BaseService<Person> {
         academicInstitutionString, areaOfStudyString, pageable);
   }
 
+  public Page<Person> findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(
+    String name,
+    String cnic,
+    Long formNo,
+    Long educationalInstitutionId,
+    Long educationalDegreeId,
+    Long educatioanlAreaOfStudyId,
+    Long jamatiTitleId,
+    Pageable pageable
+  ) {
+    return personRepository
+      .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(
+        name, formNo, educationalInstitutionId, educationalDegreeId, educatioanlAreaOfStudyId,
+        jamatiTitleId, cnic, pageable);
+  }
+
   public List<Person> findByIdOrCnic(
     String cnic,
     Long id) {
