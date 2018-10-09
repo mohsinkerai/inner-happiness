@@ -113,7 +113,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public List<FamilyRelationModel> FamilyRelations { get; set; }
 
         [JsonProperty(PropertyName = "fathersName")]
-        [Display(Name = "Father Name")]
+        [Display(Name = "Father/Husband Name")]
         public string FathersName { get; set; }
 
         [JsonProperty(PropertyName = "fieldOfExpertise")]

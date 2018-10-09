@@ -32,7 +32,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private const string SessionKeyDoNotValidateCnicOnEditPage = "_DoNotValidateCnicOnEditPage";
         private const string SessionKeyDoNotValidateFormNumberOnEditPage = "_DoNotValidateFormNumberOnEditPage";
         private readonly Configuration _configuration;
-        private readonly RestfulClient RestfulClient;
+        private readonly RestfulClient _restfulClient;
 
         #endregion Private Fields
 
@@ -80,12 +80,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.ReligiousEducationList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetReligiousEducation();
             ViewBag.RegionalCouncilList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalCouncil();
 
-            List<SelectListItem> listOfCountries = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
+            var listOfCountries = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
             ViewBag.CountryOfStudyList = listOfCountries;
             ViewBag.AkdnTrainingCountryList = listOfCountries;
             ViewBag.ProfessionalTrainingCountryList = listOfCountries;
 
-            List<SelectListItem> listOfLanguageProficiency = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLanguageProficiency();
+            var listOfLanguageProficiency = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLanguageProficiency();
             ViewBag.Proficiency = listOfLanguageProficiency;
 
             ViewBag.VoluntaryCommunityPositionList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositions();
@@ -110,7 +110,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
-                IFormCollection formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
+                var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
 
                 if (!string.IsNullOrWhiteSpace(formCollection["RelocationDateTime"]))
                 {
@@ -127,7 +127,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (model.ImageUpload != null)
                     {
-                        using (MemoryStream memoryStream = new MemoryStream())
+                        using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
@@ -136,7 +136,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                     RestoreSessionDataToModel(model);
 
-                    bool success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).SavePersonData(model);
+                    var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).SavePersonData(model);
 
                     //var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).savePersonData(PersonDummyData(model.Image));
 
@@ -145,7 +145,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         TempData["MessageType"] = MessageTypes.Success;
                         TempData["Message"] = Messages.SuccessfulUserAdd;
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
+
+                        //return RedirectToAction("Index");
                     }
 
                     ViewBag.MessageType = MessageTypes.Error;
@@ -168,25 +170,25 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private void RestoreSessionDataToModel(PersonModel model)
         {
-            List<AkdnTrainingModel> sessionAkdnTrainingList =
+            var sessionAkdnTrainingList =
                 HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                 new List<AkdnTrainingModel>();
-            List<EducationModel> sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
                                        new List<EducationModel>();
-            List<ProfessionalTrainingModel> sessionProfessionalTrainingList =
+            var sessionProfessionalTrainingList =
                 HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
                 new List<ProfessionalTrainingModel>();
-            List<LanguageProficiencyModel> sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
                                       new List<LanguageProficiencyModel>();
-            List<VoluntaryCommunityModel> sessionVoluntaryCommunityList =
+            var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                 new List<VoluntaryCommunityModel>();
-            List<VoluntaryPublicModel> sessionVoluntaryPublicList =
+            var sessionVoluntaryPublicList =
                 HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
                 new List<VoluntaryPublicModel>();
-            List<EmploymentModel> sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                         new List<EmploymentModel>();
-            List<FamilyRelationModel> sessionFamilyRelationList =
+            var sessionFamilyRelationList =
                 HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
                 new List<FamilyRelationModel>();
 
@@ -203,7 +205,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public List<AkdnTrainingModel> AddAkdnTrainingToSession(string id, string training, string countryOfTarining,
             string date)
         {
-            List<AkdnTrainingModel> sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
+            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                           new List<AkdnTrainingModel>();
 
             if (string.IsNullOrWhiteSpace(id))
@@ -249,7 +251,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 Date = dt
             });
 
-            for (int counter = 0; counter < sessionAkdnTrainingList.Count; counter++)
+            for (var counter = 0; counter < sessionAkdnTrainingList.Count; counter++)
             {
                 sessionAkdnTrainingList[counter].Priority = counter + 1;
             }
@@ -263,7 +265,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public IActionResult AkdnTrainingListAdd(string id, string training, string countryOfTarining,
             string date)
         {
-            List<AkdnTrainingModel> sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, date);
+            var sessionAkdnTrainingList = AddAkdnTrainingToSession(id, training, countryOfTarining, date);
 
             return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
@@ -271,7 +273,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult AkdnTrainingListDelete(string id)
         {
-            List<AkdnTrainingModel> sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
+            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                           new List<AkdnTrainingModel>();
             sessionAkdnTrainingList.Remove(sessionAkdnTrainingList.Find(e => e.TrainingId == id));
             HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
@@ -291,7 +293,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
             }
 
-            PersonModel person = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsById(id);
+            var person = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsById(id);
 
             if (person.RegionalCouncil != null)
             {
@@ -341,7 +343,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
             }
 
-            PersonModel person = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsById(id);
+            var person = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsById(id);
 
             ViewBag.LocalCouncilList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalCouncil(person.RegionalCouncil);
             ViewBag.JamatkhanaList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatkhana(person.LocalCouncil);
@@ -378,7 +380,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
-                IFormCollection formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
+                var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
                 if (!string.IsNullOrWhiteSpace(formCollection["RelocationDateTime"]))
                 {
                     model.RelocationDateTime =
@@ -394,7 +396,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (model.ImageUpload != null)
                     {
-                        using (MemoryStream memoryStream = new MemoryStream())
+                        using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
@@ -403,13 +405,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                     RestoreSessionDataToModel(model);
 
-                    bool success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).EditPersonData(model);
+                    var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).EditPersonData(model);
                     if (success)
                     {
                         TempData["MessageType"] = MessageTypes.Success;
                         TempData["Message"] = Messages.SuccessUserUpdate;
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
+
+                        //return RedirectToAction("Index");
                     }
 
                     ViewBag.MessageType = MessageTypes.Error;
@@ -435,7 +439,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string fromYear,
             string toYear, string nameOfDegree, string majorAreaOfStudy)
         {
-            List<EducationModel> sessionEducationList = AddEducationToSession(id, institution, countryOfStudy, fromYear, toYear,
+            var sessionEducationList = AddEducationToSession(id, institution, countryOfStudy, fromYear, toYear,
                 nameOfDegree, majorAreaOfStudy);
 
             return PartialView("_EducationTablePartial", sessionEducationList);
@@ -444,7 +448,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult EducationListDelete(string id)
         {
-            List<EducationModel> sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
                                        new List<EducationModel>();
             sessionEducationList.Remove(sessionEducationList.Find(e => e.EducationId == id));
             HttpContext.Session.Set("EducationList", sessionEducationList);
@@ -457,7 +461,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
-            List<EmploymentModel> sessionEmploymentList = AddEmploymentToSession(id, nameOfOrganization, designation, location,
+            var sessionEmploymentList = AddEmploymentToSession(id, nameOfOrganization, designation, location,
                 employmentEmailAddress, employmentTelephone,
                 typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate);
 
@@ -467,7 +471,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult EmploymentListDelete(string id)
         {
-            List<EmploymentModel> sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                         new List<EmploymentModel>();
             sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
             HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
@@ -481,7 +485,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
             string relativeDateOfBirth, string relativeRelation, string personId)
         {
-            List<FamilyRelationModel> sessionFamilyRelationList = await AddFamilyRelationToSession(id, relativeCnic, relativeSalutation,
+            var sessionFamilyRelationList = await AddFamilyRelationToSession(id, relativeCnic, relativeSalutation,
                 relativeFirstName, relativeFathersName,
                 relativeFamilyName, relativeJamatiTitle, relativeDateOfBirth, relativeRelation, personId);
 
@@ -491,7 +495,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult FamilyRelationListDelete(string id)
         {
-            List<FamilyRelationModel> sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
+            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
                                             new List<FamilyRelationModel>();
             sessionFamilyRelationList.Remove(sessionFamilyRelationList.Find(e => e.FamilyRelationId == id));
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
@@ -502,7 +506,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<JsonResult> GetJamatkhana(string uid)
         {
             //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            List<SelectListItem> list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatkhana(uid);
+            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatkhana(uid);
 
             return new JsonResult(list);
         }
@@ -510,7 +514,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<JsonResult> GetLocalCouncil(string uid)
         {
             //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            List<SelectListItem> list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalCouncil(uid);
+            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalCouncil(uid);
 
             return new JsonResult(list);
         }
@@ -534,12 +538,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string formNumber, string cnic, string firstName, string lastName, string jamatiTitle, string degree,
+        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName, string jamatiTitle, string degree,
             string majorAreaOfStudy, string academicInstitution)
         {
             if (cnic == null && firstName == null && lastName == null && formNumber == null)
             {
             }
+
+            ViewBag.JamatiTitleList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
+            ViewBag.InstitutionList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllInstitutions();
+            ViewBag.NameOfDegreeList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetEducationalDegree();
+            ViewBag.MajorAreaOfStudy = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetMajorAreaOfStudy();
 
             //var persons = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
             return View(new IndexPersonModel
@@ -561,7 +570,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public IActionResult LanguageListAdd(string id, string language, string read,
             string write, string speak)
         {
-            List<LanguageProficiencyModel> sessionLanguageList = AddLanguageToSession(id, language, read, write, speak);
+            var sessionLanguageList = AddLanguageToSession(id, language, read, write, speak);
 
             return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
@@ -569,7 +578,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReorderEducation(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<EducationModel> sessionEducationList = ReOrderEducationInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+            var sessionEducationList = ReOrderEducationInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
 
             return PartialView("_EducationTablePartial", sessionEducationList);
         }
@@ -577,7 +586,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReorderLanguage(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<LanguageProficiencyModel> sessionLanguageList = ReOrderLanguageInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+            var sessionLanguageList = ReOrderLanguageInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
 
             return PartialView("_LanguageTablePartial", sessionLanguageList);
         }
@@ -585,7 +594,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReorderVoluntaryCommunityService(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<VoluntaryCommunityModel> voluntaryCommunityServiceInSession = ReorderVoluntaryCommunityServiceInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+            var voluntaryCommunityServiceInSession = ReorderVoluntaryCommunityServiceInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
 
             return PartialView("_VoluntaryCommunityTablePartial", voluntaryCommunityServiceInSession);
         }
@@ -593,7 +602,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReorderVoluntaryPublicService(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<VoluntaryPublicModel> voluntaryPublicServiceInSession = ReorderVoluntaryPublicServiceInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+            var voluntaryPublicServiceInSession = ReorderVoluntaryPublicServiceInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
 
             return PartialView("_VoluntaryPublicTablePartial", voluntaryPublicServiceInSession);
         }
@@ -601,7 +610,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReorderEmployment(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<EmploymentModel> employmentInSession = ReorderEmploymentInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+            var employmentInSession = ReorderEmploymentInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
 
             return PartialView("_EmploymentTablePartial", employmentInSession);
         }
@@ -609,7 +618,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReorderAkdnTraining(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<AkdnTrainingModel> sessionAkdnTrainingList = ReOrderAkdnTrainingInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+            var sessionAkdnTrainingList = ReOrderAkdnTrainingInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
 
             return PartialView("_AkdnTrainingTablePartial", sessionAkdnTrainingList);
         }
@@ -617,7 +626,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReorderProfessionalTraining(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<ProfessionalTrainingModel> sessionProfessionalTrainingList = ReOrderProfessionalTrainingInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
+            var sessionProfessionalTrainingList = ReOrderProfessionalTrainingInSession(primaryId, primaryPosition, secondaryId, secondaryPosition);
 
             return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
         }
@@ -625,7 +634,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult LanguageListDelete(string id)
         {
-            List<LanguageProficiencyModel> sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
                                       new List<LanguageProficiencyModel>();
             sessionLanguageList.Remove(sessionLanguageList.Find(e => e.LanguageProficiencyId == id));
             HttpContext.Session.Set("LanguageList", sessionLanguageList);
@@ -637,7 +646,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public IActionResult ProfessionalTrainingListAdd(string id, string training, string institution,
             string countryOfTarining, string month, string year, string date)
         {
-            List<ProfessionalTrainingModel> sessionProfessionalTrainingList =
+            var sessionProfessionalTrainingList =
                 AddProfessionalTrainingToSession(id, training, institution, countryOfTarining, month, year, date);
 
             return PartialView("_ProfessionalTrainingTablePartial", sessionProfessionalTrainingList);
@@ -646,7 +655,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ProfessionalTrainingListDelete(string id)
         {
-            List<ProfessionalTrainingModel> sessionProfessionalTrainingList =
+            var sessionProfessionalTrainingList =
                 HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
                 new List<ProfessionalTrainingModel>();
             sessionProfessionalTrainingList.Remove(sessionProfessionalTrainingList.Find(e => e.TrainingId == id));
@@ -659,29 +668,29 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
-                string firstName = searchingData.FirstName;
-                string lastName = searchingData.LastName;
-                string cnic = searchingData.Cnic;
-                string formNumber = searchingData.FormNumber;
-                string jamatiTitle = searchingData.JamatiTitle;
-                string degree = searchingData.Degree;
-                string majorAreaOfStudy = searchingData.MajorAreaOfStudy;
-                string academicIstitution = searchingData.AcademicInstitution;
+                var firstName = searchingData.FirstName;
+                var lastName = searchingData.LastName;
+                var cnic = searchingData.Cnic;
+                var formNumber = searchingData.FormNumber;
+                var jamatiTitle = searchingData.JamatiTitle;
+                var degree = searchingData.Degree;
+                var majorAreaOfStudy = searchingData.MajorAreaOfStudy;
+                var academicIstitution = searchingData.AcademicInstitution;
 
-                IQueryCollection queryCollection = Request.Query; //HttpContext.Request.Query;
+                var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
-                string search = queryCollection["search[value]"][0];
-                string draw = queryCollection["draw"][0];
+                var search = queryCollection["search[value]"][0];
+                var draw = queryCollection["draw"][0];
                 //string order = form["order[0][column]"][0];
                 //string orderDir = form["order[0][dir]"][0];
-                int startRec = Convert.ToInt32(queryCollection["start"][0]);
-                int pageSize = Convert.ToInt32(queryCollection["length"][0]);
+                var startRec = Convert.ToInt32(queryCollection["start"][0]);
+                var pageSize = Convert.ToInt32(queryCollection["length"][0]);
 
-                Tuple<List<PersonModel>, int> tupleData = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(firstName, lastName, cnic,
+                var tupleData = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(firstName, lastName, cnic,
                     formNumber, jamatiTitle, degree, majorAreaOfStudy, academicIstitution, startRec / pageSize + 1, pageSize);
 
-                List<PersonModel> conditionedData = tupleData.Item1;
-                int totalRecords = tupleData.Item2;
+                var conditionedData = tupleData.Item1;
+                var totalRecords = tupleData.Item2;
 
                 // Loading drop down lists.
                 return Json(new
@@ -691,6 +700,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     recordsFiltered = totalRecords,
                     data = conditionedData.Select(n => new
                     {
+                        n.Id,
                         n.FullName,
                         n.Cnic,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
@@ -714,22 +724,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> ValidateCnic(string cnic)
         {
-            string doNotValidateCnic = HttpContext.Session.GetString(SessionKeyDoNotValidateCnicOnEditPage);
+            var doNotValidateCnic = HttpContext.Session.GetString(SessionKeyDoNotValidateCnicOnEditPage);
 
             if (doNotValidateCnic == "true")
             {
                 return Json("true");
             }
 
-            Tuple<List<PersonModel>, int> success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
-            List<PersonModel> list = success.Item1;
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", cnic));
         }
 
         public async Task<IActionResult> ValidateFormNumber(string formnumber)
         {
-            string doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
+            var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
 
             //if (doNotValidateFormNumber == "true")
             //{
@@ -746,15 +756,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 return Json("true");
             }
 
-            Tuple<List<PersonModel>, int> success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, formnumber, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
-            List<PersonModel> list = success.Item1;
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, formnumber, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", formnumber));
         }
 
         public async Task<IActionResult> ValidateId(string id)
         {
-            string doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
+            var doNotValidateFormNumber = HttpContext.Session.GetString(SessionKeyDoNotValidateFormNumberOnEditPage);
 
             //if (doNotValidateFormNumber == "true")
             //{
@@ -771,8 +781,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 return Json("true");
             }
 
-            Tuple<List<PersonModel>, int> success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
-            List<PersonModel> list = success.Item1;
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", id));
         }
@@ -780,12 +790,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> VerifyCnic(string cnic)
         {
-            Tuple<List<PersonModel>, int> success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             ViewBag.SalutationList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSalutation();
             ViewBag.JamatiTitleList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
             ViewBag.RelationList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllRelatives();
 
-            PersonModel person = success.Item1.FirstOrDefault();
+            var person = success.Item1.FirstOrDefault();
             if (person != null)
             {
                 person.RelativeCnic = person.Cnic;
@@ -805,7 +815,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public IActionResult VoluntaryCommunityListAdd(string id, string institution, string fromYear,
             string toYear, string position)
         {
-            List<VoluntaryCommunityModel> sessionVoluntaryCommunityList =
+            var sessionVoluntaryCommunityList =
                 AddVoluntaryCommunityToSession(id, institution, fromYear, toYear, position);
 
             return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
@@ -814,7 +824,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult VoluntaryCommunityListDelete(string id)
         {
-            List<VoluntaryCommunityModel> sessionVoluntaryCommunityList =
+            var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                 new List<VoluntaryCommunityModel>();
             sessionVoluntaryCommunityList.Remove(sessionVoluntaryCommunityList.Find(e => e.VoluntaryCommunityId == id));
@@ -827,7 +837,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public IActionResult VoluntaryPublicListAdd(string id, string institution, string fromYear,
             string toYear, string position)
         {
-            List<VoluntaryPublicModel> sessionVoluntaryPublicList = AddVoluntaryPublicToSession(id, institution, fromYear, toYear, position);
+            var sessionVoluntaryPublicList = AddVoluntaryPublicToSession(id, institution, fromYear, toYear, position);
 
             return PartialView("_VoluntaryPublicTablePartial", sessionVoluntaryPublicList);
         }
@@ -835,7 +845,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult VoluntaryPublicListDelete(string id)
         {
-            List<VoluntaryPublicModel> sessionVoluntaryPublicList =
+            var sessionVoluntaryPublicList =
                 HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
                 new List<VoluntaryPublicModel>();
             sessionVoluntaryPublicList.Remove(sessionVoluntaryPublicList.Find(e => e.VoluntaryPublicId == id));
@@ -852,7 +862,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string fromYear, string toYear,
             string nameOfDegree, string majorAreaOfStudy)
         {
-            List<EducationModel> sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
                                        new List<EducationModel>();
 
             if (string.IsNullOrWhiteSpace(id))
@@ -881,7 +891,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
             });
 
-            for (int counter = 0; counter < sessionEducationList.Count; counter++)
+            for (var counter = 0; counter < sessionEducationList.Count; counter++)
             {
                 sessionEducationList[counter].Priority = counter + 1;
             }
@@ -892,7 +902,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<EducationModel> ReOrderEducationInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<EducationModel> sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
+            var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
                                        new List<EducationModel>();
 
             sessionEducationList.FirstOrDefault(e => e.EducationId == primaryId).Priority = Convert.ToInt32(primaryPosition);
@@ -904,7 +914,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<LanguageProficiencyModel> ReOrderLanguageInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<LanguageProficiencyModel> sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
                                        new List<LanguageProficiencyModel>();
 
             sessionLanguageList.FirstOrDefault(e => e.LanguageProficiencyId == primaryId).Priority = Convert.ToInt32(primaryPosition);
@@ -916,7 +926,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<VoluntaryCommunityModel> ReorderVoluntaryCommunityServiceInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<VoluntaryCommunityModel> voluntaryCommunityModels = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
+            var voluntaryCommunityModels = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                                        new List<VoluntaryCommunityModel>();
 
             voluntaryCommunityModels.FirstOrDefault(e => e.VoluntaryCommunityId == primaryId).Priority = Convert.ToInt32(primaryPosition);
@@ -928,7 +938,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<VoluntaryPublicModel> ReorderVoluntaryPublicServiceInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<VoluntaryPublicModel> voluntaryPublicModels = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
+            var voluntaryPublicModels = HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
                                        new List<VoluntaryPublicModel>();
 
             voluntaryPublicModels.FirstOrDefault(e => e.VoluntaryPublicId == primaryId).Priority = Convert.ToInt32(primaryPosition);
@@ -940,7 +950,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<EmploymentModel> ReorderEmploymentInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<EmploymentModel> employmentModels = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+            var employmentModels = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                        new List<EmploymentModel>();
 
             employmentModels.FirstOrDefault(e => e.EmploymentId == primaryId).Priority = Convert.ToInt32(primaryPosition);
@@ -952,7 +962,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<AkdnTrainingModel> ReOrderAkdnTrainingInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<AkdnTrainingModel> sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
+            var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                        new List<AkdnTrainingModel>();
 
             sessionAkdnTrainingList.FirstOrDefault(e => e.TrainingId == primaryId).Priority = Convert.ToInt32(primaryPosition);
@@ -964,7 +974,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<ProfessionalTrainingModel> ReOrderProfessionalTrainingInSession(string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-            List<ProfessionalTrainingModel> sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
+            var sessionProfessionalTrainingList = HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
                                           new List<ProfessionalTrainingModel>();
 
             sessionProfessionalTrainingList.FirstOrDefault(e => e.TrainingId == primaryId).Priority = Convert.ToInt32(primaryPosition);
@@ -978,7 +988,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
-            List<EmploymentModel> sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
+            var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                         new List<EmploymentModel>();
 
             if (string.IsNullOrWhiteSpace(id))
@@ -1018,7 +1028,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 NatureOfBusinessOther = natureOfBusinessOther
             });
 
-            for (int counter = 0; counter < sessionEmploymentList.Count; counter++)
+            for (var counter = 0; counter < sessionEmploymentList.Count; counter++)
             {
                 sessionEmploymentList[counter].Priority = counter + 1;
             }
@@ -1033,7 +1043,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string relativeFirstName, string relativeFathersName, string relativeFamilyName, string relativeJamatiTitle,
             string relativeDateOfBirth, string relativeRelation, string personId, string position = "", string cycle = "")
         {
-            List<FamilyRelationModel> sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
+            var sessionFamilyRelationList = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
                                             new List<FamilyRelationModel>();
 
             if (string.IsNullOrWhiteSpace(id))
@@ -1093,10 +1103,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             var pastAppointments = new List<PastImamatAppointment>();
 
-            List<PastAppointment> appointments = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAppointments(personId, true);
+            var appointments = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAppointments(personId, true);
             if (appointments?.Count > 0 && appointments.Any(a => a.Active))
             {
-                foreach (PastAppointment pastAppointment in appointments.Where(a => a.Active))
+                foreach (var pastAppointment in appointments.Where(a => a.Active))
                 {
                     pastAppointments.Add(new PastImamatAppointment
                     {
@@ -1116,7 +1126,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private List<LanguageProficiencyModel> AddLanguageToSession(string id, string language, string read,
             string write, string speak)
         {
-            List<LanguageProficiencyModel> sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
+            var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
                                       new List<LanguageProficiencyModel>();
 
             if (string.IsNullOrWhiteSpace(id))
@@ -1141,7 +1151,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 WriteName = string.IsNullOrWhiteSpace(write) ? string.Empty : write.Split('-')[1]
             });
 
-            for (int counter = 0; counter < sessionLanguageList.Count; counter++)
+            for (var counter = 0; counter < sessionLanguageList.Count; counter++)
             {
                 sessionLanguageList[counter].Priority = counter + 1;
             }
@@ -1155,7 +1165,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string institution,
             string countryOfTarining, string month, string year, string date)
         {
-            List<ProfessionalTrainingModel> sessionProfessionalTrainingList =
+            var sessionProfessionalTrainingList =
                 HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
                 new List<ProfessionalTrainingModel>();
 
@@ -1200,7 +1210,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 Date = dt
             });
 
-            for (int counter = 0; counter < sessionProfessionalTrainingList.Count; counter++)
+            for (var counter = 0; counter < sessionProfessionalTrainingList.Count; counter++)
             {
                 sessionProfessionalTrainingList[counter].Priority = counter + 1;
             }
@@ -1214,7 +1224,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string fromYear,
             string toYear, string position)
         {
-            List<VoluntaryCommunityModel> sessionVoluntaryCommunityList =
+            var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                 new List<VoluntaryCommunityModel>();
 
@@ -1239,7 +1249,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1]
             });
 
-            for (int counter = 0; counter < sessionVoluntaryCommunityList.Count; counter++)
+            for (var counter = 0; counter < sessionVoluntaryCommunityList.Count; counter++)
             {
                 sessionVoluntaryCommunityList[counter].Priority = counter + 1;
             }
@@ -1252,7 +1262,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private List<VoluntaryPublicModel> AddVoluntaryPublicToSession(string id, string institution, string fromYear,
             string toYear, string position)
         {
-            List<VoluntaryPublicModel> sessionVoluntaryPublicList =
+            var sessionVoluntaryPublicList =
                 HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
                 new List<VoluntaryPublicModel>();
 
@@ -1274,7 +1284,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 Position = position
             });
 
-            for (int counter = 0; counter < sessionVoluntaryPublicList.Count; counter++)
+            for (var counter = 0; counter < sessionVoluntaryPublicList.Count; counter++)
             {
                 sessionVoluntaryPublicList[counter].Priority = counter + 1;
             }
@@ -1360,7 +1370,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.Educations != null)
                     {
-                        foreach (EducationModel education in person.Educations)
+                        foreach (var education in person.Educations)
                         {
                             string institutionName = GetText(education.Institution, ViewBag.InstitutionList);
                             string country = GetText(education.CountryOfStudy, ViewBag.CountryOfStudyList);
@@ -1391,11 +1401,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.AkdnTrainings != null)
                     {
-                        foreach (AkdnTrainingModel akdnTraining in person.AkdnTrainings)
+                        foreach (var akdnTraining in person.AkdnTrainings)
                         {
                             string training = GetText(akdnTraining.Training, ViewBag.AkdnTrainingList);
                             string country = GetText(akdnTraining.CountryOfTraining, ViewBag.AkdnTrainingCountryList);
-                            string month = GetMonthName(akdnTraining.Month);
+                            var month = GetMonthName(akdnTraining.Month);
 
                             akdnTraining.TrainingName = training;
                             akdnTraining.CountryOfTrainingName = country;
@@ -1417,11 +1427,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.ProfessionalTrainings != null)
                     {
-                        foreach (ProfessionalTrainingModel professionalTraining in person.ProfessionalTrainings)
+                        foreach (var professionalTraining in person.ProfessionalTrainings)
                         {
                             string country = GetText(professionalTraining.CountryOfTraining,
                                 ViewBag.ProfessionalTrainingCountryList);
-                            string month = GetMonthName(professionalTraining.Month);
+                            var month = GetMonthName(professionalTraining.Month);
 
                             professionalTraining.CountryOfTrainingName = country;
                             //professionalTraining.CountryOfTraining = country;
@@ -1444,7 +1454,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.LanguageProficiencies != null)
                     {
-                        foreach (LanguageProficiencyModel language in person.LanguageProficiencies)
+                        foreach (var language in person.LanguageProficiencies)
                         {
                             string languageName = GetText(language.Language, ViewBag.LanguageList);
                             string read = GetText(language.Read, ViewBag.Proficiency);
@@ -1471,7 +1481,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.VoluntaryCommunityServices != null)
                     {
-                        foreach (VoluntaryCommunityModel voluntaryService in person.VoluntaryCommunityServices)
+                        foreach (var voluntaryService in person.VoluntaryCommunityServices)
                         {
                             string institutionName = GetText(voluntaryService.Institution,
                                 ViewBag.VoluntaryCommunityInstitutionList);
@@ -1496,7 +1506,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.VoluntaryPublicServices != null)
                     {
-                        foreach (VoluntaryPublicModel voluntaryService in person.VoluntaryPublicServices)
+                        foreach (var voluntaryService in person.VoluntaryPublicServices)
                         {
 
                             AddVoluntaryPublicToSession(voluntaryService.VoluntaryPublicId,
@@ -1515,7 +1525,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.Employments != null)
                     {
-                        foreach (EmploymentModel employment in person.Employments)
+                        foreach (var employment in person.Employments)
                         {
                             string businessNature = GetText(employment.NatureOfBusiness, ViewBag.NatureOfBusinessList);
                             string businessType = GetText(employment.TypeOfBusiness, ViewBag.TypeOfBusinessList);
@@ -1542,7 +1552,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.FamilyRelations != null)
                     {
-                        foreach (FamilyRelationModel relation in person.FamilyRelations)
+                        foreach (var relation in person.FamilyRelations)
                         {
                             string relationName = GetText(relation.Relation, ViewBag.RelationList);
                             relation.RelationName = relationName;
@@ -1561,7 +1571,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                     relation.Salutation,
                                     relation.FirstName, relation.FathersName,
                                     relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
-                                    relation.Relation+"-"+relation.RelationName, relation.Id, relation.Position, relation.Cycle);
+                                    relation.Relation + "-" + relation.RelationName, relation.Id, relation.Position, relation.Cycle);
                         }
 
                         person.FamilyRelations = HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList");

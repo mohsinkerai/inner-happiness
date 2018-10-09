@@ -52,5 +52,4 @@
       WHERE `level`.id = institution.id)
     </sql>
   </changeSet>
-
 </databaseChangeLog>
