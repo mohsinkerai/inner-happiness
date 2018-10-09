@@ -240,5 +240,16 @@
       <column name="jamati_title" />
     </createIndex>
   </changeSet>
+  <changeSet id="person-16" author="mohsin.kerai">
+    <sql>ALTER TABLE person CHANGE `full_name` `full_name_migrated` varchar(255);</sql>
+  </changeSet>
+  <changeSet id="person-17" author="mohsin.kerai">
+    <sql>ALTER TABLE person ADD COLUMN full_name varchar(255) GENERATED ALWAYS AS (CONCAT(first_name,' ',fathers_name, ' ', family_name)) STORED</sql>
+  </changeSet>
+  <changeSet id="person-18" author="mohsin.kerai">
+    <sql>
+      CREATE FULLTEXT INDEX full_name_text_index ON person(full_name);
+    </sql>
+  </changeSet>
   <!--Using SQL Tag, create full text inde, same goes for firstName-->
 </databaseChangeLog>

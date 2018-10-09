@@ -19,8 +19,8 @@ public class MyCLI implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    List<Person> byFirstName = personRepository.findByFirstName("+hafiz");
+    Page<Person> byFirstName = personRepository.findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle("+hafiz", null, 466l, null, null, null, null, Pageable.unpaged());
 
-    log.info("Returned RESULT {}", byFirstName);
+    log.info("Returned RESULT {}", byFirstName.getContent());
   }
 }
