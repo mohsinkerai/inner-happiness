@@ -12,7 +12,7 @@ public interface PersonRepository extends BasePagingAndSortingRepository<Person>
 
   String searchQuery = "SELECT p.* FROM person p "
     + " WHERE (:name is null OR :name = '' OR MATCH(p.full_name) AGAINST (CONCAT(\"'\", :name, \"'\" ) IN BOOLEAN MODE))"
-    + " AND (:cnic is null OR :cnic = 0 OR p.cnic = :cnic)"
+    + " AND (:cnic is null OR :cnic = '' OR p.cnic = :cnic)"
     + " AND (:id is null OR :id = 0 OR p.id = :id)"
     + " AND (:jt is null OR :jt = 0 OR p.jamati_title = :jt)"
     + " AND (:eduInstitution is null OR :eduInstitution = 0 OR MATCH(p.gen_institution) AGAINST (CONCAT(\"'\", '+', :eduInstitution, \"'\" ) IN BOOLEAN MODE))"
