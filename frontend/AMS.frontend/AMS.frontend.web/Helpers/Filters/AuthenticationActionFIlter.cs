@@ -12,11 +12,11 @@ namespace AMS.frontend.web.Helpers.Filters
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            AuthenticationResponse authReponse = context.HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+            var authReponse = context.HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
 
             if (authReponse != null && !string.IsNullOrWhiteSpace(authReponse.Token) && authReponse.Expiry > DateTime.Now)
             {
-                ActionExecutedContext resultContext = await next();
+                var resultContext = await next();
             }
             else
             {

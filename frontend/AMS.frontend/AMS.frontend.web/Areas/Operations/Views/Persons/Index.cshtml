@@ -201,6 +201,10 @@
                 "Persons",
                 "@Url.Action("ServerSideAjaxHandler", ControllerNames.Persons, Model)");
 
+            $("#Cnic").inputmask({
+                "mask": "99999-9999999-9"
+            });
+
             //var options = {
             //    bodyToggleSpeed: 400,
             //    tooltips: true,

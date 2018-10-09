@@ -408,7 +408,7 @@
                             <input type="hidden" id="education-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                                 <button id="education-button" type="button" class="btn btn-warning" onclick='return EducationListAdd("@Url.Action(ActionNames.EducationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderEducation", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
+                                    <i class="fa fa-save"></i> Add
                                 </button>
                             </div>
                         </div>
@@ -519,7 +519,7 @@
                             <input type="hidden" id="akdn-training-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                                 <button type="button" class="btn btn-warning" onclick='return AkdnTrainingListAdd("@Url.Action(ActionNames.AkdnTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
+                                    <i class="fa fa-save"></i> Add
                                 </button>
                             </div>
                         </div>
@@ -615,7 +615,7 @@
                             <input type="hidden" id="professional-training-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                                 <button type="button" class="btn btn-warning" onclick='return ProfessionalTrainingListAdd("@Url.Action(ActionNames.ProfessionalTrainingListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderProfessionalTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
+                                    <i class="fa fa-save"></i> Add
                                 </button>
                             </div>
                         </div>
@@ -655,7 +655,7 @@
                     @if (ViewBag.Action != "Detail")
                     {
                         <div class="form-group m-form__group row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label asp-for="Language" class="control-label"></label>
                                     <select asp-for="Language" asp-items="@ViewBag.LanguageList" class="form-control m-select2" placeholder="Select a language">
@@ -664,7 +664,7 @@
                                     <span asp-validation-for="Language" class="form-control-feedback"></span>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label asp-for="Read" class="control-label"></label>
                                     <select asp-for="Read" asp-items="@ViewBag.Proficiency" class="form-control m-select2" placeholder="Select a proficiency">
@@ -673,7 +673,7 @@
                                     <span asp-validation-for="Read" class="form-control-feedback"></span>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label asp-for="Write" class="control-label"></label>
                                     <select asp-for="Write" asp-items="@ViewBag.Proficiency" class="form-control m-select2" placeholder="Select a proficiency">
@@ -682,7 +682,7 @@
                                     <span asp-validation-for="Write" class="form-control-feedback"></span>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label asp-for="Speak" class="control-label"></label>
                                     <select asp-for="Speak" asp-items="@ViewBag.Proficiency" class="form-control m-select2" placeholder="Select a proficiency">
@@ -694,7 +694,7 @@
                             <input type="hidden" id="language-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                                 <button type="button" class="btn btn-warning" onclick='return LanguageListAdd("@Url.Action(ActionNames.LanguageListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderLanguage", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
+                                    <i class="fa fa-save"></i> Add
                                 </button>
                             </div>
                         </div>
@@ -765,7 +765,7 @@
                             <input type="hidden" id="voluntary-community-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                                 <button type="button" class="btn btn-warning" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
+                                    <i class="fa fa-save"></i> Add
                                 </button>
                             </div>
                         </div>
@@ -832,7 +832,7 @@
                             <input type="hidden" id="voluntary-public-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                                 <button type="button" class="btn btn-warning" onclick='return VoluntaryPublicListAdd("@Url.Action(ActionNames.VoluntaryPublicListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderVoluntaryPublicService", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
+                                    <i class="fa fa-save"></i> Add
                                 </button>
                             </div>
                         </div>
@@ -996,7 +996,7 @@
                             <input type="hidden" id="employment-id" />
                             <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                                 <button type="button" class="btn btn-warning" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Save
+                                    <i class="fa fa-save"></i> Add
                                 </button>
                             </div>
                         </div>
