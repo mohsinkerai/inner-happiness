@@ -538,10 +538,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string formNumber, string cnic, string firstName, string lastName, string jamatiTitle, string degree,
+        public async Task<IActionResult> Index(string formNumber, string cnic, string name, string jamatiTitle, string degree,
             string majorAreaOfStudy, string academicInstitution)
         {
-            if (cnic == null && firstName == null && lastName == null && formNumber == null)
+            if (cnic == null && name == null && formNumber == null)
             {
             }
 
@@ -550,14 +550,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.NameOfDegreeList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetEducationalDegree();
             ViewBag.MajorAreaOfStudy = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetMajorAreaOfStudy();
 
+            ViewBag.Search = true;
+
             //var persons = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
             return View(new IndexPersonModel
             {
                 //Persons = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).searchPerson(cnic, firstName, lastName),
                 //Persons = persons.Item1,
                 Cnic = cnic,
-                FirstName = firstName,
-                LastName = lastName,
+                Name = name,
                 FormNumber = formNumber,
                 JamatiTitle = jamatiTitle,
                 Degree = degree,
@@ -668,8 +669,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             try
             {
-                var firstName = searchingData.FirstName;
-                var lastName = searchingData.LastName;
+                var name = searchingData.Name;
                 var cnic = searchingData.Cnic;
                 var formNumber = searchingData.FormNumber;
                 var jamatiTitle = searchingData.JamatiTitle;
@@ -686,7 +686,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var startRec = Convert.ToInt32(queryCollection["start"][0]);
                 var pageSize = Convert.ToInt32(queryCollection["length"][0]);
 
-                var tupleData = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(firstName, lastName, cnic,
+                var tupleData = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(name, cnic,
                     formNumber, jamatiTitle, degree, majorAreaOfStudy, academicIstitution, startRec / pageSize + 1, pageSize);
 
                 var conditionedData = tupleData.Item1;
@@ -731,7 +731,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 return Json("true");
             }
 
-            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", cnic));
@@ -756,7 +756,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 return Json("true");
             }
 
-            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, formnumber, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, formnumber, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", formnumber));
@@ -781,7 +781,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 return Json("true");
             }
 
-            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             var list = success.Item1;
 
             return Json(!list.Any() ? "true" : string.Format("A record against {0} already exists.", id));
@@ -790,7 +790,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> VerifyCnic(string cnic)
         {
-            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, cnic, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, 1, 1);
             ViewBag.SalutationList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSalutation();
             ViewBag.JamatiTitleList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
             ViewBag.RelationList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllRelatives();

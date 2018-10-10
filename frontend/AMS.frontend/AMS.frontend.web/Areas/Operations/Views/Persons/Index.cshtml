@@ -5,7 +5,7 @@
 }
 
 @section styles{
-    <link href="~/assets/vendors/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="~/assets/vendors/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 }
 
 <div class="m-portlet m-portlet--skin-dark m-portlet--bordered-semi" id="search-portlet">
@@ -45,16 +45,22 @@
                         <input asp-for="Cnic" type="text" name="cnic" class="form-control">
                     </div>
                 </div>
-                <div class="col-lg-3">
+                @*<div class="col-lg-3">
                     <div class="form-group">
                         <label class="control-label">First Name</label>
-                        <input asp-for="FirstName" type="text" name="firstName" class="form-control">
+                        <input asp-for="Name" type="text" name="firstName" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label class="control-label">Last Name</label>
                         <input asp-for="LastName" type="text" name="lastName" class="form-control">
+                    </div>
+                </div>*@
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input asp-for="Name" type="text" name="name" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -168,22 +174,22 @@
                 </tr>
             </thead>
             @*<tbody>
-                @foreach (var item in Model.Persons)
-                {
-                    <tr>
-                        <td> @item.FirstName @item.FathersName @item.FamilyName </td>
-                        <td> @item.Cnic </td>
-                        <td>
-                            <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                                <i class="la la-eye"></i>
-                            </a>
-                            <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
-                                <i class="la la-edit"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>*@
+                    @foreach (var item in Model.Persons)
+                    {
+                        <tr>
+                            <td> @item.Name @item.FathersName @item.FamilyName </td>
+                            <td> @item.Cnic </td>
+                            <td>
+                                <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                                    <i class="la la-eye"></i>
+                                </a>
+                                <a asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                                    <i class="la la-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>*@
         </table>
     </div>
 </div>
@@ -199,7 +205,8 @@
         jQuery(document).ready(function() {
             InitializePersonDataTable("persons",
                 "Persons",
-                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Persons, Model)");
+                "@Url.Action("ServerSideAjaxHandler", ControllerNames.Persons, Model)",
+                "@Url.Action(ActionNames.Detail, ControllerNames.Persons)");
 
             $("#Cnic").inputmask({
                 "mask": "99999-9999999-9"
@@ -231,6 +238,12 @@
             $("#menu-1").addClass("m-menu__item--open m-menu__item--expanded");
 
             $("#persons").css("min-height", "0px");
+
+            if ("@ViewBag.Search" === "True") {
+                $('html, body').animate({
+                    scrollTop: ($('#person-list-portlet').offset().top)
+                }, 2000);
+            }
         });
     </script>
 }

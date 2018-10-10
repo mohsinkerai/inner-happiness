@@ -26,6 +26,8 @@ namespace AMS.frontend.web.Controllers
                 if (Request.Cookies.TryGetValue(CookieNames.CustomerName, out var customerName)) model.Username = customerName;
             }
 
+            HttpContext.Session.Set("AuthenticationResponse", new AuthenticationResponse());
+
             return View(model);
         }
 
