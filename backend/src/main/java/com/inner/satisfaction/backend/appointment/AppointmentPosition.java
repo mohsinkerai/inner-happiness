@@ -23,4 +23,5 @@ public class AppointmentPosition extends BaseEntity{
   private int nominationsRequired;
   private boolean isMowlaAppointee;
   private boolean isActive;
+  private Integer rank;
 }

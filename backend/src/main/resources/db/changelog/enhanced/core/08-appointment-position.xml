@@ -4,7 +4,8 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
   <changeSet id="appointment-position-01" author="mohsin.kerai">
-    <createTable tableName="appointment_position" remarks="This table is intended to store all appointments that needs to took place. Each appointment can be represented as 1. Cycle 2. Position 3. Institution 4. Seat">
+    <createTable tableName="appointment_position"
+      remarks="This table is intended to store all appointments that needs to took place. Each appointment can be represented as 1. Cycle 2. Position 3. Institution 4. Seat">
       <column autoIncrement="true" name="id" type="bigint">
         <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
@@ -47,14 +48,22 @@
     <createIndex tableName="appointment_position" indexName="appointment_position_cycle_id_index">
       <column name="cycle_id"></column>
     </createIndex>
-    <createIndex tableName="appointment_position" indexName="appointment_position_institution_id_index">
+    <createIndex tableName="appointment_position"
+      indexName="appointment_position_institution_id_index">
       <column name="institution_id"></column>
     </createIndex>
-    <createIndex tableName="appointment_position" indexName="appointment_position_position_id_index">
+    <createIndex tableName="appointment_position"
+      indexName="appointment_position_position_id_index">
       <column name="position_id"></column>
     </createIndex>
-    <createIndex tableName="appointment_position" indexName="appointment_position_is_mowla_appointee_index">
+    <createIndex tableName="appointment_position"
+      indexName="appointment_position_is_mowla_appointee_index">
       <column name="is_mowla_appointee"></column>
     </createIndex>
+  </changeSet>
+  <changeSet id="appointment-position-03" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="rank" type="int" afterColumn="cycle_id" defaultValue="1"></column>
+    </addColumn>
   </changeSet>
 </databaseChangeLog>
