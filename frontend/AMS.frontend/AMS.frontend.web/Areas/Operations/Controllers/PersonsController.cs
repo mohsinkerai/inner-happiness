@@ -145,6 +145,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         TempData["MessageType"] = MessageTypes.Success;
                         TempData["Message"] = Messages.SuccessfulUserAdd;
 
+                        ViewBag.MessageType = MessageTypes.Success;
+                        ViewBag.Message = Messages.SuccessfulUserAdd;
+
                         return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
 
                         //return RedirectToAction("Index");
@@ -330,6 +333,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Edit(string id)
         {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
             try
             {
                 await InitializePerson();
@@ -410,6 +416,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     {
                         TempData["MessageType"] = MessageTypes.Success;
                         TempData["Message"] = Messages.SuccessUserUpdate;
+
+                        ViewBag.MessageType = MessageTypes.Success;
+                        ViewBag.Message = Messages.SuccessUserUpdate;
 
                         return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
 
