@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends BasePagingAndSortingRepository<Person> {
 
-  String searchQuery = "SELECT p.* FROM person p "
+  String searchQuery = "SELECT * FROM person p "
     + " WHERE (:name is null OR :name = '' OR MATCH(p.full_name) AGAINST (CONCAT(\"'\", :name, \"'\" ) IN BOOLEAN MODE))"
     + " AND (:cnic is null OR :cnic = '' OR p.cnic = :cnic)"
     + " AND (:id is null OR :id = 0 OR p.id = :id)"
