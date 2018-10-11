@@ -6,4 +6,4 @@ Developers
 2. Mohsin Mansoor Kerai
 3. Ali Ahad
 4. Saif
-5. Amsal
+5. Amsal Verasi
