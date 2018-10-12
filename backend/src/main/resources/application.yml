@@ -35,4 +35,7 @@ server:
 person:
   images:
     path: images
-logging.level.org.springframework.security: DEBUG
+#logging.level.org.springframework.security: DEBUG
+logging.level.org.hibernate:
+  SQL: DEBUG
+  type.descriptor.sql.BasicBinder: TRACE

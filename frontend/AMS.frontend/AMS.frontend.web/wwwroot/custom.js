@@ -1541,9 +1541,8 @@ function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, sel
     }
 }
 
-function InitializePersonDataTable(id, title, url) {
-    var e;
-    (e = $("#" + id)).DataTable({
+function InitializePersonDataTable(id, title, url, personUrl) {
+    var table = $("#" + id).DataTable({
         responsive: true,
         searchDelay: 500,
         processing: true,
@@ -1584,6 +1583,14 @@ function InitializePersonDataTable(id, title, url) {
             [0, "desc"]
         ]
     });
+
+    table.on('xhr.dt',
+        function (e, settings, json, xhr) {
+            if (json.data.length === 1) {
+                var id = json.data[0].id;
+                window.location.href = personUrl + "/" + id;
+            }
+        });
 }
 
 function InitializeLitePersonDataTable(id, title, url) {
