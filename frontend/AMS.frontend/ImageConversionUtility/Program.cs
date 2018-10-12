@@ -60,7 +60,6 @@ namespace ImageConversionUtility
                         adapter.Fill(resultTable);
                         var writer = new StreamWriter("Queries.sql", false);
                         writer.WriteLine("UPDATE country SET country.id = 10000 + country.id;");
-                        writer.WriteLine("UPDATE akdn_training SET akdn_training.id = 10000 + akdn_training.id;");
 
                         foreach (DataRow row in resultTable.Rows)
                         {
@@ -97,6 +96,11 @@ namespace ImageConversionUtility
                                     {
                                         akdnTraining["countryOfTraining"] =
                                             10000 + Convert.ToInt32(akdnTraining["countryOfTraining"]);
+                                    }
+                                    if (Convert.ToInt32(akdnTraining["training"]) != 0)
+                                    {
+                                        akdnTraining["training"] =
+                                            10000 + Convert.ToInt32(akdnTraining["training"]);
                                     }
                                 }
 
