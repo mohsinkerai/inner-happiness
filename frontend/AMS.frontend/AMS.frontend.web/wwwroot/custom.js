@@ -906,37 +906,45 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
 
     table.on("row-reorder", function (e, diff, edit) {
         mApp.block("#" + id + "-table", {});
-        var primary = table.row(diff[0].node).data()[1];
-        var primaryId = diff[0].node.getAttribute("id")
-            .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
-        var primaryPosition = diff[0].newData;
-        var secondary = table.row(diff[1].node).data()[1];
-        var secondaryId = diff[1].node.getAttribute("id")
-            .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
-        var secondaryPosition = diff[1].newData;
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: { "primaryId": primaryId, "primaryPosition": primaryPosition, "secondaryId": secondaryId, "secondaryPosition": secondaryPosition },
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType: "html",
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("Request: " +
-                    xmlHttpRequest.toString() +
-                    "\n\nStatus: " +
-                    textStatus +
-                    "\n\nError: " +
-                    errorThrown);
-            },
-            success: function (result) {
-                if (result.length !== 4) {
-                    $("#" + id + "-table").html(result);
-                    InitializeDataTableLiteWithRowReordering(id, title, url);
-                    $("#" + id).css("min-height", "0px");
+        if (diff.length !== 0) {
+            var primary = table.row(diff[0].node).data()[1];
+            var primaryId = diff[0].node.getAttribute("id")
+                .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
+            var primaryPosition = diff[0].newData;
+            var secondary = table.row(diff[1].node).data()[1];
+            var secondaryId = diff[1].node.getAttribute("id")
+                .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
+            var secondaryPosition = diff[1].newData;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "primaryId": primaryId,
+                    "primaryPosition": primaryPosition,
+                    "secondaryId": secondaryId,
+                    "secondaryPosition": secondaryPosition
+                },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "html",
+                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " +
+                        xmlHttpRequest.toString() +
+                        "\n\nStatus: " +
+                        textStatus +
+                        "\n\nError: " +
+                        errorThrown);
+                },
+                success: function(result) {
+                    if (result.length !== 4) {
+                        $("#" + id + "-table").html(result);
+                        InitializeDataTableLiteWithRowReordering(id, title, url);
+                        $("#" + id).css("min-height", "0px");
+                    }
                 }
-            }
-        });
+            });
+        }
 
         mApp.unblock("#" + id + "-table", {});
     });
@@ -1705,35 +1713,44 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
 
     table.on("row-reorder", function (e, diff, edit) {
         mApp.block("#nominations-table-" + positionId, {});
-        var primary = table.row(diff[0].node).data()[1];
-        var primaryId = diff[0].node.getAttribute("id").substring(15);
-        var primaryPosition = diff[0].newData;
-        var secondary = table.row(diff[1].node).data()[1];
-        var secondaryId = diff[1].node.getAttribute("id").substring(15);
-        var secondaryPosition = diff[1].newData;
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: { "positionId": positionId, "primaryId": primaryId, "primaryPosition": primaryPosition, "secondaryId": secondaryId, "secondaryPosition": secondaryPosition },
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType: "html",
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("Request: " +
-                    xmlHttpRequest.toString() +
-                    "\n\nStatus: " +
-                    textStatus +
-                    "\n\nError: " +
-                    errorThrown);
-            },
-            success: function (result) {
-                if (result.length !== 4) {
-                    $("#nominations-table-" + positionId).html(result);
-                    InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
-                    $("#nominations-" + positionId).css("min-height", "0px");
+        if (diff.length !== 0) {
+            var primary = table.row(diff[0].node).data()[1];
+            var primaryId = diff[0].node.getAttribute("id").substring(15);
+            var primaryPosition = diff[0].newData;
+            var secondary = table.row(diff[1].node).data()[1];
+            var secondaryId = diff[1].node.getAttribute("id").substring(15);
+            var secondaryPosition = diff[1].newData;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "positionId": positionId,
+                    "primaryId": primaryId,
+                    "primaryPosition": primaryPosition,
+                    "secondaryId": secondaryId,
+                    "secondaryPosition": secondaryPosition
+                },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "html",
+                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " +
+                        xmlHttpRequest.toString() +
+                        "\n\nStatus: " +
+                        textStatus +
+                        "\n\nError: " +
+                        errorThrown);
+                },
+                success: function(result) {
+                    if (result.length !== 4) {
+                        $("#nominations-table-" + positionId).html(result);
+                        InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+                        $("#nominations-" + positionId).css("min-height", "0px");
+                    }
                 }
-            }
-        });
+            });
+        }
 
         mApp.unblock("#nominations-table-" + positionId, {});
     });
