@@ -122,10 +122,24 @@ function Initialize() {
         }
     });
 
-    $(document).on('focus', '.select2.select2-container', function (e) {
-        // only open on original attempt - close focus event should not fire open
-        if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
-            $(this).siblings('select:enabled').select2('open');
+    //$(document).on('focus', '.select2.select2-container', function (e) {
+    //    // only open on original attempt - close focus event should not fire open
+    //    if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
+    //        $(this).siblings('select:enabled').select2('open');
+    //    }
+    //});
+
+    $(document).keydown(function (e) {
+        // Listening tab button.
+        if (e.which == 9) {
+            tabPressed = true;
+        }
+    });
+
+    $(document).on('focus', '.select2', function () {
+        if (tabPressed) {
+            tabPressed = false;
+            $(this).siblings('select').select2('open');
         }
     });
 }

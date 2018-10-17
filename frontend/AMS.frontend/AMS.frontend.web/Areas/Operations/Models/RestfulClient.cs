@@ -632,8 +632,15 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 //    "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy + "&page=" + pageNumber + "&size=" + pageSize;
 
                 url = "/person/search/findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaos?cnic=" + cnic +
-                      "&name=" + firstName + "&id=" + formNo + "&degree=" + degree +
-                      "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy +
+                      "&name=" + firstName + "&id=" + formNo + "&degree=" +
+                      (string.IsNullOrWhiteSpace(degree) ? degree : degree.Split('-')[0]) +
+                      "&inst=" +
+                      (string.IsNullOrWhiteSpace(academicInstitution)
+                          ? academicInstitution
+                          : academicInstitution.Split('-')[0]) + "&jamatiTitle=" + jamatiTitle + "&maos=" +
+                      (string.IsNullOrWhiteSpace(majorAreaOfStudy)
+                          ? majorAreaOfStudy
+                          : majorAreaOfStudy.Split('-')[0]) +
                       "&page=" + pageNumber + "&size=" + pageSize;
             }
 
