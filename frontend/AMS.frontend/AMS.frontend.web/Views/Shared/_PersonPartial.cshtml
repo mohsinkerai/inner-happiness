@@ -38,7 +38,7 @@
                         }
                         else
                         {
-                            <button type="submit" onclick="return CustomPersonValidation();" class="btn btn-success">
+                            <button id="SavePerson" type="submit" onclick="return CustomPersonValidation();" class="btn btn-success">
                                 <i class="fa fa-save"></i> Save
                             </button>
                             <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
@@ -1043,7 +1043,7 @@
                         }
                         else
                         {
-                            <button type="submit" onclick="return CustomPersonValidation();" class="btn btn-success">
+                            <button id="SavePerson" type="submit" onclick="return CustomPersonValidation();" class="btn btn-success">
                                 <i class="fa fa-save"></i> Save
                             </button>
                             <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
