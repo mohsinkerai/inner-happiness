@@ -65,6 +65,7 @@ public class AppointmentPositionFacade {
       .personAppointmentList(fetchPersonAppointments(appointmentPosition.getId()))
       .nominationsRequired(appointmentPosition.getNominationsRequired())
       .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
+      .rank(appointmentPosition.getRank())
       .build();
   }
 
