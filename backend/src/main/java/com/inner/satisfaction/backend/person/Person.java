@@ -128,11 +128,11 @@ public class Person extends BaseEntity {
   @Transient
   private List<ReducedPersonDto> familyRelations;
 
-  @Column(insertable = false, updatable =  false)
+  @Column(insertable = false, updatable = false)
   private String genDegree;
-  @Column(insertable = false, updatable =  false)
+  @Column(insertable = false, updatable = false)
   private String genInstitution;
-  @Column(insertable = false, updatable =  false)
+  @Column(insertable = false, updatable = false)
   private String genMajorAreaOfStudy;
 
   private String remarks;

@@ -13,15 +13,11 @@ scp -i Inner-Satisfaction.pem target/inner-satisfaction-backend-0.0.1-SNAPSHOT.j
 echo "SSH to Server"
 ssh -i Inner-Satisfaction.pem ubuntu@34.242.122.236 <<EOF
 ps -ef | grep 'java' | grep '8090' | grep -v grep | awk '{print \$2}' | xargs -r kill -9
-java -jar prod-build.jar --server.port=8090 --spring.datasource.password=${DB_PROD_PW} --spring.datasource.host=${DB_PROD_HOST} --spring.datasource.username=${DB_PROD_USER} --spring.datasource.db=inner-satisfaction-prod -Xmx600m > startup_prod_log.out 2>&1 &
+java -jar prod-build.jar --server.port=8090 --spring.datasource.password=${DB_PROD_PW} --spring.datasource.host=${DB_PROD_HOST} --spring.datasource.username=${DB_PROD_USER} --spring.datasource.db=inner-satisfaction-prod --logging.file=app-prod.log -Xmx800m > startup_prod_log.out 2>&1 &
 EOF
 
-#ssh -i Inner-Satisfaction.pem ubuntu@34.242.122.236 "ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print \$2}'"
-## Backup Command
-##kill $(lsof -i:5000 -t)
-## Server Commands End
-
-#ps -ef | grep 'java' | grep '8080' | grep -v grep | awk '{print $2}' | xargs -r kill -9
+mvn clean install -DskipTests=true -PapplicationServer
+scp -i Inner-Satisfaction.pem target/inner-satisfaction-backend-0.0.1-SNAPSHOT.war ubuntu@34.242.122.236:~/nginx/prod-build.war
 
 echo "Removing Keys"
 rm -rf Inner-Satisfaction.pem

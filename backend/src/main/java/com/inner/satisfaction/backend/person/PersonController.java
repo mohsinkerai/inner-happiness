@@ -104,6 +104,27 @@ public class PersonController extends BaseController<Person> {
         cnic, firstName, lastName, id, degree, maos, institution, jamatiTitle, pageRequest);
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaos", method = RequestMethod.GET)
+  public Page<Person> findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaos(
+    @RequestParam(required = false, value = "cnic", defaultValue = "") String cnic,
+    @RequestParam(required = false, value = "name", defaultValue = "") String name,
+    @RequestParam(required = false, value = "id", defaultValue = "0") Long id, // formNo
+    @RequestParam(required = false, value = "degree", defaultValue = "0") Long degree, // Degree
+    // Academic Institution
+    @RequestParam(required = false, value = "inst", defaultValue = "0") Long institution,
+    // Jamati Title
+    @RequestParam(required = false, value = "jamatiTitle", defaultValue = "0") Long jamatiTitle,
+    // Major Area of Study
+    @RequestParam(required = false, value = "maos", defaultValue = "0") Long maos,
+    @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+    @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
+    PageRequest pageRequest = PageRequest.of(page - 1, size);
+    return personService
+      .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(
+        name, cnic, id, institution, degree, maos, jamatiTitle, pageRequest);
+  }
+
   @Override
   @GetMapping(ONE)
   public ResponseEntity<Person> findOne(@PathVariable("id") Long entityId) {

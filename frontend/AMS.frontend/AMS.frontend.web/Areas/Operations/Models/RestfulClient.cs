@@ -1,7 +1,6 @@
 ﻿using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,11 +18,11 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         #region Private Fields
 
-        private readonly string BaseUrl = "http://is.bismagreens.com:8080/";
+        private readonly string _baseUrl = "http://is.bismagreens.com:8080/";
 
         //http://localhost:8080/
 
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         #endregion Private Fields
 
@@ -31,7 +30,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
         {
             _client = new HttpClient
             {
-                BaseAddress = new Uri(BaseUrl)
+                BaseAddress = new Uri(_baseUrl)
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -47,7 +46,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             StringContent content = new StringContent(json);
             HttpResponseMessage res = await _client.PutAsync("person/one/" + personModel.Id, httpContent);
 
-            return res.IsSuccessStatusCode ? true : false;
+            return res.IsSuccessStatusCode;
         }
 
         public async Task<List<SelectListItem>> GetAkdnTraining()
@@ -584,9 +583,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
                 string json = res.Content.ReadAsStringAsync().Result;
 
-                List<PersonModel> person = new List<PersonModel>();
-
-                person = JsonConvert.DeserializeObject<List<PersonModel>>(json);
+                List<PersonModel> person = JsonConvert.DeserializeObject<List<PersonModel>>(json);
 
                 return person;
             }
@@ -602,14 +599,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
                 string json = res.Content.ReadAsStringAsync().Result;
 
-                PersonModel person = new PersonModel();
-
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 };
 
-                person = JsonConvert.DeserializeObject<PersonModel>(json, settings);
+                PersonModel person = JsonConvert.DeserializeObject<PersonModel>(json, settings);
 
                 return person;
             }
@@ -618,14 +613,14 @@ namespace AMS.frontend.web.Areas.Operations.Models
         }
 
         public async Task<Tuple<List<PersonModel>, int>> GetPersonDetailsThroughPagging(string firstName,
-            string lastName, string cnic, string formNo, string jamatiTitle, string degree, string majorAreaOfStudy, string academicInstitution,
+            string cnic, string formNo, string jamatiTitle, string degree, string majorAreaOfStudy, string academicInstitution,
             int pageNumber, int pageSize)
         {
 
             //var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName&cnic&lastName&page=1&size=1");
 
             string url = "";
-            if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(cnic) &&
+            if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(cnic) &&
                 string.IsNullOrWhiteSpace(formNo) && string.IsNullOrWhiteSpace(jamatiTitle) && string.IsNullOrWhiteSpace(degree) &&
                 string.IsNullOrWhiteSpace(majorAreaOfStudy) && string.IsNullOrWhiteSpace(academicInstitution))
             {
@@ -633,8 +628,13 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             else 
             {
-                url = "/person/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos?cnic=" + cnic + "&firstName=" + firstName + "&lastName=" + lastName + "&id=" + formNo + "&degree=" + degree +
-                    "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy + "&page=" + pageNumber + "&size=" + pageSize;
+                //url = "/person/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos?cnic=" + cnic + "&firstName=" + firstName + "&lastName=" + lastName + "&id=" + formNo + "&degree=" + degree +
+                //    "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy + "&page=" + pageNumber + "&size=" + pageSize;
+
+                url = "/person/search/findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaos?cnic=" + cnic +
+                      "&name=" + firstName + "&id=" + formNo + "&degree=" + degree +
+                      "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy +
+                      "&page=" + pageNumber + "&size=" + pageSize;
             }
 
             HttpResponseMessage res = await _client.GetAsync(url);
@@ -1035,28 +1035,28 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             List<SelectListItem> list = await GetMartialStatuses();
             List<SelectListItem> listAreaOfOrigin = await GetAreaOfOrigin();
-            List<SelectListItem> SalutationList = await GetSalutation();
-            List<SelectListItem> JamatiTitleList = await GetJamatiTitles();
-            List<SelectListItem> InstitutionList = await GetAllInstitutions();
-            List<SelectListItem> NameOfDegreeList = await GetEducationalDegree();
-            List<SelectListItem> ReligiousEducationList = await GetReligiousEducation();
-            List<SelectListItem> RegionalCouncilList = await GetRegionalCouncil();
+            List<SelectListItem> salutationList = await GetSalutation();
+            List<SelectListItem> jamatiTitleList = await GetJamatiTitles();
+            List<SelectListItem> institutionList = await GetAllInstitutions();
+            List<SelectListItem> nameOfDegreeList = await GetEducationalDegree();
+            List<SelectListItem> religiousEducationList = await GetReligiousEducation();
+            List<SelectListItem> regionalCouncilList = await GetRegionalCouncil();
             List<SelectListItem> listOfCountries = await GetAllCountries();
             List<SelectListItem> listOfLanguageProficiency = await GetLanguageProficiency();
-            List<SelectListItem> VoluntaryCommunityPositionList = await GetPositions();
-            List<SelectListItem> HighestLevelOfStudyList = await GetHighestLevelOfStudy();
-            List<SelectListItem> AkdnTrainingList = await GetAkdnTraining();
-            List<SelectListItem> VoluntaryCommunityInstitutionList = await GetPositionInstitution();
-            List<SelectListItem> FieldOfInterestsList = await GetFieldOfInterests();
-            List<SelectListItem> OccupationTypeList = await GetOcupations();
-            List<SelectListItem> TypeOfBusinessList = await GetBussinessType();
-            List<SelectListItem> NatureOfBusinessList = await GetBussinessNature();
-            List<SelectListItem> ProfessionalMembershipsList = await GetProfessionalMemeberShipDetails();
-            List<SelectListItem> LanguageList = await GetLanguages();
-            List<SelectListItem> SkillsList = await GetSkills();
-            List<SelectListItem> RelationList = await GetAllRelatives();
-            List<SelectListItem> MajorAreaOfStudy = await GetMajorAreaOfStudy();
-            List<SelectListItem> FieldOfExpertiseList = await GetFieldOfExpertise();
+            List<SelectListItem> voluntaryCommunityPositionList = await GetPositions();
+            List<SelectListItem> highestLevelOfStudyList = await GetHighestLevelOfStudy();
+            List<SelectListItem> akdnTrainingList = await GetAkdnTraining();
+            List<SelectListItem> voluntaryCommunityInstitutionList = await GetPositionInstitution();
+            List<SelectListItem> fieldOfInterestsList = await GetFieldOfInterests();
+            List<SelectListItem> occupationTypeList = await GetOcupations();
+            List<SelectListItem> typeOfBusinessList = await GetBussinessType();
+            List<SelectListItem> natureOfBusinessList = await GetBussinessNature();
+            List<SelectListItem> professionalMembershipsList = await GetProfessionalMemeberShipDetails();
+            List<SelectListItem> languageList = await GetLanguages();
+            List<SelectListItem> skillsList = await GetSkills();
+            List<SelectListItem> relationList = await GetAllRelatives();
+            List<SelectListItem> majorAreaOfStudy = await GetMajorAreaOfStudy();
+            List<SelectListItem> fieldOfExpertiseList = await GetFieldOfExpertise();
 
 
             try
@@ -1071,14 +1071,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     JArray arr = JArray.Parse(json);
 
                     List<PositionModel> listPositions = new List<PositionModel>();
-                    PositionModel positionModel = null;
-                    List<NominationModel> listNominations = null;
-                    NominationModel nominationModel = null;
 
-                    foreach (JObject positionArray in arr)
+                    foreach (JToken jToken1 in arr)
                     {
-                        listNominations = new List<NominationModel>();
-                        positionModel = new PositionModel();
+                        JObject positionArray = (JObject)jToken1;
+                        List<NominationModel> listNominations = new List<NominationModel>();
+                        PositionModel positionModel = new PositionModel();
 
                         JToken personAppointmentList = positionArray["personAppointmentList"];
                         JToken currentCycle = positionArray["cycle"];
@@ -1090,17 +1088,18 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         positionModel.PositionName = Convert.ToString(positionName["name"]);
                         positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
 
-                        int index = 0;
-                        foreach (JObject personsAppointed in personAppointmentList)
+                        //int index = 0;
+                        foreach (JToken jToken in personAppointmentList)
                         {
-                            nominationModel = new NominationModel();
+                            JObject personsAppointed = (JObject)jToken;
+                            NominationModel nominationModel = new NominationModel();
 
-                            JToken incubment = personsAppointed["person"];
-                            if (index == 0)
+                            JToken incumbent = personsAppointed["person"];
+                            if (Convert.ToInt32(personsAppointed["priority"]) == 0)
                             {
-                                positionModel.Incubment = incubment.ToObject<PersonModel>();
-                                SetDetails(list, listAreaOfOrigin, SalutationList, JamatiTitleList, NameOfDegreeList, VoluntaryCommunityInstitutionList,
-                                    OccupationTypeList, InstitutionList, positionModel.Incubment);
+                                positionModel.Incubment = incumbent.ToObject<PersonModel>();
+                                SetDetails(list, listAreaOfOrigin, salutationList, jamatiTitleList, nameOfDegreeList, voluntaryCommunityInstitutionList,
+                                    occupationTypeList, institutionList, positionModel.Incubment);
                             }
                             else
                             {
@@ -1110,12 +1109,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                                 JToken person = personsAppointed["person"];
                                 nominationModel.Person = person.ToObject<PersonModel>();
 
-                                SetDetails(list, listAreaOfOrigin, SalutationList, JamatiTitleList, NameOfDegreeList, VoluntaryCommunityInstitutionList,
-                                OccupationTypeList, InstitutionList, nominationModel.Person);
-                               
+                                SetDetails(list, listAreaOfOrigin, salutationList, jamatiTitleList, nameOfDegreeList, voluntaryCommunityInstitutionList,
+                                occupationTypeList, institutionList, nominationModel.Person);
+
                                 listNominations.Add(nominationModel);
                             }
-                            index++;
+                            //index++;
                         }
                         listNominations.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
                         positionModel.Nominations = listNominations;
@@ -1129,16 +1128,16 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     nominationDetailModel.Positions = listPositions;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
- 
+
             }
             return nominationDetailModel;
         }
 
-        private static void SetDetails(List<SelectListItem> list, List<SelectListItem> listAreaOfOrigin, List<SelectListItem> SalutationList, List<SelectListItem> JamatiTitleList,
-            List<SelectListItem> NameOfDegreeList,List<SelectListItem> VoluntaryCommunityInstitutionList, List<SelectListItem> OccupationTypeList,
-            List<SelectListItem> InstitutionList, PersonModel personModel)
+        private static void SetDetails(List<SelectListItem> list, List<SelectListItem> listAreaOfOrigin, List<SelectListItem> salutationList, List<SelectListItem> jamatiTitleList,
+            List<SelectListItem> nameOfDegreeList, List<SelectListItem> voluntaryCommunityInstitutionList, List<SelectListItem> occupationTypeList,
+            List<SelectListItem> institutionList, PersonModel personModel)
         {
             try
             {
@@ -1154,12 +1153,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 }
                 if (personModel.Salutation != null)
                 {
-                    SelectListItem salutation = SalutationList.Find(x => x.Value == personModel.Salutation);
+                    SelectListItem salutation = salutationList.Find(x => x.Value == personModel.Salutation);
                     personModel.SalutationForDisplay = salutation.Text;
                 }
                 if (personModel.JamatiTitle != null)
                 {
-                    SelectListItem jamatiTitle = JamatiTitleList.Find(x => x.Value == personModel.JamatiTitle);
+                    SelectListItem jamatiTitle = jamatiTitleList.Find(x => x.Value == personModel.JamatiTitle);
                     personModel.JamatiTitleForDisplay = jamatiTitle.Text;
                 }
                 if (personModel.Educations != null)
@@ -1167,10 +1166,10 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     foreach (EducationModel education in personModel.Educations)
                     {
 
-                        SelectListItem edu = NameOfDegreeList.Find(x => x.Value.StartsWith($"{education.NameOfDegree}-"));
+                        SelectListItem edu = nameOfDegreeList.Find(x => x.Value.StartsWith($"{education.NameOfDegree}-"));
                         education.NameOfDegreeName = edu.Text;
 
-                        SelectListItem institute = InstitutionList.Find(x => x.Value.StartsWith($"{education.Institution}-"));
+                        SelectListItem institute = institutionList.Find(x => x.Value.StartsWith($"{education.Institution}-"));
                         education.InstitutionName = institute.Text;
                     }
                 }
@@ -1178,23 +1177,23 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 {
                     foreach (VoluntaryCommunityModel communityInstituion in personModel.VoluntaryCommunityServices)
                     {
-                        SelectListItem institution = VoluntaryCommunityInstitutionList.Find(x => x.Value == communityInstituion.Institution);
+                        SelectListItem institution = voluntaryCommunityInstitutionList.Find(x => x.Value == communityInstituion.Institution);
                         communityInstituion.InstitutionName = institution.Text;
                     }
                 }
                 if (personModel.OccupationType != null)
                 {
-                    SelectListItem ocupation = OccupationTypeList.Find(x => x.Value == personModel.OccupationType);
+                    SelectListItem ocupation = occupationTypeList.Find(x => x.Value == personModel.OccupationType);
                     personModel.OccupationTypeName = ocupation.Text;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
         }
 
-        public async Task<PersonModel> searchPersonByFormNumber(string formNumber, string personId, string id)
+        public async Task<PersonModel> SearchPersonByFormNumber(string formNumber, string personId, string id)
         {
 
             HttpResponseMessage res = await _client.GetAsync("person/search/findByFormNo?formNo=" + formNumber);
@@ -1208,7 +1207,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<PersonModel> nominate(string personId, string positionId)
+        public async Task<PersonModel> Nominate(string personId, string positionId)
         {
 
             JObject jObject = new JObject

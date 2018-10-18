@@ -21,7 +21,7 @@ namespace ImageConversionUtility
 
         private SqlConnection GetConnection()
         {
-            SqlConnection connection = new SqlConnection(ConnectionString);
+            var connection = new SqlConnection(ConnectionString);
             if (connection.State != ConnectionState.Open)
             {
                 connection.Open();
@@ -32,7 +32,7 @@ namespace ImageConversionUtility
 
         protected DbCommand GetCommand(DbConnection connection, string commandText, CommandType commandType)
         {
-            SqlCommand command = new SqlCommand(commandText, connection as SqlConnection)
+            var command = new SqlCommand(commandText, connection as SqlConnection)
             {
                 CommandType = commandType
             };
@@ -41,7 +41,7 @@ namespace ImageConversionUtility
 
         protected SqlParameter GetParameter(string parameter, object value)
         {
-            SqlParameter parameterObject = new SqlParameter(parameter, value != null ? value : DBNull.Value)
+            var parameterObject = new SqlParameter(parameter, value != null ? value : DBNull.Value)
             {
                 Direction = ParameterDirection.Input
             };
@@ -50,7 +50,7 @@ namespace ImageConversionUtility
 
         protected SqlParameter GetParameterOut(string parameter, SqlDbType type, object value = null, ParameterDirection parameterDirection = ParameterDirection.InputOutput)
         {
-            SqlParameter parameterObject = new SqlParameter(parameter, type); ;
+            var parameterObject = new SqlParameter(parameter, type); ;
 
             if (type == SqlDbType.NVarChar || type == SqlDbType.VarChar || type == SqlDbType.NText || type == SqlDbType.Text)
             {
@@ -73,13 +73,13 @@ namespace ImageConversionUtility
 
         protected int ExecuteNonQuery(string procedureName, List<DbParameter> parameters, CommandType commandType = CommandType.StoredProcedure)
         {
-            int returnValue = -1;
+            var returnValue = -1;
 
             try
             {
-                using (SqlConnection connection = GetConnection())
+                using (var connection = GetConnection())
                 {
-                    DbCommand cmd = GetCommand(connection, procedureName, commandType);
+                    var cmd = GetCommand(connection, procedureName, commandType);
 
                     if (parameters != null && parameters.Count > 0)
                     {
@@ -106,7 +106,7 @@ namespace ImageConversionUtility
             {
                 using (DbConnection connection = GetConnection())
                 {
-                    DbCommand cmd = GetCommand(connection, procedureName, CommandType.StoredProcedure);
+                    var cmd = GetCommand(connection, procedureName, CommandType.StoredProcedure);
 
                     if (parameters != null && parameters.Count > 0)
                     {
@@ -133,7 +133,7 @@ namespace ImageConversionUtility
             {
                 DbConnection connection = GetConnection();
                 {
-                    DbCommand cmd = GetCommand(connection, procedureName, commandType);
+                    var cmd = GetCommand(connection, procedureName, commandType);
                     if (parameters != null && parameters.Count > 0)
                     {
                         cmd.Parameters.AddRange(parameters.ToArray());

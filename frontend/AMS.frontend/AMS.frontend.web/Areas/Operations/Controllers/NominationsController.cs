@@ -28,7 +28,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         #region Private Fields
 
         private readonly Configuration _configuration;
-        private readonly RestfulClient RestfulClient;
+        private readonly RestfulClient _restfulClient;
         private const string SelectedCycle = "_cycle";
 
         #endregion Private Fields
@@ -38,7 +38,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult Nominate(string id, string personId)
         {
-            var person = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).nominate(id, personId);
+            var person = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(id, personId);
         
             //saif integration goes here
             return PartialView("_NominationsTablePartial", new PositionModel
@@ -136,7 +136,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
         public async Task<JsonResult> GetPersons(string id)
         {
-            var personTuple = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, string.Empty, 1, 9999);
+            var personTuple = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPersonDetailsThroughPagging(string.Empty, string.Empty, string.Empty, id, string.Empty, string.Empty, string.Empty, 1, 9999);
             var persons = personTuple.Item1.Select(p => new { Name = $"{p.FormNumber}-{p.FullName}" })
                 .Select(p => p.Name);
 
@@ -237,16 +237,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             };
 
-            string cycle = HttpContext.Session.GetString(SelectedCycle);
+            var cycle = HttpContext.Session.GetString(SelectedCycle);
 
-            NominationDetailModel nominationModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionDetails(uid,cycle);
+            var nominationModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionDetails(uid,cycle);
 
             return View(nominationModel);
         }
 
         public async Task<JsonResult> GetInstitutionTypes(string level, string subLevel)
         {
-            var list = await RestfulClient.GetInstitutionTypes(level, subLevel);
+            var list = await _restfulClient.GetInstitutionTypes(level, subLevel);
 
             return new JsonResult(list);
         }
