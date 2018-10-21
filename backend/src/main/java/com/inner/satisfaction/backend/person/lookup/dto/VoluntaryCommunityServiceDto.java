@@ -22,4 +22,8 @@ public class VoluntaryCommunityServiceDto extends BaseDto{
   private int fromYear;
   private int toYear;
   private int priority;
+
+  private boolean isImamatAppointee;
+  private long cycleId;
+  private long seatNo;
 }
