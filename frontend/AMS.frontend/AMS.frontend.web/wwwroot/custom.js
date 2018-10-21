@@ -12,11 +12,12 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
         var dataSource = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: remoteUrl,
+            //prefetch: remoteUrl,
             //local: localData,
             remote: {
                 url: remoteUrl + "/%QUERY",
-                wildcard: '%QUERY'
+                wildcard: '%QUERY',
+                cache: false
             }
         });
 
@@ -128,6 +129,39 @@ function Initialize() {
             $(this).siblings('select:enabled').select2('open');
         }
     });
+
+    //$(document).keydown(function (e) {
+    //    // Listening tab button.
+    //    if (e.which == 9) {
+    //        tabPressed = true;
+    //    }
+    //});
+
+    //$(document).on('focus', '.select2', function () {
+    //    if (tabPressed) {
+    //        tabPressed = false;
+    //        $(this).siblings('select').select2('open');
+    //    }
+    //});
+}
+
+function IsEmpty(data) {
+    if (typeof (data) == 'number' || typeof (data) == 'boolean') {
+        return false;
+    }
+    if (typeof (data) == 'undefined' || data === null) {
+        return true;
+    }
+    if (typeof (data.length) != 'undefined') {
+        return data.length == 0;
+    }
+    var count = 0;
+    for (var i in data) {
+        if (data.hasOwnProperty(i)) {
+            count++;
+        }
+    }
+    return count == 0;
 }
 
 function toggleNotMe() {
@@ -531,6 +565,14 @@ function LanguageListAdd(url, reOrderUrl) {
         var read = $("#Read").val();
         var write = $("#Write").val();
         var speak = $("#Speak").val();
+        if (IsEmpty(languageId) &&
+            IsEmpty(language) &&
+            IsEmpty(read) &&
+            IsEmpty(write) &&
+            IsEmpty(speak)) {
+            mApp.unblock("#language-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -574,7 +616,14 @@ function ProfessionalTrainingListAdd(url, reOrderUrl) {
         //var month = $("#ProfessionalTrainingMonth").val();
         //var year = $("#ProfessionalTrainingYear").val();
         var date = $("#ProfessionalTrainingDate").val();
-
+        if (IsEmpty(trainingId) &&
+            IsEmpty(training) &&
+            IsEmpty(institution) &&
+            IsEmpty(country) &&
+            IsEmpty(date)) {
+            mApp.unblock("#professional-training-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -618,6 +667,14 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
         var fromYear = $("#VoluntaryCommunityFromYear").val();
         var toYear = $("#VoluntaryCommunityToYear").val();
         var position = $("#VoluntaryCommunityPosition").val();
+        if (IsEmpty(voluntaryCommunityId) &&
+            IsEmpty(institution) &&
+            IsEmpty(fromYear) &&
+            IsEmpty(toYear) &&
+            IsEmpty(position)) {
+            mApp.unblock("#voluntary-community-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -659,6 +716,14 @@ function VoluntaryPublicListAdd(url, reOrderUrl) {
         var fromYear = $("#VoluntaryPublicFromYear").val();
         var toYear = $("#VoluntaryPublicToYear").val();
         var position = $("#VoluntaryPublicPosition").val();
+        if (IsEmpty(voluntaryPublicId) &&
+            IsEmpty(institution) &&
+            IsEmpty(fromYear) &&
+            IsEmpty(toYear) &&
+            IsEmpty(position)) {
+            mApp.unblock("#voluntary-public-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -702,6 +767,16 @@ function EducationListAdd(url, reOrderUrl) {
         var toYear = $("#FromYear").val();
         var nameOfDegree = $("#NameOfDegree").val();
         var majorAreaOfStudy = $("#MajorAreaOfStudy").val();
+        if (IsEmpty(educationId) &&
+            IsEmpty(institution) &&
+            IsEmpty(countryOfStudy) &&
+            IsEmpty(fromYear) &&
+            IsEmpty(toYear) &&
+            IsEmpty(nameOfDegree) &&
+            IsEmpty(majorAreaOfStudy)) {
+            mApp.unblock("#education-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -751,6 +826,20 @@ function EmploymentListAdd(url, reOrderUrl) {
         var other = $("#NatureOfBusinessOther").val();
         var start = $("#EmploymentStartDate").val();
         var end = $("#EmploymentEndDate").val();
+        if (IsEmpty(id) &&
+            IsEmpty(name) &&
+            IsEmpty(designation) &&
+            IsEmpty(location) &&
+            IsEmpty(email) &&
+            IsEmpty(phone) &&
+            IsEmpty(type) &&
+            IsEmpty(nature) &&
+            IsEmpty(other) &&
+            IsEmpty(start) &&
+            IsEmpty(end)) {
+            mApp.unblock("#employment-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -803,6 +892,19 @@ function FamilyInformationListAdd(url) {
         var relativeDateOfBirth = $("#RelativeDateOfBirth").val();
         var relativeRelation = $("#RelativeRelation").val();
         var personId = $("#RelativePersonId").val();
+        if (IsEmpty(id) &&
+            IsEmpty(relativeCnic) &&
+            IsEmpty(relativeSalutation) &&
+            IsEmpty(relativeFirstName) &&
+            IsEmpty(relativeFathersName) &&
+            IsEmpty(relativeFamilyName) &&
+            IsEmpty(relativeJamatiTitle) &&
+            IsEmpty(relativeDateOfBirth) &&
+            IsEmpty(relativeRelation) &&
+            IsEmpty(personId)) {
+            mApp.unblock("#family-relation-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -849,7 +951,13 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
         //var month = $("#AkdnTrainingMonth").val();
         //var year = $("#AkdnTrainingYear").val();
         var date = $("#AkdnTrainingDate").val();
-
+        if (IsEmpty(trainingId) &&
+            IsEmpty(training) &&
+            IsEmpty(country) &&
+            IsEmpty(date)) {
+            mApp.unblock("#akdn-training-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
