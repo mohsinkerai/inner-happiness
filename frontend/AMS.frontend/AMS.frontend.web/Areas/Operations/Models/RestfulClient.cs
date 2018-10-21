@@ -626,7 +626,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
                 url = "/person/all/paginated?page=" + pageNumber + "&size=" + pageSize;
             }
-            else
+            else 
             {
                 //url = "/person/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos?cnic=" + cnic + "&firstName=" + firstName + "&lastName=" + lastName + "&id=" + formNo + "&degree=" + degree +
                 //    "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy + "&page=" + pageNumber + "&size=" + pageSize;
