@@ -1022,7 +1022,7 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
             var primaryPosition = diff[0].newData;
             var secondary = table.row(diff[1].node).data()[1];
             var secondaryId = diff[1].node.getAttribute("id")
-                .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
+                .substring(diff[1].node.getAttribute("id").lastIndexOf("row") + 4);
             var secondaryPosition = diff[1].newData;
 
             $.ajax({

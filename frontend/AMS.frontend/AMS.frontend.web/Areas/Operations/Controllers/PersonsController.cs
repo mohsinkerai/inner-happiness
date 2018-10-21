@@ -917,6 +917,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             sessionEducationList.FirstOrDefault(e => e.EducationId == primaryId).Priority = Convert.ToInt32(primaryPosition);
             sessionEducationList.FirstOrDefault(e => e.EducationId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
 
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in sessionEducationList.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.EducationId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
+
             HttpContext.Session.Set("EducationList", sessionEducationList);
             return sessionEducationList;
         }
@@ -928,6 +935,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             sessionLanguageList.FirstOrDefault(e => e.LanguageProficiencyId == primaryId).Priority = Convert.ToInt32(primaryPosition);
             sessionLanguageList.FirstOrDefault(e => e.LanguageProficiencyId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in sessionLanguageList.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.LanguageProficiencyId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
 
             HttpContext.Session.Set("LanguageList", sessionLanguageList);
             return sessionLanguageList;
@@ -941,6 +955,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             voluntaryCommunityModels.FirstOrDefault(e => e.VoluntaryCommunityId == primaryId).Priority = Convert.ToInt32(primaryPosition);
             voluntaryCommunityModels.FirstOrDefault(e => e.VoluntaryCommunityId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
 
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in voluntaryCommunityModels.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.VoluntaryCommunityId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
+
             HttpContext.Session.Set("VoluntaryCommunityList", voluntaryCommunityModels);
             return voluntaryCommunityModels;
         }
@@ -952,6 +973,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             voluntaryPublicModels.FirstOrDefault(e => e.VoluntaryPublicId == primaryId).Priority = Convert.ToInt32(primaryPosition);
             voluntaryPublicModels.FirstOrDefault(e => e.VoluntaryPublicId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in voluntaryPublicModels.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.VoluntaryPublicId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
 
             HttpContext.Session.Set("VoluntaryPublicList", voluntaryPublicModels);
             return voluntaryPublicModels;
@@ -965,6 +993,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             employmentModels.FirstOrDefault(e => e.EmploymentId == primaryId).Priority = Convert.ToInt32(primaryPosition);
             employmentModels.FirstOrDefault(e => e.EmploymentId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
 
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in employmentModels.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.EmploymentId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
+
             HttpContext.Session.Set("EmploymentList", employmentModels);
             return employmentModels;
         }
@@ -977,6 +1012,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             sessionAkdnTrainingList.FirstOrDefault(e => e.TrainingId == primaryId).Priority = Convert.ToInt32(primaryPosition);
             sessionAkdnTrainingList.FirstOrDefault(e => e.TrainingId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
 
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in sessionAkdnTrainingList.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.TrainingId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
+
             HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
             return sessionAkdnTrainingList;
         }
@@ -988,6 +1030,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             sessionProfessionalTrainingList.FirstOrDefault(e => e.TrainingId == primaryId).Priority = Convert.ToInt32(primaryPosition);
             sessionProfessionalTrainingList.FirstOrDefault(e => e.TrainingId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in sessionProfessionalTrainingList.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.TrainingId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
 
             HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
             return sessionProfessionalTrainingList;
