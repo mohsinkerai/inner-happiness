@@ -12,11 +12,12 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
         var dataSource = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: remoteUrl,
+            //prefetch: remoteUrl,
             //local: localData,
             remote: {
                 url: remoteUrl + "/%QUERY",
-                wildcard: '%QUERY'
+                wildcard: '%QUERY',
+                cache: false
             }
         });
 
