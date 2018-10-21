@@ -1094,6 +1094,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         positionModel.CurrentCycle = Convert.ToString(currentCycle["name"]);
                         positionModel.PositionName = Convert.ToString(positionName["name"]);
                         positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
+                        positionModel.Rank = Convert.ToInt32(positionArray["rank"]);
 
                         //int index = 0;
                         foreach (JToken jToken in personAppointmentList)
@@ -1132,6 +1133,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         nominationDetailModel.Institution.Name = Convert.ToString(instituion["name"]);
                     }
 
+                    listPositions.Sort((a, b) => (a.Rank.CompareTo(b.Rank)));
                     nominationDetailModel.Positions = listPositions;
                 }
             }
@@ -1220,17 +1222,20 @@ namespace AMS.frontend.web.Areas.Operations.Models
             JObject jObject = new JObject
             {
                 { "appointed", true },
-                { "cpiId", positionId },
+                { "appointmentPositionId", positionId },
                 { "id", 0 },
+                { "isAppointed", false },
+                { "isRecommended", true },
                 { "personId", personId },
                 { "priority", 0 },
-                { "recommended", true }
+                { "recommended", true },
+                { "remarks", "" }
             };
 
             string json = JsonConvert.SerializeObject(jObject);
             StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage res = await _client.PostAsync("/person/cpi", httpContent);
+            HttpResponseMessage res = await _client.PostAsync("/person/appointment", httpContent);
 
             if (res.IsSuccessStatusCode)
             {
