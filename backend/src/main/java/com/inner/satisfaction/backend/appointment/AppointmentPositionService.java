@@ -1,15 +1,7 @@
 package com.inner.satisfaction.backend.appointment;
 
 import com.inner.satisfaction.backend.base.BaseService;
-import com.inner.satisfaction.backend.cycle.CycleService;
-import com.inner.satisfaction.backend.institution.InstitutionService;
-import com.inner.satisfaction.backend.person.PersonService;
-import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
-import com.inner.satisfaction.backend.person.appointment.PersonAppointmentDto;
-import com.inner.satisfaction.backend.person.appointment.PersonAppointmentService;
-import com.inner.satisfaction.backend.position.PositionService;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,5 +29,11 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
   public List<AppointmentPosition> findByCycleIdAndInstitutionId(long cycleId,
     long institutionId) {
     return appointmentPositionRepository.findByCycleIdAndInstitutionId(cycleId, institutionId);
+  }
+
+  public List<AppointmentPosition> findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(
+    long cycleId, long institutionId, long positionId,
+    long seatId) {
+    return appointmentPositionRepository.findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(cycleId, institutionId, positionId, seatId);
   }
 }

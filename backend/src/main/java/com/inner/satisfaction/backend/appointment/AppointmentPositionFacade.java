@@ -55,6 +55,15 @@ public class AppointmentPositionFacade {
       .collect(Collectors.toList());
   }
 
+  public ApptPositionDto findByCycleIdAndInstitutionIdPositionIdAndSeatNo(long cycleId,
+    long institutionId, long positionId, long seatId) {
+    return appointmentPositionService.findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(cycleId, institutionId, positionId, seatId)
+      .stream()
+      .map(this::convertToApptPositionDto)
+      .findFirst()
+      .orElseThrow(() -> new RuntimeException("Lala !! Combination of cycle, institution, position and seat given doesn't exist"));
+  }
+
   private ApptPositionDto convertToApptPositionDto(AppointmentPosition appointmentPosition) {
     return ApptPositionDto.builder()
       .appointmentPositionId(appointmentPosition.getId())
