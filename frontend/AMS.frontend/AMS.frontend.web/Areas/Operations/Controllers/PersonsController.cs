@@ -1176,7 +1176,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     {
                         Position = pastAppointment?.PositionName,
                         Cycle = pastAppointment?.CycleName,
-                        CycleId = pastAppointment?.CycleId?.Id?.ToString(),
+                        CycleId = pastAppointment?.CycleId?.Id.ToString(),
                         RawPosition = pastAppointment?.Position?.Id.ToString(),
                         RawInstitution = pastAppointment?.Institution?.Id.ToString(),
                         FromYear = pastAppointment?.CycleId?.StartDate.Year.ToString(),
