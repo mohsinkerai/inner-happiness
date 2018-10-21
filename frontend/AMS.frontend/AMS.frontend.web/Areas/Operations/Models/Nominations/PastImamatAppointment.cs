@@ -9,6 +9,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
     {
         public string Position { get; set; }
         public string Cycle { get; set; }
+        public string CycleId { get; set; }
         public string RawPosition { get; set; }
         public string RawInstitution { get; set; }
         public string FromYear { get; set; }

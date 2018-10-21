@@ -240,10 +240,16 @@ function AkdnTrainingListEdit(id, training, country, month, year, date) {
     $("#akdn-training-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position) {
+function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position, cycle) {
+    if (cycle !== "") {
+        $($(".is-imamat-appointee")[0]).prop("checked", true).trigger('change');
+        $("#VoluntaryCommunityCycle").val(cycle).trigger('change');
+    } else {
+        $($(".is-imamat-appointee")[1]).prop("checked", true).trigger('change');
+        $("#VoluntaryCommunityFromYear").val(fromYear).trigger('change');
+        $("#VoluntaryCommunityToYear").val(toYear).trigger('change');
+    }
     $("#VoluntaryCommunityInstitution").val(institution).trigger('change');
-    $("#VoluntaryCommunityFromYear").val(fromYear).trigger('change');
-    $("#VoluntaryCommunityToYear").val(toYear).trigger('change');
     $("#VoluntaryCommunityPosition").val(position).trigger('change');
     $("#voluntary-community-id").val(id);
 
@@ -667,6 +673,12 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
         var fromYear = $("#VoluntaryCommunityFromYear").val();
         var toYear = $("#VoluntaryCommunityToYear").val();
         var position = $("#VoluntaryCommunityPosition").val();
+        var cycle = $("#VoluntaryCommunityCycle").val();
+        var cycleName = $("#VoluntaryCommunityCycle :selected").text();
+        var cycleToSend = cycle + "|" + cycleName;
+        if (!$(".is-imamat-appointee")[0].checked) {
+            cycleToSend = "";
+        }
         if (IsEmpty(voluntaryCommunityId) &&
             IsEmpty(institution) &&
             IsEmpty(fromYear) &&
@@ -678,7 +690,7 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": voluntaryCommunityId, "institution": institution, "fromYear": fromYear, "toYear": toYear, "position": position },
+            data: { "id": voluntaryCommunityId, "institution": institution, "fromYear": fromYear, "toYear": toYear, "position": position, "cycle": cycleToSend },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -697,6 +709,7 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
                     $("#VoluntaryCommunityFromYear").val('').trigger('change');
                     $("#VoluntaryCommunityToYear").val('').trigger('change');
                     $("#VoluntaryCommunityPosition").val('').trigger('change');
+                    $("#VoluntaryCommunityCycle").val('').trigger('change');
                     $("#voluntary-community-id").val('');
                 }
                 //else {

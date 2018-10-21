@@ -103,6 +103,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.RelationList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllRelatives();
             ViewBag.MajorAreaOfStudy = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetMajorAreaOfStudy();
             ViewBag.FieldOfExpertiseList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetFieldOfExpertise();
+
+            ViewBag.Cycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
         }
 
         [HttpPost]
@@ -322,7 +324,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             Institution = appointment.RawInstitution,
                             FromYear = Convert.ToInt32(appointment.FromYear),
                             ToYear = Convert.ToInt32(appointment.ToYear),
-                            Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
+                            Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1,
+                            Cycle = appointment.CycleId,
+                            IsImamatAppointee = true
                         });
                     }
                 }
@@ -373,7 +377,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         Institution = appointment.RawInstitution,
                         FromYear = Convert.ToInt32(appointment.FromYear),
                         ToYear = Convert.ToInt32(appointment.ToYear),
-                        Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1
+                        Priority = person.VoluntaryCommunityServices.Select(vc => vc.Priority).FirstOrDefault() + 1,
+                        Cycle = appointment.CycleId,
+                        IsImamatAppointee = true
                     });
                 }
             }
@@ -822,10 +828,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         [HttpPost]
         public IActionResult VoluntaryCommunityListAdd(string id, string institution, string fromYear,
-            string toYear, string position)
+            string toYear, string position, string cycle)
         {
             var sessionVoluntaryCommunityList =
-                AddVoluntaryCommunityToSession(id, institution, fromYear, toYear, position);
+                AddVoluntaryCommunityToSession(id, institution, fromYear, toYear, position, cycle);
 
             return PartialView("_VoluntaryCommunityTablePartial", sessionVoluntaryCommunityList);
         }
@@ -1170,6 +1176,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     {
                         Position = pastAppointment?.PositionName,
                         Cycle = pastAppointment?.CycleName,
+                        CycleId = pastAppointment?.CycleId?.Id?.ToString(),
                         RawPosition = pastAppointment?.Position?.Id.ToString(),
                         RawInstitution = pastAppointment?.Institution?.Id.ToString(),
                         FromYear = pastAppointment?.CycleId?.StartDate.Year.ToString(),
@@ -1280,11 +1287,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<VoluntaryCommunityModel> AddVoluntaryCommunityToSession(string id, string institution,
             string fromYear,
-            string toYear, string position)
+            string toYear, string position, string cycle)
         {
             var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                 new List<VoluntaryCommunityModel>();
+
+            if (cycle.StartsWith("0"))
+            {
+                cycle = string.Empty;
+            }
 
             if (string.IsNullOrWhiteSpace(id))
             {
@@ -1299,12 +1311,23 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             sessionVoluntaryCommunityList.Add(new VoluntaryCommunityModel
             {
                 VoluntaryCommunityId = id,
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear)
+                    ? (string.IsNullOrWhiteSpace(cycle)
+                        ? (int?) null
+                        : Convert.ToInt32(cycle.Split('|')[1].Split('-')[0]))
+                    : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
+                ToYear = string.IsNullOrWhiteSpace(toYear)
+                    ? (string.IsNullOrWhiteSpace(cycle)
+                        ? (int?) null
+                        : Convert.ToInt32(cycle.Split('|')[1].Split('-')[1]))
+                    : Convert.ToInt32(toYear),
                 Position = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[0],
-                PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1]
+                PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1],
+                IsImamatAppointee = !string.IsNullOrWhiteSpace(cycle),
+                Cycle = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[0],
+                CycleName = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[1]
             });
 
             for (var counter = 0; counter < sessionVoluntaryCommunityList.Count; counter++)
@@ -1548,10 +1571,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             voluntaryService.InstitutionName = institutionName;
                             voluntaryService.PositionName = position;
 
+                            var cycle = string.IsNullOrWhiteSpace(voluntaryService.Cycle)
+                                ? string.Empty
+                                : $"{voluntaryService.Cycle}|{voluntaryService.FromYear}-{voluntaryService.ToYear}";
+
                             AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId,
                                 voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
                                 voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
-                                voluntaryService.Position + "-" + voluntaryService.PositionName);
+                                voluntaryService.Position + "-" + voluntaryService.PositionName, cycle);
                         }
 
                         person.VoluntaryCommunityServices = HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList");
