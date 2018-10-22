@@ -24,9 +24,10 @@ public class AuthenticationToken extends BaseEntity implements Authentication {
 
   private String user;
   private String token;
+  // Can login from any one company
+  private long companyId;
   private boolean isActive;
   private Timestamp expiry;
-
   @Convert(converter = JpaConverterJson.class)
   private List<String> roles;
 

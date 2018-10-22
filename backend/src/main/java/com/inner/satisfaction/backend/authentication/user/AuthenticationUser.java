@@ -24,5 +24,7 @@ public class AuthenticationUser extends BaseEntity {
   private boolean isActive;
 
   @Convert(converter = JpaConverterJson.class)
+  private List<Long> allowedCompanies;
+  @Convert(converter = JpaConverterJson.class)
   private List<String> roles;
 }
