@@ -32,6 +32,15 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
 
+        [JsonProperty(PropertyName = "cycleId")]
+        public string Cycle { get; set; }
+
+        [JsonProperty(PropertyName = "cycleName")]
+        public string CycleName { get; set; }
+
+        [JsonProperty(PropertyName = "isImamatAppointee")]
+        public bool IsImamatAppointee { get; set; }
+
         #endregion Public Properties
     }
 }

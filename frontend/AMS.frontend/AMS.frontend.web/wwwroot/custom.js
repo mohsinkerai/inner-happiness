@@ -12,11 +12,12 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
         var dataSource = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: remoteUrl,
+            //prefetch: remoteUrl,
             //local: localData,
             remote: {
                 url: remoteUrl + "/%QUERY",
-                wildcard: '%QUERY'
+                wildcard: '%QUERY',
+                cache: false
             }
         });
 
@@ -122,6 +123,45 @@ function Initialize() {
         }
     });
 
+    $(document).on('focus', '.select2.select2-container', function (e) {
+        // only open on original attempt - close focus event should not fire open
+        if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
+            $(this).siblings('select:enabled').select2('open');
+        }
+    });
+
+    //$(document).keydown(function (e) {
+    //    // Listening tab button.
+    //    if (e.which == 9) {
+    //        tabPressed = true;
+    //    }
+    //});
+
+    //$(document).on('focus', '.select2', function () {
+    //    if (tabPressed) {
+    //        tabPressed = false;
+    //        $(this).siblings('select').select2('open');
+    //    }
+    //});
+}
+
+function IsEmpty(data) {
+    if (typeof (data) == 'number' || typeof (data) == 'boolean') {
+        return false;
+    }
+    if (typeof (data) == 'undefined' || data === null) {
+        return true;
+    }
+    if (typeof (data.length) != 'undefined') {
+        return data.length == 0;
+    }
+    var count = 0;
+    for (var i in data) {
+        if (data.hasOwnProperty(i)) {
+            count++;
+        }
+    }
+    return count == 0;
 }
 
 function toggleNotMe() {
@@ -200,10 +240,16 @@ function AkdnTrainingListEdit(id, training, country, month, year, date) {
     $("#akdn-training-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position) {
+function VoluntaryCommunityListEdit(id, institution, fromYear, toYear, position, cycle) {
+    if (cycle !== "") {
+        $($(".is-imamat-appointee")[0]).prop("checked", true).trigger('change');
+        $("#VoluntaryCommunityCycle").val(cycle).trigger('change');
+    } else {
+        $($(".is-imamat-appointee")[1]).prop("checked", true).trigger('change');
+        $("#VoluntaryCommunityFromYear").val(fromYear).trigger('change');
+        $("#VoluntaryCommunityToYear").val(toYear).trigger('change');
+    }
     $("#VoluntaryCommunityInstitution").val(institution).trigger('change');
-    $("#VoluntaryCommunityFromYear").val(fromYear).trigger('change');
-    $("#VoluntaryCommunityToYear").val(toYear).trigger('change');
     $("#VoluntaryCommunityPosition").val(position).trigger('change');
     $("#voluntary-community-id").val(id);
 
@@ -525,6 +571,14 @@ function LanguageListAdd(url, reOrderUrl) {
         var read = $("#Read").val();
         var write = $("#Write").val();
         var speak = $("#Speak").val();
+        if (IsEmpty(languageId) &&
+            IsEmpty(language) &&
+            IsEmpty(read) &&
+            IsEmpty(write) &&
+            IsEmpty(speak)) {
+            mApp.unblock("#language-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -568,7 +622,14 @@ function ProfessionalTrainingListAdd(url, reOrderUrl) {
         //var month = $("#ProfessionalTrainingMonth").val();
         //var year = $("#ProfessionalTrainingYear").val();
         var date = $("#ProfessionalTrainingDate").val();
-
+        if (IsEmpty(trainingId) &&
+            IsEmpty(training) &&
+            IsEmpty(institution) &&
+            IsEmpty(country) &&
+            IsEmpty(date)) {
+            mApp.unblock("#professional-training-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -612,10 +673,24 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
         var fromYear = $("#VoluntaryCommunityFromYear").val();
         var toYear = $("#VoluntaryCommunityToYear").val();
         var position = $("#VoluntaryCommunityPosition").val();
+        var cycle = $("#VoluntaryCommunityCycle").val();
+        var cycleName = $("#VoluntaryCommunityCycle :selected").text();
+        var cycleToSend = cycle + "|" + cycleName;
+        if (!$(".is-imamat-appointee")[0].checked) {
+            cycleToSend = "";
+        }
+        if (IsEmpty(voluntaryCommunityId) &&
+            IsEmpty(institution) &&
+            IsEmpty(fromYear) &&
+            IsEmpty(toYear) &&
+            IsEmpty(position)) {
+            mApp.unblock("#voluntary-community-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": voluntaryCommunityId, "institution": institution, "fromYear": fromYear, "toYear": toYear, "position": position },
+            data: { "id": voluntaryCommunityId, "institution": institution, "fromYear": fromYear, "toYear": toYear, "position": position, "cycle": cycleToSend },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -634,6 +709,7 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
                     $("#VoluntaryCommunityFromYear").val('').trigger('change');
                     $("#VoluntaryCommunityToYear").val('').trigger('change');
                     $("#VoluntaryCommunityPosition").val('').trigger('change');
+                    $("#VoluntaryCommunityCycle").val('').trigger('change');
                     $("#voluntary-community-id").val('');
                 }
                 //else {
@@ -653,6 +729,14 @@ function VoluntaryPublicListAdd(url, reOrderUrl) {
         var fromYear = $("#VoluntaryPublicFromYear").val();
         var toYear = $("#VoluntaryPublicToYear").val();
         var position = $("#VoluntaryPublicPosition").val();
+        if (IsEmpty(voluntaryPublicId) &&
+            IsEmpty(institution) &&
+            IsEmpty(fromYear) &&
+            IsEmpty(toYear) &&
+            IsEmpty(position)) {
+            mApp.unblock("#voluntary-public-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -696,6 +780,16 @@ function EducationListAdd(url, reOrderUrl) {
         var toYear = $("#FromYear").val();
         var nameOfDegree = $("#NameOfDegree").val();
         var majorAreaOfStudy = $("#MajorAreaOfStudy").val();
+        if (IsEmpty(educationId) &&
+            IsEmpty(institution) &&
+            IsEmpty(countryOfStudy) &&
+            IsEmpty(fromYear) &&
+            IsEmpty(toYear) &&
+            IsEmpty(nameOfDegree) &&
+            IsEmpty(majorAreaOfStudy)) {
+            mApp.unblock("#education-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -745,6 +839,20 @@ function EmploymentListAdd(url, reOrderUrl) {
         var other = $("#NatureOfBusinessOther").val();
         var start = $("#EmploymentStartDate").val();
         var end = $("#EmploymentEndDate").val();
+        if (IsEmpty(id) &&
+            IsEmpty(name) &&
+            IsEmpty(designation) &&
+            IsEmpty(location) &&
+            IsEmpty(email) &&
+            IsEmpty(phone) &&
+            IsEmpty(type) &&
+            IsEmpty(nature) &&
+            IsEmpty(other) &&
+            IsEmpty(start) &&
+            IsEmpty(end)) {
+            mApp.unblock("#employment-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -797,6 +905,19 @@ function FamilyInformationListAdd(url) {
         var relativeDateOfBirth = $("#RelativeDateOfBirth").val();
         var relativeRelation = $("#RelativeRelation").val();
         var personId = $("#RelativePersonId").val();
+        if (IsEmpty(id) &&
+            IsEmpty(relativeCnic) &&
+            IsEmpty(relativeSalutation) &&
+            IsEmpty(relativeFirstName) &&
+            IsEmpty(relativeFathersName) &&
+            IsEmpty(relativeFamilyName) &&
+            IsEmpty(relativeJamatiTitle) &&
+            IsEmpty(relativeDateOfBirth) &&
+            IsEmpty(relativeRelation) &&
+            IsEmpty(personId)) {
+            mApp.unblock("#family-relation-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -843,7 +964,13 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
         //var month = $("#AkdnTrainingMonth").val();
         //var year = $("#AkdnTrainingYear").val();
         var date = $("#AkdnTrainingDate").val();
-
+        if (IsEmpty(trainingId) &&
+            IsEmpty(training) &&
+            IsEmpty(country) &&
+            IsEmpty(date)) {
+            mApp.unblock("#akdn-training-table", {});
+            alert("Please enter at least one value to proceed.");
+        }
         $.ajax({
             type: "POST",
             url: url,
@@ -900,37 +1027,45 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
 
     table.on("row-reorder", function (e, diff, edit) {
         mApp.block("#" + id + "-table", {});
-        var primary = table.row(diff[0].node).data()[1];
-        var primaryId = diff[0].node.getAttribute("id")
-            .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
-        var primaryPosition = diff[0].newData;
-        var secondary = table.row(diff[1].node).data()[1];
-        var secondaryId = diff[1].node.getAttribute("id")
-            .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
-        var secondaryPosition = diff[1].newData;
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: { "primaryId": primaryId, "primaryPosition": primaryPosition, "secondaryId": secondaryId, "secondaryPosition": secondaryPosition },
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType: "html",
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("Request: " +
-                    xmlHttpRequest.toString() +
-                    "\n\nStatus: " +
-                    textStatus +
-                    "\n\nError: " +
-                    errorThrown);
-            },
-            success: function (result) {
-                if (result.length !== 4) {
-                    $("#" + id + "-table").html(result);
-                    InitializeDataTableLiteWithRowReordering(id, title, url);
-                    $("#" + id).css("min-height", "0px");
+        if (diff.length !== 0) {
+            var primary = table.row(diff[0].node).data()[1];
+            var primaryId = diff[0].node.getAttribute("id")
+                .substring(diff[0].node.getAttribute("id").lastIndexOf("row") + 4);
+            var primaryPosition = diff[0].newData;
+            var secondary = table.row(diff[1].node).data()[1];
+            var secondaryId = diff[1].node.getAttribute("id")
+                .substring(diff[1].node.getAttribute("id").lastIndexOf("row") + 4);
+            var secondaryPosition = diff[1].newData;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "primaryId": primaryId,
+                    "primaryPosition": primaryPosition,
+                    "secondaryId": secondaryId,
+                    "secondaryPosition": secondaryPosition
+                },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "html",
+                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " +
+                        xmlHttpRequest.toString() +
+                        "\n\nStatus: " +
+                        textStatus +
+                        "\n\nError: " +
+                        errorThrown);
+                },
+                success: function(result) {
+                    if (result.length !== 4) {
+                        $("#" + id + "-table").html(result);
+                        InitializeDataTableLiteWithRowReordering(id, title, url);
+                        $("#" + id).css("min-height", "0px");
+                    }
                 }
-            }
-        });
+            });
+        }
 
         mApp.unblock("#" + id + "-table", {});
     });
@@ -1541,9 +1676,8 @@ function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, sel
     }
 }
 
-function InitializePersonDataTable(id, title, url) {
-    var e;
-    (e = $("#" + id)).DataTable({
+function InitializePersonDataTable(id, title, url, personUrl) {
+    var table = $("#" + id).DataTable({
         responsive: true,
         searchDelay: 500,
         processing: true,
@@ -1584,6 +1718,14 @@ function InitializePersonDataTable(id, title, url) {
             [0, "desc"]
         ]
     });
+
+    table.on('xhr.dt',
+        function (e, settings, json, xhr) {
+            if (json.data.length === 1) {
+                var id = json.data[0].id;
+                window.location.href = personUrl + "/" + id;
+            }
+        });
 }
 
 function InitializeLitePersonDataTable(id, title, url) {
@@ -1692,35 +1834,44 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
 
     table.on("row-reorder", function (e, diff, edit) {
         mApp.block("#nominations-table-" + positionId, {});
-        var primary = table.row(diff[0].node).data()[1];
-        var primaryId = diff[0].node.getAttribute("id").substring(15);
-        var primaryPosition = diff[0].newData;
-        var secondary = table.row(diff[1].node).data()[1];
-        var secondaryId = diff[1].node.getAttribute("id").substring(15);
-        var secondaryPosition = diff[1].newData;
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: { "positionId": positionId, "primaryId": primaryId, "primaryPosition": primaryPosition, "secondaryId": secondaryId, "secondaryPosition": secondaryPosition },
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            dataType: "html",
-            error: function (xmlHttpRequest, textStatus, errorThrown) {
-                alert("Request: " +
-                    xmlHttpRequest.toString() +
-                    "\n\nStatus: " +
-                    textStatus +
-                    "\n\nError: " +
-                    errorThrown);
-            },
-            success: function (result) {
-                if (result.length !== 4) {
-                    $("#nominations-table-" + positionId).html(result);
-                    InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
-                    $("#nominations-" + positionId).css("min-height", "0px");
+        if (diff.length !== 0) {
+            var primary = table.row(diff[0].node).data()[1];
+            var primaryId = diff[0].node.getAttribute("id").substring(15);
+            var primaryPosition = diff[0].newData;
+            var secondary = table.row(diff[1].node).data()[1];
+            var secondaryId = diff[1].node.getAttribute("id").substring(15);
+            var secondaryPosition = diff[1].newData;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "positionId": positionId,
+                    "primaryId": primaryId,
+                    "primaryPosition": primaryPosition,
+                    "secondaryId": secondaryId,
+                    "secondaryPosition": secondaryPosition
+                },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "html",
+                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " +
+                        xmlHttpRequest.toString() +
+                        "\n\nStatus: " +
+                        textStatus +
+                        "\n\nError: " +
+                        errorThrown);
+                },
+                success: function(result) {
+                    if (result.length !== 4) {
+                        $("#nominations-table-" + positionId).html(result);
+                        InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+                        $("#nominations-" + positionId).css("min-height", "0px");
+                    }
                 }
-            }
-        });
+            });
+        }
 
         mApp.unblock("#nominations-table-" + positionId, {});
     });

@@ -9,6 +9,18 @@
     await Html.RenderPartialAsync("_PersonPartial", Model).ConfigureAwait(false);
 }
 
+@section quickNavigation{
+    <!-- begin::Quick Nav -->
+    <ul class="m-nav-sticky" style="margin-top: 30px;">
+        <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Save" data-placement="left">
+            <a href="#" onclick='return CustomPersonValidation();' class="btn btn-success m-btn m-btn--icon m-btn--icon-only">
+                <i class="fa fa-save" style="color: white !important"></i>
+            </a>
+        </li>
+    </ul>
+    <!-- begin::Quick Nav -->
+}
+
 @section scripts{
 
     @{ @(await Html.PartialAsync(PartialNames.ValidationScripts)) }
@@ -111,6 +123,19 @@
                 } else {
                     $("#RelocateLocation").prop("disabled", true);
                     $("#RelocationDateTime").prop("disabled", true);
+                }
+            });
+
+            $(".is-imamat-appointee").change(function () {
+                if ($(".is-imamat-appointee")[0].checked) {
+                    $(".non-imamat").prop("disabled", true);
+                    $(".imamat").prop("disabled", false);
+                    $("#VoluntaryCommunityFromYear").val('').trigger('change');
+                    $("#VoluntaryCommunityToYear").val('').trigger('change');
+                } else {
+                    $(".imamat").prop("disabled", true);
+                    $(".non-imamat").prop("disabled", false);
+                    $("#VoluntaryCommunityCycle").val('').trigger('change');
                 }
             });
 

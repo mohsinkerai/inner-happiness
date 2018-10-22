@@ -12,4 +12,6 @@ public interface AppointmentPositionRepository extends BaseRepository<Appointmen
   List<AppointmentPosition> findByCycleId(long cycleId);
 
   AppointmentPosition findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long institutionId, long seatNo, long positionId, long cycleId);
+
+  List<AppointmentPosition> findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(long cycleId, long institutionId, long positionId, long seatNo);
 }

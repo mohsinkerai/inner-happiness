@@ -41,4 +41,14 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
     @RequestParam("institutionId") long institutionId) {
     return appointmentPositionFacade.findByCycleIdAndInstitutionId(cycleId, institutionId);
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo", method = RequestMethod.GET)
+  public ApptPositionDto findByCycleIdAndInstitutionIdAndPositionIdAndSeatId(
+    @RequestParam("cycleId") long cycleId,
+    @RequestParam("institutionId") long institutionId,
+    @RequestParam("positionId") long positionId,
+    @RequestParam("seatNo") long seatNo) {
+    return appointmentPositionFacade.findByCycleIdAndInstitutionIdPositionIdAndSeatNo(cycleId, institutionId, positionId, seatNo);
+  }
 }

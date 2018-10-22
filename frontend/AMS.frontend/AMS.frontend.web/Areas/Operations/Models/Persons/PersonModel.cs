@@ -360,12 +360,21 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonIgnore] public string TypeOfBusiness { get; set; }
 
         [JsonIgnore]
+        [Display(Name = "Appointment Type")]
+        [Required]
+        public bool VoluntaryCommunityIsImamatAppointment { get; set; }
+
+        [JsonIgnore]
         [Display(Name = "From Year")]
         public int? VoluntaryCommunityFromYear { get; set; }
 
         [JsonIgnore]
         [Display(Name = "Institution")]
         public string VoluntaryCommunityInstitution { get; set; }
+
+        [JsonIgnore]
+        [Display(Name = "Cycle")]
+        public string VoluntaryCommunityCycle{ get; set; }
 
         [JsonIgnore]
         [Display(Name = "Position")]

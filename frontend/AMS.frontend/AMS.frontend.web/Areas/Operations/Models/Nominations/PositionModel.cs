@@ -44,6 +44,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
             throw new NotImplementedException();
         }
 
+        public int Rank { get; set; }
+
         #endregion Public Properties
     }
 }
