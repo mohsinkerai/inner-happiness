@@ -1,17 +1,22 @@
 package com.inner.satisfaction.backend.person.appointment;
 
 import com.inner.satisfaction.backend.base.SimpleBaseService;
+import com.inner.satisfaction.backend.person.Person;
+import com.inner.satisfaction.backend.person.PersonService;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PersonAppointmentService extends SimpleBaseService<PersonAppointment> {
 
+  private final PersonService personService;
   private final PersonAppointmentRepository personAppointmentRepository;
 
   protected PersonAppointmentService(
+    PersonService personService,
     PersonAppointmentRepository baseRepository) {
     super(baseRepository);
+    this.personService = personService;
     this.personAppointmentRepository = baseRepository;
   }
 
@@ -26,6 +31,10 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
     }
     if (personAppointment.getPriority() == 0) {
       throw new RuntimeException("Excuseme!! you can't make new   incumbtee");
+    }
+    Person one = personService.findOne(personAppointment.getPersonId());
+    if(one == null && one.isActive() == true) {
+      throw new RuntimeException("Jani!! Sahi person id dedo");
     }
     return super.save(personAppointment);
   }

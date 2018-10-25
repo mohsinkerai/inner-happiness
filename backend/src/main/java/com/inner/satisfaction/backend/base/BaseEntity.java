@@ -14,4 +14,6 @@ public abstract class BaseEntity implements Serializable {
   @Id
   @GeneratedValue
   protected Long id;
+
+  protected boolean isActive;
 }
