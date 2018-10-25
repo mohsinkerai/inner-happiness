@@ -15,6 +15,21 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
     this.personAppointmentRepository = baseRepository;
   }
 
+  @Override
+  public PersonAppointment save(PersonAppointment personAppointment) {
+    if (personAppointment.getId() != null) {
+      Long id = personAppointment.getId();
+      PersonAppointment dbPersonAppointment = findOne(id);
+      if (dbPersonAppointment.getPriority() == 0) {
+        throw new RuntimeException("Excuseme!! you can't update incumbtee");
+      }
+    }
+    if (personAppointment.getPriority() == 0) {
+      throw new RuntimeException("Excuseme!! you can't make new   incumbtee");
+    }
+    return super.save(personAppointment);
+  }
+
   public List<PersonAppointment> findByAppointmentPositionId(long cpiId) {
     return personAppointmentRepository.findByAppointmentPositionId(cpiId);
   }

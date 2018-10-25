@@ -43,4 +43,14 @@
       <column name="roles" value="[&quot;ADMIN&quot;]"/>
     </insert>
   </changeSet>
+  <changeSet id="authentication-user-03" author="mohsin.kerai">
+    <addColumn tableName="authentication_user">
+      <column name="allowed_companies" type="json" beforeColumn="roles"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="authentication-user-04" author="mohsin.kerai">
+    <sql>
+      UPDATE authentication_user SET allowed_companies = '[1,2,3]'
+    </sql>
+  </changeSet>
 </databaseChangeLog>
