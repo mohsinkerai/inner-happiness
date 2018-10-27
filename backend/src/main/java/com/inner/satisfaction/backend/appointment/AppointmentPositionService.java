@@ -36,4 +36,8 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
     long seatId) {
     return appointmentPositionRepository.findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(cycleId, institutionId, positionId, seatId);
   }
+
+  public List<AppointmentPosition> findAppointmentsOfPersonInCycle(long personId, long cycleId) {
+    return appointmentPositionRepository.findByCycleIdAndPersonIdAndRecommendedTrue(cycleId, personId);
+  }
 }

@@ -12,7 +12,16 @@ public class PersonAppointmentController extends BaseController<PersonAppointmen
 
   public static final String PATH = "person/appointment";
 
-  public PersonAppointmentController(PersonAppointmentService personAppointmentService) {
+  private final PersonAppointmentFacade personAppointmentFacade;
+
+  public PersonAppointmentController(PersonAppointmentService personAppointmentService,
+    PersonAppointmentFacade personAppointmentFacade) {
     super(personAppointmentService);
+    this.personAppointmentFacade = personAppointmentFacade;
+  }
+
+  @Override
+  public PersonAppointment save(PersonAppointment personAppointment) {
+    return personAppointmentFacade.save(personAppointment);
   }
 }
