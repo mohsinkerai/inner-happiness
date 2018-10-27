@@ -1,4 +1,4 @@
-package com.inner.satisfaction.backend.person.appointment.validations;
+package com.inner.satisfaction.backend.person.appointment.validation;
 
 import java.util.List;
 import lombok.EqualsAndHashCode;

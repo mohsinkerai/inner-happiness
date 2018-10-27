@@ -905,6 +905,9 @@ function FamilyInformationListAdd(url) {
         var relativeDateOfBirth = $("#RelativeDateOfBirth").val();
         var relativeRelation = $("#RelativeRelation").val();
         var personId = $("#RelativePersonId").val();
+        var cycle = $("#RelativeCycle").val();
+        var position = $("#RelativePosition").val();
+        var institution = $("#RelativeInstitution").val();
         if (IsEmpty(id) &&
             IsEmpty(relativeCnic) &&
             IsEmpty(relativeSalutation) &&
@@ -914,14 +917,17 @@ function FamilyInformationListAdd(url) {
             IsEmpty(relativeJamatiTitle) &&
             IsEmpty(relativeDateOfBirth) &&
             IsEmpty(relativeRelation) &&
-            IsEmpty(personId)) {
+            IsEmpty(personId) &&
+            IsEmpty(cycle) &&
+            IsEmpty(position) &&
+            IsEmpty(institution)) {
             mApp.unblock("#family-relation-table", {});
             alert("Please enter at least one value to proceed.");
         }
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": id, "relativeCnic": relativeCnic, "relativeSalutation": relativeSalutation, "relativeFirstName": relativeFirstName, "relativeFathersName": relativeFathersName, "relativeFamilyName": relativeFamilyName, "relativeJamatiTitle": relativeJamatiTitle, "relativeDateOfBirth": relativeDateOfBirth, "relativeRelation": relativeRelation, "personId": personId },
+            data: { "id": id, "relativeCnic": relativeCnic, "relativeSalutation": relativeSalutation, "relativeFirstName": relativeFirstName, "relativeFathersName": relativeFathersName, "relativeFamilyName": relativeFamilyName, "relativeJamatiTitle": relativeJamatiTitle, "relativeDateOfBirth": relativeDateOfBirth, "relativeRelation": relativeRelation, "personId": personId, "relativeCycle": cycle, "relativeInstitution": institution, "relativePosition": position },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -944,7 +950,11 @@ function FamilyInformationListAdd(url) {
                     $("#RelativeJamatiTitle").val('').trigger('change');
                     $("#RelativeDateOfBirth").val('').trigger('change');
                     $("#RelativeRelation").val('').trigger('change');
-                    $("#family-information-id").val('');
+                    $("#family-information-id").val('').trigger('change');
+                    $("#RelativeFormNumber").val('').trigger('change');
+                    $("#RelativeCycle").val('').trigger('change');
+                    $("#RelativeInstitution").val('').trigger('change');
+                    $("#RelativePosition").val('').trigger('change');
                 }
                 //else {
                 //    window.location.replace(window.loginUrl);
@@ -1941,8 +1951,14 @@ function LoadDropDownViaAjax(dropDownClass, url, selectedValue, secondarySelecte
 function CustomPersonValidation() {
     $(".formnumber").prop("disabled", false);
     if ($("#mainForm").valid()) {
-        $("#mainForm").off("submit");
-        $("#mainForm").submit();
+        if (IsEmpty($("#Cnic").val()) && IsEmpty($("#PassportNumber").val())) {
+            $(".formnumber").prop("disabled", true);
+            alert("Either Cnic or Passport Number is required.");
+            return false;
+        } else {
+            $("#mainForm").off("submit");
+            $("#mainForm").submit();
+        }
     } else {
         $('html, body').animate({
             scrollTop: ($('.field-validation-error').offset().top - 300)

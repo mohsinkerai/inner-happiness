@@ -14,5 +14,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public string RawInstitution { get; set; }
         public string FromYear { get; set; }
         public string ToYear { get; set; }
+        public string Institution { get; set; }
     }
 }

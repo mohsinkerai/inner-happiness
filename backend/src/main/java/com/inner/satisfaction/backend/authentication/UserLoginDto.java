@@ -17,5 +17,5 @@ public class UserLoginDto extends BaseDto {
 
   private String username;
   private String password;
-  private long companyId;
+  private int companyId;
 }

@@ -61,6 +61,13 @@
 </div>
 <div class="col-lg-2">
     <div class="form-group">
+        <label asp-for="RelativeFormNumber" class="control-label"></label>
+        <input type="text" asp-for="RelativeFormNumber" class="form-control relative-fields">
+        <span asp-validation-for="RelativeFormNumber" class="form-control-feedback"></span>
+    </div>
+</div>
+<div class="col-lg-3">
+    <div class="form-group">
         <label asp-for="RelativeRelation" class="control-label"></label>
         <select asp-for="RelativeRelation" asp-items="@ViewBag.RelationList" class="form-control m-select2" placeholder="Select">
             <option></option>
@@ -68,7 +75,34 @@
         <span asp-validation-for="RelativeRelation" class="form-control-feedback"></span>
     </div>
 </div>
-<input type="hidden" id="family-information-id"/>
+<div class="col-lg-4">
+    <div class="form-group">
+        <label asp-for="RelativeCycle" class="control-label"></label>
+        <select asp-for="RelativeCycle" asp-items="@ViewBag.Cycle" class="form-control m-select2 new-appointment-fields" placeholder="Select" disabled="disabled">
+            <option></option>
+        </select>
+        <span asp-validation-for="RelativeCycle" class="form-control-feedback"></span>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="form-group">
+        <label asp-for="RelativeInstitution" class="control-label"></label>
+        <select asp-for="RelativeInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2 new-appointment-fields" placeholder="Select an institution" disabled="disabled">
+            <option></option>
+        </select>
+        <span asp-validation-for="RelativeInstitution" class="form-control-feedback"></span>
+    </div>
+</div>
+<div class="col-lg-4">
+    <div class="form-group">
+        <label asp-for="RelativePosition" class="control-label"></label>
+        <select asp-for="RelativePosition" asp-items="@ViewBag.VoluntaryCommunityPositionList" class="form-control m-select2 new-appointment-fields" placeholder="Select a position" disabled="disabled">
+            <option></option>
+        </select>
+        <span asp-validation-for="RelativePosition" class="form-control-feedback"></span>
+    </div>
+</div>
+<input type="hidden" id="family-information-id" />
 <input type="hidden" asp-for="RelativePersonId" />
 <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
     <button type="button" class="btn btn-warning" onclick='return FamilyInformationListAdd("@Url.Action(ActionNames.FamilyRelationListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})");'>

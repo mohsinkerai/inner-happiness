@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseDto;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,8 @@ public class ReducedPersonDto extends BaseDto {
   public String familyName;
   public Long jamatiTitle;
   public long relation;
+  public List<VoluntaryCommunityServiceDto> voluntaryCommunityServiceDtos;
+
   @JsonIgnore
   public long personId;
 }

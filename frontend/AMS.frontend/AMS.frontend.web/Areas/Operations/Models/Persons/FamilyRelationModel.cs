@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
@@ -42,8 +43,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string Id { get; set; }
 
         public string Position { get; set; }
-        public string Cycle { get; set; }
 
+        public string Institution { get; set; }
+        public string Cycle { get; set; }
+        [JsonProperty(PropertyName = "voluntaryCommunityServices")]
+        public List<VoluntaryCommunityModel> VoluntaryCommunityServices { get; set; }
         #endregion Public Properties
     }
 }

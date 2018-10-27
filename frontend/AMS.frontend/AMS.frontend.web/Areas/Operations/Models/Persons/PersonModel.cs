@@ -65,7 +65,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "City or Village")]
         public string City { get; set; }
 
-        [Required]
+        //[Required]
         [JsonProperty(PropertyName = "cnic")]
         [Display(Name = "CNIC")]
         [Remote("ValidateCnic", "Persons", "Operations")]
@@ -309,9 +309,21 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "First Name")] public string RelativeFirstName { get; set; }
         [Display(Name = "Jamati Title")] public string RelativeJamatiTitle { get; set; }
 
+        [Display(Name = "Cycle")]
+        [JsonIgnore]
+        public string RelativeCycle { get; set; }
+        [Display(Name = "Position")]
+        [JsonIgnore]
+        public string RelativePosition { get; set; }
+        [Display(Name = "Institution")]
+        [JsonIgnore]
+        public string RelativeInstitution { get; set; }
         [Display(Name = "Relation")]
         [JsonIgnore]
         public string RelativeRelation { get; set; }
+        [Display(Name = "Form Number")]
+        [JsonIgnore]
+        public string RelativeFormNumber { get; set; }
 
         [Display(Name = "Relation")]
         [JsonIgnore]
@@ -361,7 +373,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore]
         [Display(Name = "Appointment Type")]
-        [Required]
+        //[Required]
         public bool VoluntaryCommunityIsImamatAppointment { get; set; }
 
         [JsonIgnore]
