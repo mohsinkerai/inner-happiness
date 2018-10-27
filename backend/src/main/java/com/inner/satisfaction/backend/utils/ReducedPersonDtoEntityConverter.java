@@ -19,7 +19,7 @@ public class ReducedPersonDtoEntityConverter implements
       .firstName(entity.getFirstName())
       .jamatiTitle(entity.getJamatiTitle())
       .salutation(entity.getSalutation())
-      .voluntaryCommunityServiceDtos(entity.getVoluntaryCommunityServices())
+      .voluntaryCommunityServices(entity.getVoluntaryCommunityServices())
       .build();
   }
 
@@ -33,7 +33,7 @@ public class ReducedPersonDtoEntityConverter implements
       .firstName(dto.getFirstName())
       .jamatiTitle(dto.getJamatiTitle())
       .salutation(dto.getSalutation())
-      .voluntaryCommunityServices(dto.getVoluntaryCommunityServiceDtos())
+      .voluntaryCommunityServices(dto.getVoluntaryCommunityServices())
       .build();
 
     person.setId(dto.getId());

@@ -28,7 +28,7 @@ public class ReducedPersonDto extends BaseDto {
   public String familyName;
   public Long jamatiTitle;
   public long relation;
-  public List<VoluntaryCommunityServiceDto> voluntaryCommunityServiceDtos;
+  public List<VoluntaryCommunityServiceDto> voluntaryCommunityServices;
 
   @JsonIgnore
   public long personId;
