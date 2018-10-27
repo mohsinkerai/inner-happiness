@@ -65,10 +65,12 @@
                     success: function(result) {
                         $("#familyRelationData").html(result);
                         Initialize();
-                        if (!($("#RelativeFirstName").val() === "")) {
+                        if (!($("#RelativePersonId").val() === "")) {
                             $(".relative-fields").prop("disabled", true);
+                            $(".new-appointment-fields").prop("disabled", true);
                         } else {
-                            $("#RelativeCnic").val(cnic);
+                            //$("#RelativeCnic").val(cnic);
+                            $(".new-appointment-fields").prop("disabled", false);
                         }
                         $("#RelativeCnic").inputmask({
                             "mask": "99999-9999999-9"
@@ -93,10 +95,12 @@
                                 success: function(result) {
                                     $("#familyRelationData").html(result);
                                     Initialize();
-                                    if (!($("#RelativeFirstName").val() === "")) {
+                                    if (!($("#RelativePersonId").val() === "")) {
                                         $(".relative-fields").prop("disabled", true);
+                                        $(".new-appointment-fields").prop("disabled", true);
                                     } else {
-                                        $("#RelativeCnic").val(cnic);
+                                        //$("#RelativeCnic").val(cnic);
+                                        $(".new-appointment-fields").prop("disabled", false);
                                     }
                                     $("#RelativeCnic").inputmask({
                                         "mask": "99999-9999999-9"
