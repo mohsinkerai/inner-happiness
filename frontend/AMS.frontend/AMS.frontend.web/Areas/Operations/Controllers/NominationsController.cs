@@ -176,17 +176,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
         public async Task<JsonResult> GetPersons(string id)
         {
-            var personTuple =
-                await new RestfulClient(
-                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
-                    .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
-                        string.Empty, string.Empty, 1, 10);
-            var persons = personTuple.Item1.Select(p => new { Name = $"{p.FormNumber}-{p.FullName}" })
-                .Select(p => p.Name);
+            if (int.TryParse(id, out _))
+            {
+                var personTuple =
+                    await new RestfulClient(
+                            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
+                        .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
+                            string.Empty, string.Empty, 1, 10);
+                var persons = personTuple.Item1.Select(p => new {Name = $"{p.FormNumber}-{p.FullName}"})
+                    .Select(p => p.Name);
 
-            //var persons = new List<string> {"Naveed", "Mohsin", "Saif"};
+                //var persons = new List<string> {"Naveed", "Mohsin", "Saif"};
 
-            return Json(persons);
+                return Json(persons);
+            }
+
+            return Json(new List<string>());
         }
 
         public async Task<IActionResult> Detail(string uid)
