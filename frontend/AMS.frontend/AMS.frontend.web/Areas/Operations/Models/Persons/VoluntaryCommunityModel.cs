@@ -38,7 +38,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "cycleName")]
         public string CycleName { get; set; }
 
-        [JsonProperty(PropertyName = "isImamatAppointee")]
+        [JsonProperty(PropertyName = "imamatAppointee")]
         public bool IsImamatAppointee { get; set; }
 
         #endregion Public Properties
