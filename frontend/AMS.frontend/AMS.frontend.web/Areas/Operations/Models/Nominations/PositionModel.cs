@@ -46,6 +46,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
 
         public int Rank { get; set; }
 
+        public string PositionId { get; set; }
+
+        public string SeatId { get; set; }
+
         #endregion Public Properties
     }
 }

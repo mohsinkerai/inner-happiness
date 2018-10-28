@@ -5,6 +5,7 @@ using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,18 +31,58 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private readonly Configuration _configuration;
         private readonly RestfulClient _restfulClient;
         private const string SelectedCycle = "_cycle";
+        private const string SessionNominationModel = "_sessionNominationModel";
 
         #endregion Private Fields
 
         #region Public Methods
 
         [HttpPost]
-        public IActionResult Nominate(string id, string personId)
+        public async Task<IActionResult> Nominate(string id, string personId)
         {
-            var person = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(id, personId);
-        
+            //getting required data from session
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            NominationDetailModel model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+
+            List<NominationModel> nominations = null;
+            string positionId = null;
+            string institutionId = null;
+            string cycleId = null;
+            string seatNo = null;
+            int pos = -1;
+
+            for(int index = 0; index < model.Positions.Count; index++)
+            {
+                PositionModel position = model.Positions[index];
+                if(position.Id == id)
+                {
+                    pos = index;
+                    index++;
+                    nominations = position.Nominations;
+                    nominations.OrderByDescending(i => i.Priority);
+                    positionId = position.PositionId;
+                    seatNo = position.SeatId;
+                }
+            }
+            institutionId = model.Institution.Id;
+            cycleId = HttpContext.Session.GetString(SelectedCycle);
+
+            //api call for nominate
+            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(id, personId,
+                nominations[0].Priority, institutionId, positionId, cycleId, seatNo);
+
+            //update data in session
+            if(pos != -1)
+            {
+                model.Positions[pos] = positionModel;
+                var updatedJson = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            }
+            
+            return PartialView("_NominationsTablePartial", positionModel);
+
             //saif integration goes here
-            return PartialView("_NominationsTablePartial", new PositionModel
+            /*return PartialView("_NominationsTablePartial", new PositionModel
             {
                 PositionName = "President",
                 CurrentCycle = "2018 - 2020",
@@ -69,14 +110,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         Id = "2222"
                     }
                 }
-            });
+            });*/
         }
 
         [HttpPost]
         public IActionResult ReOrderNominations(string positionId, string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-
-
+       
             //saif integration goes here
             return PartialView("_NominationsTablePartial", new PositionModel
             {
@@ -244,6 +284,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var cycle = HttpContext.Session.GetString(SelectedCycle);
 
             var nominationModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionDetails(uid,cycle);
+
+            var json = JsonConvert.SerializeObject(nominationModel);
+            HttpContext.Session.SetString(SessionNominationModel, json);
 
             return View(nominationModel);
         }
