@@ -626,7 +626,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
                 url = "/person/all/paginated?page=" + pageNumber + "&size=" + pageSize;
             }
-            else 
+            else
             {
                 //url = "/person/search/findByCnicOrFNameOrLNameOrIdOrDegreeOrAcadInstOrJamatiTitleOrMaos?cnic=" + cnic + "&firstName=" + firstName + "&lastName=" + lastName + "&id=" + formNo + "&degree=" + degree +
                 //    "&inst=" + academicInstitution + "&jamatiTitle=" + jamatiTitle + "&maos=" + majorAreaOfStudy + "&page=" + pageNumber + "&size=" + pageSize;
@@ -1093,8 +1093,10 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         positionModel.Id = Convert.ToString(positionArray["appointmentPositionId"]);
                         positionModel.CurrentCycle = Convert.ToString(currentCycle["name"]);
                         positionModel.PositionName = Convert.ToString(positionName["name"]);
+                        positionModel.PositionId = Convert.ToString(positionName["id"]);
                         positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
                         positionModel.Rank = Convert.ToInt32(positionArray["rank"]);
+                        positionModel.SeatId = Convert.ToString(positionName["seatId"]);
 
                         //int index = 0;
                         foreach (JToken jToken in personAppointmentList)
@@ -1141,6 +1143,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             {
 
             }
+
             return nominationDetailModel;
         }
 
@@ -1216,19 +1219,20 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<PersonModel> Nominate(string personId, string positionId)
+        public async Task<PositionModel> Nominate(string personId, string appointmentPositionId, int priority, string institutionId, string positionId, string cycleId,
+            string seatNo)
         {
 
             JObject jObject = new JObject
             {
-                { "appointed", true },
-                { "appointmentPositionId", positionId },
+                { "appointed", false },
+                { "appointmentPositionId", appointmentPositionId },
                 { "id", 0 },
                 { "isAppointed", false },
-                { "isRecommended", true },
+                { "isRecommended", false },
                 { "personId", personId },
-                { "priority", 0 },
-                { "recommended", true },
+                { "priority", priority+1},
+                { "recommended", false },
                 { "remarks", "" }
             };
 
@@ -1237,14 +1241,21 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             HttpResponseMessage res = await _client.PostAsync("/person/appointment", httpContent);
 
+            PositionModel positionModel = null;
             if (res.IsSuccessStatusCode)
             {
-                string response = res.Content.ReadAsStringAsync().Result;
+                HttpResponseMessage response = await _client.GetAsync("/appointment-position/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo?cycleId=" + cycleId +
+                    "&institutionId=" + institutionId + "&positionId=" + positionId + "&seatNo=" + seatNo);
 
-                return null;
+                if (response.IsSuccessStatusCode)
+                {
+                    string newJson = res.Content.ReadAsStringAsync().Result;
+                    positionModel = JsonConvert.DeserializeObject<PositionModel>(newJson);
+                }
+              
             }
 
-            return null;
+            return positionModel;
         }
 
         public async Task<List<SelectListItem>> GetMajorAreaOfStudy()

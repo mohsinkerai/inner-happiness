@@ -1137,7 +1137,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (string.IsNullOrWhiteSpace(position) && string.IsNullOrWhiteSpace(cycle))
                 {
-                    var appointment = (await GetPastImamatAppointments(personId)).OrderByDescending(a => a.ToYear).FirstOrDefault();
+                    var appointment = (await GetPastImamatAppointments(personId, true)).OrderByDescending(a => a.ToYear).FirstOrDefault();
                     if (appointment != null)
                     {
                         cycle = appointment.Cycle;
@@ -1185,7 +1185,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
             catch (Exception ex)
             {
-
+                
             }
 
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
@@ -1193,26 +1193,52 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return sessionFamilyRelationList;
         }
 
-        private async Task<List<PastImamatAppointment>> GetPastImamatAppointments(string personId)
+        private async Task<List<PastImamatAppointment>> GetPastImamatAppointments(string personId, bool forFamily = false)
         {
             var pastAppointments = new List<PastImamatAppointment>();
 
             var appointments = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAppointments(personId, true);
             if (appointments?.Count > 0 && appointments.Any(a => a.Active))
             {
-                foreach (var pastAppointment in appointments.Where(a => a.Active))
+                pastAppointments.AddRange(appointments.Where(a => a.Active)
+                .Select(pastAppointment => new PastImamatAppointment
                 {
-                    pastAppointments.Add(new PastImamatAppointment
-                    {
-                        Position = pastAppointment?.Position?.Name,
-                        Cycle = pastAppointment?.CycleName,
-                        CycleId = pastAppointment?.CycleId?.Id.ToString(),
-                        RawPosition = pastAppointment?.Position?.Id.ToString(),
-                        RawInstitution = pastAppointment?.Institution?.Id.ToString(),
-                        FromYear = pastAppointment?.CycleId?.StartDate.Year.ToString(),
-                        ToYear = pastAppointment?.CycleId?.EndDate.Year.ToString(),
-                        Institution = pastAppointment?.Institution?.Name
-                    });
+                    Position = pastAppointment?.Position?.Name,
+                    Cycle = pastAppointment?.CycleName,
+                    CycleId = pastAppointment?.CycleId?.Id.ToString(),
+                    RawPosition = pastAppointment?.Position?.Id.ToString(),
+                    RawInstitution = pastAppointment?.Institution?.Id.ToString(),
+                    FromYear = pastAppointment?.CycleId?.StartDate.Year.ToString(),
+                    ToYear = pastAppointment?.CycleId?.EndDate.Year.ToString(),
+                    Institution = pastAppointment?.Institution?.Name
+                }));
+            }
+
+            if (forFamily)
+            {
+                var person =
+                    await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                        ?.Token).GetPersonDetailsById(personId);
+
+                if (person.VoluntaryCommunityServices != null)
+                {
+                    pastAppointments.AddRange(
+                        from personVoluntaryCommunityService in person.VoluntaryCommunityServices?.Where(vcs =>
+                            vcs.IsImamatAppointee || !string.IsNullOrWhiteSpace(vcs.Cycle))
+                        select new PastImamatAppointment
+                        {
+                            Position = GetText(personVoluntaryCommunityService.Position,
+                                ViewBag.VoluntaryCommunityPositionList),
+                            Cycle =
+                                $"{personVoluntaryCommunityService.FromYear}-{personVoluntaryCommunityService.ToYear}",
+                            CycleId = personVoluntaryCommunityService.Cycle,
+                            RawPosition = personVoluntaryCommunityService.Position,
+                            RawInstitution = personVoluntaryCommunityService.Institution,
+                            FromYear = personVoluntaryCommunityService.FromYear?.ToString(),
+                            ToYear = personVoluntaryCommunityService.ToYear?.ToString(),
+                            Institution = GetText(personVoluntaryCommunityService.Institution,
+                                ViewBag.VoluntaryCommunityInstitutionList)
+                        });
                 }
             }
 
@@ -1682,7 +1708,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             string relationName = GetText(relation.Relation, ViewBag.RelationList);
                             relation.RelationName = relationName;
 
-                            var appointment = (await GetPastImamatAppointments(relation.Id)).OrderByDescending(a => a.ToYear).FirstOrDefault();
+                            var appointment = (await GetPastImamatAppointments(relation.Id, true)).OrderByDescending(a => a.ToYear).FirstOrDefault();
                             if (appointment != null)
                             {
                                 var cycle = appointment.Cycle;
