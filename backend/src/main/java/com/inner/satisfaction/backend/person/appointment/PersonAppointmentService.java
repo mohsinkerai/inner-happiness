@@ -30,7 +30,10 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
       }
     }
     if (personAppointment.getPriority() == 0) {
-      throw new RuntimeException("Excuseme!! you can't make new   incumbtee");
+      throw new RuntimeException("Excuseme!! you can't make new incumbtee");
+    }
+    if(personAppointment.getAppointed() == true) {
+      throw new RuntimeException("Please come low!! Appoint ku ker rahe ho?");
     }
     Person one = personService.findOne(personAppointment.getPersonId());
     if(one == null && one.isActive() == true) {

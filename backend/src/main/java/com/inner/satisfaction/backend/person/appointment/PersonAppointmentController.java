@@ -19,9 +19,4 @@ public class PersonAppointmentController extends BaseController<PersonAppointmen
     super(personAppointmentService);
     this.personAppointmentFacade = personAppointmentFacade;
   }
-
-  @Override
-  public PersonAppointment save(PersonAppointment personAppointment) {
-    return personAppointmentFacade.save(personAppointment);
-  }
 }
