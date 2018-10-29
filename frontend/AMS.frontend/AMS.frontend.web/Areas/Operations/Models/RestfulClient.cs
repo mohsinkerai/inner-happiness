@@ -1096,7 +1096,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         positionModel.PositionId = Convert.ToString(positionName["id"]);
                         positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
                         positionModel.Rank = Convert.ToInt32(positionArray["rank"]);
-                        positionModel.SeatId = Convert.ToString(positionName["seatId"]);
+                        positionModel.SeatId = Convert.ToString(positionArray["seatId"]);
 
                         //int index = 0;
                         foreach (JToken jToken in personAppointmentList)
@@ -1225,14 +1225,11 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             JObject jObject = new JObject
             {
-                { "appointed", false },
                 { "appointmentPositionId", appointmentPositionId },
-                { "id", 0 },
                 { "isAppointed", false },
                 { "isRecommended", false },
                 { "personId", personId },
                 { "priority", priority+1},
-                { "recommended", false },
                 { "remarks", "" }
             };
 

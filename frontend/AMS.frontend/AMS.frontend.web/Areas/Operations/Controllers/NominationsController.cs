@@ -67,8 +67,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             institutionId = model.Institution.Id;
             cycleId = HttpContext.Session.GetString(SelectedCycle);
 
+            Console.WriteLine("cycleID= " + cycleId + " InstitutionId= " + institutionId + " seatNo= " + seatNo + " positionId= " + positionId);
+
             //api call for nominate
-            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(id, personId,
+            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(id, personId.Split('-')[0],
                 nominations[0].Priority, institutionId, positionId, cycleId, seatNo);
 
             //update data in session
@@ -183,7 +185,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                         .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
                             string.Empty, string.Empty, 1, 10);
-                var persons = personTuple.Item1.Select(p => new {Name = $"{p.FormNumber}-{p.FullName}"})
+                var persons = personTuple.Item1.Select(p => new {Name = $"{p.Id}-{p.FullName}"})
                     .Select(p => p.Name);
 
                 //var persons = new List<string> {"Naveed", "Mohsin", "Saif"};
