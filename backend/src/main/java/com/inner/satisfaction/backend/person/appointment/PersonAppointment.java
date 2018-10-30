@@ -22,6 +22,8 @@ public class PersonAppointment extends BaseEntity {
   private Boolean isRecommended;
   private Integer priority;
   private String remarks;
+
+  @Column(updatable = false)
   private int reappointmentCount;
 
   public boolean getAppointed() {
