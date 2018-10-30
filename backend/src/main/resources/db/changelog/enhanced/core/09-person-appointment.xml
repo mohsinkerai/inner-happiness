@@ -53,8 +53,14 @@
   <changeSet id="person-appointment-04" author="mohsin.kerai">
     <addColumn tableName="person_appointment">
       <column name="is_active" defaultValue="1" type="bit">
-        <constraints nullable="false" />
+        <constraints nullable="false"/>
       </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="person-appointment-05" author="mohsin.kerai">
+    <addColumn tableName="person_appointment">
+      <column name="reppointment_count" type="int"
+        remarks="Column that stores reppointment count for a particular person if thats an incumbtee"/>
     </addColumn>
   </changeSet>
 </databaseChangeLog>

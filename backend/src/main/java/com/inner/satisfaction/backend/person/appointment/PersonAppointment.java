@@ -22,6 +22,7 @@ public class PersonAppointment extends BaseEntity {
   private Boolean isRecommended;
   private Integer priority;
   private String remarks;
+  private int reappointmentCount;
 
   public boolean getAppointed() {
     return isAppointed;
