@@ -63,4 +63,7 @@
         remarks="Column that stores reppointment count for a particular person if thats an incumbtee"/>
     </addColumn>
   </changeSet>
+  <changeSet id="person-appointment-06" author="mohsin.kerai">
+    <sql>ALTER TABLE person_appointment CHANGE `reppointment_count` `reappointment_count` int</sql>
+  </changeSet>
 </databaseChangeLog>
