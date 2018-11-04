@@ -50,31 +50,36 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string cycleId = null;
             string seatNo = null;
             int pos = -1;
+            int priority = 0;
 
-            for(int index = 0; index < model.Positions.Count; index++)
+            for (int index = 0; index < model.Positions.Count; index++)
             {
                 PositionModel position = model.Positions[index];
-                if(position.Id == id)
+                if (position.Id == id)
                 {
                     pos = index;
-                    index++;
                     nominations = position.Nominations;
-                    nominations.OrderByDescending(i => i.Priority);
                     positionId = position.PositionId;
                     seatNo = position.SeatId;
                 }
             }
             institutionId = model.Institution.Id;
             cycleId = HttpContext.Session.GetString(SelectedCycle);
+            if (nominations != null)
+            { 
+                nominations.Sort((a, b) => b.Priority.CompareTo(a.Priority));
+                priority = nominations[0].Priority;
+            }
+
 
             Console.WriteLine("cycleID= " + cycleId + " InstitutionId= " + institutionId + " seatNo= " + seatNo + " positionId= " + positionId);
 
             //api call for nominate
-            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(id, personId.Split('-')[0],
+            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(personId.Split('-')[0], id,
                 nominations[0].Priority, institutionId, positionId, cycleId, seatNo);
 
             //update data in session
-            if(pos != -1)
+            if(pos != -1 && positionModel != null)
             {
                 model.Positions[pos] = positionModel;
                 var updatedJson = JsonConvert.SerializeObject(model);
@@ -293,6 +298,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var nominationModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionDetails(uid,cycle);
 
             var json = JsonConvert.SerializeObject(nominationModel);
+            Console.WriteLine(json);
             HttpContext.Session.SetString(SessionNominationModel, json);
 
             return View(nominationModel);

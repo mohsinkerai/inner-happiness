@@ -1246,10 +1246,11 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string newJson = res.Content.ReadAsStringAsync().Result;
-                    positionModel = JsonConvert.DeserializeObject<PositionModel>(newJson);
+                    string newJson = response.Content.ReadAsStringAsync().Result;
+                    JObject obj = JObject.Parse(newJson);
+                    positionModel = await MapSinglePosition(obj);
                 }
-              
+
             }
 
             return positionModel;
@@ -1323,123 +1324,208 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        #endregion Public Methods
-    }
+        public async Task<PositionModel> MapSinglePosition(JObject positionArray)
+        {
 
-    public partial class AuthenticationResponse
-    {
-        [JsonProperty("id")]
-        public long Id { get; set; }
+            List<SelectListItem> list = await GetMartialStatuses();
+            List<SelectListItem> listAreaOfOrigin = await GetAreaOfOrigin();
+            List<SelectListItem> salutationList = await GetSalutation();
+            List<SelectListItem> jamatiTitleList = await GetJamatiTitles();
+            List<SelectListItem> institutionList = await GetAllInstitutions();
+            List<SelectListItem> nameOfDegreeList = await GetEducationalDegree();
+            List<SelectListItem> religiousEducationList = await GetReligiousEducation();
+            List<SelectListItem> regionalCouncilList = await GetRegionalCouncil();
+            List<SelectListItem> listOfCountries = await GetAllCountries();
+            List<SelectListItem> listOfLanguageProficiency = await GetLanguageProficiency();
+            List<SelectListItem> voluntaryCommunityPositionList = await GetPositions();
+            List<SelectListItem> highestLevelOfStudyList = await GetHighestLevelOfStudy();
+            List<SelectListItem> akdnTrainingList = await GetAkdnTraining();
+            List<SelectListItem> voluntaryCommunityInstitutionList = await GetPositionInstitution();
+            List<SelectListItem> fieldOfInterestsList = await GetFieldOfInterests();
+            List<SelectListItem> occupationTypeList = await GetOcupations();
+            List<SelectListItem> typeOfBusinessList = await GetBussinessType();
+            List<SelectListItem> natureOfBusinessList = await GetBussinessNature();
+            List<SelectListItem> professionalMembershipsList = await GetProfessionalMemeberShipDetails();
+            List<SelectListItem> languageList = await GetLanguages();
+            List<SelectListItem> skillsList = await GetSkills();
+            List<SelectListItem> relationList = await GetAllRelatives();
+            List<SelectListItem> majorAreaOfStudy = await GetMajorAreaOfStudy();
+            List<SelectListItem> fieldOfExpertiseList = await GetFieldOfExpertise();
 
-        [JsonProperty("user")]
-        public string User { get; set; }
+            List<NominationModel> listNominations = new List<NominationModel>();
+            PositionModel positionModel = new PositionModel();
 
-        [JsonProperty("token")]
-        public string Token { get; set; }
+            try
+            {
+                JToken personAppointmentList = positionArray["personAppointmentList"];
+                JToken currentCycle = positionArray["cycle"];
+                JToken positionName = positionArray["position"];
+                JToken instituion = positionArray["institution"];
 
-        [JsonProperty("expiry")]
-        public DateTime Expiry { get; set; }
+                positionModel.Id = Convert.ToString(positionArray["appointmentPositionId"]);
+                positionModel.CurrentCycle = Convert.ToString(currentCycle["name"]);
+                positionModel.PositionName = Convert.ToString(positionName["name"]);
+                positionModel.PositionId = Convert.ToString(positionName["id"]);
+                positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
+                positionModel.Rank = Convert.ToInt32(positionArray["rank"]);
+                positionModel.SeatId = Convert.ToString(positionArray["seatId"]);
 
-        [JsonProperty("roles")]
-        public string[] Roles { get; set; }
+                foreach (JToken jToken in personAppointmentList)
+                {
+                    JObject personsAppointed = (JObject)jToken;
+                    NominationModel nominationModel = new NominationModel();
 
-        [JsonProperty("authenticated")]
-        public bool Authenticated { get; set; }
+                    JToken incumbent = personsAppointed["person"];
+                    if (Convert.ToInt32(personsAppointed["priority"]) == 0)
+                    {
+                        positionModel.Incubment = incumbent.ToObject<PersonModel>();
+                        SetDetails(list, listAreaOfOrigin, salutationList, jamatiTitleList, nameOfDegreeList, voluntaryCommunityInstitutionList,
+                            occupationTypeList, institutionList, positionModel.Incubment);
+                    }
+                    else
+                    {
+                        nominationModel.Priority = Convert.ToInt32(personsAppointed["priority"]);
+                        nominationModel.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
+                        nominationModel.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
+                        JToken person = personsAppointed["person"];
+                        nominationModel.Person = person.ToObject<PersonModel>();
 
-        [JsonProperty("principal")]
-        public string Principal { get; set; }
+                        SetDetails(list, listAreaOfOrigin, salutationList, jamatiTitleList, nameOfDegreeList, voluntaryCommunityInstitutionList,
+                        occupationTypeList, institutionList, nominationModel.Person);
 
-        [JsonProperty("details")]
-        public object Details { get; set; }
+                        listNominations.Add(nominationModel);
+                    }
+                }
 
-        [JsonProperty("authorities")]
-        public Authority[] Authorities { get; set; }
+                listNominations.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
+                positionModel.Nominations = listNominations;
+                
+            }
+            catch (Exception ex)
+            {
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+            }
 
-        [JsonProperty("active")]
-        public bool Active { get; set; }
+            return positionModel;
+        }
 
-        [JsonProperty("credentials")]
-        public string Credentials { get; set; }
-    }
+    #endregion Public Methods
+}
 
-    public partial class Authority
-    {
-        [JsonProperty("amsAuthority")]
-        public string AmsAuthority { get; set; }
+public partial class AuthenticationResponse
+{
+    [JsonProperty("id")]
+    public long Id { get; set; }
 
-        [JsonProperty("authority")]
-        public string AuthorityAuthority { get; set; }
-    }
+    [JsonProperty("user")]
+    public string User { get; set; }
 
-    public class PastAppointment
-    {
-        [JsonProperty("id")]
-        public long Id { get; set; }
+    [JsonProperty("token")]
+    public string Token { get; set; }
 
-        [JsonProperty("position")]
-        public Position Position { get; set; }
+    [JsonProperty("expiry")]
+    public DateTime Expiry { get; set; }
 
-        [JsonProperty("institution")]
-        public Institution Institution { get; set; }
+    [JsonProperty("roles")]
+    public string[] Roles { get; set; }
 
-        [JsonProperty("seatNo")]
-        public long SeatNo { get; set; }
+    [JsonProperty("authenticated")]
+    public bool Authenticated { get; set; }
 
-        [JsonProperty("cycleId")]
-        public CycleId CycleId { get; set; }
+    [JsonProperty("principal")]
+    public string Principal { get; set; }
 
-        [JsonProperty("nominationsRequired")]
-        public long NominationsRequired { get; set; }
+    [JsonProperty("details")]
+    public object Details { get; set; }
 
-        [JsonProperty("mowlaAppointee")]
-        public bool MowlaAppointee { get; set; }
+    [JsonProperty("authorities")]
+    public Authority[] Authorities { get; set; }
 
-        [JsonProperty("active")]
-        public bool Active { get; set; }
+    [JsonProperty("name")]
+    public string Name { get; set; }
 
-        [JsonIgnore]
-        public string PositionName => $"{Position.Name} - {Institution.Name}";
+    [JsonProperty("active")]
+    public bool Active { get; set; }
 
-        [JsonIgnore]
-        public string CycleName => $"{CycleId.StartDate.Year.ToString()} - {CycleId.EndDate.Year.ToString()}";
-    }
+    [JsonProperty("credentials")]
+    public string Credentials { get; set; }
+}
 
-    public class CycleId
-    {
-        [JsonProperty("id")]
-        public long Id { get; set; }
+public partial class Authority
+{
+    [JsonProperty("amsAuthority")]
+    public string AmsAuthority { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+    [JsonProperty("authority")]
+    public string AuthorityAuthority { get; set; }
+}
 
-        [JsonProperty("startDate")]
-        public DateTime StartDate { get; set; }
+public class PastAppointment
+{
+    [JsonProperty("id")]
+    public long Id { get; set; }
 
-        [JsonProperty("endDate")]
-        public DateTime EndDate { get; set; }
-    }
+    [JsonProperty("position")]
+    public Position Position { get; set; }
 
-    public class Institution
-    {
-        [JsonProperty("id")]
-        public long Id { get; set; }
+    [JsonProperty("institution")]
+    public Institution Institution { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+    [JsonProperty("seatNo")]
+    public long SeatNo { get; set; }
 
-        [JsonProperty("levelId")]
-        public long LevelId { get; set; }
-    }
+    [JsonProperty("cycleId")]
+    public CycleId CycleId { get; set; }
 
-    public class Position
-    {
-        [JsonProperty("id")]
-        public long Id { get; set; }
+    [JsonProperty("nominationsRequired")]
+    public long NominationsRequired { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-    }
+    [JsonProperty("mowlaAppointee")]
+    public bool MowlaAppointee { get; set; }
+
+    [JsonProperty("active")]
+    public bool Active { get; set; }
+
+    [JsonIgnore]
+    public string PositionName => $"{Position.Name} - {Institution.Name}";
+
+    [JsonIgnore]
+    public string CycleName => $"{CycleId.StartDate.Year.ToString()} - {CycleId.EndDate.Year.ToString()}";
+}
+
+public class CycleId
+{
+    [JsonProperty("id")]
+    public long Id { get; set; }
+
+    [JsonProperty("name")]
+    public string Name { get; set; }
+
+    [JsonProperty("startDate")]
+    public DateTime StartDate { get; set; }
+
+    [JsonProperty("endDate")]
+    public DateTime EndDate { get; set; }
+}
+
+public class Institution
+{
+    [JsonProperty("id")]
+    public long Id { get; set; }
+
+    [JsonProperty("name")]
+    public string Name { get; set; }
+
+    [JsonProperty("levelId")]
+    public long LevelId { get; set; }
+}
+
+public class Position
+{
+    [JsonProperty("id")]
+    public long Id { get; set; }
+
+    [JsonProperty("name")]
+    public string Name { get; set; }
+}
 }
