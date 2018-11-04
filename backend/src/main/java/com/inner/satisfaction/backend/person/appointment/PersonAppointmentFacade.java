@@ -28,8 +28,12 @@ public class PersonAppointmentFacade {
   }
 
   private void performOnlyCreateValidations(PersonAppointment personAppointment) {
-    if (personAppointment.getReappointmentCount() != 0) {
-      throw new RuntimeException("Larkay!! re-appointment ka count tera-bhai dekh lega, tu mat dal");
+    if (personAppointment.getReappointmentCount() == null) {
+      personAppointment.setReappointmentCount(0);
+    }
+    if (!personAppointment.getReappointmentCount().equals(0)) {
+      throw new RuntimeException(
+        "Larkay!! re-appointment ka count tera-bhai dekh lega, tu mat dal");
     }
   }
 
