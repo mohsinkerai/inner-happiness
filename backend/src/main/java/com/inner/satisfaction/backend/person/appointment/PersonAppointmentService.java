@@ -22,6 +22,14 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
     return super.save(personAppointment);
   }
 
+  public PersonAppointment update(PersonAppointment personAppointment) {
+    return save(personAppointment);
+  }
+
+  public PersonAppointment saveNew(PersonAppointment personAppointment) {
+    return save(personAppointment);
+  }
+
   public List<PersonAppointment> findByAppointmentPositionId(long cpiId) {
     return personAppointmentRepository.findByAppointmentPositionId(cpiId);
   }
