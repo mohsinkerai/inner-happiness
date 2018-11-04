@@ -38,4 +38,21 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="cycle-03" author="mohsin.kerai">
+    <addColumn tableName="cycle">
+      <column name="is_midterm_cycle" defaultValue="0" type="bit">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="cycle-04" author="mohsin.kerai">
+    <addColumn tableName="cycle">
+      <column name="previous_cycle" type="bigint" />
+    </addColumn>
+  </changeSet>
+  <changeSet id="cycle-05" author="mohsin.kerai">
+    <addColumn tableName="cycle">
+      <column name="parent_cycle" type="bigint" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

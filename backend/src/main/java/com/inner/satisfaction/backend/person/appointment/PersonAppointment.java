@@ -16,19 +16,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PersonAppointment extends BaseEntity {
 
-  private long personId;
-  private long appointmentPositionId;
-
-  @Column(name = "is_appointed")
-  @JsonProperty("isAppointed")
-  private boolean isAppointed;
-
-  @Column(name = "is_recommended")
-  @JsonProperty("isRecommended")
-  private boolean isRecommended;
-
-  private int priority;
+  private Long personId;
+  private Long appointmentPositionId;
+  private Boolean isAppointed;
+  private Boolean isRecommended;
+  private Integer priority;
   private String remarks;
+
+  @Column(updatable = false)
+  private Integer reappointmentCount;
 
   public boolean getAppointed() {
     return isAppointed;

@@ -7,23 +7,28 @@ import com.inner.satisfaction.backend.base.BaseEntity;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
 import com.inner.satisfaction.backend.person.appointment.validation.PersonAppointmentValidation;
 import com.inner.satisfaction.backend.person.appointment.validation.message.ValidationMessage;
+import com.inner.satisfaction.backend.person.lookup.relation.PersonRelationPerson;
+import com.inner.satisfaction.backend.person.lookup.relation.PersonRelationPersonService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MultiplePersonRecommendationValidation implements PersonAppointmentValidation {
+public class BloodRelationRecommendationValidation implements PersonAppointmentValidation {
 
-  private static final String VALIDATION_NAME = "SHOULD_NOT_RECOMMEND_MULTIPLE_TIMES";
-  private static final String MESSAGE = "Person %d is recommended multiple times in %s";
-  private static final boolean BLOCKING_VALIDATION = true;
+  private static final String VALIDATION_NAME = "PERSON_RELATIVE_RECOMMENDED";
+  private static final String MESSAGE = "Person %d's rishtedaars are recommended in %s";
+  private static final boolean BLOCKING_VALIDATION = false;
 
   private final AppointmentPositionService appointmentPositionService;
+  private final PersonRelationPersonService personRelationPersonService;
 
-  public MultiplePersonRecommendationValidation(
-    AppointmentPositionService appointmentPositionService) {
+  public BloodRelationRecommendationValidation(
+    AppointmentPositionService appointmentPositionService,
+    PersonRelationPersonService personRelationPersonService) {
     this.appointmentPositionService = appointmentPositionService;
+    this.personRelationPersonService = personRelationPersonService;
   }
 
   @Override
@@ -35,20 +40,28 @@ public class MultiplePersonRecommendationValidation implements PersonAppointment
       AppointmentPosition appointmentPosition = appointmentPositionService
         .findOne(appointmentPositionId);
 
-      List<AppointmentPosition> appointmentPositions = appointmentPositionService
-        .findAppointmentsOfPersonInCycle(personId, appointmentPosition.getCycleId());
-
+      List<PersonRelationPerson> relations = personRelationPersonService
+        .findByFirstPersonId(personId);
       List<AppointmentPosition> alreadyAppointedPositions = Lists.newArrayList();
 
-      for (AppointmentPosition ap : appointmentPositions) {
-        if (!ap.getId().equals(personAppointment.getAppointmentPositionId())) {
-          alreadyAppointedPositions.add(ap);
+      for(PersonRelationPerson prp : relations) {
+        long rishtedaar = prp.getSecondPersonId();
+
+        List<AppointmentPosition> appointmentPositions = appointmentPositionService
+          .findAppointmentsOfPersonInCycle(personId, appointmentPosition.getCycleId());
+        // Check if rishtedaar has any appointment
+
+        for (AppointmentPosition ap : appointmentPositions) {
+          if (!ap.getId().equals(personAppointment.getAppointmentPositionId())) {
+            alreadyAppointedPositions.add(ap);
+          }
         }
       }
 
-      String errorMessage = String.format(MESSAGE, personId,
-        alreadyAppointedPositions.stream().map(BaseEntity::getId).collect(
-          Collectors.toList()));
+      List<Long> appointmentPositionIds = alreadyAppointedPositions.stream().map(BaseEntity::getId).collect(
+        Collectors.toList());
+
+      String errorMessage = String.format(MESSAGE, personId, appointmentPositionIds);
 
       ValidationMessage validationMessage = ValidationMessage.builder()
         .isActive(true)
