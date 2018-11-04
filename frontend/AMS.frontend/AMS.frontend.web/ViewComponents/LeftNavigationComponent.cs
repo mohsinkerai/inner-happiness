@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Models;
+using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AMS.frontend.web.Models.Navigation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AMS.frontend.web.ViewComponents
 {
@@ -14,109 +18,39 @@ namespace AMS.frontend.web.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            IList menuModel = new List<MenuModel>
+            var authReponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+            var menuModel = new List<MenuModel>();
+
+            foreach (var role in authReponse.Roles)
             {
-                new MenuModel
+                if (role == "PIF" && menuModel.All(mm => mm.MenuId != 1))
                 {
-                    MenuId = 1,
-                    Action = ActionNames.Index,
-                    Controller = ControllerNames.Persons,
-                    SubMenu = null,
-                    Title = "Basic Information Form",
-                    Area = AreaNames.Operations,
-                    ImageClass = "flaticon-information"
-                },
-
-                new MenuModel
-                {
-                    MenuId = 2,
-                    Action = ActionNames.Index,
-                    Controller = ControllerNames.Nominations,
-                    SubMenu = null,
-                    Title = "Nominations",
-                    Area = AreaNames.Operations,
-                    ImageClass = "flaticon-network"
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 1,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Persons,
+                        SubMenu = null,
+                        Title = "Basic Information Form",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-information"
+                    });
                 }
-            };
 
-            //var menu = new MenuModel
-            //{
-            //    MenuId = 1,
-            //    Action = "Index",
-            //    Controller = "Home",
-            //    SubMenu = null,
-            //    Title = "Dashboard",
-            //    Area = "",
-            //    ImageClass = "flaticon-dashboard"
-            //};
-            //menuModel.Add(menu);
-
-            //menu = new MenuModel
-            //{
-            //    MenuId = 2,
-            //    Title = "Employee Management",
-            //    Action = "Index",
-            //    Controller = "Persons",
-            //    SubMenu = null,
-            //    Area = AreaNames.Operations,
-            //    ImageClass = "flaticon-users"
-            //};
-            //menuModel.Add(menu);
-
-            //menu = new MenuModel
-            //{
-            //    MenuId = 3,
-            //    Title = "User Groups/Tags Management",
-            //    Action = "List",
-            //    Controller = "TagsManagement",
-            //    SubMenu = null,
-            //    Area = AreaNames.Operations,
-            //    ImageClass = "flaticon-interface-9"
-            //};
-            //menuModel.Add(menu);
-
-            //menu = new MenuModel
-            //{
-            //    MenuId = 4,
-            //    Title = "Fee Management",
-            //    Action = "List",
-            //    Controller = "FeeManagement",
-            //    SubMenu = null,
-            //    Area = AreaNames.Operations,
-            //    ImageClass = "flaticon-coins"
-            //};
-            //menuModel.Add(menu);
-
-            //menu = new MenuModel {MenuId = 5, Title = "Administration", ImageClass = "flaticon-user"};
-
-            //menu.SubMenu = new List<MenuModel>();
-            //var subMenu = new MenuModel
-            //{
-            //    Action = "Roles",
-            //    Controller = "Administration",
-            //    SubMenu = null,
-            //    Title = "Role Management",
-            //    Area = AreaNames.Operations,
-            //    ImageClass = "flaticon-user-settings"
-            //};
-            //menu.SubMenu.Add(subMenu);
-
-            //subMenu = new MenuModel
-            //{
-            //    Action = "Users",
-            //    Controller = "Administration",
-            //    SubMenu = null,
-            //    Title = "User Management",
-            //    Area = AreaNames.Operations,
-            //    ImageClass = "flaticon-user-add"
-            //};
-            //menu.SubMenu.Add(subMenu);
-
-            //menuModel.Add(menu);
-
-            //menu = new MenuModel {MenuId = 6, Title = "Reports", ImageClass = "flaticon-analytics"};
-            //menuModel.Add(menu);
-            //Session["ABC"] = MenuModel;
+                if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 2))
+                {
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 2,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Nominations,
+                        SubMenu = null,
+                        Title = "Nominations",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-network"
+                    });
+                }
+            }
 
             return View(menuModel);
         }
