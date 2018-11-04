@@ -50,6 +50,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string TypeOfBusinessName { get; set; }
 
+        [JsonProperty(PropertyName = "employmentCategory")]
+        public string Category { get; set; }
+
 
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }

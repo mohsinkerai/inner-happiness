@@ -713,87 +713,87 @@
                     </div>
                     @if (ViewBag.Action != "Detail")
                     {
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityIsImamatAppointment" class="control-label"></label><span class="required">*</span>
-                                <div class="m-radio-inline">
-                                    <label class="m-radio">
-                                        <input asp-for="VoluntaryCommunityIsImamatAppointment" type="radio" value="True" class="is-imamat-appointee"> Imamat Appointee
-                                        <span></span>
-                                    </label>
-                                    <label class="m-radio">
-                                        <input asp-for="VoluntaryCommunityIsImamatAppointment" type="radio" value="False" class="is-imamat-appointee"> Non Imamat Appointee
-                                        <span></span>
-                                    </label>
-                                </div>
-                                <span asp-validation-for="VoluntaryCommunityIsImamatAppointment" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityCycle" class="control-label"></label>
-                                <select asp-for="VoluntaryCommunityCycle" asp-items="@ViewBag.Cycle" class="form-control m-select2 imamat" placeholder="Select" disabled="disabled">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="VoluntaryCommunityCycle" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityInstitution" class="control-label"></label>
-                                <select asp-for="VoluntaryCommunityInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2 imamat non-imamat" placeholder="Select an institution" disabled="disabled">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="VoluntaryCommunityInstitution" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityFromYear" class="control-label"></label>
-                                @*<input type="text" asp-for="VoluntaryCommunityFromYear" class="form-control">*@
-                                <div class="input-group">
-                                    <input type="text" asp-for="VoluntaryCommunityFromYear" class="form-control date-picker-year-only non-imamat" placeholder="Select year" disabled="disabled">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">
-                                            <i class="la la-calendar"></i>
-                                        </span>
+                        <div class="form-group m-form__group row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label asp-for="VoluntaryCommunityIsImamatAppointment" class="control-label"></label><span class="required">*</span>
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio">
+                                            <input asp-for="VoluntaryCommunityIsImamatAppointment" type="radio" value="True" class="is-imamat-appointee"> Imamat Appointee
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio">
+                                            <input asp-for="VoluntaryCommunityIsImamatAppointment" type="radio" value="False" class="is-imamat-appointee"> Non Imamat Appointee
+                                            <span></span>
+                                        </label>
                                     </div>
+                                    <span asp-validation-for="VoluntaryCommunityIsImamatAppointment" class="form-control-feedback"></span>
                                 </div>
-                                <span asp-validation-for="VoluntaryCommunityFromYear" class="form-control-feedback"></span>
                             </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityToYear" class="control-label"></label>
-                                @*<input type="text" asp-for="VoluntaryCommunityToYear" class="form-control">*@
-                                <div class="input-group">
-                                    <input type="text" asp-for="VoluntaryCommunityToYear" class="form-control date-picker-year-only non-imamat" placeholder="Select year" disabled="disabled">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2">
-                                            <i class="la la-calendar"></i>
-                                        </span>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label asp-for="VoluntaryCommunityCycle" class="control-label"></label>
+                                    <select asp-for="VoluntaryCommunityCycle" asp-items="@ViewBag.Cycle" class="form-control m-select2 imamat" placeholder="Select" disabled="disabled">
+                                        <option></option>
+                                    </select>
+                                    <span asp-validation-for="VoluntaryCommunityCycle" class="form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label asp-for="VoluntaryCommunityInstitution" class="control-label"></label>
+                                    <select asp-for="VoluntaryCommunityInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2 imamat non-imamat" placeholder="Select an institution" disabled="disabled">
+                                        <option></option>
+                                    </select>
+                                    <span asp-validation-for="VoluntaryCommunityInstitution" class="form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="VoluntaryCommunityFromYear" class="control-label"></label>
+                                    @*<input type="text" asp-for="VoluntaryCommunityFromYear" class="form-control">*@
+                                    <div class="input-group">
+                                        <input type="text" asp-for="VoluntaryCommunityFromYear" class="form-control date-picker-year-only non-imamat" placeholder="Select year" disabled="disabled">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <i class="la la-calendar"></i>
+                                            </span>
+                                        </div>
                                     </div>
+                                    <span asp-validation-for="VoluntaryCommunityFromYear" class="form-control-feedback"></span>
                                 </div>
-                                <span asp-validation-for="VoluntaryCommunityToYear" class="form-control-feedback"></span>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="VoluntaryCommunityToYear" class="control-label"></label>
+                                    @*<input type="text" asp-for="VoluntaryCommunityToYear" class="form-control">*@
+                                    <div class="input-group">
+                                        <input type="text" asp-for="VoluntaryCommunityToYear" class="form-control date-picker-year-only non-imamat" placeholder="Select year" disabled="disabled">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <i class="la la-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="VoluntaryCommunityToYear" class="form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label asp-for="VoluntaryCommunityPosition" class="control-label"></label>
+                                    <select asp-for="VoluntaryCommunityPosition" asp-items="@ViewBag.VoluntaryCommunityPositionList" class="form-control m-select2 imamat non-imamat" placeholder="Select a position" disabled="disabled">
+                                        <option></option>
+                                    </select>
+                                    <span asp-validation-for="VoluntaryCommunityPosition" class="form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <input type="hidden" id="voluntary-community-id" />
+                            <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+                                <button type="button" class="btn btn-warning imamat non-imamat" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");' disabled="disabled">
+                                    <i class="fa fa-save"></i> Add
+                                </button>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label asp-for="VoluntaryCommunityPosition" class="control-label"></label>
-                                <select asp-for="VoluntaryCommunityPosition" asp-items="@ViewBag.VoluntaryCommunityPositionList" class="form-control m-select2 imamat non-imamat" placeholder="Select a position" disabled="disabled">
-                                    <option></option>
-                                </select>
-                                <span asp-validation-for="VoluntaryCommunityPosition" class="form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <input type="hidden" id="voluntary-community-id" />
-                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                            <button type="button" class="btn btn-warning imamat non-imamat" onclick='return VoluntaryCommunityListAdd("@Url.Action(ActionNames.VoluntaryCommunityListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderVoluntaryCommunityService", ControllerNames.Persons, new {area = AreaNames.Operations})");' disabled="disabled">
-                                <i class="fa fa-save"></i> Add
-                            </button>
-                        </div>
-                    </div>
                     }
                     <div class="form-group m-form__group row">
                         <div class="col-lg-12" id="voluntary-community-table">
@@ -930,6 +930,26 @@
                     @if (ViewBag.Action != "Detail")
                     {
                         <div class="form-group m-form__group row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label asp-for="EmploymentCategory" class="control-label"></label><span class="required">*</span>
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio">
+                                            <input asp-for="EmploymentCategory" type="radio" value="NotSpecified" checked="checked" class="employment-category"> Not Specified
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio">
+                                            <input asp-for="EmploymentCategory" type="radio" value="Employed" class="employment-category"> Employed
+                                            <span></span>
+                                        </label>
+                                        <label class="m-radio">
+                                            <input asp-for="EmploymentCategory" type="radio" value="SelfEmployed" class="employment-category"> Self Employed
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <span asp-validation-for="EmploymentCategory" class="form-control-feedback"></span>
+                                </div>
+                            </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label asp-for="NameOfOrganization" class="control-label"></label>
