@@ -1,9 +1,5 @@
 package com.inner.satisfaction.backend.person.appointment;
 
-import com.inner.satisfaction.backend.appointment.AppointmentPosition;
-import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
-import com.inner.satisfaction.backend.cycle.Cycle;
-import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
 import org.springframework.stereotype.Component;
@@ -11,74 +7,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class PersonAppointmentFacade {
 
-  private final CycleService cycleService;
-  private final PersonService personService;
   private final PersonAppointmentService personAppointmentService;
-  private final AppointmentPositionService appointmentPositionService;
+  private final PersonService personService;
 
   public PersonAppointmentFacade(
-    CycleService cycleService,
-    AppointmentPositionService appointmentPositionService,
     PersonAppointmentService personAppointmentService,
     PersonService personService) {
-    this.cycleService = cycleService;
-    this.appointmentPositionService = appointmentPositionService;
     this.personAppointmentService = personAppointmentService;
     this.personService = personService;
   }
 
   public PersonAppointment save(PersonAppointment personAppointment) {
-    performValidations(personAppointment);
     if (personAppointment.getId() != null) {
       performOnlyUpdateValidations(personAppointment);
-      return updatePersonAppointment(personAppointment);
     } else {
       performOnlyCreateValidations(personAppointment);
-      return savePersonAppointment(personAppointment);
     }
-  }
-
-  private PersonAppointment updatePersonAppointment(PersonAppointment personAppointment) {
-    PersonAppointment existingPersonAppointment = personAppointmentService
-      .findOne(personAppointment.getId());
-    AppointmentPosition appointmentPosition = appointmentPositionService
-      .findOne(personAppointment.getAppointmentPositionId());
-    Cycle cycle = cycleService.findOne(appointmentPosition.getCycleId());
-    if (existingPersonAppointment.getRecommended() && !personAppointment.getRecommended()) {
-      cycle = adjustRecommendedCount(cycle, false);
-    } else if (!existingPersonAppointment.getRecommended() && personAppointment.getRecommended()) {
-      cycle = adjustRecommendedCount(cycle, true);
-    }
-    cycleService.save(cycle);
+    performValidations(personAppointment);
     return personAppointmentService.save(personAppointment);
-  }
-
-  private PersonAppointment savePersonAppointment(PersonAppointment personAppointment) {
-    AppointmentPosition appointmentPosition = appointmentPositionService
-      .findOne(personAppointment.getAppointmentPositionId());
-    Cycle cycle = cycleService.findOne(appointmentPosition.getCycleId());
-    if (personAppointment.getRecommended()) {
-      cycle = adjustRecommendedCount(cycle, true);
-    }
-    cycle = incrementNominationCount(cycle);
-    cycleService.save(cycle);
-    return personAppointmentService.save(personAppointment);
-  }
-
-  private Cycle adjustRecommendedCount(Cycle cycle, boolean increment) {
-    Long recommendedCount = cycle.getRecommendedCount();
-    if (increment) {
-      cycle.setRecommendedCount(recommendedCount++);
-    } else {
-      cycle.setRecommendedCount(recommendedCount--);
-    }
-    return cycle;
-  }
-
-  private Cycle incrementNominationCount(Cycle cycle) {
-    Long nominatedCount = cycle.getNominatedCount();
-    cycle.setNominatedCount(nominatedCount++);
-    return cycle;
   }
 
   private void performOnlyCreateValidations(PersonAppointment personAppointment) {
