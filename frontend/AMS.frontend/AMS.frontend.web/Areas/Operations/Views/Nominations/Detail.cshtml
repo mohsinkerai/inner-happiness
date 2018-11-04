@@ -207,13 +207,13 @@
             var positionIds = '@Model.Positions.Select(p => p.Id).Join()';
             var positionArray = positionIds.split(',');
             for (var i = 0; i < positionArray.length; i++) {
-                InitializeNominationDataTableLite("nominations-" + positionArray[i], "Nominations", "@Url.Action("ReOrderNominations", ControllerNames.Nominations, new { area = AreaNames.Operations })", positionArray[i]);
-                $("#nominations-" + positionArray[i]).css("min-height", "0px");
-                InitializeTypeAhead("person-lookup-" + positionArray[i],
-                    "person-lookup-" + positionArray[i],
+                InitializeNominationDataTableLite("nominations-" + positionArray[i].trim(), "Nominations", "@Url.Action("ReOrderNominations", ControllerNames.Nominations, new { area = AreaNames.Operations })", positionArray[i].trim());
+                $("#nominations-" + positionArray[i].trim()).css("min-height", "0px");
+                InitializeTypeAhead("person-lookup-" + positionArray[i].trim(),
+                    "person-lookup-" + positionArray[i].trim(),
                     "",
                     "@Url.Action("GetPersons", ControllerNames.Nominations, new { area = AreaNames.Operations })",
-                    positionArray[i],
+                    positionArray[i].trim(),
                     "@Url.Action("Nominate", ControllerNames.Nominations, new { area = AreaNames.Operations })");
             }
             $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
