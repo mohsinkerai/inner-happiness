@@ -9,37 +9,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonAppointmentService extends SimpleBaseService<PersonAppointment> {
 
-  private final PersonService personService;
   private final PersonAppointmentRepository personAppointmentRepository;
 
   protected PersonAppointmentService(
-    PersonService personService,
     PersonAppointmentRepository baseRepository) {
     super(baseRepository);
-    this.personService = personService;
     this.personAppointmentRepository = baseRepository;
   }
 
   @Override
   public PersonAppointment save(PersonAppointment personAppointment) {
-    if (personAppointment.getId() != null) {
-      Long id = personAppointment.getId();
-      PersonAppointment dbPersonAppointment = findOne(id);
-      if (dbPersonAppointment.getPriority() == 0) {
-        throw new RuntimeException("Excuseme!! you can't update incumbtee");
-      }
-    }
-    if (personAppointment.getPriority() == 0) {
-      throw new RuntimeException("Excuseme!! you can't make new incumbtee");
-    }
-    if(personAppointment.getAppointed() == true) {
-      throw new RuntimeException("Please come low!! Appoint ku ker rahe ho?");
-    }
-    Person one = personService.findOne(personAppointment.getPersonId());
-    if(one == null && one.isActive() == true) {
-      throw new RuntimeException("Jani!! Sahi person id dedo");
-    }
     return super.save(personAppointment);
+  }
+
+  public PersonAppointment update(PersonAppointment personAppointment) {
+    return save(personAppointment);
+  }
+
+  public PersonAppointment saveNew(PersonAppointment personAppointment) {
+    return save(personAppointment);
   }
 
   public List<PersonAppointment> findByAppointmentPositionId(long cpiId) {

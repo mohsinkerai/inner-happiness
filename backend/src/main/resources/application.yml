@@ -38,7 +38,19 @@ server:
 person:
   images:
     path: images
-#logging.level.org.springframework.security: DEBUG
+# Disabled Query Logging, use commented values in order to do so
 logging.level.org.hibernate:
-  SQL: DEBUG
-  type.descriptor.sql.BasicBinder: TRACE
+  SQL: INFO #DEBUG
+  type.descriptor.sql.BasicBinder: INFO #TRACE
+management:
+  endpoint:
+    logfile:
+      enabled: true
+      cache:
+        time-to-live: 100ms
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: env, logfile, health, info

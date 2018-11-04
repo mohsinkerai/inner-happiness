@@ -96,6 +96,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] public string EmploymentEmailAddress { get; set; }
 
+        [JsonIgnore] public string EmploymentCategory { get; set; }
+
         [JsonIgnore] public DateTime? EmploymentEndDate { get; set; }
 
         [JsonProperty(PropertyName = "employments")]

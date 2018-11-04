@@ -28,6 +28,8 @@ public class EmploymentHistoryDto extends BaseDto {
   private Long businessType; // ID
   private Long businessNature; // ID
 
+  private String employmentCategory;
+
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate employmentStartDate;
   @JsonSerialize(using = LocalDateSerializer.class)

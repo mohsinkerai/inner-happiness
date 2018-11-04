@@ -187,8 +187,9 @@ function LanguageListEdit(id, language, read, write, speak) {
     $("#language-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function EmploymentListEdit(id, nameOfOrganization, designation, location, employmentEmailAddress, employmentTelephone, typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate) {
+function EmploymentListEdit(id, nameOfOrganization, category, designation, location, employmentEmailAddress, employmentTelephone, typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate) {
     $("#NameOfOrganization").val(nameOfOrganization).trigger('change');
+    $("#EmploymentCategory").val(category).trigger('change');
     $("#Designation").val(designation).trigger('change');
     $("#Location").val(location).trigger('change');
     $("#EmploymentEmailAddress").val(employmentEmailAddress).trigger('change');
@@ -827,9 +828,10 @@ function EducationListAdd(url, reOrderUrl) {
 
 function EmploymentListAdd(url, reOrderUrl) {
     mApp.block("#employment-table", {});
-    if ($("#NameOfOrganization").valid() && $("#Designation").valid() && $("#Location").valid() && $("#EmploymentEmailAddress").valid() && $("#EmploymentTelephone").valid() && $("#TypeOfBusiness").valid() && $("#NatureOfBusiness").valid() && $("#NatureOfBusinessOther").valid() && $("#EmploymentStartDate").valid() && $("#EmploymentEndDate").valid()) {
+    if ($("#NameOfOrganization").valid() && $("#EmploymentCategory").valid() && $("#Designation").valid() && $("#Location").valid() && $("#EmploymentEmailAddress").valid() && $("#EmploymentTelephone").valid() && $("#TypeOfBusiness").valid() && $("#NatureOfBusiness").valid() && $("#NatureOfBusinessOther").valid() && $("#EmploymentStartDate").valid() && $("#EmploymentEndDate").valid()) {
         var id = $("#employment-id").val();
         var name = $("#NameOfOrganization").val();
+        var category = $("input[name='EmploymentCategory']:checked")[0].defaultValue;
         var designation = $("#Designation").val();
         var location = $("#Location").val();
         var email = $("#EmploymentEmailAddress").val();
@@ -841,6 +843,7 @@ function EmploymentListAdd(url, reOrderUrl) {
         var end = $("#EmploymentEndDate").val();
         if (IsEmpty(id) &&
             IsEmpty(name) &&
+            IsEmpty(category) &&
             IsEmpty(designation) &&
             IsEmpty(location) &&
             IsEmpty(email) &&
@@ -856,7 +859,7 @@ function EmploymentListAdd(url, reOrderUrl) {
         $.ajax({
             type: "POST",
             url: url,
-            data: { "id": id, "nameOfOrganization": name, "designation": designation, "location": location, "employmentEmailAddress": email, "employmentTelephone": phone, "typeOfBusiness": type, "natureOfBusiness": nature, "NatureOfBusinessOther": other, "employmentStartDate": start, "employmentEndDate": end },
+            data: { "id": id, "nameOfOrganization": name, "category": category, "designation": designation, "location": location, "employmentEmailAddress": email, "employmentTelephone": phone, "typeOfBusiness": type, "natureOfBusiness": nature, "NatureOfBusinessOther": other, "employmentStartDate": start, "employmentEndDate": end },
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -872,6 +875,7 @@ function EmploymentListAdd(url, reOrderUrl) {
                     $("#employment-table").html(result);
                     InitializeDataTableLiteWithRowReordering("employment", "Employments", reOrderUrl);
                     $("#NameOfOrganization").val('').trigger('change');
+                    $("#EmploymentCategory").val('').trigger('change');
                     $("#Designation").val('').trigger('change');
                     $("#Location").val('').trigger('change');
                     $("#EmploymentEmailAddress").val('').trigger('change');

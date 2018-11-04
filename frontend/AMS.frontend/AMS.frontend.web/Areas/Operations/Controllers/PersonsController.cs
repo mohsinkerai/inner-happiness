@@ -478,11 +478,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public IActionResult EmploymentListAdd(string id, string nameOfOrganization, string designation,
+        public IActionResult EmploymentListAdd(string id, string nameOfOrganization, string category, string designation,
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
-            var sessionEmploymentList = AddEmploymentToSession(id, nameOfOrganization, designation, location,
+            var sessionEmploymentList = AddEmploymentToSession(id, nameOfOrganization, category, designation, location,
                 employmentEmailAddress, employmentTelephone,
                 typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate);
 
@@ -1062,7 +1062,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return sessionProfessionalTrainingList;
         }
 
-        private List<EmploymentModel> AddEmploymentToSession(string id, string nameOfOrganization, string designation,
+        private List<EmploymentModel> AddEmploymentToSession(string id, string nameOfOrganization, string category, string designation,
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
             string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
         {
@@ -1083,6 +1083,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 EmploymentId = id,
                 NameOfOrganization = nameOfOrganization,
+                Category = category,
                 Designation = designation,
                 Location = location,
                 TypeOfBusiness =
@@ -1685,6 +1686,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             employment.NatureOfBusinessName = businessNature;
 
                             AddEmploymentToSession(employment.EmploymentId, employment.NameOfOrganization,
+                                employment.Category,
                                 employment.Designation, employment.Location,
                                 employment.EmploymentEmailAddress, employment.EmploymentTelephone,
                                 employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
