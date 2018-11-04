@@ -93,6 +93,7 @@ public class AppointmentPositionFacade {
       .isRecommended(personAppointment.getRecommended())
       .priority(personAppointment.getPriority())
       .remarks(personAppointment.getRemarks())
+      .personAppointmentId(personAppointment.getId())
       .person(personService.findOne(personAppointment.getPersonId()))
       .build();
   }

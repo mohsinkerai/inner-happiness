@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class PersonAppointmentDto {
 
   private Person person;
+  private Long personAppointmentId;
   private boolean isAppointed;
   private boolean isRecommended;
   private int priority;
