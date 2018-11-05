@@ -123,7 +123,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public IActionResult ReOrderNominations(string positionId, string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-       
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            NominationDetailModel model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+
             //saif integration goes here
             return PartialView("_NominationsTablePartial", new PositionModel
             {
@@ -164,10 +166,28 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             NominationDetailModel model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
             string institutionId = model.Institution.Id;
             string cycleId = HttpContext.Session.GetString(SelectedCycle);
-            
+            int pos = -1;
+            for (int index = 0; index < model.Positions.Count; index++)
+            {
+                PositionModel position = model.Positions[index];
+                if (position.Id == positionId)
+                {
+                    pos = index;
+                    break;
+                }
+            }
+
             var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).RemoveNomination(personAppointmentId,
                 cycleId,institutionId,id, seatId);
-            
+
+            //update data in session
+            if (pos != -1 && positionModel != null)
+            {
+                model.Positions[pos] = positionModel;
+                var updatedJson = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            }
+
             return PartialView("_NominationsTablePartial", positionModel);
 
             /*return PartialView("_NominationsTablePartial", new PositionModel
