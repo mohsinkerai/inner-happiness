@@ -12,6 +12,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public int Priority { get; set; }
         public string Id { get; set; }
 
+        public string personAppointmentId { get; set; }
+
         #endregion Public Properties
     }
 }

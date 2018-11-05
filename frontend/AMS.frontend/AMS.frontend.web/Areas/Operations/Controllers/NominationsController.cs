@@ -155,11 +155,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             });
         }
+
         [HttpPost]
-        public IActionResult RemoveNomination(string positionId, string personId)
+        public async Task<IActionResult> RemoveNomination(string positionId, string personId, string personAppointmentId, string seatId, string id)
         {
-            //saif integration goes here
-            return PartialView("_NominationsTablePartial", new PositionModel
+            //getting required data from session
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            NominationDetailModel model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+            string institutionId = model.Institution.Id;
+            string cycleId = HttpContext.Session.GetString(SelectedCycle);
+            
+            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).RemoveNomination(personAppointmentId,
+                cycleId,institutionId,id, seatId);
+            
+            return PartialView("_NominationsTablePartial", positionModel);
+
+            /*return PartialView("_NominationsTablePartial", new PositionModel
             {
                 PositionName = "President",
                 CurrentCycle = "2018 - 2020",
@@ -179,7 +190,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         Id = "1111"
                     }
                 }
-            });
+            });*/
         }
         public async Task<JsonResult> GetPersons(string id)
         {

@@ -1116,6 +1116,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                                 nominationModel.Priority = Convert.ToInt32(personsAppointed["priority"]);
                                 nominationModel.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
                                 nominationModel.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
+                                nominationModel.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
                                 JToken person = personsAppointed["person"];
                                 nominationModel.Person = person.ToObject<PersonModel>();
 
@@ -1387,6 +1388,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         nominationModel.Priority = Convert.ToInt32(personsAppointed["priority"]);
                         nominationModel.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
                         nominationModel.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
+                        nominationModel.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
                         JToken person = personsAppointed["person"];
                         nominationModel.Person = person.ToObject<PersonModel>();
 
@@ -1409,8 +1411,31 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return positionModel;
         }
 
+        public async Task<PositionModel> RemoveNomination(string personAppointmentId, string cycleId, string institutionId, string positionId, string seatNo)
+        {
+
+            HttpResponseMessage res = await _client.DeleteAsync("/person/appointment/one/%7Bid%7D?entityId="+personAppointmentId);
+
+            PositionModel positionModel = null;
+            if (res.IsSuccessStatusCode)
+            {
+                HttpResponseMessage response = await _client.GetAsync("/appointment-position/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo?cycleId=" + cycleId +
+                    "&institutionId=" + institutionId + "&positionId=" + positionId + "&seatNo=" + seatNo);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string newJson = response.Content.ReadAsStringAsync().Result;
+                    JObject obj = JObject.Parse(newJson);
+                    positionModel = await MapSinglePosition(obj);
+                }
+
+            }
+
+            return positionModel;
+        }
+
     #endregion Public Methods
-}
+    }
 
 public partial class AuthenticationResponse
 {

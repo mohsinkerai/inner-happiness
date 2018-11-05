@@ -40,7 +40,7 @@
                     <a target="_blank" asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@nomination.Person.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
                         <i class="la la-edit"></i>
                     </a>
-                    <a href='javascript:RemoveNomination("@Url.Action("RemoveNomination", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@Model.Id", "@nomination.Person.Id");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
+                    <a href='javascript:RemoveNomination("@Url.Action("RemoveNomination", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@Model.Id", "@nomination.Person.Id", "@nomination.personAppointmentId", "@Model.SeatId", "@Model.PositionId");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
                         <i class="la la-user-times"></i>
                     </a>
                 </td>

@@ -1891,11 +1891,11 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
     });
 }
 
-function RemoveNomination(url, positionId, personId) {
+function RemoveNomination(url, positionId, personId, personAppointmentId, seatId, id) {
     $.ajax({
         type: "POST",
-        url: url,
-        data: { "positionId": positionId, "personId": personId },
+		url: url,
+		data: { "positionId": positionId, "personId": personId, "personAppointmentId": personAppointmentId, "seatId": seatId, "id": id },
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
