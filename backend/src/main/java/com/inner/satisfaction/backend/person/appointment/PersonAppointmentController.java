@@ -27,4 +27,9 @@ public class PersonAppointmentController extends BaseController<PersonAppointmen
     PersonAppointment personAppointment) {
     return personAppointmentFacade.save(personAppointment);
   }
+
+  @Override
+  public void delete(Long entityId) {
+    personAppointmentFacade.delete(entityId);
+  }
 }

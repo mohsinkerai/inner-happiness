@@ -6,6 +6,7 @@ import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,6 +39,20 @@ public class PersonAppointmentFacade {
     }
   }
 
+  @Transactional
+  public void delete(Long entityId) {
+    PersonAppointment personAppointment = personAppointmentService.findOne(entityId);
+    AppointmentPosition appointmentPosition = appointmentPositionService
+      .findOne(personAppointment.getAppointmentPositionId());
+    Cycle cycle = cycleService.findOne(appointmentPosition.getCycleId());
+    if(personAppointment.getRecommended()) {
+      cycle = adjustRecommendedCount(cycle, false);
+    }
+    cycle = adjustNominationCount(cycle, false);
+    cycleService.save(cycle);
+    personAppointmentService.delete(personAppointment);
+  }
+
   private PersonAppointment updatePersonAppointment(PersonAppointment personAppointment) {
     PersonAppointment existingPersonAppointment = personAppointmentService
       .findOne(personAppointment.getId());
@@ -60,7 +75,7 @@ public class PersonAppointmentFacade {
     if (personAppointment.getRecommended()) {
       cycle = adjustRecommendedCount(cycle, true);
     }
-    cycle = incrementNominationCount(cycle);
+    cycle = adjustNominationCount(cycle, true);
     cycleService.save(cycle);
     return personAppointmentService.save(personAppointment);
   }
@@ -75,9 +90,13 @@ public class PersonAppointmentFacade {
     return cycle;
   }
 
-  private Cycle incrementNominationCount(Cycle cycle) {
+  private Cycle adjustNominationCount(Cycle cycle, boolean increment) {
     Long nominatedCount = cycle.getNominatedCount();
-    cycle.setNominatedCount(nominatedCount++);
+    if(increment) {
+      cycle.setNominatedCount(nominatedCount++);
+    } else {
+      cycle.setNominatedCount(nominatedCount--);
+    }
     return cycle;
   }
 
