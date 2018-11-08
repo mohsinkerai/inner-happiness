@@ -24,6 +24,9 @@ public class Cycle extends BaseEntity {
 
   private boolean isMidtermCycle;
 
+  private Long nominatedCount;
+  private Long recommendedCount;
+
   // If Normal Cycle
   private Long previousCycle;
 

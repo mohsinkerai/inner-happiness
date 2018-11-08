@@ -55,4 +55,18 @@
       <column name="parent_cycle" type="bigint" />
     </addColumn>
   </changeSet>
+  <changeSet id="cycle-06" author="mohsin.kerai">
+    <addColumn tableName="cycle">
+      <column name="nominated_count" type="bigint" defaultValue="0">
+        <constraints nullable="false"></constraints>
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="cycle-07" author="mohsin.kerai">
+    <addColumn tableName="cycle">
+      <column name="recommended_count" type="bigint" defaultValue="0">
+        <constraints nullable="false"></constraints>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
