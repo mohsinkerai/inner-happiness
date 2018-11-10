@@ -1223,8 +1223,11 @@ namespace AMS.frontend.web.Areas.Operations.Models
         public async Task<PositionModel> Nominate(string personId, string appointmentPositionId, int priority, string institutionId, string positionId, string cycleId,
             string seatNo)
         {
+            PositionModel positionModel = null;
 
-            JObject jObject = new JObject
+            try
+            {
+                JObject jObject = new JObject
             {
                 { "appointmentPositionId", appointmentPositionId },
                 { "isAppointed", false },
@@ -1234,23 +1237,27 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 { "remarks", "" }
             };
 
-            string json = JsonConvert.SerializeObject(jObject);
-            StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                string json = JsonConvert.SerializeObject(jObject);
+                StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage res = await _client.PostAsync("/person/appointment", httpContent);
+                HttpResponseMessage res = await _client.PostAsync("/person/appointment", httpContent);
 
-            PositionModel positionModel = null;
-            if (res.IsSuccessStatusCode)
-            {
-                HttpResponseMessage response = await _client.GetAsync("/appointment-position/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo?cycleId=" + cycleId +
-                    "&institutionId=" + institutionId + "&positionId=" + positionId + "&seatNo=" + seatNo);
-
-                if (response.IsSuccessStatusCode)
+                if (res.IsSuccessStatusCode)
                 {
-                    string newJson = response.Content.ReadAsStringAsync().Result;
-                    JObject obj = JObject.Parse(newJson);
-                    positionModel = await MapSinglePosition(obj);
+                    HttpResponseMessage response = await _client.GetAsync("/appointment-position/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo?cycleId=" + cycleId +
+                        "&institutionId=" + institutionId + "&positionId=" + positionId + "&seatNo=" + seatNo);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string newJson = response.Content.ReadAsStringAsync().Result;
+                        JObject obj = JObject.Parse(newJson);
+                        positionModel = await MapSinglePosition(obj);
+                    }
+
                 }
+            }
+            catch (Exception ex)
+            {
 
             }
 
@@ -1401,7 +1408,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 listNominations.Sort((a, b) => (a.Priority.CompareTo(b.Priority)));
                 positionModel.Nominations = listNominations;
-                
+
             }
             catch (Exception ex)
             {
@@ -1411,16 +1418,107 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return positionModel;
         }
 
-        public async Task<PositionModel> RemoveNomination(string personAppointmentId, string cycleId, string institutionId, string positionId, string seatNo)
+        public async Task<PositionModel> RemoveNomination(string personAppointmentId, string cycleId, string institutionId, string positionId, string seatNo,
+            PositionModel position)
         {
 
-            HttpResponseMessage res = await _client.DeleteAsync("/person/appointment/one/%7Bid%7D?entityId="+personAppointmentId);
+            PositionModel positionModel = null;
+
+            try
+            {
+                //removing nomination
+                HttpResponseMessage res = await _client.DeleteAsync("/person/appointment/one/%7Bid%7D?entityId=" + personAppointmentId);
+
+                if (res.IsSuccessStatusCode)
+                {
+                    //Reordering priority after removing nomination
+                    List<NominationModel> nominations = position.Nominations;
+                    if (nominations != null)
+                    {
+                        nominations.Sort((a, b) => a.Priority.CompareTo(b.Priority));
+                    }
+
+                    //this loop set the prioirty in a sequence for the remaining nominations.
+                    int priorityIndex = 1;
+                    bool sortPriority = false;
+                    foreach (NominationModel data in nominations)
+                    {
+                        if (data.personAppointmentId == personAppointmentId)
+                        {
+                            sortPriority = true;
+                            continue;
+                        }
+                        if (sortPriority)
+                        {
+                            if (data.Priority != priorityIndex)
+                            {
+                                JObject jObject = new JObject
+                        {
+                            { "appointmentPositionId", position.Id },
+                            { "isAppointed", false },
+                            { "isRecommended", false },
+                            { "personId", data.Person.Id },
+                            { "priority", priorityIndex},
+                            { "remarks", "" }
+                        };
+
+                                string json = JsonConvert.SerializeObject(jObject);
+                                StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                                HttpResponseMessage httpResponse = await _client.PutAsync("/person/appointment/one/" + data.personAppointmentId, httpContent);
+
+                            }
+                        }
+                        priorityIndex++;
+                    }
+
+                    //getting updated data of nominations.
+
+                    HttpResponseMessage response = await _client.GetAsync("/appointment-position/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo?cycleId=" + cycleId +
+                        "&institutionId=" + institutionId + "&positionId=" + positionId + "&seatNo=" + seatNo);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string newJson = response.Content.ReadAsStringAsync().Result;
+                        JObject obj = JObject.Parse(newJson);
+                        positionModel = await MapSinglePosition(obj);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return positionModel;
+        }
+
+        public async Task<PositionModel> reOrderNomination(List<NominationModel> nominationModel, string positionId, string cycleId, string institutionId,
+            string seatNo, string id) {
 
             PositionModel positionModel = null;
-            if (res.IsSuccessStatusCode)
+
+            try
             {
+                foreach (var data in nominationModel)
+                {
+                    JObject jObject = new JObject
+                        {
+                            { "appointmentPositionId", positionId },
+                            { "isAppointed", false },
+                            { "isRecommended", false },
+                            { "personId", data.Person.Id },
+                            { "priority", data.Priority},
+                            { "remarks", "" }
+                        };
+
+                    string json = JsonConvert.SerializeObject(jObject);
+                    StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                    HttpResponseMessage httpResponse = await _client.PutAsync("/person/appointment/one/" + data.personAppointmentId, httpContent);
+                }
+
                 HttpResponseMessage response = await _client.GetAsync("/appointment-position/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo?cycleId=" + cycleId +
-                    "&institutionId=" + institutionId + "&positionId=" + positionId + "&seatNo=" + seatNo);
+                        "&institutionId=" + institutionId + "&positionId=" + id + "&seatNo=" + seatNo);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -1428,129 +1526,132 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     JObject obj = JObject.Parse(newJson);
                     positionModel = await MapSinglePosition(obj);
                 }
+            }
+            catch (Exception ex)
+            {
 
             }
 
             return positionModel;
         }
 
-    #endregion Public Methods
+        #endregion Public Methods
     }
 
-public partial class AuthenticationResponse
-{
-    [JsonProperty("id")]
-    public long Id { get; set; }
+    public partial class AuthenticationResponse
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
-    [JsonProperty("user")]
-    public string User { get; set; }
+        [JsonProperty("user")]
+        public string User { get; set; }
 
-    [JsonProperty("token")]
-    public string Token { get; set; }
+        [JsonProperty("token")]
+        public string Token { get; set; }
 
-    [JsonProperty("expiry")]
-    public DateTime Expiry { get; set; }
+        [JsonProperty("expiry")]
+        public DateTime Expiry { get; set; }
 
-    [JsonProperty("roles")]
-    public string[] Roles { get; set; }
+        [JsonProperty("roles")]
+        public string[] Roles { get; set; }
 
-    [JsonProperty("authenticated")]
-    public bool Authenticated { get; set; }
+        [JsonProperty("authenticated")]
+        public bool Authenticated { get; set; }
 
-    [JsonProperty("principal")]
-    public string Principal { get; set; }
+        [JsonProperty("principal")]
+        public string Principal { get; set; }
 
-    [JsonProperty("details")]
-    public object Details { get; set; }
+        [JsonProperty("details")]
+        public object Details { get; set; }
 
-    [JsonProperty("authorities")]
-    public Authority[] Authorities { get; set; }
+        [JsonProperty("authorities")]
+        public Authority[] Authorities { get; set; }
 
-    [JsonProperty("name")]
-    public string Name { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-    [JsonProperty("active")]
-    public bool Active { get; set; }
+        [JsonProperty("active")]
+        public bool Active { get; set; }
 
-    [JsonProperty("credentials")]
-    public string Credentials { get; set; }
-}
+        [JsonProperty("credentials")]
+        public string Credentials { get; set; }
+    }
 
-public partial class Authority
-{
-    [JsonProperty("amsAuthority")]
-    public string AmsAuthority { get; set; }
+    public partial class Authority
+    {
+        [JsonProperty("amsAuthority")]
+        public string AmsAuthority { get; set; }
 
-    [JsonProperty("authority")]
-    public string AuthorityAuthority { get; set; }
-}
+        [JsonProperty("authority")]
+        public string AuthorityAuthority { get; set; }
+    }
 
-public class PastAppointment
-{
-    [JsonProperty("id")]
-    public long Id { get; set; }
+    public class PastAppointment
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
-    [JsonProperty("position")]
-    public Position Position { get; set; }
+        [JsonProperty("position")]
+        public Position Position { get; set; }
 
-    [JsonProperty("institution")]
-    public Institution Institution { get; set; }
+        [JsonProperty("institution")]
+        public Institution Institution { get; set; }
 
-    [JsonProperty("seatNo")]
-    public long SeatNo { get; set; }
+        [JsonProperty("seatNo")]
+        public long SeatNo { get; set; }
 
-    [JsonProperty("cycleId")]
-    public CycleId CycleId { get; set; }
+        [JsonProperty("cycleId")]
+        public CycleId CycleId { get; set; }
 
-    [JsonProperty("nominationsRequired")]
-    public long NominationsRequired { get; set; }
+        [JsonProperty("nominationsRequired")]
+        public long NominationsRequired { get; set; }
 
-    [JsonProperty("mowlaAppointee")]
-    public bool MowlaAppointee { get; set; }
+        [JsonProperty("mowlaAppointee")]
+        public bool MowlaAppointee { get; set; }
 
-    [JsonProperty("active")]
-    public bool Active { get; set; }
+        [JsonProperty("active")]
+        public bool Active { get; set; }
 
-    [JsonIgnore]
-    public string PositionName => $"{Position.Name} - {Institution.Name}";
+        [JsonIgnore]
+        public string PositionName => $"{Position.Name} - {Institution.Name}";
 
-    [JsonIgnore]
-    public string CycleName => $"{CycleId.StartDate.Year.ToString()} - {CycleId.EndDate.Year.ToString()}";
-}
+        [JsonIgnore]
+        public string CycleName => $"{CycleId.StartDate.Year.ToString()} - {CycleId.EndDate.Year.ToString()}";
+    }
 
-public class CycleId
-{
-    [JsonProperty("id")]
-    public long Id { get; set; }
+    public class CycleId
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
-    [JsonProperty("name")]
-    public string Name { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-    [JsonProperty("startDate")]
-    public DateTime StartDate { get; set; }
+        [JsonProperty("startDate")]
+        public DateTime StartDate { get; set; }
 
-    [JsonProperty("endDate")]
-    public DateTime EndDate { get; set; }
-}
+        [JsonProperty("endDate")]
+        public DateTime EndDate { get; set; }
+    }
 
-public class Institution
-{
-    [JsonProperty("id")]
-    public long Id { get; set; }
+    public class Institution
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
-    [JsonProperty("name")]
-    public string Name { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-    [JsonProperty("levelId")]
-    public long LevelId { get; set; }
-}
+        [JsonProperty("levelId")]
+        public long LevelId { get; set; }
+    }
 
-public class Position
-{
-    [JsonProperty("id")]
-    public long Id { get; set; }
+    public class Position
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
-    [JsonProperty("name")]
-    public string Name { get; set; }
-}
+        [JsonProperty("name")]
+        public string Name { get; set; }
+    }
 }
