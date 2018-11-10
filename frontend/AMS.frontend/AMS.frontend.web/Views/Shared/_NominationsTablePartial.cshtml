@@ -14,7 +14,7 @@
     {
         foreach (var nomination in Model.Nominations)
         {
-            <tr id="nomination-row-@nomination.personAppointmentId">
+            <tr id="nomination-row-@nomination.personAppointmentId" class="@nomination.RowClass">
                 <td>@nomination.Priority</td>
                 <td>
                     <div class="m-card-user m-card-user--sm">
