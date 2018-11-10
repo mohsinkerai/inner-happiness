@@ -121,11 +121,53 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public IActionResult ReOrderNominations(string positionId, string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
+        public async Task<IActionResult> ReOrderNominations(string positionId, string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
         {
-       
-            //saif integration goes here
-            return PartialView("_NominationsTablePartial", new PositionModel
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+            string institutionId = model.Institution.Id;
+            string cycleId = HttpContext.Session.GetString(SelectedCycle);
+            string id = "";
+            string seatNo = "";
+
+            List<NominationModel> listNominations = null;
+            int pos = -1;
+            for (int index = 0; index < model.Positions.Count; index++)
+            {
+                if (model.Positions[index].Id == positionId)
+                {
+                    pos = index;
+                    listNominations = model.Positions[index].Nominations;
+                    id = model.Positions[index].PositionId;
+                    seatNo = model.Positions[index].SeatId;
+                    break;
+                }
+            }
+
+            listNominations.FirstOrDefault(e => e.personAppointmentId == primaryId).Priority = Convert.ToInt32(primaryPosition);
+            listNominations.FirstOrDefault(e => e.personAppointmentId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
+
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in listNominations.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.personAppointmentId != secondaryId))
+            {
+                sessionValue.Priority = counter++;
+            }
+
+            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).reOrderNomination(listNominations,
+                positionId, cycleId, institutionId, seatNo, id);
+
+            //update data in session
+            if (pos != -1 && positionModel != null)
+            {
+                model.Positions[pos] = positionModel;
+                var updatedJson = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            }
+
+            return PartialView("_NominationsTablePartial", positionModel);
+            
+            /*return PartialView("_NominationsTablePartial", new PositionModel
             {
                 PositionName = "President",
                 CurrentCycle = "2018 - 2020",
@@ -153,13 +195,42 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         Id = "2222"
                     }
                 }
-            });
+            });*/
         }
+
         [HttpPost]
-        public IActionResult RemoveNomination(string positionId, string personId)
+        public async Task<IActionResult> RemoveNomination(string positionId, string personId, string personAppointmentId, string seatId, string id)
         {
-            //saif integration goes here
-            return PartialView("_NominationsTablePartial", new PositionModel
+            //getting required data from session
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            NominationDetailModel model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+            string institutionId = model.Institution.Id;
+            string cycleId = HttpContext.Session.GetString(SelectedCycle);
+            int pos = -1;
+            for (int index = 0; index < model.Positions.Count; index++)
+            {
+                PositionModel position = model.Positions[index];
+                if (position.Id == positionId)
+                {
+                    pos = index;
+                    break;
+                }
+            }
+
+            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).RemoveNomination(personAppointmentId,
+                cycleId,institutionId,id, seatId, model.Positions[pos]);
+
+            //update data in session
+            if (pos != -1 && positionModel != null)
+            {
+                model.Positions[pos] = positionModel;
+                var updatedJson = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            }
+
+            return PartialView("_NominationsTablePartial", positionModel);
+
+            /*return PartialView("_NominationsTablePartial", new PositionModel
             {
                 PositionName = "President",
                 CurrentCycle = "2018 - 2020",
@@ -179,7 +250,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         Id = "1111"
                     }
                 }
-            });
+            });*/
         }
         public async Task<JsonResult> GetPersons(string id)
         {
