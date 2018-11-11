@@ -9,3 +9,5 @@ For Schema Migration, it uses Liquibase.
 mvn spring-boot:run to run this project.
 
 src/resources/application.yml for confiugration properties
+
+Added Authentication

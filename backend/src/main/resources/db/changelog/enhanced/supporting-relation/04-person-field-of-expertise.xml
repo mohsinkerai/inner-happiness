@@ -38,4 +38,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="person-field-of-expertise-04" author="mohsin.kerai">
+    <dropColumn tableName="person_field_of_expertise" columnName="created_by" />
+    <dropColumn tableName="person_field_of_expertise" columnName="updated_by" />
+    <addColumn tableName="person_field_of_expertise">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

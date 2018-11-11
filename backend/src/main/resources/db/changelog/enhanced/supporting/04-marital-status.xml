@@ -43,4 +43,12 @@
       <column name="short_name" afterColumn="name" type="varchar(20)"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="marital-status-05" author="mohsin.kerai">
+    <dropColumn tableName="marital_status" columnName="created_by" />
+    <dropColumn tableName="marital_status" columnName="updated_by" />
+    <addColumn tableName="marital_status">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -46,4 +46,12 @@
       </column>
     </createTable>
   </changeSet>
+  <changeSet id="validation-message-02" author="mohsin.kerai">
+    <dropColumn tableName="validation_message" columnName="created_by" />
+    <dropColumn tableName="validation_message" columnName="updated_by" />
+    <addColumn tableName="validation_message">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

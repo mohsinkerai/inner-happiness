@@ -53,4 +53,12 @@
       UPDATE authentication_user SET allowed_companies = '[1,2,3]'
     </sql>
   </changeSet>
+  <changeSet id="authentication-user-05" author="mohsin.kerai">
+    <dropColumn tableName="authentication_user" columnName="created_by" />
+    <dropColumn tableName="authentication_user" columnName="updated_by" />
+    <addColumn tableName="authentication_user">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
