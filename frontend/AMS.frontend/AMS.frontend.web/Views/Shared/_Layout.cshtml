@@ -132,13 +132,13 @@ License: You must have a valid license purchased only from themeforest(the above
                                  id="m_quicksearch" m-quicksearch-mode="default">
 
                                 <!--BEGIN: Search Form -->
-                                <form class="m-header-search__form">
+                                <form class="m-header-search__form" asp-area="@AreaNames.Operations" asp-action="SearchPerson" asp-controller="Persons" method="post">
                                     <div class="m-header-search__wrapper">
                                         <span class="m-header-search__icon-search" id="m_quicksearch_search">
                                             <i class="flaticon-search"></i>
                                         </span>
                                         <span class="m-header-search__input-wrapper">
-                                            <input autocomplete="off" type="text" name="q" class="m-header-search__input" value="" placeholder="Search by Name ..." id="m_quicksearch_input">
+                                            <input autocomplete="off" type="text" name="formNumber" class="m-header-search__input" value="" placeholder="Search by Form Number" id="m_quicksearch_input">
                                         </span>
                                         <span class="m-header-search__icon-close" id="m_quicksearch_close">
                                             <i class="la la-remove"></i>
@@ -151,7 +151,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
                                 <!--END: Search Form -->
                                 <!--BEGIN: Search Results -->
-                                <div class="m-dropdown__wrapper">
+                                <!--<div class="m-dropdown__wrapper">
                                     <div class="m-dropdown__arrow m-dropdown__arrow--center"></div>
                                     <div class="m-dropdown__inner">
                                         <div class="m-dropdown__body">
@@ -161,7 +161,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <!--BEGIN: END Results -->
                             </div>

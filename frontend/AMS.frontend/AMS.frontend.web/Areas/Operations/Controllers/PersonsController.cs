@@ -1816,6 +1816,31 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (string.IsNullOrWhiteSpace(model.Image)) model.Image = HttpContext.Session.Get<string>("Image");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SearchPerson(string formNumber)
+        {
+            Console.WriteLine("id="+formNumber);
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var success =
+                await new RestfulClient(
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
+                    .GetPersonDetailsThroughPagging(string.Empty, string.Empty, formNumber, string.Empty, string.Empty,
+                        string.Empty, string.Empty, 1, 1);
+            var list = success.Item1;
+            if (list.Count > 0)
+            {
+                return RedirectToAction("Detail", "Persons", new { id = formNumber });
+            }
+            else
+            {
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = "Person not found";
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+        }
+
         #endregion Private Methods
     }
 }
