@@ -23,7 +23,9 @@ namespace AMS.frontend.web.Controllers
             {
                 model.RememberMe = true;
                 if (Request.Cookies.TryGetValue(CookieNames.Company, out var company)) model.Company = company;
-                if (Request.Cookies.TryGetValue(CookieNames.CustomerName, out var customerName)) model.Username = customerName;
+
+                if (Request.Cookies.TryGetValue(CookieNames.CustomerName, out var customerName))
+                    model.Username = customerName;
             }
 
             HttpContext.Session.Set("AuthenticationResponse", new AuthenticationResponse());
@@ -44,8 +46,9 @@ namespace AMS.frontend.web.Controllers
 
                     if (model.RememberMe)
                     {
-                        var cookieOptions = new CookieOptions { HttpOnly = false };
-                        Response.Cookies.Append(CookieNames.RememberMe, Convert.ToString(model.RememberMe), cookieOptions);
+                        var cookieOptions = new CookieOptions {HttpOnly = false};
+                        Response.Cookies.Append(CookieNames.RememberMe, Convert.ToString(model.RememberMe),
+                            cookieOptions);
                         Response.Cookies.Append(CookieNames.Company, model.Company, cookieOptions);
                         Response.Cookies.Append(CookieNames.CustomerName, model.Username, cookieOptions);
                     }
@@ -58,11 +61,9 @@ namespace AMS.frontend.web.Controllers
 
                     return RedirectToAction(ActionNames.Index, ControllerNames.Home);
                 }
-                else
-                {
-                    ViewBag.MessageType = MessageTypes.Error;
-                    ViewBag.Message = Messages.GeneralError;
-                }
+
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = Messages.GeneralError;
             }
 
             return View(model);

@@ -1,5 +1,6 @@
 {
-  "connectionString": "Data Source=localhost, 15789;Initial Catalog=AliAppointments;Persist Security Info=True;User ID=sa;Password=jarvis-786",
+  "connectionString":
+    "Data Source=localhost, 15789;Initial Catalog=AliAppointments;Persist Security Info=True;User ID=sa;Password=jarvis-786",
   //"connectionString": "Server=34.250.113.139;Database=inner_satisfaction;Uid=amsal;Pwd=hp;",
   //"connectionString": "Server=127.0.0.1;Database=inner_satisfaction99;Uid=root;SslMode=none;"
 }

@@ -30,6 +30,7 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
         });
 
         $("#" + id).bind('typeahead:select', function (ev, suggestion) {
+            mApp.block("#nominations-table-" + positionId, {});
             $.ajax({
                 type: "POST",
                 url: url,
@@ -52,6 +53,7 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
                     }
                 }
             });
+            mApp.unblock("#nominations-table-" + positionId, {});
         });
     }
     catch (err) { }
@@ -1892,6 +1894,7 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
 }
 
 function RemoveNomination(url, positionId, personId, personAppointmentId, seatId, id) {
+    mApp.block("#nominations-table-" + positionId, {});
     $.ajax({
         type: "POST",
 		url: url,
@@ -1914,6 +1917,34 @@ function RemoveNomination(url, positionId, personId, personAppointmentId, seatId
             }
         }
     });
+    mApp.unblock("#nominations-table-" + positionId, {});
+}
+
+function Recommend(url, positionId, personId, personAppointmentId, seatId, id) {
+    mApp.block("#nominations-table-" + positionId, {});
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "positionId": positionId, "personId": personId, "personAppointmentId": personAppointmentId, "seatId": seatId, "id": id },
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#nominations-table-" + positionId).html(result);
+                InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+                $("#nominations-" + positionId).css("min-height", "0px");
+            }
+        }
+    });
+    mApp.unblock("#nominations-table-" + positionId, {});
 }
 
 function LoadDropDownViaAjax(dropDownClass, url, selectedValue, secondarySelectedValue, tertiarySelectedValue) {

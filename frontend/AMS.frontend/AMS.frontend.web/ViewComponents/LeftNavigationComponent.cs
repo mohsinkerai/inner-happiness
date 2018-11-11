@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AMS.frontend.web.Models.Navigation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AMS.frontend.web.ViewComponents
 {
@@ -24,7 +21,6 @@ namespace AMS.frontend.web.ViewComponents
             foreach (var role in authReponse.Roles)
             {
                 if (role == "PIF" && menuModel.All(mm => mm.MenuId != 1))
-                {
                     menuModel.Add(new MenuModel
                     {
                         MenuId = 1,
@@ -35,10 +31,8 @@ namespace AMS.frontend.web.ViewComponents
                         Area = AreaNames.Operations,
                         ImageClass = "flaticon-information"
                     });
-                }
 
                 if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 2))
-                {
                     menuModel.Add(new MenuModel
                     {
                         MenuId = 2,
@@ -49,7 +43,6 @@ namespace AMS.frontend.web.ViewComponents
                         Area = AreaNames.Operations,
                         ImageClass = "flaticon-network"
                     });
-                }
             }
 
             return View(menuModel);

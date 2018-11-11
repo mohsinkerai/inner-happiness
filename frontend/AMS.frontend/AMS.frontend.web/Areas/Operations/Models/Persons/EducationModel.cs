@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -48,20 +48,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         {
             get
             {
-                if (FromYear == null && ToYear == null)
-                {
-                    return string.Empty;
-                }
+                if (FromYear == null && ToYear == null) return string.Empty;
 
-                if (FromYear == null && ToYear != null)
-                {
-                    return $", {ToYear}";
-                }
+                if (FromYear == null && ToYear != null) return $", {ToYear}";
 
-                if (ToYear == null && FromYear != null)
-                {
-                    return $", {FromYear} - continued";
-                }
+                if (ToYear == null && FromYear != null) return $", {FromYear} - continued";
 
                 return $", {FromYear} - {ToYear}";
             }

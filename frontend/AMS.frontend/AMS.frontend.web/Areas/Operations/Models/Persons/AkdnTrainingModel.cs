@@ -14,9 +14,16 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string CountryOfTrainingName { get; set; }
 
+        [JsonProperty(PropertyName = "date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? Date { get; set; }
+
         [JsonProperty(PropertyName = "month")] public string Month { get; set; }
 
         public string MonthName { get; set; }
+
+        [JsonProperty(PropertyName = "priority")]
+        public int Priority { get; set; }
 
         [JsonProperty(PropertyName = "training")]
         public string Training { get; set; }
@@ -31,13 +38,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [DataType(DataType.Date)]
         [Display(Name = "Year")]
         public int? Year { get; set; }
-
-        [JsonProperty(PropertyName = "priority")]
-        public int Priority { get; set; }
-        
-        [JsonProperty(PropertyName = "date")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime? Date { get; set; }
 
         #endregion Public Properties
     }
