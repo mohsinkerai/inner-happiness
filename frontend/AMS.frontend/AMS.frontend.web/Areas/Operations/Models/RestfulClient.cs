@@ -241,7 +241,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -264,7 +264,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -287,7 +287,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -310,7 +310,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -333,7 +333,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -375,7 +375,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -398,7 +398,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -421,7 +421,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -444,7 +444,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -467,7 +467,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -490,7 +490,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -515,7 +515,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -538,7 +538,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -561,7 +561,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -619,7 +619,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                     foreach (var jToken1 in arr)
                     {
-                        var positionArray = (JObject) jToken1;
+                        var positionArray = (JObject)jToken1;
                         var listNominations = new List<NominationModel>();
                         var positionModel = new PositionModel();
 
@@ -639,7 +639,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         //int index = 0;
                         foreach (var jToken in personAppointmentList)
                         {
-                            var personsAppointed = (JObject) jToken;
+                            var personsAppointed = (JObject)jToken;
                             var nominationModel = new NominationModel();
 
                             var incumbent = personsAppointed["person"];
@@ -743,7 +743,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -768,7 +768,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id1 = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id1});
+                    list.Add(new SelectListItem { Text = name, Value = id1 });
                 }
 
                 return list;
@@ -791,7 +791,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -814,7 +814,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -839,7 +839,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -863,7 +863,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -886,7 +886,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -909,7 +909,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -932,7 +932,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1047,7 +1047,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1070,7 +1070,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1093,7 +1093,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1116,7 +1116,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1139,7 +1139,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1162,7 +1162,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1186,7 +1186,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     {
                         var id = Convert.ToString(item.id);
                         var name = Convert.ToString(item.name);
-                        list.Add(new SelectListItem {Text = name, Value = id});
+                        list.Add(new SelectListItem { Text = name, Value = id });
                     }
 
                     return list;
@@ -1243,7 +1243,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1288,7 +1288,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
                     var name = Convert.ToString(item.name);
 
-                    list.Add(new SelectListItem {Text = name, Value = id});
+                    list.Add(new SelectListItem { Text = name, Value = id });
                 }
 
                 return list;
@@ -1344,7 +1344,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var jToken in personAppointmentList)
                 {
-                    var personsAppointed = (JObject) jToken;
+                    var personsAppointed = (JObject)jToken;
                     var nominationModel = new NominationModel();
 
                     var incumbent = personsAppointed["person"];
@@ -1543,6 +1543,51 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
 
             return positionModel;
+        }
+
+        public async Task<PositionModel> Recommend(NominationModel nominationModel, PositionModel positionModel, string cycleId, string institutionId)
+        {
+            PositionModel updatedPosition = null;
+
+            try
+            {
+                var jObject = new JObject
+                    {
+                        {"appointmentPositionId", positionModel.Id},
+                        {"isAppointed", false},
+                        {"isRecommended", true},
+                        {"personId", nominationModel.Person.Id},
+                        {"priority", nominationModel.Priority},
+                        {"remarks", ""}
+                    };
+
+                var json = JsonConvert.SerializeObject(jObject);
+                var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _client.PutAsync("/person/appointment/one/" + nominationModel.personAppointmentId,
+                    httpContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resp = await _client.GetAsync(
+                        "/appointment-position/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo?cycleId=" +
+                        cycleId +
+                        "&institutionId=" + institutionId + "&positionId=" + positionModel.PositionId + "&seatNo=" + positionModel.SeatId);
+
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        var newJson = resp.Content.ReadAsStringAsync().Result;
+                        var obj = JObject.Parse(newJson);
+                        updatedPosition = await MapSinglePosition(obj);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+            return updatedPosition;
         }
 
         public async Task<bool> SavePersonData(PersonModel personModel)

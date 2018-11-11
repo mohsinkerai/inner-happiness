@@ -139,7 +139,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     .GetInstitutionDetails(uid, cycle);
 
             var json = JsonConvert.SerializeObject(nominationModel);
-            Console.WriteLine(json);
             HttpContext.Session.SetString(SessionNominationModel, json);
 
             return View(nominationModel);
@@ -278,7 +277,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             return PartialView("_NominationsTablePartial", positionModel);
-
+            
             //saif integration goes here
             /*return PartialView("_NominationsTablePartial", new PositionModel
             {
@@ -318,33 +317,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //getting required data from session
             var json = HttpContext.Session.GetString(SessionNominationModel);
             var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+
             var institutionId = model.Institution.Id;
             var cycleId = HttpContext.Session.GetString(SelectedCycle);
-            var pos = -1;
-            for (var index = 0; index < model.Positions.Count; index++)
-            {
-                var position = model.Positions[index];
-                if (position.Id == positionId)
-                {
-                    pos = index;
-                    break;
-                }
-            }
+
+            PositionModel position = model.Positions.Where(p => p.Id == positionId).FirstOrDefault();
+            NominationModel nominationModel = position.Nominations.Where(n => n.Person.Id == personId).FirstOrDefault();
 
             var positionModel =
                 await new RestfulClient(
-                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).RemoveNomination(
-                    personAppointmentId,
-                    cycleId, institutionId, id, seatId, model.Positions[pos]);
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Recommend(nominationModel, position, cycleId, institutionId);
 
             //update data in session
-            if (pos != -1 && positionModel != null)
-            {
-                model.Positions[pos] = positionModel;
-                var updatedJson = JsonConvert.SerializeObject(model);
-                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-            }
-
+            model.Positions.Where(p => p.Id == positionId).Select(Positions => { Positions = positionModel; return Positions; }).ToList();
+            var updatedJson = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            
             return PartialView("_NominationsTablePartial", positionModel);
 
             /*return PartialView("_NominationsTablePartial", new PositionModel
