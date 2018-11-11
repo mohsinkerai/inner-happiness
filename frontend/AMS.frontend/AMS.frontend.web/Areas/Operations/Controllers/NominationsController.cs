@@ -1,4 +1,8 @@
-﻿using AMS.frontend.web.Areas.Operations.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
@@ -6,10 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -28,253 +28,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #region Private Fields
 
-        private readonly Configuration _configuration;
-        private readonly RestfulClient _restfulClient;
         private const string SelectedCycle = "_cycle";
+
         private const string SessionNominationModel = "_sessionNominationModel";
+
+        private readonly Configuration _configuration;
+
+        private readonly RestfulClient _restfulClient;
 
         #endregion Private Fields
 
         #region Public Methods
 
-        [HttpPost]
-        public async Task<IActionResult> Nominate(string id, string personId)
-        {
-            //getting required data from session
-            var json = HttpContext.Session.GetString(SessionNominationModel);
-            NominationDetailModel model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
-
-            List<NominationModel> nominations = null;
-            string positionId = null;
-            string institutionId = null;
-            string cycleId = null;
-            string seatNo = null;
-            int pos = -1;
-            int priority = 0;
-
-            for (int index = 0; index < model.Positions.Count; index++)
-            {
-                PositionModel position = model.Positions[index];
-                if (position.Id == id)
-                {
-                    pos = index;
-                    nominations = position.Nominations;
-                    positionId = position.PositionId;
-                    seatNo = position.SeatId;
-                }
-            }
-            institutionId = model.Institution.Id;
-            cycleId = HttpContext.Session.GetString(SelectedCycle);
-            if (nominations != null)
-            { 
-                nominations.Sort((a, b) => b.Priority.CompareTo(a.Priority));
-                priority = nominations[0].Priority;
-            }
-
-
-            Console.WriteLine("cycleID= " + cycleId + " InstitutionId= " + institutionId + " seatNo= " + seatNo + " positionId= " + positionId);
-
-            //api call for nominate
-            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(personId.Split('-')[0], id,
-                nominations[0].Priority, institutionId, positionId, cycleId, seatNo);
-
-            //update data in session
-            if(pos != -1 && positionModel != null)
-            {
-                model.Positions[pos] = positionModel;
-                var updatedJson = JsonConvert.SerializeObject(model);
-                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-            }
-            
-            return PartialView("_NominationsTablePartial", positionModel);
-
-            //saif integration goes here
-            /*return PartialView("_NominationsTablePartial", new PositionModel
-            {
-                PositionName = "President",
-                CurrentCycle = "2018 - 2020",
-                CycleStatus = "On going",
-                PreviousCycle = "2015 - 2018",
-                Required = 3,
-                Id = "123",
-                Incubment = PersonDummyData(string.Empty),
-                Nominations = new List<NominationModel>
-                {
-                    new NominationModel
-                    {
-                        IsAppointed = false,
-                        IsRecommended = false,
-                        Priority = 1,
-                        Person = PersonDummyData(string.Empty),
-                        Id = "1111"
-                    },
-                    new NominationModel
-                    {
-                        IsAppointed = false,
-                        IsRecommended = false,
-                        Priority = 2,
-                        Person = PersonDummyData(string.Empty),
-                        Id = "2222"
-                    }
-                }
-            });*/
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ReOrderNominations(string positionId, string primaryId, string primaryPosition, string secondaryId, string secondaryPosition)
-        {
-            var json = HttpContext.Session.GetString(SessionNominationModel);
-            var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
-            string institutionId = model.Institution.Id;
-            string cycleId = HttpContext.Session.GetString(SelectedCycle);
-            string id = "";
-            string seatNo = "";
-
-            List<NominationModel> listNominations = null;
-            int pos = -1;
-            for (int index = 0; index < model.Positions.Count; index++)
-            {
-                if (model.Positions[index].Id == positionId)
-                {
-                    pos = index;
-                    listNominations = model.Positions[index].Nominations;
-                    id = model.Positions[index].PositionId;
-                    seatNo = model.Positions[index].SeatId;
-                    break;
-                }
-            }
-
-            listNominations.FirstOrDefault(e => e.personAppointmentId == primaryId).Priority = Convert.ToInt32(primaryPosition);
-            listNominations.FirstOrDefault(e => e.personAppointmentId == secondaryId).Priority = Convert.ToInt32(secondaryPosition);
-
-            var counter = Convert.ToInt32(secondaryPosition) + 1;
-            foreach (var sessionValue in listNominations.Where(se =>
-                se.Priority >= Convert.ToInt32(secondaryPosition) && se.personAppointmentId != secondaryId))
-            {
-                sessionValue.Priority = counter++;
-            }
-
-            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).reOrderNomination(listNominations,
-                positionId, cycleId, institutionId, seatNo, id);
-
-            //update data in session
-            if (pos != -1 && positionModel != null)
-            {
-                model.Positions[pos] = positionModel;
-                var updatedJson = JsonConvert.SerializeObject(model);
-                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-            }
-
-            return PartialView("_NominationsTablePartial", positionModel);
-            
-            /*return PartialView("_NominationsTablePartial", new PositionModel
-            {
-                PositionName = "President",
-                CurrentCycle = "2018 - 2020",
-                CycleStatus = "On going",
-                PreviousCycle = "2015 - 2018",
-                Required = 3,
-                Id = "123",
-                Incubment = PersonDummyData(string.Empty),
-                Nominations = new List<NominationModel>
-                {
-                    new NominationModel
-                    {
-                        IsAppointed = false,
-                        IsRecommended = false,
-                        Priority = 1,
-                        Person = PersonDummyData(string.Empty),
-                        Id = "1111"
-                    },
-                    new NominationModel
-                    {
-                        IsAppointed = false,
-                        IsRecommended = false,
-                        Priority = 2,
-                        Person = PersonDummyData(string.Empty),
-                        Id = "2222"
-                    }
-                }
-            });*/
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RemoveNomination(string positionId, string personId, string personAppointmentId, string seatId, string id)
-        {
-            //getting required data from session
-            var json = HttpContext.Session.GetString(SessionNominationModel);
-            NominationDetailModel model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
-            string institutionId = model.Institution.Id;
-            string cycleId = HttpContext.Session.GetString(SelectedCycle);
-            int pos = -1;
-            for (int index = 0; index < model.Positions.Count; index++)
-            {
-                PositionModel position = model.Positions[index];
-                if (position.Id == positionId)
-                {
-                    pos = index;
-                    break;
-                }
-            }
-
-            var positionModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).RemoveNomination(personAppointmentId,
-                cycleId,institutionId,id, seatId, model.Positions[pos]);
-
-            //update data in session
-            if (pos != -1 && positionModel != null)
-            {
-                model.Positions[pos] = positionModel;
-                var updatedJson = JsonConvert.SerializeObject(model);
-                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-            }
-
-            return PartialView("_NominationsTablePartial", positionModel);
-
-            /*return PartialView("_NominationsTablePartial", new PositionModel
-            {
-                PositionName = "President",
-                CurrentCycle = "2018 - 2020",
-                CycleStatus = "On going",
-                PreviousCycle = "2015 - 2018",
-                Required = 3,
-                Id = "123",
-                Incubment = PersonDummyData(string.Empty),
-                Nominations = new List<NominationModel>
-                {
-                    new NominationModel
-                    {
-                        IsAppointed = false,
-                        IsRecommended = false,
-                        Priority = 1,
-                        Person = PersonDummyData(string.Empty),
-                        Id = "1111"
-                    }
-                }
-            });*/
-        }
-        public async Task<JsonResult> GetPersons(string id)
-        {
-            if (int.TryParse(id, out _))
-            {
-                var personTuple =
-                    await new RestfulClient(
-                            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
-                        .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
-                            string.Empty, string.Empty, 1, 10);
-                var persons = personTuple.Item1.Select(p => new {Name = $"{p.Id}-{p.FullName}"})
-                    .Select(p => p.Name);
-
-                //var persons = new List<string> {"Naveed", "Mohsin", "Saif"};
-
-                return Json(persons);
-            }
-
-            return Json(new List<string>());
-        }
-
         public async Task<IActionResult> Detail(string uid)
         {
-
             var model = new NominationDetailModel
             {
                 Institution = new InstitutionModel
@@ -366,10 +133,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             var cycle = HttpContext.Session.GetString(SelectedCycle);
 
-            var nominationModel = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionDetails(uid,cycle);
+            var nominationModel =
+                await new RestfulClient(
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
+                    .GetInstitutionDetails(uid, cycle);
 
             var json = JsonConvert.SerializeObject(nominationModel);
-            Console.WriteLine(json);
             HttpContext.Session.SetString(SessionNominationModel, json);
 
             return View(nominationModel);
@@ -384,14 +153,36 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetLocalInstitutions()
         {
-            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
+            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                ?.Token).GetLocalInstitutions();
 
             return new JsonResult(list);
         }
 
+        public async Task<JsonResult> GetPersons(string id)
+        {
+            if (int.TryParse(id, out _))
+            {
+                var personTuple =
+                    await new RestfulClient(
+                            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
+                        .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
+                            string.Empty, string.Empty, 1, 10);
+                var persons = personTuple.Item1.Select(p => new {Name = $"{p.Id}-{p.FullName}"})
+                    .Select(p => p.Name);
+
+                //var persons = new List<string> {"Naveed", "Mohsin", "Saif"};
+
+                return Json(persons);
+            }
+
+            return Json(new List<string>());
+        }
+
         public async Task<JsonResult> GetRegionalInstitutions()
         {
-            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalInstitutions();
+            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                ?.Token).GetRegionalInstitutions();
 
             return new JsonResult(list);
         }
@@ -401,7 +192,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
 
-            ViewBag.Cycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+            ViewBag.Cycle =
+                await new RestfulClient(
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             //return View(new List<PersonModel>());
 
             //ViewBag.CompanyList = await RestfulClient.getAllCompanies();
@@ -410,26 +203,300 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //ViewBag.JamatkhanaList = await RestfulClient.getJamatkhana();
             //ViewBag.InstitutionList = await RestfulClient.getPositionInstitution();
 
-            return View(new IndexNominationModel { Positions = new List<PositionModel>() });
+            return View(new IndexNominationModel {Positions = new List<PositionModel>()});
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
         {
-            ViewBag.Cycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+            ViewBag.Cycle =
+                await new RestfulClient(
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             if (ModelState.IsValid)
             {
                 //Store Cycle in session
                 HttpContext.Session.SetString(SelectedCycle, indexNominationModel.Cycle);
-                
+
                 return View(indexNominationModel);
             }
-            else
-            {
-                return View();
-            }
+
+            return View();
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> Nominate(string id, string personId)
+        {
+            //getting required data from session
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+
+            List<NominationModel> nominations = null;
+            string positionId = null;
+            string institutionId = null;
+            string cycleId = null;
+            string seatNo = null;
+            var pos = -1;
+            var priority = 0;
+
+            for (var index = 0; index < model.Positions.Count; index++)
+            {
+                var position = model.Positions[index];
+                if (position.Id == id)
+                {
+                    pos = index;
+                    nominations = position.Nominations;
+                    positionId = position.PositionId;
+                    seatNo = position.SeatId;
+                }
+            }
+
+            institutionId = model.Institution.Id;
+            cycleId = HttpContext.Session.GetString(SelectedCycle);
+            if (nominations != null)
+            {
+                nominations.Sort((a, b) => b.Priority.CompareTo(a.Priority));
+                priority = nominations[0].Priority;
+            }
+
+            Console.WriteLine("cycleID= " + cycleId + " InstitutionId= " + institutionId + " seatNo= " + seatNo +
+                              " positionId= " + positionId);
+
+            //api call for nominate
+            var positionModel =
+                await new RestfulClient(
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(
+                    personId.Split('-')[0], id,
+                    nominations[0].Priority, institutionId, positionId, cycleId, seatNo);
+
+            //update data in session
+            if (pos != -1 && positionModel != null)
+            {
+                model.Positions[pos] = positionModel;
+                var updatedJson = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            }
+
+            return PartialView("_NominationsTablePartial", positionModel);
+            
+            //saif integration goes here
+            /*return PartialView("_NominationsTablePartial", new PositionModel
+            {
+                PositionName = "President",
+                CurrentCycle = "2018 - 2020",
+                CycleStatus = "On going",
+                PreviousCycle = "2015 - 2018",
+                Required = 3,
+                Id = "123",
+                Incubment = PersonDummyData(string.Empty),
+                Nominations = new List<NominationModel>
+                {
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 1,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "1111"
+                    },
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 2,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "2222"
+                    }
+                }
+            });*/
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Recommend(string positionId, string personId, string personAppointmentId,
+            string seatId, string id)
+        {
+            //getting required data from session
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+
+            var institutionId = model.Institution.Id;
+            var cycleId = HttpContext.Session.GetString(SelectedCycle);
+
+            PositionModel position = model.Positions.Where(p => p.Id == positionId).FirstOrDefault();
+            NominationModel nominationModel = position.Nominations.Where(n => n.Person.Id == personId).FirstOrDefault();
+
+            var positionModel =
+                await new RestfulClient(
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Recommend(nominationModel, position, cycleId, institutionId);
+
+            //update data in session
+            model.Positions.Where(p => p.Id == positionId).Select(Positions => { Positions = positionModel; return Positions; }).ToList();
+            var updatedJson = JsonConvert.SerializeObject(model);
+            HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            
+            return PartialView("_NominationsTablePartial", positionModel);
+
+            /*return PartialView("_NominationsTablePartial", new PositionModel
+            {
+                PositionName = "President",
+                CurrentCycle = "2018 - 2020",
+                CycleStatus = "On going",
+                PreviousCycle = "2015 - 2018",
+                Required = 3,
+                Id = "123",
+                Incubment = PersonDummyData(string.Empty),
+                Nominations = new List<NominationModel>
+                {
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 1,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "1111"
+                    }
+                }
+            });*/
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveNomination(string positionId, string personId,
+            string personAppointmentId, string seatId, string id)
+        {
+            //getting required data from session
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+            var institutionId = model.Institution.Id;
+            var cycleId = HttpContext.Session.GetString(SelectedCycle);
+            var pos = -1;
+            for (var index = 0; index < model.Positions.Count; index++)
+            {
+                var position = model.Positions[index];
+                if (position.Id == positionId)
+                {
+                    pos = index;
+                    break;
+                }
+            }
+
+            var positionModel =
+                await new RestfulClient(
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).RemoveNomination(
+                    personAppointmentId,
+                    cycleId, institutionId, id, seatId, model.Positions[pos]);
+
+            //update data in session
+            if (pos != -1 && positionModel != null)
+            {
+                model.Positions[pos] = positionModel;
+                var updatedJson = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            }
+
+            return PartialView("_NominationsTablePartial", positionModel);
+
+            /*return PartialView("_NominationsTablePartial", new PositionModel
+            {
+                PositionName = "President",
+                CurrentCycle = "2018 - 2020",
+                CycleStatus = "On going",
+                PreviousCycle = "2015 - 2018",
+                Required = 3,
+                Id = "123",
+                Incubment = PersonDummyData(string.Empty),
+                Nominations = new List<NominationModel>
+                {
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 1,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "1111"
+                    }
+                }
+            });*/
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReOrderNominations(string positionId, string primaryId, string primaryPosition,
+            string secondaryId, string secondaryPosition)
+        {
+            var json = HttpContext.Session.GetString(SessionNominationModel);
+            var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+            var institutionId = model.Institution.Id;
+            var cycleId = HttpContext.Session.GetString(SelectedCycle);
+            var id = "";
+            var seatNo = "";
+
+            List<NominationModel> listNominations = null;
+            var pos = -1;
+            for (var index = 0; index < model.Positions.Count; index++)
+                if (model.Positions[index].Id == positionId)
+                {
+                    pos = index;
+                    listNominations = model.Positions[index].Nominations;
+                    id = model.Positions[index].PositionId;
+                    seatNo = model.Positions[index].SeatId;
+                    break;
+                }
+
+            listNominations.FirstOrDefault(e => e.personAppointmentId == primaryId).Priority =
+                Convert.ToInt32(primaryPosition);
+            listNominations.FirstOrDefault(e => e.personAppointmentId == secondaryId).Priority =
+                Convert.ToInt32(secondaryPosition);
+
+            var counter = Convert.ToInt32(secondaryPosition) + 1;
+            foreach (var sessionValue in listNominations.Where(se =>
+                se.Priority >= Convert.ToInt32(secondaryPosition) && se.personAppointmentId != secondaryId))
+                sessionValue.Priority = counter++;
+
+            var positionModel =
+                await new RestfulClient(
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).reOrderNomination(
+                    listNominations,
+                    positionId, cycleId, institutionId, seatNo, id);
+
+            //update data in session
+            if (pos != -1 && positionModel != null)
+            {
+                model.Positions[pos] = positionModel;
+                var updatedJson = JsonConvert.SerializeObject(model);
+                HttpContext.Session.SetString(SessionNominationModel, updatedJson);
+            }
+
+            return PartialView("_NominationsTablePartial", positionModel);
+
+            /*return PartialView("_NominationsTablePartial", new PositionModel
+            {
+                PositionName = "President",
+                CurrentCycle = "2018 - 2020",
+                CycleStatus = "On going",
+                PreviousCycle = "2015 - 2018",
+                Required = 3,
+                Id = "123",
+                Incubment = PersonDummyData(string.Empty),
+                Nominations = new List<NominationModel>
+                {
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 1,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "1111"
+                    },
+                    new NominationModel
+                    {
+                        IsAppointed = false,
+                        IsRecommended = false,
+                        Priority = 2,
+                        Person = PersonDummyData(string.Empty),
+                        Id = "2222"
+                    }
+                }
+            });*/
+        }
+
         public async Task<IActionResult> ServerSideAjaxHandler(IndexNominationModel indexNominationModel)
         {
             try
@@ -565,7 +632,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //var conditionedData = await RestfulClient.getPersonDetails();
                 //var conditionedData = new List<PositionModel>();
 
-                var conditionedData = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetInstitutionTypes(level, subLevel);
+                var conditionedData =
+                    await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                        ?.Token).GetInstitutionTypes(level, subLevel);
 
                 // Loading drop down lists.
                 return Json(new
@@ -587,11 +656,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         n.PositionName,
                         n.FullName,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
-                            new { area = AreaNames.Operations, uid = n.Id })
+                            new {area = AreaNames.Operations, uid = n.Id})
                     })
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new
                 {

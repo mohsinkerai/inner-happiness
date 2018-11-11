@@ -14,7 +14,7 @@
     {
         foreach (var nomination in Model.Nominations)
         {
-            <tr id="nomination-row-@nomination.personAppointmentId" class="@nomination.RowClass">
+            <tr id="nomination-row-@nomination.personAppointmentId" style="@nomination.RowClass">
                 <td>@nomination.Priority</td>
                 <td>
                     <div class="m-card-user m-card-user--sm">
@@ -23,10 +23,10 @@
                         </div>
                         <div class="m-card-user__details">
                             <span class="m-card-user__name">@nomination.Person.FullName</span>
-                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.Gender</span>
-                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.Age yrs</span>
-                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.MaritalStatusForDisplay</span>
-                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded">@nomination.Person.AreaOfOriginForUi</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded" style="margin-bottom:4px !important">@nomination.Person.Gender</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded" style="margin-bottom:4px !important">@nomination.Person.Age yrs</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded" style="margin-bottom:4px !important">@nomination.Person.MaritalStatusForDisplay</span>
+                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded" style="margin-bottom:4px !important">@nomination.Person.AreaOfOriginForUi</span>
                             @*<a href="" class="m-card-user__email m-link">Brakus-Hansen</a>*@
                         </div>
                     </div>
@@ -42,6 +42,9 @@
                     </a>
                     <a href='javascript:RemoveNomination("@Url.Action("RemoveNomination", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@Model.Id", "@nomination.Person.Id", "@nomination.personAppointmentId", "@Model.SeatId", "@Model.PositionId");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Remove Nomination">
                         <i class="la la-user-times"></i>
+                    </a>
+                    <a href='javascript:Recommend("@Url.Action("Recommend", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@Model.Id", "@nomination.Person.Id", "@nomination.personAppointmentId", "@Model.SeatId", "@Model.PositionId");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Recommend">
+                        <i class="la la-star"></i>
                     </a>
                 </td>
             </tr>

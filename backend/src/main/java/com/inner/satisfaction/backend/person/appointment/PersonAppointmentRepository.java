@@ -14,6 +14,9 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
 
   PersonAppointment findByAppointmentPositionIdAndIsAppointedTrue(long appointmentPositionId);
 
+  List<PersonAppointment> findByAppointmentPositionIdAndIsRecommendedTrue(
+    long appointmentPositionId);
+
   List<PersonAppointment> findByPersonIdAndIsAppointedTrue(long personId);
 
   @Modifying

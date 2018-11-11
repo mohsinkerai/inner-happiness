@@ -11,6 +11,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "cnic")] public string Cnic { get; set; }
 
+        public string Cycle { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
         [JsonProperty(PropertyName = "dateOfBirth")]
@@ -28,8 +30,14 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "firstName")]
         public string FirstName { get; set; }
 
+        [JsonProperty(PropertyName = "id")] public string Id { get; set; }
+
+        public string Institution { get; set; }
+
         [JsonProperty(PropertyName = "jamatiTitle")]
         public string JamatiTitle { get; set; }
+
+        public string Position { get; set; }
 
         [JsonProperty(PropertyName = "relation")]
         public string Relation { get; set; }
@@ -39,15 +47,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "salutation")]
         public string Salutation { get; set; }
 
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        public string Position { get; set; }
-
-        public string Institution { get; set; }
-        public string Cycle { get; set; }
         [JsonProperty(PropertyName = "voluntaryCommunityServices")]
         public List<VoluntaryCommunityModel> VoluntaryCommunityServices { get; set; }
+
         #endregion Public Properties
     }
 }

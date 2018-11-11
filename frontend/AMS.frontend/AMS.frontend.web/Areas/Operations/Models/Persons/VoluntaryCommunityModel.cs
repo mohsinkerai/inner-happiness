@@ -7,6 +7,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
     {
         #region Public Properties
 
+        [JsonProperty(PropertyName = "cycleId")]
+        public string Cycle { get; set; }
+
+        [JsonProperty(PropertyName = "cycleName")]
+        public string CycleName { get; set; }
+
         [JsonProperty(PropertyName = "fromYear")]
         [Display(Name = "From Year")]
         public int? FromYear { get; set; }
@@ -16,11 +22,17 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public string InstitutionName { get; set; }
 
+        [JsonProperty(PropertyName = "imamatAppointee")]
+        public bool IsImamatAppointee { get; set; }
+
         [JsonProperty(PropertyName = "position")]
         public string Position { get; set; }
 
         [JsonProperty(PropertyName = "positionName")]
         public string PositionName { get; set; }
+
+        [JsonProperty(PropertyName = "priority")]
+        public int Priority { get; set; }
 
         [JsonProperty(PropertyName = "toYear")]
         [Display(Name = "To Year")]
@@ -28,18 +40,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "voluntaryCommunityId")]
         public string VoluntaryCommunityId { get; set; }
-
-        [JsonProperty(PropertyName = "priority")]
-        public int Priority { get; set; }
-
-        [JsonProperty(PropertyName = "cycleId")]
-        public string Cycle { get; set; }
-
-        [JsonProperty(PropertyName = "cycleName")]
-        public string CycleName { get; set; }
-
-        [JsonProperty(PropertyName = "imamatAppointee")]
-        public bool IsImamatAppointee { get; set; }
 
         #endregion Public Properties
     }

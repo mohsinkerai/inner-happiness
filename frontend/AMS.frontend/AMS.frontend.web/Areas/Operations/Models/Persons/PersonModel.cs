@@ -12,6 +12,15 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
     public class PersonModel
     {
+        #region Public Methods
+
+        public static implicit operator PersonModel(JToken v)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Public Methods
+
         #region Public Properties
 
         public int Age
@@ -19,6 +28,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             get
             {
                 if (DateOfBirth != null) return DateOfBirth.Value.GetAge();
+
                 return 0;
             }
         }
@@ -31,14 +41,16 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Country")]
         public string AkdnTrainingCountry { get; set; }
 
+        [JsonIgnore]
+        [Display(Name = "Month and Year")]
+        public DateTime? AkdnTrainingDate { get; set; }
+
         [JsonIgnore] [Display(Name = "Month")] public string AkdnTrainingMonth { get; set; }
 
         [JsonProperty(PropertyName = "akdnTrainings")]
         public List<AkdnTrainingModel> AkdnTrainings { get; set; }
 
         [JsonIgnore] [Display(Name = "Year")] public string AkdnTrainingYear { get; set; }
-
-        [JsonIgnore] [Display(Name = "Month and Year")] public DateTime? AkdnTrainingDate { get; set; }
 
         [JsonProperty(PropertyName = "areaOfOrigin")]
         [Display(Name = "Area of Origin")]
@@ -51,13 +63,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             get
             {
                 if (string.IsNullOrWhiteSpace(AreaOfOriginForDisplay))
-                {
                     return "No origin specified";
-                }
-                else
-                {
-                    return AreaOfOriginForDisplay;
-                }
+                return AreaOfOriginForDisplay;
             }
         }
 
@@ -94,10 +101,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [EmailAddress]
         public string EmailAddress { get; set; }
 
-        [JsonIgnore] public string EmploymentEmailAddress { get; set; }
-
         [JsonIgnore] public string EmploymentCategory { get; set; }
-
+        [JsonIgnore] public string EmploymentEmailAddress { get; set; }
         [JsonIgnore] public DateTime? EmploymentEndDate { get; set; }
 
         [JsonProperty(PropertyName = "employments")]
@@ -199,9 +204,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             {
                 var education = Educations?.FirstOrDefault();
                 if (education != null)
-                {
                     return $"{education?.NameOfDegreeName}, {education?.InstitutionName} {education?.YearForDisplay}";
-                }
 
                 return string.Empty;
             }
@@ -212,10 +215,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             get
             {
                 var employment = Employments?.FirstOrDefault();
-                if (employment != null)
-                {
-                    return $"{employment?.Designation}, {employment?.NameOfOrganization}";
-                }
+                if (employment != null) return $"{employment?.Designation}, {employment?.NameOfOrganization}";
 
                 return string.Empty;
             }
@@ -254,8 +254,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Occupation Type")]
         public string OccupationType { get; set; }
 
-        [JsonIgnore]
-        public string OccupationTypeName { get; set; }
+        [JsonIgnore] public string OccupationTypeName { get; set; }
 
         [JsonProperty(PropertyName = "occupationOthers")]
         [Display(Name = "Others")]
@@ -272,7 +271,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "planToRelocate")]
         [Display(Name = "Plan to Relocate")]
         public bool PlanToRelocate { get; set; }
-        
+
         [JsonIgnore]
         [Display(Name = "Training")]
         public string ProfesisonalTraining { get; set; }
@@ -285,6 +284,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string ProfessionalTrainingCountry { get; set; }
 
         [JsonIgnore]
+        [Display(Name = "Month and Year")]
+        public DateTime? ProfessionalTrainingDate { get; set; }
+
+        [JsonIgnore]
         [Display(Name = "Institution")]
         public string ProfessionalTrainingInstitution { get; set; }
 
@@ -294,9 +297,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public List<ProfessionalTrainingModel> ProfessionalTrainings { get; set; }
 
         [JsonIgnore] [Display(Name = "Year")] public string ProfessionalTrainingYear { get; set; }
-
-        [JsonIgnore] [Display(Name = "Month and Year")] public DateTime? ProfessionalTrainingDate { get; set; }
-
         [JsonIgnore] public string Read { get; set; }
 
         [Required]
@@ -305,31 +305,35 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string RegionalCouncil { get; set; }
 
         [Display(Name = "Cnic")] [JsonIgnore] public string RelativeCnic { get; set; }
+
+        [Display(Name = "Cycle")] [JsonIgnore] public string RelativeCycle { get; set; }
+
         [Display(Name = "Date of Birth")] public DateTime? RelativeDateOfBirth { get; set; }
         [Display(Name = "Last Name")] public string RelativeFamilyName { get; set; }
         [Display(Name = "Father Name")] public string RelativeFathersName { get; set; }
         [Display(Name = "First Name")] public string RelativeFirstName { get; set; }
-        [Display(Name = "Jamati Title")] public string RelativeJamatiTitle { get; set; }
 
-        [Display(Name = "Cycle")]
-        [JsonIgnore]
-        public string RelativeCycle { get; set; }
-        [Display(Name = "Position")]
-        [JsonIgnore]
-        public string RelativePosition { get; set; }
-        [Display(Name = "Institution")]
-        [JsonIgnore]
-        public string RelativeInstitution { get; set; }
-        [Display(Name = "Relation")]
-        [JsonIgnore]
-        public string RelativeRelation { get; set; }
         [Display(Name = "Form Number")]
         [JsonIgnore]
         public string RelativeFormNumber { get; set; }
 
+        [Display(Name = "Institution")]
+        [JsonIgnore]
+        public string RelativeInstitution { get; set; }
+
+        [Display(Name = "Jamati Title")] public string RelativeJamatiTitle { get; set; }
+
         [Display(Name = "Relation")]
         [JsonIgnore]
         public string RelativePersonId { get; set; }
+
+        [Display(Name = "Position")]
+        [JsonIgnore]
+        public string RelativePosition { get; set; }
+
+        [Display(Name = "Relation")]
+        [JsonIgnore]
+        public string RelativeRelation { get; set; }
 
         [Display(Name = "Salutation")]
         [JsonIgnore]
@@ -373,10 +377,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] public string TypeOfBusiness { get; set; }
 
-        [JsonIgnore]
-        [Display(Name = "Appointment Type")]
-        //[Required]
-        public bool VoluntaryCommunityIsImamatAppointment { get; set; }
+        [JsonIgnore] [Display(Name = "Cycle")] public string VoluntaryCommunityCycle { get; set; }
 
         [JsonIgnore]
         [Display(Name = "From Year")]
@@ -387,8 +388,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string VoluntaryCommunityInstitution { get; set; }
 
         [JsonIgnore]
-        [Display(Name = "Cycle")]
-        public string VoluntaryCommunityCycle{ get; set; }
+        [Display(Name = "Appointment Type")]
+        //[Required]
+        public bool VoluntaryCommunityIsImamatAppointment { get; set; }
 
         [JsonIgnore]
         [Display(Name = "Position")]
@@ -425,11 +427,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string WillingnessToDevoteTimeInFuture { get; set; }
 
         [JsonIgnore] public string Write { get; set; }
-
-        public static implicit operator PersonModel(JToken v)
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion Public Properties
     }

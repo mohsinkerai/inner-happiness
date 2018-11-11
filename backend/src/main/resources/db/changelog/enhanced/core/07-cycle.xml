@@ -69,4 +69,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="cycle-08" author="mohsin.kerai">
+    <dropColumn tableName="cycle" columnName="created_by" />
+    <dropColumn tableName="cycle" columnName="updated_by" />
+    <addColumn tableName="cycle">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -32,4 +32,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="company-03" author="mohsin.kerai">
+    <dropColumn tableName="company" columnName="created_by" />
+    <dropColumn tableName="company" columnName="updated_by" />
+    <addColumn tableName="company">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

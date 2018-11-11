@@ -38,4 +38,12 @@
       ALTER TABLE area_of_origin AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="area-of-origin-04" author="mohsin.kerai">
+    <dropColumn tableName="area_of_origin" columnName="created_by" />
+    <dropColumn tableName="area_of_origin" columnName="updated_by" />
+    <addColumn tableName="area_of_origin">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

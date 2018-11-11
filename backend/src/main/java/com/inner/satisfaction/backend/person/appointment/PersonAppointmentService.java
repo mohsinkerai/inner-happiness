@@ -40,6 +40,12 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
       .findByAppointmentPositionIdAndIsAppointedTrue(appointmentPositionId);
   }
 
+  public List<PersonAppointment> findByAppointmentPositionIdAndIsRecommendedTrue(
+    long appointmentPositionId) {
+    return personAppointmentRepository
+      .findByAppointmentPositionIdAndIsRecommendedTrue(appointmentPositionId);
+  }
+
   public List<PersonAppointment> findAppointmentsOfPerson(long personId) {
     return personAppointmentRepository.findByPersonIdAndIsAppointedTrue(personId);
   }

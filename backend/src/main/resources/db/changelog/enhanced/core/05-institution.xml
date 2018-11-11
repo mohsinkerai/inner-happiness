@@ -52,4 +52,12 @@
       WHERE `level`.id = institution.id)
     </sql>
   </changeSet>
+  <changeSet id="institution-05" author="mohsin.kerai">
+    <dropColumn tableName="institution" columnName="created_by" />
+    <dropColumn tableName="institution" columnName="updated_by" />
+    <addColumn tableName="institution">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

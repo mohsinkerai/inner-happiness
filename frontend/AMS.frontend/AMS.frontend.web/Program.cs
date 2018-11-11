@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
 using NLog.Web;
-using Microsoft.Extensions.Logging;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace AMS.frontend.web
 {
@@ -11,22 +12,24 @@ namespace AMS.frontend.web
     {
         #region Public Methods
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                    logging.SetMinimumLevel(LogLevel.Trace);
                 })
-                .UseNLog()  // NLog: setup NLog for Dependency injection
+                .UseNLog() // NLog: setup NLog for Dependency injection
                 .Build();
+        }
 
         public static void Main(string[] args)
         {
             // NLog: setup the logger first to catch all errors
-            var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
                 logger.Debug("init main");
@@ -40,8 +43,9 @@ namespace AMS.frontend.web
             }
             finally
             {
-                // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-                NLog.LogManager.Shutdown();
+                // Ensure to flush and stop internal timers/threads before application-exit (Avoid
+                // segmentation fault on Linux)
+                LogManager.Shutdown();
             }
         }
 

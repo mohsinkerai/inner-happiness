@@ -35,4 +35,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="position-03" author="mohsin.kerai">
+    <dropColumn tableName="position" columnName="created_by" />
+    <dropColumn tableName="position" columnName="updated_by" />
+    <addColumn tableName="position">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

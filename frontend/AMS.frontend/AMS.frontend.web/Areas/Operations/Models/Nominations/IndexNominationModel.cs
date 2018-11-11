@@ -7,6 +7,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
     {
         #region Public Properties
 
+        [Required] public string Cycle { get; set; }
+
         public string Institution { get; set; }
 
         [Display(Name = "Institution Type")] public string InstitutionType { get; set; }
@@ -16,9 +18,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public List<PositionModel> Positions { get; set; }
 
         public string Region { get; set; }
-
-        [Required]
-        public string Cycle { get; set; }
 
         #endregion Public Properties
     }

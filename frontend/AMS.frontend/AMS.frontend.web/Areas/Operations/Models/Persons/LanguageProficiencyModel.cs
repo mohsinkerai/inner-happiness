@@ -14,6 +14,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "languageProficiencyId")]
         public string LanguageProficiencyId { get; set; }
 
+        [JsonProperty(PropertyName = "priority")]
+        public int Priority { get; set; }
+
         [JsonProperty(PropertyName = "read")] public string Read { get; set; }
 
         public string ReadName { get; set; }
@@ -25,9 +28,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "write")] public string Write { get; set; }
 
         public string WriteName { get; set; }
-
-        [JsonProperty(PropertyName = "priority")]
-        public int Priority { get; set; }
 
         #endregion Public Properties
     }

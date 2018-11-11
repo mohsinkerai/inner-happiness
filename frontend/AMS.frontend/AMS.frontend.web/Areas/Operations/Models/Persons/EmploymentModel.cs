@@ -8,6 +8,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
     {
         #region Public Properties
 
+        [JsonProperty(PropertyName = "employmentCategory")]
+        public string Category { get; set; }
+
         [JsonProperty(PropertyName = "designation")]
         public string Designation { get; set; }
 
@@ -45,17 +48,13 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "natureOfBusinessOther")]
         public string NatureOfBusinessOther { get; set; }
 
+        [JsonProperty(PropertyName = "priority")]
+        public int Priority { get; set; }
+
         [JsonProperty(PropertyName = "businessType")]
         public string TypeOfBusiness { get; set; }
 
         public string TypeOfBusinessName { get; set; }
-
-        [JsonProperty(PropertyName = "employmentCategory")]
-        public string Category { get; set; }
-
-
-        [JsonProperty(PropertyName = "priority")]
-        public int Priority { get; set; }
 
         #endregion Public Properties
     }

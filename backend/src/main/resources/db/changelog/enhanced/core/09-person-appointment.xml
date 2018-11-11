@@ -66,4 +66,12 @@
   <changeSet id="person-appointment-06" author="mohsin.kerai">
     <sql>ALTER TABLE person_appointment CHANGE `reppointment_count` `reappointment_count` int</sql>
   </changeSet>
+  <changeSet id="person-appointment-07" author="mohsin.kerai">
+    <dropColumn tableName="person_appointment" columnName="created_by" />
+    <dropColumn tableName="person_appointment" columnName="updated_by" />
+    <addColumn tableName="person_appointment">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

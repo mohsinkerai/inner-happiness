@@ -38,4 +38,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="person-relation-person-04" author="mohsin.kerai">
+    <dropColumn tableName="person_relation_person" columnName="created_by" />
+    <dropColumn tableName="person_relation_person" columnName="updated_by" />
+    <addColumn tableName="person_relation_person">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

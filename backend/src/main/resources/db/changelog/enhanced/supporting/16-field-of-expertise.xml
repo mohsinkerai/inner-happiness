@@ -37,4 +37,12 @@
       ALTER TABLE field_of_expertise AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="field-of-expertise-04" author="mohsin.kerai">
+    <dropColumn tableName="field_of_expertise" columnName="created_by" />
+    <dropColumn tableName="field_of_expertise" columnName="updated_by" />
+    <addColumn tableName="field_of_expertise">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

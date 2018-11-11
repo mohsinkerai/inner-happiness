@@ -44,4 +44,12 @@
       ALTER TABLE jamati_title AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="jamati-title-04" author="mohsin.kerai">
+    <dropColumn tableName="jamati_title" columnName="created_by" />
+    <dropColumn tableName="jamati_title" columnName="updated_by" />
+    <addColumn tableName="jamati_title">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

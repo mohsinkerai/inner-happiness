@@ -45,4 +45,12 @@
       UPDATE relation SET reverse_relation_id = reverse_relation_id + 10000 WHERE reverse_relation_id &lt;= 10000
     </sql>
   </changeSet>
+  <changeSet id="relation-05" author="mohsin.kerai">
+    <dropColumn tableName="relation" columnName="created_by" />
+    <dropColumn tableName="relation" columnName="updated_by" />
+    <addColumn tableName="relation">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
