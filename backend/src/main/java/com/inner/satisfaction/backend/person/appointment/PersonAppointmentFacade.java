@@ -6,8 +6,11 @@ import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
+import java.util.List;
 import javax.transaction.Transactional;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 @Component
 public class PersonAppointmentFacade {
@@ -45,7 +48,7 @@ public class PersonAppointmentFacade {
     AppointmentPosition appointmentPosition = appointmentPositionService
       .findOne(personAppointment.getAppointmentPositionId());
     Cycle cycle = cycleService.findOne(appointmentPosition.getCycleId());
-    if(personAppointment.getRecommended()) {
+    if (personAppointment.getRecommended()) {
       cycle = adjustRecommendedCount(cycle, false);
     }
     cycle = adjustNominationCount(cycle, false);
@@ -69,6 +72,9 @@ public class PersonAppointmentFacade {
   }
 
   private PersonAppointment savePersonAppointment(PersonAppointment personAppointment) {
+    /**
+     * Adjust Appointment Position Count (Can be done async)
+     */
     AppointmentPosition appointmentPosition = appointmentPositionService
       .findOne(personAppointment.getAppointmentPositionId());
     Cycle cycle = cycleService.findOne(appointmentPosition.getCycleId());
@@ -77,6 +83,23 @@ public class PersonAppointmentFacade {
     }
     cycle = adjustNominationCount(cycle, true);
     cycleService.save(cycle);
+
+    /**
+     * Lets unrecommend previous person first
+     * TODO: Create Index on Person Appointment isRecommended and isAppointed
+     */
+    if (personAppointment.getIsRecommended()) {
+      List<PersonAppointment> alreadyRecommended = personAppointmentService
+        .findByAppointmentPositionIdAndIsRecommendedTrue(
+          personAppointment.getAppointmentPositionId());
+
+      if (!CollectionUtils.isEmpty(alreadyRecommended)) {
+        for (PersonAppointment recommended : alreadyRecommended) {
+          recommended.setIsRecommended(false);
+          personAppointmentService.save(recommended);
+        }
+      }
+    }
     return personAppointmentService.save(personAppointment);
   }
 
@@ -92,7 +115,7 @@ public class PersonAppointmentFacade {
 
   private Cycle adjustNominationCount(Cycle cycle, boolean increment) {
     Long nominatedCount = cycle.getNominatedCount();
-    if(increment) {
+    if (increment) {
       cycle.setNominatedCount(nominatedCount++);
     } else {
       cycle.setNominatedCount(nominatedCount--);
