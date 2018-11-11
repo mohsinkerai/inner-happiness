@@ -44,4 +44,12 @@
       <column name="company_id" type="int" afterColumn="expiry"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="authentication-token-04" author="mohsin.kerai">
+    <dropColumn tableName="authentication_token" columnName="created_by" />
+    <dropColumn tableName="authentication_token" columnName="updated_by" />
+    <addColumn tableName="authentication_token">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -41,4 +41,12 @@
       ALTER TABLE country AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="country-04" author="mohsin.kerai">
+    <dropColumn tableName="country" columnName="created_by" />
+    <dropColumn tableName="country" columnName="updated_by" />
+    <addColumn tableName="country">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

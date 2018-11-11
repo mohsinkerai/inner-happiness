@@ -252,4 +252,13 @@
     </sql>
   </changeSet>
   <!--Using SQL Tag, create full text inde, same goes for firstName-->
+
+  <changeSet id="person-19" author="mohsin.kerai">
+    <dropColumn tableName="person" columnName="created_by" />
+    <dropColumn tableName="person" columnName="updated_by" />
+    <addColumn tableName="person">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

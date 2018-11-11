@@ -38,4 +38,12 @@
       ALTER TABLE professional_membership AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="professional-membership-04" author="mohsin.kerai">
+    <dropColumn tableName="professional_membership" columnName="created_by" />
+    <dropColumn tableName="professional_membership" columnName="updated_by" />
+    <addColumn tableName="professional_membership">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

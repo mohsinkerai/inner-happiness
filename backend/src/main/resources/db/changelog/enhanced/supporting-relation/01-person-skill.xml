@@ -35,4 +35,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="person-skill-04" author="mohsin.kerai">
+    <dropColumn tableName="person_skill" columnName="created_by" />
+    <dropColumn tableName="person_skill" columnName="updated_by" />
+    <addColumn tableName="person_skill">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

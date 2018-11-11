@@ -66,4 +66,12 @@
       <column name="rank" type="int" afterColumn="cycle_id" defaultValue="1"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="appointment-position-04" author="mohsin.kerai">
+    <dropColumn tableName="appointment_position" columnName="created_by" />
+    <dropColumn tableName="appointment_position" columnName="updated_by" />
+    <addColumn tableName="appointment_position">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

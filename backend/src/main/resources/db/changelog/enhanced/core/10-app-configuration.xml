@@ -36,4 +36,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="application-configuration-03" author="mohsin.kerai">
+    <dropColumn tableName="application_configuration" columnName="created_by" />
+    <dropColumn tableName="application_configuration" columnName="updated_by" />
+    <addColumn tableName="application_configuration">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

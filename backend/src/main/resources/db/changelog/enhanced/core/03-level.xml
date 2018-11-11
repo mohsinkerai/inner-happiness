@@ -57,4 +57,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="level-03" author="mohsin.kerai">
+    <dropColumn tableName="level" columnName="created_by" />
+    <dropColumn tableName="level" columnName="updated_by" />
+    <addColumn tableName="level">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

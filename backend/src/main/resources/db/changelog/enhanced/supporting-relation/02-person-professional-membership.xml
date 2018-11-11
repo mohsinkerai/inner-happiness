@@ -35,4 +35,12 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="person-professional-membership-04" author="mohsin.kerai">
+    <dropColumn tableName="person_professional_membership" columnName="created_by" />
+    <dropColumn tableName="person_professional_membership" columnName="updated_by" />
+    <addColumn tableName="person_professional_membership">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

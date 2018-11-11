@@ -37,4 +37,12 @@
       ALTER TABLE skill AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="skill-04" author="mohsin.kerai">
+    <dropColumn tableName="skill" columnName="created_by" />
+    <dropColumn tableName="skill" columnName="updated_by" />
+    <addColumn tableName="skill">
+      <column name="created_by" type="varchar(255)" />
+      <column name="updated_by" type="varchar(255)" />
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
