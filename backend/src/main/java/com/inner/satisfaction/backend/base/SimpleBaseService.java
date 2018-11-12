@@ -35,6 +35,9 @@ public abstract class SimpleBaseService<E extends BaseEntity> {
 
   public E save(E e) {
     try {
+      if(e.isActive==null) {
+        e.isActive=true;
+      }
       return baseRepository.save(e);
     } catch (EntityNotFoundException ex) {
       log.error("Entity not found {}", e, ex);
