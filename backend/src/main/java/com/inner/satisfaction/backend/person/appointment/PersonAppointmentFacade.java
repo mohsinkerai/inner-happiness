@@ -68,6 +68,8 @@ public class PersonAppointmentFacade {
       cycle = adjustRecommendedCount(cycle, true);
     }
     cycleService.save(cycle);
+
+    removeExistingRecommendation(personAppointment);
     return personAppointmentService.save(personAppointment);
   }
 
@@ -88,6 +90,11 @@ public class PersonAppointmentFacade {
      * Lets unrecommend previous person first
      * TODO: Create Index on Person Appointment isRecommended and isAppointed
      */
+    removeExistingRecommendation(personAppointment);
+    return personAppointmentService.save(personAppointment);
+  }
+
+  private void removeExistingRecommendation(PersonAppointment personAppointment) {
     if (personAppointment.getIsRecommended()) {
       List<PersonAppointment> alreadyRecommended = personAppointmentService
         .findByAppointmentPositionIdAndIsRecommendedTrue(
@@ -100,7 +107,6 @@ public class PersonAppointmentFacade {
         }
       }
     }
-    return personAppointmentService.save(personAppointment);
   }
 
   private Cycle adjustRecommendedCount(Cycle cycle, boolean increment) {
@@ -142,7 +148,7 @@ public class PersonAppointmentFacade {
         "Please come low!! Appoint ku ker rahe ho? ya appointed ko edit ku ker rahe ho?");
     }
     Person one = personService.findOne(personAppointment.getPersonId());
-    if (one == null && one.isActive() == true) {
+    if (one == null || (one.getIsActive() != null && one.getIsActive() == false)) {
       throw new RuntimeException("Jani!! Sahi person id dedo");
     }
   }
