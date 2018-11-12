@@ -23,7 +23,7 @@ public abstract class BaseEntity implements Serializable {
   @GeneratedValue
   protected Long id;
 
-  protected boolean isActive;
+  protected Boolean isActive;
 
   @CreatedBy
   protected String createdBy;
