@@ -38,6 +38,7 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "html",
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    mApp.unblock("#nominations-table-" + positionId, {});
                     alert("Request: " +
                         xmlHttpRequest.toString() +
                         "\n\nStatus: " +
@@ -50,10 +51,11 @@ function InitializeTypeAhead(id, name, prefetchJson, remoteUrl, positionId, url)
                         $("#nominations-table-" + positionId).html(result);
                         InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
                         $("#nominations-" + positionId).css("min-height", "0px");
+                        $("#person-lookup-" + positionId).val('').trigger('change');
                     }
+                    mApp.unblock("#nominations-table-" + positionId, {});
                 }
             });
-            mApp.unblock("#nominations-table-" + positionId, {});
         });
     }
     catch (err) { }
@@ -290,6 +292,7 @@ function LanguageListDelete(url, id, reOrderUrl) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#language-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -307,12 +310,12 @@ function LanguageListDelete(url, id, reOrderUrl) {
                 $("#Speak").val('').trigger('change');
                 $("#language-id").val('');
             }
+            mApp.unblock("#language-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#language-table", {});
 }
 
 function EmploymentListDelete(url, id, reOrderUrl) {
@@ -324,6 +327,7 @@ function EmploymentListDelete(url, id, reOrderUrl) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#employment-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -347,12 +351,12 @@ function EmploymentListDelete(url, id, reOrderUrl) {
                 $("#EmploymentEndDate").val('').trigger('change');
                 $("#employment-id").val('');
             }
+            mApp.unblock("#employment-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#employment-table", {});
 }
 
 function FamilyInformationListDelete(url, id) {
@@ -364,6 +368,7 @@ function FamilyInformationListDelete(url, id) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#family-relation-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -385,12 +390,12 @@ function FamilyInformationListDelete(url, id) {
                 $("#RelativeRelation").val('').trigger('change');
                 $("#family-information-id").val('');
             }
+            mApp.unblock("#family-relation-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#family-relation-table", {});
 }
 
 function ProfessionalTrainingListDelete(url, id, reOrderUrl) {
@@ -402,6 +407,7 @@ function ProfessionalTrainingListDelete(url, id, reOrderUrl) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#professional-training-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -420,12 +426,12 @@ function ProfessionalTrainingListDelete(url, id, reOrderUrl) {
                 $("#ProfessionalTrainingYear").val('').trigger('change');
                 $("#professional-training-id").val('');
             }
+            mApp.unblock("#professional-training-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#professional-training-table", {});
 }
 
 function VoluntaryCommunityListDelete(url, id, reOrderUrl) {
@@ -437,6 +443,7 @@ function VoluntaryCommunityListDelete(url, id, reOrderUrl) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#voluntary-community-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -454,12 +461,12 @@ function VoluntaryCommunityListDelete(url, id, reOrderUrl) {
                 $("#VoluntaryCommunityPosition").val('').trigger('change');
                 $("#voluntary-community-id").val('');
             }
+            mApp.unblock("#voluntary-community-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#voluntary-community-table", {});
 }
 
 function VoluntaryPublicListDelete(url, id, reOrderUrl) {
@@ -471,6 +478,7 @@ function VoluntaryPublicListDelete(url, id, reOrderUrl) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#voluntary-public-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -488,12 +496,12 @@ function VoluntaryPublicListDelete(url, id, reOrderUrl) {
                 $("#VoluntaryPublicPosition").val('').trigger('change');
                 $("#voluntary-public-id").val('');
             }
+            mApp.unblock("#voluntary-public-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#voluntary-public-table", {});
 }
 
 function EducationListDelete(url, id, reOrderUrl) {
@@ -505,6 +513,7 @@ function EducationListDelete(url, id, reOrderUrl) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#education-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -524,12 +533,12 @@ function EducationListDelete(url, id, reOrderUrl) {
                 $("#MajorAreaOfStudy").val('').trigger('change');
                 $("#education-id").val('');
             }
+            mApp.unblock("#education-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#education-table", {});
 }
 
 function AkdnTrainingListDelete(url, id, reOrderUrl) {
@@ -541,6 +550,7 @@ function AkdnTrainingListDelete(url, id, reOrderUrl) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#akdn-training-table", {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -558,12 +568,12 @@ function AkdnTrainingListDelete(url, id, reOrderUrl) {
                 $("#AkdnTrainingYear").val('').trigger('change');
                 $("#akdn-training-id").val('');
             }
+            mApp.unblock("#akdn-training-table", {});
             //else {
             //    window.location.replace(window.loginUrl);
             //}
         }
     });
-    mApp.unblock("#akdn-training-table", {});
 }
 
 function LanguageListAdd(url, reOrderUrl) {
@@ -589,6 +599,7 @@ function LanguageListAdd(url, reOrderUrl) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#language-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -606,13 +617,13 @@ function LanguageListAdd(url, reOrderUrl) {
                     $("#Speak").val('').trigger('change');
                     $("#language-id").val('');
                 }
+                mApp.unblock("#language-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#language-table", {});
 }
 
 function ProfessionalTrainingListAdd(url, reOrderUrl) {
@@ -640,6 +651,7 @@ function ProfessionalTrainingListAdd(url, reOrderUrl) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#professional-training-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -659,13 +671,13 @@ function ProfessionalTrainingListAdd(url, reOrderUrl) {
                     $("#ProfessionalTrainingDate").val('').trigger('change');
                     $("#professional-training-id").val('');
                 }
+                mApp.unblock("#professional-training-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#professional-training-table", {});
 }
 
 function VoluntaryCommunityListAdd(url, reOrderUrl) {
@@ -697,6 +709,7 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#voluntary-community-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -715,13 +728,13 @@ function VoluntaryCommunityListAdd(url, reOrderUrl) {
                     $("#VoluntaryCommunityCycle").val('').trigger('change');
                     $("#voluntary-community-id").val('');
                 }
+                mApp.unblock("#voluntary-community-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#voluntary-community-table", {});
 }
 
 function VoluntaryPublicListAdd(url, reOrderUrl) {
@@ -747,6 +760,7 @@ function VoluntaryPublicListAdd(url, reOrderUrl) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#voluntary-public-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -764,13 +778,13 @@ function VoluntaryPublicListAdd(url, reOrderUrl) {
                     $("#VoluntaryPublicPosition").val('').trigger('change');
                     $("#voluntary-public-id").val('');
                 }
+                mApp.unblock("#voluntary-public-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#voluntary-public-table", {});
 }
 
 function EducationListAdd(url, reOrderUrl) {
@@ -800,6 +814,7 @@ function EducationListAdd(url, reOrderUrl) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#education-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -819,13 +834,13 @@ function EducationListAdd(url, reOrderUrl) {
                     $("#MajorAreaOfStudy").val('').trigger('change');
                     $("#education-id").val('');
                 }
+                mApp.unblock("#education-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#education-table", {});
 }
 
 function EmploymentListAdd(url, reOrderUrl) {
@@ -865,6 +880,7 @@ function EmploymentListAdd(url, reOrderUrl) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#employment-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -889,13 +905,13 @@ function EmploymentListAdd(url, reOrderUrl) {
                     $("#EmploymentEndDate").val('').trigger('change');
                     $("#employment-id").val('');
                 }
+                mApp.unblock("#employment-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#employment-table", {});
 }
 
 function FamilyInformationListAdd(url) {
@@ -937,6 +953,7 @@ function FamilyInformationListAdd(url) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#family-relation-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -962,13 +979,13 @@ function FamilyInformationListAdd(url) {
                     $("#RelativeInstitution").val('').trigger('change');
                     $("#RelativePosition").val('').trigger('change');
                 }
+                mApp.unblock("#family-relation-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#family-relation-table", {});
 }
 
 function AkdnTrainingListAdd(url, reOrderUrl) {
@@ -994,6 +1011,7 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "html",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("#akdn-training-table", {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -1010,13 +1028,13 @@ function AkdnTrainingListAdd(url, reOrderUrl) {
                     $("#AkdnTrainingDate").val('').trigger('change');
                     $("#akdn-training-id").val('');
                 }
+                mApp.unblock("#akdn-training-table", {});
                 //else {
                 //    window.location.replace(window.loginUrl);
                 //}
             }
         });
     }
-    mApp.unblock("#akdn-training-table", {});
 }
 
 function InitializeDataTableLite(id, title) {
@@ -1065,7 +1083,8 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
                 },
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "html",
-                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    mApp.unblock("#" + id + "-table", {});
                     alert("Request: " +
                         xmlHttpRequest.toString() +
                         "\n\nStatus: " +
@@ -1079,11 +1098,10 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
                         InitializeDataTableLiteWithRowReordering(id, title, url);
                         $("#" + id).css("min-height", "0px");
                     }
+                    mApp.unblock("#" + id + "-table", {});
                 }
             });
         }
-
-        mApp.unblock("#" + id + "-table", {});
     });
 }
 
@@ -1647,7 +1665,6 @@ function MakeCascadingDropDown(primaryDropdownClass, secondaryDropdownClass, url
                 mApp.block("." + secondaryDropdownClass, {});
                 var selectedPrimaryValue = $(this).val();
                 LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, selectedPrimaryValue, url, "");
-                mApp.unblock("." + secondaryDropdownClass, {});
             });
     }
 }
@@ -1665,6 +1682,7 @@ function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, sel
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             error: function (xmlHttpRequest, textStatus, errorThrown) {
+                mApp.unblock("." + secondaryDropdownClass, {});
                 alert("Request: " +
                     xmlHttpRequest.toString() +
                     "\n\nStatus: " +
@@ -1687,6 +1705,7 @@ function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, sel
                 if (selectedSecondaryValue !== "" || selectedSecondaryValue !== "0") {
                     $("." + secondaryDropdownClass).val(selectedSecondaryValue);
                 }
+                mApp.unblock("." + secondaryDropdownClass, {});
             }
         });
     }
@@ -1871,7 +1890,8 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
                 },
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "html",
-                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    mApp.unblock("#nominations-table-" + positionId, {});
                     alert("Request: " +
                         xmlHttpRequest.toString() +
                         "\n\nStatus: " +
@@ -1885,11 +1905,10 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
                         InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
                         $("#nominations-" + positionId).css("min-height", "0px");
                     }
+                    mApp.unblock("#nominations-table-" + positionId, {});
                 }
             });
         }
-
-        mApp.unblock("#nominations-table-" + positionId, {});
     });
 }
 
@@ -1902,6 +1921,7 @@ function RemoveNomination(url, positionId, personId, personAppointmentId, seatId
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#nominations-table-" + positionId, {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -1915,9 +1935,9 @@ function RemoveNomination(url, positionId, personId, personAppointmentId, seatId
                 InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
                 $("#nominations-" + positionId).css("min-height", "0px");
             }
+            mApp.unblock("#nominations-table-" + positionId, {});
         }
     });
-    mApp.unblock("#nominations-table-" + positionId, {});
 }
 
 function Recommend(url, positionId, personId, personAppointmentId, seatId, id) {
@@ -1929,6 +1949,7 @@ function Recommend(url, positionId, personId, personAppointmentId, seatId, id) {
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#nominations-table-" + positionId, {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -1942,9 +1963,9 @@ function Recommend(url, positionId, personId, personAppointmentId, seatId, id) {
                 InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
                 $("#nominations-" + positionId).css("min-height", "0px");
             }
+            mApp.unblock("#nominations-table-" + positionId, {});
         }
     });
-    mApp.unblock("#nominations-table-" + positionId, {});
 }
 
 function LoadDropDownViaAjax(dropDownClass, url, selectedValue, secondarySelectedValue, tertiarySelectedValue) {

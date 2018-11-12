@@ -35,6 +35,9 @@ namespace AMS.frontend.web.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
             return View();
         }
         

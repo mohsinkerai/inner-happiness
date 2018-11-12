@@ -1835,8 +1835,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
             else
             {
-                ViewBag.MessageType = MessageTypes.Error;
-                ViewBag.Message = "Person not found";
+                TempData["MessageType"] = MessageTypes.Warn;
+                TempData["Message"] = "No record found against this form number";
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
         }
