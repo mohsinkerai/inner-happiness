@@ -1116,7 +1116,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                 new List<VoluntaryCommunityModel>();
 
-            if (cycle.StartsWith("0")) cycle = string.Empty;
+            if (cycle != null)
+            {
+                if (cycle.StartsWith("0")) cycle = string.Empty;
+            }
 
             if (string.IsNullOrWhiteSpace(id))
                 id = Guid.NewGuid().ToString();
