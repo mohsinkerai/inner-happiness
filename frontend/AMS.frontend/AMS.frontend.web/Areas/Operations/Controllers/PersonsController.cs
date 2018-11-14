@@ -808,8 +808,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 person.RelativePersonId = person.Id;
                 person.RelativeFormNumber = person.Id;
             }
-
-            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel {RelativeCnic = cnic} : null);
+            //return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeCnic = cnic } : null);
+            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel {RelativeCnic = cnic} : person);
         }
 
         [HttpPost]
