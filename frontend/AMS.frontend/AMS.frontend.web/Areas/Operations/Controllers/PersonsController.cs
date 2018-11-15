@@ -809,7 +809,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 person.RelativeFormNumber = person.Id;
             }
 
-            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel {RelativeCnic = cnic} : null);
+            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel {RelativeCnic = cnic} : person);
         }
 
         [HttpPost]
@@ -1116,7 +1116,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
                 new List<VoluntaryCommunityModel>();
 
-            if (cycle.StartsWith("0")) cycle = string.Empty;
+            if (cycle != null && cycle.StartsWith("0")) cycle = string.Empty;
 
             if (string.IsNullOrWhiteSpace(id))
                 id = Guid.NewGuid().ToString();

@@ -311,16 +311,16 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         <div class="m-scrollable" data-scrollable="false" data-height="380" data-mobile-height="200">
                                                             <div class="m-nav-grid m-nav-grid--skin-light">
                                                                 <div class="m-nav-grid__row">
-                                                                    <a href="#" class="m-nav-grid__item">
+                                                                    <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Add" class="m-nav-grid__item">
                                                                         <i class="m-nav-grid__icon flaticon-user-add"></i>
                                                                         <span class="m-nav-grid__text">Add New Person</span>
                                                                     </a>
-                                                                    <a href="#" class="m-nav-grid__item">
+                                                                    @*<a href="#" class="m-nav-grid__item">
                                                                         <i class="m-nav-grid__icon flaticon-time"></i>
                                                                         <span class="m-nav-grid__text">Add New Event</span>
-                                                                    </a>
+                                                                    </a>*@
                                                                 </div>
-                                                                <div class="m-nav-grid__row">
+                                                                @*<div class="m-nav-grid__row">
                                                                     <a href="#" class="m-nav-grid__item">
                                                                         <i class="m-nav-grid__icon flaticon-folder"></i>
                                                                         <span class="m-nav-grid__text">Create New Task</span>
@@ -329,7 +329,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                         <i class="m-nav-grid__icon flaticon-clipboard"></i>
                                                                         <span class="m-nav-grid__text">Completed Tasks</span>
                                                                     </a>
-                                                                </div>
+                                                                </div>*@
                                                             </div>
                                                         </div>
                                                     </div>
