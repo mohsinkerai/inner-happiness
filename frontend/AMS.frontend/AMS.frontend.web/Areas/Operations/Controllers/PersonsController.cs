@@ -978,9 +978,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             try
             {
-                string institutionName = GetText(relativeInstitution, ViewBag.VoluntaryCommunityInstitutionList);
-                string positionName = GetText(relativePosition, ViewBag.VoluntaryCommunityPositionList);
-                string cycleName = GetText(relativeCycle, ViewBag.Cycle);
+                string institutionName = "";
+                string positionName = "";
+                string cycleName = "";
+
+                if (relativeInstitution != null)
+                {
+                    institutionName = GetText(relativeInstitution, ViewBag.VoluntaryCommunityInstitutionList);
+                }
+                if (relativePosition != null)
+                {
+                    positionName = GetText(relativePosition, ViewBag.VoluntaryCommunityPositionList);
+                }
+                if (relativeCycle != null)
+                {
+                    cycleName = GetText(relativeCycle, ViewBag.Cycle);
+                }
 
                 sessionFamilyRelationList.Add(new FamilyRelationModel
                 {
@@ -1019,7 +1032,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         }
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
 
