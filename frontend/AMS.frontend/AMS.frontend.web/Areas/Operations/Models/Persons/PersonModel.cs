@@ -98,7 +98,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonProperty(PropertyName = "emailAddress")]
         [Display(Name = "Email Address")]
-        [EmailAddress]
+        //[EmailAddress]
         public string EmailAddress { get; set; }
 
         [JsonIgnore] public string EmploymentCategory { get; set; }

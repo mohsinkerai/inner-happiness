@@ -245,6 +245,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
 
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return RedirectToAction(ActionNames.Index);
+            }
+
             try
             {
                 await InitializePerson();
