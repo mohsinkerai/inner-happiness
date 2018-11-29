@@ -102,10 +102,11 @@ public class PersonService extends BaseService<Person> {
     Long jamatiTitleId,
     Pageable pageable
   ) {
-    return personRepository
+    Page<Person> persons = personRepository
       .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(
         name, formNo, educationalInstitutionId, educationalDegreeId, educatioanlAreaOfStudyId,
         jamatiTitleId, cnic, pageable);
+    return persons.map(person -> runProcessor(person));
   }
 
   public List<Person> findByIdOrCnic(
@@ -154,5 +155,12 @@ public class PersonService extends BaseService<Person> {
     Assert.notNull(entity.getJamatkhana(), "Person jamatkhana should not be null");
     Assert.notNull(entity.getLocalCouncil(), "Person local council should not be null");
     Assert.notNull(entity.getRegionalCouncil(), "Person regional council should not be null");
+  }
+
+  private Person runProcessor(Person person) {
+    for (BaseM2MProcessingService bps : baseProcessingservices) {
+      person = bps.populatePerson(person);
+    }
+    return person;
   }
 }
