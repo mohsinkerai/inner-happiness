@@ -812,6 +812,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 person.RelativeDateOfBirth = person.DateOfBirth;
                 person.RelativePersonId = person.Id;
                 person.RelativeFormNumber = person.Id;
+                
             }
             //return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeCnic = cnic } : null);
             return PartialView("_FamilyRelationPartial", person == null ? new PersonModel {RelativeCnic = cnic} : person);
@@ -1263,7 +1264,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 if (person.VoluntaryCommunityServices != null)
                     pastAppointments.AddRange(
                         from personVoluntaryCommunityService in person.VoluntaryCommunityServices?.Where(vcs =>
-                            vcs.IsImamatAppointee || !string.IsNullOrWhiteSpace(vcs.Cycle))
+                            vcs.IsImamatAppointee && !string.IsNullOrWhiteSpace(vcs.Cycle))
                         select new PastImamatAppointment
                         {
                             Position = GetText(personVoluntaryCommunityService.Position,

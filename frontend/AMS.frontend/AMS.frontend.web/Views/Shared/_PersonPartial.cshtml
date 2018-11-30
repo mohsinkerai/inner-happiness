@@ -929,122 +929,122 @@
                     </div>
                     @if (ViewBag.Action != "Detail")
                     {
-                        <div class="form-group m-form__group row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="EmploymentCategory" class="control-label"></label><span class="required">*</span>
-                                    <div class="m-radio-inline">
-                                        <label class="m-radio">
-                                            <input asp-for="EmploymentCategory" type="radio" value="NotSpecified" checked="checked" class="employment-category"> Not Specified
-                                            <span></span>
-                                        </label>
-                                        <label class="m-radio">
-                                            <input asp-for="EmploymentCategory" type="radio" value="Employed" class="employment-category"> Employed
-                                            <span></span>
-                                        </label>
-                                        <label class="m-radio">
-                                            <input asp-for="EmploymentCategory" type="radio" value="SelfEmployed" class="employment-category"> Self Employed
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                    <span asp-validation-for="EmploymentCategory" class="form-control-feedback"></span>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="EmploymentCategory" class="control-label"></label><span class="required">*</span>
+                                <div class="m-radio-inline">
+                                    <label class="m-radio">
+                                        <input asp-for="EmploymentCategory" type="radio" value="NotSpecified" checked="checked" class="employment-category"> Not Specified
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio">
+                                        <input asp-for="EmploymentCategory" type="radio" value="Employed" class="employment-category"> Employed
+                                        <span></span>
+                                    </label>
+                                    <label class="m-radio">
+                                        <input asp-for="EmploymentCategory" type="radio" value="SelfEmployed" class="employment-category"> Self Employed
+                                        <span></span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="NameOfOrganization" class="control-label"></label>
-                                    <input type="text" asp-for="NameOfOrganization" class="form-control">
-                                    <span asp-validation-for="NameOfOrganization" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="Designation" class="control-label"></label>
-                                    <input type="text" asp-for="Designation" class="form-control">
-                                    <span asp-validation-for="Designation" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="Location" class="control-label"></label>
-                                    <input type="text" asp-for="Location" class="form-control">
-                                    <span asp-validation-for="Location" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="EmploymentEmailAddress" class="control-label"></label>
-                                    <input type="text" asp-for="EmploymentEmailAddress" class="form-control">
-                                    <span asp-validation-for="EmploymentEmailAddress" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="EmploymentTelephone" class="control-label"></label>
-                                    <input type="text" asp-for="EmploymentTelephone" class="form-control">
-                                    <span asp-validation-for="EmploymentTelephone" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="TypeOfBusiness" class="control-label"></label>
-                                    <select asp-for="TypeOfBusiness" asp-items="@ViewBag.TypeOfBusinessList" class="form-control m-select2" placeholder="Select a type of business">
-                                        <option></option>
-                                    </select>
-                                    <span asp-validation-for="TypeOfBusiness" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="NatureOfBusiness" class="control-label"></label>
-                                    <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusinessList" class="form-control m-select2 nature-of-business" placeholder="Select a nature of business">
-                                        <option></option>
-                                    </select>
-                                    <span asp-validation-for="NatureOfBusiness" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="NatureOfBusinessOther" class="control-label"></label>
-                                    <input type="text" asp-for="NatureOfBusinessOther" class="form-control" disabled="disabled">
-                                    <span asp-validation-for="NatureOfBusinessOther" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="EmploymentStartDate" class="control-label"></label>
-                                    <div class="input-group">
-                                        <input type="text" asp-for="EmploymentStartDate" class="form-control date-picker" readonly placeholder="Select start date">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">
-                                                <i class="la la-calendar"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span asp-validation-for="EmploymentStartDate" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label asp-for="EmploymentEndDate" class="control-label"></label>
-                                    <div class="input-group">
-                                        <input type="text" asp-for="EmploymentEndDate" class="form-control date-picker" readonly placeholder="Select end date">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">
-                                                <i class="la la-calendar"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span asp-validation-for="EmploymentEndDate" class="form-control-feedback"></span>
-                                </div>
-                            </div>
-                            <input type="hidden" id="employment-id" />
-                            <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                                <button type="button" class="btn btn-warning" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
-                                    <i class="fa fa-save"></i> Add
-                                </button>
+                                <span asp-validation-for="EmploymentCategory" class="form-control-feedback"></span>
                             </div>
                         </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="NameOfOrganization" class="control-label"></label>
+                                <input type="text" asp-for="NameOfOrganization" class="form-control">
+                                <span asp-validation-for="NameOfOrganization" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="Designation" class="control-label"></label>
+                                <input type="text" asp-for="Designation" class="form-control">
+                                <span asp-validation-for="Designation" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="Location" class="control-label"></label>
+                                <input type="text" asp-for="Location" class="form-control">
+                                <span asp-validation-for="Location" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="EmploymentEmailAddress" class="control-label"></label>
+                                <input type="text" asp-for="EmploymentEmailAddress" class="form-control">
+                                <span asp-validation-for="EmploymentEmailAddress" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="EmploymentTelephone" class="control-label"></label>
+                                <input type="text" asp-for="EmploymentTelephone" class="form-control">
+                                <span asp-validation-for="EmploymentTelephone" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="TypeOfBusiness" class="control-label"></label>
+                                <select asp-for="TypeOfBusiness" asp-items="@ViewBag.TypeOfBusinessList" class="form-control m-select2" placeholder="Select a type of business">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="TypeOfBusiness" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="NatureOfBusiness" class="control-label"></label>
+                                <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusinessList" class="form-control m-select2 nature-of-business" placeholder="Select a nature of business">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="NatureOfBusiness" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="NatureOfBusinessOther" class="control-label"></label>
+                                <input type="text" asp-for="NatureOfBusinessOther" class="form-control" disabled="disabled">
+                                <span asp-validation-for="NatureOfBusinessOther" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="EmploymentStartDate" class="control-label"></label>
+                                <div class="input-group">
+                                    <input type="text" asp-for="EmploymentStartDate" class="form-control date-picker" readonly placeholder="Select start date">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="EmploymentStartDate" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="EmploymentEndDate" class="control-label"></label>
+                                <div class="input-group">
+                                    <input type="text" asp-for="EmploymentEndDate" class="form-control date-picker" readonly placeholder="Select end date">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="EmploymentEndDate" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="employment-id" />
+                        <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+                            <button type="button" class="btn btn-warning" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");'>
+                                <i class="fa fa-save"></i> Add
+                            </button>
+                        </div>
+                    </div>
                     }
                     <div class="form-group m-form__group row">
                         <div class="col-lg-12" id="employment-table">
