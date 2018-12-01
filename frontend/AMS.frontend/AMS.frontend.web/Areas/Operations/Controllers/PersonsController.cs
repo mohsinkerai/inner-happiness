@@ -71,11 +71,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
 
                 if (!string.IsNullOrWhiteSpace(formCollection["RelocationDateTime"]))
+                {
                     model.RelocationDateTime =
-                        DateTime.ParseExact(formCollection["RelocationDateTime"], "MM/dd/yyyy", null);
+                        DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                    ModelState.Remove("RelocationDateTime");
+                }
 
                 if (!string.IsNullOrWhiteSpace(formCollection["DateOfBirth"]))
-                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "MM/dd/yyyy", null);
+                {
+                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
+                    ModelState.Remove("DateOfBirth");
+                }
 
                 if (ModelState.IsValid)
                 {
@@ -313,11 +319,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
                 if (!string.IsNullOrWhiteSpace(formCollection["RelocationDateTime"]))
+                {
                     model.RelocationDateTime =
-                        DateTime.ParseExact(formCollection["RelocationDateTime"], "MM/dd/yyyy", null);
+                        DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                    ModelState.Remove("RelocationDateTime");
+                }
 
                 if (!string.IsNullOrWhiteSpace(formCollection["DateOfBirth"]))
-                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "MM/dd/yyyy", null);
+                {
+                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
+                    ModelState.Remove("DateOfBirth");
+                }
 
                 if (ModelState.IsValid)
                 {
@@ -1025,7 +1037,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     FamilyRelationId = id,
                     Cnic = relativeCnic,
-                    DateOfBirth = Convert.ToDateTime(relativeDateOfBirth),
+                    DateOfBirth = DateTime.ParseExact(relativeDateOfBirth, "dd/MM/yyyy", null),
                     FathersName = relativeFathersName,
                     FirstName = relativeFirstName,
                     RelationName = string.IsNullOrWhiteSpace(relativeRelation)

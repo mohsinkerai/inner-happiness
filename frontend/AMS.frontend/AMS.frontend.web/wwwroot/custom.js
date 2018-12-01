@@ -92,7 +92,8 @@ function Initialize() {
     });
     $(".date-picker").datepicker({
         todayHighlight: true,
-        orientation: "bottom left",
+        format: "dd/mm/yyyy",
+        //orientation: "bottom left",
         templates: {
             leftArrow: '<i class="la la-angle-left"></i>',
             rightArrow: '<i class="la la-angle-right"></i>'
@@ -102,7 +103,7 @@ function Initialize() {
 
     $(".date-picker-year-only").datepicker({
         todayHighlight: true,
-        orientation: "bottom left",
+        //orientation: "bottom left",
         templates: {
             leftArrow: '<i class="la la-angle-left"></i>',
             rightArrow: '<i class="la la-angle-right"></i>'
@@ -113,7 +114,7 @@ function Initialize() {
     });
     $(".date-picker-month-year-only").datepicker({
         todayHighlight: true,
-        orientation: "bottom left",
+        //orientation: "bottom left",
         templates: {
             leftArrow: '<i class="la la-angle-left"></i>',
             rightArrow: '<i class="la la-angle-right"></i>'
