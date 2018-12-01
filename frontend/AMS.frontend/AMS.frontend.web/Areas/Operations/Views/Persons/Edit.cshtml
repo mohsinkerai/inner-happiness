@@ -74,6 +74,12 @@
                         $("#RelativeCnic").inputmask({
                             "mask": "99999-9999999-9"
                         });
+                        $("#RelativeCnic").keypress(function (event) {
+                            if (event.keyCode == 13) {
+                                event.preventDefault();
+                                return false;
+                            }
+                        });
                         $(".relative-cnic").blur(function() {
                             var cnic = $(".relative-cnic").val();
                             $.ajax({
@@ -103,6 +109,12 @@
                                     }
                                     $("#RelativeCnic").inputmask({
                                         "mask": "99999-9999999-9"
+                                    });
+                                    $("#RelativeCnic").keypress(function (event) {
+                                        if (event.keyCode == 13) {
+                                            event.preventDefault();
+                                            return false;
+                                        }
                                     });
                                 }
                             });
@@ -180,6 +192,13 @@
 
             $("#RelativeCnic").inputmask({
                 "mask": "99999-9999999-9"
+            });
+
+            $("#RelativeCnic").keypress(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
             });
 
             $(".highest-level-select").change(function () {
