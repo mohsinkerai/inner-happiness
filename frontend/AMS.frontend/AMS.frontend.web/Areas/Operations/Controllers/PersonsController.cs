@@ -11,6 +11,7 @@ using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
@@ -20,9 +21,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         #region Public Constructors
 
-        public PersonsController(IOptions<Configuration> configuration)
+        public PersonsController(IOptions<Configuration> configuration, ILogger<PersonsController> logger)
         {
             _configuration = configuration.Value;
+            _logger = logger;
         }
 
         #endregion Public Constructors
@@ -36,6 +38,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private readonly Configuration _configuration;
 
         private readonly RestfulClient _restfulClient;
+
+        private readonly ILogger<PersonsController> _logger;
 
         #endregion Private Fields
 
@@ -1040,6 +1044,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An exception occured while adding family relation to session.");
             }
 
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
