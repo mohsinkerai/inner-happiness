@@ -1025,7 +1025,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     Cycle = string.IsNullOrWhiteSpace(relativeCycle) ? cycle : cycleName,
                     Position = string.IsNullOrWhiteSpace(relativePosition) ? position : positionName,
                     Institution = string.IsNullOrWhiteSpace(relativeInstitution) ? institution : institutionName,
-                    VoluntaryCommunityServices = !string.IsNullOrWhiteSpace(personId)
+                    VoluntaryCommunityServices = string.IsNullOrWhiteSpace(personId)
                         ? null
                         : new List<VoluntaryCommunityModel>
                         {
