@@ -139,7 +139,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             DateTime? dt = null;
             try
             {
-                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MM-yyyy", null);
             }
             catch (Exception)
             {
@@ -922,6 +922,26 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             else
                 sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
 
+            DateTime? startDt = null;
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(employmentStartDate)) startDt = DateTime.ParseExact(employmentStartDate, "MM-yyyy", null);
+            }
+            catch (Exception)
+            {
+                startDt = Convert.ToDateTime(employmentStartDate);
+            }
+
+            DateTime? endDt = null;
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(employmentEndDate)) endDt = DateTime.ParseExact(employmentEndDate, "MM-yyyy", null);
+            }
+            catch (Exception)
+            {
+                endDt = Convert.ToDateTime(employmentEndDate);
+            }
+
             sessionEmploymentList.Add(new EmploymentModel
             {
                 EmploymentId = id,
@@ -934,18 +954,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 TypeOfBusinessName =
                     string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[1],
                 EmploymentEmailAddress = employmentEmailAddress,
-                EmploymentEndDate = string.IsNullOrWhiteSpace(employmentStartDate)
-                    ? (DateTime?) null
-                    : Convert.ToDateTime(employmentStartDate),
+                EmploymentEndDate = endDt,
                 NatureOfBusiness = string.IsNullOrWhiteSpace(natureOfBusiness)
                     ? string.Empty
                     : natureOfBusiness.Split('-')[0],
                 NatureOfBusinessName = string.IsNullOrWhiteSpace(natureOfBusiness)
                     ? string.Empty
                     : natureOfBusiness.Split('-')[1],
-                EmploymentStartDate = string.IsNullOrWhiteSpace(employmentStartDate)
-                    ? (DateTime?) null
-                    : Convert.ToDateTime(employmentEndDate),
+                EmploymentStartDate = startDt,
                 EmploymentTelephone = employmentTelephone,
                 NatureOfBusinessOther = natureOfBusinessOther
             });
@@ -1103,7 +1119,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             DateTime? dt = null;
             try
             {
-                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MM-yyyy", null);
             }
             catch (Exception)
             {

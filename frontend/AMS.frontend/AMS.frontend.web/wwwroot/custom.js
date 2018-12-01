@@ -118,7 +118,7 @@ function Initialize() {
             leftArrow: '<i class="la la-angle-left"></i>',
             rightArrow: '<i class="la la-angle-right"></i>'
         },
-        format: "MM-yyyy",
+        format: "mm-yyyy",
         startView: "years",
         minViewMode: "months",
         autoclose: true,
