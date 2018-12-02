@@ -62,7 +62,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         {
             get
             {
-                string format = "dd/MM/yyyy";
+                string format = "MM-yyyy";
                 string newDateFormat = "";
                 
                 var date = EmploymentStartDate.Equals(DateTime.MinValue) ? null : EmploymentStartDate.ToString();
@@ -80,7 +80,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         {
             get
             {
-                string format = "dd/MM/yyyy";
+                string format = "MM-yyyy";
                 string newDateFormat = null;
 
                 var date = EmploymentEndDate.Equals(DateTime.MinValue) ? null : EmploymentEndDate.ToString();

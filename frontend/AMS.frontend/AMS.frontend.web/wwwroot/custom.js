@@ -92,7 +92,7 @@ function Initialize() {
     });
     $(".date-picker").datepicker({
         todayHighlight: true,
-        format: "dd/mm/yyyy",
+
         //orientation: "bottom left",
         templates: {
             leftArrow: '<i class="la la-angle-left"></i>',
@@ -203,8 +203,8 @@ function EmploymentListEdit(id, nameOfOrganization, category, designation, locat
     $("#TypeOfBusiness").val(typeOfBusiness).trigger('change');
     $("#NatureOfBusiness").val(natureOfBusiness).trigger('change');
 	$("#NatureOfBusinessOther").val(natureOfBusinessOther).trigger('change');	
-	$("#EmploymentStartDate").val(moment(employmentStartDate).format("DD/MM/YYYY")).trigger('change');
-	$("#EmploymentEndDate").val(moment(employmentEndDate).format("DD/MM/YYYY")).trigger('change');
+	$("#EmploymentStartDate").val(moment(employmentStartDate).format("MM-YYYY")).trigger('change');
+	$("#EmploymentEndDate").val(moment(employmentEndDate).format("MM-YYYY")).trigger('change');
 	$("#employment-id").val(id);
 
 	if (endDateForDisplay == "") {
