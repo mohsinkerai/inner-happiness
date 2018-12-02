@@ -238,7 +238,7 @@ function ProfessionalTrainingListEdit(id, training, institution, country, month,
     $("#ProfessionalTrainingCountry").val(country).trigger('change');
     //$("#ProfessionalTrainingMonth").val(month).trigger('change');
     //$("#ProfessionalTrainingYear").val(year).trigger('change');
-    $("#ProfessionalTrainingDate").val(date).trigger('change');
+	$("#ProfessionalTrainingDate").val(moment(month).format("MM-YYYY")).trigger('change');
     $("#professional-training-id").val(id);
 
     $("#professional-training-row-" + id).addClass("m-datatable__row--hover");
@@ -249,7 +249,7 @@ function AkdnTrainingListEdit(id, training, country, month, year, date) {
     $("#AkdnTrainingCountry").val(country).trigger('change');
     //$("#AkdnTrainingMonth").val(month).trigger('change');
     //$("#AkdnTrainingYear").val(year).trigger('change');
-    $("#AkdnTrainingDate").val(date).trigger('change');
+	$("#AkdnTrainingDate").val(moment(date).format("MM-YYYY")).trigger('change');
     $("#akdn-training-id").val(id);
 
     $("#akdn-training-row-" + id).addClass("m-datatable__row--hover");

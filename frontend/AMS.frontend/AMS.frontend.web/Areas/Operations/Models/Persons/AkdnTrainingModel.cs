@@ -39,6 +39,24 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Year")]
         public int? Year { get; set; }
 
+        [JsonIgnore]
+        public string DateForDisplay
+        {
+            get
+            {
+                string format = "MM-yyyy";
+                string newDateFormat = null;
+
+                var date = Date.Equals(DateTime.MinValue) ? null : Date.ToString();
+                if (date != null && date != "")
+                {
+                    DateTime dateTime = (DateTime)Date;
+                    newDateFormat = dateTime.ToString(format);
+                }
+                return newDateFormat;
+            }
+        }
+
         #endregion Public Properties
     }
 }
