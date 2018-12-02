@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -107,7 +108,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ViewBag.Message = Messages.GeneralError;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
@@ -918,6 +919,19 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             else
                 sessionEmploymentList.Remove(sessionEmploymentList.Find(e => e.EmploymentId == id));
 
+            if (!string.IsNullOrWhiteSpace(employmentStartDate))
+            {
+                DateTime startDateTime = (DateTime)Convert.ToDateTime(employmentStartDate);
+                string start = startDateTime.ToString("dd/MM/yyyy");
+                employmentStartDate = start;
+            }
+            if (!string.IsNullOrWhiteSpace(employmentEndDate))
+            {
+                DateTime endDateTime = (DateTime)Convert.ToDateTime(employmentEndDate);
+                string end = endDateTime.ToString("dd/MM/yyyy");
+                employmentEndDate = end;
+            }
+            
             sessionEmploymentList.Add(new EmploymentModel
             {
                 EmploymentId = id,
@@ -930,9 +944,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 TypeOfBusinessName =
                     string.IsNullOrWhiteSpace(typeOfBusiness) ? string.Empty : typeOfBusiness.Split('-')[1],
                 EmploymentEmailAddress = employmentEmailAddress,
-                EmploymentEndDate = string.IsNullOrWhiteSpace(employmentStartDate)
+                EmploymentEndDate = string.IsNullOrWhiteSpace(employmentEndDate)
                     ? (DateTime?) null
-                    : Convert.ToDateTime(employmentStartDate),
+                    : Convert.ToDateTime(employmentEndDate),
                 NatureOfBusiness = string.IsNullOrWhiteSpace(natureOfBusiness)
                     ? string.Empty
                     : natureOfBusiness.Split('-')[0],
@@ -941,7 +955,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     : natureOfBusiness.Split('-')[1],
                 EmploymentStartDate = string.IsNullOrWhiteSpace(employmentStartDate)
                     ? (DateTime?) null
-                    : Convert.ToDateTime(employmentEndDate),
+                    : Convert.ToDateTime(employmentStartDate),
                 EmploymentTelephone = employmentTelephone,
                 NatureOfBusinessOther = natureOfBusinessOther
             });
@@ -1602,7 +1616,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         person.Employments = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList");
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                 }
 

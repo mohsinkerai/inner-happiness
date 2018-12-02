@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Newtonsoft.Json;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
@@ -55,6 +56,42 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string TypeOfBusiness { get; set; }
 
         public string TypeOfBusinessName { get; set; }
+
+        [JsonIgnore]
+        public string StartDateForDisplay
+        {
+            get
+            {
+                string format = "dd/MM/yyyy";
+                string newDateFormat = "";
+                
+                var date = EmploymentStartDate.Equals(DateTime.MinValue) ? null : EmploymentStartDate.ToString();
+                if (date != null && date != "") {
+                    DateTime dateTime = (DateTime) EmploymentStartDate;
+                    newDateFormat = dateTime.ToString(format);   
+                }
+
+                return newDateFormat;
+            }
+        }
+
+        [JsonIgnore]
+        public string EndDateForDisplay
+        {
+            get
+            {
+                string format = "dd/MM/yyyy";
+                string newDateFormat = null;
+
+                var date = EmploymentEndDate.Equals(DateTime.MinValue) ? null : EmploymentEndDate.ToString();
+                if (date != null && date != "")
+                {
+                    DateTime dateTime = (DateTime)EmploymentEndDate;
+                    newDateFormat = dateTime.ToString(format);
+                }
+                return newDateFormat;
+            }
+        }
 
         #endregion Public Properties
     }

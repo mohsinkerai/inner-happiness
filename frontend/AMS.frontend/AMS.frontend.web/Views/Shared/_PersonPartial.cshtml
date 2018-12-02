@@ -1038,6 +1038,21 @@
                                 <span asp-validation-for="EmploymentEndDate" class="form-control-feedback"></span>
                             </div>
                         </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label asp-for="IsContinued" class="control-label"></label>
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="">
+                                            <label class="m-checkbox m-checkbox--state m-checkbox--state-primary" style="vertical-align:bottom !important">
+                                                <input asp-for="IsContinued" type="checkbox">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <input type="hidden" id="employment-id" />
                         <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
                             <button type="button" class="btn btn-warning" onclick='return EmploymentListAdd("@Url.Action(ActionNames.EmploymentListAdd, ControllerNames.Persons, new {area = AreaNames.Operations})", "@Url.Action("ReorderEmployment", ControllerNames.Persons, new {area = AreaNames.Operations})");'>

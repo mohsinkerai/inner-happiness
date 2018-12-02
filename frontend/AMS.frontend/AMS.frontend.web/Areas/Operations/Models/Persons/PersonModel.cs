@@ -428,7 +428,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] public string Write { get; set; }
 
-        [Display(Name = "Continued")]
+        [Display(Name = "Is Continued")]
         [JsonIgnore]
         public bool IsContinued { get; set; }
         #endregion Public Properties

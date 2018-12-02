@@ -96,7 +96,8 @@ function Initialize() {
         templates: {
             leftArrow: '<i class="la la-angle-left"></i>',
             rightArrow: '<i class="la la-angle-right"></i>'
-        },
+		},
+		format: "dd/mm/yyyy",
         autoclose: true
     });
 
@@ -191,7 +192,7 @@ function LanguageListEdit(id, language, read, write, speak) {
     $("#language-row-" + id).addClass("m-datatable__row--hover");
 }
 
-function EmploymentListEdit(id, nameOfOrganization, category, designation, location, employmentEmailAddress, employmentTelephone, typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate) {
+function EmploymentListEdit(id, nameOfOrganization, category, designation, location, employmentEmailAddress, employmentTelephone, typeOfBusiness, natureOfBusiness, natureOfBusinessOther, employmentStartDate, employmentEndDate, endDateForDisplay) {
     $("#NameOfOrganization").val(nameOfOrganization).trigger('change');
     $("#EmploymentCategory").val(category).trigger('change');
     $("#Designation").val(designation).trigger('change');
@@ -200,10 +201,18 @@ function EmploymentListEdit(id, nameOfOrganization, category, designation, locat
     $("#EmploymentTelephone").val(employmentTelephone).trigger('change');
     $("#TypeOfBusiness").val(typeOfBusiness).trigger('change');
     $("#NatureOfBusiness").val(natureOfBusiness).trigger('change');
-    $("#NatureOfBusinessOther").val(natureOfBusinessOther).trigger('change');
-    $("#EmploymentStartDate").val(employmentStartDate).trigger('change');
-    $("#EmploymentEndDate").val(employmentEndDate).trigger('change');
-    $("#employment-id").val(id);
+	$("#NatureOfBusinessOther").val(natureOfBusinessOther).trigger('change');	
+	$("#EmploymentStartDate").val(moment(employmentStartDate).format("DD/MM/YYYY")).trigger('change');
+	$("#EmploymentEndDate").val(moment(employmentEndDate).format("DD/MM/YYYY")).trigger('change');
+	$("#employment-id").val(id);
+
+	if (endDateForDisplay == "") {
+		$("#IsContinued").prop("checked", true);
+		$("#EmploymentEndDate").prop("disabled", true);
+	} else {
+		$("#IsContinued").prop("checked", false);
+		$("#EmploymentEndDate").prop("disabled", false);
+	}
 
     $("#employment-row-" + id).addClass("m-datatable__row--hover");
 }
@@ -217,8 +226,8 @@ function FamilyInformationListEdit(id, relativeCnic, relativeSalutation, relativ
     $("#RelativeJamatiTitle").val(relativeJamatiTitle).trigger('change');
     $("#RelativeDateOfBirth").val(relativeDateOfBirth).trigger('change');
     $("#RelativeRelation").val(relativeRelation).trigger('change');
-    $("#family-information-id").val(id);
-
+	$("#family-information-id").val(id);
+	
     $("#family-relation-row-" + id).addClass("m-datatable__row--hover");
 }
 
@@ -794,7 +803,7 @@ function EducationListAdd(url, reOrderUrl) {
         var institution = $("#Institution").val();
         var countryOfStudy = $("#CountryOfStudy").val();
         var fromYear = $("#FromYear").val();
-        var toYear = $("#FromYear").val();
+		var toYear = $("#ToYear").val();
         var nameOfDegree = $("#NameOfDegree").val();
         var majorAreaOfStudy = $("#MajorAreaOfStudy").val();
         if (IsEmpty(educationId) &&
@@ -857,7 +866,14 @@ function EmploymentListAdd(url, reOrderUrl) {
         var nature = $("#NatureOfBusiness").val();
         var other = $("#NatureOfBusinessOther").val();
         var start = $("#EmploymentStartDate").val();
-        var end = $("#EmploymentEndDate").val();
+		var end = $("#EmploymentEndDate").val();
+
+		var isContine = document.getElementById("IsContinued").checked
+
+		if (isContine) {
+			end = null;
+		}
+
         if (IsEmpty(id) &&
             IsEmpty(name) &&
             IsEmpty(category) &&

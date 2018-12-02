@@ -129,6 +129,14 @@
                     $("#RelocationDateTime").prop("disabled", true);
                 }
             });
+            
+            $("#IsContinued").change(function () {
+                if (this.checked) {
+                    $("#EmploymentEndDate").prop("disabled", true);
+                } else {
+                    $("#EmploymentEndDate").prop("disabled", false);
+                }
+            });
 
             $(".is-imamat-appointee").change(function () {
                 if ($(".is-imamat-appointee")[0].checked) {
