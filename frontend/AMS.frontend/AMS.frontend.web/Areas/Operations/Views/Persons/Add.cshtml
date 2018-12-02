@@ -75,6 +75,12 @@
                         $("#RelativeCnic").inputmask({
                             "mask": "99999-9999999-9"
                         });
+                        $("#RelativeCnic").keypress(function (event) {
+                            if (event.keyCode == 13) {
+                                event.preventDefault();
+                                return false;
+                            }
+                        });
                         $(".relative-cnic").blur(function() {
                             var cnic = $(".relative-cnic").val();
                             $.ajax({
@@ -104,6 +110,12 @@
                                     }
                                     $("#RelativeCnic").inputmask({
                                         "mask": "99999-9999999-9"
+                                    });
+                                    $("#RelativeCnic").keypress(function (event) {
+                                        if (event.keyCode == 13) {
+                                            event.preventDefault();
+                                            return false;
+                                        }
                                     });
                                 }
                             });
@@ -163,8 +175,39 @@
                 "mask": "99999-9999999-9"
             });
 
+            $("#DateOfBirth").inputmask({
+                "mask": "99/99/9999"
+            });
+
+            $("#RelativeDateOfBirth").inputmask({
+                "mask": "99/99/9999"
+            });
+
+            $("#AkdnTrainingDate").inputmask({
+                "mask": "99-9999"
+            });
+
+            $("#ProfessionalTrainingDate").inputmask({
+                "mask": "99-9999"
+            });
+
+            $("#EmploymentStartDate").inputmask({
+                "mask": "99-9999"
+            });
+
+            $("#EmploymentEndDate").inputmask({
+                "mask": "99-9999"
+            });
+
             $("#RelativeCnic").inputmask({
                 "mask": "99999-9999999-9"
+            });
+
+            $("#RelativeCnic").keypress(function(event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
             });
 
             $(".highest-level-select").change(function () {

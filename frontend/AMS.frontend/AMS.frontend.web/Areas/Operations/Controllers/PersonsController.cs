@@ -12,6 +12,7 @@ using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
@@ -21,9 +22,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         #region Public Constructors
 
-        public PersonsController(IOptions<Configuration> configuration)
+        public PersonsController(IOptions<Configuration> configuration, ILogger<PersonsController> logger)
         {
             _configuration = configuration.Value;
+            _logger = logger;
         }
 
         #endregion Public Constructors
@@ -37,6 +39,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private readonly Configuration _configuration;
 
         private readonly RestfulClient _restfulClient;
+
+        private readonly ILogger<PersonsController> _logger;
 
         #endregion Private Fields
 
@@ -68,11 +72,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
 
                 if (!string.IsNullOrWhiteSpace(formCollection["RelocationDateTime"]))
+                {
                     model.RelocationDateTime =
-                        DateTime.ParseExact(formCollection["RelocationDateTime"], "MM/dd/yyyy", null);
+                        DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                    ModelState.Remove("RelocationDateTime");
+                }
 
                 if (!string.IsNullOrWhiteSpace(formCollection["DateOfBirth"]))
-                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "MM/dd/yyyy", null);
+                {
+                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
+                    ModelState.Remove("DateOfBirth");
+                }
 
                 if (ModelState.IsValid)
                 {
@@ -136,7 +146,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             DateTime? dt = null;
             try
             {
-                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MM-yyyy", null);
             }
             catch (Exception)
             {
@@ -310,11 +320,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
                 if (!string.IsNullOrWhiteSpace(formCollection["RelocationDateTime"]))
+                {
                     model.RelocationDateTime =
-                        DateTime.ParseExact(formCollection["RelocationDateTime"], "MM/dd/yyyy", null);
+                        DateTime.ParseExact(formCollection["RelocationDateTime"], "dd/MM/yyyy", null);
+                    ModelState.Remove("RelocationDateTime");
+                }
 
                 if (!string.IsNullOrWhiteSpace(formCollection["DateOfBirth"]))
-                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "MM/dd/yyyy", null);
+                {
+                    model.DateOfBirth = DateTime.ParseExact(formCollection["DateOfBirth"], "dd/MM/yyyy", null);
+                    ModelState.Remove("DateOfBirth");
+                }
 
                 if (ModelState.IsValid)
                 {
@@ -1019,7 +1035,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     FamilyRelationId = id,
                     Cnic = relativeCnic,
-                    DateOfBirth = Convert.ToDateTime(relativeDateOfBirth),
+                    DateOfBirth = DateTime.ParseExact(relativeDateOfBirth, "dd/MM/yyyy", null),
                     FathersName = relativeFathersName,
                     FirstName = relativeFirstName,
                     RelationName = string.IsNullOrWhiteSpace(relativeRelation)
@@ -1035,7 +1051,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     Cycle = string.IsNullOrWhiteSpace(relativeCycle) ? cycle : cycleName,
                     Position = string.IsNullOrWhiteSpace(relativePosition) ? position : positionName,
                     Institution = string.IsNullOrWhiteSpace(relativeInstitution) ? institution : institutionName,
-                    VoluntaryCommunityServices = !string.IsNullOrWhiteSpace(personId)
+                    VoluntaryCommunityServices = string.IsNullOrWhiteSpace(personId) ||
+                                                 string.IsNullOrWhiteSpace(relativeInstitution) ||
+                                                 string.IsNullOrWhiteSpace(relativePosition) ||
+                                                 string.IsNullOrWhiteSpace(cycleName)
                         ? null
                         : new List<VoluntaryCommunityModel>
                         {
@@ -1054,6 +1073,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An exception occured while adding family relation to session.");
             }
 
             HttpContext.Session.Set("FamilyRelationList", sessionFamilyRelationList);
@@ -1109,7 +1129,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             DateTime? dt = null;
             try
             {
-                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MMMM-yyyy", null);
+                if (!string.IsNullOrWhiteSpace(date)) dt = DateTime.ParseExact(date, "MM-yyyy", null);
             }
             catch (Exception)
             {
