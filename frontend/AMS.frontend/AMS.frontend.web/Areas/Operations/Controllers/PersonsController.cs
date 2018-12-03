@@ -1850,6 +1850,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.Set("VoluntaryPublicList", new List<VoluntaryPublicModel>());
             HttpContext.Session.Set("EmploymentList", new List<EmploymentModel>());
             HttpContext.Session.Set("FamilyRelationList", new List<FamilyRelationModel>());
+            HttpContext.Session.Set("Image", string.Empty);
         }
 
         private void RestoreSessionDataToModel(PersonModel model)

@@ -308,6 +308,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Cycle")] [JsonIgnore] public string RelativeCycle { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Date of Birth")] public DateTime? RelativeDateOfBirth { get; set; }
         [Display(Name = "Last Name")] public string RelativeFamilyName { get; set; }
         [Display(Name = "Father Name")] public string RelativeFathersName { get; set; }
