@@ -1681,7 +1681,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             await AddFamilyRelationToSession(relation.FamilyRelationId, relation.Cnic,
                                 relation.Salutation,
                                 relation.FirstName, relation.FathersName,
-                                relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString(),
+                                relation.FamilyName, relation.JamatiTitle, relation.DateOfBirth.ToString("dd/MM/yyyy"),
                                 relation.Relation + "-" + relation.RelationName, relation.Id, relation.Position,
                                 relation.Cycle, relation.Institution);
                         }
