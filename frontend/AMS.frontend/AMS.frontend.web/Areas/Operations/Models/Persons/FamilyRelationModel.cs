@@ -18,6 +18,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonProperty(PropertyName = "dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 
+        [JsonIgnore]
+        public string DateOfBirthForDisplay => DateOfBirth.ToString("dd/MM/yyyy");
+
         [JsonProperty(PropertyName = "familyName")]
         public string FamilyName { get; set; }
 
