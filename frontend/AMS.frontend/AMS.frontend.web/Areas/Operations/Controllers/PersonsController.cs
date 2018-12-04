@@ -702,6 +702,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         n.Id,
                         n.FullName,
                         n.Cnic,
+                        n.DateOfBirthForDisplay,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
                             new {area = AreaNames.Operations, id = n.Id}),
                         EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,

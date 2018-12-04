@@ -1743,10 +1743,12 @@ function InitializePersonDataTable(id, title, url, personUrl) {
         }, {
             data: "cnic"
         }, {
+            data: "dateOfBirthForDisplay"
+        }, {
             data: "Actions"
         }],
         columnDefs: [{
-            targets: 3,
+            targets: 4,
             title: "Actions",
             orderable: false,
             render: function (a, e, t, n) {

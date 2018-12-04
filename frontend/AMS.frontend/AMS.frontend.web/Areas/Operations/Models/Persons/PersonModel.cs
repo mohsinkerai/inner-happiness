@@ -91,6 +91,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DateOfBirth { get; set; }
 
+        [JsonIgnore]
+        public string DateOfBirthForDisplay => DateOfBirth?.ToString("dd/MM/yyyy");
+
         [JsonIgnore] public string Designation { get; set; }
 
         [JsonProperty(PropertyName = "educations")]
