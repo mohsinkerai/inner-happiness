@@ -59,7 +59,7 @@ namespace AMS.frontend.web.Controllers
                         Response.Cookies.Delete(CookieNames.CustomerName);
                     }
 
-                    return RedirectToAction(ActionNames.Index, ControllerNames.Home);
+                    return RedirectToAction(ActionNames.Add, ControllerNames.Persons, new { area = AreaNames.Operations});
                 }
 
                 ViewBag.MessageType = MessageTypes.Error;
