@@ -22,12 +22,12 @@ public class ReducedPersonDto extends BaseDto {
   public Long id;
   public String cnic;
   public LocalDate dateOfBirth;
-  public long salutation;
+  public Long salutation;
   public String firstName;
   public String fathersName;
   public String familyName;
   public Long jamatiTitle;
-  public long relation;
+  public Long relation;
   public List<VoluntaryCommunityServiceDto> voluntaryCommunityServices;
 
   @JsonIgnore
