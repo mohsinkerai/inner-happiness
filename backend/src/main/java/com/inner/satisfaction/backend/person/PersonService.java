@@ -106,7 +106,7 @@ public class PersonService extends BaseService<Person> {
       .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(
         name, formNo, educationalInstitutionId, educationalDegreeId, educatioanlAreaOfStudyId,
         jamatiTitleId, cnic, pageable);
-    return persons.map(person -> runProcessor(person));
+    return persons;
   }
 
   public List<Person> findByIdOrCnic(
