@@ -1,7 +1,7 @@
 ﻿@using AMS.frontend.web.Areas.Operations.Models
 @using AMS.frontend.web.Extensions
 @using Microsoft.AspNetCore.Http
-@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@*@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet*@
 @{
     ViewBag.Title = "Appointment Management System";
     ViewBag.DesktopHeader = "Appointment Management System";
@@ -64,7 +64,7 @@ License: You must have a valid license purchased only from themeforest(the above
     @RenderSection("styles", false)
     <!--begin::Custom Styles -->
     <link rel="shortcut icon" href="~/favicon.ico" />
-    @Html.Raw(JavaScriptSnippet.FullScript)
+    @*@Html.Raw(JavaScriptSnippet.FullScript)*@
 </head>
 <!-- end::Head -->
 <!-- end::Body -->

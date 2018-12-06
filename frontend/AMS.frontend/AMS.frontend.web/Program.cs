@@ -16,7 +16,7 @@ namespace AMS.frontend.web
         {
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseApplicationInsights()
+                //.UseApplicationInsights()
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();

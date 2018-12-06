@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <ApplicationInsightsResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourcegroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsResourceId>
-    <ApplicationInsightsAnnotationResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourceGroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsAnnotationResourceId>
+    <!--<ApplicationInsightsResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourcegroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsResourceId>-->
+    <!--<ApplicationInsightsAnnotationResourceId>/subscriptions/0701cfd9-a853-40d4-84f9-2beca88a46ec/resourceGroups/jamat/providers/microsoft.insights/components/amssandbox</ApplicationInsightsAnnotationResourceId>-->
     <UserSecretsId>393a4026-082c-4368-9c37-82f152cd6e45</UserSecretsId>
     <LangVersion>default</LangVersion>
   </PropertyGroup>
@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.7.0" />
@@ -32,6 +31,7 @@
     <Folder Include="Areas\Administration\Views\" />
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Areas\Administration\Controllers\" />
+    <Folder Include="Connected Services\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 

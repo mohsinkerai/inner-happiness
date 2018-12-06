@@ -30,3 +30,4 @@ app.log*
 /frontend/AMS.frontend/ImageConversionUtility/obj
 /frontend/AMS.frontend/ImageConversionUtility/bin/Debug/netcoreapp2.1
 /frontend/AMS.frontend/ImageConversionUtility/bin/Release/netcoreapp2.1
+/frontend/AMS.frontend/.vs/AMS.frontend/v16/.suo
