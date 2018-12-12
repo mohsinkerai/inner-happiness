@@ -2,6 +2,7 @@ package com.inner.satisfaction.backend.person;
 
 import com.inner.satisfaction.backend.base.BaseService;
 import com.inner.satisfaction.backend.person.lookup.base.BaseM2MProcessingService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -106,6 +107,24 @@ public class PersonService extends BaseService<Person> {
       .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(
         name, formNo, educationalInstitutionId, educationalDegreeId, educatioanlAreaOfStudyId,
         jamatiTitleId, cnic, pageable);
+    return persons;
+  }
+
+  public Page<Person> findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitleAndDateOfBirth(
+    String name,
+    String cnic,
+    Long formNo,
+    Long educationalInstitutionId,
+    Long educationalDegreeId,
+    Long educatioanlAreaOfStudyId,
+    Long jamatiTitleId,
+    LocalDate dateOfBirth,
+    Pageable pageable
+  ) {
+    Page<Person> persons = personRepository
+      .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitleAndDob(
+        name, formNo, educationalInstitutionId, educationalDegreeId, educatioanlAreaOfStudyId,
+        jamatiTitleId, cnic, dateOfBirth, pageable);
     return persons;
   }
 
