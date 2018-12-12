@@ -167,7 +167,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     await new RestfulClient(
                             HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                         .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
-                            string.Empty, string.Empty, 1, 10);
+                            string.Empty, string.Empty, 1, 10, string.Empty);
                 var persons = personTuple.Item1.Select(p => new {Name = $"{p.Id}-{p.FullName}"})
                     .Select(p => p.Name);
 
