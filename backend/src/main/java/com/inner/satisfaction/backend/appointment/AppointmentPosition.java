@@ -2,6 +2,7 @@ package com.inner.satisfaction.backend.appointment;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseEntity;
+import java.sql.Timestamp;
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,4 +25,12 @@ public class AppointmentPosition extends BaseEntity{
   private boolean isMowlaAppointee;
   private boolean isActive;
   private Integer rank;
+
+  private Timestamp from;
+  private Timestamp to;
+
+  // There exist 3 State
+  // CREATED, APPOINTED, RETIRED
+  // It is one way Created -> Appointed -> Retired
+  private String state;
 }
