@@ -32,4 +32,9 @@ public class Cycle extends BaseEntity {
 
   // If mid-term cycle, this would be populated
   private Long parentCycle;
+
+  // Cycle State OPENED, APPOINTED, MIDTERM, CLOSE
+  // OPENED -> APPOINTED -> ClOSE
+  // OPENED -> APPOINTED -> MIDTERM -> APPOINTED -> ClOSE
+  private String state;
 }
