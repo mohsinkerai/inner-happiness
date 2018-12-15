@@ -1,5 +1,7 @@
 package com.inner.satisfaction.backend.cycle;
 
+import static com.inner.satisfaction.backend.cycle.CycleState.OPENED;
+
 import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
 import com.inner.satisfaction.backend.base.BaseEntity;
@@ -47,6 +49,7 @@ public class CycleService extends BaseService<Cycle> {
     Cycle one = findOne(cycleRequestDto.getPreviousCycleId());
     Assert.notNull(one, "Invalid Previous Cycle Given");
 
+    cycleRequestDto.getCycleDetails().setState(OPENED);
     Cycle savedCycle = save(cycleRequestDto.getCycleDetails());
     List<AppointmentPosition> newPositions = appointmentPositionService
       .findByCycleId(cycleRequestDto.getPreviousCycleId())

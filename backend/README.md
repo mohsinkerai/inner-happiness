@@ -18,11 +18,12 @@ Cycle will work like
 Open -> Appointed -> Closed
 Open -> Appointed -> Midterm -> Appointed -> Closed
 Open -> Appointed -> Midterm -> Canceled -> Closed
+Open -> Cancelled.
 
 AppointmentPosition Work Like this
 Open -> Appointed -> Retired
 
-## Things todo:
+## Things TODO:
 * You Can't Nominate/Recommend Anyone if Position is Appointed
 * You Can't Move Cycle State to Appointed until and unless all positions in that cycle have one recommendation
   * In this process, you also need to mark those recommended position to appointed
@@ -30,4 +31,5 @@ Open -> Appointed -> Retired
   * Cycle should be in appointed state
   * You need to specify re-appointment positions with year served upfront.
   * You should be able to add more positions during midterm phase.
-* A Midterm Appointed can be cancelled too.
+* A Midterm Appointment can be cancelled too.
+* A Normal Cycle Appointment can be cancelled too.

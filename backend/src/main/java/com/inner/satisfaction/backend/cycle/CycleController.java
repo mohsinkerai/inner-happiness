@@ -40,6 +40,19 @@ public class CycleController extends BaseController<Cycle> {
     cycleService.openCycle(cycleRequestDto);
   }
 
+  @RequestMapping(method = RequestMethod.POST, value = "appoint")
+  public void appoint(@RequestBody long cycleId) {
+    // Move this cycle to appointed state, appoint every member that is recommended, throw error if this cannot be done.
+    // This can happen from either open state or from midterm state
+    cycleFacade.appointInCycle(cycleId);
+  }
+
+  @RequestMapping(method = RequestMethod.POST, value = "midterm")
+  public void midterm(@RequestBody long cycleId) {
+    // Move this cycle to midterm state, if and only if cycle is in appointed state
+    cycleFacade.openMidtermAppointment(cycleId);
+  }
+
   @Override
   public Cycle save(Cycle cycle) {
     throw new RuntimeException(
