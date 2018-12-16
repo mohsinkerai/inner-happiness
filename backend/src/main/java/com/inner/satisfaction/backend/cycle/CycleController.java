@@ -31,8 +31,8 @@ public class CycleController extends BaseController<Cycle> {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "close")
-  public void close(@RequestBody long cycleId) {
-    cycleService.closeCycle(cycleId);
+  public void close(@RequestBody CycleCloseRequestDto cycleCloseRequestDto) {
+    cycleFacade.closeCycle(cycleCloseRequestDto.getCycleId(), cycleCloseRequestDto.getEndingDate());
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "create")

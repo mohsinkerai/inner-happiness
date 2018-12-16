@@ -4,7 +4,18 @@ import static com.inner.satisfaction.backend.cycle.CycleState.APPOINTED;
 import static com.inner.satisfaction.backend.cycle.CycleState.MIDTERM;
 import static com.inner.satisfaction.backend.cycle.CycleState.OPENED;
 
+import com.inner.satisfaction.backend.appointment.AppointmentPosition;
+import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
+import com.inner.satisfaction.backend.appointment.AppointmentPositionState;
+import com.inner.satisfaction.backend.base.BaseEntity;
+import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
+import com.inner.satisfaction.backend.person.appointment.PersonAppointmentService;
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -12,9 +23,15 @@ import org.springframework.util.Assert;
 public class CycleFacade {
 
   private final CycleService cycleService;
+  private final PersonAppointmentService personAppointmentService;
+  private final AppointmentPositionService appointmentPositionService;
 
-  public CycleFacade(CycleService cycleService) {
+  public CycleFacade(CycleService cycleService,
+    PersonAppointmentService personAppointmentService,
+    AppointmentPositionService appointmentPositionService) {
     this.cycleService = cycleService;
+    this.personAppointmentService = personAppointmentService;
+    this.appointmentPositionService = appointmentPositionService;
   }
 
   public CycleSummaryDto getCycleSummary(long cycleId) {
@@ -25,6 +42,7 @@ public class CycleFacade {
       .build();
   }
 
+  @Transactional
   public void openMidtermAppointment(long cycleId) {
     Cycle cycle = cycleService.findOne(cycleId);
     if (cycle.getState() == null) {
@@ -38,6 +56,7 @@ public class CycleFacade {
     cycleService.save(cycle);
   }
 
+  @Transactional
   public void appointInCycle(long cycleId) {
     Cycle cycle = cycleService.findOne(cycleId);
     Assert.notNull(cycle, "Invalid Cycle Id Provided");
@@ -45,10 +64,31 @@ public class CycleFacade {
       cycle.setState(CycleState.OPENED);
       cycleService.save(cycle);
     }
-    if (cycle.getState() == OPENED || cycle.getState() == MIDTERM) {
 
-      // Mark PersonAppointed as Appointed
-      // Mark Mark AppointmentPosition as Appointed
+    if (cycle.getState() == OPENED || cycle.getState() == MIDTERM) {
+      List<AppointmentPosition> appointmentPositions = appointmentPositionService
+        .fetchActiveAppointmentsForCycle(cycle.getId());
+      // Some other checks should be there that if all positions are recommended or not.
+
+      List<Long> appointmentPositionIds = appointmentPositions.stream()
+        .filter(
+          appointmentPosition -> appointmentPosition.getState() == AppointmentPositionState.CREATED)
+        .map(BaseEntity::getId)
+        .collect(Collectors.toList());
+
+      int recommendedPersons = personAppointmentService
+        .findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
+
+      if (appointmentPositions.size() > recommendedPersons) {
+        throw new RuntimeException("Recommendations are less than positions");
+      }
+
+      appointmentPositionIds.stream().forEach(personAppointmentService::appointRecommendedPeople);
+      appointmentPositions.stream()
+        .filter(
+          appointmentPosition -> appointmentPosition.getState() == AppointmentPositionState.CREATED)
+        .map(this::changeAppointmentPositionStateToAppointed)
+        .forEach(appointmentPositionService::save);
 
       // Change State of Cycle
       cycle.setState(CycleState.APPOINTED);
@@ -56,5 +96,24 @@ public class CycleFacade {
       throw new RuntimeException("Lala, Midterm nahi khul sakta, state invalid error");
     }
     cycleService.save(cycle);
+  }
+
+  @Transactional
+  public void closeCycle(long cycleId, Timestamp endDate) {
+    Cycle cycle = cycleService.findOne(cycleId);
+    Assert.notNull(cycle, "Invalid Cycle Id Provided");
+
+    if(cycle.getState() != CycleState.APPOINTED) {
+      throw new RuntimeException("Invalid cycle state, should be appointed before close");
+    }
+
+    cycle.setState(CycleState.CLOSED);
+    cycleService.save(cycle);
+  }
+
+  private AppointmentPosition changeAppointmentPositionStateToAppointed(
+    AppointmentPosition appointmentPosition) {
+    appointmentPosition.setState(AppointmentPositionState.APPOINTED);
+    return appointmentPosition;
   }
 }

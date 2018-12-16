@@ -22,4 +22,11 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
   @Modifying
   @Query("UPDATE person_appointment p SET p.isAppointed = true WHERE p.isRecommended=true AND p.appointmentPositionId IN :appointmentPositionId")
   void appointRecommendedPeople(List<Long> appointmentPositionId);
+
+  @Modifying
+  @Query("UPDATE person_appointment p SET p.isAppointed = true WHERE p.isRecommended=true AND p.appointmentPositionId = :appointmentPositionId")
+  void appointRecommendedPeople(Long appointmentPositionId);
+
+  @Query("SELECT count(pa) FROM PersonAppointment pa WHERE pa.appointmentPositionId in :appointmentPositionIds and pa.isRecommended = true")
+  int findRecommendedCountInAppointmentPositionIds(List<Long> appointmentPositionIds);
 }

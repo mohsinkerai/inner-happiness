@@ -25,4 +25,6 @@ public interface AppointmentPositionRepository extends BaseRepository<Appointmen
 
   @Query(nativeQuery =  true, value = AppointmentPositionRepository.searchQuery)
   List<AppointmentPosition> findByCycleIdAndPersonIdAndRecommendedTrue(long cycleId, long personId);
+
+  List<AppointmentPosition> findByCycleIdAndState(Long id, String state);
 }
