@@ -103,9 +103,16 @@ public class CycleFacade {
     Cycle cycle = cycleService.findOne(cycleId);
     Assert.notNull(cycle, "Invalid Cycle Id Provided");
 
-    if(cycle.getState() != CycleState.APPOINTED) {
+    if (cycle.getState() != CycleState.APPOINTED) {
       throw new RuntimeException("Invalid cycle state, should be appointed before close");
     }
+
+    List<AppointmentPosition> appointmentPositions = appointmentPositionService
+      .fetchActiveAppointmentsForCycle(cycle.getId());
+    appointmentPositions.stream().map(ap -> {
+      ap.setTo(endDate);
+      return ap;
+    }).forEach(appointmentPositionService::save);
 
     cycle.setState(CycleState.CLOSED);
     cycleService.save(cycle);

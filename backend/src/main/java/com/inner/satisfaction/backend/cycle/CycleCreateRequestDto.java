@@ -2,6 +2,7 @@ package com.inner.satisfaction.backend.cycle;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseDto;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +18,5 @@ public class CycleCreateRequestDto extends BaseDto {
 
   private Cycle cycleDetails;
   private long previousCycleId;
+  private Timestamp startDate;
 }
