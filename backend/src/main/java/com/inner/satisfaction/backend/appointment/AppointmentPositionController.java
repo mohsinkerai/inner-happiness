@@ -5,6 +5,7 @@ import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 import com.inner.satisfaction.backend.base.BaseController;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,14 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppointmentPositionController extends BaseController<AppointmentPosition> {
 
   private final AppointmentPositionFacade appointmentPositionFacade;
-  private final AppointmentPositionService appointmentPositionService;
 
   public AppointmentPositionController(
-    AppointmentPositionFacade appointmentPositionFacade,
-    AppointmentPositionService appointmentPositionService) {
+    AppointmentPositionService appointmentPositionService,
+    AppointmentPositionFacade appointmentPositionFacade) {
     super(appointmentPositionService);
     this.appointmentPositionFacade = appointmentPositionFacade;
-    this.appointmentPositionService = appointmentPositionService;
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -50,5 +49,11 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
     @RequestParam("positionId") long positionId,
     @RequestParam("seatNo") long seatNo) {
     return appointmentPositionFacade.findByCycleIdAndInstitutionIdPositionIdAndSeatNo(cycleId, institutionId, positionId, seatNo);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/midterm", method = RequestMethod.POST)
+  public List<AppointmentPosition> introduceMidtermPosition(@RequestBody MidtermPositionCreateRequestDto requestDto) {
+    return appointmentPositionFacade.createMidtermPosition(requestDto);
   }
 }

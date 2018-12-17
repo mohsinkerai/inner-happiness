@@ -1,5 +1,6 @@
 package com.inner.satisfaction.backend.appointment;
 
+import com.google.common.collect.Lists;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.institution.InstitutionService;
 import com.inner.satisfaction.backend.person.PersonService;
@@ -7,6 +8,7 @@ import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointmentDto;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointmentService;
 import com.inner.satisfaction.backend.position.PositionService;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
@@ -109,5 +111,14 @@ public class AppointmentPositionFacade {
       .position(positionService.findOne(appointmentPosition.getPositionId()))
       .seatNo(appointmentPosition.getSeatNo())
       .build();
+  }
+
+  public List<AppointmentPosition> createMidtermPosition(MidtermPositionCreateRequestDto requestDto) {
+    Timestamp startdate = requestDto.getMidtermPositionStartdate();
+
+    // Retire Old Positions.
+    // Create new positions of same thing
+    // Return its value
+    return Lists.newArrayList();
   }
 }
