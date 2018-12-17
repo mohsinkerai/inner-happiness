@@ -8,6 +8,7 @@
         public const string Dashboard = "Dashboard";
         public const string Nominations = "Nominations";
         public const string Persons = "Persons";
+        public const string AreaOfStudies = "AreaOfStudies";
 
         #endregion Public Fields
     }

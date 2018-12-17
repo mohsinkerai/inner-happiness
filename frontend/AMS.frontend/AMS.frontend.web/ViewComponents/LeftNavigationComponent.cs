@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AMS.frontend.web.Areas.Operations.Models;
+﻿using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AMS.frontend.web.Models.Navigation;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AMS.frontend.web.ViewComponents
 {
@@ -15,13 +15,14 @@ namespace AMS.frontend.web.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var authReponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
-            var menuModel = new List<MenuModel>();
+            AuthenticationResponse authReponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+            List<MenuModel> menuModel = new List<MenuModel>();
 
-            foreach (var role in authReponse.Roles)
+            foreach (string role in authReponse.Roles)
             {
 
                 if (role == "DB" && menuModel.All(mm => mm.MenuId != 1))
+                {
                     menuModel.Add(new MenuModel
                     {
                         MenuId = 1,
@@ -32,8 +33,10 @@ namespace AMS.frontend.web.ViewComponents
                         Area = AreaNames.Blank,
                         ImageClass = "flaticon-analytics"
                     });
+                }
 
                 if (role == "PIF" && menuModel.All(mm => mm.MenuId != 2))
+                {
                     menuModel.Add(new MenuModel
                     {
                         MenuId = 2,
@@ -44,8 +47,10 @@ namespace AMS.frontend.web.ViewComponents
                         Area = AreaNames.Operations,
                         ImageClass = "flaticon-information"
                     });
+                }
 
                 if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 3))
+                {
                     menuModel.Add(new MenuModel
                     {
                         MenuId = 3,
@@ -56,6 +61,29 @@ namespace AMS.frontend.web.ViewComponents
                         Area = AreaNames.Operations,
                         ImageClass = "flaticon-network"
                     });
+
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 4,
+                        Action = string.Empty,
+                        Controller = string.Empty,
+                        SubMenu = new List<MenuModel> {
+                            new MenuModel
+                            {
+                                MenuId = 5,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.AreaOfStudies,
+                                SubMenu = null,
+                                Title = "Area of Study",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            }
+                        },
+                        Title = "Master Data",
+                        Area = string.Empty,
+                        ImageClass = "flaticon-network"
+                    });
+                }
             }
 
             return View(menuModel);
