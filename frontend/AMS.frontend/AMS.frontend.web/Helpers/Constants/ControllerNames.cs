@@ -5,7 +5,7 @@
         #region Public Fields
 
         public const string Authenticate = "Authenticate";
-        public const string Home = "Home";
+        public const string Dashboard = "Dashboard";
         public const string Nominations = "Nominations";
         public const string Persons = "Persons";
 

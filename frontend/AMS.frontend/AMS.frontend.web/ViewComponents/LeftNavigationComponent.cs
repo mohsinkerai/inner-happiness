@@ -20,10 +20,23 @@ namespace AMS.frontend.web.ViewComponents
 
             foreach (var role in authReponse.Roles)
             {
-                if (role == "PIF" && menuModel.All(mm => mm.MenuId != 1))
+
+                if (role == "DB" && menuModel.All(mm => mm.MenuId != 1))
                     menuModel.Add(new MenuModel
                     {
                         MenuId = 1,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Dashboard,
+                        SubMenu = null,
+                        Title = "Dashboard",
+                        Area = AreaNames.Blank,
+                        ImageClass = "flaticon-analytics"
+                    });
+
+                if (role == "PIF" && menuModel.All(mm => mm.MenuId != 2))
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 2,
                         Action = ActionNames.Index,
                         Controller = ControllerNames.Persons,
                         SubMenu = null,
@@ -32,10 +45,10 @@ namespace AMS.frontend.web.ViewComponents
                         ImageClass = "flaticon-information"
                     });
 
-                if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 2))
+                if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 3))
                     menuModel.Add(new MenuModel
                     {
-                        MenuId = 2,
+                        MenuId = 3,
                         Action = ActionNames.Index,
                         Controller = ControllerNames.Nominations,
                         SubMenu = null,
