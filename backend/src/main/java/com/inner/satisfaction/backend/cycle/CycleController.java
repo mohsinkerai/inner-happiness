@@ -31,13 +31,26 @@ public class CycleController extends BaseController<Cycle> {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "close")
-  public void close(@RequestBody long cycleId) {
-    cycleService.closeCycle(cycleId);
+  public void close(@RequestBody CycleCloseRequestDto cycleCloseRequestDto) {
+    cycleFacade.closeCycle(cycleCloseRequestDto.getCycleId(), cycleCloseRequestDto.getEndingDate());
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "create")
   public void open(@RequestBody CycleCreateRequestDto cycleRequestDto) {
     cycleService.openCycle(cycleRequestDto);
+  }
+
+  @RequestMapping(method = RequestMethod.POST, value = "appoint")
+  public void appoint(@RequestBody long cycleId) {
+    // Move this cycle to appointed state, appoint every member that is recommended, throw error if this cannot be done.
+    // This can happen from either open state or from midterm state
+    cycleFacade.appointInCycle(cycleId);
+  }
+
+  @RequestMapping(method = RequestMethod.POST, value = "midterm")
+  public void midterm(@RequestBody long cycleId) {
+    // Move this cycle to midterm state, if and only if cycle is in appointed state
+    cycleFacade.openMidtermAppointment(cycleId);
   }
 
   @Override

@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CycleCreateRequestDto extends BaseDto {
+public class CycleCloseRequestDto extends BaseDto {
 
-  private Cycle cycleDetails;
-  private long previousCycleId;
-  private Timestamp startDate;
+  private Long cycleId;
+  private Timestamp endingDate;
 }

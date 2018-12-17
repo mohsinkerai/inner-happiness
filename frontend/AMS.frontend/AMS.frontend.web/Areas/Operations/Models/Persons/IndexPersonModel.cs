@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
@@ -14,6 +15,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public string MajorAreaOfStudy { get; set; }
         public string Name { get; set; }
         public List<PersonModel> Persons { get; set; }
+
+        [Display(Name = "Date of Birth")]
+        public string DOB { get; set; }
 
         #endregion Public Properties
     }

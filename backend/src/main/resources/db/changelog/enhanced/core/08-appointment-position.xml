@@ -74,4 +74,19 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+  <changeSet id="appointment-position-05" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="from" type="timestamp"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="appointment-position-06" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="to" type="timestamp"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="appointment-position-07" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="state" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -1,5 +1,7 @@
 package com.inner.satisfaction.backend.appointment;
 
+import static com.inner.satisfaction.backend.appointment.AppointmentPositionState.CREATED;
+
 import com.inner.satisfaction.backend.base.BaseService;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
     this.appointmentPositionRepository = baseRepository;
   }
 
-  public AppointmentPosition findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long cycleId, long institutionId, long seatNo, long positionId) {
+  public List<AppointmentPosition> findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long cycleId, long institutionId, long seatNo, long positionId) {
     return appointmentPositionRepository
       .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(institutionId, seatNo, positionId,
         cycleId);
@@ -39,5 +41,9 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   public List<AppointmentPosition> findAppointmentsOfPersonInCycle(long personId, long cycleId) {
     return appointmentPositionRepository.findByCycleIdAndPersonIdAndRecommendedTrue(cycleId, personId);
+  }
+
+  public List<AppointmentPosition> fetchActiveAppointmentsForCycle(Long id) {
+    return appointmentPositionRepository.findByCycleIdAndState(id, CREATED);
   }
 }

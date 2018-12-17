@@ -53,4 +53,12 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
   public void appointRecommendedPeople(List<Long> appointmentPositionId) {
     personAppointmentRepository.appointRecommendedPeople(appointmentPositionId);
   }
+
+  public void appointRecommendedPeople(Long appointmentPositionId) {
+    personAppointmentRepository.appointRecommendedPeople(appointmentPositionId);
+  }
+
+  public int findRecommendedCountInAppointmentPositionIds(List<Long> appointmentPositionIds) {
+    return personAppointmentRepository.findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
+  }
 }

@@ -77,4 +77,9 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+  <changeSet id="cycle-09" author="mohsin.kerai">
+    <addColumn tableName="cycle">
+      <column name="state" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -19,10 +19,13 @@ public interface AppointmentPositionRepository extends BaseRepository<Appointmen
 
   List<AppointmentPosition> findByCycleId(long cycleId);
 
-  AppointmentPosition findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long institutionId, long seatNo, long positionId, long cycleId);
+  // It can exist multiple, as of midterm case
+  List<AppointmentPosition> findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long institutionId, long seatNo, long positionId, long cycleId);
 
   List<AppointmentPosition> findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(long cycleId, long institutionId, long positionId, long seatNo);
 
   @Query(nativeQuery =  true, value = AppointmentPositionRepository.searchQuery)
   List<AppointmentPosition> findByCycleIdAndPersonIdAndRecommendedTrue(long cycleId, long personId);
+
+  List<AppointmentPosition> findByCycleIdAndState(Long id, String state);
 }

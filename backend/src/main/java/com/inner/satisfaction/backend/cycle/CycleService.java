@@ -1,11 +1,16 @@
 package com.inner.satisfaction.backend.cycle;
 
+import static com.inner.satisfaction.backend.cycle.CycleState.OPENED;
+
 import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
+import com.inner.satisfaction.backend.appointment.AppointmentPositionState;
 import com.inner.satisfaction.backend.base.BaseEntity;
 import com.inner.satisfaction.backend.base.BaseService;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointmentService;
+import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,27 +52,28 @@ public class CycleService extends BaseService<Cycle> {
     Cycle one = findOne(cycleRequestDto.getPreviousCycleId());
     Assert.notNull(one, "Invalid Previous Cycle Given");
 
+    cycleRequestDto.getCycleDetails().setState(OPENED);
     Cycle savedCycle = save(cycleRequestDto.getCycleDetails());
     List<AppointmentPosition> newPositions = appointmentPositionService
       .findByCycleId(cycleRequestDto.getPreviousCycleId())
       .stream()
-      .map(ap -> copy(ap, savedCycle.getId()))
+      .map(ap -> copy(ap, savedCycle.getId(), cycleRequestDto.getStartDate()))
       .map(appointmentPositionService::save)
       .collect(Collectors.toList());
 
     // Previous Appointee as current Incumbtee
-    for(AppointmentPosition ap : newPositions) {
+    for (AppointmentPosition ap : newPositions) {
       Optional<Long> incumbentId = fetchIncumbentId(cycleRequestDto.getPreviousCycleId(),
         ap.getInstitutionId(), ap.getPositionId(), ap.getSeatNo());
-      if(incumbentId.isPresent()) {
+      if (incumbentId.isPresent()) {
         personAppointmentService.save(
           PersonAppointment.builder()
-          .appointmentPositionId(ap.getId())
-          .personId(incumbentId.get())
-          .isAppointed(false)
-          .isRecommended(false)
-          .priority(0)
-          .build()
+            .appointmentPositionId(ap.getId())
+            .personId(incumbentId.get())
+            .isAppointed(false)
+            .isRecommended(false)
+            .priority(0)
+            .build()
         );
       }
     }
@@ -81,16 +87,22 @@ public class CycleService extends BaseService<Cycle> {
   /**
    * There exist a case where incumbent doesn't exist for a cycle.
    */
-  private Optional<Long> fetchIncumbentId(long cycleId, long institutionId, long positionId, long seatNo) {
-    AppointmentPosition ap = appointmentPositionService
+  private Optional<Long> fetchIncumbentId(long cycleId, long institutionId, long positionId,
+    long seatNo) {
+    List<AppointmentPosition> aps = appointmentPositionService
       .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(cycleId, institutionId, seatNo,
         positionId);
+
+    Optional<AppointmentPosition> first = aps.stream()
+      .sorted(Comparator.comparing(AppointmentPosition::getFrom)).findFirst();
+    AppointmentPosition ap = first.get();
     PersonAppointment pa = personAppointmentService
       .findByAppointmentPositionIdAndIsAppointedTrue(ap.getId());
     return Optional.ofNullable(pa).map(BaseEntity::getId);
   }
 
-  private AppointmentPosition copy(AppointmentPosition appointmentPosition, long newCycleId) {
+  private AppointmentPosition copy(AppointmentPosition appointmentPosition, long newCycleId,
+    Timestamp from) {
     return AppointmentPosition.builder()
       .cycleId(newCycleId)
       .institutionId(appointmentPosition.getInstitutionId())
@@ -98,6 +110,8 @@ public class CycleService extends BaseService<Cycle> {
       .seatNo(appointmentPosition.getSeatNo())
       .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
       .nominationsRequired(appointmentPosition.getNominationsRequired())
+      .from(from)
+      .state(AppointmentPositionState.CREATED)
       .isActive(true)
       .build();
   }

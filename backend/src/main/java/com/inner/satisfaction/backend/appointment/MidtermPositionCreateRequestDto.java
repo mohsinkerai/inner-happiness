@@ -1,22 +1,20 @@
-package com.inner.satisfaction.backend.cycle;
+package com.inner.satisfaction.backend.appointment;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.inner.satisfaction.backend.base.BaseDto;
 import java.sql.Timestamp;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CycleCreateRequestDto extends BaseDto {
+public class MidtermPositionCreateRequestDto {
 
-  private Cycle cycleDetails;
-  private long previousCycleId;
-  private Timestamp startDate;
+  private List<Long> appointmentPositionIds;
+  private Timestamp midtermPositionStartdate;
 }

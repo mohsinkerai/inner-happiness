@@ -261,4 +261,10 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+
+  <changeSet id="person-20" author="mohsin.kerai">
+    <createIndex tableName="person" indexName="date_of_birth_index">
+      <column name="date_of_birth" />
+    </createIndex>
+  </changeSet>
 </databaseChangeLog>

@@ -5,6 +5,7 @@ import com.inner.satisfaction.backend.base.BaseRepository;
 import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,5 +22,12 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
 
   @Modifying
   @Query("UPDATE person_appointment p SET p.isAppointed = true WHERE p.isRecommended=true AND p.appointmentPositionId IN :appointmentPositionId")
-  void appointRecommendedPeople(List<Long> appointmentPositionId);
+  void appointRecommendedPeople(@Param("appointmentPositionId") List<Long> appointmentPositionId);
+
+  @Modifying
+  @Query("UPDATE person_appointment p SET p.isAppointed = true WHERE p.isRecommended =true AND p.appointmentPositionId = :appointmentPositionId")
+  void appointRecommendedPeople(@Param("appointmentPositionId") Long appointmentPositionId);
+
+  @Query(nativeQuery = true, value = "SELECT count(*) FROM person_appointment pa WHERE pa.appointment_position_id in :appointmentPositionIds AND pa.is_recommended = true")
+  int findRecommendedCountInAppointmentPositionIds(@Param("appointmentPositionIds") List<Long> appointmentPositionIds);
 }

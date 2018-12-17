@@ -1,6 +1,7 @@
 package com.inner.satisfaction.backend.person;
 
 import com.inner.satisfaction.backend.base.BasePagingAndSortingRepository;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,16 @@ public interface PersonRepository extends BasePagingAndSortingRepository<Person>
     + " AND (:aos is null OR :aos = 0 OR MATCH(p.gen_major_area_of_study) AGAINST (CONCAT(\"'\", '+', :aos, \"'\" ) IN BOOLEAN MODE))";
 //    + " AND (:eduInstitution is null OR :eduInstitution = 0 OR MATCH(p.gen_institution) AGAINST (CONCAT('\\\'', '+',:eduInstitution,'\\\'') IN BOOLEAN MODE))";
 
+  String searchQueryWithDob = "SELECT * FROM person p "
+    + " WHERE (:name is null OR :name = '' OR MATCH(p.full_name) AGAINST (CONCAT(\"'\", :name, \"'\" ) IN BOOLEAN MODE))"
+    + " AND (:cnic is null OR :cnic = '' OR p.cnic = :cnic)"
+    + " AND (:id is null OR :id = 0 OR p.id = :id)"
+    + " AND (:jt is null OR :jt = 0 OR p.jamati_title = :jt)"
+    + " AND (:dob = '1899-01-01' OR p.date_of_birth = :dob)"
+    + " AND (:eduInstitution is null OR :eduInstitution = 0 OR MATCH(p.gen_institution) AGAINST (CONCAT(\"'\", '+', :eduInstitution, \"'\" ) IN BOOLEAN MODE))"
+    + " AND (:eduDegree is null OR :eduDegree = 0 OR MATCH(p.gen_degree) AGAINST (CONCAT(\"'\", '+', :eduDegree, \"'\" ) IN BOOLEAN MODE))"
+    + " AND (:aos is null OR :aos = 0 OR MATCH(p.gen_major_area_of_study) AGAINST (CONCAT(\"'\", '+', :aos, \"'\" ) IN BOOLEAN MODE))";
+
   Person findByCnic(String cnic);
 
   // TODO: Full Text search index on CNIC, FirstName and LastName
@@ -36,4 +47,8 @@ public interface PersonRepository extends BasePagingAndSortingRepository<Person>
   // Only Educational Institution
   @Query(value = PersonRepository.searchQuery, nativeQuery = true)
   Page<Person> findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(String name, Long id, Long eduInstitution, Long eduDegree, Long aos, Long jt, String cnic, Pageable pageable);
+
+  // Only Educational Institution
+  @Query(value = PersonRepository.searchQueryWithDob, nativeQuery = true)
+  Page<Person> findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitleAndDob(String name, Long id, Long eduInstitution, Long eduDegree, Long aos, Long jt, String cnic, LocalDate dob, Pageable pageable);
 }

@@ -3,11 +3,15 @@ package com.inner.satisfaction.backend.person;
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -123,6 +127,32 @@ public class PersonController extends BaseController<Person> {
     return personService
       .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitle(
         name, cnic, id, institution, degree, maos, jamatiTitle, pageRequest);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaosAndDob", method = RequestMethod.GET)
+  public Page<Person> findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaosAndDob(
+    @RequestParam(required = false, value = "cnic", defaultValue = "") String cnic,
+    @RequestParam(required = false, value = "name", defaultValue = "") String name,
+    @RequestParam(required = false, value = "id", defaultValue = "0") Long id, // formNo
+    @RequestParam(required = false, value = "degree", defaultValue = "0") Long degree, // Degree
+    // Academic Institution
+    @RequestParam(required = false, value = "inst", defaultValue = "0") Long institution,
+    // Jamati Title
+    @RequestParam(required = false, value = "jamatiTitle", defaultValue = "0") Long jamatiTitle,
+    // Major Area of Study
+    @RequestParam(required = false, value = "maos", defaultValue = "0") Long maos,
+    // Date of Birth
+    @RequestParam(required = false, value = "dob", defaultValue = "1899-01-01") String dob,
+    @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+    @RequestParam(required = false, defaultValue = "20", value = "size") int size) {
+
+    PageRequest pageRequest = PageRequest.of(page - 1, size);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+    LocalDate dateOfBirth = LocalDate.parse(dob, formatter);
+    return personService
+      .findByFullNameAndIdAndCnicAndEducationInstitutionAndEducationDegreeAndAreaOfStudyAndJamatiTitleAndDateOfBirth(
+        name, cnic, id, institution, degree, maos, jamatiTitle, dateOfBirth, pageRequest);
   }
 
   @Override

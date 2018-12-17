@@ -979,7 +979,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
         public async Task<Tuple<List<PersonModel>, int>> GetPersonDetailsThroughPagging(string firstName,
             string cnic, string formNo, string jamatiTitle, string degree, string majorAreaOfStudy,
             string academicInstitution,
-            int pageNumber, int pageSize)
+            int pageNumber, int pageSize, string dob)
         {
             //var Res = await client.GetAsync("/person/search/findByCnicOrFirstNameOrLastName?firstName&cnic&lastName&page=1&size=1");
 
@@ -987,10 +987,10 @@ namespace AMS.frontend.web.Areas.Operations.Models
             if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(cnic) &&
                 string.IsNullOrWhiteSpace(formNo) && string.IsNullOrWhiteSpace(jamatiTitle) &&
                 string.IsNullOrWhiteSpace(degree) &&
-                string.IsNullOrWhiteSpace(majorAreaOfStudy) && string.IsNullOrWhiteSpace(academicInstitution))
+                string.IsNullOrWhiteSpace(majorAreaOfStudy) && string.IsNullOrWhiteSpace(academicInstitution) && string.IsNullOrWhiteSpace(dob))
                 url = "/person/all/paginated?page=" + pageNumber + "&size=" + pageSize;
             else
-                url = "/person/search/findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaos?cnic=" + cnic +
+                url = "/person/search/findByCnicAndNameAndIdAndDegreeAndAcadInstAndJamatiTitleAndMaosAndDob?cnic=" + cnic +
                       "&name=" + firstName + "&id=" + formNo + "&degree=" +
                       (string.IsNullOrWhiteSpace(degree) ? degree : degree.Split('-')[0]) +
                       "&inst=" +
@@ -999,7 +999,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                           : academicInstitution.Split('-')[0]) + "&jamatiTitle=" + jamatiTitle + "&maos=" +
                       (string.IsNullOrWhiteSpace(majorAreaOfStudy)
                           ? majorAreaOfStudy
-                          : majorAreaOfStudy.Split('-')[0]) +
+                          : majorAreaOfStudy.Split('-')[0]) + "&dob=" + dob +
                       "&page=" + pageNumber + "&size=" + pageSize;
 
             var res = await _client.GetAsync(url);
