@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AMS.frontend.web.Areas.Administration.Models.AreaOfStudies
+namespace AMS.frontend.web.Areas.Administration.Models.EducationalInstitution
 {
-    public class AreaOfStudyModel
+    public class EducationalInstitutionModel
     {
         [JsonProperty(PropertyName = "name")]
         [Required]

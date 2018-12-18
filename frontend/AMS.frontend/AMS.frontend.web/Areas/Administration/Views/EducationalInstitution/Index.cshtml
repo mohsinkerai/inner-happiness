@@ -1,9 +1,10 @@
-﻿@model AreaOfStudyModel
+﻿@model AMS.frontend.web.Areas.Administration.Models.EducationalInstitution.EducationalInstitutionModel
 @{
-    ViewBag.ModuleTitle = "Area of Study Management";
-    ViewBag.PageTitle = "Area of Study";
+    ViewBag.ModuleTitle = "Educational Institution Management";
+    ViewBag.PageTitle = "Educational Institution";
     ViewBag.Action = "Add";
 }
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -22,7 +23,7 @@
                     </div>
                 </div>*@
             <!--begin::Form-->
-            <form id="mainForm" asp-area="@AreaNames.Administration" asp-controller="@ControllerNames.AreaOfStudies" asp-action="@ActionNames.Index" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
+            <form id="mainForm" asp-area="@AreaNames.Administration" asp-controller="@ControllerNames.EducationalInstituion" asp-action="@ActionNames.Index" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group row">
                         <div class="col-lg-4">

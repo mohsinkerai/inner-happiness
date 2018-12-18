@@ -10,6 +10,7 @@
         public const string SuccessUserDelete = "Person has been deleted successfully.";
         public const string SuccessUserUpdate = "Person has been updated successfully.";
         public const string UserNotFoundSession = "Person not found in session.";
+        public const string successfullyAdded = "Successfully Added";
 
         #endregion Public Fields
     }

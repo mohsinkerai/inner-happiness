@@ -1,14 +1,17 @@
-﻿using AMS.frontend.web.Areas.Administration.Models.AreaOfStudies;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Administration.Models.Country;
 using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Areas.Administration.Controllers
 {
     [Area(AreaNames.Administration)]
-    public class AreaOfStudiesController : BaseController
+    public class CountryController : BaseController
     {
         public IActionResult Index()
         {
@@ -16,11 +19,11 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(AreaOfStudyModel model)
+        public async Task<IActionResult> Index(CountryModel model)
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewAreaOfStudies(model);
+                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCountry(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;

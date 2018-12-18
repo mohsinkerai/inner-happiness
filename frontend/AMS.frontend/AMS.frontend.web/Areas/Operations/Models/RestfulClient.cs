@@ -5,6 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Administration.Models.AreaOfStudies;
+using AMS.frontend.web.Areas.Administration.Models.Country;
+using AMS.frontend.web.Areas.Administration.Models.EducationalInstitution;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
@@ -1658,6 +1661,42 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
 
             return null;
+        }
+
+        public async Task<bool> AddNewAreaOfStudies(AreaOfStudyModel areaOfStudyModel)
+        {
+            areaOfStudyModel.IsActive = true;
+            var json = JsonConvert.SerializeObject(areaOfStudyModel);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PostAsync("constants/area-of-study", httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
+        public async Task<bool> AddNewEducationalInstitution(EducationalInstitutionModel educationalInstitutionModel)
+        {
+            educationalInstitutionModel.IsActive = true;
+            var json = JsonConvert.SerializeObject(educationalInstitutionModel);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PostAsync("constants/educational-publicserviceinstitution", httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
+        public async Task<bool> AddNewCountry(CountryModel countryModel)
+        {
+            countryModel.IsActive = true;
+            var json = JsonConvert.SerializeObject(countryModel);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PostAsync("constants/country", httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
         }
 
         #endregion Public Methods

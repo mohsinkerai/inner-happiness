@@ -77,6 +77,26 @@ namespace AMS.frontend.web.ViewComponents
                                 Title = "Area of Study",
                                 Area = AreaNames.Administration,
                                 ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 6,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.EducationalInstituion,
+                                SubMenu = null,
+                                Title = "Educational Institution",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 7,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.Country,
+                                SubMenu = null,
+                                Title = "Country",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
                             }
                         },
                         Title = "Master Data",

@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AMS.frontend.web.Areas.Administration.Models.AreaOfStudies
+namespace AMS.frontend.web.Areas.Administration.Models.Country
 {
-    public class AreaOfStudyModel
+    public class CountryModel
     {
         [JsonProperty(PropertyName = "name")]
         [Required]
@@ -24,5 +24,9 @@ namespace AMS.frontend.web.Areas.Administration.Models.AreaOfStudies
 
         [JsonProperty(PropertyName = "updatedBy")]
         public string UpdatedBy { get; set; }
+
+        [JsonProperty(PropertyName = "code")]
+        [Required]
+        public string Code { get; set; }
     }
 }
