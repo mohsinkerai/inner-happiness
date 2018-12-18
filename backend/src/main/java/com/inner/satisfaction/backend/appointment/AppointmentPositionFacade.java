@@ -1,7 +1,10 @@
 package com.inner.satisfaction.backend.appointment;
 
 import com.google.common.collect.Lists;
+import com.inner.satisfaction.backend.base.BaseEntity;
+import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
+import com.inner.satisfaction.backend.cycle.CycleState;
 import com.inner.satisfaction.backend.institution.InstitutionService;
 import com.inner.satisfaction.backend.person.PersonService;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
@@ -59,11 +62,14 @@ public class AppointmentPositionFacade {
 
   public ApptPositionDto findByCycleIdAndInstitutionIdPositionIdAndSeatNo(long cycleId,
     long institutionId, long positionId, long seatId) {
-    return appointmentPositionService.findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(cycleId, institutionId, positionId, seatId)
+    return appointmentPositionService
+      .findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo(cycleId, institutionId, positionId,
+        seatId)
       .stream()
       .map(this::convertToApptPositionDto)
       .findFirst()
-      .orElseThrow(() -> new RuntimeException("Lala !! Combination of cycle, institution, position and seat given doesn't exist"));
+      .orElseThrow(() -> new RuntimeException(
+        "Lala !! Combination of cycle, institution, position and seat given doesn't exist"));
   }
 
   private ApptPositionDto convertToApptPositionDto(AppointmentPosition appointmentPosition) {
@@ -113,12 +119,45 @@ public class AppointmentPositionFacade {
       .build();
   }
 
-  public List<AppointmentPosition> createMidtermPosition(MidtermPositionCreateRequestDto requestDto) {
+  public List<AppointmentPosition> createMidtermPosition(
+    MidtermPositionCreateRequestDto requestDto) {
+    long cycleId = requestDto.getCycleId();
     Timestamp startdate = requestDto.getMidtermPositionStartdate();
+    List<Long> apptPositionIds = requestDto.getAppointmentPositionIds();
 
-    // Retire Old Positions.
-    // Create new positions of same thing
-    // Return its value
-    return Lists.newArrayList();
+    Cycle one = cycleService.findOne(cycleId);
+    if (one.getState() != CycleState.MIDTERM) {
+      throw new RuntimeException("Expected Cycle State to Midterm, but it isn't");
+    }
+
+/**
+ * It Does the Following in order
+ * 1. Update End Date and Retire Old Positions
+ * 2. It Create New Positions (Based on Some previous value, end date of previous one is start date of new one
+ * 3. Return those values
+ */
+    return apptPositionIds.stream()
+      .map(appointmentPositionService::findOne)
+      .map(ap -> {
+        ap.setTo(startdate);
+        ap.setState(AppointmentPositionState.RETIRED);
+        ap.setIsActive(Boolean.FALSE);
+        return ap;
+      })
+      .map(appointmentPositionService::save)
+      .map(ap -> AppointmentPosition.builder()
+        .from(startdate)
+        .state(AppointmentPositionState.CREATED)
+        .seatNo(ap.getSeatNo())
+        .positionId(ap.getPositionId())
+        .cycleId(ap.getCycleId())
+        .institutionId(ap.getInstitutionId())
+        .rank(ap.getRank())
+        .isActive(Boolean.TRUE)
+        .nominationsRequired(ap.getNominationsRequired())
+        .isMowlaAppointee(ap.isMowlaAppointee())
+        .build()
+      ).map(appointmentPositionService::save)
+      .collect(Collectors.toList());
   }
 }

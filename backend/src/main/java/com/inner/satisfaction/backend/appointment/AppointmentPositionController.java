@@ -30,7 +30,8 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
   public List<AppointmentPositionDto> findAppointmentsOfPersonIdAndIsMowlaAppointee(
     @RequestParam("personId") long personId,
     @RequestParam("isMowlaAppointee") boolean isMowlaAppointee) {
-    return appointmentPositionFacade.findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
+    return appointmentPositionFacade
+      .findAppointmentsOfPersonIdAndIsMowlaAppointee(personId, isMowlaAppointee);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -48,12 +49,14 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
     @RequestParam("institutionId") long institutionId,
     @RequestParam("positionId") long positionId,
     @RequestParam("seatNo") long seatNo) {
-    return appointmentPositionFacade.findByCycleIdAndInstitutionIdPositionIdAndSeatNo(cycleId, institutionId, positionId, seatNo);
+    return appointmentPositionFacade
+      .findByCycleIdAndInstitutionIdPositionIdAndSeatNo(cycleId, institutionId, positionId, seatNo);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/midterm", method = RequestMethod.POST)
-  public List<AppointmentPosition> introduceMidtermPosition(@RequestBody MidtermPositionCreateRequestDto requestDto) {
+  public List<AppointmentPosition> introduceMidtermPosition(
+    @RequestBody MidtermPositionCreateRequestDto requestDto) {
     return appointmentPositionFacade.createMidtermPosition(requestDto);
   }
 }

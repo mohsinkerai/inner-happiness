@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MidtermPositionCreateRequestDto {
 
+  private long cycleId;
   private List<Long> appointmentPositionIds;
   private Timestamp midtermPositionStartdate;
 }
