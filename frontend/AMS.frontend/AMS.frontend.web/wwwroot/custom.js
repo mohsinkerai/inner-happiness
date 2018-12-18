@@ -1725,7 +1725,7 @@ function LoadSecondaryDropDown(primaryDropdownClass, secondaryDropdownClass, sel
     }
 }
 
-function InitializePersonDataTable(id, title, url, personUrl) {
+function InitializePersonDataTable(id, title, url, personUrl, newPersonUrl, cnic) {
     var table = $("#" + id).DataTable({
         responsive: true,
         searchDelay: 500,
@@ -1772,10 +1772,12 @@ function InitializePersonDataTable(id, title, url, personUrl) {
 
     table.on('xhr.dt',
         function (e, settings, json, xhr) {
-            if (json.data.length === 1) {
-                var id = json.data[0].id;
-                window.location.href = personUrl + "/" + id;
-            }
+			if (json.data.length === 1) {
+				var id = json.data[0].id;
+				window.location.href = personUrl + "/" + id;
+			} else if (json.data.length === 0) {
+				window.location.href = newPersonUrl + "/" + cnic;
+			}
         });
 }
 

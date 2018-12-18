@@ -27,7 +27,11 @@
     @{ @(await Html.PartialAsync(PartialNames.DateTimePickerScripts)) }
 
     <script type="text/javascript">
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
+
+            var currentUrl = window.location.href;
+            var cnic = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+            $("#Cnic").val(cnic);
 
             $("#menu-1").addClass("m-menu__item--open m-menu__item--expanded");
 
@@ -247,6 +251,7 @@
             $("#voluntary-public").css("min-height", "0px");
             $("#employment").css("min-height", "0px");
             $("#family-relation").css("min-height", "0px");
+
         });
     </script>
 }

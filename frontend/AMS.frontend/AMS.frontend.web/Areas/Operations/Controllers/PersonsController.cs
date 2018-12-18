@@ -46,7 +46,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #region Public Methods
 
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(string cnic)
         {
             try
             {
