@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AMS.frontend.web.Controllers
 {
     [Authenticate]
-    public class HomeController : Controller
+    public class DashboardController : Controller
     {
         #region Public Methods
 

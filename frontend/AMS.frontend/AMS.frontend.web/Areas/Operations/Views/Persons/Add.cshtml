@@ -33,7 +33,7 @@
             var cnic = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
             $("#Cnic").val(cnic);
 
-            $("#menu-1").addClass("m-menu__item--open m-menu__item--expanded");
+            $("#menu-2").addClass("m-menu__item--open m-menu__item--expanded");
 
             InitializeDataTableLiteWithRowReordering("education", "Education", "@Url.Action("ReorderEducation", ControllerNames.Persons, new {area = AreaNames.Operations})");
             InitializeDataTableLiteWithRowReordering("akdn-training", "AKDN Trainings", "@Url.Action("ReorderAkdnTraining", ControllerNames.Persons, new {area = AreaNames.Operations})");

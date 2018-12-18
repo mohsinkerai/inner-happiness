@@ -21,11 +21,11 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
   List<PersonAppointment> findByPersonIdAndIsAppointedTrue(long personId);
 
   @Modifying
-  @Query("UPDATE person_appointment p SET p.is_appointed = true WHERE p.is_recommended=true AND p.appointment_position_id IN :appointmentPositionId")
+  @Query("UPDATE person_appointment p SET p.isAppointed = true WHERE p.isRecommended=true AND p.appointmentPositionId IN :appointmentPositionId")
   void appointRecommendedPeople(@Param("appointmentPositionId") List<Long> appointmentPositionId);
 
   @Modifying
-  @Query("UPDATE person_appointment p SET p.is_appointed = true WHERE p.is_recommended=true AND p.appointment_position_id = :appointmentPositionId")
+  @Query("UPDATE person_appointment p SET p.isAppointed = true WHERE p.isRecommended =true AND p.appointmentPositionId = :appointmentPositionId")
   void appointRecommendedPeople(@Param("appointmentPositionId") Long appointmentPositionId);
 
   @Query(nativeQuery = true, value = "SELECT count(*) FROM person_appointment pa WHERE pa.appointment_position_id in :appointmentPositionIds AND pa.is_recommended = true")
