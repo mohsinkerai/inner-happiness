@@ -83,6 +83,10 @@ public class AppointmentPositionFacade {
       .nominationsRequired(appointmentPosition.getNominationsRequired())
       .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
       .rank(appointmentPosition.getRank())
+      .isActive(appointmentPosition.isActive())
+      .from(appointmentPosition.getFrom())
+      .to(appointmentPosition.getTo())
+      .state(appointmentPosition.getState())
       .build();
   }
 
@@ -116,6 +120,9 @@ public class AppointmentPositionFacade {
       .nominationsRequired(appointmentPosition.getNominationsRequired())
       .position(positionService.findOne(appointmentPosition.getPositionId()))
       .seatNo(appointmentPosition.getSeatNo())
+      .from(appointmentPosition.getFrom())
+      .to(appointmentPosition.getTo())
+      .state(appointmentPosition.getState())
       .build();
   }
 

@@ -6,6 +6,7 @@ import com.inner.satisfaction.backend.base.BaseDto;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.institution.Institution;
 import com.inner.satisfaction.backend.position.Position;
+import java.sql.Timestamp;
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,4 +29,8 @@ public class AppointmentPositionDto extends BaseDto {
   private int nominationsRequired;
   private boolean isMowlaAppointee;
   private boolean isActive;
+
+  private Timestamp from;
+  private Timestamp to;
+  private String state;
 }
