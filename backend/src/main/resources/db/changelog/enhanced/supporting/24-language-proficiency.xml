@@ -42,4 +42,20 @@
       ALTER TABLE language_proficiency AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="language-proficiency-04" author="mohsin.kerai">
+    <dropColumn tableName="language_proficiency" columnName="created_by" />
+  </changeSet>
+  <changeSet id="language-proficiency-05" author="mohsin.kerai">
+    <dropColumn tableName="language_proficiency" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="language-proficiency-06" author="mohsin.kerai">
+    <addColumn tableName="language_proficiency">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="language-proficiency-07" author="mohsin.kerai">
+    <addColumn tableName="language_proficiency">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -43,4 +43,20 @@
       ALTER TABLE business_nature AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="business-nature-05" author="mohsin.kerai">
+    <dropColumn tableName="business_nature" columnName="created_by" />
+  </changeSet>
+  <changeSet id="business-nature-06" author="mohsin.kerai">
+    <dropColumn tableName="business_nature" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="business-nature-07" author="mohsin.kerai">
+    <addColumn tableName="business_nature">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="business-nature-08" author="mohsin.kerai">
+    <addColumn tableName="business_nature">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
