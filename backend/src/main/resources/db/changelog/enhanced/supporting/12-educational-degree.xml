@@ -42,4 +42,20 @@
       <column name="old_id" type="bigint" afterColumn="name"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="educational-degree-06" author="mohsin.kerai">
+    <dropColumn tableName="educational_degree" columnName="created_by" />
+  </changeSet>
+  <changeSet id="educational-degree-07" author="mohsin.kerai">
+    <dropColumn tableName="educational_degree" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="educational-degree-08" author="mohsin.kerai">
+    <addColumn tableName="educational_degree">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="educational-degree-09" author="mohsin.kerai">
+    <addColumn tableName="educational_degree">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
