@@ -40,4 +40,20 @@
       ALTER TABLE field_of_interest AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="field-of-interest-04" author="mohsin.kerai">
+    <dropColumn tableName="field_of_interest" columnName="created_by" />
+  </changeSet>
+  <changeSet id="field-of-interest-05" author="mohsin.kerai">
+    <dropColumn tableName="field_of_interest" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="field-of-interest-06" author="mohsin.kerai">
+    <addColumn tableName="field_of_interest">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="field-of-interest-07" author="mohsin.kerai">
+    <addColumn tableName="field_of_interest">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
