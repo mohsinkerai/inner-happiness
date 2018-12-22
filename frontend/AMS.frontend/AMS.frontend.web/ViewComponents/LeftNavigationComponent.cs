@@ -97,6 +97,76 @@ namespace AMS.frontend.web.ViewComponents
                                 Title = "Country",
                                 Area = AreaNames.Administration,
                                 ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 8,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.AkdnTraining,
+                                SubMenu = null,
+                                Title = "Akdn Training",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 9,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.AreaOfOrigin,
+                                SubMenu = null,
+                                Title = "Area Of Origin",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 10,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.BusinessNature,
+                                SubMenu = null,
+                                Title = "Business Nature",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 11,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.BusinessType,
+                                SubMenu = null,
+                                Title = "Business Type",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 12,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.EducationalDegree,
+                                SubMenu = null,
+                                Title = "Educational Degree",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 13,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.FieldOfExpertise,
+                                SubMenu = null,
+                                Title = "Field of Expertise",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 14,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.FieldOfInterest,
+                                SubMenu = null,
+                                Title = "Field of Interest",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
                             }
                         },
                         Title = "Master Data",
