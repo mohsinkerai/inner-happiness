@@ -34,7 +34,7 @@
   <changeSet id="language-03" author="mohsin.kerai">
     <addColumn tableName="language">
       <column name="is_active" defaultValue="1" type="bit">
-        <constraints nullable="false" />
+        <constraints nullable="false"/>
       </column>
     </addColumn>
   </changeSet>
@@ -43,4 +43,22 @@
       ALTER TABLE language AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+
+  <changeSet id="language-06" author="mohsin.kerai">
+    <dropColumn tableName="language" columnName="created_by"/>
+  </changeSet>
+  <changeSet id="language-07" author="mohsin.kerai">
+    <dropColumn tableName="language" columnName="updated_by"/>
+  </changeSet>
+  <changeSet id="language-08" author="mohsin.kerai">
+    <addColumn tableName="language">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="language-09" author="mohsin.kerai">
+    <addColumn tableName="language">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+
 </databaseChangeLog>

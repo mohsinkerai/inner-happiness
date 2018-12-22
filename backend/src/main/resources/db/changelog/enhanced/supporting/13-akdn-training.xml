@@ -37,4 +37,20 @@
       ALTER TABLE akdn_training AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="akdn-training-04" author="mohsin.kerai">
+    <dropColumn tableName="akdn_training" columnName="created_by" />
+  </changeSet>
+  <changeSet id="akdn-training-05" author="mohsin.kerai">
+    <dropColumn tableName="akdn_training" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="akdn-training-06" author="mohsin.kerai">
+    <addColumn tableName="akdn_training">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="akdn-training-07" author="mohsin.kerai">
+    <addColumn tableName="akdn_training">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

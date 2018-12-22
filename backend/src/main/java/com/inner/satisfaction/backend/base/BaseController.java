@@ -2,6 +2,8 @@ package com.inner.satisfaction.backend.base;
 
 import com.inner.satisfaction.backend.level.Level;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 public abstract class BaseController<E extends BaseEntity> {
@@ -21,6 +24,7 @@ public abstract class BaseController<E extends BaseEntity> {
   public static final String ROOT = "";
   public static final String ONE = ROOT + "one/{id}";
   public static final String ALL = ROOT + "all";
+  public static final String PAGINATED = ROOT + "paginated";
 
   protected final SimpleBaseService<E> baseService;
 
@@ -30,10 +34,10 @@ public abstract class BaseController<E extends BaseEntity> {
 
   @GetMapping(ONE)
   public ResponseEntity<E> findOne(
-      @PathVariable("id") Long entityId
+    @PathVariable("id") Long entityId
   ) {
     E entity = baseService.findOne(entityId);
-    if(entity == null) {
+    if (entity == null) {
       return ResponseEntity.status(404).body(null);
     }
     return ResponseEntity.ok(entity);
@@ -42,8 +46,8 @@ public abstract class BaseController<E extends BaseEntity> {
   @PutMapping(ONE)
   @ResponseStatus(HttpStatus.CREATED)
   public E putSave(
-      @PathVariable("id")Long id,
-      @RequestBody E e
+    @PathVariable("id") Long id,
+    @RequestBody E e
   ) {
     e.setId(id);
     return baseService.save(e);
@@ -64,9 +68,18 @@ public abstract class BaseController<E extends BaseEntity> {
   @DeleteMapping(ONE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(
-      Long entityId
+    Long entityId
   ) {
     E e = baseService.findOne(entityId);
     baseService.delete(e);
+  }
+
+  @GetMapping(value = PAGINATED)
+  @ResponseStatus(HttpStatus.OK)
+  public Page<E> findAllPage(
+    @RequestParam(value = "size", defaultValue = "10") int size,
+    @RequestParam(value = "page", defaultValue = "0") int page) {
+    PageRequest pageRequest = PageRequest.of(page - 1, size);
+    return baseService.findAll(pageRequest);
   }
 }

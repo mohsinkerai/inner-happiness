@@ -38,4 +38,20 @@
       ALTER TABLE voluntary_institution AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="voluntary-institution-04" author="mohsin.kerai">
+    <dropColumn tableName="voluntary_institution" columnName="created_by" />
+  </changeSet>
+  <changeSet id="voluntary-institution-05" author="mohsin.kerai">
+    <dropColumn tableName="voluntary_institution" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="voluntary-institution-06" author="mohsin.kerai">
+    <addColumn tableName="voluntary_institution">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="voluntary-institution-07" author="mohsin.kerai">
+    <addColumn tableName="voluntary_institution">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

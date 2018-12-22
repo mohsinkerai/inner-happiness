@@ -42,4 +42,20 @@
       ALTER TABLE secular_study_level AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="secular-study-level-05" author="mohsin.kerai">
+    <dropColumn tableName="secular_study_level" columnName="created_by" />
+  </changeSet>
+  <changeSet id="secular-study-level-06" author="mohsin.kerai">
+    <dropColumn tableName="secular_study_level" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="secular-study-level-07" author="mohsin.kerai">
+    <addColumn tableName="secular_study_level">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="secular-study-level-08" author="mohsin.kerai">
+    <addColumn tableName="secular_study_level">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

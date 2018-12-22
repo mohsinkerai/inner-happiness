@@ -37,4 +37,20 @@
       ALTER TABLE religious_qualification AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="religious-qualification-04" author="mohsin.kerai">
+    <dropColumn tableName="religious_qualification" columnName="created_by" />
+  </changeSet>
+  <changeSet id="religious-qualification-05" author="mohsin.kerai">
+    <dropColumn tableName="religious_qualification" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="religious-qualification-06" author="mohsin.kerai">
+    <addColumn tableName="religious_qualification">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="religious-qualification-07" author="mohsin.kerai">
+    <addColumn tableName="religious_qualification">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

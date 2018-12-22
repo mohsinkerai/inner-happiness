@@ -37,4 +37,20 @@
       ALTER TABLE public_service_institution AUTO_INCREMENT = 10000;
     </sql>
   </changeSet>
+  <changeSet id="public-service-institution-04" author="mohsin.kerai">
+    <dropColumn tableName="public_service_institution" columnName="created_by" />
+  </changeSet>
+  <changeSet id="public-service-institution-05" author="mohsin.kerai">
+    <dropColumn tableName="public_service_institution" columnName="updated_by" />
+  </changeSet>
+  <changeSet id="public-service-institution-06" author="mohsin.kerai">
+    <addColumn tableName="public_service_institution">
+      <column name="created_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="public-service-institution-07" author="mohsin.kerai">
+    <addColumn tableName="public_service_institution">
+      <column name="updated_by" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
