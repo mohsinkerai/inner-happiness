@@ -138,12 +138,12 @@ public class AppointmentPositionFacade {
       throw new RuntimeException("Expected Cycle State to Midterm, but it isn't");
     }
 
-/**
- * It Does the Following in order
- * 1. Update End Date and Retire Old Positions
- * 2. It Create New Positions (Based on Some previous value, end date of previous one is start date of new one
- * 3. Return those values
- */
+  /**
+   * It Does the Following in order
+   * 1. Update End Date and Retire Old Positions
+   * 2. It Create New Positions (Based on Some previous value, end date of previous one is start date of new one
+   * 3. Return those values
+   */
     return apptPositionIds.stream()
       .map(appointmentPositionService::findOne)
       .map(ap -> {
