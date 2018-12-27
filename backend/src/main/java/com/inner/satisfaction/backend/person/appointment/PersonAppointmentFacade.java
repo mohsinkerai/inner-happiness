@@ -14,6 +14,9 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+/**
+ * Move it to event driven, i.e. application event.
+ */
 @Slf4j
 @Component
 public class PersonAppointmentFacade {

@@ -59,4 +59,9 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
     @RequestBody MidtermPositionCreateRequestDto requestDto) {
     return appointmentPositionFacade.createMidtermPosition(requestDto);
   }
+
+  @Override
+  public AppointmentPosition save(@RequestBody AppointmentPosition appointmentPosition) {
+    return appointmentPositionFacade.save(appointmentPosition);
+  }
 }

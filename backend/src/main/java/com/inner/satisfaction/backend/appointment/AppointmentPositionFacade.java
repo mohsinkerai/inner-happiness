@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 @Component
 public class AppointmentPositionFacade {
@@ -132,7 +133,7 @@ public class AppointmentPositionFacade {
     Timestamp startdate = requestDto.getMidtermPositionStartdate();
     List<Long> apptPositionIds = requestDto.getAppointmentPositionIds();
 
-    Cycle one = cycleService.findOne(cycleId);
+    Cycle one = getVerifiedCycle(cycleId);
     if (one.getState() != CycleState.MIDTERM) {
       throw new RuntimeException("Expected Cycle State to Midterm, but it isn't");
     }
@@ -166,5 +167,27 @@ public class AppointmentPositionFacade {
         .build()
       ).map(appointmentPositionService::save)
       .collect(Collectors.toList());
+  }
+
+  private Cycle getVerifiedCycle(long cycleId) {
+    Cycle cycle = cycleService.findOne(cycleId);
+    Assert.notNull(cycle, "Invalid cycle id");
+    return cycle;
+  }
+
+  public AppointmentPosition save(AppointmentPosition appointmentPosition) {
+    Cycle cycle = getVerifiedCycle(appointmentPosition.getCycleId());
+    if (cycle.getState() != CycleState.OPENED) {
+      throw new RuntimeException("Incorrect Cycle State");
+    }
+
+    Assert.notNull(appointmentPosition.getFrom(), "Invalid from field");
+    if (appointmentPosition.getRank() == null) {
+      appointmentPosition.setRank(1); // Order to display
+    }
+    if (appointmentPosition.getState() == null) {
+      appointmentPosition.setState(AppointmentPositionState.CREATED);
+    }
+    return appointmentPositionService.save(appointmentPosition);
   }
 }
