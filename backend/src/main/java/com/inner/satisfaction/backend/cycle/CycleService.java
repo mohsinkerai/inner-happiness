@@ -106,10 +106,9 @@ public class CycleService extends BaseService<Cycle> {
 
     Optional<AppointmentPosition> first = aps.stream()
       .sorted(Comparator.comparing(AppointmentPosition::getFrom)).findFirst();
-    AppointmentPosition ap = first.get();
-    PersonAppointment pa = personAppointmentService
-      .findByAppointmentPositionIdAndIsAppointedTrue(ap.getId());
-    return Optional.ofNullable(pa).map(BaseEntity::getId);
+    return first.map(BaseEntity::getId)
+      .map(personAppointmentService::findByAppointmentPositionIdAndIsAppointedTrue)
+      .map(BaseEntity::getId);
   }
 
   private AppointmentPosition copy(AppointmentPosition appointmentPosition, long newCycleId,
