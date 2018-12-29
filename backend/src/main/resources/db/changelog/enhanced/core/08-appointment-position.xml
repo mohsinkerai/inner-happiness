@@ -89,4 +89,10 @@
       <column name="state" type="varchar(255)"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="appointment-position-08" author="mohsin.kerai">
+    <sql>alter table `appointment_position` change `from` `from_time` timestamp null</sql>
+  </changeSet>
+  <changeSet id="appointment-position-09" author="mohsin.kerai">
+    <sql>alter table `appointment_position` change `to` `to_time` timestamp null</sql>
+  </changeSet>
 </databaseChangeLog>

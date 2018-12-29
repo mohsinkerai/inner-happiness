@@ -177,7 +177,7 @@ public class AppointmentPositionFacade {
 
   public AppointmentPosition save(AppointmentPosition appointmentPosition) {
     Cycle cycle = getVerifiedCycle(appointmentPosition.getCycleId());
-    if (cycle.getState() != CycleState.OPENED) {
+    if (!cycle.getState().equals(CycleState.OPENED)) {
       throw new RuntimeException("Incorrect Cycle State");
     }
 
