@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+@Slf4j
 @Service
 public class CycleService extends BaseService<Cycle> {
 
@@ -58,7 +60,7 @@ public class CycleService extends BaseService<Cycle> {
       .findByCycleId(cycleRequestDto.getPreviousCycleId())
       .stream()
       .map(ap -> copy(ap, savedCycle.getId(), cycleRequestDto.getStartDate()))
-      .map(appointmentPositionService::save)
+      .map(this::saveAppointmentPosition)
       .collect(Collectors.toList());
 
     // Previous Appointee as current Incumbtee
@@ -76,6 +78,15 @@ public class CycleService extends BaseService<Cycle> {
             .build()
         );
       }
+    }
+  }
+
+  private AppointmentPosition saveAppointmentPosition(AppointmentPosition appointmentPosition) {
+    try {
+      return appointmentPositionService.save(appointmentPosition);
+    } catch (Exception e) {
+      log.info("Unable to save this appointmentPosition Please Debug it {}", appointmentPosition, e);
+      throw e;
     }
   }
 

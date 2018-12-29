@@ -37,6 +37,7 @@ public class CycleController extends BaseController<Cycle> {
 
   @RequestMapping(method = RequestMethod.POST, value = "create")
   public void open(@RequestBody CycleCreateRequestDto cycleRequestDto) {
+    // Verify Opened cycle count (Should be 0)
     cycleService.openCycle(cycleRequestDto);
   }
 
