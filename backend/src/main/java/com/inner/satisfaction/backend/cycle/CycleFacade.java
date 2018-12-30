@@ -65,22 +65,26 @@ public class CycleFacade {
       cycleService.save(cycle);
     }
 
-    if (cycle.getState() == OPENED || cycle.getState() == MIDTERM) {
+    if (cycle.getState().equals(OPENED) || cycle.getState().equals(MIDTERM)) {
       List<AppointmentPosition> appointmentPositions = appointmentPositionService
         .fetchActiveAppointmentsForCycle(cycle.getId());
       // Some other checks should be there that if all positions are recommended or not.
 
       List<Long> appointmentPositionIds = appointmentPositions.stream()
         .filter(
-          appointmentPosition -> appointmentPosition.getState() == AppointmentPositionState.CREATED)
+          appointmentPosition -> appointmentPosition.getState() == null || appointmentPosition.getState().equals(AppointmentPositionState.CREATED))
         .map(BaseEntity::getId)
         .collect(Collectors.toList());
 
-      int recommendedPersons = personAppointmentService
-        .findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
+      if(appointmentPositionIds.size() > 0) {
+        int recommendedPersons = personAppointmentService
+          .findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
 
-      if (appointmentPositions.size() > recommendedPersons) {
-        throw new RuntimeException("Recommendations are less than positions");
+        if (appointmentPositions.size() > recommendedPersons) {
+          throw new RuntimeException("Recommendations are less than positions");
+        }
+      } else {
+        throw new RuntimeException("Something is wrong, no appointment position in cycle");
       }
 
       appointmentPositionIds.stream().forEach(personAppointmentService::appointRecommendedPeople);
@@ -88,12 +92,13 @@ public class CycleFacade {
         .filter(
           appointmentPosition -> appointmentPosition.getState() == AppointmentPositionState.CREATED)
         .map(this::changeAppointmentPositionStateToAppointed)
+        // Do Bulk Save Here. (Instead of Individual (Maybe Quick?)
         .forEach(appointmentPositionService::save);
 
       // Change State of Cycle
       cycle.setState(CycleState.APPOINTED);
     } else {
-      throw new RuntimeException("Lala, Midterm nahi khul sakta, state invalid error");
+      throw new RuntimeException("Cycle state is incorrect, should be either opened / midterm");
     }
     cycleService.save(cycle);
   }
