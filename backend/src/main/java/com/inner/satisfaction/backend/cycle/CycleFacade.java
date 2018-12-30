@@ -48,7 +48,7 @@ public class CycleFacade {
     if (cycle.getState() == null) {
       cycle.setState(CycleState.OPENED);
     }
-    if (cycle.getState() == APPOINTED) {
+    if (cycle.getState().equals(APPOINTED)) {
       cycle.setState(MIDTERM);
     } else {
       throw new RuntimeException("Lala, Midterm nahi khul sakta, state invalid error");
