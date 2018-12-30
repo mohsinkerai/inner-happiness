@@ -108,7 +108,7 @@ public class CycleFacade {
     Cycle cycle = cycleService.findOne(cycleId);
     Assert.notNull(cycle, "Invalid Cycle Id Provided");
 
-    if (cycle.getState() != CycleState.APPOINTED) {
+    if (!cycle.getState().equals(CycleState.APPOINTED)) {
       throw new RuntimeException("Invalid cycle state, should be appointed before close");
     }
 
