@@ -146,6 +146,8 @@ public class AppointmentPositionFacade {
      */
     return apptPositionIds.stream()
       .map(appointmentPositionService::findOne)
+      // Validation should only create those positions who are appointed state.
+      .filter(a -> a.getState().equals(AppointmentPositionState.APPOINTED))
       .map(ap -> {
         ap.setTo(startdate);
         ap.setState(AppointmentPositionState.RETIRED);
