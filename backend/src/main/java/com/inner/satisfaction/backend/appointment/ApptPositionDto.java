@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class ApptPositionDto extends BaseDto {
 
   private long appointmentPositionId;
-  private int rank;
+  private Integer rank;
   private long seatId;
   private int nominationsRequired;
   private boolean isMowlaAppointee;

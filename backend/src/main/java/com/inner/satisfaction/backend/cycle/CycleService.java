@@ -121,6 +121,7 @@ public class CycleService extends BaseService<Cycle> {
       .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
       .nominationsRequired(appointmentPosition.getNominationsRequired())
       .from(from)
+      .rank(appointmentPosition.getRank())
       .state(AppointmentPositionState.CREATED)
       .isActive(true)
       .build();
