@@ -134,7 +134,7 @@ public class AppointmentPositionFacade {
     List<Long> apptPositionIds = requestDto.getAppointmentPositionIds();
 
     Cycle one = getVerifiedCycle(cycleId);
-    if (one.getState() != CycleState.MIDTERM) {
+    if (!one.getState().equals(CycleState.MIDTERM)) {
       throw new RuntimeException("Expected Cycle State to Midterm, but it isn't");
     }
 
