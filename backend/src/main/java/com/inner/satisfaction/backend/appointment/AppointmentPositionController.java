@@ -54,6 +54,13 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByCycleIdWhereNoOneIsRecommended", method = RequestMethod.GET)
+  public List<ApptPositionDto> findByCycleIdWhereNoOneIsRecommended(
+    @RequestParam("cycleId") long cycleId) {
+    return appointmentPositionFacade.findByCycleIdWhereNoOneIsRecommended(cycleId);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/midterm", method = RequestMethod.POST)
   public List<AppointmentPosition> introduceMidtermPosition(
     @RequestBody MidtermPositionCreateRequestDto requestDto) {

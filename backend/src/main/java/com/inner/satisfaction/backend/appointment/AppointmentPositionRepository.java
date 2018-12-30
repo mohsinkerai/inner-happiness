@@ -15,6 +15,13 @@ public interface AppointmentPositionRepository extends BaseRepository<Appointmen
     + " AND ap.cycle_id = :cycleId"
     + " AND pa.is_recommended = true";
 
+  String unrecommendedPositionsQuery = "SELECT ap.* "
+    + " FROM appointment_position as ap "
+    + " LEFT OUTER JOIN (select * from person_appointment where is_recommended=true) pa "
+    + "   ON pa.appointment_position_id = ap.id "
+    + " WHERE ap.cycle_id = :cycleId "
+    + " AND pa.appointment_position_id is null";
+
   List<AppointmentPosition> findByCycleIdAndInstitutionId(long cycleId, long institutionId);
 
   List<AppointmentPosition> findByCycleId(long cycleId);
@@ -28,4 +35,7 @@ public interface AppointmentPositionRepository extends BaseRepository<Appointmen
   List<AppointmentPosition> findByCycleIdAndPersonIdAndRecommendedTrue(long cycleId, long personId);
 
   List<AppointmentPosition> findByCycleIdAndState(Long id, String state);
+
+  @Query(nativeQuery = true, value = unrecommendedPositionsQuery)
+  List<AppointmentPosition> findByCycleIdWhereNoOneIsRecommended(long cycleId);
 }

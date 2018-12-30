@@ -76,6 +76,7 @@ public class CycleFacade {
         .map(BaseEntity::getId)
         .collect(Collectors.toList());
 
+      // There are positions to work on
       if(appointmentPositionIds.size() > 0) {
         int recommendedPersons = personAppointmentService
           .findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
