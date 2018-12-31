@@ -67,7 +67,9 @@ public class CycleService extends BaseService<Cycle> {
     for (AppointmentPosition ap : newPositions) {
       Optional<Long> incumbentId = fetchIncumbentId(cycleRequestDto.getPreviousCycleId(),
         ap.getInstitutionId(), ap.getPositionId(), ap.getSeatNo());
+      // Fetch incumbent instead of id.
       if (incumbentId.isPresent()) {
+        // increase count of reappointment
         personAppointmentService.save(
           PersonAppointment.builder()
             .appointmentPositionId(ap.getId())
