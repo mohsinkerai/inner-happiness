@@ -3,6 +3,7 @@ package com.inner.satisfaction.backend.appointment;
 import static com.inner.satisfaction.backend.appointment.AppointmentPositionState.CREATED;
 
 import com.inner.satisfaction.backend.base.BaseService;
+import java.util.BitSet;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,9 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   public List<AppointmentPosition> fetchActiveAppointmentsForCycle(Long id) {
     return appointmentPositionRepository.findByCycleIdAndState(id, CREATED);
+  }
+
+  public List<AppointmentPosition> findByCycleIdWhereNoOneIsRecommended(long cycleId) {
+    return appointmentPositionRepository.findByCycleIdWhereNoOneIsRecommended(cycleId);
   }
 }

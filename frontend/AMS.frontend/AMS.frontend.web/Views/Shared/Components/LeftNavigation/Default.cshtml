@@ -7,8 +7,7 @@
     <!-- BEGIN: Aside Menu -->
     <div id="m_ver_menu"
          class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light"
-         data-menu-vertical="true"
-         data-menu-scrollable="true" data-menu-dropdown-timeout="500">
+         data-menu-vertical="true" m-menu-scrollable="1" m-menu-dropdown-timeout="500">
         <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
             @foreach (var menu in Model)
             {
@@ -42,7 +41,7 @@
                                             <span class="m-menu__link-text">
                                                 @subMenu.Title
                                             </span>
-                                            <i class="m-menu__link-icon @subMenu.ImageClass"></i>
+                                            @*<i class="m-menu__link-icon @subMenu.ImageClass"></i>*@
                                         </a>
                                     </li>
                                 }

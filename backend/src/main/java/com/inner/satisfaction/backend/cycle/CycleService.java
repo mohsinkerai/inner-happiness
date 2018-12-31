@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+@Slf4j
 @Service
 public class CycleService extends BaseService<Cycle> {
 
@@ -58,7 +60,7 @@ public class CycleService extends BaseService<Cycle> {
       .findByCycleId(cycleRequestDto.getPreviousCycleId())
       .stream()
       .map(ap -> copy(ap, savedCycle.getId(), cycleRequestDto.getStartDate()))
-      .map(appointmentPositionService::save)
+      .map(this::saveAppointmentPosition)
       .collect(Collectors.toList());
 
     // Previous Appointee as current Incumbtee
@@ -79,6 +81,15 @@ public class CycleService extends BaseService<Cycle> {
     }
   }
 
+  private AppointmentPosition saveAppointmentPosition(AppointmentPosition appointmentPosition) {
+    try {
+      return appointmentPositionService.save(appointmentPosition);
+    } catch (Exception e) {
+      log.info("Unable to save this appointmentPosition Please Debug it {}", appointmentPosition, e);
+      throw e;
+    }
+  }
+
   @Transactional
   public void dismissCycle(long cycleId) {
     // Dismiss cycle
@@ -95,10 +106,9 @@ public class CycleService extends BaseService<Cycle> {
 
     Optional<AppointmentPosition> first = aps.stream()
       .sorted(Comparator.comparing(AppointmentPosition::getFrom)).findFirst();
-    AppointmentPosition ap = first.get();
-    PersonAppointment pa = personAppointmentService
-      .findByAppointmentPositionIdAndIsAppointedTrue(ap.getId());
-    return Optional.ofNullable(pa).map(BaseEntity::getId);
+    return first.map(BaseEntity::getId)
+      .map(personAppointmentService::findByAppointmentPositionIdAndIsAppointedTrue)
+      .map(BaseEntity::getId);
   }
 
   private AppointmentPosition copy(AppointmentPosition appointmentPosition, long newCycleId,
@@ -111,6 +121,7 @@ public class CycleService extends BaseService<Cycle> {
       .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
       .nominationsRequired(appointmentPosition.getNominationsRequired())
       .from(from)
+      .rank(appointmentPosition.getRank())
       .state(AppointmentPositionState.CREATED)
       .isActive(true)
       .build();

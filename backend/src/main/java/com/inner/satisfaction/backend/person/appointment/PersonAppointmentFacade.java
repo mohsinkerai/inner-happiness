@@ -2,16 +2,22 @@ package com.inner.satisfaction.backend.person.appointment;
 
 import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
+import com.inner.satisfaction.backend.appointment.AppointmentPositionState;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
 import java.util.List;
 import javax.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+/**
+ * Move it to event driven, i.e. application event.
+ */
+@Slf4j
 @Component
 public class PersonAppointmentFacade {
 
@@ -150,6 +156,15 @@ public class PersonAppointmentFacade {
     Person one = personService.findOne(personAppointment.getPersonId());
     if (one == null || (one.getIsActive() != null && one.getIsActive() == false)) {
       throw new RuntimeException("Jani!! Sahi person id dedo");
+    }
+    AppointmentPosition appointmentPosition = appointmentPositionService
+      .findOne(personAppointment.getAppointmentPositionId());
+    if (appointmentPosition == null || (appointmentPosition.getIsActive() != null
+      && appointmentPosition.getIsActive() == false)
+      || appointmentPosition.getState() != AppointmentPositionState.CREATED) {
+
+      log.info("Invalid Appointment Position", appointmentPosition);
+      throw new RuntimeException("Position Dekh k do");
     }
   }
 

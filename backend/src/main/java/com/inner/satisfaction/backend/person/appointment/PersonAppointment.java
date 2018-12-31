@@ -1,6 +1,5 @@
 package com.inner.satisfaction.backend.person.appointment;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inner.satisfaction.backend.base.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;

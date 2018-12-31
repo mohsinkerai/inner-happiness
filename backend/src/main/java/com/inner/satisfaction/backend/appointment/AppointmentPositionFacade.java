@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 @Component
 public class AppointmentPositionFacade {
@@ -132,19 +133,21 @@ public class AppointmentPositionFacade {
     Timestamp startdate = requestDto.getMidtermPositionStartdate();
     List<Long> apptPositionIds = requestDto.getAppointmentPositionIds();
 
-    Cycle one = cycleService.findOne(cycleId);
-    if (one.getState() != CycleState.MIDTERM) {
+    Cycle one = getVerifiedCycle(cycleId);
+    if (!one.getState().equals(CycleState.MIDTERM)) {
       throw new RuntimeException("Expected Cycle State to Midterm, but it isn't");
     }
 
-/**
- * It Does the Following in order
- * 1. Update End Date and Retire Old Positions
- * 2. It Create New Positions (Based on Some previous value, end date of previous one is start date of new one
- * 3. Return those values
- */
+    /**
+     * It Does the Following in order
+     * 1. Update End Date and Retire Old Positions
+     * 2. It Create New Positions (Based on Some previous value, end date of previous one is start date of new one
+     * 3. Return those values
+     */
     return apptPositionIds.stream()
       .map(appointmentPositionService::findOne)
+      // Validation should only create those positions who are appointed state.
+      .filter(a -> a.getState().equals(AppointmentPositionState.APPOINTED))
       .map(ap -> {
         ap.setTo(startdate);
         ap.setState(AppointmentPositionState.RETIRED);
@@ -165,6 +168,35 @@ public class AppointmentPositionFacade {
         .isMowlaAppointee(ap.isMowlaAppointee())
         .build()
       ).map(appointmentPositionService::save)
+      .collect(Collectors.toList());
+  }
+
+  private Cycle getVerifiedCycle(long cycleId) {
+    Cycle cycle = cycleService.findOne(cycleId);
+    Assert.notNull(cycle, "Invalid cycle id");
+    return cycle;
+  }
+
+  public AppointmentPosition save(AppointmentPosition appointmentPosition) {
+    Cycle cycle = getVerifiedCycle(appointmentPosition.getCycleId());
+    if (!cycle.getState().equals(CycleState.OPENED)) {
+      throw new RuntimeException("Incorrect Cycle State");
+    }
+
+    Assert.notNull(appointmentPosition.getFrom(), "Invalid from field");
+    if (appointmentPosition.getRank() == null) {
+      appointmentPosition.setRank(1); // Order to display
+    }
+    if (appointmentPosition.getState() == null) {
+      appointmentPosition.setState(AppointmentPositionState.CREATED);
+    }
+    return appointmentPositionService.save(appointmentPosition);
+  }
+
+  public List<ApptPositionDto> findByCycleIdWhereNoOneIsRecommended(long cycleId) {
+    return appointmentPositionService.findByCycleIdWhereNoOneIsRecommended(cycleId)
+      .stream()
+      .map(this::convertToApptPositionDto)
       .collect(Collectors.toList());
   }
 }

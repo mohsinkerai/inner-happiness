@@ -3,6 +3,7 @@ package com.inner.satisfaction.backend.appointment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseEntity;
 import java.sql.Timestamp;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,9 @@ public class AppointmentPosition extends BaseEntity{
   private boolean isActive;
   private Integer rank;
 
+  @Column(name="from_time")
   private Timestamp from;
+  @Column(name="to_time")
   private Timestamp to;
 
   // There exist 3 State

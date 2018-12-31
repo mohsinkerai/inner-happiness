@@ -18,7 +18,7 @@ Cycle will work like
 Open -> Appointed -> Closed
 Open -> Appointed -> Midterm -> Appointed -> Closed
 Open -> Appointed -> Midterm -> Canceled -> Closed
-Open -> Cancelled.
+Open -> Cancelled
 
 AppointmentPosition Work Like this
 Open -> Appointed -> Retired
