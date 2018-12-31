@@ -21,8 +21,8 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   public List<AppointmentPosition> findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long cycleId, long institutionId, long seatNo, long positionId) {
     return appointmentPositionRepository
-      .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(institutionId, seatNo, positionId,
-        cycleId);
+      .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(institutionId, seatNo, cycleId,
+        positionId);
   }
 
   public List<AppointmentPosition> findByCycleId(long cycleId) {

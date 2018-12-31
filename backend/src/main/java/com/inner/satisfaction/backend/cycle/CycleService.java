@@ -106,6 +106,7 @@ public class CycleService extends BaseService<Cycle> {
 
     Optional<AppointmentPosition> first = aps.stream()
       .sorted(Comparator.comparing(AppointmentPosition::getFrom)).findFirst();
+
     return first.map(BaseEntity::getId)
       .map(personAppointmentService::findByAppointmentPositionIdAndIsAppointedTrue)
       .map(BaseEntity::getId);
