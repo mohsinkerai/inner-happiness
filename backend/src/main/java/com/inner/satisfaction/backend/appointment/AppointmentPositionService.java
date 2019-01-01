@@ -51,4 +51,10 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
   public List<AppointmentPosition> findByCycleIdWhereNoOneIsRecommended(long cycleId) {
     return appointmentPositionRepository.findByCycleIdWhereNoOneIsRecommended(cycleId);
   }
+
+  public void updateState(Long id, String appointed) {
+    AppointmentPosition one = findOne(id);
+    one.setState(appointed);
+    save(one);
+  }
 }
