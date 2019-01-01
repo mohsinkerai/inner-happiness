@@ -1,7 +1,5 @@
 package com.inner.satisfaction.backend.appointment;
 
-import com.google.common.collect.Lists;
-import com.inner.satisfaction.backend.base.BaseEntity;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.cycle.CycleState;
@@ -13,6 +11,7 @@ import com.inner.satisfaction.backend.person.appointment.PersonAppointmentServic
 import com.inner.satisfaction.backend.position.PositionService;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -143,6 +142,7 @@ public class AppointmentPositionFacade {
      * 1. Update End Date and Retire Old Positions
      * 2. It Create New Positions (Based on Some previous value, end date of previous one is start date of new one
      * 3. Return those values
+     * 4. Mark previous ones as incumbent
      */
     return apptPositionIds.stream()
       .map(appointmentPositionService::findOne)
@@ -155,19 +155,7 @@ public class AppointmentPositionFacade {
         return ap;
       })
       .map(appointmentPositionService::save)
-      .map(ap -> AppointmentPosition.builder()
-        .from(startdate)
-        .state(AppointmentPositionState.CREATED)
-        .seatNo(ap.getSeatNo())
-        .positionId(ap.getPositionId())
-        .cycleId(ap.getCycleId())
-        .institutionId(ap.getInstitutionId())
-        .rank(ap.getRank())
-        .isActive(Boolean.TRUE)
-        .nominationsRequired(ap.getNominationsRequired())
-        .isMowlaAppointee(ap.isMowlaAppointee())
-        .build()
-      ).map(appointmentPositionService::save)
+      .map(this::createNewAppointmentPositionAndAddIncumbent)
       .collect(Collectors.toList());
   }
 
@@ -198,5 +186,40 @@ public class AppointmentPositionFacade {
       .stream()
       .map(this::convertToApptPositionDto)
       .collect(Collectors.toList());
+  }
+
+  private AppointmentPosition createNewAppointmentPositionAndAddIncumbent(
+    AppointmentPosition oldAppointmentPosition) {
+    AppointmentPosition appointmentPosition = AppointmentPosition.builder()
+      .from(oldAppointmentPosition.getTo())
+      .state(AppointmentPositionState.CREATED)
+      .seatNo(oldAppointmentPosition.getSeatNo())
+      .positionId(oldAppointmentPosition.getPositionId())
+      .cycleId(oldAppointmentPosition.getCycleId())
+      .institutionId(oldAppointmentPosition.getInstitutionId())
+      .rank(oldAppointmentPosition.getRank())
+      .isActive(Boolean.TRUE)
+      .nominationsRequired(oldAppointmentPosition.getNominationsRequired())
+      .isMowlaAppointee(oldAppointmentPosition.isMowlaAppointee())
+      .build();
+
+    appointmentPosition = appointmentPositionService.save(appointmentPosition);
+
+    // AppointmentPosition set incumbent
+    PersonAppointment personAppointment = personAppointmentService
+      .findByAppointmentPositionIdAndIsAppointedTrue(oldAppointmentPosition.getId());
+    personAppointmentService.save(
+      PersonAppointment.builder()
+        .reappointmentCount(
+          Optional.ofNullable(personAppointment.getReappointmentCount()).map(a -> a + 1).orElse(0))
+        .appointmentPositionId(appointmentPosition.getId())
+        .personId(personAppointment.getPersonId())
+        .isRecommended(Boolean.FALSE)
+        .isAppointed(Boolean.FALSE)
+        .priority(0)
+        .build()
+    );
+
+    return appointmentPosition;
   }
 }

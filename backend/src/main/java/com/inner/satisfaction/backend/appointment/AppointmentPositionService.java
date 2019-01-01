@@ -21,8 +21,8 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   public List<AppointmentPosition> findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long cycleId, long institutionId, long seatNo, long positionId) {
     return appointmentPositionRepository
-      .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(institutionId, seatNo, positionId,
-        cycleId);
+      .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(institutionId, seatNo, cycleId,
+        positionId);
   }
 
   public List<AppointmentPosition> findByCycleId(long cycleId) {
@@ -50,5 +50,11 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   public List<AppointmentPosition> findByCycleIdWhereNoOneIsRecommended(long cycleId) {
     return appointmentPositionRepository.findByCycleIdWhereNoOneIsRecommended(cycleId);
+  }
+
+  public void updateState(Long id, String appointed) {
+    AppointmentPosition one = findOne(id);
+    one.setState(appointed);
+    save(one);
   }
 }
