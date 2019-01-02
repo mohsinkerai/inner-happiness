@@ -71,8 +71,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 5,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.AreaOfStudies,
+                                Action = ActionNames.AreaOfStudy,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Area of Study",
                                 Area = AreaNames.Administration,
@@ -101,8 +101,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 8,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.AkdnTraining,
+                                Action = ActionNames.AkdnTraining,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Akdn Training",
                                 Area = AreaNames.Administration,

@@ -18,6 +18,7 @@
         public const string EducationalDegree = "EducationalDegree";
         public const string FieldOfExpertise = "FieldOfExpertise";
         public const string FieldOfInterest = "FieldOfInterest";
+        public const string LookupCrud = "LookupCrud";
 
         #endregion Public Fields
     }

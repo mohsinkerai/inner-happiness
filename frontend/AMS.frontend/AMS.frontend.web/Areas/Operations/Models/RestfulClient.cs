@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Administration.Models;
 using AMS.frontend.web.Areas.Administration.Models.AkdnTraining;
 using AMS.frontend.web.Areas.Administration.Models.AreaOfOrigin;
 using AMS.frontend.web.Areas.Administration.Models.AreaOfStudies;
@@ -1786,6 +1787,18 @@ namespace AMS.frontend.web.Areas.Operations.Models
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var content = new StringContent(json);
             var res = await _client.PostAsync("constants/field-of-interest", httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
+        public async Task<bool> AddNewData(CrudModel model, string url)
+        {
+            model.IsActive = true;
+            var json = JsonConvert.SerializeObject(model);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PostAsync(url, httpContent);
 
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }

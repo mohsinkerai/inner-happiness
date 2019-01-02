@@ -283,8 +283,11 @@ function VoluntaryPublicListEdit(id, institution, fromYear, toYear, position) {
 
 function EducationListEdit(id, institution, countryOfStudy, fromYear, toYear, nameOfDegree, majorAreaOfStudy) {
     $("#Institution").val(institution).trigger('change');
-    $("#FromYear").val(fromYear).trigger('change');
+	$("#CountryOfStudy").val(countryOfStudy).trigger('change');
+	$("#FromYear").val(fromYear).trigger('change');
 	$("#ToYear").val(toYear).trigger('change');
+	$("#NameOfDegree").val(nameOfDegree).trigger('change');
+	$("#MajorAreaOfStudy").val(majorAreaOfStudy).trigger('change');
     $("#education-id").val(id);
 
     $("#education-row-" + id).addClass("m-datatable__row--hover");

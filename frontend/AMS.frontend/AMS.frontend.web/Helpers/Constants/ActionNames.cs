@@ -34,6 +34,9 @@
         public const string VoluntaryPublicListAdd = "VoluntaryPublicListAdd";
         public const string VoluntaryPublicListDelete = "VoluntaryPublicListDelete";
 
+        public const string AkdnTraining = "AkdnTraining";
+        public const string AreaOfStudy = "AreaOfStudy";
+
         #endregion Public Fields
     }
 }
