@@ -88,13 +88,10 @@ public class CycleFacade {
         throw new RuntimeException("Something is wrong, no appointment position in cycle");
       }
 
-      appointmentPositionIds.stream().forEach(personAppointmentService::appointRecommendedPeople);
-      appointmentPositions.stream()
-        .filter(
-          appointmentPosition -> appointmentPosition.getState() == AppointmentPositionState.CREATED)
-        .map(this::changeAppointmentPositionStateToAppointed)
-        // Do Bulk Save Here. (Instead of Individual (Maybe Quick?)
-        .forEach(appointmentPositionService::save);
+      appointmentPositionIds.stream().forEach((id) ->  {
+        personAppointmentService.appointRecommendedPeople(id);
+        appointmentPositionService.updateState(id, AppointmentPositionState.APPOINTED);
+      });
 
       // Change State of Cycle
       cycle.setState(CycleState.APPOINTED);

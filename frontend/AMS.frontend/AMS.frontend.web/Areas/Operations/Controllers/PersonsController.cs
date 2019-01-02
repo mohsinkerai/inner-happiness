@@ -1346,7 +1346,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             if (list == null) return string.Empty;
 
-            if (id.Contains('-')) id = id.Split('-')[0];
+            if (id != null)
+            {
+                if (id.Contains('-')) id = id.Split('-')[0];
+            }
 
             return list.FirstOrDefault(l =>
                 (string.IsNullOrWhiteSpace(l.Value) ? string.Empty : l.Value.Split('-')[0]) == id)?.Text;
