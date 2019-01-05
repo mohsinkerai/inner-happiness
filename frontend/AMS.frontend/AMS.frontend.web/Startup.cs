@@ -1,4 +1,5 @@
 ﻿using System;
+using AMS.frontend.web.Areas.Operations.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -68,6 +69,8 @@ namespace AMS.frontend.web
             //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.Add(new ServiceDescriptor(typeof(UploadImageContext), new UploadImageContext(Configuration.GetConnectionString("DefaultConnection"))));
 
             services.AddMemoryCache();
             services.AddSession(options =>

@@ -47,6 +47,17 @@ namespace AMS.frontend.web.ViewComponents
                         Area = AreaNames.Operations,
                         ImageClass = "flaticon-information"
                     });
+
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 15,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Image,
+                        SubMenu = null,
+                        Title = "Add Images",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-user"
+                    });
                 }
 
                 if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 3))

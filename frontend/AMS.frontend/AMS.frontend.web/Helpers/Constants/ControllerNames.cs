@@ -19,6 +19,7 @@
         public const string FieldOfExpertise = "FieldOfExpertise";
         public const string FieldOfInterest = "FieldOfInterest";
         public const string LookupCrud = "LookupCrud";
+        public const string Image = "Image";
 
         #endregion Public Fields
     }
