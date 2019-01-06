@@ -47,17 +47,6 @@ namespace AMS.frontend.web.ViewComponents
                         Area = AreaNames.Operations,
                         ImageClass = "flaticon-information"
                     });
-
-                    menuModel.Add(new MenuModel
-                    {
-                        MenuId = 15,
-                        Action = ActionNames.Index,
-                        Controller = ControllerNames.Image,
-                        SubMenu = null,
-                        Title = "Add Images",
-                        Area = AreaNames.Operations,
-                        ImageClass = "flaticon-user"
-                    });
                 }
 
                 if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 3))
@@ -71,6 +60,18 @@ namespace AMS.frontend.web.ViewComponents
                         Title = "Nominations",
                         Area = AreaNames.Operations,
                         ImageClass = "flaticon-network"
+                    });
+
+
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 15,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Image,
+                        SubMenu = null,
+                        Title = "Bulk Image Upload",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-user"
                     });
 
                     menuModel.Add(new MenuModel
@@ -182,7 +183,7 @@ namespace AMS.frontend.web.ViewComponents
                         },
                         Title = "Master Data",
                         Area = string.Empty,
-                        ImageClass = "flaticon-network"
+                        ImageClass = "flaticon-list"
                     });
                 }
             }

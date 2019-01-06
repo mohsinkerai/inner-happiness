@@ -11,6 +11,8 @@
         public const string SuccessUserUpdate = "Person has been updated successfully.";
         public const string UserNotFoundSession = "Person not found in session.";
         public const string successfullyAdded = "Successfully Added";
+        public const string AllImagesUploaded = "All images have been successfully uploaded.";
+        public const string FewImagesUploaded = "Few images have been successfully uploaded. Please check error list.";
 
         #endregion Public Fields
     }
