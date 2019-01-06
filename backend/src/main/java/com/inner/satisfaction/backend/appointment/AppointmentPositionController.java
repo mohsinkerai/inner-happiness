@@ -44,7 +44,7 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
 
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/findByCycleIdAndInstitutionIdAndPositionIdAndSeatNo", method = RequestMethod.GET)
-  public ApptPositionDto findByCycleIdAndInstitutionIdAndPositionIdAndSeatId(
+  public List<ApptPositionDto> findByCycleIdAndInstitutionIdAndPositionIdAndSeatId(
     @RequestParam("cycleId") long cycleId,
     @RequestParam("institutionId") long institutionId,
     @RequestParam("positionId") long positionId,
