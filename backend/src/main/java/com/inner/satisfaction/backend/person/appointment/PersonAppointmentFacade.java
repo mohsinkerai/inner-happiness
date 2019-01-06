@@ -162,7 +162,7 @@ public class PersonAppointmentFacade {
       .findOne(personAppointment.getAppointmentPositionId());
     if (appointmentPosition == null || (appointmentPosition.getIsActive() != null
       && appointmentPosition.getIsActive() == false)
-      || appointmentPosition.getState() != AppointmentPositionState.CREATED) {
+      || !appointmentPosition.getState().equals(AppointmentPositionState.CREATED)) {
 
       log.info("Invalid Appointment Position {}", appointmentPosition);
       throw new RuntimeException("Position Dekh k do");
