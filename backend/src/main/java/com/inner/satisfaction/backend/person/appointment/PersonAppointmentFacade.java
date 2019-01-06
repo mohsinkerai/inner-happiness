@@ -155,6 +155,7 @@ public class PersonAppointmentFacade {
     }
     Person one = personService.findOne(personAppointment.getPersonId());
     if (one == null || (one.getIsActive() != null && one.getIsActive() == false)) {
+      log.info("Invalid Person {}", one);
       throw new RuntimeException("Jani!! Sahi person id dedo");
     }
     AppointmentPosition appointmentPosition = appointmentPositionService
@@ -163,7 +164,7 @@ public class PersonAppointmentFacade {
       && appointmentPosition.getIsActive() == false)
       || appointmentPosition.getState() != AppointmentPositionState.CREATED) {
 
-      log.info("Invalid Appointment Position", appointmentPosition);
+      log.info("Invalid Appointment Position {}", appointmentPosition);
       throw new RuntimeException("Position Dekh k do");
     }
   }
