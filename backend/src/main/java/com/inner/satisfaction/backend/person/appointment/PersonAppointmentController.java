@@ -36,8 +36,8 @@ public class PersonAppointmentController extends BaseController<PersonAppointmen
     @PathVariable("id") Long id,
     @RequestBody PersonAppointment personAppointment) {
     personAppointment.setId(id);
-    Assert.isNull(personAppointment.getPersonId(), "Person Id should be null");
-    Assert.isNull(personAppointment.getAppointmentPositionId(), "Appointment Position Id should be null");
+    Assert.notNull(personAppointment.getPersonId(), "Person Id should not be null");
+    Assert.notNull(personAppointment.getAppointmentPositionId(), "Appointment Position Id should not be null");
     return personAppointmentFacade.save(personAppointment);
   }
 
