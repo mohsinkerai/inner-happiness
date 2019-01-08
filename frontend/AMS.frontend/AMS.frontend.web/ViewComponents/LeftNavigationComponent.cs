@@ -93,8 +93,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 6,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.EducationalInstituion,
+                                Action = ActionNames.EducationalInstitution,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Educational Institution",
                                 Area = AreaNames.Administration,
@@ -123,8 +123,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 9,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.AreaOfOrigin,
+                                Action = ActionNames.AreaOfOrigin,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Area Of Origin",
                                 Area = AreaNames.Administration,
@@ -133,8 +133,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 10,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.BusinessNature,
+                                Action = ActionNames.BusinessNature,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Business Nature",
                                 Area = AreaNames.Administration,
@@ -143,8 +143,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 11,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.BusinessType,
+                                Action = ActionNames.BusinessType,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Business Type",
                                 Area = AreaNames.Administration,
@@ -153,8 +153,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 12,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.EducationalDegree,
+                                Action = ActionNames.EducationalDegree,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Educational Degree",
                                 Area = AreaNames.Administration,
@@ -163,8 +163,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 13,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.FieldOfExpertise,
+                                Action = ActionNames.FieldOfExpertise,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Field of Expertise",
                                 Area = AreaNames.Administration,
@@ -173,10 +173,100 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 14,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.FieldOfInterest,
+                                Action = ActionNames.FieldOfInterest,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Field of Interest",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 16,
+                                Action = ActionNames.Language,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Language",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 17,
+                                Action = ActionNames.MaritalStatus,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Marital Statius",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 18,
+                                Action = ActionNames.Occupation,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Occupation",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 19,
+                                Action = ActionNames.ProfessionalMembership,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Professional Membership",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 20,
+                                Action = ActionNames.PublicServiceInstitution,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Public Service Institution",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 21,
+                                Action = ActionNames.ReligiousQualification,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Religious Qualification",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 22,
+                                Action = ActionNames.Salutation,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Salutation",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 23,
+                                Action = ActionNames.SecularStudyLevel,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Secular Study Level",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 24,
+                                Action = ActionNames.Skill,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Skills",
                                 Area = AreaNames.Administration,
                                 ImageClass = "flaticon-network"
                             }

@@ -6,16 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using AMS.frontend.web.Areas.Administration.Models;
-using AMS.frontend.web.Areas.Administration.Models.AkdnTraining;
-using AMS.frontend.web.Areas.Administration.Models.AreaOfOrigin;
-using AMS.frontend.web.Areas.Administration.Models.AreaOfStudies;
-using AMS.frontend.web.Areas.Administration.Models.BusinessNature;
-using AMS.frontend.web.Areas.Administration.Models.BusinessType;
 using AMS.frontend.web.Areas.Administration.Models.Country;
-using AMS.frontend.web.Areas.Administration.Models.EducationalDegree;
-using AMS.frontend.web.Areas.Administration.Models.EducationalInstitution;
-using AMS.frontend.web.Areas.Administration.Models.FieldOfExpertise;
-using AMS.frontend.web.Areas.Administration.Models.FieldOfInterest;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
@@ -1671,30 +1662,6 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<bool> AddNewAreaOfStudies(AreaOfStudyModel areaOfStudyModel)
-        {
-            areaOfStudyModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(areaOfStudyModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/area-of-study", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewEducationalInstitution(EducationalInstitutionModel educationalInstitutionModel)
-        {
-            educationalInstitutionModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(educationalInstitutionModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/educational-publicserviceinstitution", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
         public async Task<bool> AddNewCountry(CountryModel countryModel)
         {
             countryModel.IsActive = true;
@@ -1707,98 +1674,14 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }
 
-        public async Task<bool> AddNewAkdnTraining(AkdnTraineeModel akdnTrainingModel)
-        {
-            akdnTrainingModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(akdnTrainingModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/akdn-training", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewAreaOfOrign(AreaOfOriginModel areaOfOriginModel)
-        {
-            areaOfOriginModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(areaOfOriginModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/area-of-origin", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewBusinessNature(BusinessNatureModel businessNatureModel)
-        {
-            businessNatureModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(businessNatureModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/business-nature", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewBusinessType(BusinessTypeModel businessTypeModel)
-        {
-            businessTypeModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(businessTypeModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/business-type", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewEducationalDegree(EducationalDegreeModel educationalDegreeModel)
-        {
-            educationalDegreeModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(educationalDegreeModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/educational-degree", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewFieldOfExpertise(FieldOfExpertiseModel fieldOfExpertiseModel)
-        {
-            fieldOfExpertiseModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(fieldOfExpertiseModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/field-of-expertise", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewFieldOfInterest(FieldOfInterestModel fieldOfInterestModel)
-        {
-            fieldOfInterestModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(fieldOfInterestModel);
-
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/field-of-interest", httpContent);
-
-            return res.StatusCode == HttpStatusCode.OK ? true : false;
-        }
-
-        public async Task<bool> AddNewData(CrudModel model, string url)
+        public async Task<bool> AddNewData(CrudModel model)
         {
             model.IsActive = true;
             var json = JsonConvert.SerializeObject(model);
 
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var content = new StringContent(json);
-            var res = await _client.PostAsync(url, httpContent);
+            var res = await _client.PostAsync(model.Url, httpContent);
 
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }

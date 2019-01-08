@@ -36,6 +36,22 @@
 
         public const string AkdnTraining = "AkdnTraining";
         public const string AreaOfStudy = "AreaOfStudy";
+        public const string EducationalInstitution = "EducationalInstitution";
+        public const string AreaOfOrigin = "AreaOfOrigin";
+        public const string BusinessNature = "BusinessNature";
+        public const string BusinessType = "BusinessType";
+        public const string EducationalDegree = "EducationalDegree";
+        public const string FieldOfExpertise = "FieldOfExpertise";
+        public const string FieldOfInterest = "FieldOfInterest";
+        public const string Language = "Language";
+        public const string MaritalStatus = "MaritalStatus";
+        public const string Occupation = "Occupation";
+        public const string ProfessionalMembership = "ProfessionalMembership";
+        public const string PublicServiceInstitution = "PublicServiceInstitution";
+        public const string ReligiousQualification = "ReligiousQualification";
+        public const string Salutation = "Salutation";
+        public const string SecularStudyLevel = "SecularStudyLevel";
+        public const string Skill = "Skills";
 
         #endregion Public Fields
     }

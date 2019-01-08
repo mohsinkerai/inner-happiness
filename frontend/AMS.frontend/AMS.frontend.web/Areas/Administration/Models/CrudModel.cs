@@ -28,5 +28,8 @@ namespace AMS.frontend.web.Areas.Administration.Models
         [JsonIgnore]
         public string Url { get; set; }
 
+        [JsonIgnore]
+        public string Title { get; set; }
+
     }
 }
