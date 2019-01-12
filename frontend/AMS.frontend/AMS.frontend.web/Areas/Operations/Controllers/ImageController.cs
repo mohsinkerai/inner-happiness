@@ -65,8 +65,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
             catch (Exception)
             {
-                TempData["MessageType"] = MessageTypes.Error;
-                TempData["Message"] = Messages.GeneralError;
+                //TempData["MessageType"] = MessageTypes.Error;
+                //TempData["Message"] = Messages.GeneralError;
 
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
@@ -74,16 +74,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (filesNotUploaded.Count == 0)
             {
-                TempData["MessageType"] = MessageTypes.Success;
-                TempData["Message"] = Messages.AllImagesUploaded;
+                //TempData["MessageType"] = MessageTypes.Success;
+                //TempData["Message"] = Messages.AllImagesUploaded;
 
                 ViewBag.MessageType = MessageTypes.Success;
                 ViewBag.Message = Messages.AllImagesUploaded;
             }
             else
             {
-                TempData["MessageType"] = MessageTypes.Warn;
-                TempData["Message"] = Messages.FewImagesUploaded;
+                //TempData["MessageType"] = MessageTypes.Warn;
+                //TempData["Message"] = Messages.FewImagesUploaded;
 
                 ViewBag.MessageType = MessageTypes.Warn;
                 ViewBag.Message = Messages.FewImagesUploaded;

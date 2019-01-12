@@ -255,7 +255,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (nominations != null)
             {
                 nominations.Sort((a, b) => b.Priority.CompareTo(a.Priority));
-                priority = nominations[0].Priority;
+                priority = nominations.Count == 0 ? 0 : nominations[0].Priority;
             }
 
             Console.WriteLine("cycleID= " + cycleId + " InstitutionId= " + institutionId + " seatNo= " + seatNo +
@@ -266,7 +266,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 await new RestfulClient(
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(
                     personId.Split('-')[0], id,
-                    nominations[0].Priority, institutionId, positionId, cycleId, seatNo);
+                    priority, institutionId, positionId, cycleId, seatNo);
 
             //update data in session
             if (pos != -1 && positionModel != null)

@@ -621,7 +621,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                     foreach (var jToken1 in arr)
                     {
-                        var positionArray = (JObject)jToken1;
+                        var positionArray = (JObject) jToken1;
                         var listNominations = new List<NominationModel>();
                         var positionModel = new PositionModel();
 
@@ -637,11 +637,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
                         positionModel.Rank = Convert.ToInt32(positionArray["rank"].HasValues ? positionArray["rank"] : 0);
                         positionModel.SeatId = Convert.ToString(positionArray["seatId"]);
+                        positionModel.State = Convert.ToString(positionArray["state"]);
+                        positionModel.From = string.IsNullOrWhiteSpace(Convert.ToString(positionArray["from"]))
+                            ? (DateTime?) null
+                            : Convert.ToDateTime(positionArray["from"]);
+                        positionModel.To = string.IsNullOrWhiteSpace(Convert.ToString(positionArray["to"]))
+                            ? (DateTime?) null
+                            : Convert.ToDateTime(positionArray["to"]);
+                        positionModel.CycleStatus = Convert.ToString(currentCycle["state"]);
 
                         //int index = 0;
                         foreach (var jToken in personAppointmentList)
                         {
-                            var personsAppointed = (JObject)jToken;
+                            var personsAppointed = (JObject) jToken;
                             var nominationModel = new NominationModel();
 
                             var incumbent = personsAppointed["person"];
@@ -1417,8 +1425,15 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     if (response.IsSuccessStatusCode)
                     {
                         var newJson = response.Content.ReadAsStringAsync().Result;
-                        var obj = JObject.Parse(newJson);
-                        positionModel = await MapSinglePosition(obj);
+                        var obj = JArray.Parse(newJson);
+                        foreach (var position in obj)
+                        {
+                            if (Convert.ToString(position["state"]) == "CREATED")
+                            {
+                                positionModel = await MapSinglePosition((JObject)position);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -1490,9 +1505,23 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     if (response.IsSuccessStatusCode)
                     {
                         var newJson = response.Content.ReadAsStringAsync().Result;
-                        var obj = JObject.Parse(newJson);
-                        positionModel = await MapSinglePosition(obj);
+                        var obj = JArray.Parse(newJson);
+                        foreach (var objPosition in obj)
+                        {
+                            if (Convert.ToString(objPosition["state"]) == "CREATED")
+                            {
+                                positionModel = await MapSinglePosition((JObject)objPosition);
+                                break;
+                            }
+                        }
                     }
+
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //    var newJson = response.Content.ReadAsStringAsync().Result;
+                    //    var obj = JObject.Parse(newJson);
+                    //    positionModel = await MapSinglePosition(obj);
+                    //}
                 }
             }
             catch (Exception)
@@ -1536,9 +1565,23 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 if (response.IsSuccessStatusCode)
                 {
                     var newJson = response.Content.ReadAsStringAsync().Result;
-                    var obj = JObject.Parse(newJson);
-                    positionModel = await MapSinglePosition(obj);
+                    var obj = JArray.Parse(newJson);
+                    foreach (var objPosition in obj)
+                    {
+                        if (Convert.ToString(objPosition["state"]) == "CREATED")
+                        {
+                            positionModel = await MapSinglePosition((JObject)objPosition);
+                            break;
+                        }
+                    }
                 }
+
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    var newJson = response.Content.ReadAsStringAsync().Result;
+                //    var obj = JObject.Parse(newJson);
+                //    positionModel = await MapSinglePosition(obj);
+                //}
             }
             catch (Exception)
             {
@@ -1575,12 +1618,26 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         cycleId +
                         "&institutionId=" + institutionId + "&positionId=" + positionModel.PositionId + "&seatNo=" + positionModel.SeatId);
 
-                    if (resp.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode)
                     {
                         var newJson = resp.Content.ReadAsStringAsync().Result;
-                        var obj = JObject.Parse(newJson);
-                        updatedPosition = await MapSinglePosition(obj);
+                        var obj = JArray.Parse(newJson);
+                        foreach (var objPosition in obj)
+                        {
+                            if (Convert.ToString(objPosition["state"]) == "CREATED")
+                            {
+                                updatedPosition = await MapSinglePosition((JObject)objPosition);
+                                break;
+                            }
+                        }
                     }
+
+                    //if (resp.IsSuccessStatusCode)
+                    //{
+                    //    var newJson = resp.Content.ReadAsStringAsync().Result;
+                    //    var obj = JObject.Parse(newJson);
+                    //    updatedPosition = await MapSinglePosition(obj);
+                    //}
 
                 }
             }

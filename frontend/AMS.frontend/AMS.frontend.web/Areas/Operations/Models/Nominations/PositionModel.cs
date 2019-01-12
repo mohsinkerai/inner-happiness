@@ -20,7 +20,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
 
         public string CurrentCycle { get; set; }
         public string CycleStatus { get; set; }
+
+        public string CycleStatusForDisplay => CycleStatus?.ToLower();
         public string FullName { get; set; }
+        public string State { get; set; }
+
+        public string StateForDisplay => State?.ToLower();
         public string Id { get; set; }
         public PersonModel Incubment { get; set; }
         public List<NominationModel> Nominations { get; set; }
@@ -48,6 +53,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public int Required { get; set; }
 
         public string SeatId { get; set; }
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
 
         #endregion Public Properties
     }
