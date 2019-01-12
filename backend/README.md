@@ -13,14 +13,14 @@ src/resources/application.yml for confiugration properties
 Added Authentication
 
 
-Cycle will work like
+Cycle will work like:
 
 Open -> Appointed -> Closed
 Open -> Appointed -> Midterm -> Appointed -> Closed
 Open -> Appointed -> Midterm -> Canceled -> Closed
 Open -> Cancelled
 
-AppointmentPosition Work Like this
+AppointmentPosition Work Like this:
 Open -> Appointed -> Retired
 
 ## Things TODO:
