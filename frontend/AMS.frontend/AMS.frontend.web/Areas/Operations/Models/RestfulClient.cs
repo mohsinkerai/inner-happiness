@@ -635,7 +635,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         positionModel.PositionName = Convert.ToString(positionName["name"]);
                         positionModel.PositionId = Convert.ToString(positionName["id"]);
                         positionModel.Required = Convert.ToInt32(positionArray["nominationsRequired"]);
-                        positionModel.Rank = Convert.ToInt32(positionArray["rank"]);
+                        positionModel.Rank = Convert.ToInt32(positionArray["rank"].HasValues ? positionArray["rank"] : 0);
                         positionModel.SeatId = Convert.ToString(positionArray["seatId"]);
 
                         //int index = 0;

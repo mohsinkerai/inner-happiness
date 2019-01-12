@@ -132,5 +132,10 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
             return View("Index", new CrudModel { Url = "constants/skill", Title = "Skills" });
         }
 
+        public IActionResult Country()
+        {
+            return View("Index", new CrudModel { Url = "constants/country", Title = "Country" });
+        }
+
     }
 }
