@@ -276,6 +276,20 @@ namespace AMS.frontend.web.ViewComponents
                         ImageClass = "flaticon-list"
                     });
                 }
+
+                if (role == "REP" && menuModel.All(mm => mm.MenuId != 26))
+                {
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 26,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Reports,
+                        SubMenu = null,
+                        Title = "Reports",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-line-graph"
+                    });
+                }
             }
 
             return View(menuModel);
