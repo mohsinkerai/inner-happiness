@@ -20,6 +20,7 @@
         public const string FieldOfInterest = "FieldOfInterest";
         public const string LookupCrud = "LookupCrud";
         public const string Image = "Image";
+        public const string Cycle = "Cycle";
 
         #endregion Public Fields
     }

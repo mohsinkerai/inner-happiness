@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AMS.frontend.web.Areas.Administration.Models;
 using AMS.frontend.web.Areas.Administration.Models.Country;
+using AMS.frontend.web.Areas.Operations.Models.Cycle;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
@@ -1743,7 +1744,29 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }
 
+        public async Task<List<CycleModel>> GetAllCycles()
+        {
+            var res = await _client.GetAsync("cycle/all");
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<CycleModel>();
 
+                foreach (var item in myObject)
+                {
+                    var name = Convert.ToString(item.name);
+                    var startDate = Convert.ToDateTime(item.startDate);
+                    var endDate = Convert.ToDateTime(item.endDate);
+
+                    list.Add(new CycleModel { Name = name, StartDate = startDate, EndDate = endDate });
+                }
+
+                return list;
+            }
+
+            return null;
+        }
 
         #endregion Public Methods
     }

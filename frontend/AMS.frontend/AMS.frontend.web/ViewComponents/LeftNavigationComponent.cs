@@ -62,6 +62,16 @@ namespace AMS.frontend.web.ViewComponents
                         ImageClass = "flaticon-network"
                     });
 
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 25,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Cycle,
+                        SubMenu = null,
+                        Title = "Cycle",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-share"
+                    });
 
                     menuModel.Add(new MenuModel
                     {
