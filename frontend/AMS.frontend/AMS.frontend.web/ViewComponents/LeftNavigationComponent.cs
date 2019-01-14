@@ -113,8 +113,8 @@ namespace AMS.frontend.web.ViewComponents
                             new MenuModel
                             {
                                 MenuId = 7,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.Country,
+                                Action = ActionNames.Country,
+                                Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Country",
                                 Area = AreaNames.Administration,
@@ -277,6 +277,26 @@ namespace AMS.frontend.web.ViewComponents
                                 Controller = ControllerNames.LookupCrud,
                                 SubMenu = null,
                                 Title = "Skills",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 26,
+                                Action = ActionNames.City,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "City",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 27,
+                                Action = ActionNames.JamatiTitle,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Jamati Title",
                                 Area = AreaNames.Administration,
                                 ImageClass = "flaticon-network"
                             }

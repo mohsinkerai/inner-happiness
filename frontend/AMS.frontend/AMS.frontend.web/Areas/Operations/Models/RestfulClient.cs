@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using AMS.frontend.web.Areas.Administration.Models;
-using AMS.frontend.web.Areas.Administration.Models.Country;
 using AMS.frontend.web.Areas.Operations.Models.Cycle;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
@@ -1719,20 +1718,46 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             return null;
         }
-
-        public async Task<bool> AddNewCountry(CountryModel countryModel)
+        
+        public async Task<bool> AddNewData(CrudModel model)
         {
-            countryModel.IsActive = true;
-            var json = JsonConvert.SerializeObject(countryModel);
+            model.IsActive = true;
+            var json = JsonConvert.SerializeObject(model);
 
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var content = new StringContent(json);
-            var res = await _client.PostAsync("constants/country", httpContent);
+            var res = await _client.PostAsync(model.Url, httpContent);
 
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }
 
-        public async Task<bool> AddNewData(CrudModel model)
+        public async Task<bool> AddNewCountry(CountryModel model)
+        {
+            model.IsActive = true;
+            var json = JsonConvert.SerializeObject(model);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PostAsync(model.Url, httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
+        public async Task<bool> AddNewCity(CityModel model)
+        {
+            model.CountryId = model.CountryId.Split('-')[0];
+
+            model.IsActive = true;
+            var json = JsonConvert.SerializeObject(model);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PostAsync(model.Url, httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
+        public async Task<bool> AddNewJamatiTitle(JamatiTitle model)
         {
             model.IsActive = true;
             var json = JsonConvert.SerializeObject(model);

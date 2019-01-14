@@ -52,6 +52,9 @@
         public const string Salutation = "Salutation";
         public const string SecularStudyLevel = "SecularStudyLevel";
         public const string Skill = "Skills";
+        public const string Country = "Country";
+        public const string City = "City";
+        public const string JamatiTitle = "JamatiTitle";
 
         #endregion Public Fields
     }

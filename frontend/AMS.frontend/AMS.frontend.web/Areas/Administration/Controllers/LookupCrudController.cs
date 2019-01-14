@@ -134,7 +134,90 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
 
         public IActionResult Country()
         {
-            return View("Index", new CrudModel { Url = "constants/country", Title = "Country" });
+            return View(new CountryModel { Url = "constants/country", Title = "Country" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCountry(CountryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCountry(model);
+                if (success)
+                {
+                    TempData["MessageType"] = MessageTypes.Success;
+                    TempData["Message"] = Messages.successfullyAdded;
+
+                    ViewBag.MessageType = MessageTypes.Success;
+                    ViewBag.Message = Messages.successfullyAdded;
+                }
+                else
+                {
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
+            }
+
+            return View("Country", model);
+        }
+
+        public async Task<IActionResult> City()
+        {
+            ViewBag.CountryList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
+            return View(new CityModel { Url = "constants/city", Title = "City" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCity(CityModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCity(model);
+                if (success)
+                {
+                    TempData["MessageType"] = MessageTypes.Success;
+                    TempData["Message"] = Messages.successfullyAdded;
+
+                    ViewBag.MessageType = MessageTypes.Success;
+                    ViewBag.Message = Messages.successfullyAdded;
+                }
+                else
+                {
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
+            }
+
+            ViewBag.CountryList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
+            return View("City", model);
+        }
+
+        public async Task<IActionResult> JamatiTitle()
+        {
+            return View(new JamatiTitle { Url = "constants/jamati-title", Title = "JamatiTitle" });
+        }
+
+        public async Task<IActionResult> AddJamatiTitle(JamatiTitle model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewJamatiTitle(model);
+                if (success)
+                {
+                    TempData["MessageType"] = MessageTypes.Success;
+                    TempData["Message"] = Messages.successfullyAdded;
+
+                    ViewBag.MessageType = MessageTypes.Success;
+                    ViewBag.Message = Messages.successfullyAdded;
+                }
+                else
+                {
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
+            }
+
+            return View("JamatiTitle", model);
         }
 
     }

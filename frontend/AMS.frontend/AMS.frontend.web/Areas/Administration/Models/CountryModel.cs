@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AMS.frontend.web.Areas.Administration.Models.Country
+namespace AMS.frontend.web.Areas.Administration.Models
 {
     public class CountryModel : CrudModel
     {
