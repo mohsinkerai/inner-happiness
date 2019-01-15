@@ -51,9 +51,60 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Appoint(MidTermCycle model)
         {
-            return View();
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).appoint(model.CycleId);
+
+            if (success)
+            {
+                TempData["MessageType"] = MessageTypes.Success;
+                TempData["Message"] = Messages.CycleAppoint;
+
+                ViewBag.MessageType = MessageTypes.Success;
+                ViewBag.Message = Messages.CycleAppoint;
+            }
+            else
+            {
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = Messages.GeneralError;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Close(MidTermCycle model)
+        {
+            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).close(model);
+
+            if (success)
+            {
+                TempData["MessageType"] = MessageTypes.Success;
+                TempData["Message"] = Messages.CycleClosed;
+
+                ViewBag.MessageType = MessageTypes.Success;
+                ViewBag.Message = Messages.CycleClosed;
+            }
+            else
+            {
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = Messages.GeneralError;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Detail(string id)
+        {
+            ViewBag.Institution = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositionInstitution();
+
+            return View(new MidTermCycle {CycleId = id });
+        }
+
+        public async Task<JsonResult> GetAllPositionOfInstitution(string uid)
+        {
+            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).findPositionByInstituionId(uid);
+
+            return new JsonResult(list);
         }
     }
 }

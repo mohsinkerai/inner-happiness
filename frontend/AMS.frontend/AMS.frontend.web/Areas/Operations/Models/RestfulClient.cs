@@ -1832,6 +1832,51 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
         }
 
+        public async Task<List<SelectListItem>> findPositionByInstituionId(string InstitutionId)
+        {
+            var res = await _client.GetAsync("position/search/findByInstitutionId?institutionId="+InstitutionId);
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+
+            return null;
+        }
+
+        public async Task<bool> appoint(string id)
+        {
+            var httpContent = new StringContent(id, Encoding.UTF8, "application/json");
+            var res = await _client.PostAsync("cycle/appoint", httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
+        public async Task<bool> close(MidTermCycle model)
+        {
+            JObject jObject = new JObject();
+            jObject.Add("CycleId",model.CycleId);
+            jObject.Add("endingDate", model.StartDate);
+
+            var json = JsonConvert.SerializeObject(jObject);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var res = await _client.PostAsync("cycle/close", httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+        
         #endregion Public Methods
     }
 }

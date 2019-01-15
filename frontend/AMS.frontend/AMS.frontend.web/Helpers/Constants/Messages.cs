@@ -14,6 +14,8 @@
         public const string AllImagesUploaded = "All images have been successfully uploaded.";
         public const string FewImagesUploaded = "Few images have been successfully uploaded. Please check error list.";
         public const string CycleCreated = " Successfully cycle created.";
+        public const string CycleClosed = " Successfully cycle closed.";
+        public const string CycleAppoint = " Successfully appoint.";
 
         #endregion Public Fields
     }
