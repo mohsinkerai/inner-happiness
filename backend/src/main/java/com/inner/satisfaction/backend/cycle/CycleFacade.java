@@ -115,6 +115,7 @@ public class CycleFacade {
       .fetchAppointmentsForCycleByState(cycle.getId(), AppointmentPositionState.APPOINTED);
     appointmentPositions.stream().map(ap -> {
       ap.setTo(endDate);
+      ap.setState(AppointmentPositionState.RETIRED);
       return ap;
     }).forEach(appointmentPositionService::save);
 
