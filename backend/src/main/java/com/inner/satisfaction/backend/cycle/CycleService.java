@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+import javax.validation.constraints.AssertFalse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 @Slf4j
 @Service
@@ -87,7 +89,8 @@ public class CycleService extends BaseService<Cycle> {
     try {
       return appointmentPositionService.save(appointmentPosition);
     } catch (Exception e) {
-      log.info("Unable to save this appointmentPosition Please Debug it {}", appointmentPosition, e);
+      log
+        .info("Unable to save this appointmentPosition Please Debug it {}", appointmentPosition, e);
       throw e;
     }
   }
@@ -106,11 +109,16 @@ public class CycleService extends BaseService<Cycle> {
       .findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(cycleId, institutionId, seatNo,
         positionId);
 
-    Optional<AppointmentPosition> first = aps.stream()
+    List<AppointmentPosition> appointmentPositions = aps.stream()
       .sorted(Comparator.comparing(AppointmentPosition::getFrom))
-      .findFirst();
+      .collect(Collectors.toList());
 
-    return first.map(BaseEntity::getId)
+    Assert.isTrue(!CollectionUtils.isEmpty(appointmentPositions),
+      "No Appointment Positions in Cycle" + cycleId + ", institutionId " + institutionId
+        + ", positionId " + positionId + ", seatNo " + seatNo);
+
+    return Optional.ofNullable(appointmentPositions.get(appointmentPositions.size() - 1))
+      .map(BaseEntity::getId)
       .map(personAppointmentService::findByAppointmentPositionIdAndIsAppointedTrue)
       .map(BaseEntity::getId);
   }
