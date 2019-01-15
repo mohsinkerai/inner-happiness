@@ -120,7 +120,7 @@ public class CycleService extends BaseService<Cycle> {
     return Optional.ofNullable(appointmentPositions.get(appointmentPositions.size() - 1))
       .map(BaseEntity::getId)
       .map(personAppointmentService::findByAppointmentPositionIdAndIsAppointedTrue)
-      .map(BaseEntity::getId);
+      .map(PersonAppointment::getPersonId);
   }
 
   private AppointmentPosition copy(AppointmentPosition appointmentPosition, long newCycleId,
