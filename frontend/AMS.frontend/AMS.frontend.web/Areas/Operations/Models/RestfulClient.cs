@@ -1780,11 +1780,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
+                    var id = Convert.ToString(item.id);
                     var name = Convert.ToString(item.name);
                     var startDate = Convert.ToDateTime(item.startDate);
                     var endDate = Convert.ToDateTime(item.endDate);
 
-                    list.Add(new CycleModel { Name = name, StartDate = startDate, EndDate = endDate });
+                    list.Add(new CycleModel {Id = id, Name = name, StartDate = startDate, EndDate = endDate });
                 }
 
                 return list;

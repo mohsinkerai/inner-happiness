@@ -51,7 +51,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Detail()
+        public async Task<IActionResult> Detail(int id)
         {
             return View();
         }

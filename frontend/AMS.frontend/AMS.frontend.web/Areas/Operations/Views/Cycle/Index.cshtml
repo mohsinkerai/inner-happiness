@@ -62,7 +62,7 @@
                         <td>@item.StartDateForDisplay</td>
                         <td>@item.EndDateForDisplay</td>
                         <td>
-                            <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View"  onclick="@("window.location.href='" + @Url.Action("Detail", "Cycle") + "'");">
+                            <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View"  onclick="@("window.location.href='" + @Url.Action("Detail", "Cycle", new { id = item.Id }) + "'");">
                                 <i class="la la-eye"></i>
                             </button>
                             <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit">

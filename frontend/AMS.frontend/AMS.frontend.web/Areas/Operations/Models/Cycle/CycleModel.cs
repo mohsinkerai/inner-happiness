@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Cycle
 {
     public class CycleModel
     {
+        [NotMapped]
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         [Required]
