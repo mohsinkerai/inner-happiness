@@ -72,12 +72,13 @@ public class CycleFacade {
 
       List<Long> appointmentPositionIds = appointmentPositions.stream()
         .filter(
-          appointmentPosition -> appointmentPosition.getState() == null || appointmentPosition.getState().equals(AppointmentPositionState.CREATED))
+          appointmentPosition -> appointmentPosition.getState() == null || appointmentPosition
+            .getState().equals(AppointmentPositionState.CREATED))
         .map(BaseEntity::getId)
         .collect(Collectors.toList());
 
       // There are positions to work on
-      if(appointmentPositionIds.size() > 0) {
+      if (appointmentPositionIds.size() > 0) {
         int recommendedPersons = personAppointmentService
           .findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
 
@@ -88,7 +89,7 @@ public class CycleFacade {
         throw new RuntimeException("Something is wrong, no appointment position in cycle");
       }
 
-      appointmentPositionIds.stream().forEach((id) ->  {
+      appointmentPositionIds.stream().forEach((id) -> {
         personAppointmentService.appointRecommendedPeople(id);
         appointmentPositionService.updateState(id, AppointmentPositionState.APPOINTED);
       });
@@ -111,7 +112,7 @@ public class CycleFacade {
     }
 
     List<AppointmentPosition> appointmentPositions = appointmentPositionService
-      .fetchActiveAppointmentsForCycle(cycle.getId());
+      .fetchAppointmentsForCycleByState(cycle.getId(), AppointmentPositionState.APPOINTED);
     appointmentPositions.stream().map(ap -> {
       ap.setTo(endDate);
       return ap;
