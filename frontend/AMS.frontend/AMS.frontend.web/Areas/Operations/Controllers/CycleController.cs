@@ -21,6 +21,38 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Create()
         {
+            ViewBag.PreviousCycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CycleModel model)
+        {
+            bool success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).CreateNewCycle(model);
+
+            if (success)
+            {
+                TempData["MessageType"] = MessageTypes.Success;
+                TempData["Message"] = Messages.CycleCreated;
+
+                ViewBag.MessageType = MessageTypes.Success;
+                ViewBag.Message = Messages.CycleCreated;
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.PreviousCycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+
+                ViewBag.MessageType = MessageTypes.Error;
+                ViewBag.Message = Messages.GeneralError;
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> Detail()
+        {
             return View();
         }
     }

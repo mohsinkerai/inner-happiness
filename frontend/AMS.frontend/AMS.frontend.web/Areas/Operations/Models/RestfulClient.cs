@@ -1793,6 +1793,44 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
+        public async Task<bool> CreateNewCycle(CycleModel model)
+        {
+            try
+            {
+                JObject jObject = new JObject();
+                jObject.Add("previousCycleId", model.PreviousCycle);
+                jObject.Add("startDate", model.StartDate);
+
+                JObject cycleDetail = new JObject();
+                cycleDetail.Add("createdBy", "");
+                cycleDetail.Add("endDate", model.EndDate);
+                cycleDetail.Add("id", 0);
+                cycleDetail.Add("isActive", true);
+                cycleDetail.Add("midtermCycle", false);
+                cycleDetail.Add("name", model.CycleNameForDisplay);
+                cycleDetail.Add("nominatedCount", 0);
+                cycleDetail.Add("parentCycle", 0);
+                cycleDetail.Add("previousCycle", model.PreviousCycle);
+                cycleDetail.Add("recommendedCount", 0);
+                cycleDetail.Add("startDate", model.StartDate);
+                cycleDetail.Add("state", "");
+                cycleDetail.Add("updatedBy", "");
+
+                jObject.Add("cycleDetails", cycleDetail);
+
+                var json = JsonConvert.SerializeObject(jObject);
+
+                var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                var res = await _client.PostAsync("cycle/create", httpContent);
+
+                return res.StatusCode == HttpStatusCode.OK ? true : false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         #endregion Public Methods
     }
 }

@@ -13,6 +13,7 @@
         public const string successfullyAdded = "Successfully Added";
         public const string AllImagesUploaded = "All images have been successfully uploaded.";
         public const string FewImagesUploaded = "Few images have been successfully uploaded. Please check error list.";
+        public const string CycleCreated = " Successfully cycle created.";
 
         #endregion Public Fields
     }

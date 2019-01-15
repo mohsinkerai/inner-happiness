@@ -1,0 +1,69 @@
+﻿@model AMS.frontend.web.Areas.Operations.Models.Cycle.CycleModel
+@{
+    ViewBag.ModuleTitle = "Create Cycle";
+    ViewBag.PageTitle = "Create Cycle";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--begin::Portlet-->
+        <div class="m-portlet">
+            <!--begin::Form-->
+            <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Cycle" asp-action="Create" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
+                <div class="m-portlet__body">
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label asp-for="StartDate" class="control-label"></label><span class="required">*</span>
+                                <div class="input-group">
+                                    <input type="text" asp-for="StartDate" class="form-control date-picker" placeholder="Select date">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="StartDate" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label asp-for="EndDate" class="control-label"></label><span class="required">*</span>
+                                <div class="input-group">
+                                    <input type="text" asp-for="EndDate" class="form-control date-picker" placeholder="Select date">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="EndDate" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label asp-for="PreviousCycle" class="control-label"></label>
+                                <select asp-for="PreviousCycle" asp-items="@ViewBag.PreviousCycle" class="form-control m-select2" placeholder="Select Previous Cycle">
+                                    <option></option>
+                                </select>
+                                <span asp-validation-for="PreviousCycle" class="form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions--solid m--align-right">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i> Add
+                        </button>
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Cycle" asp-action="@ActionNames.Index" class="btn default">
+                            <i class="fa fa-close"></i> Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
