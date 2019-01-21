@@ -1345,6 +1345,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             var listNominations = new List<NominationModel>();
             var positionModel = new PositionModel();
+            var incumbentDetail = new IncumbentDetail();
 
             try
             {
@@ -1374,10 +1375,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                             voluntaryCommunityInstitutionList,
                             occupationTypeList, institutionList, positionModel.Incubment);
 
-                        positionModel.incumbentDetail.Priority = Convert.ToInt32(personsAppointed["priority"]);
-                        positionModel.incumbentDetail.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
-                        positionModel.incumbentDetail.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
-                        positionModel.incumbentDetail.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
+                        incumbentDetail.Priority = Convert.ToInt32(personsAppointed["priority"]);
+                        incumbentDetail.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
+                        incumbentDetail.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
+                        incumbentDetail.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
+
+                        positionModel.incumbentDetail = incumbentDetail;
                         
                     }
                     else
