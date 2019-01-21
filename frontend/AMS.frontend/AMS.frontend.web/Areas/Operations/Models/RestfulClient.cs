@@ -624,6 +624,8 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         var positionArray = (JObject) jToken1;
                         var listNominations = new List<NominationModel>();
                         var positionModel = new PositionModel();
+                        var incumbentDetail = new IncumbentDetail();
+
 
                         var personAppointmentList = positionArray["personAppointmentList"];
                         var currentCycle = positionArray["cycle"];
@@ -659,6 +661,13 @@ namespace AMS.frontend.web.Areas.Operations.Models
                                 SetDetails(list, listAreaOfOrigin, salutationList, jamatiTitleList, nameOfDegreeList,
                                     voluntaryCommunityInstitutionList,
                                     occupationTypeList, institutionList, positionModel.Incubment);
+
+                                incumbentDetail.Priority = Convert.ToInt32(personsAppointed["priority"]);
+                                incumbentDetail.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
+                                incumbentDetail.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
+                                incumbentDetail.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
+
+                                positionModel.incumbentDetail = incumbentDetail;
                             }
                             else
                             {
@@ -693,7 +702,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     nominationDetailModel.Positions = listPositions;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
 
@@ -1336,6 +1345,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             var listNominations = new List<NominationModel>();
             var positionModel = new PositionModel();
+            var incumbentDetail = new IncumbentDetail();
 
             try
             {
@@ -1364,6 +1374,14 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         SetDetails(list, listAreaOfOrigin, salutationList, jamatiTitleList, nameOfDegreeList,
                             voluntaryCommunityInstitutionList,
                             occupationTypeList, institutionList, positionModel.Incubment);
+
+                        incumbentDetail.Priority = Convert.ToInt32(personsAppointed["priority"]);
+                        incumbentDetail.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
+                        incumbentDetail.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
+                        incumbentDetail.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
+
+                        positionModel.incumbentDetail = incumbentDetail;
+                        
                     }
                     else
                     {
@@ -1590,13 +1608,16 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return positionModel;
         }
 
-        public async Task<PositionModel> Recommend(NominationModel nominationModel, PositionModel positionModel, string cycleId, string institutionId)
+        public async Task<PositionModel> Recommend(NominationModel nominationModel, PositionModel positionModel, string cycleId, string institutionId, bool isIncumbent)
         {
             PositionModel updatedPosition = null;
 
             try
             {
-                var jObject = new JObject
+                JObject jObject = null;
+                if (!isIncumbent)
+                {
+                    jObject = new JObject
                     {
                         {"appointmentPositionId", positionModel.Id},
                         {"isAppointed", false},
@@ -1605,6 +1626,20 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         {"priority", nominationModel.Priority},
                         {"remarks", ""}
                     };
+                }
+                else
+                {
+                    jObject = new JObject
+                    {
+                        {"appointmentPositionId", positionModel.Id},
+                        {"isAppointed", true},
+                        {"isRecommended", true},
+                        {"personId", nominationModel.Person.Id},
+                        {"priority", nominationModel.Priority},
+                        {"remarks", ""}
+                    };
+
+                }
 
                 var json = JsonConvert.SerializeObject(jObject);
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -1631,14 +1666,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                             }
                         }
                     }
-
-                    //if (resp.IsSuccessStatusCode)
-                    //{
-                    //    var newJson = resp.Content.ReadAsStringAsync().Result;
-                    //    var obj = JObject.Parse(newJson);
-                    //    updatedPosition = await MapSinglePosition(obj);
-                    //}
-
+                    
                 }
             }
             catch (Exception ex)

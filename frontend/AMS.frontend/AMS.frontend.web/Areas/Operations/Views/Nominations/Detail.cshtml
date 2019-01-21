@@ -73,6 +73,17 @@
                     <div class="m-widget5__content" style="padding-left: 1.57rem !important;">
                         <div class="m-widget5__pic">
                             <img class="m-widget7__img" src="data:image/jpeg;base64,@position.Incubment?.Image" alt="">
+                            @if (position.incumbentDetail != null)
+                            {
+                                if (position.incumbentDetail.IsRecommended)
+                                {
+                                    <div class="m-widget5__info">
+                                        <span class="m-widget5__desc m--font-info">
+                                            <span class="m-badge m-badge--info m-badge--wide m-badge--rounded" style="background-color:#30b96d !important; margin-top:5px !important">Recommended</span>
+                                        </span>
+                                    </div>
+                                }
+                            }
                         </div>
                         <div class="m-widget5__section">
                             <h4 class="m-widget5__title">
@@ -118,6 +129,19 @@
                                         Masters (Architect), Massachusetts Institute of Technology (USA), 1991
                                     </span>*@
                             </div>
+                            @if (position.incumbentDetail != null)
+                            {
+                                if (!position.incumbentDetail.IsRecommended)
+                                {
+                                    <div class="m-widget5__info">
+                                        <span class="m-widget5__desc m--font-info" style="margin-top:5px !important">
+                                            <a href='javascript:Recommend("@Url.Action("RecommendIncumbent", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@position.Id", "@position.Incubment.Id", "@position.incumbentDetail.personAppointmentId", "@position.SeatId", "@position.PositionId");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent" title="Recommend">
+                                                <i class="la la-star"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                }
+                            }
                         </div>
                     </div>
                     <div class="m-widget5__content" style="padding-right: 1.57rem !important;">
