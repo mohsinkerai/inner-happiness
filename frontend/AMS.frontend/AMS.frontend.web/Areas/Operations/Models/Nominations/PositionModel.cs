@@ -28,6 +28,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public string StateForDisplay => State?.ToLower();
         public string Id { get; set; }
         public PersonModel Incubment { get; set; }
+        public IncumbentDetail incumbentDetail { get; set; }
         public List<NominationModel> Nominations { get; set; }
 
         public string NominationsMessage
