@@ -7,11 +7,13 @@ import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
+import com.inner.satisfaction.backend.person.appointment.event.PersonRecommendedEventDto;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -25,16 +27,19 @@ public class PersonAppointmentFacade {
   private final PersonService personService;
   private final PersonAppointmentService personAppointmentService;
   private final AppointmentPositionService appointmentPositionService;
+  private final ApplicationEventPublisher applicationEventPublisher;
 
   public PersonAppointmentFacade(
     CycleService cycleService,
     AppointmentPositionService appointmentPositionService,
     PersonAppointmentService personAppointmentService,
-    PersonService personService) {
+    PersonService personService,
+    ApplicationEventPublisher applicationEventPublisher) {
     this.cycleService = cycleService;
     this.appointmentPositionService = appointmentPositionService;
     this.personAppointmentService = personAppointmentService;
     this.personService = personService;
+    this.applicationEventPublisher = applicationEventPublisher;
   }
 
   public PersonAppointment save(PersonAppointment personAppointment) {
@@ -175,5 +180,33 @@ public class PersonAppointmentFacade {
     if (dbPersonAppointment.getPriority() == 0) {
       throw new RuntimeException("Excuseme!! you can't update incumbtee");
     }
+  }
+
+  @Transactional
+  public void recommendPersonInAppointment(PersonRecommendationDto personRecommendationDto) {
+    Long personAppointmentId = personRecommendationDto.getPersonAppointmentId();
+    PersonAppointment personAppointment = personAppointmentService.findOne(personAppointmentId);
+    Assert.notNull(personAppointment,
+      "Invalid personAppointment Id, personAppointment does not exists");
+
+    Long appointmentPositionId = personAppointment.getAppointmentPositionId();
+    List<PersonAppointment> alreadyRecommended = personAppointmentService
+      .findByAppointmentPositionIdAndIsRecommendedTrue(
+        personAppointment.getAppointmentPositionId());
+
+    alreadyRecommended.stream().map(pa -> {
+      pa.setIsRecommended(Boolean.FALSE);
+      return pa;
+    }).map(personAppointmentService::save);
+
+    personAppointment.setIsRecommended(true);
+    personAppointmentService.save(personAppointment);
+
+    applicationEventPublisher.publishEvent(PersonRecommendedEventDto.builder()
+      .personAppointmentId(personAppointmentId)
+      .appointmentPositionId(appointmentPositionId)
+      .personId(personAppointment.getPersonId())
+      .previousRecommendationCount(alreadyRecommended.size())
+      .build());
   }
 }
