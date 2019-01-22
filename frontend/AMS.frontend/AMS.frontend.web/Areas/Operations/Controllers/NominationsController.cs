@@ -322,11 +322,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var cycleId = HttpContext.Session.GetString(SelectedCycle);
 
             PositionModel position = model.Positions.Where(p => p.Id == positionId).FirstOrDefault();
-            NominationModel nominationModel = position.Nominations.Where(n => n.Person.Id == personId).FirstOrDefault();
+            //NominationModel nominationModel = position.Nominations.Where(n => n.Person.Id == personId).FirstOrDefault();
 
             var positionModel =
                 await new RestfulClient(
-                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Recommend(nominationModel, position, cycleId, institutionId, false);
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Recommend(personAppointmentId, position, cycleId, institutionId);
 
             //update data in session
             model.Positions.Where(p => p.Id == positionId).Select(Positions => { Positions = positionModel; return Positions; }).ToList();
@@ -356,44 +356,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     }
                 }
             });*/
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RecommendIncumbent(string positionId, string personId, string personAppointmentId, string seatId, string id)
-        {
-            //getting required data from session
-            var json = HttpContext.Session.GetString(SessionNominationModel);
-            var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
-
-            var institutionId = model.Institution.Id;
-            var cycleId = HttpContext.Session.GetString(SelectedCycle);
-
-            PositionModel position = model.Positions.Where(p => p.Id == positionId).FirstOrDefault();
-
-            var positionModel =
-                await new RestfulClient(
-                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Recommend(
-                    new NominationModel
-                    {
-                        Priority = 0,
-                        Person = new Models.Persons.PersonModel
-                        {
-                            Id = personId
-                        },
-                        personAppointmentId = personAppointmentId
-                    },
-                        position,
-                        cycleId,
-                        institutionId,
-                        true);
-
-            //update data in session
-            model.Positions.Where(p => p.Id == positionId).Select(Positions => { Positions = positionModel; return Positions; }).ToList();
-            var updatedJson = JsonConvert.SerializeObject(model);
-            HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-
-            return PartialView("_NominationsTablePartial", positionModel);
-            
         }
 
         [HttpPost]

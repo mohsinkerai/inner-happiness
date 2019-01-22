@@ -208,7 +208,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
         #region Private Fields
 
-        private readonly string _baseUrl = "http://is.bismagreens.com:8080/";
+        private readonly string _baseUrl = "http://is.bismagreens.com/";
 
         //http://localhost:8080/
 
@@ -1608,43 +1608,20 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return positionModel;
         }
 
-        public async Task<PositionModel> Recommend(NominationModel nominationModel, PositionModel positionModel, string cycleId, string institutionId, bool isIncumbent)
+        public async Task<PositionModel> Recommend(string personAppointmentId, PositionModel positionModel, string cycleId, string institutionId)
         {
             PositionModel updatedPosition = null;
 
             try
             {
-                JObject jObject = null;
-                if (!isIncumbent)
+                var jObject = new JObject
                 {
-                    jObject = new JObject
-                    {
-                        {"appointmentPositionId", positionModel.Id},
-                        {"isAppointed", false},
-                        {"isRecommended", true},
-                        {"personId", nominationModel.Person.Id},
-                        {"priority", nominationModel.Priority},
-                        {"remarks", ""}
-                    };
-                }
-                else
-                {
-                    jObject = new JObject
-                    {
-                        {"appointmentPositionId", positionModel.Id},
-                        {"isAppointed", true},
-                        {"isRecommended", true},
-                        {"personId", nominationModel.Person.Id},
-                        {"priority", nominationModel.Priority},
-                        {"remarks", ""}
-                    };
-
-                }
-
+                    { "personAppointmentId", personAppointmentId }
+                };
+                
                 var json = JsonConvert.SerializeObject(jObject);
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _client.PutAsync("/person/appointment/one/" + nominationModel.personAppointmentId,
-                    httpContent);
+                var response = await _client.PostAsync("/person/appointment/recommend", httpContent);
 
                 if (response.IsSuccessStatusCode)
                 {

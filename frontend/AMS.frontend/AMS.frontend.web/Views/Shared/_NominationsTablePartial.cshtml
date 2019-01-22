@@ -3,6 +3,7 @@
     <thead>
         <tr>
             <th> Priority </th>
+            <th> Form Number </th>
             <th> Name </th>
             <th> Occupation </th>
             <th> Education </th>
@@ -16,6 +17,7 @@
             {
                 <tr id="nomination-row-@nomination.personAppointmentId" style="@nomination.RowClass">
                     <td>@nomination.Priority</td>
+                    <td>@nomination.Person.Id</td>
                     <td>
                         <div class="m-card-user m-card-user--sm">
                             <div class="m-card-user__pic">
