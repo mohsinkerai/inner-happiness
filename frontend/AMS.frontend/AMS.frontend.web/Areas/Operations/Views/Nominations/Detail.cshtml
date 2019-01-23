@@ -34,7 +34,8 @@
                         }
                     </span>
                     <h3 class="m-portlet__head-text">
-                        @position.PositionName&nbsp;&nbsp;<span class="m-badge m-badge--light m-badge--wide m-badge--rounded">@position.NominationsMessage</span>
+                        @position.PositionName&nbsp;&nbsp;|&nbsp;&nbsp;@position.Incubment.FullName&nbsp;&nbsp;|&nbsp;&nbsp;@position.Incubment.Id&nbsp;&nbsp;
+                        <span class="m-badge m-badge--light m-badge--wide m-badge--rounded">@position.NominationsMessage</span>
                         &nbsp;&nbsp;
                         @if (position.State == "CREATED")
                         {
@@ -47,6 +48,11 @@
                         else if (position.State == "RETIRED")
                         {
                             <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">@position.StateForDisplay</span>
+                        }
+                        &nbsp;&nbsp;
+                        @if (position.Nominations?.Count < position.Required)
+                        {
+                            <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">Pending</span>
                         }
                     </h3>
                 </div>
@@ -155,19 +161,29 @@
                             <br>
                             <span class="m-widget5__votes">Nominated</span>
                         </div>
-                        @if (position.incumbentDetail != null)
-                        {
-                            if (!position.incumbentDetail.IsRecommended)
+                        <div class="m-widget5__info" style="margin-top:20px !important">
+                            @if (position.incumbentDetail != null)
                             {
-                                <div class="m-widget5__info" style="margin-top:50px !important">
-                                    <span class="m-widget5__desc m--font-info" >
-                                        <a href='javascript:Recommend("@Url.Action("Recommend", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@position.Id", "@position.Incubment.Id", "@position.incumbentDetail.personAppointmentId", "@position.SeatId", "@position.PositionId");' class="m-portlet__nav-link btn m-btn--label-accent m-btn--hover-success" title="Recommend">
-                                            <i class="la la-star"> Click to recommend</i>
+                                if (!position.incumbentDetail.IsRecommended)
+                                {
+                                    <span class="m-widget5__desc m--font-info">
+                                        <a href='javascript:Recommend("@Url.Action("Recommend", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@position.Id", "@position.Incubment.Id", "@position.incumbentDetail.personAppointmentId", "@position.SeatId", "@position.PositionId");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Recommend">
+                                            <i class="la la-star"></i>
                                         </a>
                                     </span>
-                                </div>
+                                }
                             }
-                        }
+                            <span class="m-widget5__desc m--font-info">
+                                <a target="_blank" asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@position.Incubment.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                                    <i class="la la-edit"></i>
+                                </a>
+                            </span>
+                            <span class="m-widget5__desc m--font-info">
+                                <a target="_blank" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@position.Incubment.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                                    <i class="la la-eye"></i>
+                                </a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
