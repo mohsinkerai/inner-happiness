@@ -52,28 +52,41 @@
                             <!-- begin::Tab Content -->
                             <div class="m-widget28__tab tab-content">
                                 <div id="menu11" class="m-widget28__tab-container tab-pane active">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Coverage</span>
-                                            <span>National Council</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Dashboard</span>
-                                            <span>Yes</span>
-                                        </div>
-                                    </div>
-                                    <div class="m--align-right">
-                                        <div class="btn-group dropup">
-                                            <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Generate Report
-                                            </button>
-                                            <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(119px, -176px, 0px);">
-                                                <a target="_blank" class="dropdown-item" href="http://appointment.akcpk.org:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Shortlist.pdf" download>PDF</a>
-                                                <a target="_blank" class="dropdown-item" href="http://appointment.akcpk.org:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Shortlist.docx" download>Word</a>
-                                                @*<a target="_blank" class="dropdown-item" href="https://ol.baker.edu/webapps/dur-browserCheck-bb_bb60/samples/sample.xls" download>Excel</a>*@
+                                    <form asp-controller="Reports" asp-action="ThreePlusOne" asp-area="Operations">
+                                        <div class="m-widget28__tab-items">
+                                            <div class="m-widget28__tab-item">
+                                                <span>Coverage</span>
+                                                <span>National Council</span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>Dashboard</span>
+                                                <span>Yes</span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <div class="form-group">
+                                                    <label class="control-label">Cycle</label>
+                                                    <select name="cycleid" asp-items="@ViewBag.Cycle" class="form-control m-select2" placeholder="Select a cycle">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <div class="form-group">
+                                                    <label class="control-label">Instiution</label>
+                                                    <select name="cycleid" asp-items="@ViewBag.Cycle" class="form-control m-select2" placeholder="Select a institution">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="m--align-right">
+                                            <div class="btn-group">
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    Generate Report
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div id="menu21" class="m-widget28__tab-container tab-pane fade">
                                     <div class="m-widget28__tab-items">

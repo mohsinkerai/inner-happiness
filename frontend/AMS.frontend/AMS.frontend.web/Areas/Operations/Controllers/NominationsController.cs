@@ -656,7 +656,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         n.PositionName,
                         n.FullName,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Nominations,
-                            new {area = AreaNames.Operations, uid = n.Id})
+                            new {area = AreaNames.Operations, uid = n.Id}),
+                        ThreePlusOneUrl = Url.Action("ThreePlusOne", "Reports",
+                            new
+                            {
+                                area = AreaNames.Operations, insitutionId = n.Id,
+                                cycleId = HttpContext.Session.GetString(SelectedCycle)
+                            })
                     })
                 });
             }
