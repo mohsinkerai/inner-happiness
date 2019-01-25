@@ -299,6 +299,16 @@ namespace AMS.frontend.web.ViewComponents
                                 Title = "Jamati Title",
                                 Area = AreaNames.Administration,
                                 ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 27,
+                                Action = ActionNames.Position,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "Position",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
                             }
                         },
                         Title = "Master Data",

@@ -220,5 +220,10 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
             return View("JamatiTitle", model);
         }
 
+        public IActionResult Position()
+        {
+            return View("Index", new CrudModel { Url = "position", Title = "Position" });
+        }
+
     }
 }

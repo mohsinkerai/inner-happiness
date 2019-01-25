@@ -56,6 +56,7 @@
         public const string City = "City";
         public const string JamatiTitle = "JamatiTitle";
         public const string GetAllPositionOfInstitution = "GetAllPositionOfInstitution";
+        public const string Position = "Position";
 
         #endregion Public Fields
     }
