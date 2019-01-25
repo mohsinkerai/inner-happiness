@@ -1980,7 +1980,7 @@ function Recommend(url, positionId, personId, personAppointmentId, seatId, id) {
         },
         success: function (result) {
             if (result.length !== 4) {
-                $("#nominations-table-" + positionId).html(result);
+				$("#nominations-table-" + positionId).html(result);
                 InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
                 $("#nominations-" + positionId).css("min-height", "0px");
             }
