@@ -1850,9 +1850,11 @@ function InitializeInstitutionDataTable(id, title, url) {
             title: "Actions",
             orderable: false,
             render: function (a, e, t, n) {
-                return '<a href=' +
-                    t["detailUrl"] +
-                    ' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details"><i class="la la-eye"></i></a>';
+	            return '<a href=' +
+		            t["detailUrl"] +
+		            ' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details"><i class="la la-eye"></i></a><a target="_blank" href=' +
+		            t["threePlusOneUrl"] +
+		            ' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Generate 3+1 Report"><i class="la la-sitemap"></i></a>';
             }
         }],
         colReorder: true,
