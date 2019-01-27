@@ -27,6 +27,10 @@
                             {
                                 <img class="m--img-rounded" src="data:image/jpeg;base64,@appointedOne.Person?.Image" style="width: 35px; height: 35px;" title="">
                             }
+                            else if (position.incumbentDetail != null && position.incumbentDetail.IsAppointed)
+                            {
+                                <img class="m--img-rounded" src="data:image/jpeg;base64,@position.Incubment?.Image" style="width: 35px; height: 35px;" title="">
+                            }
                             else
                             {
                                 <i class="flaticon-avatar"></i>
@@ -50,9 +54,13 @@
                             <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">@position.StateForDisplay</span>
                         }
                         &nbsp;&nbsp;
-                        @if (position.Nominations?.Count < position.Required)
+                        @if (position.Nominations != null && !position.Nominations.Any(n => n.IsRecommended) && position.incumbentDetail != null && !position.incumbentDetail.IsRecommended)
                         {
-                            <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">Pending</span>
+                            <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">pending Recommendation</span>
+                        }
+                        else
+                        {
+                            <span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Recommendation completed</span>
                         }
                     </h3>
                 </div>
