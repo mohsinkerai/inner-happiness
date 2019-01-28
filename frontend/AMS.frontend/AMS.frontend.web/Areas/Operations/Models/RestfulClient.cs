@@ -1881,7 +1881,26 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }
-        
+
+        public async Task<bool> AddNewVoluntaryInstitution(VoluntaryInstitutionModel model)
+        {
+            var level = model.Level;
+            var subLevel = string.IsNullOrWhiteSpace(model.Region)
+                ? model.Local
+                : model.Region;
+
+            model.LevelId = string.IsNullOrWhiteSpace(subLevel) ? "1" : subLevel;
+
+            model.IsActive = true;
+            var json = JsonConvert.SerializeObject(model);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PostAsync(model.Url, httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
         #endregion Public Methods
     }
 }

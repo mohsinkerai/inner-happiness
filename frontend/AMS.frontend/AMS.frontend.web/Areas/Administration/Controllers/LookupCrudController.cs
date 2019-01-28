@@ -220,5 +220,39 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
             return View("JamatiTitle", model);
         }
 
+        public IActionResult Position()
+        {
+            return View("Index", new CrudModel { Url = "position", Title = "Position" });
+        }
+
+        public IActionResult VoluntaryInstitution()
+        {
+            return View(new VoluntaryInstitutionModel { Url = "institution", Title = "Voluntary Institution" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddVoluntaryInstitution(VoluntaryInstitutionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewVoluntaryInstitution(model);
+                if (success)
+                {
+                    TempData["MessageType"] = MessageTypes.Success;
+                    TempData["Message"] = Messages.successfullyAdded;
+
+                    ViewBag.MessageType = MessageTypes.Success;
+                    ViewBag.Message = Messages.successfullyAdded;
+                }
+                else
+                {
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
+            }
+
+            return View("VoluntaryInstitution", model);
+        }
+
     }
 }
