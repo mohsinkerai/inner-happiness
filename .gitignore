@@ -32,3 +32,4 @@ app.log*
 /frontend/AMS.frontend/ImageConversionUtility/bin/Release/netcoreapp2.1
 /frontend/AMS.frontend/.vs/AMS.frontend/v16/.suo
 /frontend/AMS.frontend/.vs/AMS.frontend/v16/Server/sqlite3
+/frontend/AMS.frontend/.vs/AMS.frontend/config/applicationhost.config
