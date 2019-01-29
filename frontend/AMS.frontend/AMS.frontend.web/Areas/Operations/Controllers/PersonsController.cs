@@ -9,6 +9,7 @@ using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
+using ImageMagick;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -90,6 +91,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
+                            //var optimizer = new ImageOptimizer();
+                            //optimizer.LosslessCompress(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
 
@@ -109,7 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         ViewBag.MessageType = MessageTypes.Success;
                         ViewBag.Message = Messages.SuccessfulUserAdd;
 
-                        return RedirectToAction("Edit", "Persons", new {area = AreaNames.Operations, id = model.Id});
+                        return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
 
                         //return RedirectToAction("Index");
                     }
@@ -133,7 +136,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         public List<AkdnTrainingModel> AddAkdnTrainingToSession(string id, string training, string countryOfTarining,
-            string date)
+            string date, int priority = 0)
         {
             var sessionAkdnTrainingList = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList") ??
                                           new List<AkdnTrainingModel>();
@@ -152,6 +155,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 dt = Convert.ToDateTime(date);
             }
+            
+            var highestPriority = sessionAkdnTrainingList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
 
             sessionAkdnTrainingList.Add(new AkdnTrainingModel
             {
@@ -168,11 +173,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 TrainingName = string.IsNullOrWhiteSpace(training) ? string.Empty : training.Split('-')[1],
                 //Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year),
                 //Date = string.IsNullOrWhiteSpace(date) ? DateTime.ParseExact("00/00/00", "MM/dd/yyyy", null) : DateTime.ParseExact(date, "MM/dd/yyyy", null)
-                Date = dt
+                Date = dt,
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionAkdnTrainingList.Count; counter++)
-                sessionAkdnTrainingList[counter].Priority = counter + 1;
+            //for (var counter = 0; counter < sessionAkdnTrainingList.Count; counter++)
+            //    sessionAkdnTrainingList[counter].Priority = counter + 1;
+
+            sessionAkdnTrainingList = sessionAkdnTrainingList.OrderBy(v => v.Priority).ToList();
 
             HttpContext.Session.Set("AkdnTrainingList", sessionAkdnTrainingList);
 
@@ -338,6 +346,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
+                            //var optimizer = new ImageOptimizer();
+                            //memoryStream.Position = 0;
+                            //optimizer.LosslessCompress(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
 
@@ -354,7 +365,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         ViewBag.MessageType = MessageTypes.Success;
                         ViewBag.Message = Messages.SuccessUserUpdate;
 
-                        return RedirectToAction("Edit", "Persons", new {area = AreaNames.Operations, id = model.Id});
+                        return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
 
                         //return RedirectToAction("Index");
                     }
@@ -363,7 +374,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ViewBag.Message = Messages.GeneralError;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
@@ -679,7 +690,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     var dob = DateTime.ParseExact(searchingData.DOB, "dd/MM/yyyy", null);
                     dateOfBirth = dob.ToString("yyyy-MM-dd");
                 }
-                
+
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
                 var search = queryCollection["search[value]"][0];
@@ -711,9 +722,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         n.Cnic,
                         n.DateOfBirthForDisplay,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, id = n.Id}),
+                            new { area = AreaNames.Operations, id = n.Id }),
                         EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, id = n.Id})
+                            new { area = AreaNames.Operations, id = n.Id })
                     })
                 });
             }
@@ -837,10 +848,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 person.RelativeDateOfBirth = person.DateOfBirth;
                 person.RelativePersonId = person.Id;
                 person.RelativeFormNumber = person.Id;
-                
+
             }
             //return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeCnic = cnic } : null);
-            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel {RelativeCnic = cnic} : person);
+            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeCnic = cnic } : person);
         }
 
         [HttpPost]
@@ -892,7 +903,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<EducationModel> AddEducationToSession(string id, string institution, string countryOfStudy,
             string fromYear, string toYear,
-            string nameOfDegree, string majorAreaOfStudy)
+            string nameOfDegree, string majorAreaOfStudy, int priority = 0)
         {
             var sessionEducationList = HttpContext.Session.Get<List<EducationModel>>("EducationList") ??
                                        new List<EducationModel>();
@@ -902,6 +913,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             else
                 sessionEducationList.Remove(sessionEducationList.Find(e => e.EducationId == id));
 
+            var highestPriority = sessionEducationList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
+
             sessionEducationList.Add(new EducationModel
             {
                 EducationId = id,
@@ -909,7 +922,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
                 CountryOfStudyName =
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
                 MajorAreaOfStudy = string.IsNullOrWhiteSpace(majorAreaOfStudy)
@@ -920,11 +933,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     : majorAreaOfStudy.Split('-')[1],
                 NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
                 NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear)
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionEducationList.Count; counter++)
-                sessionEducationList[counter].Priority = counter + 1;
+            //for (var counter = 0; counter < sessionEducationList.Count; counter++)
+            //    sessionEducationList[counter].Priority = counter + 1;
+
+            sessionEducationList = sessionEducationList.OrderBy(v => v.Priority).ToList();
 
             HttpContext.Session.Set("EducationList", sessionEducationList);
             return sessionEducationList;
@@ -933,7 +949,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private List<EmploymentModel> AddEmploymentToSession(string id, string nameOfOrganization, string category,
             string designation,
             string location, string employmentEmailAddress, string employmentTelephone, string typeOfBusiness,
-            string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate)
+            string natureOfBusiness, string natureOfBusinessOther, string employmentStartDate, string employmentEndDate, int priority = 0)
         {
             var sessionEmploymentList = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList") ??
                                         new List<EmploymentModel>();
@@ -976,6 +992,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 endDt = Convert.ToDateTime(employmentEndDate);
             }
 
+            var highestPriority = sessionEmploymentList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
+
             sessionEmploymentList.Add(new EmploymentModel
             {
                 EmploymentId = id,
@@ -997,11 +1015,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     : natureOfBusiness.Split('-')[1],
                 EmploymentStartDate = startDt,
                 EmploymentTelephone = employmentTelephone,
-                NatureOfBusinessOther = natureOfBusinessOther
+                NatureOfBusinessOther = natureOfBusinessOther,
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionEmploymentList.Count; counter++)
-                sessionEmploymentList[counter].Priority = counter + 1;
+            //for (var counter = 0; counter < sessionEmploymentList.Count; counter++)
+            //    sessionEmploymentList[counter].Priority = counter + 1;
+
+            sessionEmploymentList = sessionEmploymentList.OrderBy(v => v.Priority).ToList();
 
             HttpContext.Session.Set("EmploymentList", sessionEmploymentList);
 
@@ -1106,7 +1127,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         private List<LanguageProficiencyModel> AddLanguageToSession(string id, string language, string read,
-            string write, string speak)
+            string write, string speak, int priority = 0)
         {
             var sessionLanguageList = HttpContext.Session.Get<List<LanguageProficiencyModel>>("LanguageList") ??
                                       new List<LanguageProficiencyModel>();
@@ -1115,6 +1136,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 id = Guid.NewGuid().ToString();
             else
                 sessionLanguageList.Remove(sessionLanguageList.Find(e => e.LanguageProficiencyId == id));
+
+            var highestPriority = sessionLanguageList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
 
             sessionLanguageList.Add(new LanguageProficiencyModel
             {
@@ -1126,11 +1149,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 Speak = string.IsNullOrWhiteSpace(speak) ? string.Empty : speak.Split('-')[0],
                 SpeakName = string.IsNullOrWhiteSpace(speak) ? string.Empty : speak.Split('-')[1],
                 Write = string.IsNullOrWhiteSpace(write) ? string.Empty : write.Split('-')[0],
-                WriteName = string.IsNullOrWhiteSpace(write) ? string.Empty : write.Split('-')[1]
+                WriteName = string.IsNullOrWhiteSpace(write) ? string.Empty : write.Split('-')[1],
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionLanguageList.Count; counter++)
-                sessionLanguageList[counter].Priority = counter + 1;
+            //for (var counter = 0; counter < sessionLanguageList.Count; counter++)
+            //    sessionLanguageList[counter].Priority = counter + 1;
+
+            sessionLanguageList = sessionLanguageList.OrderBy(v => v.Priority).ToList();
 
             HttpContext.Session.Set("LanguageList", sessionLanguageList);
 
@@ -1139,7 +1165,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<ProfessionalTrainingModel> AddProfessionalTrainingToSession(string id, string training,
             string institution,
-            string countryOfTarining, string month, string year, string date)
+            string countryOfTarining, string month, string year, string date, int priority = 0)
         {
             var sessionProfessionalTrainingList =
                 HttpContext.Session.Get<List<ProfessionalTrainingModel>>("ProfessionalTrainingList") ??
@@ -1160,6 +1186,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 dt = Convert.ToDateTime(date);
             }
 
+            var highestPriority = sessionProfessionalTrainingList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
+
             sessionProfessionalTrainingList.Add(new ProfessionalTrainingModel
             {
                 TrainingId = id,
@@ -1174,11 +1202,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //MonthName = GetMonthName(month.Contains('-') ? month.Split('-')[0] : month),
                 Training = training,
                 //Year = string.IsNullOrWhiteSpace(year) ? (int?) null : Convert.ToInt32(year),
-                Date = dt
+                Date = dt,
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionProfessionalTrainingList.Count; counter++)
-                sessionProfessionalTrainingList[counter].Priority = counter + 1;
+            //for (var counter = 0; counter < sessionProfessionalTrainingList.Count; counter++)
+            //    sessionProfessionalTrainingList[counter].Priority = counter + 1;
+
+            sessionProfessionalTrainingList = sessionProfessionalTrainingList.OrderBy(v => v.Priority).ToList();
 
             HttpContext.Session.Set("ProfessionalTrainingList", sessionProfessionalTrainingList);
 
@@ -1187,7 +1218,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<VoluntaryCommunityModel> AddVoluntaryCommunityToSession(string id, string institution,
             string fromYear,
-            string toYear, string position, string cycle)
+            string toYear, string position, string cycle, int priority = 0)//saif replicate this
         {
             var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
@@ -1203,6 +1234,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             else
                 sessionVoluntaryCommunityList.Remove(
                     sessionVoluntaryCommunityList.Find(e => e.VoluntaryCommunityId == id));
+
+            //saif replicate this
+            var highestPriority = sessionVoluntaryCommunityList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
 
             sessionVoluntaryCommunityList.Add(new VoluntaryCommunityModel
             {
@@ -1223,19 +1257,21 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1],
                 IsImamatAppointee = !string.IsNullOrWhiteSpace(cycle),
                 Cycle = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[0],
-                CycleName = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[1]
+                CycleName = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[1],
+                //saif replicate this
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionVoluntaryCommunityList.Count; counter++)
-                sessionVoluntaryCommunityList[counter].Priority = counter + 1;
+            sessionVoluntaryCommunityList = sessionVoluntaryCommunityList.OrderBy(v => v.Priority).ToList();
 
+            //saif replicate this
             HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
 
             return sessionVoluntaryCommunityList;
         }
 
         private List<VoluntaryPublicModel> AddVoluntaryPublicToSession(string id, string institution, string fromYear,
-            string toYear, string position)
+            string toYear, string position, int priority = 0)
         {
             var sessionVoluntaryPublicList =
                 HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList") ??
@@ -1246,17 +1282,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             else
                 sessionVoluntaryPublicList.Remove(sessionVoluntaryPublicList.Find(e => e.VoluntaryPublicId == id));
 
+            var highestPriority = sessionVoluntaryPublicList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
+
             sessionVoluntaryPublicList.Add(new VoluntaryPublicModel
             {
                 VoluntaryPublicId = id,
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
                 Institution = institution,
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear),
-                Position = position
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
+                Position = position,
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionVoluntaryPublicList.Count; counter++)
-                sessionVoluntaryPublicList[counter].Priority = counter + 1;
+            //for (var counter = 0; counter < sessionVoluntaryPublicList.Count; counter++)
+            //    sessionVoluntaryPublicList[counter].Priority = counter + 1;
+
+            sessionVoluntaryPublicList = sessionVoluntaryPublicList.OrderBy(v => v.Priority).ToList();
 
             HttpContext.Session.Set("VoluntaryPublicList", sessionVoluntaryPublicList);
 
@@ -1472,6 +1513,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                     if (person.Educations != null)
                     {
+                        person.Educations = person.Educations
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var education in person.Educations)
                         {
                             string institutionName = GetText(education.Institution, ViewBag.InstitutionList);
@@ -1490,7 +1534,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 education.CountryOfStudy + "-" + education.CountryOfStudyName,
                                 education.FromYear?.ToString(), education.ToYear?.ToString(),
                                 education.NameOfDegree + "-" + education.NameOfDegreeName,
-                                education.MajorAreaOfStudy + "-" + education.MajorAreaOfStudyName);
+                                education.MajorAreaOfStudy + "-" + education.MajorAreaOfStudyName, education.Priority);
                         }
 
                         person.Educations = HttpContext.Session.Get<List<EducationModel>>("EducationList");
@@ -1504,6 +1548,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.AkdnTrainings != null)
                     {
+                        person.AkdnTrainings = person.AkdnTrainings
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var akdnTraining in person.AkdnTrainings)
                         {
                             string training = GetText(akdnTraining.Training, ViewBag.AkdnTrainingList);
@@ -1517,7 +1564,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             AddAkdnTrainingToSession(akdnTraining.TrainingId,
                                 akdnTraining.Training + "-" + akdnTraining.TrainingName,
                                 akdnTraining.CountryOfTraining + "-" + akdnTraining.CountryOfTrainingName,
-                                akdnTraining.Date?.ToString());
+                                akdnTraining.Date?.ToString(), akdnTraining.Priority);
                         }
 
                         person.AkdnTrainings = HttpContext.Session.Get<List<AkdnTrainingModel>>("AkdnTrainingList");
@@ -1531,6 +1578,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.ProfessionalTrainings != null)
                     {
+                        person.ProfessionalTrainings = person.ProfessionalTrainings
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var professionalTraining in person.ProfessionalTrainings)
                         {
                             string country = GetText(professionalTraining.CountryOfTraining,
@@ -1547,7 +1597,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 professionalTraining.CountryOfTraining + "-" +
                                 professionalTraining.CountryOfTrainingName,
                                 professionalTraining.Month + "-" + professionalTraining.MonthName,
-                                professionalTraining.Year?.ToString(), professionalTraining.Date.ToString());
+                                professionalTraining.Year?.ToString(), professionalTraining.Date.ToString(), professionalTraining.Priority);
                         }
 
                         person.ProfessionalTrainings =
@@ -1562,6 +1612,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.LanguageProficiencies != null)
                     {
+                        person.LanguageProficiencies = person.LanguageProficiencies
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var language in person.LanguageProficiencies)
                         {
                             string languageName = GetText(language.Language, ViewBag.LanguageList);
@@ -1577,7 +1630,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             AddLanguageToSession(language.LanguageProficiencyId,
                                 language.Language + "-" + language.LanguageName,
                                 language.Read + "-" + language.ReadName,
-                                language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName);
+                                language.Write + "-" + language.WriteName, language.Speak + "-" + language.SpeakName, language.Priority);
                         }
 
                         person.LanguageProficiencies =
@@ -1592,6 +1645,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.VoluntaryCommunityServices != null)
                     {
+                        //saif replicate this
+                        person.VoluntaryCommunityServices = person.VoluntaryCommunityServices
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var voluntaryService in person.VoluntaryCommunityServices)
                         {
                             string institutionName = GetText(voluntaryService.Institution,
@@ -1609,7 +1666,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId,
                                 voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
                                 voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
-                                voluntaryService.Position + "-" + voluntaryService.PositionName, cycle);
+                                voluntaryService.Position + "-" + voluntaryService.PositionName, cycle, voluntaryService.Priority);
                         }
 
                         person.VoluntaryCommunityServices =
@@ -1624,11 +1681,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.VoluntaryPublicServices != null)
                     {
+                        person.VoluntaryPublicServices = person.VoluntaryPublicServices
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var voluntaryService in person.VoluntaryPublicServices)
                             AddVoluntaryPublicToSession(voluntaryService.VoluntaryPublicId,
                                 voluntaryService.Institution,
                                 voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
-                                voluntaryService.Position);
+                                voluntaryService.Position, voluntaryService.Priority);
 
                         person.VoluntaryPublicServices =
                             HttpContext.Session.Get<List<VoluntaryPublicModel>>("VoluntaryPublicList");
@@ -1642,6 +1702,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.Employments != null)
                     {
+                        person.Employments = person.Employments
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var employment in person.Employments)
                         {
                             string businessNature = GetText(employment.NatureOfBusiness, ViewBag.NatureOfBusinessList);
@@ -1657,7 +1720,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 employment.TypeOfBusiness + "-" + employment.TypeOfBusinessName,
                                 employment.NatureOfBusiness + "-" + employment.NatureOfBusinessName,
                                 employment.NatureOfBusinessOther,
-                                employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString());
+                                employment.EmploymentStartDate?.ToString(), employment.EmploymentEndDate?.ToString(), employment.Priority);
                         }
 
                         person.Employments = HttpContext.Session.Get<List<EmploymentModel>>("EmploymentList");
@@ -1903,7 +1966,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchPerson(string formNumber)
         {
-            Console.WriteLine("id="+formNumber);
+            Console.WriteLine("id=" + formNumber);
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
 
