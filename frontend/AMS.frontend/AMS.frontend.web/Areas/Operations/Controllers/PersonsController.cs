@@ -9,6 +9,7 @@ using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
+using ImageMagick;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -90,6 +91,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
+                            //var optimizer = new ImageOptimizer();
+                            //optimizer.LosslessCompress(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
 
@@ -109,7 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         ViewBag.MessageType = MessageTypes.Success;
                         ViewBag.Message = Messages.SuccessfulUserAdd;
 
-                        return RedirectToAction("Edit", "Persons", new {area = AreaNames.Operations, id = model.Id});
+                        return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
 
                         //return RedirectToAction("Index");
                     }
@@ -338,6 +341,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
+                            //var optimizer = new ImageOptimizer();
+                            //memoryStream.Position = 0;
+                            //optimizer.LosslessCompress(memoryStream);
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
 
@@ -354,7 +360,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         ViewBag.MessageType = MessageTypes.Success;
                         ViewBag.Message = Messages.SuccessUserUpdate;
 
-                        return RedirectToAction("Edit", "Persons", new {area = AreaNames.Operations, id = model.Id});
+                        return RedirectToAction("Edit", "Persons", new { area = AreaNames.Operations, id = model.Id });
 
                         //return RedirectToAction("Index");
                     }
@@ -363,7 +369,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     ViewBag.Message = Messages.GeneralError;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
@@ -679,7 +685,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     var dob = DateTime.ParseExact(searchingData.DOB, "dd/MM/yyyy", null);
                     dateOfBirth = dob.ToString("yyyy-MM-dd");
                 }
-                
+
                 var queryCollection = Request.Query; //HttpContext.Request.Query;
                 // Initialization.
                 var search = queryCollection["search[value]"][0];
@@ -711,9 +717,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         n.Cnic,
                         n.DateOfBirthForDisplay,
                         DetailUrl = Url.Action(ActionNames.Detail, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, id = n.Id}),
+                            new { area = AreaNames.Operations, id = n.Id }),
                         EditUrl = Url.Action(ActionNames.Edit, ControllerNames.Persons,
-                            new {area = AreaNames.Operations, id = n.Id})
+                            new { area = AreaNames.Operations, id = n.Id })
                     })
                 });
             }
@@ -837,10 +843,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 person.RelativeDateOfBirth = person.DateOfBirth;
                 person.RelativePersonId = person.Id;
                 person.RelativeFormNumber = person.Id;
-                
+
             }
             //return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeCnic = cnic } : null);
-            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel {RelativeCnic = cnic} : person);
+            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeCnic = cnic } : person);
         }
 
         [HttpPost]
@@ -909,7 +915,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[0],
                 CountryOfStudyName =
                     string.IsNullOrWhiteSpace(countryOfStudy) ? string.Empty : countryOfStudy.Split('-')[1],
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
                 MajorAreaOfStudy = string.IsNullOrWhiteSpace(majorAreaOfStudy)
@@ -920,7 +926,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     : majorAreaOfStudy.Split('-')[1],
                 NameOfDegree = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[0],
                 NameOfDegreeName = string.IsNullOrWhiteSpace(nameOfDegree) ? string.Empty : nameOfDegree.Split('-')[1],
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear)
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear)
             });
 
             for (var counter = 0; counter < sessionEducationList.Count; counter++)
@@ -1187,7 +1193,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         private List<VoluntaryCommunityModel> AddVoluntaryCommunityToSession(string id, string institution,
             string fromYear,
-            string toYear, string position, string cycle)
+            string toYear, string position, string cycle, int priority = 0)//saif replicate this
         {
             var sessionVoluntaryCommunityList =
                 HttpContext.Session.Get<List<VoluntaryCommunityModel>>("VoluntaryCommunityList") ??
@@ -1203,6 +1209,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             else
                 sessionVoluntaryCommunityList.Remove(
                     sessionVoluntaryCommunityList.Find(e => e.VoluntaryCommunityId == id));
+
+            //saif replicate this
+            var highestPriority = sessionVoluntaryCommunityList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
 
             sessionVoluntaryCommunityList.Add(new VoluntaryCommunityModel
             {
@@ -1223,13 +1232,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 PositionName = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[1],
                 IsImamatAppointee = !string.IsNullOrWhiteSpace(cycle),
                 Cycle = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[0],
-                CycleName = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[1]
+                CycleName = string.IsNullOrWhiteSpace(cycle) ? string.Empty : cycle.Split('|')[1],
+                //saif replicate this
+                Priority = priority == 0 ? highestPriority == null ? 0 + 1 : highestPriority.Value + 1 : priority
             });
 
-            for (var counter = 0; counter < sessionVoluntaryCommunityList.Count; counter++)
-                sessionVoluntaryCommunityList[counter].Priority = counter + 1;
-
-            HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList);
+            //saif replicate this
+            HttpContext.Session.Set("VoluntaryCommunityList", sessionVoluntaryCommunityList.OrderBy(v => v.Priority));
 
             return sessionVoluntaryCommunityList;
         }
@@ -1249,9 +1258,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             sessionVoluntaryPublicList.Add(new VoluntaryPublicModel
             {
                 VoluntaryPublicId = id,
-                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?) null : Convert.ToInt32(fromYear),
+                FromYear = string.IsNullOrWhiteSpace(fromYear) ? (int?)null : Convert.ToInt32(fromYear),
                 Institution = institution,
-                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?) null : Convert.ToInt32(toYear),
+                ToYear = string.IsNullOrWhiteSpace(toYear) ? (int?)null : Convert.ToInt32(toYear),
                 Position = position
             });
 
@@ -1592,6 +1601,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (person.VoluntaryCommunityServices != null)
                     {
+                        //saif replicate this
+                        person.VoluntaryCommunityServices = person.VoluntaryCommunityServices
+                            .OrderByDescending(v => v.Priority).ToList();
+
                         foreach (var voluntaryService in person.VoluntaryCommunityServices)
                         {
                             string institutionName = GetText(voluntaryService.Institution,
@@ -1609,7 +1622,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             AddVoluntaryCommunityToSession(voluntaryService.VoluntaryCommunityId,
                                 voluntaryService.Institution + "-" + voluntaryService.InstitutionName,
                                 voluntaryService.FromYear?.ToString(), voluntaryService.ToYear?.ToString(),
-                                voluntaryService.Position + "-" + voluntaryService.PositionName, cycle);
+                                voluntaryService.Position + "-" + voluntaryService.PositionName, cycle, voluntaryService.Priority);
                         }
 
                         person.VoluntaryCommunityServices =
@@ -1903,7 +1916,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchPerson(string formNumber)
         {
-            Console.WriteLine("id="+formNumber);
+            Console.WriteLine("id=" + formNumber);
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
 
