@@ -2046,3 +2046,38 @@ function CustomPersonValidation() {
         return false;
     }
 }
+
+function InstitutionListAdd(url) {
+	mApp.block("#institution-table", {});
+		var institution = $("#InstitutionName").val();
+		if (IsEmpty(institution)) {
+			mApp.unblock("#institution-table", {});
+			alert("Please enter at least one value to proceed.");
+		}
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: {"id":"", "institution": institution},
+			contentType: "application/x-www-form-urlencoded; charset=utf-8",
+			dataType: "html",
+			error: function (xmlHttpRequest, textStatus, errorThrown) {
+				mApp.unblock("#institution-table", {});
+				alert("Request: " +
+					xmlHttpRequest.toString() +
+					"\n\nStatus: " +
+					textStatus +
+					"\n\nError: " +
+					errorThrown);
+			},
+			success: function (result) {
+				if (result.length !== 4) {
+					$("#institution-table").html(result);
+					$("#InstitutionName").val('').trigger('change');
+				}
+				mApp.unblock("#institution-table", {});
+				//else {
+				//    window.location.replace(window.loginUrl);
+				//}
+			}
+		});
+}

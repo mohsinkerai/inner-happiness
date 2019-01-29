@@ -1,0 +1,24 @@
+﻿@model AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport.ThreePlusOneReportModel
+<table id="institutions" class="table table-striped- table-bordered table-hover">
+    <thead>
+        <tr>
+            <th> Name </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model.ListInstitution)
+            {
+                <tr id="institution-row-@item.SessionId">
+                    <td> @item.InstitutionName </td>
+                    <td>
+                        <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return InstitutionListDelete("@Url.Action("InstitutionListDelete", ControllerNames.ThreePlusOneReport)", "@item.SessionId");'>
+                            <i class="la la-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

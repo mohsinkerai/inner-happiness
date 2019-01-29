@@ -1901,6 +1901,30 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }
 
+        public async Task<List<SelectListItem>> GetNationalInstitutions()
+        {
+            var res = await _client.GetAsync("institution/search/findByLevelType?levelTypeId=1");
+
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+                dynamic myObject = JArray.Parse(json);
+                var list = new List<SelectListItem>();
+
+                foreach (var item in myObject)
+                {
+                    var id = Convert.ToString(item.id);
+                    var name = Convert.ToString(item.name);
+
+                    list.Add(new SelectListItem { Text = name, Value = id });
+                }
+
+                return list;
+            }
+
+            return null;
+        }
+
         #endregion Public Methods
     }
 }
