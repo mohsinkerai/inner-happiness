@@ -319,7 +319,7 @@ namespace AMS.frontend.web.ViewComponents
                                 Title = "Institution",
                                 Area = AreaNames.Administration,
                                 ImageClass = "flaticon-network"
-                            }
+                            },
                         },
                         Title = "Master Data",
                         Area = string.Empty,
@@ -332,11 +332,32 @@ namespace AMS.frontend.web.ViewComponents
                     menuModel.Add(new MenuModel
                     {
                         MenuId = 26,
-                        Action = ActionNames.Index,
-                        Controller = ControllerNames.Reports,
-                        SubMenu = null,
+                        Action = string.Empty,
+                        Controller = string.Empty,
+                        SubMenu = new List<MenuModel> {
+                            new MenuModel
+                            {
+                                MenuId = 30,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.Reports,
+                                SubMenu = null,
+                                Title = "Reports",
+                                Area = AreaNames.Operations,
+                                ImageClass = "flaticon-network"
+                            },
+                            new MenuModel
+                            {
+                                MenuId = 31,
+                                Action = ActionNames.Index,
+                                Controller = ControllerNames.ThreePlusOneReport,
+                                SubMenu = null,
+                                Title = "3+1 Report",
+                                Area = AreaNames.Operations,
+                                ImageClass = "flaticon-network"
+                            }
+                        },
                         Title = "Reports",
-                        Area = AreaNames.Operations,
+                        Area = string.Empty,
                         ImageClass = "flaticon-line-graph"
                     });
                 }
