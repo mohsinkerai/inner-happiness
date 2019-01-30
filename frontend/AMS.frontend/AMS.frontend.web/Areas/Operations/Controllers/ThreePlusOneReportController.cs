@@ -53,6 +53,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var list = await new RestfulClient(
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetNationalInstitutions();
 
+            foreach (var item in list)
+            {
+                item.Value = item.Value+"-"+item.Text;
+            }
+
             return new JsonResult(list);
         }
 
@@ -61,6 +66,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var list = await new RestfulClient(
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalInstitutions();
 
+            foreach (var item in list)
+            {
+                item.Value = item.Value + "-" + item.Text;
+            }
+
             return new JsonResult(list);
         }
 
@@ -68,6 +78,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             var list = await new RestfulClient(
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
+
+            foreach (var item in list)
+            {
+                item.Value = item.Value + "-" + item.Text;
+            }
 
             return new JsonResult(list);
         }

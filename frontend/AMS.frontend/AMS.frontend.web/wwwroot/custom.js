@@ -2079,5 +2079,5 @@ function InstitutionListAdd(url) {
 				//    window.location.replace(window.loginUrl);
 				//}
 			}
-		});
+	});
 }
