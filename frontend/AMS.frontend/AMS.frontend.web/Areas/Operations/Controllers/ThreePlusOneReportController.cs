@@ -112,7 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 //item.Id => this is sessionId.
                 //item.Name => this is intitution name with institution id like (2-AKEPB) so we have to split value.
-                var institution = item.Name.Split("-")[1];
+                var institution = item.Name.Split("-")[0];
                 institutions += $"{institution},";
             }
 
