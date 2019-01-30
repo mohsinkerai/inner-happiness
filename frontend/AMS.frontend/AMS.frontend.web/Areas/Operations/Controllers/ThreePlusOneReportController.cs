@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Areas.Operations.Models.Nominations;
@@ -100,18 +102,31 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return new JsonResult(list);
         }
 
-        public async Task<IActionResult> GenerateReport()
+        public IActionResult GenerateReport()
         {
             var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
                            new List<InstitutionModel>();
+            var institutions = string.Empty;
 
             foreach (var item in sessionInstituionList)
             {
                 //item.Id => this is sessionId.
                 //item.Name => this is intitution name with institution id like (2-AKEPB) so we have to split value.
+                var institution = item.Name.Split("-")[1];
+                institutions += $"{institution},";
             }
 
-            return null;
+            institutions = institutions.Substring(0, institutions.Length - 1);
+
+            using (var client = new WebClient())
+            {
+                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+
+                var stream = new MemoryStream(client.DownloadData(
+                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19"));
+
+                return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
+            }
         }
 
     }
