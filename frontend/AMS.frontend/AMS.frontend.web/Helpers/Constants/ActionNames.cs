@@ -58,6 +58,8 @@
         public const string GetAllPositionOfInstitution = "GetAllPositionOfInstitution";
         public const string Position = "Position";
         public const string VoluntaryInstitution = "VoluntaryInstitution";
+        public const string GetNationalInstitutions = "GetNationalInstitutions";
+        public const string InstitutionListAdd = "InstitutionListAdd";
 
         #endregion Public Fields
     }

@@ -28,7 +28,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View();
         }
 
-        public IActionResult ThreePlusOne(int insitutionId, int cycleId)
+        public IActionResult ThreePlusOne(string insitutionId, int cycleId)
         {
             using (var client = new WebClient())
             {

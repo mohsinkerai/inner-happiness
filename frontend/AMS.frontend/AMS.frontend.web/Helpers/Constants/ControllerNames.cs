@@ -22,6 +22,7 @@
         public const string LookupCrud = "LookupCrud";
         public const string Image = "Image";
         public const string Cycle = "Cycle";
+        public const string ThreePlusOneReport = "ThreePlusOneReport";
 
         #endregion Public Fields
     }
