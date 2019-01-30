@@ -1,23 +1,26 @@
-﻿@model AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport.ThreePlusOneReportModel
+﻿@model IEnumerable<AMS.frontend.web.Areas.Operations.Models.Nominations.InstitutionModel>
 <table id="institutions" class="table table-striped- table-bordered table-hover">
     <thead>
         <tr>
+            <th> Id </th>
             <th> Name </th>
+            <th> Action </th>
         </tr>
     </thead>
     <tbody>
         @if (Model != null)
         {
-            foreach (var item in Model.ListInstitution)
+            foreach (var item in Model)
             {
-                <tr id="institution-row-@item.SessionId">
-                    <td> @item.InstitutionName </td>
-                    <td>
-                        <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return InstitutionListDelete("@Url.Action("InstitutionListDelete", ControllerNames.ThreePlusOneReport)", "@item.SessionId");'>
-                            <i class="la la-trash"></i>
-                        </button>
-                    </td>
-                </tr>
+        <tr id="institution-row-@item.Id">
+            <td> @item.Name.Split('-')[0] </td>
+            <td> @item.Name.Split('-')[1] </td>
+            <td>
+                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Delete" onclick='return InstitutionListDelete("@Url.Action("InstitutionListDelete", ControllerNames.ThreePlusOneReport)", "@item.Id");'>
+                    <i class="la la-trash"></i>
+                </button>
+            </td>
+        </tr>
             }
         }
     </tbody>

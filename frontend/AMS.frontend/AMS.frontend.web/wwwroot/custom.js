@@ -2081,3 +2081,30 @@ function InstitutionListAdd(url) {
 			}
 	});
 }
+
+function InstitutionListDelete(url, id) {
+	mApp.block("#institution-table", {});
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: { "id": id },
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		dataType: "html",
+		error: function (xmlHttpRequest, textStatus, errorThrown) {
+			mApp.unblock("#institution-table", {});
+			alert("Request: " +
+				xmlHttpRequest.toString() +
+				"\n\nStatus: " +
+				textStatus +
+				"\n\nError: " +
+				errorThrown);
+		},
+		success: function (result) {
+			if (result.length !== 4) {
+				$("#institution-table").html(result);
+				$("#InstitutionName").val('').trigger('change');
+			}
+			mApp.unblock("#institution-table", {});
+		}
+	});
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AMS.frontend.web.Areas.Operations.Models;
+using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
@@ -13,9 +14,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     [Area(AreaNames.Operations)]
     public class ThreePlusOneReportController : BaseController
     {
+
         public IActionResult Index()
         {
-            var sessionInstituionList = new List<ThreePlusOneReportModel>();
+            var sessionInstituionList = new List<InstitutionModel>();
             HttpContext.Session.Set("InstitutionList", sessionInstituionList);
             return View();
         }
@@ -28,24 +30,35 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return PartialView("_InstitutionTablePartial", sessionEducationList);
         }
 
-        private List<ThreePlusOneReportModel> AddInstitutionToSession(string id, string institution)
+        private List<InstitutionModel> AddInstitutionToSession(string id, string institution)
         {
-            var sessionInstituionList = HttpContext.Session.Get<List<ThreePlusOneReportModel>>("InstitutionList") ??
-                                       new List<ThreePlusOneReportModel>();
+            var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
+                                       new List<InstitutionModel>();
 
             if (string.IsNullOrWhiteSpace(id))
                 id = Guid.NewGuid().ToString();
             else
-                sessionInstituionList.Remove(sessionInstituionList.Find(e => e.SessionId == id));
-
-            sessionInstituionList.Add(new ThreePlusOneReportModel
+                sessionInstituionList.Remove(sessionInstituionList.Find(e => e.Id == id));
+            
+            sessionInstituionList.Add(new InstitutionModel
             {
-                InstitutionName = institution,
-                SessionId = id
+                Id = id,
+                Name = institution
             });
             
             HttpContext.Session.Set("InstitutionList", sessionInstituionList);
             return sessionInstituionList;
+        }
+
+        [HttpPost]
+        public IActionResult InstitutionListDelete(string id)
+        {
+            var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
+                                       new List<InstitutionModel>();
+            sessionInstituionList.Remove(sessionInstituionList.Find(e => e.Id == id));
+            HttpContext.Session.Set("InstitutionList", sessionInstituionList);
+
+            return PartialView("_InstitutionTablePartial", sessionInstituionList);
         }
 
         public async Task<JsonResult> GetNationalInstitutions()
@@ -85,6 +98,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             return new JsonResult(list);
+        }
+
+        public async Task<IActionResult> GenerateReport()
+        {
+            var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
+                           new List<InstitutionModel>();
+
+            foreach (var item in sessionInstituionList)
+            {
+                //item.Id => this is sessionId.
+                //item.Name => this is intitution name with institution id like (2-AKEPB) so we have to split value.
+            }
+
+            return null;
         }
 
     }

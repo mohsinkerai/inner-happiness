@@ -47,10 +47,8 @@
                     </select>
                 </div>
             </div>
-        </div>
-        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-            <div class="m-form__actions m-form__actions--solid">
-                <button type="button" class="btn btn-primary btn-info" onclick='return InstitutionListAdd("@Url.Action(ActionNames.InstitutionListAdd, ControllerNames.ThreePlusOneReport, new {area = AreaNames.Operations})");'>
+            <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
+                <button type="button" class="btn btn-warning btn-info" onclick='return InstitutionListAdd("@Url.Action(ActionNames.InstitutionListAdd, ControllerNames.ThreePlusOneReport, new {area = AreaNames.Operations})");'>
                     <i class="fa fa-search"></i> Add
                 </button>
             </div>
@@ -60,6 +58,16 @@
                 @{
                     await Html.RenderPartialAsync("_InstitutionTablePartial", Model?.ListInstitution).ConfigureAwait(false);
                 }
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions--solid m--align-right">
+                <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("GenerateReport", ControllerNames.ThreePlusOneReport)'">
+                    <i class="fa fa-save"></i> Generate
+                </button>
+                <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
+                    <i class="fa fa-close"></i> Cancel
+                </a>
             </div>
         </div>
     </div>
