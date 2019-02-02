@@ -88,21 +88,29 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 if (ModelState.IsValid)
                 {
                     if (model.ImageUpload != null)
+                    {
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
-                            //var optimizer = new ImageOptimizer();
-                            //optimizer.LosslessCompress(memoryStream);
+                            //memoryStream.Position = 0;
+                            //var image = new MagickImage(memoryStream);
+                            //image.Resize(new Percentage(50));
+                            //model.Image = Convert.ToBase64String(image.ToByteArray());
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
+                    }
+                    else
+                    {
+                        model.Image = null;
+                    }
 
                     RestoreSessionDataToModel(model);
 
                     var success =
-                        await new RestfulClient(HttpContext.Session
+                        await new RestfulClient(_logger,HttpContext.Session
                             .Get<AuthenticationResponse>("AuthenticationResponse")?.Token).SavePersonData(model);
 
-                    //var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).savePersonData(PersonDummyData(model.Image));
+                    //var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).savePersonData(PersonDummyData(model.Image));
 
                     if (success)
                     {
@@ -155,7 +163,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 dt = Convert.ToDateTime(date);
             }
-            
+
             var highestPriority = sessionAkdnTrainingList.OrderByDescending(v => v.Priority).FirstOrDefault()?.Priority;
 
             sessionAkdnTrainingList.Add(new AkdnTrainingModel
@@ -220,17 +228,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var person =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPersonDetailsById(id);
 
             if (person.RegionalCouncil != null)
             {
                 ViewBag.LocalCouncilList =
-                    await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetLocalCouncil(person.RegionalCouncil);
                 ViewBag.JamatkhanaList =
-                    await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetJamatkhana(person.LocalCouncil);
 
                 var appointments = await GetPastImamatAppointments(person.Id);
@@ -283,16 +291,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var person =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPersonDetailsById(id);
 
             ViewBag.LocalCouncilList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetLocalCouncil(person.RegionalCouncil);
             ViewBag.JamatkhanaList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetJamatkhana(person.LocalCouncil);
 
@@ -346,16 +354,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             await model.ImageUpload.CopyToAsync(memoryStream);
-                            //var optimizer = new ImageOptimizer();
                             //memoryStream.Position = 0;
-                            //optimizer.LosslessCompress(memoryStream);
+                            //var image = new MagickImage(memoryStream);
+                            //image.Resize(new Percentage(50));
+                            //model.Image = Convert.ToBase64String(image.ToByteArray());
                             model.Image = Convert.ToBase64String(memoryStream.ToArray());
                         }
 
                     RestoreSessionDataToModel(model);
 
                     var success =
-                        await new RestfulClient(HttpContext.Session
+                        await new RestfulClient(_logger,HttpContext.Session
                             .Get<AuthenticationResponse>("AuthenticationResponse")?.Token).EditPersonData(model);
                     if (success)
                     {
@@ -442,13 +451,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             string relativeInstitution, string relativePosition)
         {
             ViewBag.Cycle =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             ViewBag.VoluntaryCommunityPositionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositions();
             ViewBag.VoluntaryCommunityInstitutionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPositionInstitution();
 
@@ -474,7 +483,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<JsonResult> GetJamatkhana(string uid)
         {
             //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+            var list = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                 ?.Token).GetJamatkhana(uid);
 
             return new JsonResult(list);
@@ -483,7 +492,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<JsonResult> GetLocalCouncil(string uid)
         {
             //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+            var list = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                 ?.Token).GetLocalCouncil(uid);
 
             return new JsonResult(list);
@@ -499,22 +508,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.SetString(SessionKeyDoNotValidateFormNumberOnEditPage, "false");
 
             ViewBag.JamatiTitleList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
             ViewBag.InstitutionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetAllInstitutions();
             ViewBag.NameOfDegreeList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetEducationalDegree();
             ViewBag.MajorAreaOfStudy =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetMajorAreaOfStudy();
 
-            //return View(new IndexPersonModel { Persons = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).getPersonDetails() });
+            //return View(new IndexPersonModel { Persons = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).getPersonDetails() });
             return View();
         }
 
@@ -528,27 +537,27 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             ViewBag.JamatiTitleList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
             ViewBag.InstitutionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetAllInstitutions();
             ViewBag.NameOfDegreeList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetEducationalDegree();
             ViewBag.MajorAreaOfStudy =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetMajorAreaOfStudy();
 
             ViewBag.Search = true;
 
-            //var persons = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
+            //var persons = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).getPersonDetailsThroughPagging(firstName,lastName,cnic,1, 1);
             return View(new IndexPersonModel
             {
-                //Persons = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).searchPerson(cnic, firstName, lastName),
+                //Persons = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).searchPerson(cnic, firstName, lastName),
                 //Persons = persons.Item1,
                 Cnic = cnic,
                 Name = name,
@@ -701,7 +710,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var pageSize = Convert.ToInt32(queryCollection["length"][0]);
 
                 var tupleData =
-                    await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetPersonDetailsThroughPagging(name, cnic,
                         formNumber, jamatiTitle, degree, majorAreaOfStudy, academicIstitution, startRec / pageSize + 1,
                         pageSize, dateOfBirth);
@@ -747,7 +756,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (doNotValidateCnic == "true") return Json("true");
 
             var success =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPersonDetailsThroughPagging(string.Empty, cnic, string.Empty, string.Empty, string.Empty,
                         string.Empty, string.Empty, 1, 1, string.Empty);
@@ -766,14 +775,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //}
             //else
             //{
-            //    var success = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).searchByFormNumber(cnic, out var person);
+            //    var success = new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).searchByFormNumber(cnic, out var person);
             //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
             //}
 
             if (doNotValidateFormNumber == "true") return Json("true");
 
             var success =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPersonDetailsThroughPagging(string.Empty, string.Empty, formnumber, string.Empty, string.Empty,
                         string.Empty, string.Empty, 1, 1, string.Empty);
@@ -792,14 +801,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //}
             //else
             //{
-            //    var success = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).searchByFormNumber(cnic, out var person);
+            //    var success = new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).searchByFormNumber(cnic, out var person);
             //    return Json(!success ? "true" : string.Format("A record against {0} already exists.", formnumber));
             //}
 
             if (doNotValidateFormNumber == "true") return Json("true");
 
             var success =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
                         string.Empty, string.Empty, 1, 1, string.Empty);
@@ -812,27 +821,27 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> VerifyCnic(string cnic)
         {
             var success =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPersonDetailsThroughPagging(string.Empty, cnic, string.Empty, string.Empty, string.Empty,
                         string.Empty, string.Empty, 1, 1, string.Empty);
             ViewBag.SalutationList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSalutation();
             ViewBag.JamatiTitleList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
             ViewBag.RelationList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllRelatives();
             ViewBag.Cycle =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             ViewBag.VoluntaryCommunityPositionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositions();
             ViewBag.VoluntaryCommunityInstitutionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPositionInstitution();
 
@@ -1243,14 +1252,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 VoluntaryCommunityId = id,
                 FromYear = string.IsNullOrWhiteSpace(fromYear)
                     ? string.IsNullOrWhiteSpace(cycle)
-                        ? (int?) null
+                        ? (int?)null
                         : Convert.ToInt32(cycle.Split('|')[1].Split('-')[0])
                     : Convert.ToInt32(fromYear),
                 Institution = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[0],
                 InstitutionName = string.IsNullOrWhiteSpace(institution) ? string.Empty : institution.Split('-')[1],
                 ToYear = string.IsNullOrWhiteSpace(toYear)
                     ? string.IsNullOrWhiteSpace(cycle)
-                        ? (int?) null
+                        ? (int?)null
                         : Convert.ToInt32(cycle.Split('|')[1].Split('-')[1])
                     : Convert.ToInt32(toYear),
                 Position = string.IsNullOrWhiteSpace(position) ? string.Empty : position.Split('-')[0],
@@ -1337,7 +1346,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var pastAppointments = new List<PastImamatAppointment>();
 
             var appointments =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetAppointments(personId, true);
             if (appointments?.Count > 0 && appointments.Any(a => a.Active))
@@ -1357,7 +1366,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (forFamily)
             {
                 var person =
-                    await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetPersonDetailsById(personId);
 
                 if (person.VoluntaryCommunityServices != null)
@@ -1399,105 +1408,105 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private async Task InitializePerson()
         {
             ViewBag.SalutationList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSalutation();
             ViewBag.JamatiTitleList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
             ViewBag.MaritalStatusList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetMartialStatuses();
             ViewBag.CityList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCities();
             ViewBag.AreaOfOriginList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAreaOfOrigin();
             ViewBag.InstitutionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetAllInstitutions();
             ViewBag.NameOfDegreeList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetEducationalDegree();
             ViewBag.ReligiousEducationList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetReligiousEducation();
             ViewBag.RegionalCouncilList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetRegionalCouncil();
 
             var listOfCountries =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
             ViewBag.CountryOfStudyList = listOfCountries;
             ViewBag.AkdnTrainingCountryList = listOfCountries;
             ViewBag.ProfessionalTrainingCountryList = listOfCountries;
 
             var listOfLanguageProficiency =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetLanguageProficiency();
             ViewBag.Proficiency = listOfLanguageProficiency;
 
             ViewBag.VoluntaryCommunityPositionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositions();
             ViewBag.HighestLevelOfStudyList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetHighestLevelOfStudy();
             ViewBag.AkdnTrainingList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAkdnTraining();
-            //ViewBag.VoluntaryCommunityInstitutionList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetVoluntaryInstitution();
+            //ViewBag.VoluntaryCommunityInstitutionList = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetVoluntaryInstitution();
             ViewBag.VoluntaryCommunityInstitutionList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPositionInstitution();
             ViewBag.FieldOfInterestsList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetFieldOfInterests();
             ViewBag.OccupationTypeList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetOcupations();
             ViewBag.TypeOfBusinessList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetBussinessType();
             ViewBag.NatureOfBusinessList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetBussinessNature();
             ViewBag.ProfessionalMembershipsList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetProfessionalMemeberShipDetails();
             ViewBag.LanguageList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLanguages();
             ViewBag.SkillsList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSkills();
             ViewBag.RelationList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllRelatives();
             ViewBag.MajorAreaOfStudy =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetMajorAreaOfStudy();
             ViewBag.FieldOfExpertiseList =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetFieldOfExpertise();
 
             ViewBag.Cycle =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
         }
 
@@ -1961,6 +1970,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             model.FamilyRelations = sessionFamilyRelationList;
 
             if (string.IsNullOrWhiteSpace(model.Image)) model.Image = HttpContext.Session.Get<string>("Image");
+
+            if (string.IsNullOrWhiteSpace(model.Image)) model.Image = null;
         }
 
         [HttpPost]
@@ -1971,7 +1982,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.Message = TempData["Message"];
 
             var success =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetPersonDetailsThroughPagging(string.Empty, string.Empty, formNumber, string.Empty, string.Empty,
                         string.Empty, string.Empty, 1, 1, string.Empty);

@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AMS.frontend.web.Areas.Operations.Controllers;
 using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using AMS.frontend.web.Models.Authenticate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AMS.frontend.web.Controllers
 {
     public class AuthenticateController : Controller
     {
+        private readonly ILogger<AuthenticateController> _logger;
+
+        public AuthenticateController(ILogger<AuthenticateController> logger)
+        {
+            _logger = logger;
+        }
         #region Public Methods
 
         public IActionResult Index()
@@ -38,7 +46,7 @@ namespace AMS.frontend.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await new RestfulClient(string.Empty).GetToken(model);
+                var response = await new RestfulClient(_logger,string.Empty).GetToken(model);
 
                 if (response != null)
                 {

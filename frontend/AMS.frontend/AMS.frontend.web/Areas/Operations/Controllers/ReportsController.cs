@@ -10,19 +10,26 @@ using System.IO.Compression;
 using System.Net;
 using System.Threading.Tasks;
 using AMS.frontend.web.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
     [Area(AreaNames.Operations)]
     public class ReportsController : BaseController
     {
+        private readonly ILogger<ReportsController> _logger;
+
+        public ReportsController(ILogger<ReportsController> logger)
+        {
+            _logger = logger;
+        }
         public async Task<IActionResult> Index()
         {
             ViewBag.MessageType = TempData["MessageType"];
             ViewBag.Message = TempData["Message"];
 
             ViewBag.Cycle =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
 
             return View();

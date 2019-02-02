@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using ImageMagick;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ImageConversionUtility
 {
@@ -111,134 +114,134 @@ namespace ImageConversionUtility
             //    }
             //}
 
-            var reader = new StreamReader("institutionMappings.txt");
-            var institutionMappings = new Dictionary<int, int>();
+            //var reader = new StreamReader("institutionMappings.txt");
+            //var institutionMappings = new Dictionary<int, int>();
 
-            while (!reader.EndOfStream)
-            {
-                var line = reader.ReadLine();
-                if (line.Contains("--"))
-                    institutionMappings.Add(-1 * Convert.ToInt32(line.Split('-')[2]),
-                        Convert.ToInt32(line.Split('-')[0]));
-                else
-                    institutionMappings.Add(Convert.ToInt32(line.Split('-')[1]), Convert.ToInt32(line.Split('-')[0]));
-            }
+            //while (!reader.EndOfStream)
+            //{
+            //    var line = reader.ReadLine();
+            //    if (line.Contains("--"))
+            //        institutionMappings.Add(-1 * Convert.ToInt32(line.Split('-')[2]),
+            //            Convert.ToInt32(line.Split('-')[0]));
+            //    else
+            //        institutionMappings.Add(Convert.ToInt32(line.Split('-')[1]), Convert.ToInt32(line.Split('-')[0]));
+            //}
 
-            reader.Close();
+            //reader.Close();
 
-            var positionReader = new StreamReader("positionMapping.txt");
-            var positionMappings = new Dictionary<int, int>();
+            //var positionReader = new StreamReader("positionMapping.txt");
+            //var positionMappings = new Dictionary<int, int>();
 
-            while (!positionReader.EndOfStream)
-            {
-                var line = positionReader.ReadLine();
-                positionMappings.Add(Convert.ToInt32(line.Split('-')[1]), Convert.ToInt32(line.Split('-')[0]));
-            }
+            //while (!positionReader.EndOfStream)
+            //{
+            //    var line = positionReader.ReadLine();
+            //    positionMappings.Add(Convert.ToInt32(line.Split('-')[1]), Convert.ToInt32(line.Split('-')[0]));
+            //}
 
-            positionReader.Close();
+            //positionReader.Close();
 
-            using (var conn = new SqlConnection(connectionString))
-            {
-                const string sql = "select personId from Ali_tblPerson;";
-                using (var cmd = new SqlCommand(sql, conn))
-                {
-                    using (var adapter = new SqlDataAdapter(cmd))
-                    {
-                        var resultTable = new DataTable();
-                        adapter.Fill(resultTable);
+            //using (var conn = new SqlConnection(connectionString))
+            //{
+            //    const string sql = "select personId from Ali_tblPerson;";
+            //    using (var cmd = new SqlCommand(sql, conn))
+            //    {
+            //        using (var adapter = new SqlDataAdapter(cmd))
+            //        {
+            //            var resultTable = new DataTable();
+            //            adapter.Fill(resultTable);
 
-                        var writer = new StreamWriter("Queries.sql", false);
-                        var start = "UPDATE person SET person.voluntary_community_services = '";
-                        var end = "' WHERE person.id = ";
+            //            var writer = new StreamWriter("Queries.sql", false);
+            //            var start = "UPDATE person SET person.voluntary_community_services = '";
+            //            var end = "' WHERE person.id = ";
 
-                        foreach (DataRow row in resultTable.Rows)
-                        {
-                            var personId = Convert.ToInt32(row[0]);
-                            var services = new List<VoluntaryCommunity>();
-                            using (var innerCmd =
-                                new SqlCommand($"select * from Ali_tblCommunityService where PersonId = {personId};",
-                                    conn))
-                            {
-                                using (var innerAdapter = new SqlDataAdapter(innerCmd))
-                                {
-                                    var innerResultTable = new DataTable();
-                                    innerAdapter.Fill(innerResultTable);
+            //            foreach (DataRow row in resultTable.Rows)
+            //            {
+            //                var personId = Convert.ToInt32(row[0]);
+            //                var services = new List<VoluntaryCommunity>();
+            //                using (var innerCmd =
+            //                    new SqlCommand($"select * from Ali_tblCommunityService where PersonId = {personId};",
+            //                        conn))
+            //                {
+            //                    using (var innerAdapter = new SqlDataAdapter(innerCmd))
+            //                    {
+            //                        var innerResultTable = new DataTable();
+            //                        innerAdapter.Fill(innerResultTable);
 
-                                    foreach (DataRow dataRow in innerResultTable.Rows)
-                                    {
-                                        var value = dataRow[4];
-                                        if (value != DBNull.Value && Convert.ToInt32(dataRow[4]) > 0)
-                                            services.Add(new VoluntaryCommunity
-                                            {
-                                                institution = dataRow[2] == DBNull.Value
-                                                    ? 0
-                                                    :
-                                                    Convert.ToInt32(dataRow[2]) == 0
-                                                        ? 0
-                                                        :
-                                                        institutionMappings.ContainsKey(Convert.ToInt32(dataRow[2]))
-                                                            ?
-                                                            institutionMappings[Convert.ToInt32(dataRow[2])]
-                                                            : 0,
-                                                cycleId = dataRow[4] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[4]),
-                                                fromYear = dataRow[5] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[5]),
-                                                toYear = dataRow[6] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[6]),
-                                                isImamatAppointee = true,
-                                                position = dataRow[3] == DBNull.Value
-                                                    ? 0
-                                                    :
-                                                    Convert.ToInt32(dataRow[3]) == 0
-                                                        ? 0
-                                                        :
-                                                        positionMappings.ContainsKey(Convert.ToInt32(dataRow[3]))
-                                                            ?
-                                                            positionMappings[Convert.ToInt32(dataRow[3])]
-                                                            : 0,
-                                                priority = dataRow[8] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[8]),
-                                                voluntaryCommunityId = dataRow[1] as string
-                                            });
-                                        else
-                                            services.Add(new VoluntaryCommunity
-                                            {
-                                                institution = dataRow[2] == DBNull.Value
-                                                    ? 0
-                                                    :
-                                                    Convert.ToInt32(dataRow[2]) == 0
-                                                        ? 0
-                                                        :
-                                                        institutionMappings.ContainsKey(Convert.ToInt32(dataRow[2]))
-                                                            ?
-                                                            institutionMappings[Convert.ToInt32(dataRow[2])]
-                                                            : 0,
-                                                fromYear = dataRow[5] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[5]),
-                                                toYear = dataRow[6] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[6]),
-                                                isImamatAppointee = false,
-                                                position = dataRow[3] == DBNull.Value
-                                                    ? 0
-                                                    :
-                                                    Convert.ToInt32(dataRow[3]) == 0
-                                                        ? 0
-                                                        :
-                                                        positionMappings.ContainsKey(Convert.ToInt32(dataRow[3]))
-                                                            ?
-                                                            positionMappings[Convert.ToInt32(dataRow[3])]
-                                                            : 0,
-                                                priority = dataRow[8] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[8]),
-                                                voluntaryCommunityId = dataRow[1] as string
-                                            });
-                                    }
+            //                        foreach (DataRow dataRow in innerResultTable.Rows)
+            //                        {
+            //                            var value = dataRow[4];
+            //                            if (value != DBNull.Value && Convert.ToInt32(dataRow[4]) > 0)
+            //                                services.Add(new VoluntaryCommunity
+            //                                {
+            //                                    institution = dataRow[2] == DBNull.Value
+            //                                        ? 0
+            //                                        :
+            //                                        Convert.ToInt32(dataRow[2]) == 0
+            //                                            ? 0
+            //                                            :
+            //                                            institutionMappings.ContainsKey(Convert.ToInt32(dataRow[2]))
+            //                                                ?
+            //                                                institutionMappings[Convert.ToInt32(dataRow[2])]
+            //                                                : 0,
+            //                                    cycleId = dataRow[4] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[4]),
+            //                                    fromYear = dataRow[5] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[5]),
+            //                                    toYear = dataRow[6] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[6]),
+            //                                    isImamatAppointee = true,
+            //                                    position = dataRow[3] == DBNull.Value
+            //                                        ? 0
+            //                                        :
+            //                                        Convert.ToInt32(dataRow[3]) == 0
+            //                                            ? 0
+            //                                            :
+            //                                            positionMappings.ContainsKey(Convert.ToInt32(dataRow[3]))
+            //                                                ?
+            //                                                positionMappings[Convert.ToInt32(dataRow[3])]
+            //                                                : 0,
+            //                                    priority = dataRow[8] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[8]),
+            //                                    voluntaryCommunityId = dataRow[1] as string
+            //                                });
+            //                            else
+            //                                services.Add(new VoluntaryCommunity
+            //                                {
+            //                                    institution = dataRow[2] == DBNull.Value
+            //                                        ? 0
+            //                                        :
+            //                                        Convert.ToInt32(dataRow[2]) == 0
+            //                                            ? 0
+            //                                            :
+            //                                            institutionMappings.ContainsKey(Convert.ToInt32(dataRow[2]))
+            //                                                ?
+            //                                                institutionMappings[Convert.ToInt32(dataRow[2])]
+            //                                                : 0,
+            //                                    fromYear = dataRow[5] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[5]),
+            //                                    toYear = dataRow[6] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[6]),
+            //                                    isImamatAppointee = false,
+            //                                    position = dataRow[3] == DBNull.Value
+            //                                        ? 0
+            //                                        :
+            //                                        Convert.ToInt32(dataRow[3]) == 0
+            //                                            ? 0
+            //                                            :
+            //                                            positionMappings.ContainsKey(Convert.ToInt32(dataRow[3]))
+            //                                                ?
+            //                                                positionMappings[Convert.ToInt32(dataRow[3])]
+            //                                                : 0,
+            //                                    priority = dataRow[8] == DBNull.Value ? 0 : Convert.ToInt32(dataRow[8]),
+            //                                    voluntaryCommunityId = dataRow[1] as string
+            //                                });
+            //                        }
 
-                                    if (services.Count > 0)
-                                        writer.WriteLine(
-                                            $"{start}{JsonConvert.SerializeObject(services, Formatting.None, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore})}{end}{personId};");
-                                }
-                            }
-                        }
+            //                        if (services.Count > 0)
+            //                            writer.WriteLine(
+            //                                $"{start}{JsonConvert.SerializeObject(services, Formatting.None, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore})}{end}{personId};");
+            //                    }
+            //                }
+            //            }
 
-                        writer.Close();
-                    }
-                }
-            }
+            //            writer.Close();
+            //        }
+            //    }
+            //}
 
             //using (MySqlConnection conn = new MySqlConnection(connectionString))
             //{
@@ -367,8 +370,87 @@ namespace ImageConversionUtility
             //        }
             //    }
             //}
-        }
 
-        #endregion Private Methods
+            //var reader = new StreamReader("backup.sql");
+            //while (!reader.EndOfStream)
+            //{
+            //    using (MySqlConnection conn = new MySqlConnection(connectionString))
+            //    {
+            //        conn.Open();
+
+            //        var sql = reader.ReadLine();
+            //        using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            //        {
+            //            cmd.CommandTimeout = 5000;
+            //            Console.WriteLine(
+            //                $"Effected Rows for = {cmd.ExecuteNonQuery()}");
+            //        }
+
+            //        conn.Close();
+            //    }
+            //}
+            //reader.Close();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                const string sql = "SELECT * FROM person where person.id";
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.CommandTimeout = 5000;
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable resultTable = new DataTable();
+                        adapter.Fill(resultTable);
+
+                        foreach (DataRow row in resultTable.Rows)
+                        {
+                            try
+                            {
+                                using (MySqlConnection innerConnection = new MySqlConnection("Server=127.0.0.1;Database=inner_satisfaction99;Uid=root;SslMode=none;"))
+                                {
+                                    innerConnection.Open();
+                                    var id = Convert.ToInt32(row[0]);
+                                    var base64 = Convert.ToString(row[4]);
+                                    //var bytes = Convert.FromBase64String(base64);
+                                    //using (MemoryStream ms = new MemoryStream(bytes))
+                                    //{
+                                    //    if (ms.Length > 200000)
+                                    //    {
+                                    //        Console.WriteLine(ms.Length);
+                                    //        var image = new MagickImage(ms);
+                                    //        image.Resize(new Percentage(50));
+                                    //        var imageBase64 = Convert.ToBase64String(image.ToByteArray());
+                                    //        var innerSql =
+                                    //            $"UPDATE person SET person.image = '{imageBase64}' WHERE person.id = {id}";
+                                    //        using (MySqlCommand innerCommand =
+                                    //            new MySqlCommand(innerSql, innerConnection))
+                                    //        {
+                                    //            Console.WriteLine(
+                                    //                $"Effected Rows for person id {id} = {innerCommand.ExecuteNonQuery()}");
+                                    //        }
+                                    //    }
+                                    //}
+                                    var innerSql =
+                                                $"UPDATE person SET person.image = '{base64}' WHERE person.id = {id}";
+                                    using (MySqlCommand innerCommand =
+                                        new MySqlCommand(innerSql, innerConnection))
+                                    {
+                                        Console.WriteLine(
+                                            $"Effected Rows for person id {id} = {innerCommand.ExecuteNonQuery()}");
+                                    }
+                                    innerConnection.Close();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.ToString());
+                            }
+                        }
+                    }
+                }
+            }
+
+            #endregion Private Methods
+        }
     }
 }

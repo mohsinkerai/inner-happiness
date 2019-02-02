@@ -7,12 +7,21 @@ using AMS.frontend.web.Areas.Operations.Models;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AMS.frontend.web.Areas.Administration.Controllers
 {
     [Area(AreaNames.Administration)]
     public class LookupCrudController : BaseController
     {
+
+        private readonly ILogger<LookupCrudController> _logger;
+
+        public LookupCrudController(ILogger<LookupCrudController> logger)
+        {
+            _logger = logger;
+        }
+
         public IActionResult Index(CrudModel model)
         {
             return View(model);
@@ -23,7 +32,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewData(model);
+                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewData(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -142,7 +151,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCountry(model);
+                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCountry(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -163,7 +172,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
 
         public async Task<IActionResult> City()
         {
-            ViewBag.CountryList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
+            ViewBag.CountryList = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
             return View(new CityModel { Url = "constants/city", Title = "City" });
         }
 
@@ -172,7 +181,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCity(model);
+                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCity(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -188,7 +197,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
                 }
             }
 
-            ViewBag.CountryList = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
+            ViewBag.CountryList = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
             return View("City", model);
         }
 
@@ -201,7 +210,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewJamatiTitle(model);
+                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewJamatiTitle(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -235,7 +244,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewVoluntaryInstitution(model);
+                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewVoluntaryInstitution(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;

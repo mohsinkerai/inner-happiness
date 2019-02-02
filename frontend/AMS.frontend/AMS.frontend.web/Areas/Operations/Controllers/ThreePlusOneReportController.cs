@@ -10,6 +10,7 @@ using AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -17,6 +18,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     public class ThreePlusOneReportController : BaseController
     {
 
+        private readonly ILogger<ThreePlusOneReportController> _logger;
+
+        public ThreePlusOneReportController(ILogger<ThreePlusOneReportController> logger)
+        {
+            _logger = logger;
+        }
         public IActionResult Index()
         {
             var sessionInstituionList = new List<InstitutionModel>();
@@ -65,7 +72,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetNationalInstitutions()
         {
-            var list = await new RestfulClient(
+            var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetNationalInstitutions();
 
             foreach (var item in list)
@@ -78,7 +85,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetRegionalInstitutions()
         {
-            var list = await new RestfulClient(
+            var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalInstitutions();
 
             foreach (var item in list)
@@ -91,7 +98,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetLocalInstitutions()
         {
-            var list = await new RestfulClient(
+            var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
 
             foreach (var item in list)
