@@ -8,6 +8,7 @@ using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -18,10 +19,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
     {
         #region Public Constructors
 
-        public NominationsController(IOptions<Configuration> configuration)
+        public NominationsController(IOptions<Configuration> configuration, ILogger<NominationsController> logger)
         {
             _configuration = configuration.Value;
-            //RestfulClient = new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token);
+            _logger = logger;
+            //RestfulClient = new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token);
         }
 
         #endregion Public Constructors
@@ -35,6 +37,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         private readonly Configuration _configuration;
 
         private readonly RestfulClient _restfulClient;
+
+        private readonly ILogger<NominationsController> _logger;
 
         #endregion Private Fields
 
@@ -134,7 +138,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var cycle = HttpContext.Session.GetString(SelectedCycle);
 
             var nominationModel =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                     .GetInstitutionDetails(uid, cycle);
 
@@ -153,7 +157,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetLocalInstitutions()
         {
-            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+            var list = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                 ?.Token).GetLocalInstitutions();
 
             return new JsonResult(list);
@@ -164,7 +168,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (int.TryParse(id, out _))
             {
                 var personTuple =
-                    await new RestfulClient(
+                    await new RestfulClient(_logger,
                             HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
                         .GetPersonDetailsThroughPagging(string.Empty, string.Empty, id, string.Empty, string.Empty,
                             string.Empty, string.Empty, 1, 10, string.Empty);
@@ -181,7 +185,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<JsonResult> GetRegionalInstitutions()
         {
-            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+            var list = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                 ?.Token).GetRegionalInstitutions();
 
             return new JsonResult(list);
@@ -193,7 +197,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ViewBag.Message = TempData["Message"];
 
             ViewBag.Cycle =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             //return View(new List<PersonModel>());
 
@@ -210,7 +214,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<IActionResult> Index(IndexNominationModel indexNominationModel)
         {
             ViewBag.Cycle =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             if (ModelState.IsValid)
             {
@@ -263,7 +267,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             //api call for nominate
             var positionModel =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Nominate(
                     personId.Split('-')[0], id,
                     priority, institutionId, positionId, cycleId, seatNo);
@@ -325,7 +329,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //NominationModel nominationModel = position.Nominations.Where(n => n.Person.Id == personId).FirstOrDefault();
 
             var positionModel =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).Recommend(personAppointmentId, position, cycleId, institutionId);
 
             //update data in session
@@ -379,7 +383,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var positionModel =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).RemoveNomination(
                     personAppointmentId,
                     cycleId, institutionId, id, seatId, model.Positions[pos]);
@@ -451,7 +455,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 sessionValue.Priority = counter++;
 
             var positionModel =
-                await new RestfulClient(
+                await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).reOrderNomination(
                     listNominations,
                     positionId, cycleId, institutionId, seatNo, id);
@@ -633,7 +637,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //var conditionedData = new List<PositionModel>();
 
                 var conditionedData =
-                    await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetInstitutionTypes(level, subLevel);
 
                 // Loading drop down lists.

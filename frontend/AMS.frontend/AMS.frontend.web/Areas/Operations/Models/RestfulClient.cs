@@ -11,6 +11,7 @@ using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -129,7 +130,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
     {
         #region Public Constructors
 
-        public RestfulClient(string token)
+        public RestfulClient(ILogger logger, string token)
         {
             _client = new HttpClient
             {
@@ -137,6 +138,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            _logger = logger;
         }
 
         #endregion Public Constructors
@@ -208,11 +210,13 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
         #region Private Fields
 
-        private readonly string _baseUrl = "http://is.bismagreens.com/";
+        private readonly string _baseUrl = "http://localhost:8080/";
 
         //http://localhost:8080/
 
         private readonly HttpClient _client;
+
+        private ILogger _logger;
 
         #endregion Private Fields
 
@@ -704,6 +708,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             catch (Exception ex)
             {
+                _logger.LogCritical(ex,"An exception occurred while fetching institution details");
             }
 
             return nominationDetailModel;

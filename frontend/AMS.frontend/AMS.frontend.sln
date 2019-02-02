@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28516.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMS.frontend.web", "AMS.frontend.web\AMS.frontend.web.csproj", "{EC967EF8-4133-4678-B66B-3F9B82AD8DB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConversionUtility", "ImageConversionUtility\ImageConversionUtility.csproj", "{90DAB60C-63F0-4865-B74C-ADDC4ECE612F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageConversionUtility", "ImageConversionUtility\ImageConversionUtility.csproj", "{90DAB60C-63F0-4865-B74C-ADDC4ECE612F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "..\..\..\..\Users\navee\Desktop\hello\Demo\Demo.csproj", "{C2470C67-7B80-498F-AF5B-2509269CDE59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{90DAB60C-63F0-4865-B74C-ADDC4ECE612F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90DAB60C-63F0-4865-B74C-ADDC4ECE612F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90DAB60C-63F0-4865-B74C-ADDC4ECE612F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2470C67-7B80-498F-AF5B-2509269CDE59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2470C67-7B80-498F-AF5B-2509269CDE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2470C67-7B80-498F-AF5B-2509269CDE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2470C67-7B80-498F-AF5B-2509269CDE59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

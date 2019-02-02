@@ -7,28 +7,36 @@ using AMS.frontend.web.Areas.Operations.Models.Cycle;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
     [Area(AreaNames.Operations)]
     public class CycleController : BaseController
     {
+
+        private readonly ILogger<CycleController> _logger;
+
+        public CycleController(ILogger<CycleController> logger)
+        {
+            _logger = logger;
+        }
         public async Task<IActionResult> Index()
         {
-            var allCycles = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCycles();
+            var allCycles = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCycles();
             return View(allCycles);
         }
 
         public async Task<IActionResult> Create()
         {
-            ViewBag.PreviousCycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+            ViewBag.PreviousCycle = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CycleModel model)
         {
-            bool success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).CreateNewCycle(model);
+            bool success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).CreateNewCycle(model);
 
             if (success)
             {
@@ -42,7 +50,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
             else
             {
-                ViewBag.PreviousCycle = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+                ViewBag.PreviousCycle = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
 
                 ViewBag.MessageType = MessageTypes.Error;
                 ViewBag.Message = Messages.GeneralError;
@@ -53,7 +61,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Appoint(MidTermCycle model)
         {
-            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).appoint(model.CycleId);
+            var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).appoint(model.CycleId);
 
             if (success)
             {
@@ -74,7 +82,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Close(MidTermCycle model)
         {
-            var success = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).close(model);
+            var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).close(model);
 
             if (success)
             {
@@ -95,14 +103,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
-            ViewBag.Institution = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositionInstitution();
+            ViewBag.Institution = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositionInstitution();
 
             return View(new MidTermCycle {CycleId = id });
         }
 
         public async Task<JsonResult> GetAllPositionOfInstitution(string uid)
         {
-            var list = await new RestfulClient(HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).findPositionByInstituionId(uid);
+            var list = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).findPositionByInstituionId(uid);
 
             return new JsonResult(list);
         }
