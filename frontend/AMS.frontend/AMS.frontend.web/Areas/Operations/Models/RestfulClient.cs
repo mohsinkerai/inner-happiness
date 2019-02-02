@@ -210,7 +210,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
         #region Private Fields
 
-        private readonly string _baseUrl = "http://localhost:8080/";
+        private readonly string _baseUrl = "http://is.bismagreens.com/";
 
         //http://localhost:8080/
 
