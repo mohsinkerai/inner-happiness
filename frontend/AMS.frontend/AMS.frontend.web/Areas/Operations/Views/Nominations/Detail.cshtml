@@ -175,19 +175,19 @@
                                 if (!position.incumbentDetail.IsRecommended)
                                 {
                                     <span class="m-widget5__desc m--font-info">
-                                        <a href='javascript:Recommend("@Url.Action("Recommend", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@position.Id", "@position.Incubment.Id", "@position.incumbentDetail.personAppointmentId", "@position.SeatId", "@position.PositionId");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Recommend">
+                                        <a href='javascript:Recommend("@Url.Action("Recommend", ControllerNames.Nominations, new { area = AreaNames.Operations })", "@position.Id", "@position.Incubment?.Id", "@position.incumbentDetail.personAppointmentId", "@position.SeatId", "@position.PositionId");' class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Recommend">
                                             <i class="la la-star"></i>
                                         </a>
                                     </span>
                                 }
                             }
                             <span class="m-widget5__desc m--font-info">
-                                <a target="_blank" asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@position.Incubment.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
+                                <a target="_blank" asp-area="@AreaNames.Operations" asp-controller=@ControllerNames.Persons asp-action=@ActionNames.Edit asp-route-id="@position.Incubment?.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit Details">
                                     <i class="la la-edit"></i>
                                 </a>
                             </span>
                             <span class="m-widget5__desc m--font-info">
-                                <a target="_blank" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@position.Incubment.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                                <a target="_blank" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@position.Incubment?.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
                                     <i class="la la-eye"></i>
                                 </a>
                             </span>
