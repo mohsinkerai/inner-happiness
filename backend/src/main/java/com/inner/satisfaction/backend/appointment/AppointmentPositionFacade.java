@@ -1,12 +1,15 @@
 package com.inner.satisfaction.backend.appointment;
 
+import com.inner.satisfaction.backend.appointment.dto.AppointmentPositionDto;
+import com.inner.satisfaction.backend.appointment.dto.ApptPositionDto;
+import com.inner.satisfaction.backend.appointment.dto.MidtermPositionCreateRequestDto;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.cycle.CycleState;
 import com.inner.satisfaction.backend.institution.InstitutionService;
 import com.inner.satisfaction.backend.person.PersonService;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
-import com.inner.satisfaction.backend.person.appointment.PersonAppointmentDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentDto;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointmentService;
 import com.inner.satisfaction.backend.position.PositionService;
 import java.sql.Timestamp;

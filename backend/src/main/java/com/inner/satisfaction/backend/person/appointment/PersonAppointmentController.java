@@ -3,12 +3,17 @@ package com.inner.satisfaction.backend.person.appointment;
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentExtendedDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonRecommendationDto;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -46,6 +51,14 @@ public class PersonAppointmentController extends BaseController<PersonAppointmen
   @PostMapping("recommend")
   public void recommend(@Valid @RequestBody PersonRecommendationDto personRecommendationDto) {
     personAppointmentFacade.recommendPersonInAppointment(personRecommendationDto);
+  }
+
+  @GetMapping("search/findRecommendationAndNominationByPersonIdAndCycleId")
+  public List<PersonAppointmentExtendedDto> findRecommendationAndNominationByPersonIdAndCycleId(
+    @RequestParam("personId") long personId,
+    @RequestParam("cycleId") long cycleId
+  ) {
+    return personAppointmentFacade.findRecommendationAndNominationByPersonIdAndCycleId(personId, cycleId);
   }
 
   @Override

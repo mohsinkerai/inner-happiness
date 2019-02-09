@@ -435,6 +435,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Is Continued")]
         [JsonIgnore]
         public bool IsContinued { get; set; }
+
+        [JsonIgnore] public List<CycleOutlook> CycleOutlooks { get; set; }
+
         #endregion Public Properties
     }
 }

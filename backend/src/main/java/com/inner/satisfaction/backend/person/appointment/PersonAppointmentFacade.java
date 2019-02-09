@@ -5,10 +5,15 @@ import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionState;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
+import com.inner.satisfaction.backend.institution.InstitutionService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentExtendedDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonRecommendationDto;
 import com.inner.satisfaction.backend.person.appointment.event.PersonRecommendedEventDto;
+import com.inner.satisfaction.backend.position.PositionService;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,6 +29,8 @@ import org.springframework.util.CollectionUtils;
 public class PersonAppointmentFacade {
 
   private final CycleService cycleService;
+  private final InstitutionService institutionService;
+  private final PositionService positionService;
   private final PersonService personService;
   private final PersonAppointmentService personAppointmentService;
   private final AppointmentPositionService appointmentPositionService;
@@ -31,11 +38,15 @@ public class PersonAppointmentFacade {
 
   public PersonAppointmentFacade(
     CycleService cycleService,
+    InstitutionService institutionService,
+    PositionService positionService,
     AppointmentPositionService appointmentPositionService,
     PersonAppointmentService personAppointmentService,
     PersonService personService,
     ApplicationEventPublisher applicationEventPublisher) {
     this.cycleService = cycleService;
+    this.institutionService = institutionService;
+    this.positionService = positionService;
     this.appointmentPositionService = appointmentPositionService;
     this.personAppointmentService = personAppointmentService;
     this.personService = personService;
@@ -188,16 +199,31 @@ public class PersonAppointmentFacade {
     PersonAppointment personAppointment = personAppointmentService.findOne(personAppointmentId);
     Assert.notNull(personAppointment,
       "Invalid personAppointment Id, personAppointment does not exists");
+    AppointmentPosition appointmentPosition = appointmentPositionService
+      .findOne(personAppointment.getAppointmentPositionId());
+
+    List<PersonAppointmentExtendedDto> nominationsAndRecommendationOfPerson = findRecommendationAndNominationByPersonIdAndCycleId(
+      personAppointment.getPersonId(), appointmentPosition.getCycleId());
+
+    List<PersonAppointmentExtendedDto> recommendationsOfPerson = nominationsAndRecommendationOfPerson
+      .stream()
+      .filter(paeDto -> paeDto.isRecommended())
+      .collect(Collectors.toList());
+
+    if (recommendationsOfPerson.size() > 0) {
+      throw new RuntimeException(
+        "This person is already recommended at " + formatify(recommendationsOfPerson));
+    }
 
     Long appointmentPositionId = personAppointment.getAppointmentPositionId();
     List<PersonAppointment> alreadyRecommended = personAppointmentService
       .findByAppointmentPositionIdAndIsRecommendedTrue(
         personAppointment.getAppointmentPositionId());
 
-    alreadyRecommended.stream().map(pa -> {
+    alreadyRecommended.stream().forEach(pa -> {
       pa.setIsRecommended(Boolean.FALSE);
-      return pa;
-    }).map(personAppointmentService::save);
+      personAppointmentService.save(pa);
+    });
 
     personAppointment.setIsRecommended(true);
     personAppointmentService.save(personAppointment);
@@ -208,5 +234,56 @@ public class PersonAppointmentFacade {
       .personId(personAppointment.getPersonId())
       .previousRecommendationCount(alreadyRecommended.size())
       .build());
+  }
+
+  private String formatify(List<PersonAppointmentExtendedDto> recommendationsOfPerson) {
+    return recommendationsOfPerson.stream()
+      .map(paeDto -> paeDto.getPosition() + " " + paeDto.getInstitution().getName())
+      .collect(Collectors.joining(", "));
+  }
+
+  public List<PersonAppointmentExtendedDto> findRecommendationAndNominationByPersonIdAndCycleId(
+    long personId, long cycleId) {
+    List<PersonAppointment> personAppointments = personAppointmentService
+      .findByPersonId(personId, true, true);
+
+    return personAppointments.stream()
+      .map(pa -> PersonAppointmentExtendedDto.builder()
+        .personAppointmentId(pa.getId())
+        .personId(pa.getPersonId())
+        .appointmentPositionId(pa.getAppointmentPositionId())
+        .priority(pa.getPriority())
+        .isRecommended(pa.getIsRecommended())
+        .isAppointed(pa.getIsAppointed())
+        .build())
+      .map(paeDto -> {
+        AppointmentPosition ap = appointmentPositionService
+          .findOne(paeDto.getAppointmentPositionId());
+        return paeDto.toBuilder()
+          .cycleId(ap.getCycleId())
+          .positionId(ap.getPositionId())
+          .institutionId(ap.getInstitutionId())
+          .seatId(ap.getSeatNo())
+          .build();
+      })
+      .filter(paeDto ->
+        cycleId == paeDto.getCycleId()
+      ).map(
+        paeDto -> {
+          paeDto.setPerson(personService.findOne(paeDto.getPersonId()));
+          return paeDto;
+        }
+      ).map(
+        paeDto -> {
+          paeDto.setInstitution(institutionService.findOne(paeDto.getInstitutionId()));
+          return paeDto;
+        }
+      ).map(
+        paeDto -> {
+          paeDto.setPosition(positionService.findOne(paeDto.getPositionId()));
+          return paeDto;
+        }
+      )
+      .collect(Collectors.toList());
   }
 }

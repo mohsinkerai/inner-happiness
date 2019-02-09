@@ -2,6 +2,9 @@ package com.inner.satisfaction.backend.appointment;
 
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
+import com.inner.satisfaction.backend.appointment.dto.AppointmentPositionDto;
+import com.inner.satisfaction.backend.appointment.dto.ApptPositionDto;
+import com.inner.satisfaction.backend.appointment.dto.MidtermPositionCreateRequestDto;
 import com.inner.satisfaction.backend.base.BaseController;
 import java.util.List;
 import org.springframework.http.HttpStatus;

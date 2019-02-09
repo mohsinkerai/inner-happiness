@@ -2,6 +2,8 @@ package com.inner.satisfaction.backend.base;
 
 import com.inner.satisfaction.backend.level.Level;
 import java.util.List;
+import javax.transaction.Transactional;
+import javax.websocket.server.PathParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -65,10 +67,11 @@ public abstract class BaseController<E extends BaseEntity> {
     return baseService.save(e);
   }
 
+  @Transactional
   @DeleteMapping(ONE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(
-    Long entityId
+    @PathVariable("id") Long entityId
   ) {
     E e = baseService.findOne(entityId);
     baseService.delete(e);
