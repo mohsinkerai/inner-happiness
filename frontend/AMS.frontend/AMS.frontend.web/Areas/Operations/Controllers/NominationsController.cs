@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -342,8 +343,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             model.Positions.Where(p => p.Id == positionId).Select(Positions => { Positions = positionModel; return Positions; }).ToList();
             var updatedJson = JsonConvert.SerializeObject(model);
             HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-            
-            return PartialView("_NominationsTablePartial", positionModel);
+
+            if (positionModel.IsError)
+            {
+                return Json("Error - " + positionModel.ErrorMessage);
+            }
+            else
+            {
+                return PartialView("_NominationsTablePartial", positionModel);
+            }
 
             /*return PartialView("_NominationsTablePartial", new PositionModel
             {

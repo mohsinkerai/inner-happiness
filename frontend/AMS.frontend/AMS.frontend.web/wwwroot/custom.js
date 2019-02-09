@@ -1981,10 +1981,12 @@ function Recommend(url, positionId, personId, personAppointmentId, seatId, id) {
                 errorThrown);
         },
         success: function (result) {
-            if (result.length !== 4) {
-				$("#nominations-table-" + positionId).html(result);
-                InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
-                $("#nominations-" + positionId).css("min-height", "0px");
+            if (result.startsWith('"Error - ')) {
+	            alert(result);
+            } else {
+	            $("#nominations-table-" + positionId).html(result);
+	            InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+	            $("#nominations-" + positionId).css("min-height", "0px");
             }
             mApp.unblock("#nominations-table-" + positionId, {});
         }

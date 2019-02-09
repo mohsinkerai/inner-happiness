@@ -11,6 +11,7 @@ using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -1668,6 +1669,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         }
                     }
                     
+                }
+                else
+                {
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    dynamic jsonObject = JToken.Parse(responseString);
+                    updatedPosition = new PositionModel {ErrorMessage = jsonObject.message, IsError = true};
                 }
             }
             catch (Exception ex)

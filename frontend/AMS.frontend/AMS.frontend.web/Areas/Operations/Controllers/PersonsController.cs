@@ -107,7 +107,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     RestoreSessionDataToModel(model);
 
                     var success =
-                        await new RestfulClient(_logger,HttpContext.Session
+                        await new RestfulClient(_logger, HttpContext.Session
                             .Get<AuthenticationResponse>("AuthenticationResponse")?.Token).SavePersonData(model);
 
                     //var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).savePersonData(PersonDummyData(model.Image));
@@ -235,10 +235,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (person.RegionalCouncil != null)
             {
                 ViewBag.LocalCouncilList =
-                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetLocalCouncil(person.RegionalCouncil);
                 ViewBag.JamatkhanaList =
-                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetJamatkhana(person.LocalCouncil);
 
                 var appointments = await GetPastImamatAppointments(person.Id);
@@ -264,13 +264,25 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             }
 
+            var cycles =
+                await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCycles();
+
+            var cycleId = cycles.OrderByDescending(c => c.Id).FirstOrDefault().Id;
+
             var outlooks =
                 await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
-                    .GetCycleOutlook(person.Id, "17");
+                    .GetCycleOutlook(person.Id, cycleId.ToString());
 
             var personModel = await MapPerson(person);
             personModel.CycleOutlooks = outlooks;
+
+            AuthenticationResponse authReponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+            if (authReponse.Roles.Contains("NOM") || authReponse.Roles.Contains("REC"))
+            {
+                personModel.ShowOutlook = true;
+            }
 
             return View(personModel);
         }
@@ -372,7 +384,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     RestoreSessionDataToModel(model);
 
                     var success =
-                        await new RestfulClient(_logger,HttpContext.Session
+                        await new RestfulClient(_logger, HttpContext.Session
                             .Get<AuthenticationResponse>("AuthenticationResponse")?.Token).EditPersonData(model);
                     if (success)
                     {
@@ -491,7 +503,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<JsonResult> GetJamatkhana(string uid)
         {
             //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            var list = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+            var list = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                 ?.Token).GetJamatkhana(uid);
 
             return new JsonResult(list);
@@ -500,7 +512,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         public async Task<JsonResult> GetLocalCouncil(string uid)
         {
             //var list = new List<SelectListItem> {new SelectListItem {Text = "Karimabad", Value = "Karimabad"}};
-            var list = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+            var list = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                 ?.Token).GetLocalCouncil(uid);
 
             return new JsonResult(list);
@@ -718,7 +730,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 var pageSize = Convert.ToInt32(queryCollection["length"][0]);
 
                 var tupleData =
-                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetPersonDetailsThroughPagging(name, cnic,
                         formNumber, jamatiTitle, degree, majorAreaOfStudy, academicIstitution, startRec / pageSize + 1,
                         pageSize, dateOfBirth);
@@ -1374,7 +1386,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (forFamily)
             {
                 var person =
-                    await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
+                    await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")
                         ?.Token).GetPersonDetailsById(personId);
 
                 if (person.VoluntaryCommunityServices != null)
