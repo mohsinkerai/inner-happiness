@@ -3,9 +3,12 @@ package com.inner.satisfaction.backend.person.appointment;
 import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 
 import com.inner.satisfaction.backend.base.BaseController;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentExtendedDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonRecommendationDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,7 +53,8 @@ public class PersonAppointmentController extends BaseController<PersonAppointmen
     personAppointmentFacade.recommendPersonInAppointment(personRecommendationDto);
   }
 
-  public List<PersonAppointment> findRecommendationAndNominationByPersonIdAndCycleId(
+  @GetMapping("search/findRecommendationAndNominationByPersonIdAndCycleId")
+  public List<PersonAppointmentExtendedDto> findRecommendationAndNominationByPersonIdAndCycleId(
     @RequestParam("personId") long personId,
     @RequestParam("cycleId") long cycleId
   ) {
