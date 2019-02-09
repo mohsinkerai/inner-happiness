@@ -79,18 +79,34 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(SearchCriteria searchCriteria)
         {
+            var formCollection = await HttpContext.Request.ReadFormAsync().ConfigureAwait(false);
+
+            if (!string.IsNullOrWhiteSpace(formCollection["DateOfBirthFrom"]))
+            {
+                searchCriteria.DateOfBirthFrom = DateTime.ParseExact(formCollection["DateOfBirthFrom"], "dd/MM/yyyy", null);
+                ModelState.Remove("DateOfBirthFrom");
+            }
+
+            if (!string.IsNullOrWhiteSpace(formCollection["DateOfBirthTo"]))
+            {
+                searchCriteria.DateOfBirthTo = DateTime.ParseExact(formCollection["DateOfBirthTo"], "dd/MM/yyyy", null);
+                ModelState.Remove("DateOfBirthTo");
+            }
+
             UploadImageContext context = HttpContext.RequestServices.GetService(typeof(UploadImageContext)) as UploadImageContext;
             var query = MakeQuery(searchCriteria);
             List<PersonModel> personList = context.GetPersons(query);
             searchCriteria.persons = personList;
             searchCriteria.Query = query;
+            
+            await InitializeSearchCriteria();
 
             return View(searchCriteria);
         }
 
         private string MakeQuery(SearchCriteria searchCriteria)
         {
-            string Query(SearchCriteria searchCriteria1, bool b, string s)
+            string Query(SearchCriteria searchCriteria1, ref bool b, ref string s)
             {
                 if (b)
                 {
@@ -111,62 +127,62 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (searchCriteria.RegionalCouncil != null && searchCriteria.RegionalCouncil.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.regional_council IN ({string.Join(",", searchCriteria.RegionalCouncil)})";
             }
             
 
             if (searchCriteria.LocalCouncil != null && searchCriteria.LocalCouncil.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.local_council IN ({string.Join(",", searchCriteria.LocalCouncil)})";
             }
 
             if (searchCriteria.JamatKhana != null && searchCriteria.JamatKhana.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.jamatkhana IN ({string.Join(",", searchCriteria.JamatKhana)})";
             }
 
             if (searchCriteria.JamatiTitle != null && searchCriteria.JamatiTitle.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.jamati_title IN ({string.Join(",", searchCriteria.JamatiTitle)})";
             }
 
             if (searchCriteria.City != null && searchCriteria.City.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.city IN ({string.Join(",", searchCriteria.City)})";
             }
 
             if (searchCriteria.AreaOfOrigin != null && searchCriteria.AreaOfOrigin.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.area_of_origin IN ({string.Join(",", searchCriteria.AreaOfOrigin)})";
             }
 
             if (searchCriteria.HighestLevelOfStudy != null && searchCriteria.HighestLevelOfStudy.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.highest_level_of_study IN ({string.Join(",", searchCriteria.HighestLevelOfStudy)})";
             }
 
             //if (searchCriteria.FiledOfInterest != null && searchCriteria.FiledOfInterest.Count > 0)
             //{
-            //    query = Query(searchCriteria, isFirstOne, query);
+            //    query = Query(searchCriteria, ref isFirstOne, ref query);
             //    query += $"p.field_of_interest IN ({string.Join(",", searchCriteria.FiledOfInterest)})";
             //}
 
             if (searchCriteria.OccupationType != null && searchCriteria.OccupationType.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.occupation_type IN ({string.Join(",", searchCriteria.OccupationType)})";
             }
 
             if (searchCriteria.EducationalInstitution != null && searchCriteria.EducationalInstitution.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 foreach (var item in searchCriteria.EducationalInstitution)
                 {
                     query += " json_contains(p.educations, '{\"institution\": " + item.Split('-')[0] + "}') OR";
@@ -177,7 +193,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (searchCriteria.NameOfDegree != null && searchCriteria.NameOfDegree.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 foreach (var item in searchCriteria.NameOfDegree)
                 {
                     query += " json_contains(p.educations, '{\"nameOfDegree\": " + item.Split('-')[0] + "}') OR";
@@ -188,7 +204,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (searchCriteria.MajorAreaOfStudy != null && searchCriteria.MajorAreaOfStudy.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 foreach (var item in searchCriteria.MajorAreaOfStudy)
                 {
                     query += " json_contains(p.educations, '{\"majorAreaOfStudy\": " + item.Split('-')[0] + "}') OR";
@@ -199,19 +215,19 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (searchCriteria.FieldOfExpertise != null && searchCriteria.FieldOfExpertise.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"pfoe.id IN ({string.Join(",", searchCriteria.FieldOfExpertise)})";
             }
 
             if (searchCriteria.ReligiousEducation != null && searchCriteria.ReligiousEducation.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.religious_education IN ({string.Join(",", searchCriteria.ReligiousEducation)})";
             }
 
             if (searchCriteria.AkdnTraining != null && searchCriteria.AkdnTraining.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 foreach (var item in searchCriteria.AkdnTraining)
                 {
                     query += " json_contains(p.akdn_trainings, '{\"training\" : " + item.Split('-')[0] + "}') OR";
@@ -222,31 +238,31 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (searchCriteria.Skills != null && searchCriteria.Skills.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"ps.id IN ({string.Join(",", searchCriteria.Skills)})";
             }
 
             if (searchCriteria.ProfessionalMembership != null && searchCriteria.ProfessionalMembership.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query);
+                query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"ppm.id IN ({string.Join(",", searchCriteria.ProfessionalMembership)})";
             }
 
-            if (searchCriteria.ProfessionalTraining != null)
+            if (!string.IsNullOrWhiteSpace(searchCriteria.ProfessionalTraining))
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 query += "json_contains(p.professional_trainings, '{\"training\": " + searchCriteria.ProfessionalTraining + "}'))";
             }
 
-            if (searchCriteria.EmploymentNameOfOrganization != null)
+            if (!string.IsNullOrWhiteSpace(searchCriteria.EmploymentNameOfOrganization))
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 query += "json_contains(p.employments, '{\"nameOfOrganization\": " + searchCriteria.EmploymentNameOfOrganization + "}'))";
             }
 
             if (searchCriteria.TypeOfBuisness != null && searchCriteria.TypeOfBuisness.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 foreach (var item in searchCriteria.TypeOfBuisness)
                 {
                     query += " json_contains(p.employments, '{\"businessType\": " + item.Split('-')[0] + "}') OR";
@@ -257,7 +273,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (searchCriteria.NatureOfBuisness != null && searchCriteria.NatureOfBuisness.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 foreach (var item in searchCriteria.NatureOfBuisness)
                 {
                     query += " json_contains(p.employments, '{\"businessNature\": " + item.Split('-')[0] + "}') OR";
@@ -268,7 +284,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             if (searchCriteria.AreaOfStudy != null && searchCriteria.AreaOfStudy.Count > 0)
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
                 foreach (var item in searchCriteria.AreaOfStudy)
                 {
                     query += " json_contains(p.educations, '{\"majorAreaOfStudy\": " + item.Split('-')[0] + "}') OR";
@@ -277,14 +293,24 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 query += ")";
             }
 
-            if (searchCriteria.EmploymentCategory != null)
+            if (!string.IsNullOrWhiteSpace(searchCriteria.EmploymentCategory))
             {
-                query = Query(searchCriteria, isFirstOne, query) + "(";
-                query += "json_contains(p.employments, '{\"employmentCategory\" : " + searchCriteria.EmploymentCategory + "}'))";
+                query = Query(searchCriteria, ref isFirstOne, ref query) + "(";
+                query += "json_contains(p.employments, '{\"employmentCategory\" : \"" + searchCriteria.EmploymentCategory + "\"}'))";
             }
 
-            query = Query(searchCriteria, isFirstOne, query);
-            query += "p.gender = " + searchCriteria.Gender;
+            if (searchCriteria.Gender != null)
+            {
+                query = Query(searchCriteria, ref isFirstOne, ref query);
+                query += "p.gender = " + (searchCriteria.Gender == Gender.Male ? "0" : "1");
+            }
+
+            if (searchCriteria.DateOfBirthFrom != null || searchCriteria.DateOfBirthTo != null)
+            {
+                query = Query(searchCriteria, ref isFirstOne, ref query);
+                query +=
+                    $"p.date_of_birth BETWEEN '{(searchCriteria.DateOfBirthFrom == null ? DateTime.MinValue.ToString("yyyy-MM-dd HH:mm:ss") : searchCriteria.DateOfBirthFrom.Value.ToString("yyyy-MM-dd HH:mm:ss"))}' AND '{(searchCriteria.DateOfBirthTo == null ? DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss") : searchCriteria.DateOfBirthTo.Value.ToString("yyyy-MM-dd HH:mm:ss"))}'";
+            }
 
             return query;
         }

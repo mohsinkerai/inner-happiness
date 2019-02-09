@@ -10,19 +10,19 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
     {
         public string Condition { get; set; }
 
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [Display(Name = "Employment Category")]
         public string EmploymentCategory { get; set; }
 
         [Display(Name = "Employment - Name of Organization")]
         public string EmploymentNameOfOrganization { get; set; }
-
+        
         [Display(Name = "From - Date of Birth")]
-        public DateTime DateOfBirthFrom { get; set; }
+        public DateTime? DateOfBirthFrom { get; set; }
 
         [Display(Name = "Till - Date of Birth")]
-        public DateTime DateOfBirthTo { get; set; }
+        public DateTime? DateOfBirthTo { get; set; }
 
         [Display(Name = "Regional Council")]
         public List<string> RegionalCouncil { get; set; }
