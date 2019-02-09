@@ -6,7 +6,7 @@
 }
 
 @{
-    @if (Model.CycleOutlooks?.Count > 0)
+    @if(Model.CycleOutlooks?.Count > 0 && Model.ShowOutlook)
      {
     <div class="row">
         <div class="col-xl-12">
@@ -64,7 +64,7 @@
                                     <div class="m-widget5__content">
                                         <div class="m-widget5__section">
                                             <h4 class="m-widget5__title">
-                                                    @outlook.institution.FullName
+                                                @outlook.institution.FullName
                                             </h4>
                                             <div class="m-widget5__info">
                                                 <span class="m-widget5__info-date m--font-info">
@@ -109,7 +109,9 @@
                                 <div class="m-widget5__item">
                                     <div class="m-widget5__content">
                                         <div class="m-widget5__section">
-                                            @outlook.institution.FullName
+                                            <h4 class="m-widget5__title">
+                                                @outlook.institution.FullName
+                                            </h4>
                                             <div class="m-widget5__info">
                                                 <span class="m-widget5__info-date m--font-info">
                                                     @outlook.position.Name
@@ -152,7 +154,9 @@
                                 <div class="m-widget5__item">
                                     <div class="m-widget5__content">
                                         <div class="m-widget5__section">
-                                            @outlook.institution.FullName
+                                            <h4 class="m-widget5__title">
+                                                @outlook.institution.FullName
+                                            </h4>
                                             <div class="m-widget5__info">
                                                 <span class="m-widget5__info-date m--font-info">
                                                     @outlook.position.Name

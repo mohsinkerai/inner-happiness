@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Nominations
 {
@@ -59,6 +61,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
 
+        [JsonIgnore] public string ErrorMessage { get; set; }
+        [JsonIgnore] public bool IsError { get; set; }
+
         #endregion Public Properties
     }
+
+
 }

@@ -438,6 +438,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] public List<CycleOutlook> CycleOutlooks { get; set; }
 
+        [JsonIgnore] public bool ShowOutlook { get; set; }
+
         #endregion Public Properties
     }
 }

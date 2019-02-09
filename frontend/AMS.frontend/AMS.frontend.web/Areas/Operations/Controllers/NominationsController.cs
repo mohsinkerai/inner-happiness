@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -240,6 +241,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var json = HttpContext.Session.GetString(SessionNominationModel);
             var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
 
+            if (model.Positions != null && model.Positions.FirstOrDefault(p => p.Id == id).Nominations
+                    .Any(n => n.Person?.Id == personId.Split('-')[0]))
+            {
+                return PartialView("_NominationsTablePartial", model.Positions.FirstOrDefault(p => p.Id == id));
+            }
+
             List<NominationModel> nominations = null;
             string positionId = null;
             string institutionId = null;
@@ -342,8 +349,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             model.Positions.Where(p => p.Id == positionId).Select(Positions => { Positions = positionModel; return Positions; }).ToList();
             var updatedJson = JsonConvert.SerializeObject(model);
             HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-            
-            return PartialView("_NominationsTablePartial", positionModel);
+
+            if (positionModel.IsError)
+            {
+                return Json("Error - " + positionModel.ErrorMessage);
+            }
+            else
+            {
+                return PartialView("_NominationsTablePartial", positionModel);
+            }
 
             /*return PartialView("_NominationsTablePartial", new PositionModel
             {
