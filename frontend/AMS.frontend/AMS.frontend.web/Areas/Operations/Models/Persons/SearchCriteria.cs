@@ -70,7 +70,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         public List<string> AkdnTraining { get; set; }
 
         [Display(Name = "Professional Training")]
-        public List<string> ProfessionalTraining { get; set; }
+        public string ProfessionalTraining { get; set; }
 
         [Display(Name = "Skills")]
         public List<string> Skills { get; set; }
@@ -93,5 +93,6 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
             persons = new List<PersonModel>();
         }
 
+        public string Query { get; set; }
     }
 }
