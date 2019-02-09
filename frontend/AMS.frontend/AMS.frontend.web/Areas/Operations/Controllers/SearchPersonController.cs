@@ -74,6 +74,8 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetBussinessType();
             ViewBag.NatureOfBuisness = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetBussinessNature();
+            ViewBag.AreaOfStudy = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetMajorAreaOfStudy();
         }
 
         [HttpPost]
