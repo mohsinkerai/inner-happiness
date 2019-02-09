@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="m-portlet__body">
-        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.SearchPerson" asp-action="IndexPost" method="post">
+        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.SearchPerson" asp-action="Index" method="post">
             <div class="form-group m-form__group row">
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -190,6 +190,14 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
+                        <label asp-for="AreaOfExpertise" class="control-label"></label>
+                        <select asp-for="AreaOfExpertise" asp-items="@ViewBag.AreaOfExpertise" class="form-control m-select2-multiple" placeholder="Area of Expertise" multiple name="AreaOfExpertise">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
                         <label class="control-label">Date of Birth (Select range from)</label>
                         <div class="input-group">
                             <input type="text" asp-for="DateOfBirthFrom" class="form-control date-picker" placeholder="Select date">
@@ -300,15 +308,15 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.persons != null)
+                @if (Model?.persons != null)
                 {
                     @foreach (var item in Model.persons)
                     {
                 <tr>
-                    <td> @item.FormNumber </td>
+                    <td> @item.Id </td>
                     <td> @item.FirstName </td>
                     <td>
-                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.FormNumber" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
                             <i class="la la-eye"></i>
                         </a>
                     </td>

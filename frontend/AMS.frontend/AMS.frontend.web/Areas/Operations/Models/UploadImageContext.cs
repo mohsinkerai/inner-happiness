@@ -44,10 +44,11 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
         }
 
-        public bool GetPersons()
+        public List<PersonModel> GetPersons()
         {
             try
             {
+                List<PersonModel> personList = new List<PersonModel>();
                 using (MySqlConnection conn = GetConnection())
                 {
                     conn.Open();
@@ -55,14 +56,26 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     string query = "Select * from person LIMIT 20";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    var data = cmd.ExecuteReader();
+                    MySqlDataReader reader = cmd.ExecuteReader();
 
-                    return false;
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var person = new PersonModel();
+                            person.Id = reader["id"].ToString();
+                            person.FirstName = reader["full_name"].ToString();
+
+                            personList.Add(person);
+                        }
+                    }
+                    
+                    return personList;
                 }
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
         }
     }

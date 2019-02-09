@@ -28,17 +28,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             await InitializeSearchCriteria();
             
-            SearchCriteria searchCriteria = new SearchCriteria();
-            for (int i = 0; i < 20; i++)
-            {
-                PersonModel personModel = new PersonModel();
-                personModel.FormNumber = Convert.ToString(i);
-                personModel.FirstName = "Name :" + i;
-
-                searchCriteria.persons.Add(personModel);
-            }
-            
-            return View(searchCriteria);
+            return View();
         }
 
         public async Task InitializeSearchCriteria()
@@ -86,13 +76,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> IndexPost(SearchCriteria searchCriteria)
+        public async Task<IActionResult> Index(SearchCriteria searchCriteria)
         {
 
             UploadImageContext context = HttpContext.RequestServices.GetService(typeof(UploadImageContext)) as UploadImageContext;
-            bool success = context.GetPersons();
+            List<PersonModel> personList = context.GetPersons();
+            searchCriteria.persons = personList;
 
-            return RedirectToAction("Index");
+            return View(searchCriteria);
         }
     }
 }

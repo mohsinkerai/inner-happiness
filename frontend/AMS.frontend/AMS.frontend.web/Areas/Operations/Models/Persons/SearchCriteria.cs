@@ -84,6 +84,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [Display(Name = "Nature Of Buisness")]
         public List<string> NatureOfBuisness { get; set; }
 
+        [Display(Name = "Area Of Expertise")]
+        public List<string> AreaOfExpertise { get; set; }
+
         public List<PersonModel> persons { get; set; }
 
         public SearchCriteria() {
