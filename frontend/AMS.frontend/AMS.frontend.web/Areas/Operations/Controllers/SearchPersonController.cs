@@ -112,6 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 query = Query(searchCriteria, isFirstOne, query);
                 query += $"p.regional_council IN ({string.Join(",", searchCriteria.RegionalCouncil)})";
             }
+            
 
             return query;
         }
