@@ -212,7 +212,7 @@ public class PersonAppointmentFacade {
 
     if (recommendationsOfPerson.size() > 0) {
       throw new RuntimeException(
-        "This person is already recommended at " + recommendationsOfPerson.toString());
+        "This person is already recommended at " + formatify(recommendationsOfPerson));
     }
 
     Long appointmentPositionId = personAppointment.getAppointmentPositionId();
@@ -234,6 +234,12 @@ public class PersonAppointmentFacade {
       .personId(personAppointment.getPersonId())
       .previousRecommendationCount(alreadyRecommended.size())
       .build());
+  }
+
+  private String formatify(List<PersonAppointmentExtendedDto> recommendationsOfPerson) {
+    return recommendationsOfPerson.stream()
+      .map(paeDto -> paeDto.getPosition() + " " + paeDto.getInstitution().getName())
+      .collect(Collectors.joining(", "));
   }
 
   public List<PersonAppointmentExtendedDto> findRecommendationAndNominationByPersonIdAndCycleId(
