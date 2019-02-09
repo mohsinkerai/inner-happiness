@@ -1,4 +1,4 @@
-package com.inner.satisfaction.backend.person.appointment;
+package com.inner.satisfaction.backend.person.appointment.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.person.Person;
