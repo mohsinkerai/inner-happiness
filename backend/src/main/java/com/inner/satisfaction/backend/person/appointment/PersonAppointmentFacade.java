@@ -199,16 +199,31 @@ public class PersonAppointmentFacade {
     PersonAppointment personAppointment = personAppointmentService.findOne(personAppointmentId);
     Assert.notNull(personAppointment,
       "Invalid personAppointment Id, personAppointment does not exists");
+    AppointmentPosition appointmentPosition = appointmentPositionService
+      .findOne(personAppointment.getAppointmentPositionId());
+
+    List<PersonAppointmentExtendedDto> nominationsAndRecommendationOfPerson = findRecommendationAndNominationByPersonIdAndCycleId(
+      personAppointment.getPersonId(), appointmentPosition.getCycleId());
+
+    List<PersonAppointmentExtendedDto> recommendationsOfPerson = nominationsAndRecommendationOfPerson
+      .stream()
+      .filter(paeDto -> paeDto.isRecommended())
+      .collect(Collectors.toList());
+
+    if (recommendationsOfPerson.size() > 0) {
+      throw new RuntimeException(
+        "This person is already recommended at " + recommendationsOfPerson.toString());
+    }
 
     Long appointmentPositionId = personAppointment.getAppointmentPositionId();
     List<PersonAppointment> alreadyRecommended = personAppointmentService
       .findByAppointmentPositionIdAndIsRecommendedTrue(
         personAppointment.getAppointmentPositionId());
 
-    alreadyRecommended.stream().map(pa -> {
+    alreadyRecommended.stream().forEach(pa -> {
       pa.setIsRecommended(Boolean.FALSE);
-      return pa;
-    }).map(personAppointmentService::save);
+      personAppointmentService.save(pa);
+    });
 
     personAppointment.setIsRecommended(true);
     personAppointmentService.save(personAppointment);
@@ -236,7 +251,8 @@ public class PersonAppointmentFacade {
         .isAppointed(pa.getIsAppointed())
         .build())
       .map(paeDto -> {
-        AppointmentPosition ap = appointmentPositionService.findOne(paeDto.getAppointmentPositionId());
+        AppointmentPosition ap = appointmentPositionService
+          .findOne(paeDto.getAppointmentPositionId());
         return paeDto.toBuilder()
           .cycleId(ap.getCycleId())
           .positionId(ap.getPositionId())
