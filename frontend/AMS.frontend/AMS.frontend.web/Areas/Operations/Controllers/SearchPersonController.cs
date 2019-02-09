@@ -7,6 +7,7 @@ using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -78,12 +79,41 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(SearchCriteria searchCriteria)
         {
-
             UploadImageContext context = HttpContext.RequestServices.GetService(typeof(UploadImageContext)) as UploadImageContext;
-            List<PersonModel> personList = context.GetPersons();
+            List<PersonModel> personList = context.GetPersons(MakeQuery(searchCriteria));
             searchCriteria.persons = personList;
 
             return View(searchCriteria);
+        }
+
+        private string MakeQuery(SearchCriteria searchCriteria)
+        {
+            string Query(SearchCriteria searchCriteria1, bool b, string s)
+            {
+                if (b)
+                {
+                    s += $" ";
+                }
+                else
+                {
+                    s += $" {searchCriteria1.Condition} ";
+                }
+
+                b = false;
+                return s;
+            }
+
+            var query =
+                "SELECT DISTINCT(p.id), p.full_name FROM person AS p INNER JOIN person_skill AS ps ON p.id = ps.person_id INNER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id INNER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id WHERE";
+            var isFirstOne = true;
+
+            if (searchCriteria.RegionalCouncil != null && searchCriteria.RegionalCouncil.Count > 0)
+            {
+                query = Query(searchCriteria, isFirstOne, query);
+                query += $"p.regional_council IN ({string.Join(",", searchCriteria.RegionalCouncil)})";
+            }
+
+            return query;
         }
     }
 }

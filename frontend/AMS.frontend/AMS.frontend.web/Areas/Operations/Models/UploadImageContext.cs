@@ -44,7 +44,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
         }
 
-        public List<PersonModel> GetPersons()
+        public List<PersonModel> GetPersons(string query)
         {
             try
             {
@@ -52,8 +52,6 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 using (MySqlConnection conn = GetConnection())
                 {
                     conn.Open();
-
-                    string query = "Select * from person LIMIT 20";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     MySqlDataReader reader = cmd.ExecuteReader();
