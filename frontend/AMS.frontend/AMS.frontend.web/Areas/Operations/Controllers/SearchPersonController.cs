@@ -265,6 +265,26 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 query += ")";
             }
 
+            if (searchCriteria.AreaOfStudy != null && searchCriteria.AreaOfStudy.Count > 0)
+            {
+                query = Query(searchCriteria, isFirstOne, query) + "(";
+                foreach (var item in searchCriteria.AreaOfStudy)
+                {
+                    query += " json_contains(p.educations, '{\"majorAreaOfStudy\": " + item.Split('-')[0] + "}') OR";
+                }
+                query = query.Substring(0, query.LastIndexOf("OR") - 1);
+                query += ")";
+            }
+
+            if (searchCriteria.EmploymentCategory != null)
+            {
+                query = Query(searchCriteria, isFirstOne, query) + "(";
+                query += "json_contains(p.employments, '{\"employmentCategory\" : " + searchCriteria.EmploymentCategory + "}'))";
+            }
+
+            query = Query(searchCriteria, isFirstOne, query);
+            query += "p.gender = " + searchCriteria.Gender;
+
             return query;
         }
     }
