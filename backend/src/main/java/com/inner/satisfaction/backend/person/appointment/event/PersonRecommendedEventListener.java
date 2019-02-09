@@ -24,6 +24,10 @@ public class PersonRecommendedEventListener {
     this.appointmentPositionService = appointmentPositionService;
   }
 
+  /**
+   * We need to make sure that appointment position has only 1 recommendation as well as that person is only recommended at one place.
+   * @param personRecommendedEventDto
+   */
   @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
   public void listen(PersonRecommendedEventDto personRecommendedEventDto) {
     if (personRecommendedEventDto.getPreviousRecommendationCount() == 1) {

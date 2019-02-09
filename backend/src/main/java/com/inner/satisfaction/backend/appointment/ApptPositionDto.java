@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseDto;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.institution.Institution;
-import com.inner.satisfaction.backend.person.appointment.PersonAppointmentDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentDto;
 import com.inner.satisfaction.backend.position.Position;
 import java.sql.Timestamp;
 import java.util.List;

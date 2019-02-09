@@ -1,6 +1,5 @@
 package com.inner.satisfaction.backend.person.appointment;
 
-import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.base.BaseRepository;
 import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,5 +28,11 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
   void appointRecommendedPeople(@Param("appointmentPositionId") Long appointmentPositionId);
 
   @Query(nativeQuery = true, value = "SELECT count(*) FROM person_appointment pa WHERE pa.appointment_position_id in :appointmentPositionIds AND pa.is_recommended = true")
-  int findRecommendedCountInAppointmentPositionIds(@Param("appointmentPositionIds") List<Long> appointmentPositionIds);
+  int findRecommendedCountInAppointmentPositionIds(
+    @Param("appointmentPositionIds") List<Long> appointmentPositionIds);
+
+  List<PersonAppointment> findByPersonId(long personId);
+
+  List<PersonAppointment> findByPersonIdAndIsRecommendedEquals(long personId,
+    boolean isRecommended);
 }
