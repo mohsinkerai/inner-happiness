@@ -1,10 +1,9 @@
 package com.inner.satisfaction.backend.person.appointment;
 
 import com.inner.satisfaction.backend.base.SimpleBaseService;
-import com.inner.satisfaction.backend.person.Person;
-import com.inner.satisfaction.backend.person.PersonService;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class PersonAppointmentService extends SimpleBaseService<PersonAppointment> {
@@ -59,6 +58,22 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
   }
 
   public int findRecommendedCountInAppointmentPositionIds(List<Long> appointmentPositionIds) {
-    return personAppointmentRepository.findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
+    return personAppointmentRepository
+      .findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
+  }
+
+  public List<PersonAppointment> findByPersonId(long personId, boolean isRecommended,
+    boolean isNominated) {
+    Assert
+      .isTrue(isRecommended || isNominated, "Either isRecommended or isNominated should be true");
+
+    if (isRecommended && isNominated) {
+      return personAppointmentRepository.findByPersonId(personId);
+    } else if (isRecommended
+      && !isNominated) { // !isNominated is redundent check, but for clear code, need to do it
+      return personAppointmentRepository.findByPersonIdAndIsRecommendedEquals(personId, true);
+    } else {
+      return personAppointmentRepository.findByPersonIdAndIsRecommendedEquals(personId, false);
+    }
   }
 }
