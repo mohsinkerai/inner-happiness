@@ -76,4 +76,8 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
       return personAppointmentRepository.findByPersonIdAndIsRecommendedEquals(personId, false);
     }
   }
+
+  public void deleteAllPersonAppointmentForAppointmentPosition(long appointmentPositionId) {
+    personAppointmentRepository.deleteByAppointmentPositionId(appointmentPositionId);
+  }
 }

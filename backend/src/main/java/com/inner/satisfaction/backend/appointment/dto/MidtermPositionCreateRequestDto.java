@@ -1,4 +1,4 @@
-package com.inner.satisfaction.backend.appointment;
+package com.inner.satisfaction.backend.appointment.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Timestamp;

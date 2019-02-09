@@ -35,4 +35,8 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
 
   List<PersonAppointment> findByPersonIdAndIsRecommendedEquals(long personId,
     boolean isRecommended);
+
+  @Modifying
+  @Query("DELETE from person_appointment where appointmentPositionId = :appointmentPositionId")
+  void deleteByAppointmentPositionId(long appointmentPositionId);
 }
