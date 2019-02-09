@@ -13,6 +13,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Cycle
         [NotMapped]
         public string Id { get; set; }
 
+        [JsonIgnore]
+        public int NumericId => Convert.ToInt32(Id);
+
         public string Name { get; set; }
 
         [Required]

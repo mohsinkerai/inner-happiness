@@ -268,7 +268,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCycles();
 
-            var cycleId = cycles.OrderByDescending(c => c.Id).FirstOrDefault().Id;
+            var cycleId = cycles.OrderByDescending(c => c.NumericId).FirstOrDefault().Id;
 
             var outlooks =
                 await new RestfulClient(_logger,
