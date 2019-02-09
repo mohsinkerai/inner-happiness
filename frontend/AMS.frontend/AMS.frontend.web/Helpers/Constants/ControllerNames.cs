@@ -23,6 +23,7 @@
         public const string Image = "Image";
         public const string Cycle = "Cycle";
         public const string ThreePlusOneReport = "ThreePlusOneReport";
+        public const string SearchPerson = "SearchPerson";
 
         #endregion Public Fields
     }

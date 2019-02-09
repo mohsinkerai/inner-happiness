@@ -48,6 +48,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                     UploadImageContext context =
                                         HttpContext.RequestServices.GetService(typeof(UploadImageContext)) as
                                             UploadImageContext;
+
                                     bool success = context.uploadImageToDB(image, formNumber);
 
                                     if (!success)

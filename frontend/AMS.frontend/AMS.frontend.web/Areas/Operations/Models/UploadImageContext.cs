@@ -43,5 +43,27 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 return false;
             }
         }
+
+        public bool GetPersons()
+        {
+            try
+            {
+                using (MySqlConnection conn = GetConnection())
+                {
+                    conn.Open();
+
+                    string query = "Select * from person LIMIT 20";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    var data = cmd.ExecuteReader();
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

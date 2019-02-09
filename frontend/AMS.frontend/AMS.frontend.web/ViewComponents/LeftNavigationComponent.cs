@@ -86,6 +86,17 @@ namespace AMS.frontend.web.ViewComponents
 
                     menuModel.Add(new MenuModel
                     {
+                        MenuId = 32,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.SearchPerson,
+                        SubMenu = null,
+                        Title = "Search Person",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-search"
+                    });
+
+                    menuModel.Add(new MenuModel
+                    {
                         MenuId = 4,
                         Action = string.Empty,
                         Controller = string.Empty,

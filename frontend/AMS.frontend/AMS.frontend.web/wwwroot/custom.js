@@ -2108,3 +2108,13 @@ function InstitutionListDelete(url, id) {
 		}
 	});
 }
+
+function InitializeSearchPersonDataTable(id) {
+	var e;
+	(e = $("#" + id)).DataTable({
+		responsive: true,
+		paging: true,
+		info: true,
+		filter: false
+	});
+}
