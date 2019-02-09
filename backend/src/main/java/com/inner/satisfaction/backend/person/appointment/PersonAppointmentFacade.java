@@ -9,6 +9,7 @@ import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
 import com.inner.satisfaction.backend.person.appointment.event.PersonRecommendedEventDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -208,5 +209,15 @@ public class PersonAppointmentFacade {
       .personId(personAppointment.getPersonId())
       .previousRecommendationCount(alreadyRecommended.size())
       .build());
+  }
+
+  public List<PersonAppointment> findRecommendationAndNominationByPersonIdAndCycleId(long personId, long cycleId) {
+    List<PersonAppointment> personAppointments = personAppointmentService
+      .findByPersonId(personId, true, true);
+
+    return personAppointments.stream().filter(pa -> {
+      AppointmentPosition ap = appointmentPositionService.findOne(pa.getAppointmentPositionId());
+      return ap.getCycleId() == cycleId;
+    }).collect(Collectors.toList());
   }
 }
