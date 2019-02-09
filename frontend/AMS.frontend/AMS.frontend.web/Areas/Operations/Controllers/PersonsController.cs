@@ -264,7 +264,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
             }
 
-            return View(await MapPerson(person));
+            var outlooks =
+                await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
+                    .GetCycleOutlook(person.Id, "17");
+
+            var personModel = await MapPerson(person);
+            personModel.CycleOutlooks = outlooks;
+
+            return View(personModel);
         }
 
         public async Task<IActionResult> Edit(string id)

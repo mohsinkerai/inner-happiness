@@ -44,7 +44,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #region Public Methods
 
-        public async Task<IActionResult> Detail(string uid)
+        public async Task<IActionResult> Detail(string uid, string selectedCycle)
         {
             var model = new NominationDetailModel
             {
@@ -136,6 +136,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             };
 
             var cycle = HttpContext.Session.GetString(SelectedCycle);
+
+            if (!string.IsNullOrWhiteSpace(selectedCycle))
+            {
+                cycle = selectedCycle;
+                HttpContext.Session.SetString(SelectedCycle, cycle);
+            }
 
             var nominationModel =
                 await new RestfulClient(_logger,

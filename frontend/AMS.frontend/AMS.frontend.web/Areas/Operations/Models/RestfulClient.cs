@@ -367,6 +367,25 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
+        public async Task<List<CycleOutlook>> GetCycleOutlook(string personId, string cycleId)
+        {
+            var res = await _client.GetAsync(
+                $"person/appointment/search/findRecommendationAndNominationByPersonIdAndCycleId?personId={personId}&cycleId={cycleId}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+
+                var outlook = new List<CycleOutlook>();
+
+                outlook = JsonConvert.DeserializeObject<List<CycleOutlook>>(json);
+
+                return outlook;
+            }
+
+            return null;
+        }
+
         public async Task<List<SelectListItem>> GetAreaOfOrigin()
         {
             var res = await _client.GetAsync("constants/area-of-origin/all");
