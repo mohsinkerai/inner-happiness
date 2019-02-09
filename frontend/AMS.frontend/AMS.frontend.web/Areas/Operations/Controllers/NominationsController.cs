@@ -241,6 +241,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             var json = HttpContext.Session.GetString(SessionNominationModel);
             var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
 
+            if (model.Positions != null && model.Positions.FirstOrDefault(p => p.Id == id).Nominations
+                    .Any(n => n.Person?.Id == personId.Split('-')[0]))
+            {
+                return PartialView("_NominationsTablePartial", model.Positions.FirstOrDefault(p => p.Id == id));
+            }
+
             List<NominationModel> nominations = null;
             string positionId = null;
             string institutionId = null;
