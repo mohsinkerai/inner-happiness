@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
@@ -44,7 +45,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
         #region Public Methods
 
-        public async Task<IActionResult> Detail(string uid)
+        public async Task<IActionResult> Detail(string uid, string selectedCycle)
         {
             var model = new NominationDetailModel
             {
@@ -136,6 +137,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             };
 
             var cycle = HttpContext.Session.GetString(SelectedCycle);
+
+            if (!string.IsNullOrWhiteSpace(selectedCycle))
+            {
+                cycle = selectedCycle;
+                HttpContext.Session.SetString(SelectedCycle, cycle);
+            }
 
             var nominationModel =
                 await new RestfulClient(_logger,
@@ -233,6 +240,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //getting required data from session
             var json = HttpContext.Session.GetString(SessionNominationModel);
             var model = JsonConvert.DeserializeObject<NominationDetailModel>(json);
+
+            if (model.Positions != null && model.Positions.FirstOrDefault(p => p.Id == id).Nominations
+                    .Any(n => n.Person?.Id == personId.Split('-')[0]))
+            {
+                return PartialView("_NominationsTablePartial", model.Positions.FirstOrDefault(p => p.Id == id));
+            }
 
             List<NominationModel> nominations = null;
             string positionId = null;
@@ -336,8 +349,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             model.Positions.Where(p => p.Id == positionId).Select(Positions => { Positions = positionModel; return Positions; }).ToList();
             var updatedJson = JsonConvert.SerializeObject(model);
             HttpContext.Session.SetString(SessionNominationModel, updatedJson);
-            
-            return PartialView("_NominationsTablePartial", positionModel);
+
+            if (positionModel.IsError)
+            {
+                return Json("Error - " + positionModel.ErrorMessage);
+            }
+            else
+            {
+                return PartialView("_NominationsTablePartial", positionModel);
+            }
 
             /*return PartialView("_NominationsTablePartial", new PositionModel
             {

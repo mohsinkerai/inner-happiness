@@ -2,20 +2,25 @@ package com.inner.satisfaction.backend.appointment;
 
 import static com.inner.satisfaction.backend.appointment.AppointmentPositionState.CREATED;
 
+import com.inner.satisfaction.backend.appointment.dto.AppointmentPositionDeletedEventDto;
 import com.inner.satisfaction.backend.base.BaseService;
 import java.util.List;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AppointmentPositionService extends BaseService<AppointmentPosition> {
 
   private final AppointmentPositionRepository appointmentPositionRepository;
+  private final ApplicationEventPublisher applicationEventPublisher;
 
   protected AppointmentPositionService(
     AppointmentPositionRepository baseRepository,
-    AppointmentPositionValidation appointmentPositionValidation) {
+    AppointmentPositionValidation appointmentPositionValidation,
+    ApplicationEventPublisher applicationEventPublisher) {
     super(baseRepository, appointmentPositionValidation);
     this.appointmentPositionRepository = baseRepository;
+    this.applicationEventPublisher = applicationEventPublisher;
   }
 
   public List<AppointmentPosition> findByInstitutionIdAndSeatNoAndCycleIdAndPositionId(long cycleId,
@@ -57,6 +62,13 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   public List<AppointmentPosition> findByCycleIdWhereNoOneIsRecommended(long cycleId) {
     return appointmentPositionRepository.findByCycleIdWhereNoOneIsRecommended(cycleId);
+  }
+
+  @Override
+  public void delete(AppointmentPosition appointmentPosition) {
+    super.delete(appointmentPosition);
+    applicationEventPublisher
+      .publishEvent(new AppointmentPositionDeletedEventDto(appointmentPosition.getId()));
   }
 
   public void updateState(Long id, String appointed) {

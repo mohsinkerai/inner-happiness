@@ -1,5 +1,8 @@
 package com.inner.satisfaction.backend.appointment;
 
+import com.inner.satisfaction.backend.appointment.dto.AppointmentPositionDto;
+import com.inner.satisfaction.backend.appointment.dto.ApptPositionDto;
+import com.inner.satisfaction.backend.appointment.dto.MidtermPositionCreateRequestDto;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.cycle.CycleState;

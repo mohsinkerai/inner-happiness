@@ -11,6 +11,7 @@ using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Models.Authenticate;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -362,6 +363,25 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 appointments = JsonConvert.DeserializeObject<List<PastAppointment>>(json);
 
                 return appointments;
+            }
+
+            return null;
+        }
+
+        public async Task<List<CycleOutlook>> GetCycleOutlook(string personId, string cycleId)
+        {
+            var res = await _client.GetAsync(
+                $"person/appointment/search/findRecommendationAndNominationByPersonIdAndCycleId?personId={personId}&cycleId={cycleId}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+
+                var outlook = new List<CycleOutlook>();
+
+                outlook = JsonConvert.DeserializeObject<List<CycleOutlook>>(json);
+
+                return outlook;
             }
 
             return null;
@@ -1649,6 +1669,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         }
                     }
                     
+                }
+                else
+                {
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    dynamic jsonObject = JToken.Parse(responseString);
+                    updatedPosition = new PositionModel {ErrorMessage = jsonObject.message, IsError = true};
                 }
             }
             catch (Exception ex)
