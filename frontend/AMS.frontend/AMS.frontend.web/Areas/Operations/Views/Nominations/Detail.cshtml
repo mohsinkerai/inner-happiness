@@ -38,7 +38,22 @@
                         }
                     </span>
                     <h3 class="m-portlet__head-text">
-                        @position.PositionName&nbsp;&nbsp;|&nbsp;&nbsp;@position.Incubment?.FullName&nbsp;&nbsp;|&nbsp;&nbsp;@position.Incubment?.Id&nbsp;&nbsp;
+                        @if (position.State == "CREATED")
+                        {
+                            @position.PositionName@Html.Raw("&nbsp;&nbsp;|&nbsp;&nbsp;")@position.Incubment?.FullName@Html.Raw("&nbsp;&nbsp;|&nbsp;&nbsp;")@position.Incubment?.Id@Html.Raw("&nbsp;&nbsp;")
+                        }
+                        else
+                        {
+                            var appointedOne = position.Nominations?.FirstOrDefault(n => n.IsAppointed);
+                            if (appointedOne != null)
+                            {
+                                @position.PositionName@Html.Raw("&nbsp;&nbsp;|&nbsp;&nbsp;")@appointedOne.Person?.FullName@Html.Raw("&nbsp;&nbsp;|&nbsp;&nbsp;")@appointedOne.Person?.Id@Html.Raw("&nbsp;&nbsp;")
+                            }
+                            else if (position.incumbentDetail != null && position.incumbentDetail.IsAppointed)
+                            {
+                                @position.PositionName@Html.Raw("&nbsp;&nbsp;|&nbsp;&nbsp;")@position.Incubment?.FullName@Html.Raw("&nbsp;&nbsp;|&nbsp;&nbsp;")@position.Incubment?.Id@Html.Raw("&nbsp;&nbsp;")
+                            }
+                        }
                         <span class="m-badge m-badge--light m-badge--wide m-badge--rounded">@position.NominationsMessage</span>
                         &nbsp;&nbsp;
                         @if (position.State == "CREATED")
