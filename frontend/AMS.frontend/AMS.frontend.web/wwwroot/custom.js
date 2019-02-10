@@ -2126,11 +2126,22 @@ function InstitutionListDelete(url, id) {
 }
 
 function InitializeSearchPersonDataTable(id) {
-	var e;
-	(e = $("#" + id)).DataTable({
+	var table = $("#" + id).DataTable({
 		responsive: true,
 		paging: true,
 		info: true,
-		filter: false
+        filter: true,
+		pagingType: "full_numbers",
+		dom: "<'row'<'col-sm-6 text-left'B>>\n\t\t\t<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>",
+        buttons: ["print", "copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+		lengthMenu: [5, 10, 25, 50],
+        pageLength: 10,
+		search: {
+			input: $("#generalSearch")
+		}
+    });
+    
+    $('#generalSearch').on('keyup', function () {
+		table.search(this.value).draw();
 	});
 }
