@@ -129,26 +129,40 @@ function Initialize() {
         }
     });
 
-    $(document).on('focus', '.select2.select2-container', function (e) {
-        // only open on original attempt - close focus event should not fire open
-        if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
-            $(this).siblings('select:enabled').select2('open');
-        }
+    //// Make Select2 respect tab focus
+    //function select2Focus() {
+	   // jQuery(window).keyup(function (e) {
+		  //  var code = (e.keyCode ? e.keyCode : e.which);
+		  //  if (code == 9 && jQuery('.select2-search__field:focus').length) {
+    //            jQuery('.m-select2').select2('open');
+		  //  }
+	   // });
+    //}
+
+    //select2Focus();
+
+    //$(document).on('focus', '.select2.select2-container', function (e) {
+    //    // only open on original attempt - close focus event should not fire open
+    //    if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
+    //        $(this).siblings('select:enabled').select2('open');
+    //    }
+    //});
+
+    var tabPressed = false;
+
+    $(document).keydown(function (e) {
+	    // Listening tab button.
+	    if (e.which == 9) {
+		    tabPressed = true;
+	    }
     });
 
-    //$(document).keydown(function (e) {
-    //    // Listening tab button.
-    //    if (e.which == 9) {
-    //        tabPressed = true;
-    //    }
-    //});
-
-    //$(document).on('focus', '.select2', function () {
-    //    if (tabPressed) {
-    //        tabPressed = false;
-    //        $(this).siblings('select').select2('open');
-    //    }
-    //});
+    $(document).on('focus', '.select2', function () {
+	    if (tabPressed) {
+		    tabPressed = false;
+		    $(this).siblings('select').select2('open');
+	    }
+    });
 }
 
 function IsEmpty(data) {
