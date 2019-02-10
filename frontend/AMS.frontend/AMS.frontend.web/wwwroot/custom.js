@@ -1939,7 +1939,7 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
                 success: function(result) {
                     if (result.length !== 4) {
                         $("#nominations-table-" + positionId).html(result);
-                        InitializeNominationDataTableLite("nominations-" + positionId, "Nominations");
+                        InitializeNominationDataTableLite("nominations-" + positionId, "Nominations", url, positionId);
                         $("#nominations-" + positionId).css("min-height", "0px");
                     }
                     mApp.unblock("#nominations-table-" + positionId, {});

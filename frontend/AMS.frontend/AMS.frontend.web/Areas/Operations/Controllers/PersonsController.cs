@@ -1980,13 +1980,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 HttpContext.Session.Get<List<FamilyRelationModel>>("FamilyRelationList") ??
                 new List<FamilyRelationModel>();
 
-            model.AkdnTrainings = sessionAkdnTrainingList;
-            model.Educations = sessionEducationList;
-            model.ProfessionalTrainings = sessionProfessionalTrainingList;
-            model.LanguageProficiencies = sessionLanguageList;
-            model.VoluntaryCommunityServices = sessionVoluntaryCommunityList;
-            model.VoluntaryPublicServices = sessionVoluntaryPublicList;
-            model.Employments = sessionEmploymentList;
+            model.AkdnTrainings = sessionAkdnTrainingList.OrderBy(items => items.Priority).ToList();
+            model.Educations = sessionEducationList.OrderBy(items => items.Priority).ToList();
+            model.ProfessionalTrainings = sessionProfessionalTrainingList.OrderBy(items => items.Priority).ToList();
+            model.LanguageProficiencies = sessionLanguageList.OrderBy(items => items.Priority).ToList();
+            model.VoluntaryCommunityServices = sessionVoluntaryCommunityList.OrderBy(items => items.Priority).ToList();
+            model.VoluntaryPublicServices = sessionVoluntaryPublicList.OrderBy(items => items.Priority).ToList();
+            model.Employments = sessionEmploymentList.OrderBy(items => items.Priority).ToList();
             model.FamilyRelations = sessionFamilyRelationList;
 
             if (string.IsNullOrWhiteSpace(model.Image)) model.Image = HttpContext.Session.Get<string>("Image");
