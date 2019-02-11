@@ -60,4 +60,7 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+  <changeSet id="institution-06" author="mohsin.kerai">
+    <addDefaultValue tableName="institution" columnName="is_imamat_appointee" defaultValue="0" />
+  </changeSet>
 </databaseChangeLog>
