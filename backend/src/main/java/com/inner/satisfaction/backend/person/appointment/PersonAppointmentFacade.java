@@ -173,16 +173,16 @@ public class PersonAppointmentFacade {
     }
     Person one = personService.findOne(personAppointment.getPersonId());
     if (one == null || (one.getIsActive() != null && one.getIsActive() == false)) {
-      throw new AmsException(ErrorEnumType.PERSON_DOES_NOT_EXIST_IN_DB, ImmutableMap.of("person-from-db", one));
+      throw new AmsException(ErrorEnumType.PERSON_DOES_NOT_EXIST_IN_DB,
+        ImmutableMap.of("person-from-db", one));
     }
     AppointmentPosition appointmentPosition = appointmentPositionService
       .findOne(personAppointment.getAppointmentPositionId());
     if (appointmentPosition == null || (appointmentPosition.getIsActive() != null
       && appointmentPosition.getIsActive() == false)
       || !appointmentPosition.getState().equals(AppointmentPositionState.CREATED)) {
-
-      log.info("Invalid Appointment Position {}", appointmentPosition);
-      throw new RuntimeException("Position Dekh k do");
+      throw new AmsException(ErrorEnumType.APPOINTMENT_POSITION_DOES_NOT_EXIST,
+        ImmutableMap.of("appointment-position-from-db", appointmentPosition));
     }
   }
 

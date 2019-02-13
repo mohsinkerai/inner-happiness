@@ -2,6 +2,7 @@ package com.inner.satisfaction.backend.error;
 
 import java.sql.Timestamp;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,12 +19,14 @@ public class ExceptionInterceptor {
 
   @ExceptionHandler(AmsException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleAmsException(AmsException amsException) {
+  public ErrorResponse handleAmsException(HttpServletRequest request, AmsException amsException) {
     ErrorResponse errorResponse = ErrorResponse.builder()
       .message(amsException.getMessage())
       .errorCode(String.valueOf(amsException.getErrorCode()))
       .timestamp(new Timestamp(System.currentTimeMillis()))
       .details(amsException.getDetails())
+      .uri(request.getRequestURI())
+      .message(request.getMethod())
       .build();
     log.info("System Logical Error Due to {}", errorResponse);
     return errorResponse;
@@ -39,5 +42,7 @@ public class ExceptionInterceptor {
     private Timestamp timestamp;
     private String errorCode;
     private Map<String, Object> details;
+    private String uri;
+    private String httpMethod;
   }
 }
