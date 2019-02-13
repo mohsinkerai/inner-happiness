@@ -58,4 +58,9 @@
       <column name="updated_by" type="varchar(255)"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="educational-institution-10" author="mohsin.kerai">
+    <addColumn tableName="educational_institution">
+      <column name="short_code" afterColumn="name" type="varchar(200)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
