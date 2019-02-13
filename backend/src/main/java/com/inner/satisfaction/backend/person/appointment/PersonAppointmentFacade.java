@@ -1,10 +1,13 @@
 package com.inner.satisfaction.backend.person.appointment;
 
+import com.google.common.collect.ImmutableMap;
 import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionState;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
+import com.inner.satisfaction.backend.error.AmsException;
+import com.inner.satisfaction.backend.error.ErrorEnumType;
 import com.inner.satisfaction.backend.institution.InstitutionService;
 import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
@@ -163,16 +166,14 @@ public class PersonAppointmentFacade {
 
   private void performValidations(PersonAppointment personAppointment) {
     if (personAppointment.getPriority() == 0) {
-      throw new RuntimeException("Excuseme!! you can't make new incumbtee or update incumbtee");
+      throw new AmsException(ErrorEnumType.INCUMBENT_CAN_NOT_BE_UPDATED_OR_CREATED);
     }
     if (personAppointment.getAppointed() == true) {
-      throw new RuntimeException(
-        "Please come low!! Appoint ku ker rahe ho? ya appointed ko edit ku ker rahe ho?");
+      throw new AmsException(ErrorEnumType.CAN_NOT_NOMINATE_WITH_IS_APPOINTED_TRUE);
     }
     Person one = personService.findOne(personAppointment.getPersonId());
     if (one == null || (one.getIsActive() != null && one.getIsActive() == false)) {
-      log.info("Invalid Person {}", one);
-      throw new RuntimeException("Jani!! Sahi person id dedo");
+      throw new AmsException(ErrorEnumType.PERSON_DOES_NOT_EXIST_IN_DB, ImmutableMap.of("person-from-db", one));
     }
     AppointmentPosition appointmentPosition = appointmentPositionService
       .findOne(personAppointment.getAppointmentPositionId());
