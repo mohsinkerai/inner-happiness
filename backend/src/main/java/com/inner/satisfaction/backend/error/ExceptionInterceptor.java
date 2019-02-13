@@ -9,34 +9,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.inner.satisfaction.backend")
 public class ExceptionInterceptor {
 
   @ExceptionHandler(AmsException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorResponse handleAmsException(HttpServletRequest request, AmsException amsException) {
+  public ResponseEntity<ErrorResponse> handleAmsException(HttpServletRequest request, AmsException amsException) {
     ErrorResponse errorResponse = ErrorResponse.builder()
       .message(amsException.getMessage())
       .errorCode(String.valueOf(amsException.getErrorCode()))
       .timestamp(new Timestamp(System.currentTimeMillis()))
       .details(amsException.getDetails())
       .uri(request.getRequestURI())
-      .message(request.getMethod())
+      .httpMethod(request.getMethod())
       .build();
     log.info("System Logical Error Due to {}", errorResponse);
-    return errorResponse;
+    return ResponseEntity.badRequest().body(errorResponse);
   }
 
   @Builder
   @Data
   @NoArgsConstructor
   @AllArgsConstructor
-  public class ErrorResponse {
+  private static class ErrorResponse {
 
     private String message;
     private Timestamp timestamp;
