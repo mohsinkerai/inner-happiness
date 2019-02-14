@@ -1588,7 +1588,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     {
                         {"appointmentPositionId", positionId},
                         {"isAppointed", false},
-                        {"isRecommended", false},
+                        {"isRecommended", data.IsRecommended},
                         {"personId", data.Person.Id},
                         {"priority", data.Priority},
                         {"remarks", ""}

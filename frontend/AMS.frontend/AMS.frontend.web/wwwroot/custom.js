@@ -1133,6 +1133,8 @@ function InitializeDataTableLiteWithRowReordering(id, title, url) {
                 }
             });
         }
+        
+        mApp.unblock("#" + id + "-table", {});
     });
 }
 
@@ -1946,6 +1948,8 @@ function InitializeNominationDataTableLite(id, title, url, positionId) {
                 }
             });
         }
+
+        mApp.unblock("#nominations-table-" + positionId, {});
     });
 }
 
