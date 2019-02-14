@@ -60,9 +60,14 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     {
                         while (reader.Read())
                         {
-                            var person = new PersonModel();
-                            person.Id = reader["id"].ToString();
-                            person.FirstName = reader["full_name"].ToString();
+                            var person = new PersonModel
+                            {
+                                Id = reader["id"].ToString(),
+                                FirstName = reader["full_name"].ToString(),
+                                MobilePhone = reader["mobile_phone"].ToString(),
+                                PreComputedLatestEducation = reader["latest_education"].ToString(),
+                                PreComputedLatestEmployment = reader["latest_employment"].ToString()
+                            };
 
                             personList.Add(person);
                         }

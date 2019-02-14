@@ -26,6 +26,12 @@
             <div class="form-group m-form__group row">
                 <div class="col-lg-3">
                     <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" type="text" name="Name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
                         <label asp-for="RegionalCouncil" class="control-label"></label>
                         <select asp-for="RegionalCouncil" asp-items="@ViewBag.RegionalCouncil" class="form-control m-select2-multiple" placeholder="Select Regional Councils" multiple name="RegionalCouncil">
                             <option></option>
@@ -322,23 +328,29 @@
                 <tr>
                     <th> Form Number </th>
                     <th> Full Name </th>
+                    <th> Latest Education </th>
+                    <th> Latest Employment </th>
+                    <th> Mobile No. </th>
                     <th> Actions </th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model?.persons != null)
                 {
-                    @foreach (var item in Model.persons)
+                @foreach (var item in Model.persons)
                     {
-                        <tr>
-                            <td> @item.Id </td>
-                            <td> @item.FirstName </td>
-                            <td>
-                                <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
-                                    <i class="la la-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                <tr>
+                    <td> @item.Id </td>
+                    <td> @item.FirstName </td>
+                    <td> @item.PreComputedLatestEducation </td>
+                    <td> @item.PreComputedLatestEmployment </td>
+                    <td> @item.MobilePhone </td>
+                    <td>
+                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
+                            <i class="la la-eye"></i>
+                        </a>
+                    </td>
+                </tr>
                     }
                 }
             </tbody>

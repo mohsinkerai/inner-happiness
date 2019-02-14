@@ -94,5 +94,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         }
 
         public string Query { get; set; }
+
+        [Display(Name = "Name")]
+        public string Name { get; set; }
     }
 }

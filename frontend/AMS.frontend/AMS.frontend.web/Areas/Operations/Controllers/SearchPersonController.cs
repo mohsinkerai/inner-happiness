@@ -124,15 +124,20 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var query =
-                "SELECT DISTINCT(p.id), p.full_name FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id WHERE";
+                "SELECT DISTINCT(p.id), p.full_name, p.mobile_phone, CONCAT(ed.NAME, \", \", ei.NAME, \", \", json_extract(p.educations,'$[0].fromYear'),\" - \", json_extract(p.educations,'$[0].toYear')) AS latest_education, CONCAT(TRIM(BOTH '\"' from json_extract(p.employments,'$[0].designation')),\", \",TRIM(BOTH '\"' from json_extract(p.employments,'$[0].nameOfOrganization'))) as latest_employment FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id LEFT OUTER JOIN educational_degree AS ed ON json_extract(p.educations,'$[0].nameOfDegree') = ed.id LEFT OUTER JOIN educational_institution AS ei ON json_extract(p.educations,'$[0].institution') = ei.id WHERE";
             var isFirstOne = true;
+
+            if (!string.IsNullOrWhiteSpace(searchCriteria.Name))
+            {
+                query = Query(searchCriteria, ref isFirstOne, ref query);
+                query += $"p.first_name LIKE '%{searchCriteria.Name}%' OR p.fathers_name LIKE '%{searchCriteria.Name}%' OR p.family_name LIKE '%{searchCriteria.Name}%'";
+            }
 
             if (searchCriteria.RegionalCouncil != null && searchCriteria.RegionalCouncil.Count > 0)
             {
                 query = Query(searchCriteria, ref isFirstOne, ref query);
                 query += $"p.regional_council IN ({string.Join(",", searchCriteria.RegionalCouncil)})";
             }
-            
 
             if (searchCriteria.LocalCouncil != null && searchCriteria.LocalCouncil.Count > 0)
             {

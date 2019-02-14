@@ -440,6 +440,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [JsonIgnore] public bool ShowOutlook { get; set; }
 
+        [JsonIgnore]
+        public string PreComputedLatestEducation { get; set; }
+
+        [JsonIgnore]
+        public string PreComputedLatestEmployment { get; set; }
+
         #endregion Public Properties
     }
 }
