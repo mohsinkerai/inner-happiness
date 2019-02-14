@@ -158,24 +158,26 @@ public class PersonAppointmentFacade {
     if (personAppointment.getReappointmentCount() == null) {
       personAppointment.setReappointmentCount(0);
     }
-    if (!personAppointment.getReappointmentCount().equals(0)) {
-      throw new RuntimeException(
-        "Larkay!! re-appointment ka count tera-bhai dekh lega, tu mat dal");
-    }
   }
 
   private void performValidations(PersonAppointment personAppointment) {
     if (personAppointment.getPriority() == 0) {
-      throw new AmsException(ErrorEnumType.INCUMBENT_CAN_NOT_BE_UPDATED_OR_CREATED);
+      throw new AmsException(ErrorEnumType.AS_INCUMBENT_CAN_NOT_BE_UPDATED_OR_CREATED);
     }
     if (personAppointment.getAppointed() == true) {
       throw new AmsException(ErrorEnumType.CAN_NOT_NOMINATE_WITH_IS_APPOINTED_TRUE);
     }
-    Person one = personService.findOne(personAppointment.getPersonId());
-    if (one == null || (one.getIsActive() != null && one.getIsActive() == false)) {
+    Person person = personService.findOne(personAppointment.getPersonId());
+    if (person == null || (person.getIsActive() != null && person.getIsActive() == false)) {
       throw new AmsException(ErrorEnumType.PERSON_DOES_NOT_EXIST_IN_DB,
-        ImmutableMap.of("person-from-db", one));
+        ImmutableMap.of("person-from-db", personAppointment));
     }
+    if (personAppointment.getReappointmentCount() != null && !personAppointment
+      .getReappointmentCount().equals(0)) {
+      throw new AmsException(ErrorEnumType.INVALID_REAPPOINTMENT_COUNT_PROVIDED,
+        ImmutableMap.of("given-payload", person));
+    }
+
     AppointmentPosition appointmentPosition = appointmentPositionService
       .findOne(personAppointment.getAppointmentPositionId());
     if (appointmentPosition == null || (appointmentPosition.getIsActive() != null
@@ -190,7 +192,8 @@ public class PersonAppointmentFacade {
     Long id = personAppointment.getId();
     PersonAppointment dbPersonAppointment = personAppointmentService.findOne(id);
     if (dbPersonAppointment.getPriority() == 0) {
-      throw new RuntimeException("Excuseme!! you can't update incumbtee");
+      throw new AmsException(ErrorEnumType.INCUMBENT_INFORMATION_CAN_NOT_BE_UPDATED,
+        ImmutableMap.of("id-trying-to-update", id));
     }
   }
 
