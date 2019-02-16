@@ -9,9 +9,12 @@ namespace AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport
     public class ThreePlusOneReportModel
     {
         public string Level { get; set; }
+
         public string InstitutionName { get; set; }
 
-        public List<InstitutionModel> ListInstitution { get; set; }
-        
+        public string Category { get; set; }
+
+        public bool comments { get; set; }
+
     }
 }

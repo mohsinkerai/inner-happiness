@@ -27,49 +27,63 @@
         </div>
     </div>
     <div class="m-portlet__body">
-        <div class="form-group m-form__group row">
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <label asp-for="Level" class="control-label">Level</label>
-                    <select asp-for="Level" class="form-control m-select2 level" placeholder="Select a Level">
-                        <option></option>
-                        <option value="National">National</option>
-                        <option value="Regional">Regional</option>
-                        <option value="Local">Local</option>
-                    </select>
+        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.ThreePlusOneReport" asp-action="GenerateReport" method="post">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Level" class="control-label">Level</label>
+                        <select asp-for="Level" class="form-control m-select2 level" placeholder="Select a Level">
+                            <option></option>
+                            <option value="National">National</option>
+                            <option value="Regional">Regional</option>
+                            <option value="Local">Local</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Category" class="control-label">Category</label>
+                        <select asp-for="Category" class="form-control m-select2 level" placeholder="Select a Category" disabled>
+                            <option></option>
+                            <option value="National">CAB</option>
+                            <option value="Regional">ITREB</option>
+                            <option value="Local">COUNCIL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="InstitutionName" class="control-label"></label>
+                        <select asp-for="InstitutionName" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label class="m-checkbox">
+                            <input asp-for="comments" type="checkbox"> Show Comments
+                            <span></span>
+                        </label>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <label asp-for="InstitutionName" class="control-label"></label>
-                    <select asp-for="InstitutionName" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
-                        <option></option>
-                    </select>
+
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions--solid m--align-right">
+                    <!--<button type="button" class="btn btn-success" onclick="window.open('@Url.Action("GenerateReport", ControllerNames.ThreePlusOneReport)')">
+                        <i class="fa fa-save"></i> Generate
+                    </button>-->
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-save"></i> Generate
+                    </button>
+                    <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
+                        <i class="fa fa-close"></i> Cancel
+                    </a>
                 </div>
             </div>
-            <div class="m-form__actions" style="padding-left: 15px !important; padding-top: 28px !important">
-                <button type="button" class="btn btn-warning btn-info" onclick='return InstitutionListAdd("@Url.Action(ActionNames.InstitutionListAdd, ControllerNames.ThreePlusOneReport, new {area = AreaNames.Operations})");'>
-                    <i class="fa fa-search"></i> Add
-                </button>
-            </div>
-        </div>
-        <div class="form-group m-form__group row" style="margin-top:20px">
-            <div class="col-lg-12" id="institution-table">
-                @{
-                    await Html.RenderPartialAsync("_InstitutionTablePartial", Model?.ListInstitution).ConfigureAwait(false);
-                }
-            </div>
-        </div>
-        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-            <div class="m-form__actions m-form__actions--solid m--align-right">
-                <button type="button" class="btn btn-success" onclick="window.open('@Url.Action("GenerateReport", ControllerNames.ThreePlusOneReport)')">
-                    <i class="fa fa-save"></i> Generate
-                </button>
-                <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
-                    <i class="fa fa-close"></i> Cancel
-                </a>
-            </div>
-        </div>
+
+        </form>
     </div>
 </div>
 
@@ -88,14 +102,16 @@
                     }
                     $(".institution").empty().append("<option></option>").prop("disabled", true);
                     if (selectedPrimaryValue === "National") {
-                        LoadNationalInstitutions();
+                        $(".institution").empty().append("<option></option>").prop("disabled", true);
+                        //LoadNationalInstitutions();
                     } else if (selectedPrimaryValue === "Regional") {
-                        LoadRegionalInstitutions();
+                        $(".institution").empty().append("<option></option>").prop("disabled", true);
+                        //LoadRegionalInstitutions();
                     } else if (selectedPrimaryValue === "Local") {
                         LoadLocalInstitutions();
                     }
                 });
-
+            
             function LoadNationalInstitutions() {
                 LoadDropDownViaAjax("institution",
                 "@Url.Action(ActionNames.GetNationalInstitutions, ControllerNames.ThreePlusOneReport, new {area = AreaNames.Operations})",

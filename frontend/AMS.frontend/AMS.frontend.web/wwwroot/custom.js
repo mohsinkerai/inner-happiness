@@ -2067,7 +2067,7 @@ function CustomPersonValidation() {
     }
 }
 
-function InstitutionListAdd(url) {
+/*function InstitutionListAdd(url) {
 	mApp.block("#institution-table", {});
 		var institution = $("#InstitutionName").val();
 		if (IsEmpty(institution)) {
@@ -2100,9 +2100,9 @@ function InstitutionListAdd(url) {
 				//}
 			}
 	});
-}
+}*/
 
-function InstitutionListDelete(url, id) {
+/*function InstitutionListDelete(url, id) {
 	mApp.block("#institution-table", {});
 	$.ajax({
 		type: "POST",
@@ -2127,7 +2127,7 @@ function InstitutionListDelete(url, id) {
 			mApp.unblock("#institution-table", {});
 		}
 	});
-}
+}*/
 
 function InitializeSearchPersonDataTable(id) {
 	var table = $("#" + id).DataTable({

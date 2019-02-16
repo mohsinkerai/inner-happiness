@@ -10,6 +10,7 @@ using AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
@@ -31,15 +32,15 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return View();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult InstitutionListAdd(string id, string institution)
         {
             var sessionEducationList = AddInstitutionToSession(id, institution);
 
             return PartialView("_InstitutionTablePartial", sessionEducationList);
-        }
+        }*/
 
-        private List<InstitutionModel> AddInstitutionToSession(string id, string institution)
+        /*private List<InstitutionModel> AddInstitutionToSession(string id, string institution)
         {
             var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
                                        new List<InstitutionModel>();
@@ -57,9 +58,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             
             HttpContext.Session.Set("InstitutionList", sessionInstituionList);
             return sessionInstituionList;
-        }
+        }*/
 
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult InstitutionListDelete(string id)
         {
             var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
@@ -68,9 +69,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             HttpContext.Session.Set("InstitutionList", sessionInstituionList);
 
             return PartialView("_InstitutionTablePartial", sessionInstituionList);
-        }
+        }*/
 
-        public async Task<JsonResult> GetNationalInstitutions()
+        public async Task<List<SelectListItem>> GetNationalInstitutions()
         {
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetNationalInstitutions();
@@ -80,10 +81,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 item.Value = item.Value+"-"+item.Text;
             }
 
-            return new JsonResult(list);
+            return list;
         }
 
-        public async Task<JsonResult> GetRegionalInstitutions()
+        public async Task<List<SelectListItem>> GetRegionalInstitutions()
         {
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalInstitutions();
@@ -93,24 +94,46 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 item.Value = item.Value + "-" + item.Text;
             }
 
-            return new JsonResult(list);
+            return list;
         }
 
-        public async Task<JsonResult> GetLocalInstitutions()
+        public async Task<List<SelectListItem>> GetLocalInstitutions(string id)
         {
             var list = await new RestfulClient(_logger,
-                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(id);
 
             foreach (var item in list)
             {
                 item.Value = item.Value + "-" + item.Text;
             }
 
-            return new JsonResult(list);
+            return list;
         }
-
-        public IActionResult GenerateReport()
+        
+        [HttpPost]
+        public async Task<IActionResult> GenerateReport(ThreePlusOneReportModel model)
         {
+
+            //------------------------------------------------------------------------------------------------------
+            
+            if (ModelState.IsValid)
+            {
+                if (model.Level == "National")
+                {
+                    var list = await GetNationalInstitutions();
+                }
+                else if (model.Level == "Regional")
+                {
+                    var list = await GetRegionalInstitutions();
+                }
+                else if (model.Level == "Local")
+                {
+                    var list = await GetLocalInstitutions(model.InstitutionName.Split("-")[0]);
+                }
+            }
+            //------------------------------------------------------------------------------------------------------
+
+
             var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
                            new List<InstitutionModel>();
             var institutions = string.Empty;
