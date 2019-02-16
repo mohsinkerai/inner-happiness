@@ -63,4 +63,10 @@
   <changeSet id="institution-06" author="mohsin.kerai">
     <addDefaultValue tableName="institution" columnName="is_imamat_appointee" defaultValue="0" />
   </changeSet>
+
+  <changeSet id="institution-07" author="mohsin.kerai">
+    <addColumn tableName="institution">
+      <column name="category" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -215,8 +215,10 @@ public class PersonAppointmentFacade {
       .collect(Collectors.toList());
 
     if (recommendationsOfPerson.size() > 0) {
-      throw new RuntimeException(
-        "This person is already recommended at " + formatify(recommendationsOfPerson));
+      ErrorEnumType personAlreadyRecommended = ErrorEnumType.PERSON_ALREADY_RECOMMENDED;
+      throw new AmsException(personAlreadyRecommended.getErrorCode(),
+        personAlreadyRecommended.getMessage() + formatify(recommendationsOfPerson),
+        ImmutableMap.of("payload", personRecommendationDto));
     }
 
     Long appointmentPositionId = personAppointment.getAppointmentPositionId();
