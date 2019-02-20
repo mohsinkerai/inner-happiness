@@ -346,23 +346,23 @@ namespace AMS.frontend.web.ViewComponents
                         Action = string.Empty,
                         Controller = string.Empty,
                         SubMenu = new List<MenuModel> {
-                            new MenuModel
-                            {
-                                MenuId = 30,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.Reports,
-                                SubMenu = null,
-                                Title = "Reports",
-                                Area = AreaNames.Operations,
-                                ImageClass = "flaticon-network"
-                            },
+                            //new MenuModel
+                            //{
+                            //    MenuId = 30,
+                            //    Action = ActionNames.Index,
+                            //    Controller = ControllerNames.Reports,
+                            //    SubMenu = null,
+                            //    Title = "Reports",
+                            //    Area = AreaNames.Operations,
+                            //    ImageClass = "flaticon-network"
+                            //},
                             new MenuModel
                             {
                                 MenuId = 31,
-                                Action = ActionNames.Index,
-                                Controller = ControllerNames.ThreePlusOneReport,
+                                Action = "Nominations",
+                                Controller = ControllerNames.Reports,
                                 SubMenu = null,
-                                Title = "3+1 Report",
+                                Title = "Nominations",
                                 Area = AreaNames.Operations,
                                 ImageClass = "flaticon-network"
                             }

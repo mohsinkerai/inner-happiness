@@ -1,7 +1,7 @@
 ﻿@model AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport.ThreePlusOneReportModel
 @{
-    ViewBag.ModuleTitle = "3+1 Report";
-    ViewBag.PageTitle = "3+1 Report";
+    ViewBag.ModuleTitle = "Nominations Report";
+    ViewBag.PageTitle = "Nominations Report";
 }
 
 <div class="m-portlet m-portlet--skin-dark m-portlet--bordered-semi" id="search-portlet">
@@ -25,9 +25,9 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div>\
     <div class="m-portlet__body">
-        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.ThreePlusOneReport" asp-action="GenerateReport" method="post">
+        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Reports" asp-action="GenerateReport" method="post">
             <div class="form-group m-form__group row">
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -59,19 +59,19 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                @*<div class="col-lg-3">
                     <div class="form-group">
                         <label class="m-checkbox">
                             <input asp-for="comments" type="checkbox"><p style="color:#fff"> Show Comments </p>
                             <span></span>
                         </label>
                     </div>
-                </div>
+                </div>*@
             </div>
 
             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                 <div class="m-form__actions m-form__actions--solid m--align-right">
-                    <!--<button type="button" class="btn btn-success" onclick="window.open('@Url.Action("GenerateReport", ControllerNames.ThreePlusOneReport)')">
+                    <!--<button type="button" class="btn btn-success" onclick="window.open('@Url.Action("GenerateReport", ControllerNames.Reports)')">
                         <i class="fa fa-save"></i> Generate
                     </button>-->
                     <button type="submit" class="btn btn-success">
