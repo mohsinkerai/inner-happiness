@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface InstitutionRepository extends BaseRepository<Institution> {
 
   List<Institution> findByLevelId(long levelId);
+
+  List<Institution> findByCategory(String category);
 }

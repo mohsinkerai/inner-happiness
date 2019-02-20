@@ -48,4 +48,8 @@ public class InstitutionService extends BaseService<Institution> {
     }
     return super.save(institution);
   }
+
+  public List<Institution> findByCategory(String category) {
+    return repository.findByCategory(category);
+  }
 }

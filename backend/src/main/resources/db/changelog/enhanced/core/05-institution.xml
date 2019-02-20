@@ -69,4 +69,22 @@
       <column name="category" type="varchar(255)"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="institution-08" author="mohsin.kerai">
+    <update tableName="institution">
+      <column name="category" value="COUNCIL" />
+      <where>lower(full_name) like '%council%'</where>
+    </update>
+  </changeSet>
+  <changeSet id="institution-09" author="mohsin.kerai">
+    <update tableName="institution">
+      <column name="category" value="CAB" />
+      <where>lower(full_name) like '%arbitration%'</where>
+    </update>
+  </changeSet>
+  <changeSet id="institution-10" author="mohsin.kerai">
+    <update tableName="institution">
+      <column name="category" value="ITREB" />
+      <where>lower(full_name) like '%itreb%'</where>
+    </update>
+  </changeSet>
 </databaseChangeLog>
