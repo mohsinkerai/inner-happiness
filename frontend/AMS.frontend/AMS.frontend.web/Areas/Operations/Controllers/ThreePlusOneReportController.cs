@@ -78,7 +78,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             foreach (var item in list)
             {
-                item.Value = item.Value+"-"+item.Text;
+                item.Value = item.Value + "-" + item.Text;
             }
 
             return list;
@@ -97,10 +97,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return list;
         }
 
-        public async Task<List<SelectListItem>> GetLocalInstitutions(string id)
+        public async Task<List<SelectListItem>> GetLocalInstitutions(string regionId)
         {
             var list = await new RestfulClient(_logger,
-                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(id);
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId);
 
             foreach (var item in list)
             {
@@ -109,55 +109,42 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return list;
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> GenerateReport(ThreePlusOneReportModel model)
         {
-
-            //------------------------------------------------------------------------------------------------------
-            
             if (ModelState.IsValid)
             {
-                if (model.Level == "National")
+                var list = model.Level == "National" ? await GetNationalInstitutions() :
+                    model.Level == "Regional" ? await GetRegionalInstitutions() :
+                    model.Level == "Local" ? await GetLocalInstitutions(model.RegionalInstitution.Split("-")[0]) : null;
+
+                //var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ?? new List<InstitutionModel>();
+                var institutions = string.Empty;
+
+                foreach (var item in list)
                 {
-                    var list = await GetNationalInstitutions();
+                    //item.Id => this is sessionId.
+                    //item.Name => this is intitution name with institution id like (2-AKEPB) so we have to split value.
+                    //var institution = item.Name.Split("-")[0];
+                    var institution = item.Value.Split("-")[0];
+                    institutions += $"{institution},";
                 }
-                else if (model.Level == "Regional")
+
+                institutions = institutions.Substring(0, institutions.Length - 1);
+
+                using (var client = new WebClient())
                 {
-                    var list = await GetRegionalInstitutions();
-                }
-                else if (model.Level == "Local")
-                {
-                    var list = await GetLocalInstitutions(model.InstitutionName.Split("-")[0]);
+                    client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+
+                    var stream = new MemoryStream(client.DownloadData(
+                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19"));
+
+                    return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
                 }
             }
-            //------------------------------------------------------------------------------------------------------
 
-
-            var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ??
-                           new List<InstitutionModel>();
-            var institutions = string.Empty;
-
-            foreach (var item in sessionInstituionList)
-            {
-                //item.Id => this is sessionId.
-                //item.Name => this is intitution name with institution id like (2-AKEPB) so we have to split value.
-                var institution = item.Name.Split("-")[0];
-                institutions += $"{institution},";
-            }
-
-            institutions = institutions.Substring(0, institutions.Length - 1);
-
-            using (var client = new WebClient())
-            {
-                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
-
-                var stream = new MemoryStream(client.DownloadData(
-                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19"));
-
-                return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
-            }
+            return null;
         }
-
     }
 }

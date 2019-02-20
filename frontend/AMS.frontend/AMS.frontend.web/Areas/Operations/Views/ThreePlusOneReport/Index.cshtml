@@ -4,7 +4,7 @@
     ViewBag.PageTitle = "3+1 Report";
 }
 
-<div class="m-portlet m-portlet--bordered-semi" id="search-portlet">
+<div class="m-portlet m-portlet--skin-dark m-portlet--bordered-semi" id="search-portlet">
     <div class="m-portlet__head">
         <div class="m-portlet__head-caption">
             <div class="m-portlet__head-title">
@@ -29,7 +29,7 @@
     <div class="m-portlet__body">
         <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.ThreePlusOneReport" asp-action="GenerateReport" method="post">
             <div class="form-group m-form__group row">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label asp-for="Level" class="control-label">Level</label>
                         <select asp-for="Level" class="form-control m-select2 level" placeholder="Select a Level">
@@ -40,10 +40,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label">Category</label>
-                        <select asp-for="Category" class="form-control m-select2 level" placeholder="Select a Category" disabled>
+                        <select asp-for="Category" class="form-control m-select2 category" placeholder="Select a Category" disabled="disabled">
                             <option></option>
                             <option value="National">CAB</option>
                             <option value="Regional">ITREB</option>
@@ -51,10 +51,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="form-group">
-                        <label asp-for="InstitutionName" class="control-label"></label>
-                        <select asp-for="InstitutionName" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
+                        <label asp-for="RegionalInstitution" class="control-label"></label>
+                        <select asp-for="RegionalInstitution" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
                             <option></option>
                         </select>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label class="m-checkbox">
-                            <input asp-for="comments" type="checkbox"> Show Comments
+                            <input asp-for="comments" type="checkbox"><p style="color:#fff"> Show Comments </p>
                             <span></span>
                         </label>
                     </div>
@@ -78,7 +78,7 @@
                         <i class="fa fa-save"></i> Generate
                     </button>
                     <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
-                        <i class="fa fa-close"></i> Cancel
+                        <i class="fa fa-close"></i> <p style="color:#fff">Cancel</p>
                     </a>
                 </div>
             </div>
@@ -100,42 +100,31 @@
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".level").val([]);
                     }
+
                     $(".institution").empty().append("<option></option>").prop("disabled", true);
+                    $(".category").empty().append("<option></option>").prop("disabled", true);
+
                     if (selectedPrimaryValue === "National") {
                         $(".institution").empty().append("<option></option>").prop("disabled", true);
-                        //LoadNationalInstitutions();
+                        $(".category").empty().append("<option></option>").prop("disabled", true);
+                        
                     } else if (selectedPrimaryValue === "Regional") {
                         $(".institution").empty().append("<option></option>").prop("disabled", true);
-                        //LoadRegionalInstitutions();
+                        $(".category").empty().append("<option></option>").prop("disabled", true);
+                        
                     } else if (selectedPrimaryValue === "Local") {
-                        LoadLocalInstitutions();
+                        LoadRegionalInstitutions();
                     }
                 });
-            
-            function LoadNationalInstitutions() {
-                LoadDropDownViaAjax("institution",
-                "@Url.Action(ActionNames.GetNationalInstitutions, ControllerNames.ThreePlusOneReport, new {area = AreaNames.Operations})",
-                "",
-                "",
-                "");
-
-            }
-
+           
             function LoadRegionalInstitutions() {
-                LoadDropDownViaAjax("institution",
-                "@Url.Action(ActionNames.GetRegionalInstitutions, ControllerNames.ThreePlusOneReport, new {area = AreaNames.Operations})",
-                "",
-                "",
-                "");
-            }
-
-        function LoadLocalInstitutions() {
             LoadDropDownViaAjax("institution",
-                "@Url.Action(ActionNames.GetLocalInstitutions, ControllerNames.ThreePlusOneReport, new {area = AreaNames.Operations})",
+                "@Url.Action(ActionNames.GetRegionalInstitutions, ControllerNames.Nominations, new {area = AreaNames.Operations})",
                 "",
                 "",
                 "");
-            }
+        }
+
         });
     </script>
 }

@@ -1979,9 +1979,9 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetAllLocal(string localCouncilId)
+        public async Task<List<SelectListItem>> GetAllLocal(string regionId)
         {
-            var res = await _client.GetAsync("level/search/parent?value="+localCouncilId);
+            var res = await _client.GetAsync("level/search/parent?value="+ regionId);
 
             if (res.IsSuccessStatusCode)
             {

@@ -10,7 +10,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport
     {
         public string Level { get; set; }
 
-        public string InstitutionName { get; set; }
+        public string RegionalInstitution { get; set; }
 
         public string Category { get; set; }
 
