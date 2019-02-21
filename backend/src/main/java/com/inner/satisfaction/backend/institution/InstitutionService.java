@@ -52,4 +52,12 @@ public class InstitutionService extends BaseService<Institution> {
   public List<Institution> findByCategory(String category) {
     return repository.findByCategory(category);
   }
+
+  public List<Institution> findByCategoryAndParentLevelId(String category, Long parentLevelId) {
+    return repository.findByCategoryAndParentLevelId(category, parentLevelId);
+  }
+
+  public List<Institution> findByCategoryAndLevelTypeId(String category, Long levelTypeId) {
+    return repository.findByCategoryAndLevelTypeId(category, levelTypeId);
+  }
 }
