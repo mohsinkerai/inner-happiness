@@ -2149,3 +2149,32 @@ function InitializeSearchPersonDataTable(id) {
 		table.search(this.value).draw();
 	});
 }
+
+function AddRemarks(url, appointmentPositionId, isRecommended, personId, priority, isAppointed, personAppointmentId) {
+    mApp.block("#nominations-table-" + appointmentPositionId, {});
+    var remarks = $("#remarks-"+appointmentPositionId).val();
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { "appointmentPositionId": appointmentPositionId, "isRecommended": isRecommended, "personId": personId, "priority": priority, "remarks": remarks, "personAppointmentId": personAppointmentId, "isAppointed": isAppointed},
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        dataType: "html",
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            mApp.unblock("#nominations-table-" + positionId, {});
+            alert("Request: " +
+                xmlHttpRequest.toString() +
+                "\n\nStatus: " +
+                textStatus +
+                "\n\nError: " +
+                errorThrown);
+        },
+        success: function (result) {
+            if (result.length !== 4) {
+                $("#nominations-table-" + appointmentPositionId).html(result);
+                InitializeNominationDataTableLite("nominations-" + appointmentPositionId, "Nominations");
+                $("#nominations-" + appointmentPositionId).css("min-height", "0px");
+            }
+            mApp.unblock("#nominations-table-" + appointmentPositionId, {});
+        }
+    });
+}
