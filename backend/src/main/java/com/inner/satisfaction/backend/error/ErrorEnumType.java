@@ -13,6 +13,7 @@ public enum ErrorEnumType {
   APPOINTMENT_POSITION_DOES_NOT_EXIST(4, "Appointment position does not exist"),
   INCUMBENT_INFORMATION_CAN_NOT_BE_UPDATED(5, "You can't update information of existing incumbent"),
   INVALID_REAPPOINTMENT_COUNT_PROVIDED(6, "Reappointment count should be 0 when creating or updating position"),
+  PERSON_APPOINTMENT_DOES_NOT_EXIST(7, "Person Appointment that is tried to modified doesn't exist"),
 
   INVALID_INSTITUTION_CATEGORY_GIVEN(101, "Invalid Institution Category Provided, Possible values are CAB, ITREB & COUNCIL"),
 

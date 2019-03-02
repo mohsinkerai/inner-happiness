@@ -5,6 +5,7 @@ import static com.inner.satisfaction.backend.base.BaseController.PREFIX;
 import com.inner.satisfaction.backend.base.BaseController;
 import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentExtendedDto;
 import com.inner.satisfaction.backend.person.appointment.dto.PersonRecommendationDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonRemarksDto;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.util.Assert;
@@ -51,6 +52,11 @@ public class PersonAppointmentController extends BaseController<PersonAppointmen
   @PostMapping("recommend")
   public void recommend(@Valid @RequestBody PersonRecommendationDto personRecommendationDto) {
     personAppointmentFacade.recommendPersonInAppointment(personRecommendationDto);
+  }
+
+  @PostMapping("updateRemarks")
+  public void updateRemarks(@Valid @RequestBody PersonRemarksDto personRemarksDto) {
+    personAppointmentFacade.updateRemarks(personRemarksDto);
   }
 
   @GetMapping("search/findRecommendationAndNominationByPersonIdAndCycleId")
