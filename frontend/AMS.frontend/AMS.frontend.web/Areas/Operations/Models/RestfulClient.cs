@@ -2003,6 +2003,36 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
+        public async Task<PositionModel> addRemarks(string appointmentPositionId, bool isRecommended, string personId,
+            string priority, string remarks, string personAppointmentId, bool isAppointed)
+        {
+            PositionModel positionModel = null;
+
+            try
+            {
+                var jObject = new JObject
+                    {
+                        {"appointmentPositionId", appointmentPositionId},
+                        {"isAppointed", isAppointed},
+                        {"isRecommended", isRecommended},
+                        {"personId", personId},
+                        {"priority", priority},
+                        {"remarks", remarks}
+                    };
+
+                var json = JsonConvert.SerializeObject(jObject);
+                var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                var httpResponse = await _client.PutAsync("/person/appointment/one/" + personAppointmentId,
+                    httpContent);
+              
+            }
+            catch (Exception)
+            {
+            }
+
+            return positionModel;
+        }
+
         #endregion Public Methods
     }
    

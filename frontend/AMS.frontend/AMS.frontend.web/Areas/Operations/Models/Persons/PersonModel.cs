@@ -446,6 +446,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
         [JsonIgnore]
         public string PreComputedLatestEmployment { get; set; }
 
+        [JsonProperty(PropertyName = "remarks")]
+        public string Remarks { get; set; }
+
         #endregion Public Properties
     }
 }

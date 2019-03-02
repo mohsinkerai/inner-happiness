@@ -702,13 +702,24 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
         }
 
-        #endregion Public Methods
-
-        /*public async Task<JsonResult> GetInstitutions(string level, string subLevel, string type)
+        [HttpPost]
+        public async Task<IActionResult> AddRemarks(string appointmentPositionId, bool isRecommended, string personId,
+            string priority, string remarks, string personAppointmentId, bool isAppointed)
         {
-            var list = await RestfulClient.GetInstitutions(level, subLevel, type);
+            var positionModel =
+                await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).addRemarks(appointmentPositionId, isRecommended, personId, priority, remarks, personAppointmentId, isAppointed);
 
-            return new JsonResult(list);
-        }*/
-    }
+            return null;
+        }
+
+            #endregion Public Methods
+
+            /*public async Task<JsonResult> GetInstitutions(string level, string subLevel, string type)
+            {
+                var list = await RestfulClient.GetInstitutions(level, subLevel, type);
+
+                return new JsonResult(list);
+            }*/
+        }
 }
