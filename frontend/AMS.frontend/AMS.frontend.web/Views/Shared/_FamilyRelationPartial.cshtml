@@ -6,6 +6,13 @@
         <span asp-validation-for="RelativeCnic" class="form-control-feedback"></span>
     </div>
 </div>
+<div class="col-lg-3">
+    <div class="form-group">
+        <label asp-for="RelativeFormNumber" class="control-label"></label>
+        <input type="text" asp-for="RelativeFormNumber" class="form-control relative-formNumber">
+        <span asp-validation-for="RelativeFormNumber" class="form-control-feedback"></span>
+    </div>
+</div>
 <div class="col-lg-2">
     <div class="form-group">
         <label asp-for="RelativeSalutation" class="control-label"></label>
@@ -61,13 +68,6 @@
 </div>
 <div class="col-lg-2">
     <div class="form-group">
-        <label asp-for="RelativeFormNumber" class="control-label"></label>
-        <input type="text" asp-for="RelativeFormNumber" class="form-control" disabled="disabled">
-        <span asp-validation-for="RelativeFormNumber" class="form-control-feedback"></span>
-    </div>
-</div>
-<div class="col-lg-3">
-    <div class="form-group">
         <label asp-for="RelativeRelation" class="control-label"></label>
         <select asp-for="RelativeRelation" asp-items="@ViewBag.RelationList" class="form-control m-select2" placeholder="Select">
             <option></option>
@@ -75,7 +75,7 @@
         <span asp-validation-for="RelativeRelation" class="form-control-feedback"></span>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-3">
     <div class="form-group">
         <label asp-for="RelativeCycle" class="control-label"></label>
         <select asp-for="RelativeCycle" asp-items="@ViewBag.Cycle" class="form-control m-select2 new-appointment-fields" placeholder="Select" disabled="disabled">
@@ -84,7 +84,7 @@
         <span asp-validation-for="RelativeCycle" class="form-control-feedback"></span>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-3">
     <div class="form-group">
         <label asp-for="RelativeInstitution" class="control-label"></label>
         <select asp-for="RelativeInstitution" asp-items="@ViewBag.VoluntaryCommunityInstitutionList" class="form-control m-select2 new-appointment-fields" placeholder="Select an institution" disabled="disabled">
@@ -93,7 +93,7 @@
         <span asp-validation-for="RelativeInstitution" class="form-control-feedback"></span>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-3">
     <div class="form-group">
         <label asp-for="RelativePosition" class="control-label"></label>
         <select asp-for="RelativePosition" asp-items="@ViewBag.VoluntaryCommunityPositionList" class="form-control m-select2 new-appointment-fields" placeholder="Select a position" disabled="disabled">

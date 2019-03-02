@@ -2019,6 +2019,52 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> FetchPersonThroughFormNumber(string formNumber)
+        {
+            var success =
+                await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
+                    .GetPersonDetailsThroughPagging(string.Empty, string.Empty, formNumber, string.Empty, string.Empty,
+                        string.Empty, string.Empty, 1, 1, string.Empty);
+            ViewBag.SalutationList =
+                await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSalutation();
+            ViewBag.JamatiTitleList =
+                await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetJamatiTitles();
+            ViewBag.RelationList =
+                await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllRelatives();
+            ViewBag.Cycle =
+                await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetCycles();
+            ViewBag.VoluntaryCommunityPositionList =
+                await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositions();
+            ViewBag.VoluntaryCommunityInstitutionList =
+                await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token)
+                    .GetPositionInstitution();
+
+            var person = success.Item1.FirstOrDefault();
+            if (person != null)
+            {
+                person.RelativeCnic = person.Cnic;
+                person.RelativeSalutation = person.Salutation;
+                person.RelativeFirstName = person.FirstName;
+                person.RelativeFathersName = person.FathersName;
+                person.RelativeFamilyName = person.FamilyName;
+                person.RelativeJamatiTitle = person.JamatiTitle;
+                person.RelativeDateOfBirth = person.DateOfBirth;
+                person.RelativePersonId = person.Id;
+                person.RelativeFormNumber = person.Id;
+
+            }
+            //return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeCnic = cnic } : null);
+            return PartialView("_FamilyRelationPartial", person == null ? new PersonModel { RelativeFormNumber = formNumber } : person);
+        }
+
         #endregion Private Methods
     }
 }

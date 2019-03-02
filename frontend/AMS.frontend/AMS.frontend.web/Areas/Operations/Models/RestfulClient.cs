@@ -690,6 +690,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                                 incumbentDetail.IsAppointed = Convert.ToBoolean(personsAppointed["appointed"]);
                                 incumbentDetail.IsRecommended = Convert.ToBoolean(personsAppointed["recommended"]);
                                 incumbentDetail.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
+                                incumbentDetail.Remarks = Convert.ToString(personsAppointed["remarks"]);
 
                                 positionModel.incumbentDetail = incumbentDetail;
                             }
@@ -2003,34 +2004,29 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<PositionModel> addRemarks(string appointmentPositionId, bool isRecommended, string personId,
+        public async Task<bool> addRemarks(string appointmentPositionId, bool isRecommended, string personId,
             string priority, string remarks, string personAppointmentId, bool isAppointed)
         {
-            PositionModel positionModel = null;
-
             try
             {
                 var jObject = new JObject
                     {
-                        {"appointmentPositionId", appointmentPositionId},
-                        {"isAppointed", isAppointed},
-                        {"isRecommended", isRecommended},
-                        {"personId", personId},
-                        {"priority", priority},
+                        {"personAppointmentId", personAppointmentId},
                         {"remarks", remarks}
                     };
 
                 var json = JsonConvert.SerializeObject(jObject);
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var httpResponse = await _client.PutAsync("/person/appointment/one/" + personAppointmentId,
+                var httpResponse = await _client.PostAsync("/person/appointment/updateRemarks",
                     httpContent);
+
+                return httpResponse.IsSuccessStatusCode ? true : false;
               
             }
             catch (Exception)
             {
+                return false;
             }
-
-            return positionModel;
         }
 
         #endregion Public Methods

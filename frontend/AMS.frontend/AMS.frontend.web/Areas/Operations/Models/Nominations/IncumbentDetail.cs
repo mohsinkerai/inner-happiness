@@ -13,5 +13,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Nominations
         public string personAppointmentId { get; set; }
         public int Priority { get; set; }
         public string RowClass => IsRecommended ? "background: #bec9f57a !important" : string.Empty;
+
+        public string Remarks { get; set; }
     }
 }

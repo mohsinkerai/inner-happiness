@@ -703,14 +703,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRemarks(string appointmentPositionId, bool isRecommended, string personId,
+        public async Task<bool> AddRemarks(string appointmentPositionId, bool isRecommended, string personId,
             string priority, string remarks, string personAppointmentId, bool isAppointed)
         {
-            var positionModel =
+            bool success =
                 await new RestfulClient(_logger,
                     HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).addRemarks(appointmentPositionId, isRecommended, personId, priority, remarks, personAppointmentId, isAppointed);
 
-            return null;
+            return success;
         }
 
             #endregion Public Methods

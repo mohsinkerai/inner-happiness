@@ -2160,7 +2160,7 @@ function AddRemarks(url, appointmentPositionId, isRecommended, personId, priorit
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
         dataType: "html",
         error: function (xmlHttpRequest, textStatus, errorThrown) {
-            mApp.unblock("#nominations-table-" + positionId, {});
+            mApp.unblock("#nominations-table-" + appointmentPositionId, {});
             alert("Request: " +
                 xmlHttpRequest.toString() +
                 "\n\nStatus: " +
@@ -2169,10 +2169,9 @@ function AddRemarks(url, appointmentPositionId, isRecommended, personId, priorit
                 errorThrown);
         },
         success: function (result) {
-            if (result.length !== 4) {
-                $("#nominations-table-" + appointmentPositionId).html(result);
-                InitializeNominationDataTableLite("nominations-" + appointmentPositionId, "Nominations");
-                $("#nominations-" + appointmentPositionId).css("min-height", "0px");
+            if (result) {
+                alert("Comment successfully Added!");
+                modal.style.display = "block";
             }
             mApp.unblock("#nominations-table-" + appointmentPositionId, {});
         }
