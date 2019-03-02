@@ -1,5 +1,7 @@
 package com.inner.satisfaction.backend.person.appointment;
 
+import static com.inner.satisfaction.backend.error.ErrorEnumType.PERSON_APPOINTMENT_DOES_NOT_EXIST;
+
 import com.google.common.collect.ImmutableMap;
 import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
@@ -13,9 +15,11 @@ import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
 import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentExtendedDto;
 import com.inner.satisfaction.backend.person.appointment.dto.PersonRecommendationDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonRemarksDto;
 import com.inner.satisfaction.backend.person.appointment.event.PersonRecommendedEventDto;
 import com.inner.satisfaction.backend.position.PositionService;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -291,5 +295,15 @@ public class PersonAppointmentFacade {
         }
       )
       .collect(Collectors.toList());
+  }
+
+  public void updateRemarks(PersonRemarksDto personRemarksDto) {
+    PersonAppointment personAppointment = Optional.ofNullable(personAppointmentService
+      .findOne(personRemarksDto.getPersonAppointmentId()))
+      .orElseThrow(() -> new AmsException(PERSON_APPOINTMENT_DOES_NOT_EXIST,
+        ImmutableMap.of("requestPayload", personRemarksDto)));
+
+    personAppointment.setRemarks(personRemarksDto.getRemarks());
+    personAppointmentService.save(personAppointment);
   }
 }
