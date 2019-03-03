@@ -60,6 +60,7 @@
         public const string VoluntaryInstitution = "VoluntaryInstitution";
         public const string GetNationalInstitutions = "GetNationalInstitutions";
         public const string InstitutionListAdd = "InstitutionListAdd";
+        public const string FetchPersonThroughFormNumber = "FetchPersonThroughFormNumber";
 
         #endregion Public Fields
     }

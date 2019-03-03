@@ -35,4 +35,27 @@ public class InstitutionController extends BaseController<Institution> {
     @RequestParam("levelTypeId") Long levelTypeId) {
     return institutionService.findByLevelType(levelTypeId);
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByInstitutionCategory", method = RequestMethod.GET)
+  public List<Institution> findByCategory(
+    @RequestParam("category") String category) {
+    return institutionService.findByCategory(category);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByInstitutionCategoryAndParentLevelId", method = RequestMethod.GET)
+  public List<Institution> findByCategoryAndParentLevelId(
+    @RequestParam("category") String category,
+    @RequestParam("parentLevelId") Long parentLevelId) {
+    return institutionService.findByCategoryAndParentLevelId(category, parentLevelId);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/search/findByInstitutionCategoryAndLevelTypeId", method = RequestMethod.GET)
+  public List<Institution> findByCategoryAndLevelTypeId(
+    @RequestParam("category") String category,
+    @RequestParam("levelTypeId") Long levelTypeId) {
+    return institutionService.findByCategoryAndLevelTypeId(category, levelTypeId);
+  }
 }

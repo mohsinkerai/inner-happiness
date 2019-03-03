@@ -1,5 +1,7 @@
 package com.inner.satisfaction.backend.person.appointment;
 
+import static com.inner.satisfaction.backend.error.ErrorEnumType.PERSON_APPOINTMENT_DOES_NOT_EXIST;
+
 import com.google.common.collect.ImmutableMap;
 import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
@@ -13,9 +15,11 @@ import com.inner.satisfaction.backend.person.Person;
 import com.inner.satisfaction.backend.person.PersonService;
 import com.inner.satisfaction.backend.person.appointment.dto.PersonAppointmentExtendedDto;
 import com.inner.satisfaction.backend.person.appointment.dto.PersonRecommendationDto;
+import com.inner.satisfaction.backend.person.appointment.dto.PersonRemarksDto;
 import com.inner.satisfaction.backend.person.appointment.event.PersonRecommendedEventDto;
 import com.inner.satisfaction.backend.position.PositionService;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -158,24 +162,26 @@ public class PersonAppointmentFacade {
     if (personAppointment.getReappointmentCount() == null) {
       personAppointment.setReappointmentCount(0);
     }
-    if (!personAppointment.getReappointmentCount().equals(0)) {
-      throw new RuntimeException(
-        "Larkay!! re-appointment ka count tera-bhai dekh lega, tu mat dal");
-    }
   }
 
   private void performValidations(PersonAppointment personAppointment) {
     if (personAppointment.getPriority() == 0) {
-      throw new AmsException(ErrorEnumType.INCUMBENT_CAN_NOT_BE_UPDATED_OR_CREATED);
+      throw new AmsException(ErrorEnumType.AS_INCUMBENT_CAN_NOT_BE_UPDATED_OR_CREATED);
     }
     if (personAppointment.getAppointed() == true) {
       throw new AmsException(ErrorEnumType.CAN_NOT_NOMINATE_WITH_IS_APPOINTED_TRUE);
     }
-    Person one = personService.findOne(personAppointment.getPersonId());
-    if (one == null || (one.getIsActive() != null && one.getIsActive() == false)) {
+    Person person = personService.findOne(personAppointment.getPersonId());
+    if (person == null || (person.getIsActive() != null && person.getIsActive() == false)) {
       throw new AmsException(ErrorEnumType.PERSON_DOES_NOT_EXIST_IN_DB,
-        ImmutableMap.of("person-from-db", one));
+        ImmutableMap.of("person-from-db", personAppointment));
     }
+    if (personAppointment.getReappointmentCount() != null && !personAppointment
+      .getReappointmentCount().equals(0)) {
+      throw new AmsException(ErrorEnumType.INVALID_REAPPOINTMENT_COUNT_PROVIDED,
+        ImmutableMap.of("given-payload", person));
+    }
+
     AppointmentPosition appointmentPosition = appointmentPositionService
       .findOne(personAppointment.getAppointmentPositionId());
     if (appointmentPosition == null || (appointmentPosition.getIsActive() != null
@@ -190,7 +196,8 @@ public class PersonAppointmentFacade {
     Long id = personAppointment.getId();
     PersonAppointment dbPersonAppointment = personAppointmentService.findOne(id);
     if (dbPersonAppointment.getPriority() == 0) {
-      throw new RuntimeException("Excuseme!! you can't update incumbtee");
+      throw new AmsException(ErrorEnumType.INCUMBENT_INFORMATION_CAN_NOT_BE_UPDATED,
+        ImmutableMap.of("id-trying-to-update", id));
     }
   }
 
@@ -212,8 +219,10 @@ public class PersonAppointmentFacade {
       .collect(Collectors.toList());
 
     if (recommendationsOfPerson.size() > 0) {
-      throw new RuntimeException(
-        "This person is already recommended at " + formatify(recommendationsOfPerson));
+      ErrorEnumType personAlreadyRecommended = ErrorEnumType.PERSON_ALREADY_RECOMMENDED;
+      throw new AmsException(personAlreadyRecommended.getErrorCode(),
+        personAlreadyRecommended.getMessage() + formatify(recommendationsOfPerson),
+        ImmutableMap.of("payload", personRecommendationDto));
     }
 
     Long appointmentPositionId = personAppointment.getAppointmentPositionId();
@@ -286,5 +295,15 @@ public class PersonAppointmentFacade {
         }
       )
       .collect(Collectors.toList());
+  }
+
+  public void updateRemarks(PersonRemarksDto personRemarksDto) {
+    PersonAppointment personAppointment = Optional.ofNullable(personAppointmentService
+      .findOne(personRemarksDto.getPersonAppointmentId()))
+      .orElseThrow(() -> new AmsException(PERSON_APPOINTMENT_DOES_NOT_EXIST,
+        ImmutableMap.of("requestPayload", personRemarksDto)));
+
+    personAppointment.setRemarks(personRemarksDto.getRemarks());
+    personAppointmentService.save(personAppointment);
   }
 }

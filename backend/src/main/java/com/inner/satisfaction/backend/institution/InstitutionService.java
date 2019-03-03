@@ -1,6 +1,9 @@
 package com.inner.satisfaction.backend.institution;
 
+import com.google.common.collect.Sets;
 import com.inner.satisfaction.backend.base.BaseService;
+import com.inner.satisfaction.backend.error.AmsException;
+import com.inner.satisfaction.backend.error.ErrorEnumType;
 import com.inner.satisfaction.backend.level.Level;
 import com.inner.satisfaction.backend.level.LevelService;
 import java.util.List;
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InstitutionService extends BaseService<Institution> {
+
+  private static final Set<String> ALLOWED_CATEGORIES = Sets.newHashSet("CAB", "ITREB", "COUNCIL");
 
   private final LevelService levelService;
   private final InstitutionRepository repository;
@@ -33,5 +38,26 @@ public class InstitutionService extends BaseService<Institution> {
       .stream()
       .flatMap((level) -> repository.findByLevelId(level.getId()).stream())
       .collect(Collectors.toList());
+  }
+
+  @Override
+  public Institution save(Institution institution) {
+    if (institution != null && institution.getCategory() != null && !ALLOWED_CATEGORIES
+      .contains(institution.getCategory())) {
+      new AmsException(ErrorEnumType.INVALID_INSTITUTION_CATEGORY_GIVEN);
+    }
+    return super.save(institution);
+  }
+
+  public List<Institution> findByCategory(String category) {
+    return repository.findByCategory(category);
+  }
+
+  public List<Institution> findByCategoryAndParentLevelId(String category, Long parentLevelId) {
+    return repository.findByCategoryAndParentLevelId(category, parentLevelId);
+  }
+
+  public List<Institution> findByCategoryAndLevelTypeId(String category, Long levelTypeId) {
+    return repository.findByCategoryAndLevelTypeId(category, levelTypeId);
   }
 }
