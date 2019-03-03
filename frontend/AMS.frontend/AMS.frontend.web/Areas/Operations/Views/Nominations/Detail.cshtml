@@ -69,13 +69,13 @@
                             <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">@position.StateForDisplay</span>
                         }
                         &nbsp;&nbsp;
-                        @if (position.Nominations != null && !position.Nominations.Any(n => n.IsRecommended) && position.incumbentDetail != null && !position.incumbentDetail.IsRecommended)
+                        @if ((position.Nominations != null && position.Nominations.Any(n => n.IsRecommended)) || (position.incumbentDetail != null && position.incumbentDetail.IsRecommended))
                         {
-                            <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">pending Recommendation</span>
+                            <span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Recommendation completed</span>
                         }
                         else
                         {
-                            <span class="m-badge m-badge--success m-badge--wide m-badge--rounded">Recommendation completed</span>
+                            <span class="m-badge m-badge--danger m-badge--wide m-badge--rounded">pending Recommendation</span>
                         }
                     </h3>
                 </div>
