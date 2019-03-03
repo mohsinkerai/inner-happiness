@@ -45,7 +45,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
 
                 var stream = new MemoryStream(client.DownloadData(
-                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}"));
+                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}&showremarks=false"));
 
                 return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
             }
@@ -125,7 +125,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
 
                     var stream = new MemoryStream(client.DownloadData(
-                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19"));
+                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}"));
 
                     return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
                 }

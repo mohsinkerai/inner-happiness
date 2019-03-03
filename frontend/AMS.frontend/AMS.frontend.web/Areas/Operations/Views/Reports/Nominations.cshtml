@@ -25,11 +25,11 @@
                 </li>
             </ul>
         </div>
-    </div>\
+    </div>
     <div class="m-portlet__body">
         <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Reports" asp-action="GenerateReport" method="post">
             <div class="form-group m-form__group row">
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label asp-for="Level" class="control-label">Level</label>
                         <select asp-for="Level" class="form-control m-select2 level" placeholder="Select a Level">
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label">Category</label>
                         <select asp-for="Category" class="form-control m-select2 category" placeholder="Select a Category" disabled="disabled">
@@ -51,7 +51,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label asp-for="RegionalInstitution" class="control-label"></label>
                         <select asp-for="RegionalInstitution" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
@@ -59,27 +59,28 @@
                         </select>
                     </div>
                 </div>
-                @*<div class="col-lg-3">
+                <div class="col-lg-3">
                     <div class="form-group">
-                        <label class="m-checkbox">
-                            <input asp-for="comments" type="checkbox"><p style="color:#fff"> Show Comments </p>
-                            <span></span>
-                        </label>
+                        <label asp-for="Remarks" class="control-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <span class="">
+                                    <label class="m-checkbox m-checkbox--state m-checkbox--state-primary" style="vertical-align:bottom !important">
+                                        <input asp-for="Remarks" type="checkbox">
+                                        <span></span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>*@
+                </div>
             </div>
 
             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-                <div class="m-form__actions m-form__actions--solid m--align-right">
-                    <!--<button type="button" class="btn btn-success" onclick="window.open('@Url.Action("GenerateReport", ControllerNames.Reports)')">
-                        <i class="fa fa-save"></i> Generate
-                    </button>-->
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-save"></i> Generate
+                <div class="m-form__actions m-form__actions--solid">
+                    <button type="submit" class="btn btn-primary btn-info">
+                        <i class="fa fa-download"></i> Generate
                     </button>
-                    <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
-                        <i class="fa fa-close"></i> <p style="color:#fff">Cancel</p>
-                    </a>
                 </div>
             </div>
 

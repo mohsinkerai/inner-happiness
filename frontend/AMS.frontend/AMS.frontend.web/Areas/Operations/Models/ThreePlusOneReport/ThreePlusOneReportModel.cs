@@ -14,7 +14,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport
 
         public string Category { get; set; }
 
-        public bool comments { get; set; }
+        public bool Remarks { get; set; }
 
     }
 }
