@@ -68,7 +68,7 @@ namespace AMS.frontend.web
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.Add(new ServiceDescriptor(typeof(UploadImageContext), new UploadImageContext(Configuration.GetConnectionString("DefaultConnection"))));
 

@@ -9,7 +9,6 @@ using AMS.frontend.web.Areas.Operations.Models.Nominations;
 using AMS.frontend.web.Areas.Operations.Models.Persons;
 using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
-using ImageMagick;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
