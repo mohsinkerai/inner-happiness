@@ -29,6 +29,10 @@ namespace AMS.frontend.web.Areas.Operations.Models.Cycle
         public string PreviousCycle { get; set; }
 
         [JsonIgnore]
+        public int NumericPreviousCycle =>
+            string.IsNullOrWhiteSpace(PreviousCycle) ? 0 : Convert.ToInt32(PreviousCycle);
+
+        [JsonIgnore]
         public string StartDateForDisplay => StartDate?.ToString("dd/MM/yyyy");
 
 

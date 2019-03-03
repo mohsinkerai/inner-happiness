@@ -123,6 +123,89 @@
                 });
             });
 
+            //---------------------------------------
+
+            $(".relative-formNumber").blur(function() {
+                var formNumber = $(".relative-formNumber").val();
+                $.ajax({
+                    type: "POST",
+                    url:
+                        "@Url.Action(ActionNames.FetchPersonThroughFormNumber, ControllerNames.Persons, new {area = AreaNames.Operations})",
+                    data: { "formNumber": formNumber },
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    dataType: "html",
+                    error: function(xmlHttpRequest, textStatus, errorThrown) {
+                        alert("Request: " +
+                            xmlHttpRequest.toString() +
+                            "\n\nStatus: " +
+                            textStatus +
+                            "\n\nError: " +
+                            errorThrown);
+                    },
+                    success: function(result) {
+                        $("#familyRelationData").html(result);
+                        Initialize();
+                        if (!($("#RelativePersonId").val() === "")) {
+                            $(".relative-fields").prop("disabled", true);
+                            $(".new-appointment-fields").prop("disabled", true);
+                        } else {
+                            //$("#RelativeCnic").val(cnic);
+                            $(".new-appointment-fields").prop("disabled", false);
+                        }
+                        $("#RelativeCnic").inputmask({
+                            "mask": "99999-9999999-9"
+                        });
+                        $("#RelativeFormNumber").keypress(function (event) {
+                            if (event.keyCode == 13) {
+                                event.preventDefault();
+                                return false;
+                            }
+                        });
+                        $(".relative-formNumber").blur(function() {
+                            var formNumber = $(".relative-formNumber").val();
+                            $.ajax({
+                                type: "POST",
+                                url:
+                                    "@Url.Action(ActionNames.FetchPersonThroughFormNumber, ControllerNames.Persons, new {area = AreaNames.Operations})",
+                                data: { "formNumber": formNumber },
+                                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                                dataType: "html",
+                                error: function(xmlHttpRequest, textStatus, errorThrown) {
+                                    alert("Request: " +
+                                        xmlHttpRequest.toString() +
+                                        "\n\nStatus: " +
+                                        textStatus +
+                                        "\n\nError: " +
+                                        errorThrown);
+                                },
+                                success: function(result) {
+                                    $("#familyRelationData").html(result);
+                                    Initialize();
+                                    if (!($("#RelativePersonId").val() === "")) {
+                                        $(".relative-fields").prop("disabled", true);
+                                        $(".new-appointment-fields").prop("disabled", true);
+                                    } else {
+                                        //$("#RelativeCnic").val(cnic);
+                                        $(".new-appointment-fields").prop("disabled", false);
+                                    }
+                                    $("#RelativeCnic").inputmask({
+                                        "mask": "99999-9999999-9"
+                                    });
+                                    $("#RelativeFormNumber").keypress(function (event) {
+                                        if (event.keyCode == 13) {
+                                            event.preventDefault();
+                                            return false;
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+
+            //---------------------------------------
+
             if ($("#PlanToRelocate")[0].checked) {
                 $("#RelocateLocation").prop("disabled", false);
                 $("#RelocationDateTime").prop("disabled", false);

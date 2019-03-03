@@ -1075,8 +1075,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (!string.IsNullOrWhiteSpace(personId))
                 if (string.IsNullOrWhiteSpace(position) && string.IsNullOrWhiteSpace(cycle))
                 {
-                    var appointment = (await GetPastImamatAppointments(personId, true)).OrderByDescending(a => a.ToYear)
-                        .FirstOrDefault();
+                    var previousCycle = (await new RestfulClient(_logger,
+                            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCycles()).OrderByDescending(c => c.NumericPreviousCycle)
+                        .FirstOrDefault()?.PreviousCycle;
+                    var appointment =
+                        (await GetPastImamatAppointments(personId, true)).FirstOrDefault(ap =>
+                            ap.CycleId == previousCycle);
                     if (appointment != null)
                     {
                         cycle = appointment.Cycle;
@@ -1767,8 +1771,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             string relationName = GetText(relation.Relation, ViewBag.RelationList);
                             relation.RelationName = relationName;
 
-                            var appointment = (await GetPastImamatAppointments(relation.Id, true))
-                                .OrderByDescending(a => a.ToYear).FirstOrDefault();
+                            var previousCycle = (await new RestfulClient(_logger,
+                                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCycles()).OrderByDescending(c => c.NumericPreviousCycle)
+                                .FirstOrDefault()?.PreviousCycle;
+                            var appointment =
+                                (await GetPastImamatAppointments(relation.Id, true)).FirstOrDefault(ap =>
+                                    ap.CycleId == previousCycle);
                             if (appointment != null)
                             {
                                 var cycle = appointment.Cycle;
