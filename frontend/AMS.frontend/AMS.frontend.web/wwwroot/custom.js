@@ -2171,7 +2171,7 @@ function AddRemarks(url, appointmentPositionId, isRecommended, personId, priorit
         success: function (result) {
             if (result) {
                 alert("Comment successfully Added!");
-                modal.style.display = "block";
+                //modal.style.display = "block";
             }
             mApp.unblock("#nominations-table-" + appointmentPositionId, {});
         }
