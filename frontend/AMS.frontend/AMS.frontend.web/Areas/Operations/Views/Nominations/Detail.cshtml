@@ -185,7 +185,7 @@
                             <span class="m-widget5__votes">Nominated</span>
                         </div>
                         <div class="m-widget5__info" style="margin-top:20px !important">
-                            <textarea class="form-control m-input" id="remarks-@position.PositionId" placeholder="Comments..." rows="2">@position.incumbentDetail.Remarks</textarea>
+                            <textarea class="form-control m-input" id="remarks-@position.PositionId" placeholder="Comments..." rows="2">@position.incumbentDetail?.Remarks</textarea>
                         </div>
                         <div class="m-widget5__info" style="margin-top:20px !important">
                             @if (position.incumbentDetail != null)
