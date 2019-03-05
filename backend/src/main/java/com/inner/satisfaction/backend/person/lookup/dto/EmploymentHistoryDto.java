@@ -27,6 +27,7 @@ public class EmploymentHistoryDto extends BaseDto {
   private String employmentTelephone;
   private Long businessType; // ID
   private Long businessNature; // ID
+  private String natureOfBusinessOther;
 
   private String employmentCategory;
 
