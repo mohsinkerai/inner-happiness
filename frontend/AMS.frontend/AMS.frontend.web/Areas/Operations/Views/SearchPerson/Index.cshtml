@@ -279,6 +279,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="ShowRecommendation" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="ShowRecommendation" type="checkbox"> Only show recommended ones
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                 <div class="m-form__actions m-form__actions--solid">
@@ -327,10 +338,15 @@
             <thead>
                 <tr>
                     <th> Form Number </th>
+                    <th> CNIC </th>
                     <th> Full Name </th>
                     <th> Latest Education </th>
                     <th> Latest Employment </th>
                     <th> Mobile No. </th>
+                    @if (Model.ShowRecommendation)
+                    {
+                    <th> Recommended </th>
+                    }
                     <th> Actions </th>
                 </tr>
             </thead>
@@ -341,10 +357,15 @@
                     {
                 <tr>
                     <td> @item.Id </td>
+                    <td> @item.Cnic </td>
                     <td> @item.FirstName </td>
                     <td> @item.PreComputedLatestEducation </td>
                     <td> @item.PreComputedLatestEmployment </td>
                     <td> @item.MobilePhone </td>
+                    @if (Model.ShowRecommendation)
+                    {
+                    <td> @item.Institution </td>
+                    }
                     <td>
                         <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Detail" asp-route-id="@item.Id" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="View Details">
                             <i class="la la-eye"></i>

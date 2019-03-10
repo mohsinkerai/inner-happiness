@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AMS.frontend.web.Areas.Operations.Models.Persons
 {
     public class SearchCriteria
     {
+        [Display(Name="Recommendation")]
+        public bool ShowRecommendation { get; set; }
         public string Condition { get; set; }
 
         public Gender? Gender { get; set; }
@@ -17,7 +17,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         [Display(Name = "Employment - Name of Organization")]
         public string EmploymentNameOfOrganization { get; set; }
-        
+
         [Display(Name = "From - Date of Birth")]
         public DateTime? DateOfBirthFrom { get; set; }
 
@@ -89,7 +89,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Persons
 
         public List<PersonModel> persons { get; set; }
 
-        public SearchCriteria() {
+        public SearchCriteria()
+        {
             persons = new List<PersonModel>();
         }
 

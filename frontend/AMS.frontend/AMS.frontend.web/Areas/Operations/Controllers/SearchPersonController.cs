@@ -29,7 +29,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             await InitializeSearchCriteria();
             
-            return View();
+            return View(new SearchCriteria());
         }
 
         public async Task InitializeSearchCriteria()
@@ -124,7 +124,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var query =
-                "SELECT DISTINCT(p.id), p.full_name, p.mobile_phone, CONCAT(ed.NAME, \", \", ei.NAME, \", \", json_extract(p.educations,'$[0].fromYear'),\" - \", json_extract(p.educations,'$[0].toYear')) AS latest_education, CONCAT(TRIM(BOTH '\"' from json_extract(p.employments,'$[0].designation')),\", \",TRIM(BOTH '\"' from json_extract(p.employments,'$[0].nameOfOrganization'))) as latest_employment FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id LEFT OUTER JOIN educational_degree AS ed ON json_extract(p.educations,'$[0].nameOfDegree') = ed.id LEFT OUTER JOIN educational_institution AS ei ON json_extract(p.educations,'$[0].institution') = ei.id WHERE";
+                "SELECT DISTINCT(p.id), '' as institution_name, p.cnic, p.full_name, p.mobile_phone, CONCAT(ed.NAME, \", \", ei.NAME, \", \", json_extract(p.educations,'$[0].fromYear'),\" - \", json_extract(p.educations,'$[0].toYear')) AS latest_education, CONCAT(TRIM(BOTH '\"' from json_extract(p.employments,'$[0].designation')),\", \",TRIM(BOTH '\"' from json_extract(p.employments,'$[0].nameOfOrganization'))) as latest_employment FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id LEFT OUTER JOIN educational_degree AS ed ON json_extract(p.educations,'$[0].nameOfDegree') = ed.id LEFT OUTER JOIN educational_institution AS ei ON json_extract(p.educations,'$[0].institution') = ei.id WHERE";
+
+            if (searchCriteria.ShowRecommendation)
+            {
+                query =
+                    $"SELECT b.id, b.cnic, b.full_name, b.mobile_phone, b.latest_education, b.latest_employment, CONCAT(pos.NAME, ' - ', l.NAME) as institution_name FROM({query}";
+            }
+
             var isFirstOne = true;
 
             if (!string.IsNullOrWhiteSpace(searchCriteria.Name))
@@ -317,6 +324,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 query = Query(searchCriteria, ref isFirstOne, ref query);
                 query +=
                     $"p.date_of_birth BETWEEN '{(searchCriteria.DateOfBirthFrom == null ? DateTime.MinValue.ToString("yyyy-MM-dd HH:mm:ss") : searchCriteria.DateOfBirthFrom.Value.ToString("yyyy-MM-dd HH:mm:ss"))}' AND '{(searchCriteria.DateOfBirthTo == null ? DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss") : searchCriteria.DateOfBirthTo.Value.ToString("yyyy-MM-dd HH:mm:ss"))}'";
+            }
+
+            if (searchCriteria.ShowRecommendation)
+            {
+                return
+                    $"{query}) AS b INNER JOIN person_appointment pa ON b.id = pa.person_id INNER JOIN appointment_position ap ON pa.appointment_position_id = ap.id INNER JOIN level l ON ap.institution_id = l.id INNER JOIN position pos ON ap.position_id = pos.id WHERE ap.cycle_id = 19 AND pa.is_recommended = 1";
             }
 
             return query;

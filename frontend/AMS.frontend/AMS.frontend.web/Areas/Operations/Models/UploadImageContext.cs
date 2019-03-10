@@ -54,6 +54,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     conn.Open();
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.CommandTimeout = 99999;
                     MySqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.HasRows)
@@ -63,10 +64,12 @@ namespace AMS.frontend.web.Areas.Operations.Models
                             var person = new PersonModel
                             {
                                 Id = reader["id"].ToString(),
+                                Cnic = reader["cnic"].ToString(),
                                 FirstName = reader["full_name"].ToString(),
                                 MobilePhone = reader["mobile_phone"].ToString(),
                                 PreComputedLatestEducation = reader["latest_education"].ToString(),
-                                PreComputedLatestEmployment = reader["latest_employment"].ToString()
+                                PreComputedLatestEmployment = reader["latest_employment"].ToString(),
+                                Institution = reader["institution_name"].ToString()
                             };
 
                             personList.Add(person);
