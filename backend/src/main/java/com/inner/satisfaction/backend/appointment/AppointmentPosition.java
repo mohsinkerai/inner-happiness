@@ -36,4 +36,6 @@ public class AppointmentPosition extends BaseEntity{
   // CREATED, APPOINTED, RETIRED
   // It is one way Created -> Appointed -> Retired
   private String state;
+
+  private String positionType;
 }
