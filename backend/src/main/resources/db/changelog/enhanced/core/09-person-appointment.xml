@@ -81,4 +81,7 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="person-appointment-09" author="mohsin.kerai">
+    <sql>update person_appointment set company_id = 1</sql>
+  </changeSet>
 </databaseChangeLog>
