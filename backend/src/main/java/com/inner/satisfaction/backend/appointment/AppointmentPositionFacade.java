@@ -202,6 +202,7 @@ public class AppointmentPositionFacade {
       .isActive(Boolean.TRUE)
       .nominationsRequired(oldAppointmentPosition.getNominationsRequired())
       .isMowlaAppointee(oldAppointmentPosition.isMowlaAppointee())
+      .company(oldAppointmentPosition.getCompany())
       .build();
 
     appointmentPosition = appointmentPositionService.save(appointmentPosition);
@@ -217,6 +218,7 @@ public class AppointmentPositionFacade {
         .personId(personAppointment.getPersonId())
         .isRecommended(Boolean.FALSE)
         .isAppointed(Boolean.FALSE)
+        .company(personAppointment.getCompany())
         .priority(0)
         .build()
     );

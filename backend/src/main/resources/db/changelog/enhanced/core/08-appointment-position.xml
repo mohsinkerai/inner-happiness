@@ -101,4 +101,11 @@
       <column name="position_type" type="varchar(255)"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="appointment-poosition-11" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="company_id" type="bigint">
+        <constraints referencedTableName="company" foreignKeyName="appointment_position_company_fk" referencedColumnNames="id" nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
