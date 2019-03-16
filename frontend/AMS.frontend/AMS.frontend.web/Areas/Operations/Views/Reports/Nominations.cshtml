@@ -29,7 +29,7 @@
     <div class="m-portlet__body">
         <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Reports" asp-action="GenerateReport" method="post">
             <div class="form-group m-form__group row">
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label asp-for="Level" class="control-label">Level</label>
                         <select asp-for="Level" class="form-control m-select2 level" placeholder="Select a Level">
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label asp-for="Category" class="control-label">Category</label>
                         <select asp-for="Category" class="form-control m-select2 category" placeholder="Select a Category" disabled="disabled">
@@ -51,12 +51,18 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label asp-for="RegionalInstitution" class="control-label"></label>
                         <select asp-for="RegionalInstitution" class="form-control m-select2 institution" placeholder="Select" disabled="disabled">
                             <option></option>
                         </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="PageNumber" class="control-label"></label>
+                        <input asp-for="PageNumber" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-2">

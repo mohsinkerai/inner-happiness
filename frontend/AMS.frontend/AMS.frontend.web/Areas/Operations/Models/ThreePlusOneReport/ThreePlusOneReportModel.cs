@@ -16,6 +16,9 @@ namespace AMS.frontend.web.Areas.Operations.Models.ThreePlusOneReport
 
         public string Category { get; set; }
 
+        [Display(Name="Start with Page Number")]
+        public int PageNumber { get; set; }
+
         public bool Remarks { get; set; }
 
         [Display(Name ="Include Parent")]
