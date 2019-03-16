@@ -79,6 +79,7 @@ public class CycleService extends BaseService<Cycle> {
             .isAppointed(false)
             .isRecommended(false)
             .priority(0)
+            .company(ap.getCompany())
             .build()
         );
       }
@@ -136,6 +137,7 @@ public class CycleService extends BaseService<Cycle> {
       .rank(appointmentPosition.getRank())
       .state(AppointmentPositionState.CREATED)
       .isActive(true)
+      .company(appointmentPosition.getCompany())
       .build();
   }
 }

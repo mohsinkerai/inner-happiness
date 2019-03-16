@@ -2,6 +2,8 @@ package com.inner.satisfaction.backend.appointment;
 
 import com.inner.satisfaction.backend.base.BaseRepository;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -38,4 +40,8 @@ public interface AppointmentPositionRepository extends BaseRepository<Appointmen
 
   @Query(nativeQuery = true, value = unrecommendedPositionsQuery)
   List<AppointmentPosition> findByCycleIdWhereNoOneIsRecommended(long cycleId);
+
+  List<AppointmentPosition> findByCompanyId(Long companyId);
+
+  Page<AppointmentPosition> findByCompanyId(Long companyId, Pageable pageable);
 }

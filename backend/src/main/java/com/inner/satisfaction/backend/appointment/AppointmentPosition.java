@@ -2,9 +2,12 @@ package com.inner.satisfaction.backend.appointment;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inner.satisfaction.backend.base.BaseEntity;
+import com.inner.satisfaction.backend.company.Company;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,4 +39,9 @@ public class AppointmentPosition extends BaseEntity{
   // CREATED, APPOINTED, RETIRED
   // It is one way Created -> Appointed -> Retired
   private String state;
+  private String positionType;
+
+  @ManyToOne
+  @JoinColumn(name = "company_id")
+  private Company company;
 }

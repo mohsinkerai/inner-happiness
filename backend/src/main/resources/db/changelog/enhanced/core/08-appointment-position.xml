@@ -95,4 +95,20 @@
   <changeSet id="appointment-position-09" author="mohsin.kerai">
     <sql>alter table `appointment_position` change `to` `to_time` timestamp null</sql>
   </changeSet>
+
+  <changeSet id="appointment-poosition-10" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="position_type" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="appointment-poosition-11" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="company_id" type="bigint">
+        <constraints referencedTableName="company" foreignKeyName="appointment_position_company_fk" referencedColumnNames="id" nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="appointment-position-12" author="mohsin.kerai">
+    <sql>update appointment_position set company_id = 1</sql>
+  </changeSet>
 </databaseChangeLog>

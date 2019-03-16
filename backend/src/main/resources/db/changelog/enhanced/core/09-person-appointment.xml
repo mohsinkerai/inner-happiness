@@ -74,4 +74,14 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+  <changeSet id="person-appointment-08" author="mohsin.kerai">
+    <addColumn tableName="person_appointment">
+      <column name="company_id" type="bigint">
+        <constraints referencedTableName="company" foreignKeyName="person_appointment_company_fk" referencedColumnNames="id" nullable="true" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="person-appointment-09" author="mohsin.kerai">
+    <sql>update person_appointment set company_id = 1</sql>
+  </changeSet>
 </databaseChangeLog>

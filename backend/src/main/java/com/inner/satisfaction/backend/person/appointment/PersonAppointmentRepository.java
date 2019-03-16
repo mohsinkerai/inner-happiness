@@ -2,6 +2,8 @@ package com.inner.satisfaction.backend.person.appointment;
 
 import com.inner.satisfaction.backend.base.BaseRepository;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonAppointmentRepository extends BaseRepository<PersonAppointment> {
 
-  List<PersonAppointment> findByAppointmentPositionId(long appointmentPositionId);
+  List<PersonAppointment> findByAppointmentPositionIdAndCompanyId(long appointmentPositionId, long companyId);
 
   PersonAppointment findByAppointmentPositionIdAndIsAppointedTrue(long appointmentPositionId);
 
@@ -33,10 +35,14 @@ public interface PersonAppointmentRepository extends BaseRepository<PersonAppoin
 
   List<PersonAppointment> findByPersonId(long personId);
 
-  List<PersonAppointment> findByPersonIdAndIsRecommendedEquals(long personId,
-    boolean isRecommended);
+  List<PersonAppointment> findByPersonIdAndIsRecommendedEqualsAndCompanyId(long personId,
+    boolean isRecommended, long companyId);
 
   @Modifying
-  @Query("DELETE from person_appointment where appointmentPositionId = :appointmentPositionId")
-  void deleteByAppointmentPositionId(long appointmentPositionId);
+  @Query("DELETE from person_appointment where appointmentPositionId = :appointmentPositionId and companyId = :companyId")
+  void deleteByAppointmentPositionId(long appointmentPositionId, long companyId);
+
+  Page<PersonAppointment> findByCompanyId(Long companyId, Pageable pageable);
+
+  List<PersonAppointment> findByCompanyId(Long companyId);
 }
