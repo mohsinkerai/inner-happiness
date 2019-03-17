@@ -49,6 +49,20 @@ namespace AMS.frontend.web.ViewComponents
                     });
                 }
 
+                if (role == "REP" && menuModel.All(mm => mm.MenuId != 26))
+                {
+                    menuModel.Add(new MenuModel
+                    {
+                        MenuId = 26,
+                        Action = ActionNames.Index,
+                        Controller = ControllerNames.Reports,
+                        SubMenu = null,
+                        Title = "Reports",
+                        Area = AreaNames.Operations,
+                        ImageClass = "flaticon-network"
+                    });
+                }
+
                 if ((role == "NOM" || role == "REC") && menuModel.All(mm => mm.MenuId != 3))
                 {
                     menuModel.Add(new MenuModel
@@ -335,41 +349,6 @@ namespace AMS.frontend.web.ViewComponents
                         Title = "Master Data",
                         Area = string.Empty,
                         ImageClass = "flaticon-list"
-                    });
-                }
-
-                if (role == "REP" && menuModel.All(mm => mm.MenuId != 26))
-                {
-                    menuModel.Add(new MenuModel
-                    {
-                        MenuId = 26,
-                        Action = string.Empty,
-                        Controller = string.Empty,
-                        SubMenu = new List<MenuModel> {
-                            //new MenuModel
-                            //{
-                            //    MenuId = 30,
-                            //    Action = ActionNames.Index,
-                            //    Controller = ControllerNames.Reports,
-                            //    SubMenu = null,
-                            //    Title = "Reports",
-                            //    Area = AreaNames.Operations,
-                            //    ImageClass = "flaticon-network"
-                            //},
-                            new MenuModel
-                            {
-                                MenuId = 31,
-                                Action = "Nominations",
-                                Controller = ControllerNames.Reports,
-                                SubMenu = null,
-                                Title = "Nominations",
-                                Area = AreaNames.Operations,
-                                ImageClass = "flaticon-network"
-                            }
-                        },
-                        Title = "Reports",
-                        Area = string.Empty,
-                        ImageClass = "flaticon-line-graph"
                     });
                 }
             }

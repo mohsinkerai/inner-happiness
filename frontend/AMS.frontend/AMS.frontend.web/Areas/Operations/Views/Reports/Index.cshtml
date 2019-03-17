@@ -1,297 +1,238 @@
-﻿@{
+﻿@model AMS.frontend.web.Areas.Operations.Models.Reports.ReportModel
+@{
     ViewBag.ModuleTitle = "Reports";
     ViewBag.PageTitle = "Reports";
 }
 
-<div class="m-content">
-
-    <!--Begin::Section-->
-
-    <div class="row">
-        <div class="col-xl-8">
-
-            <!--begin:: Widgets/Blog-->
-            <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force">
-                <div class="m-portlet__head m-portlet__head--fit">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text m--font-light">
-                                Summaries
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget28">
-                        <div class="m-widget28__pic m-portlet-fit--sides"></div>
-                        <div class="m-widget28__container">
-
-                            <!-- begin::Nav pills -->
-                            <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#menu11"><span><i class="fa flaticon-pie-chart"></i></span><span>National Shortlist</span></a>
-                                </li>
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#menu21"><span><i class="fa flaticon-file-1"></i></span><span>Regional Councils</span></a>
-                                </li>
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#menu31"><span><i class="fa flaticon-clipboard"></i></span><span>Regional ITREBs</span></a>
-                                </li>
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#menu41"><span><i class="fa flaticon-clipboard"></i></span><span>Regional CABs</span></a>
-                                </li>
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#menu51"><span><i class="fa flaticon-clipboard"></i></span><span>Local Councils</span></a>
-                                </li>
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#menu61"><span><i class="fa flaticon-clipboard"></i></span><span>Local ITREBs</span></a>
-                                </li>
-                            </ul>
-
-                            <!-- end::Nav pills -->
-                            <!-- begin::Tab Content -->
-                            <div class="m-widget28__tab tab-content">
-                                <div id="menu11" class="m-widget28__tab-container tab-pane active">
-                                    <form asp-controller="Reports" asp-action="ThreePlusOne" asp-area="Operations">
-                                        <div class="m-widget28__tab-items">
-                                            <div class="m-widget28__tab-item">
-                                                <span>Coverage</span>
-                                                <span>National Council</span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>Dashboard</span>
-                                                <span>Yes</span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <div class="form-group">
-                                                    <label class="control-label">Cycle</label>
-                                                    <select name="cycleid" asp-items="@ViewBag.Cycle" class="form-control m-select2" placeholder="Select a cycle">
-                                                        <option></option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <div class="form-group">
-                                                    <label class="control-label">Instiution</label>
-                                                    <select name="cycleid" asp-items="@ViewBag.Cycle" class="form-control m-select2" placeholder="Select a institution">
-                                                        <option></option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="m--align-right">
-                                            <div class="btn-group">
-                                                <button type="submit" class="btn btn-sm btn-success">
-                                                    Generate Report
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div id="menu21" class="m-widget28__tab-container tab-pane fade">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Project Description</span>
-                                            <span>Back-End Web Architecture</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Total Charges</span>
-                                            <span>USD 2,170.000</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>INE Number</span>
-                                            <span>D110-1234562546</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Company Name</span>
-                                            <span>SLT Back-end Solutions</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="menu31" class="m-widget28__tab-container tab-pane fade">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Total Charges</span>
-                                            <span>USD 3,450.000</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Project Description</span>
-                                            <span>Creating Back-end Components</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Company Name</span>
-                                            <span>SLT Back-end Solutions</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>INE Number</span>
-                                            <span>D510-7431562548</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="menu41" class="m-widget28__tab-container tab-pane fade">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Total Charges</span>
-                                            <span>USD 3,450.000</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Project Description</span>
-                                            <span>Creating Back-end Components</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Company Name</span>
-                                            <span>SLT Back-end Solutions</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>INE Number</span>
-                                            <span>D510-7431562548</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="menu61" class="m-widget28__tab-container tab-pane fade">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Total Charges</span>
-                                            <span>USD 3,450.000</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Project Description</span>
-                                            <span>Creating Back-end Components</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Company Name</span>
-                                            <span>SLT Back-end Solutions</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>INE Number</span>
-                                            <span>D510-7431562548</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="menu51" class="m-widget28__tab-container tab-pane fade">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Total Charges</span>
-                                            <span>USD 3,450.000</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Project Description</span>
-                                            <span>Creating Back-end Components</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>Company Name</span>
-                                            <span>SLT Back-end Solutions</span>
-                                        </div>
-                                        <div class="m-widget28__tab-item">
-                                            <span>INE Number</span>
-                                            <span>D510-7431562548</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- end::Tab Content -->
-                        </div>
-                    </div>
-                </div>
+<div class="m-portlet m-portlet--skin-dark m-portlet--bordered-semi" id="search-portlet">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <span class="m-portlet__head-icon">
+                    <i class="flaticon-map"></i>
+                </span>
+                <h3 class="m-portlet__head-text">
+                    Reporting Criteria
+                </h3>
             </div>
-
-            <!--end:: Widgets/Blog-->
         </div>
-        <div class="col-xl-4">
-
-            <!--begin:: Widgets/Blog-->
-            <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force">
-                <div class="m-portlet__head m-portlet__head--fit">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text m--font-light">
-                                Detailed
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget28">
-                        <div class="m-widget28__pic m-portlet-fit--sides"></div>
-                        <div class="m-widget28__container">
-
-                            <!-- begin::Nav pills -->
-                            <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#menu11"><span><i class="fa flaticon-pie-chart"></i></span><span>Three plus One</span></a>
-                                </li>
-                                <li class="m-widget28__nav-item nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#menu11"><span><i class="fa flaticon-pie-chart"></i></span><span>Any Other</span></a>
-                                </li>
-                            </ul>
-
-                            <!-- end::Nav pills -->
-                            <!-- begin::Tab Content -->
-                            <div class="m-widget28__tab tab-content">
-                                <div id="menu11" class="m-widget28__tab-container tab-pane active">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Company Name</span>
-                                            <span>SLT Back-end Solutions</span>
-                                        </div>
-                                        @*<div class="m-widget28__tab-item">
-                                                <span>INE Number</span>
-                                                <span>D330-1234562546</span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>Total Charges</span>
-                                                <span>USD 1,250.000</span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>Project Description</span>
-                                                <span>Creating Back-end Components</span>
-                                            </div>*@
-                                    </div>
-                                </div>
-                                <div id="menu21" class="m-widget28__tab-container tab-pane fade">
-                                    <div class="m-widget28__tab-items">
-                                        <div class="m-widget28__tab-item">
-                                            <span>Project Description</span>
-                                            <span>Back-End Web Architecture</span>
-                                        </div>
-                                        @*<div class="m-widget28__tab-item">
-                                                <span>Total Charges</span>
-                                                <span>USD 2,170.000</span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>INE Number</span>
-                                                <span>D110-1234562546</span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>Company Name</span>
-                                                <span>SLT Back-end Solutions</span>
-                                            </div>*@
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- end::Tab Content -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--end:: Widgets/Blog-->
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <a href="" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+                        <i class="la la-angle-down"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+    <div class="m-portlet__body">
+        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Reports" asp-action="GenerateReport" method="post">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Level" class="control-label">Level</label>
+                        <select asp-for="Level" class="form-control m-select2 level" placeholder="Select a Level">
+                            <option></option>
+                            <option value="National">National</option>
+                            <option value="Regional">Regional</option>
+                            <option value="Local">Local</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Layout" class="control-label">Layout</label>
+                        <select asp-for="Layout" class="form-control m-select2 layout initially-disabled" placeholder="Select a Layout">
+                            <option></option>
+                            <option value="ThreePlusOne">Three plus One</option>
+                            <option value="Running">Running</option>
+                            <option value="Summary" class="summary">Summary</option>
+                            <option value="Shortlist">Shortlist</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Category" class="control-label">Category</label>
+                        <select asp-for="Category" class="form-control m-select2 category initially-disabled" placeholder="Select a Category">
+                            <option></option>
+                            <option value="Council">Council</option>
+                            <option value="ITREB">ITREB</option>
+                            <option value="CAB">CAB</option>
+                            <option value="GRB">GRB</option>
+                        </select>
+                    </div>
+                </div><div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Institution" class="control-label"></label>
+                        <select asp-for="Institution" class="form-control m-select2 institution initially-disabled" placeholder="Select an Institution">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="PageNumber" class="control-label"></label>
+                        <input asp-for="PageNumber" type="text" class="form-control page-number initially-disabled">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="IncludeMemberNominations" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="IncludeMemberNominations" class="member-nominations initially-disabled" type="checkbox"> Include Member Nominations
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label asp-for="Remarks" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="Remarks" class="remarks initially-disabled" type="checkbox"> Include Remarks
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-lg-2">
+            <div class="form-group">
+                <label asp-for="IncludeParent" class="control-label"></label>
+                <div class="m-checkbox-inline">
+                    <label class="m-checkbox">
+                        <input asp-for="IncludeParent" type="checkbox"> Include Parent
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>*@
+            </div>
 
-    <!--End::Section-->
+            <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions--solid">
+                    <button type="submit" class="btn btn-primary btn-info initially-disabled generate">
+                        <i class="fa fa-download"></i> Generate
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
 </div>
 
 @section scripts{
-
-    @{ @(await Html.PartialAsync(PartialNames.ValidationScripts)) }
-    @{ @(await Html.PartialAsync(PartialNames.DateTimePickerScripts)) }
-
     <script type="text/javascript">
-        jQuery(document).ready(function () {
-            $("#menu-26").addClass("m-menu__item--open m-menu__item--expanded");
+        jQuery(document).ready(function() {
+
+            var x = document.getElementById("subHeader");
+            x.style.display = "none";
+
+            $(".initially-disabled").prop("disabled", true);
+
+            $(".level")
+                .change(function() {
+                    var selectedPrimaryValue = $(this).val();
+                    if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
+                        $(".level").val([]);
+                        $(".initially-disabled").prop("disabled", true);
+                    } else {
+                        $(".layout").prop("disabled", false);
+                        if (selectedPrimaryValue !== "National") {
+                            $(".summary").prop("disabled", true);
+                        } else {
+                            $(".summary").prop("disabled", false);
+                        }
+                        $(".layout")
+                            .each(function() {
+                                var placeholder = $(this).attr("placeholder");
+                                $(this)
+                                    .select2({
+                                        placeholder: placeholder,
+                                        allowClear: true
+                                    });
+                            });
+                    }
+
+                    //$(".institution").empty().append("<option></option>").prop("disabled", true);
+                    //$(".category").empty().append("<option></option>").prop("disabled", true);
+
+                    //if (selectedPrimaryValue === "National") {
+                    //    $(".institution").empty().append("<option></option>").prop("disabled", true);
+                    //    $(".category").empty().append("<option></option>").prop("disabled", true);
+
+                    //} else if (selectedPrimaryValue === "Regional") {
+                    //    $(".institution").empty().append("<option></option>").prop("disabled", true);
+                    //    $(".category").empty().append("<option></option>").prop("disabled", true);
+
+                    //} else if (selectedPrimaryValue === "Local") {
+                    //    LoadInstitutions();
+                    //}
+                });
+
+            $(".layout")
+                .change(function() {
+                    var selectedPrimaryValue = $(this).val();
+                    if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
+                        $(".layout").val([]);
+                        $(".initially-disabled").prop("disabled", true);
+                        $(".layout").prop("disabled", false);
+                    } else {
+                        $(".category").prop("disabled", false);
+                    }
+                });
+
+            $(".category")
+                .change(function() {
+                    var selectedPrimaryValue = $(this).val();
+                    if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
+                        $(".category").val([]);
+                        $(".initially-disabled").prop("disabled", true);
+                        $(".layout").prop("disabled", false);
+                        $(".category").prop("disabled", false);
+                    } else {
+                        if (selectedPrimaryValue === "CAB" || selectedPrimaryValue === "GRB" || selectedPrimaryValue === "ITREB") {
+                            EnableUtilityControls();
+                        } else if (selectedPrimaryValue === "Council") {
+                            $(".institution").prop("disabled", false);
+                            LoadNationalInstitutions();
+                        }
+                    }
+                });
+
+            $(".institution")
+                .change(function() {
+                    var selectedPrimaryValue = $(this).val();
+                    if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
+                        $(".institution").val([]);
+                        $(".initially-disabled").prop("disabled", true);
+                        $(".layout").prop("disabled", false);
+                        $(".category").prop("disabled", false);
+                        $(".institution").prop("disabled", false);
+                    } else {
+                        EnableUtilityControls();
+                    }
+                });
+
+            function LoadNationalInstitutions() {
+                LoadDropDownViaAjax("institution",
+                    "@Url.Action(ActionNames.GetNationalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    $(".category").val(),
+                    "",
+                    "");
+            }
+
+            function EnableUtilityControls() {
+                $(".page-number").prop("disabled", false);
+                if ($(".layout").val() === "ThreePlusOne" || $(".layout").val() === "Running") {
+                    $(".member-nominations").prop("disabled", false);
+                    $(".remarks").prop("disabled", false);
+                }
+                $(".generate").prop("disabled", false);
+            }
         });
     </script>
 }
