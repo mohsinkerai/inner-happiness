@@ -107,7 +107,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     model.Level == "Local" ? await GetLocalInstitutions(model.RegionalInstitution.Split("-")[0]) : null;
 
                 //var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ?? new List<InstitutionModel>();
-                var institutions = model.IncludeParent ? $"{model.RegionalInstitution.Split("-")[0]}," : string.Empty;
+                var institutions = (model.IncludeParent && model.Level == "Local") ? $"{model.RegionalInstitution.Split("-")[0]}," : string.Empty;
 
                 foreach (var item in list)
                 {
