@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="m-portlet__body">
-        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Reports" asp-action="GenerateReport" method="post">
+        <form id="mainForm" asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Reports" asp-action="@ActionNames.Index" method="post">
             <div class="form-group m-form__group row">
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -194,7 +194,7 @@
                         $(".layout").prop("disabled", false);
                         $(".category").prop("disabled", false);
                     } else {
-                        if (selectedPrimaryValue === "CAB" || selectedPrimaryValue === "GRB" || selectedPrimaryValue === "ITREB") {
+                        if (selectedPrimaryValue === "CAB" || selectedPrimaryValue === "GRB" || selectedPrimaryValue === "ITREB" || (selectedPrimaryValue === "Council" && ($(".layout").val() === "Summary" || $(".layout").val() === "Shortlist"))) {
                             EnableUtilityControls();
                         } else if (selectedPrimaryValue === "Council") {
                             $(".institution").prop("disabled", false);

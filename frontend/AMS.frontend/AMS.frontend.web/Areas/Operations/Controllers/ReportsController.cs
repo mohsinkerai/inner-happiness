@@ -91,12 +91,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GenerateReport(ReportModel model)
+        public async Task<IActionResult> Index(ReportModel model)
         {
             if (ModelState.IsValid)
             {
                 var institutions = string.Empty;
                 var includeMemberNominations = model.IncludeMemberNominations ? 1 : 0;
+                var pageNumber = model.PageNumber == null ? 0 : model.PageNumber.Value;
 
                 switch (model.Layout)
                 {
@@ -136,7 +137,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             ViewBag.MessageType = MessageTypes.Warn;
                             ViewBag.Message = "Report is currently under development.";
 
-                            break;
+                            return RedirectToAction(ActionNames.Index);
                         }
                 }
 
@@ -156,20 +157,23 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 //    institutions += $"{institution},";
                 //}
 
-                institutions = institutions.Substring(0, institutions.Length - 1);
+                if (!string.IsNullOrWhiteSpace(institutions))
+                {
+                    institutions = institutions.Substring(0, institutions.Length - 1);
+                }
 
                 using (var client = new WebClient())
                 {
                     client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
 
                     var stream = new MemoryStream(client.DownloadData(
-                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={model.PageNumber}&membernominations={includeMemberNominations}"));
+                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}"));
 
                     return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].pdf");
                 }
             }
 
-            return null;
+            return RedirectToAction(ActionNames.Index);
         }
     }
 }

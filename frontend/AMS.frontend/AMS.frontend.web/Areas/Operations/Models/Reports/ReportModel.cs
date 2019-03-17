@@ -19,7 +19,7 @@ namespace AMS.frontend.web.Areas.Operations.Models.Reports
         public string Category { get; set; }
 
         [Display(Name="Start with Page Number")]
-        public int PageNumber { get; set; }
+        public int? PageNumber { get; set; }
 
         [Display(Name = "Include Remarks")]
         public bool Remarks { get; set; }
