@@ -27,8 +27,5 @@ namespace AMS.frontend.web.Areas.Operations.Models.Reports
         [Display(Name ="Include Parent")]
         public bool IncludeParent { get; set; }
 
-        [Display(Name = "Include Member Nominations")]
-        public bool IncludeMemberNominations { get; set; }
-
     }
 }

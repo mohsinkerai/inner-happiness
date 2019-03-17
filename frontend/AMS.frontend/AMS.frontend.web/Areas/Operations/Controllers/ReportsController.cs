@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AMS.frontend.web.Extensions;
 using Microsoft.Extensions.Logging;
@@ -96,7 +97,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (ModelState.IsValid)
             {
                 var institutions = string.Empty;
-                var includeMemberNominations = model.IncludeMemberNominations ? 1 : 0;
+                var includeMemberNominations = model.Layout == "Running" ? 0 : 1;
                 var pageNumber = model.PageNumber == null ? 0 : model.PageNumber.Value;
 
                 switch (model.Layout)
@@ -162,9 +163,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     institutions = institutions.Substring(0, institutions.Length - 1);
                 }
 
-                using (var client = new WebClient())
+                using (var client = new CustomWebClient())
                 {
                     client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                    client.Timeout = 600 * 60 * 1000;
 
                     var stream = new MemoryStream(client.DownloadData(
                         $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}"));
@@ -174,6 +176,19 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             return RedirectToAction(ActionNames.Index);
+        }
+    }
+
+    class CustomWebClient : WebClient
+    {
+        public int Timeout { get; set; }
+
+        protected override WebRequest GetWebRequest(Uri uri)
+        {
+            WebRequest lWebRequest = base.GetWebRequest(uri);
+            lWebRequest.Timeout = Timeout;
+            ((HttpWebRequest)lWebRequest).ReadWriteTimeout = Timeout;
+            return lWebRequest;
         }
     }
 }
