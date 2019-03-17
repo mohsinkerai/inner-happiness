@@ -50,21 +50,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
         }
 
-        public async Task<JsonResult> GetNationalInstitutions(string level)
+        public async Task<List<SelectListItem>> GetNationalInstitutions(string level)
         {
             //level would serve as category
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetNationalInstitutions();
-            
-            return new JsonResult(list);
+
+            return list;
         }
 
 
-        public async Task<List<SelectListItem>> GetRegionalInstitutions()
+        public async Task<List<SelectListItem>> GetRegionalInstitutions(string level)
         {
+            //level would serve as category
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalInstitutions();
-            
+
             return list;
         }
 
@@ -72,7 +73,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId);
-            
+
             return list;
         }
 
@@ -89,13 +90,13 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     case "ThreePlusOne":
                         {
-                            institutions = GetInstitutions(institutions);
+                            institutions = await GetInstitutions(institutions);
                             includeMemberNominations = 1;
                             break;
                         }
                     case "Running":
                         {
-                            institutions = GetInstitutions(institutions);
+                            institutions = await GetInstitutions(institutions);
                             includeMemberNominations = 0;
                             break;
                         }
@@ -147,7 +148,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             return RedirectToAction(ActionNames.Index);
 
-            string GetInstitutions(string institutions)
+            async Task<string> GetInstitutions(string institutions)
             {
                 if (model.Level == "National")
                 {
@@ -166,6 +167,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     else if (model.Category == "Council")
                     {
                         institutions = $"{model.Institution},";
+                    }
+                }
+                else if (model.Level == "Regional")
+                {
+                    if (!model.LocalsOnly)
+                    {
+                        institutions = $"{model.Institution},";
+                    }
+
+                    if (model.IncludeLocals)
+                    {
+                        var locals = await GetLocalInstitutions(model.Institution);
+                        foreach (var local in locals)
+                        {
+                            institutions += $"{local.Value},";
+                        }
                     }
                 }
 

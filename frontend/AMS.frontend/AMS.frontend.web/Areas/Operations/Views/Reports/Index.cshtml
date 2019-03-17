@@ -59,8 +59,8 @@
                             <option></option>
                             <option value="Council">Council</option>
                             <option value="ITREB">ITREB</option>
-                            <option value="CAB">CAB</option>
-                            <option value="GRB">GRB</option>
+                            <option class="cab" value="CAB">CAB</option>
+                            <option class="grb" value="GRB">GRB</option>
                         </select>
                     </div>
                 </div><div class="col-lg-3">
@@ -75,6 +75,28 @@
                     <div class="form-group">
                         <label asp-for="PageNumber" class="control-label"></label>
                         <input asp-for="PageNumber" type="text" class="form-control page-number initially-disabled">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label asp-for="IncludeLocals" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="IncludeLocals" class="include-locals initially-disabled" type="checkbox"> Include Locals
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label asp-for="LocalsOnly" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="LocalsOnly" class="locals-only initially-disabled" type="checkbox"> Locals Only
+                                <span></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-2">
@@ -127,15 +149,30 @@
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".level").val([]);
-                        $(".initially-disabled").prop("disabled", true);
+                        ClearSelections();
                     } else {
                         $(".layout").prop("disabled", false);
                         if (selectedPrimaryValue !== "National") {
                             $(".summary").prop("disabled", true);
+                            $(".grb").prop("disabled", true);
+                            if (selectedPrimaryValue !== "Regional") {
+                                $(".cab").prop("disabled", true);
+                            }
                         } else {
                             $(".summary").prop("disabled", false);
+                            $(".grb").prop("disabled", false);
+                            $(".cab").prop("disabled", false);
                         }
                         $(".layout")
+                            .each(function() {
+                                var placeholder = $(this).attr("placeholder");
+                                $(this)
+                                    .select2({
+                                        placeholder: placeholder,
+                                        allowClear: true
+                                    });
+                            });
+                        $(".category")
                             .each(function() {
                                 var placeholder = $(this).attr("placeholder");
                                 $(this)
@@ -167,7 +204,7 @@
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".layout").val([]);
-                        $(".initially-disabled").prop("disabled", true);
+                        ClearSelections();
                         $(".layout").prop("disabled", false);
                     } else {
                         $(".category").prop("disabled", false);
@@ -179,15 +216,28 @@
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".category").val([]);
-                        $(".initially-disabled").prop("disabled", true);
+                        ClearSelections();
                         $(".layout").prop("disabled", false);
                         $(".category").prop("disabled", false);
                     } else {
-                        if (selectedPrimaryValue === "CAB" || selectedPrimaryValue === "GRB" || selectedPrimaryValue === "ITREB" || (selectedPrimaryValue === "Council" && ($(".layout").val() === "Summary" || $(".layout").val() === "Shortlist"))) {
-                            EnableUtilityControls();
-                        } else if (selectedPrimaryValue === "Council") {
-                            $(".institution").prop("disabled", false);
-                            LoadNationalInstitutions();
+                        if ($(".level").val() == "National") {
+                            if (selectedPrimaryValue === "CAB" ||
+                                selectedPrimaryValue === "GRB" ||
+                                selectedPrimaryValue === "ITREB" ||
+                                (selectedPrimaryValue === "Council" &&
+                                    ($(".layout").val() === "Summary" || $(".layout").val() === "Shortlist"))) {
+                                EnableUtilityControls();
+                            } else if (selectedPrimaryValue === "Council") {
+                                $(".institution").prop("disabled", false);
+                                LoadNationalInstitutions();
+                            }
+                        } else if ($(".level").val() == "Regional") {
+                            if (selectedPrimaryValue === "Council" && $(".layout").val() === "Shortlist") {
+                                EnableUtilityControls();
+                            } else {
+                                $(".institution").prop("disabled", false);
+                                LoadRegionalInstitutions();
+                            }
                         }
                     }
                 });
@@ -197,12 +247,23 @@
                     var selectedPrimaryValue = $(this).val();
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".institution").val([]);
-                        $(".initially-disabled").prop("disabled", true);
+                        ClearSelections();
                         $(".layout").prop("disabled", false);
                         $(".category").prop("disabled", false);
                         $(".institution").prop("disabled", false);
                     } else {
                         EnableUtilityControls();
+                    }
+                });
+
+            $(".include-locals")
+                .change(function() {
+                    var selectedPrimaryValue = $(this).val();
+                    if (selectedPrimaryValue) {
+                        $(".locals-only").prop("disabled", false);
+                    } else {
+                        $(".locals-only").val("");
+                        $(".locals-only").prop("disabled", true);
                     }
                 });
 
@@ -214,13 +275,35 @@
                     "");
             }
 
+            function LoadRegionalInstitutions() {
+                LoadDropDownViaAjax("institution",
+                    "@Url.Action(ActionNames.GetRegionalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    $(".category").val(),
+                    "",
+                    "");
+            }
+
             function EnableUtilityControls() {
                 $(".page-number").prop("disabled", false);
                 if ($(".layout").val() === "ThreePlusOne" || $(".layout").val() === "Running") {
                     $(".member-nominations").prop("disabled", false);
                     $(".remarks").prop("disabled", false);
                 }
+                if ($(".level").val() == "Regional" && ($(".category").val() !== "CAB") && ($(".layout").val() === "Running" || $(".layout").val() === "Shortlist")) {
+                    //show local only and include local
+                    $(".include-locals").prop("disabled", false);
+                }
                 $(".generate").prop("disabled", false);
+            }
+
+            function ClearSelections() {
+                $(".initially-disabled").prop("disabled", true);
+                $(".layout").val("");
+                $(".category").val("");
+                $(".institution").val("");
+                $(".page-number").val("");
+                $(".include-locals").val("");
+                $(".remarks").val("");
             }
         });
     </script>

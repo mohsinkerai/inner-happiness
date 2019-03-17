@@ -24,8 +24,11 @@ namespace AMS.frontend.web.Areas.Operations.Models.Reports
         [Display(Name = "Include Remarks")]
         public bool Remarks { get; set; }
 
-        [Display(Name ="Include Parent")]
-        public bool IncludeParent { get; set; }
+        [Display(Name = "Include Locals")]
+        public bool IncludeLocals { get; set; }
+
+        [Display(Name = "Locals Only")]
+        public bool LocalsOnly { get; set; }
 
     }
 }
