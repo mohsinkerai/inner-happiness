@@ -82,12 +82,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId);
-
-            foreach (var item in list)
-            {
-                item.Value = item.Value + "-" + item.Text;
-            }
-
+            
             return list;
         }
 
