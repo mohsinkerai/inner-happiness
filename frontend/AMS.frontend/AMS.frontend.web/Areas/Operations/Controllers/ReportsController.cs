@@ -55,12 +55,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             //level would serve as category
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetNationalInstitutions();
-
-            foreach (var item in list)
-            {
-                item.Value = item.Value + "-" + item.Text;
-            }
-
+            
             return new JsonResult(list);
         }
 
@@ -69,12 +64,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         {
             var list = await new RestfulClient(_logger,
                         HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetRegionalInstitutions();
-
-            foreach (var item in list)
-            {
-                item.Value = item.Value + "-" + item.Text;
-            }
-
+            
             return list;
         }
 
@@ -147,8 +137,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
                     client.Timeout = 600 * 60 * 1000;
 
-                    var stream = new MemoryStream(client.DownloadData(
-                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}"));
+                    var url =
+                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}";
+                    var stream = new MemoryStream(client.DownloadData(url));
 
                     return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].pdf");
                 }
