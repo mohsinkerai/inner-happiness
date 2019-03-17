@@ -136,7 +136,4 @@ public class Person extends BaseEntity {
   private String genMajorAreaOfStudy;
 
   private String remarks;
-
-  private String natureOfBusinessOther;
-
 }
