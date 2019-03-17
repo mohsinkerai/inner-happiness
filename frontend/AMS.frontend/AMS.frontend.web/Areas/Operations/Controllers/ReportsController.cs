@@ -97,37 +97,21 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (ModelState.IsValid)
             {
                 var institutions = string.Empty;
-                var includeMemberNominations = model.Layout == "Running" ? 0 : 1;
+                var includeMemberNominations = 0;
                 var pageNumber = model.PageNumber == null ? 0 : model.PageNumber.Value;
 
                 switch (model.Layout)
                 {
                     case "ThreePlusOne":
                         {
-                            if (model.Level == "National")
-                            {
-                                if (model.Category == "CAB")
-                                {
-                                    institutions = "1,";
-                                }
-                                else if (model.Category == "GRB")
-                                {
-                                    institutions = "11,";
-                                }
-                                else if (model.Category == "ITREB")
-                                {
-                                    institutions = "3,";
-                                }
-                                else if (model.Category == "Council")
-                                {
-                                    institutions = $"{model.Institution},";
-                                }
-                            }
-
+                            institutions = GetInstitutions(institutions);
+                            includeMemberNominations = 1;
                             break;
                         }
                     case "Running":
                         {
+                            institutions = GetInstitutions(institutions);
+                            includeMemberNominations = 0;
                             break;
                         }
                     default:
@@ -176,6 +160,31 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             return RedirectToAction(ActionNames.Index);
+
+            string GetInstitutions(string institutions)
+            {
+                if (model.Level == "National")
+                {
+                    if (model.Category == "CAB")
+                    {
+                        institutions = "1,";
+                    }
+                    else if (model.Category == "GRB")
+                    {
+                        institutions = "11,";
+                    }
+                    else if (model.Category == "ITREB")
+                    {
+                        institutions = "3,";
+                    }
+                    else if (model.Category == "Council")
+                    {
+                        institutions = $"{model.Institution},";
+                    }
+                }
+
+                return institutions;
+            }
         }
     }
 
