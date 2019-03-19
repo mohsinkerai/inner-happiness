@@ -32,8 +32,9 @@ public class InstitutionController extends BaseController<Institution> {
   @ResponseStatus(HttpStatus.OK)
   @RequestMapping(value = "/search/findByLevelType", method = RequestMethod.GET)
   public List<Institution> findByLevelType(
+    @RequestParam(required = false, value = "category") String category,
     @RequestParam("levelTypeId") Long levelTypeId) {
-    return institutionService.findByLevelType(levelTypeId);
+    return institutionService.findByLevelType(category, levelTypeId);
   }
 
   @ResponseStatus(HttpStatus.OK)

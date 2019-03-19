@@ -32,11 +32,12 @@ public class InstitutionService extends BaseService<Institution> {
     return repository.findByLevelId(levelId);
   }
 
-  public List<Institution> findByLevelType(Long levelType) {
+  public List<Institution> findByLevelType(String category, Long levelType) {
     Set<Level> levels = levelService.findByLevelTypeId(levelType.intValue());
     return levels
       .stream()
       .flatMap((level) -> repository.findByLevelId(level.getId()).stream())
+      .filter(c -> category == null || category.equals(c))
       .collect(Collectors.toList());
   }
 
