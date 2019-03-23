@@ -110,6 +110,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Recommendation" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="Recommendation" class="recommendations initially-disabled" type="checkbox"> Include Recommendations
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 @*<div class="col-lg-2">
             <div class="form-group">
                 <label asp-for="IncludeParent" class="control-label"></label>
@@ -288,6 +299,7 @@
                 if ($(".layout").val() === "ThreePlusOne" || $(".layout").val() === "Running") {
                     $(".member-nominations").prop("disabled", false);
                     $(".remarks").prop("disabled", false);
+                    $(".recommendations").prop("disabled", false);
                 }
                 if ($(".level").val() == "Regional" && ($(".category").val() !== "CAB")) {
                     //show local only and include local
@@ -304,6 +316,7 @@
                 $(".page-number").val("");
                 $(".include-locals").val("");
                 $(".remarks").val("");
+                $(".recommendations").val("");
             }
         });
     </script>
