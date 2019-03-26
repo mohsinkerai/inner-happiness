@@ -112,7 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (b)
                 {
-                    s += $" ";
+                    s += $" WHERE";
                 }
                 else
                 {
@@ -124,12 +124,12 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var query =
-                "SELECT DISTINCT(p.id), '' as institution_name, p.cnic, CONCAT(p.first_name, ' ', p.fathers_name, ' ', p.family_name) AS full_name, p.mobile_phone, CONCAT(ed.NAME, \", \", ei.NAME, \", \", json_extract(p.educations,'$[0].fromYear'),\" - \", json_extract(p.educations,'$[0].toYear')) AS latest_education, CONCAT(TRIM(BOTH '\"' from json_extract(p.employments,'$[0].designation')),\", \",TRIM(BOTH '\"' from json_extract(p.employments,'$[0].nameOfOrganization'))) as latest_employment FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id LEFT OUTER JOIN educational_degree AS ed ON json_extract(p.educations,'$[0].nameOfDegree') = ed.id LEFT OUTER JOIN educational_institution AS ei ON json_extract(p.educations,'$[0].institution') = ei.id WHERE";
+                "SELECT DISTINCT(p.id), '' as institution_name, p.cnic, CONCAT(ifnull(p.first_name,''), ' ', ifnull(p.fathers_name,''), ' ', ifnull(p.family_name,'')) AS full_name, p.mobile_phone, CONCAT(ed.NAME, \", \", ei.NAME, \", \", json_extract(p.educations,'$[0].fromYear'),\" - \", json_extract(p.educations,'$[0].toYear')) AS latest_education, CONCAT(TRIM(BOTH '\"' from json_extract(p.employments,'$[0].designation')),\", \",TRIM(BOTH '\"' from json_extract(p.employments,'$[0].nameOfOrganization'))) as latest_employment FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id LEFT OUTER JOIN educational_degree AS ed ON json_extract(p.educations,'$[0].nameOfDegree') = ed.id LEFT OUTER JOIN educational_institution AS ei ON json_extract(p.educations,'$[0].institution') = ei.id";
 
             if (searchCriteria.ShowRecommendation)
             {
                 query =
-                    $"SELECT b.id, b.cnic, CONCAT(p.first_name, ' ', p.fathers_name, ' ', p.family_name) AS full_name, b.mobile_phone, b.latest_education, b.latest_employment, CONCAT(pos.NAME, ' - ', l.NAME) as institution_name FROM({query}";
+                    $"SELECT b.id, b.cnic, b.full_name, b.mobile_phone, b.latest_education, b.latest_employment, CONCAT(pos.NAME, ' - ', l.NAME) as institution_name FROM({query}";
             }
 
             var isFirstOne = true;
