@@ -121,6 +121,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="OfficeBearersOnly" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="OfficeBearersOnly" class="officebearersonly initially-disabled" type="checkbox"> Office Bearers Only
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 @*<div class="col-lg-2">
             <div class="form-group">
                 <label asp-for="IncludeParent" class="control-label"></label>
@@ -300,6 +311,7 @@
                     $(".member-nominations").prop("disabled", false);
                     $(".remarks").prop("disabled", false);
                     $(".recommendations").prop("disabled", false);
+                    $(".officebearersonly").prop("disabled", false);
                 }
                 if ($(".level").val() == "Regional" && ($(".category").val() !== "CAB")) {
                     //show local only and include local
@@ -317,6 +329,7 @@
                 $(".include-locals").val("");
                 $(".remarks").val("");
                 $(".recommendations").val("");
+                $(".officebearersonly").val("");
             }
         });
     </script>

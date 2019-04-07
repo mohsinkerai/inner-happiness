@@ -33,5 +33,8 @@ namespace AMS.frontend.web.Areas.Operations.Models.Reports
         [Display(Name = "Locals Only")]
         public bool LocalsOnly { get; set; }
 
+        [Display(Name = "Office Bearers Only")]
+        public bool OfficeBearersOnly { get; set; }
+
     }
 }

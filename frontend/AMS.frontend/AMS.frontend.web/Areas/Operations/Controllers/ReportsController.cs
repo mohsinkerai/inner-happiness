@@ -44,7 +44,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
 
                 var stream = new MemoryStream(client.DownloadData(
-                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}&showremarks=false&pagenumber=1&membernominations=1&showrecommendation=true"));
+                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}&showremarks=false&pagenumber=1&membernominations=1&showrecommendation=true&officebearersonly=false"));
 
                 return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
             }
@@ -139,7 +139,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     client.Timeout = 600 * 60 * 1000;
 
                     var url =
-                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}&showrecommendation={model.Recommendation}";
+                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}&showrecommendation={model.Recommendation}&officebearersonly={model.OfficeBearersOnly}";
                     var stream = new MemoryStream(client.DownloadData(url));
 
                     return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].pdf");
