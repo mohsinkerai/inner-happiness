@@ -112,7 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (b)
                 {
-                    s += $" WHERE";
+                    s += $" WHERE ";
                 }
                 else
                 {
