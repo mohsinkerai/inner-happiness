@@ -124,15 +124,29 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].docx");
                             }
                         }
+                    case "Shortlist":
+                        {
+                            if (model.Level == "National")
+                            {
+                                using (var client = new CustomWebClient())
+                                {
+                                    client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                                    client.Timeout = 600 * 60 * 1000;
+
+                                    var url =
+                                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Shortlist.docx";
+                                    var stream = new MemoryStream(client.DownloadData(url));
+
+                                    return File(stream, "application/pdf",
+                                        $"{model.Layout}[{DateTime.Now.ToString()}].docx");
+                                }
+                            }
+
+                            return NotSupportedReport();
+                        }
                     default:
                         {
-                            TempData["MessageType"] = MessageTypes.Warn;
-                            TempData["Message"] = "Report is currently under development.";
-
-                            ViewBag.MessageType = MessageTypes.Warn;
-                            ViewBag.Message = "Report is currently under development.";
-
-                            return RedirectToAction(ActionNames.Index);
+                            return NotSupportedReport();
                         }
                 }
 
@@ -275,6 +289,17 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
 
                 return institutions;
+            }
+
+            IActionResult NotSupportedReport()
+            {
+                TempData["MessageType"] = MessageTypes.Warn;
+                TempData["Message"] = "Report is currently under development.";
+
+                ViewBag.MessageType = MessageTypes.Warn;
+                ViewBag.Message = "Report is currently under development.";
+
+                return RedirectToAction(ActionNames.Index);
             }
         }
     }
