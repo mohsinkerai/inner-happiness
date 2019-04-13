@@ -20,7 +20,7 @@
         public const string GetInstitutionTypes = "GetInstitutionTypes";
         public const string GetJamatkhana = "GetJamatkhana";
         public const string GetLocalCouncil = "GetLocalCouncil";
-        public const string GetLocalInstitutions = "GetLocalInstitutions";
+        public const string GetLocalInstitutions = "GetChildInstitutions";
         public const string GetRegionalInstitutions = "GetRegionalInstitutions";
         public const string Index = "Index";
         public const string LanguageListAdd = "LanguageListAdd";

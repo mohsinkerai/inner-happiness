@@ -69,10 +69,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return list;
         }
 
-        public async Task<List<SelectListItem>> GetLocalInstitutions(string regionId)
+        public async Task<List<SelectListItem>> GetChildInstitutions(string regionId, bool sortByCodeNc = false)
         {
             var list = await new RestfulClient(_logger,
-                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId);
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId, sortByCodeNc);
 
             return list;
         }
@@ -100,6 +100,22 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             includeMemberNominations = 0;
                             break;
                         }
+                    case "Summary":
+                        {
+                            using (var client = new CustomWebClient())
+                            {
+                                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                                client.Timeout = 600 * 60 * 1000;
+
+                                var url =
+                                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Summary.docx";
+                                var stream = new MemoryStream(client.DownloadData(url));
+
+                                return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].docx");
+                            }
+
+                            break;
+                        }
                     default:
                         {
                             TempData["MessageType"] = MessageTypes.Warn;
@@ -114,7 +130,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                 //var list = model.Level == "National" ? await GetNationalInstitutions() :
                 //    model.Level == "Regional" ? await GetRegionalInstitutions() :
-                //    model.Level == "Local" ? await GetLocalInstitutions(model.Institution.Split("-")[0]) : null;
+                //    model.Level == "Local" ? await GetChildInstitutions(model.Institution.Split("-")[0]) : null;
 
                 ////var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ?? new List<InstitutionModel>();
                 //var institutions = (model.IncludeParent && model.Level == "Local") ? $"{model.Institution.Split("-")[0]}," : string.Empty;
@@ -171,17 +187,47 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
                 else if (model.Level == "Regional")
                 {
-                    if (!model.LocalsOnly)
+                    if (!string.IsNullOrWhiteSpace(model.Institution))
                     {
-                        institutions = $"{model.Institution},";
-                    }
-
-                    if (model.IncludeLocals)
-                    {
-                        var locals = await GetLocalInstitutions(model.Institution);
-                        foreach (var local in locals)
+                        if (!model.LocalsOnly)
                         {
-                            institutions += $"{local.Value},";
+                            institutions = $"{model.Institution},";
+                        }
+
+                        if (model.IncludeLocals)
+                        {
+                            var locals = await GetChildInstitutions(model.Institution);
+                            foreach (var local in locals)
+                            {
+                                institutions += $"{local.Value},";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (model.Category == "Council")
+                        {
+                            var regions = await GetChildInstitutions("8", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+                        }
+                        else if (model.Category == "ITREB")
+                        {
+                            var regions = await GetChildInstitutions("3", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+                        }
+                        else if (model.Category == "CAB")
+                        {
+                            var regions = await GetChildInstitutions("1", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
                         }
                     }
                 }
