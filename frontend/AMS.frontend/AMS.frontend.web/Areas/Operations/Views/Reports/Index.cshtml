@@ -264,6 +264,16 @@
                                 LoadRegionalInstitutions();
                                 EnableUtilityControls();
                             }
+                        } else if ($(".level").val() == "Local") {
+                            if (selectedPrimaryValue === "Council" && $(".layout").val() === "Shortlist") {
+                                EnableUtilityControls();
+                                $(".include-locals").prop("disabled", true);
+                            } else {
+                                $(".institution").prop("disabled", false);
+                                LoadLocalInstitutions();
+                                EnableUtilityControls();
+                                $(".include-locals").prop("disabled", true);
+                            }
                         }
                     }
                 });
@@ -304,6 +314,14 @@
             function LoadRegionalInstitutions() {
                 LoadDropDownViaAjax("institution",
                     "@Url.Action(ActionNames.GetRegionalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    $(".category").val(),
+                    "",
+                    "");
+            }
+
+            function LoadLocalInstitutions() {
+                LoadDropDownViaAjax("institution",
+                    "@Url.Action(ActionNames.GetLocalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
                     $(".category").val(),
                     "",
                     "");

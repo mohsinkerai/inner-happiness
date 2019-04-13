@@ -60,6 +60,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
 
+        public async Task<List<SelectListItem>> GetLocalInstitutions(string level)
+        {
+            //level would serve as category
+            var list = await new RestfulClient(_logger,
+                HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
+
+            return list;
+        }
+
+
         public async Task<List<SelectListItem>> GetRegionalInstitutions(string level)
         {
             //level would serve as category
@@ -113,8 +123,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                                 return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].docx");
                             }
-
-                            break;
                         }
                     default:
                         {
@@ -227,6 +235,40 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             foreach (var region in regions)
                             {
                                 institutions += $"{region.Value},";
+                            }
+                        }
+                    }
+                }
+                else if (model.Level == "Local")
+                {
+                    if (!string.IsNullOrWhiteSpace(model.Institution))
+                    {
+                        institutions = $"{model.Institution},";
+                    }
+                    else
+                    {
+                        if (model.Category == "Council")
+                        {
+                            var regions = await GetChildInstitutions("8", true);
+                            foreach (var region in regions)
+                            {
+                                var locals = await GetChildInstitutions(region.Value, true);
+                                foreach (var local in locals)
+                                {
+                                    institutions += $"{local.Value},";
+                                }
+                            }
+                        }
+                        else if (model.Category == "ITREB")
+                        {
+                            var regions = await GetChildInstitutions("3", true);
+                            foreach (var region in regions)
+                            {
+                                var locals = await GetChildInstitutions(region.Value, true);
+                                foreach (var local in locals)
+                                {
+                                    institutions += $"{local.Value},";
+                                }
                             }
                         }
                     }
