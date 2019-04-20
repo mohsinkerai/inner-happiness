@@ -1,5 +1,5 @@
 # inner-happiness
-A Collobrative Project for Inner Happiness.
+A Collobrative Project for Inner Happiness
 
 Developers
 1. Naveed Tejani
