@@ -46,4 +46,9 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+  <changeSet id="area-of-origin-05" author="mohsin.kerai">
+    <addColumn tableName="area_of_origin">
+      <column name="short_code" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
