@@ -60,4 +60,9 @@
       <column name="updated_by" type="varchar(255)"></column>
     </addColumn>
   </changeSet>
+  <changeSet id="city-08" author="mohsin.kerai">
+    <addColumn tableName="city">
+      <column name="short_code" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
