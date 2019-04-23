@@ -1,7 +1,7 @@
 {
-  //"connectionString": "Data Source=34.250.113.139;Initial Catalog=inner_satisfaction;Persist Security Info=True;User ID=amsal;Password=hp",
-  "connectionString": "Server=127.0.0.1;Database=tejani;Uid=root;SslMode=none;"
+  //"connectionString": "Data Source=34.250.113.139;Initial Catalog=inner-satisfaction-prod;Persist Security Info=True;User ID=ams;Password=FVr8iuzU1kEPNkSsYt2V"
+  //"connectionString": "Server=127.0.0.1;Database=tejani;Uid=root;SslMode=none;"
   //"Data Source=localhost, 15789;Initial Catalog=AliAppointments;Persist Security Info=True;User ID=sa;Password=jarvis-786",
   //"DefaultConnection": "Data Source=34.250.113.139;Initial Catalog=inner_satisfaction;Persist Security Info=True;User ID=amsal;Password=hp"
-  //"connectionString": "Server=127.0.0.1;Database=inner_satisfaction99;Uid=root;SslMode=none;"
+  "connectionString": "Server=127.0.0.1;Database=inner_satisfaction99;Uid=root;SslMode=none;"
 }

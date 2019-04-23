@@ -112,7 +112,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             {
                 if (b)
                 {
-                    s += $" ";
+                    s += $" WHERE ";
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             }
 
             var query =
-                "SELECT DISTINCT(p.id), '' as institution_name, p.cnic, p.full_name, p.mobile_phone, CONCAT(ed.NAME, \", \", ei.NAME, \", \", json_extract(p.educations,'$[0].fromYear'),\" - \", json_extract(p.educations,'$[0].toYear')) AS latest_education, CONCAT(TRIM(BOTH '\"' from json_extract(p.employments,'$[0].designation')),\", \",TRIM(BOTH '\"' from json_extract(p.employments,'$[0].nameOfOrganization'))) as latest_employment FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id LEFT OUTER JOIN educational_degree AS ed ON json_extract(p.educations,'$[0].nameOfDegree') = ed.id LEFT OUTER JOIN educational_institution AS ei ON json_extract(p.educations,'$[0].institution') = ei.id WHERE";
+                "SELECT DISTINCT(p.id), '' as institution_name, p.cnic, CONCAT(ifnull(p.first_name,''), ' ', ifnull(p.fathers_name,''), ' ', ifnull(p.family_name,'')) AS full_name, p.mobile_phone, CONCAT(ed.NAME, \", \", ei.NAME, \", \", json_extract(p.educations,'$[0].fromYear'),\" - \", json_extract(p.educations,'$[0].toYear')) AS latest_education, CONCAT(TRIM(BOTH '\"' from json_extract(p.employments,'$[0].designation')),\", \",TRIM(BOTH '\"' from json_extract(p.employments,'$[0].nameOfOrganization'))) as latest_employment FROM person AS p LEFT OUTER JOIN person_skill AS ps ON p.id = ps.person_id LEFT OUTER JOIN person_professional_membership AS ppm ON p.id = ppm.person_id LEFT OUTER JOIN person_field_of_expertise AS pfoe ON p.id = pfoe.person_id LEFT OUTER JOIN educational_degree AS ed ON json_extract(p.educations,'$[0].nameOfDegree') = ed.id LEFT OUTER JOIN educational_institution AS ei ON json_extract(p.educations,'$[0].institution') = ei.id";
 
             if (searchCriteria.ShowRecommendation)
             {
@@ -137,7 +137,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (!string.IsNullOrWhiteSpace(searchCriteria.Name))
             {
                 query = Query(searchCriteria, ref isFirstOne, ref query);
-                query += $"p.first_name LIKE '%{searchCriteria.Name}%' OR p.fathers_name LIKE '%{searchCriteria.Name}%' OR p.family_name LIKE '%{searchCriteria.Name}%'";
+                query += $"(p.first_name LIKE '%{searchCriteria.Name}%' OR p.fathers_name LIKE '%{searchCriteria.Name}%' OR p.family_name LIKE '%{searchCriteria.Name}%')";
             }
 
             if (searchCriteria.RegionalCouncil != null && searchCriteria.RegionalCouncil.Count > 0)

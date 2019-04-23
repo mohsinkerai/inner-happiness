@@ -44,7 +44,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
 
                 var stream = new MemoryStream(client.DownloadData(
-                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}&showremarks=false&pagenumber=1&membernominations=1"));
+                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}&showremarks=false&pagenumber=1&membernominations=1&showrecommendation=true&officebearersonly=false"));
 
                 return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
             }
@@ -60,6 +60,16 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
         }
 
 
+        public async Task<List<SelectListItem>> GetLocalInstitutions(string level)
+        {
+            //level would serve as category
+            var list = await new RestfulClient(_logger,
+                HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
+
+            return list;
+        }
+
+
         public async Task<List<SelectListItem>> GetRegionalInstitutions(string level)
         {
             //level would serve as category
@@ -69,10 +79,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return list;
         }
 
-        public async Task<List<SelectListItem>> GetLocalInstitutions(string regionId)
+        public async Task<List<SelectListItem>> GetChildInstitutions(string regionId, bool sortByCodeNc = false)
         {
             var list = await new RestfulClient(_logger,
-                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId);
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId, sortByCodeNc);
 
             return list;
         }
@@ -100,21 +110,49 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             includeMemberNominations = 0;
                             break;
                         }
+                    case "Summary":
+                        {
+                            using (var client = new CustomWebClient())
+                            {
+                                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                                client.Timeout = 600 * 60 * 1000;
+
+                                var url =
+                                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Summary.docx";
+                                var stream = new MemoryStream(client.DownloadData(url));
+
+                                return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].docx");
+                            }
+                        }
+                    case "Shortlist":
+                        {
+                            if (model.Level == "National")
+                            {
+                                using (var client = new CustomWebClient())
+                                {
+                                    client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                                    client.Timeout = 600 * 60 * 1000;
+
+                                    var url =
+                                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Shortlist.docx";
+                                    var stream = new MemoryStream(client.DownloadData(url));
+
+                                    return File(stream, "application/pdf",
+                                        $"{model.Layout}[{DateTime.Now.ToString()}].docx");
+                                }
+                            }
+
+                            return NotSupportedReport();
+                        }
                     default:
                         {
-                            TempData["MessageType"] = MessageTypes.Warn;
-                            TempData["Message"] = "Report is currently under development.";
-
-                            ViewBag.MessageType = MessageTypes.Warn;
-                            ViewBag.Message = "Report is currently under development.";
-
-                            return RedirectToAction(ActionNames.Index);
+                            return NotSupportedReport();
                         }
                 }
 
                 //var list = model.Level == "National" ? await GetNationalInstitutions() :
                 //    model.Level == "Regional" ? await GetRegionalInstitutions() :
-                //    model.Level == "Local" ? await GetLocalInstitutions(model.Institution.Split("-")[0]) : null;
+                //    model.Level == "Local" ? await GetChildInstitutions(model.Institution.Split("-")[0]) : null;
 
                 ////var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ?? new List<InstitutionModel>();
                 //var institutions = (model.IncludeParent && model.Level == "Local") ? $"{model.Institution.Split("-")[0]}," : string.Empty;
@@ -139,7 +177,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     client.Timeout = 600 * 60 * 1000;
 
                     var url =
-                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}";
+                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}&showrecommendation={model.Recommendation}&officebearersonly={model.OfficeBearersOnly}";
                     var stream = new MemoryStream(client.DownloadData(url));
 
                     return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].pdf");
@@ -171,22 +209,97 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 }
                 else if (model.Level == "Regional")
                 {
-                    if (!model.LocalsOnly)
+                    if (!string.IsNullOrWhiteSpace(model.Institution))
+                    {
+                        if (!model.LocalsOnly)
+                        {
+                            institutions = $"{model.Institution},";
+                        }
+
+                        if (model.IncludeLocals)
+                        {
+                            var locals = await GetChildInstitutions(model.Institution);
+                            foreach (var local in locals)
+                            {
+                                institutions += $"{local.Value},";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (model.Category == "Council")
+                        {
+                            var regions = await GetChildInstitutions("8", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+                        }
+                        else if (model.Category == "ITREB")
+                        {
+                            var regions = await GetChildInstitutions("3", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+                        }
+                        else if (model.Category == "CAB")
+                        {
+                            var regions = await GetChildInstitutions("1", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+                        }
+                    }
+                }
+                else if (model.Level == "Local")
+                {
+                    if (!string.IsNullOrWhiteSpace(model.Institution))
                     {
                         institutions = $"{model.Institution},";
                     }
-
-                    if (model.IncludeLocals)
+                    else
                     {
-                        var locals = await GetLocalInstitutions(model.Institution);
-                        foreach (var local in locals)
+                        if (model.Category == "Council")
                         {
-                            institutions += $"{local.Value},";
+                            var regions = await GetChildInstitutions("8", true);
+                            foreach (var region in regions)
+                            {
+                                var locals = await GetChildInstitutions(region.Value, true);
+                                foreach (var local in locals)
+                                {
+                                    institutions += $"{local.Value},";
+                                }
+                            }
+                        }
+                        else if (model.Category == "ITREB")
+                        {
+                            var regions = await GetChildInstitutions("3", true);
+                            foreach (var region in regions)
+                            {
+                                var locals = await GetChildInstitutions(region.Value, true);
+                                foreach (var local in locals)
+                                {
+                                    institutions += $"{local.Value},";
+                                }
+                            }
                         }
                     }
                 }
 
                 return institutions;
+            }
+
+            IActionResult NotSupportedReport()
+            {
+                TempData["MessageType"] = MessageTypes.Warn;
+                TempData["Message"] = "Report is currently under development.";
+
+                ViewBag.MessageType = MessageTypes.Warn;
+                ViewBag.Message = "Report is currently under development.";
+
+                return RedirectToAction(ActionNames.Index);
             }
         }
     }

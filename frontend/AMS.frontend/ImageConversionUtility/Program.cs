@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using ImageMagick;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
@@ -393,7 +392,8 @@ namespace ImageConversionUtility
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                const string sql = "SELECT * FROM person where person.id";
+                const string sql =
+                    @"SELECT person.id, person.voluntary_community_services FROM person WHERE json_contains(person.voluntary_community_services, '{""toYear"": 2015, ""cycleId"": 17, ""fromYear"": 2012}')";
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.CommandTimeout = 5000;
@@ -406,32 +406,15 @@ namespace ImageConversionUtility
                         {
                             try
                             {
-                                using (MySqlConnection innerConnection = new MySqlConnection("Server=127.0.0.1;Database=inner_satisfaction99;Uid=root;SslMode=none;"))
+                                using (MySqlConnection innerConnection = new MySqlConnection(connectionString))
                                 {
                                     innerConnection.Open();
                                     var id = Convert.ToInt32(row[0]);
-                                    var base64 = Convert.ToString(row[4]);
-                                    //var bytes = Convert.FromBase64String(base64);
-                                    //using (MemoryStream ms = new MemoryStream(bytes))
-                                    //{
-                                    //    if (ms.Length > 200000)
-                                    //    {
-                                    //        Console.WriteLine(ms.Length);
-                                    //        var image = new MagickImage(ms);
-                                    //        image.Resize(new Percentage(50));
-                                    //        var imageBase64 = Convert.ToBase64String(image.ToByteArray());
-                                    //        var innerSql =
-                                    //            $"UPDATE person SET person.image = '{imageBase64}' WHERE person.id = {id}";
-                                    //        using (MySqlCommand innerCommand =
-                                    //            new MySqlCommand(innerSql, innerConnection))
-                                    //        {
-                                    //            Console.WriteLine(
-                                    //                $"Effected Rows for person id {id} = {innerCommand.ExecuteNonQuery()}");
-                                    //        }
-                                    //    }
-                                    //}
+                                    var json = Convert.ToString(row[1]);
+                                    json = json.Replace(@"""toYear"": 2015, ""cycleId"": 17, ""fromYear"": 2012",
+                                        @"""toYear"": 2015, ""cycleId"": 16, ""fromYear"": 2012");
                                     var innerSql =
-                                                $"UPDATE person SET person.image = '{base64}' WHERE person.id = {id}";
+                                                $"UPDATE person SET person.voluntary_community_services = '{json}' WHERE person.id = {id}";
                                     using (MySqlCommand innerCommand =
                                         new MySqlCommand(innerSql, innerConnection))
                                     {
@@ -448,6 +431,7 @@ namespace ImageConversionUtility
                         }
                     }
                 }
+                conn.Close();
             }
 
             #endregion Private Methods

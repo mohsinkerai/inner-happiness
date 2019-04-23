@@ -110,6 +110,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="Recommendation" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="Recommendation" class="recommendations initially-disabled" type="checkbox"> Include Recommendations
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="OfficeBearersOnly" class="control-label"></label>
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input asp-for="OfficeBearersOnly" class="officebearersonly initially-disabled" type="checkbox"> Office Bearers Only
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 @*<div class="col-lg-2">
             <div class="form-group">
                 <label asp-for="IncludeParent" class="control-label"></label>
@@ -206,7 +228,10 @@
                         $(".layout").val([]);
                         ClearSelections();
                         $(".layout").prop("disabled", false);
-                    } else {
+                    } else if (selectedPrimaryValue === "Summary") {
+                        $(".generate").prop("disabled", false);
+                    }
+                    else {
                         $(".category").prop("disabled", false);
                     }
                 });
@@ -237,6 +262,17 @@
                             } else {
                                 $(".institution").prop("disabled", false);
                                 LoadRegionalInstitutions();
+                                EnableUtilityControls();
+                            }
+                        } else if ($(".level").val() == "Local") {
+                            if (selectedPrimaryValue === "Council" && $(".layout").val() === "Shortlist") {
+                                EnableUtilityControls();
+                                $(".include-locals").prop("disabled", true);
+                            } else {
+                                $(".institution").prop("disabled", false);
+                                LoadLocalInstitutions();
+                                EnableUtilityControls();
+                                $(".include-locals").prop("disabled", true);
                             }
                         }
                     }
@@ -283,13 +319,23 @@
                     "");
             }
 
+            function LoadLocalInstitutions() {
+                LoadDropDownViaAjax("institution",
+                    "@Url.Action(ActionNames.GetLocalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    $(".category").val(),
+                    "",
+                    "");
+            }
+
             function EnableUtilityControls() {
                 $(".page-number").prop("disabled", false);
                 if ($(".layout").val() === "ThreePlusOne" || $(".layout").val() === "Running") {
                     $(".member-nominations").prop("disabled", false);
                     $(".remarks").prop("disabled", false);
+                    $(".recommendations").prop("disabled", false);
+                    $(".officebearersonly").prop("disabled", false);
                 }
-                if ($(".level").val() == "Regional" && ($(".category").val() !== "CAB") && ($(".layout").val() === "Running" || $(".layout").val() === "Shortlist")) {
+                if ($(".level").val() == "Regional" && ($(".category").val() !== "CAB")) {
                     //show local only and include local
                     $(".include-locals").prop("disabled", false);
                 }
@@ -304,6 +350,8 @@
                 $(".page-number").val("");
                 $(".include-locals").val("");
                 $(".remarks").val("");
+                $(".recommendations").val("");
+                $(".officebearersonly").val("");
             }
         });
     </script>

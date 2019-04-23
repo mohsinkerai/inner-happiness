@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -645,7 +646,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                     foreach (var jToken1 in arr)
                     {
-                        var positionArray = (JObject) jToken1;
+                        var positionArray = (JObject)jToken1;
                         var listNominations = new List<NominationModel>();
                         var positionModel = new PositionModel();
                         var incumbentDetail = new IncumbentDetail();
@@ -665,23 +666,24 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         {
                             positionModel.Rank = Convert.ToInt32(positionArray["rank"]);
                         }
-                        catch (Exception ex) {
+                        catch (Exception ex)
+                        {
                             positionModel.Rank = 99;
                         }
                         positionModel.SeatId = Convert.ToString(positionArray["seatId"]);
                         positionModel.State = Convert.ToString(positionArray["state"]);
                         positionModel.From = string.IsNullOrWhiteSpace(Convert.ToString(positionArray["from"]))
-                            ? (DateTime?) null
+                            ? (DateTime?)null
                             : Convert.ToDateTime(positionArray["from"]);
                         positionModel.To = string.IsNullOrWhiteSpace(Convert.ToString(positionArray["to"]))
-                            ? (DateTime?) null
+                            ? (DateTime?)null
                             : Convert.ToDateTime(positionArray["to"]);
                         positionModel.CycleStatus = Convert.ToString(currentCycle["state"]);
 
                         //int index = 0;
                         foreach (var jToken in personAppointmentList)
                         {
-                            var personsAppointed = (JObject) jToken;
+                            var personsAppointed = (JObject)jToken;
                             var nominationModel = new NominationModel();
 
                             var incumbent = personsAppointed["person"];
@@ -735,7 +737,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex,"An exception occurred while fetching institution details");
+                _logger.LogCritical(ex, "An exception occurred while fetching institution details");
             }
 
             return nominationDetailModel;
@@ -1413,7 +1415,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                         incumbentDetail.personAppointmentId = Convert.ToString(personsAppointed["personAppointmentId"]);
 
                         positionModel.incumbentDetail = incumbentDetail;
-                        
+
                     }
                     else
                     {
@@ -1650,7 +1652,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 {
                     { "personAppointmentId", personAppointmentId }
                 };
-                
+
                 var json = JsonConvert.SerializeObject(jObject);
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _client.PostAsync("/person/appointment/recommend", httpContent);
@@ -1675,20 +1677,20 @@ namespace AMS.frontend.web.Areas.Operations.Models
                             }
                         }
                     }
-                    
+
                 }
                 else
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
                     dynamic jsonObject = JToken.Parse(responseString);
-                    updatedPosition = new PositionModel {ErrorMessage = jsonObject.message, IsError = true};
+                    updatedPosition = new PositionModel { ErrorMessage = jsonObject.message, IsError = true };
                 }
             }
             catch (Exception ex)
             {
 
             }
-            
+
             return updatedPosition;
         }
 
@@ -1761,7 +1763,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
             return null;
         }
-        
+
         public async Task<bool> AddNewData(CrudModel model)
         {
             model.IsActive = true;
@@ -1829,7 +1831,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     var endDate = Convert.ToDateTime(item.endDate);
                     var previousCycle = Convert.ToString(item.previousCycle);
 
-                    list.Add(new CycleModel {Id = id, Name = name, StartDate = startDate, EndDate = endDate, PreviousCycle = previousCycle });
+                    list.Add(new CycleModel { Id = id, Name = name, StartDate = startDate, EndDate = endDate, PreviousCycle = previousCycle });
                 }
 
                 return list;
@@ -1878,7 +1880,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
         public async Task<List<SelectListItem>> findPositionByInstituionId(string InstitutionId)
         {
-            var res = await _client.GetAsync("position/search/findByInstitutionId?institutionId="+InstitutionId);
+            var res = await _client.GetAsync("position/search/findByInstitutionId?institutionId=" + InstitutionId);
             if (res.IsSuccessStatusCode)
             {
                 var json = res.Content.ReadAsStringAsync().Result;
@@ -1910,7 +1912,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
         public async Task<bool> close(MidTermCycle model)
         {
             JObject jObject = new JObject();
-            jObject.Add("CycleId",model.CycleId);
+            jObject.Add("CycleId", model.CycleId);
             jObject.Add("endingDate", model.StartDate);
 
             var json = JsonConvert.SerializeObject(jObject);
@@ -1987,9 +1989,9 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetAllLocal(string regionId)
+        public async Task<List<SelectListItem>> GetAllLocal(string regionId, bool sortByCodeNc = false)
         {
-            var res = await _client.GetAsync("level/search/parent?value="+ regionId);
+            var res = await _client.GetAsync("level/search/parent?value=" + regionId);
 
             if (res.IsSuccessStatusCode)
             {
@@ -1997,12 +1999,41 @@ namespace AMS.frontend.web.Areas.Operations.Models
                 dynamic myObject = JArray.Parse(json);
                 var list = new List<SelectListItem>();
 
-                foreach (var item in myObject)
+                if (sortByCodeNc)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var tempList = new List<LevelRow>();
+                    foreach (var item in myObject)
+                    {
+                        var isClosed = Convert.ToBoolean(item.closed);
+                        if (!isClosed)
+                        {
+                            tempList.Add(new LevelRow
+                            {
+                                Name = Convert.ToString(item.name),
+                                Value = Convert.ToString(item.id),
+                                SortKey = string.IsNullOrWhiteSpace(Convert.ToString(item.codeNc))
+                                    ? 0
+                                    : Convert.ToInt32(item.codeNc)
+                            });
+                        }
+                    }
 
-                    list.Add(new SelectListItem { Text = name, Value = id });
+                    foreach (var levelRow in tempList.OrderBy(l => l.SortKey))
+                    {
+                        list.Add(new SelectListItem {Text = levelRow.Name, Value = levelRow.Value});
+                    }
+                }
+                else
+                {
+                    foreach (var item in myObject)
+                    {
+                        var id = Convert.ToString(item.id);
+                        var name = Convert.ToString(item.name);
+
+                        list.Add(new SelectListItem { Text = name, Value = id });
+                    }
+
+                    return list.OrderBy(l => l.Text).ToList();
                 }
 
                 return list;
@@ -2028,7 +2059,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
                     httpContent);
 
                 return httpResponse.IsSuccessStatusCode ? true : false;
-              
+
             }
             catch (Exception)
             {
@@ -2038,5 +2069,11 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
         #endregion Public Methods
     }
-   
+
+    public class LevelRow
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public int SortKey { get; set; }
+    }
 }
