@@ -13,4 +13,5 @@ import javax.persistence.Entity;
 public class FieldOfExpertise extends BaseEntity{
 
   private String name;
+  private String shortCode;
 }

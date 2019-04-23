@@ -13,4 +13,5 @@ public class JamatiTitle extends BaseEntity{
    * applicable on which geneder, male or female
    */
   private String gender;
+  private String shortCode;
 }
