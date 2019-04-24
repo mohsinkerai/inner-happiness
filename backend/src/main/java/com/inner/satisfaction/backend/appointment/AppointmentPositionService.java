@@ -80,13 +80,16 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
 
   @Override
   public List<AppointmentPosition> findAll() {
-    return getCurrentUserCompanyId().map(appointmentPositionRepository::findByCompanyId)
+    return getCurrentUserCompanyId()
+      .map(Integer::longValue)
+      .map(appointmentPositionRepository::findByCompanyId)
       .orElse(Lists.newArrayList());
   }
 
   @Override
   public Page<AppointmentPosition> findAll(Pageable pageable) {
     return getCurrentUserCompanyId()
+      .map(Integer::longValue)
       .map(companyId -> appointmentPositionRepository.findByCompanyId(companyId, pageable))
       .orElse(Page.empty());
   }
@@ -94,9 +97,9 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
   @Override
   public AppointmentPosition findOne(Long id) {
     AppointmentPosition one = super.findOne(id);
-    Optional<Long> currentUserCompanyId = getCurrentUserCompanyId();
+    Optional<Integer> currentUserCompanyId = getCurrentUserCompanyId();
     if(one != null && currentUserCompanyId.isPresent()) {
-      return one.getCompany().getId() == currentUserCompanyId.get() ? one : null;
+      return one.getCompany().getId() == currentUserCompanyId.map(Long::valueOf).get() ? one : null;
     }
     return one;
   }
@@ -107,7 +110,7 @@ public class AppointmentPositionService extends BaseService<AppointmentPosition>
     save(one);
   }
 
-  private Optional<Long> getCurrentUserCompanyId() {
+  private Optional<Integer> getCurrentUserCompanyId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication instanceof AuthenticationToken) {
       AuthenticationToken authenticationToken = (AuthenticationToken) authentication;

@@ -228,7 +228,10 @@
                         $(".layout").val([]);
                         ClearSelections();
                         $(".layout").prop("disabled", false);
-                    } else {
+                    } else if (selectedPrimaryValue === "Summary") {
+                        $(".generate").prop("disabled", false);
+                    }
+                    else {
                         $(".category").prop("disabled", false);
                     }
                 });
@@ -259,6 +262,17 @@
                             } else {
                                 $(".institution").prop("disabled", false);
                                 LoadRegionalInstitutions();
+                                EnableUtilityControls();
+                            }
+                        } else if ($(".level").val() == "Local") {
+                            if (selectedPrimaryValue === "Council" && $(".layout").val() === "Shortlist") {
+                                EnableUtilityControls();
+                                $(".include-locals").prop("disabled", true);
+                            } else {
+                                $(".institution").prop("disabled", false);
+                                LoadLocalInstitutions();
+                                EnableUtilityControls();
+                                $(".include-locals").prop("disabled", true);
                             }
                         }
                     }
@@ -300,6 +314,14 @@
             function LoadRegionalInstitutions() {
                 LoadDropDownViaAjax("institution",
                     "@Url.Action(ActionNames.GetRegionalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    $(".category").val(),
+                    "",
+                    "");
+            }
+
+            function LoadLocalInstitutions() {
+                LoadDropDownViaAjax("institution",
+                    "@Url.Action(ActionNames.GetLocalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
                     $(".category").val(),
                     "",
                     "");

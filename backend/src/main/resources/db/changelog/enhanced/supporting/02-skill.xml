@@ -45,4 +45,9 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+  <changeSet id="skill-05" author="mohsin.kerai">
+    <addColumn tableName="skill">
+      <column name="short_code" type="varchar(255)"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -9,4 +9,5 @@ import lombok.Data;
 public class Skill extends BaseEntity{
 
   private String name;
+  private String shortCode;
 }

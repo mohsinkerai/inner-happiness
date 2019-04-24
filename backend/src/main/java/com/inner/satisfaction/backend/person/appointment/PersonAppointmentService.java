@@ -74,7 +74,7 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
     boolean isNominated) {
     Assert
       .isTrue(isRecommended || isNominated, "Either isRecommended or isNominated should be true");
-    Optional<Long> currentUserCompanyId = getCurrentUserCompanyId();
+    Optional<Integer> currentUserCompanyId = getCurrentUserCompanyId();
     if (isRecommended && isNominated) {
       return personAppointmentRepository.findByPersonId(personId);
     } else if (isRecommended
@@ -91,13 +91,16 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
 
   @Override
   public List<PersonAppointment> findAll() {
-    return getCurrentUserCompanyId().map(personAppointmentRepository::findByCompanyId)
+    return getCurrentUserCompanyId()
+      .map(Integer::longValue)
+      .map(personAppointmentRepository::findByCompanyId)
       .orElse(Lists.newArrayList());
   }
 
   @Override
   public Page<PersonAppointment> findAll(Pageable pageable) {
     return getCurrentUserCompanyId()
+      .map(Integer::longValue)
       .map(companyId -> personAppointmentRepository.findByCompanyId(companyId, pageable))
       .orElse(Page.empty());
   }
@@ -105,14 +108,14 @@ public class PersonAppointmentService extends SimpleBaseService<PersonAppointmen
   @Override
   public PersonAppointment findOne(Long id) {
     PersonAppointment one = super.findOne(id);
-    Optional<Long> currentUserCompanyId = getCurrentUserCompanyId();
+    Optional<Integer> currentUserCompanyId = getCurrentUserCompanyId();
     if(one != null && currentUserCompanyId.isPresent()) {
-      return one.getCompany().getId() == currentUserCompanyId.get() ? one : null;
+      return one.getCompany().getId() == currentUserCompanyId.map(Integer::longValue).get() ? one : null;
     }
     return one;
   }
 
-  private Optional<Long> getCurrentUserCompanyId() {
+  private Optional<Integer> getCurrentUserCompanyId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication instanceof AuthenticationToken) {
       AuthenticationToken authenticationToken = (AuthenticationToken) authentication;

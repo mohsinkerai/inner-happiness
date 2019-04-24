@@ -35,3 +35,5 @@ app.log*
 /frontend/AMS.frontend/.vs/AMS.frontend/config/applicationhost.config
 /frontend/AMS.frontend/packages
 /frontend/AMS.frontend/ImageConversionUtility/bin/Release/netcoreapp2.2
+/frontend/AMS.frontend/.vs
+/frontend/AMS.frontend/ImageConversionUtility/bin/Debug/netcoreapp2.2

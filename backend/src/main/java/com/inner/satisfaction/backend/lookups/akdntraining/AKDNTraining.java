@@ -10,4 +10,5 @@ import javax.persistence.Entity;
 public class AKDNTraining extends BaseEntity{
 
   private String name;
+  private String shortCode;
 }
