@@ -10,4 +10,5 @@ import lombok.Data;
 public class PublicServiceInstitution extends BaseEntity{
 
   private String name;
+  private String shortCode;
 }

@@ -10,4 +10,5 @@ public class City extends BaseEntity{
 
   private String name;
   private Long countryId;
+  private String shortCode;
 }
