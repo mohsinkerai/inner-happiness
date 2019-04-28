@@ -235,7 +235,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return res.IsSuccessStatusCode;
         }
 
-        public async Task<List<SelectListItem>> GetAkdnTraining()
+        public async Task<List<SelectListItem>> GetAkdnTraining(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/akdn-training/all");
             if (res.IsSuccessStatusCode)
@@ -246,8 +246,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -304,7 +315,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetAllInstitutions()
+        public async Task<List<SelectListItem>> GetAllInstitutions(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/educational-publicserviceinstitution/all");
             if (res.IsSuccessStatusCode)
@@ -315,8 +326,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -388,7 +410,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetAreaOfOrigin()
+        public async Task<List<SelectListItem>> GetAreaOfOrigin(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/area-of-origin/all");
             if (res.IsSuccessStatusCode)
@@ -399,8 +421,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -411,7 +444,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetBussinessNature()
+        public async Task<List<SelectListItem>> GetBussinessNature(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/business-nature/all");
             if (res.IsSuccessStatusCode)
@@ -422,8 +455,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -434,7 +478,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetBussinessType()
+        public async Task<List<SelectListItem>> GetBussinessType(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/business-type/all");
             if (res.IsSuccessStatusCode)
@@ -445,8 +489,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -503,7 +558,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetEducationalDegree()
+        public async Task<List<SelectListItem>> GetEducationalDegree(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/educational-degree/all");
             if (res.IsSuccessStatusCode)
@@ -514,8 +569,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -526,7 +592,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetFieldOfExpertise()
+        public async Task<List<SelectListItem>> GetFieldOfExpertise(bool includeShortCode = false)
         {
             //var res = await _client.GetAsync("constants/field-of-expertise/all");
             var res = await _client.GetAsync("constants/field-of-expertise/all");
@@ -539,8 +605,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -551,7 +628,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetFieldOfInterests()
+        public async Task<List<SelectListItem>> GetFieldOfInterests(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/field-of-interest/all");
             if (res.IsSuccessStatusCode)
@@ -562,8 +639,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -574,7 +662,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetHighestLevelOfStudy()
+        public async Task<List<SelectListItem>> GetHighestLevelOfStudy(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/secular-study-level/all");
             if (res.IsSuccessStatusCode)
@@ -585,8 +673,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -853,7 +952,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetLanguages()
+        public async Task<List<SelectListItem>> GetLanguages(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/language/all");
             if (res.IsSuccessStatusCode)
@@ -864,8 +963,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -925,7 +1035,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetMajorAreaOfStudy()
+        public async Task<List<SelectListItem>> GetMajorAreaOfStudy(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/area-of-study/all");
             if (res.IsSuccessStatusCode)
@@ -936,8 +1046,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -948,7 +1069,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetMartialStatuses()
+        public async Task<List<SelectListItem>> GetMartialStatuses(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/marital-status/all");
             if (res.IsSuccessStatusCode)
@@ -959,8 +1080,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -971,7 +1103,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetOcupations()
+        public async Task<List<SelectListItem>> GetOcupations(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/occupation/all");
             if (res.IsSuccessStatusCode)
@@ -982,8 +1114,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -1109,7 +1252,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetPositions()
+        public async Task<List<SelectListItem>> GetPositions(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("position/all");
             if (res.IsSuccessStatusCode)
@@ -1120,8 +1263,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.name)}";
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -1132,7 +1286,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetProfessionalMemeberShipDetails()
+        public async Task<List<SelectListItem>> GetProfessionalMemeberShipDetails(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/professional-membership/all");
             if (res.IsSuccessStatusCode)
@@ -1143,8 +1297,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -1201,7 +1366,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetReligiousEducation()
+        public async Task<List<SelectListItem>> GetReligiousEducation(bool includeShortCode = false)
         {
             var res = await _client.GetAsync("constants/religious-qualification/all");
             if (res.IsSuccessStatusCode)
@@ -1212,8 +1377,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -1224,7 +1400,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }
 
-        public async Task<List<SelectListItem>> GetSalutation()
+        public async Task<List<SelectListItem>> GetSalutation(bool includeShortCode = false)
         {
             try
             {
@@ -1237,8 +1413,20 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                     foreach (var item in myObject)
                     {
-                        var id = Convert.ToString(item.id);
-                        var name = Convert.ToString(item.name);
+                        var id = string.Empty;
+                        var name = string.Empty;
+
+                        if (includeShortCode)
+                        {
+                            id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                            name = Convert.ToString(item.name);
+                        }
+                        else
+                        {
+                            id = Convert.ToString(item.id);
+                            name = Convert.ToString(item.name);
+                        }
+
                         list.Add(new SelectListItem { Text = name, Value = id });
                     }
 
@@ -1280,7 +1468,7 @@ namespace AMS.frontend.web.Areas.Operations.Models
             return null;
         }*/
 
-        public async Task<List<SelectListItem>> GetSkills()
+        public async Task<List<SelectListItem>> GetSkills(bool includeShortCode = false)
         {
             //var res = await _client.GetAsync("constants/field-of-expertise/all");
             var res = await _client.GetAsync("constants/skill/all");
@@ -1293,8 +1481,19 @@ namespace AMS.frontend.web.Areas.Operations.Models
 
                 foreach (var item in myObject)
                 {
-                    var id = Convert.ToString(item.id);
-                    var name = Convert.ToString(item.name);
+                    var id = string.Empty;
+                    var name = string.Empty;
+
+                    if (includeShortCode)
+                    {
+                        id = $"{Convert.ToString(item.id)}-{Convert.ToString(item.shortCode)}";
+                        name = Convert.ToString(item.name);
+                    }
+                    else
+                    {
+                        id = Convert.ToString(item.id);
+                        name = Convert.ToString(item.name);
+                    }
 
                     list.Add(new SelectListItem { Text = name, Value = id });
                 }
@@ -1772,6 +1971,18 @@ namespace AMS.frontend.web.Areas.Operations.Models
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var content = new StringContent(json);
             var res = await _client.PostAsync(model.Url, httpContent);
+
+            return res.StatusCode == HttpStatusCode.OK ? true : false;
+        }
+
+        public async Task<bool> UpdateLookUpData(CrudModel model)
+        {
+            model.IsActive = true;
+            var json = JsonConvert.SerializeObject(model);
+
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(json);
+            var res = await _client.PutAsync(model.Url+"/one/"+model.Id, httpContent);
 
             return res.StatusCode == HttpStatusCode.OK ? true : false;
         }

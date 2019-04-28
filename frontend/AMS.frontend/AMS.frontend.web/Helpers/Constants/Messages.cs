@@ -16,6 +16,7 @@
         public const string CycleCreated = " Successfully cycle created.";
         public const string CycleClosed = " Successfully cycle closed.";
         public const string CycleAppoint = " Successfully appoint.";
+        public const string successfullyUpdated = "Successfully Updated";
 
         #endregion Public Fields
     }

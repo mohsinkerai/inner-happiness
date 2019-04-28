@@ -32,7 +32,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewData(model);
+                var success = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewData(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -48,97 +48,221 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
                 }
             }
 
-            return View("Index", model);
+            return RedirectToAction(model.ActionName);
         }
 
-        public IActionResult AkdnTraining()
-        {         
-            return View("Index", new CrudModel {Url= "constants/akdn-training", Title = "Akdn Training" });
-        }
-
-        public IActionResult AreaOfStudy()
+        [HttpPost]
+        public async Task<IActionResult> UpdateData(CrudModel model)
         {
-            return View("Index", new CrudModel { Url = "constants/area-of-study", Title = "Area Of Study" });
+            if (ModelState.IsValid)
+            {
+                var success = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).UpdateLookUpData(model);
+                if (success)
+                {
+                    TempData["MessageType"] = MessageTypes.Success;
+                    TempData["Message"] = Messages.successfullyUpdated;
+
+                    ViewBag.MessageType = MessageTypes.Success;
+                    ViewBag.Message = Messages.successfullyUpdated;
+                }
+                else
+                {
+                    ViewBag.MessageType = MessageTypes.Error;
+                    ViewBag.Message = Messages.GeneralError;
+                }
+            }
+
+            return RedirectToAction(model.ActionName);
         }
 
-        public IActionResult EducationalInstitution()
+        public async Task<IActionResult> AkdnTraining()
         {
-            return View("Index", new CrudModel { Url = "constants/educational-publicserviceinstitution", Title = "Educational Institution" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var akdnTraining = await new RestfulClient(_logger,
+                    HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAkdnTraining(true);
+            return View("Index", new CrudModel { Url = "constants/akdn-training", Title = "Akdn Training", lookUpList = akdnTraining, ActionName = "AkdnTraining" });
         }
 
-        public IActionResult AreaOfOrigin()
+        public async Task<IActionResult> AreaOfStudy()
         {
-            return View("Index", new CrudModel { Url = "constants/area-of-origin", Title = "Area of Origin" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var areaOfStudy = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetMajorAreaOfStudy(true);
+            return View("Index", new CrudModel { Url = "constants/area-of-study", Title = "Area Of Study", lookUpList = areaOfStudy, ActionName = "AreaOfStudy" });
         }
 
-        public IActionResult BusinessNature()
+        public async Task<IActionResult> EducationalInstitution()
         {
-            return View("Index", new CrudModel { Url = "constants/business-nature", Title = "Business Nature" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var educationalInstitution = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllInstitutions(true);
+            return View("Index", new CrudModel { Url = "constants/educational-publicserviceinstitution", Title = "Educational Institution", lookUpList = educationalInstitution, ActionName = "EducationalInstitution" });
         }
 
-        public IActionResult BusinessType()
+        public async Task<IActionResult> AreaOfOrigin()
         {
-            return View("Index", new CrudModel { Url = "constants/business-type", Title = "Business Type" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var areaOfOrigin = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAreaOfOrigin(true);
+            return View("Index", new CrudModel { Url = "constants/area-of-origin", Title = "Area of Origin", lookUpList = areaOfOrigin, ActionName = "AreaOfOrigin" });
         }
 
-        public IActionResult EducationalDegree()
+        public async Task<IActionResult> BusinessNature()
         {
-            return View("Index", new CrudModel { Url = "constants/educational-degree", Title = "Educational Degree" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var buisnessNature = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetBussinessNature(true);
+            return View("Index", new CrudModel { Url = "constants/business-nature", Title = "Business Nature", lookUpList = buisnessNature, ActionName = "BusinessNature" });
         }
 
-        public IActionResult FieldOfExpertise()
+        public async Task<IActionResult> BusinessType()
         {
-            return View("Index", new CrudModel { Url = "constants/field-of-expertise", Title = "Field of Expertise" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var buisnessNature = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetBussinessType(true);
+            return View("Index", new CrudModel { Url = "constants/business-type", Title = "Business Type", lookUpList = buisnessNature, ActionName = "BusinessType" });
         }
 
-        public IActionResult FieldOfInterest()
+        public async Task<IActionResult> EducationalDegree()
         {
-            return View("Index", new CrudModel { Url = "constants/field-of-interest", Title = "Field of Interest" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var educationalDegree = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetEducationalDegree(true);
+            return View("Index", new CrudModel { Url = "constants/educational-degree", Title = "Educational Degree", lookUpList = educationalDegree, ActionName = "EducationalDegree" });
         }
 
-        public IActionResult Language()
+        public async Task<IActionResult> FieldOfExpertise()
         {
-            return View("Index", new CrudModel { Url = "constants/language", Title = "Language" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var fieldOfExpertise = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetFieldOfExpertise(true);
+            return View("Index", new CrudModel { Url = "constants/field-of-expertise", Title = "Field of Expertise", lookUpList = fieldOfExpertise, ActionName = "FieldOfExpertise" });
         }
 
-        public IActionResult MaritalStatus()
+        public async Task<IActionResult> FieldOfInterest()
         {
-            return View("Index", new CrudModel { Url = "constants/marital-status", Title = "Marital Status" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var fieldOfInterest = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetFieldOfInterests(true);
+            return View("Index", new CrudModel { Url = "constants/field-of-interest", Title = "Field of Interest", lookUpList = fieldOfInterest, ActionName = "FieldOfInterest" });
         }
 
-        public IActionResult Occupation()
+        public async Task<IActionResult> Language()
         {
-            return View("Index", new CrudModel { Url = "constants/occupation", Title = "Occupation" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var language = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLanguages(true);
+            return View("Index", new CrudModel { Url = "constants/language", Title = "Language", lookUpList = language, ActionName = "Language" });
         }
 
-        public IActionResult ProfessionalMembership()
+        public async Task<IActionResult> MaritalStatus()
         {
-            return View("Index", new CrudModel { Url = "constants/professional-membership", Title = "Professional Membership" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var maritalStatus = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetMartialStatuses(true);
+            return View("Index", new CrudModel { Url = "constants/marital-status", Title = "Marital Status", lookUpList = maritalStatus, ActionName = "MaritalStatus" });
         }
 
-        public IActionResult PublicServiceInstitution()
+        public async Task<IActionResult> Occupation()
         {
-            return View("Index", new CrudModel { Url = "constants/public-service-institution", Title = "Public Service Institution" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var occupation = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetOcupations(true);
+            return View("Index", new CrudModel { Url = "constants/occupation", Title = "Occupation", lookUpList = occupation, ActionName = "Occupation" });
         }
 
-        public IActionResult ReligiousQualification()
+        public async Task<IActionResult> ProfessionalMembership()
         {
-            return View("Index", new CrudModel { Url = "constants/religious-qualification", Title = "Religious Qualification" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var professionalMembership = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetProfessionalMemeberShipDetails(true);
+            return View("Index", new CrudModel { Url = "constants/professional-membership", Title = "Professional Membership", lookUpList = professionalMembership, ActionName = "ProfessionalMembership" });
         }
 
-        public IActionResult Salutation()
+        public async Task<IActionResult> PublicServiceInstitution()
         {
-            return View("Index", new CrudModel { Url = "constants/salutation", Title = "Salutation" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var publicServiceInstitution = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllInstitutions(true);
+            return View("Index", new CrudModel { Url = "constants/public-service-institution", Title = "Public Service Institution", lookUpList = publicServiceInstitution, ActionName = "PublicServiceInstitution" });
         }
 
-        public IActionResult SecularStudyLevel()
+        public async Task<IActionResult> ReligiousQualification()
         {
-            return View("Index", new CrudModel { Url = "constants/secular-study-level", Title = "Secular Study Level" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var religiousQualification = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetReligiousEducation(true);
+            return View("Index", new CrudModel { Url = "constants/religious-qualification", Title = "Religious Qualification", lookUpList = religiousQualification, ActionName = "ReligiousQualification" });
         }
 
-        public IActionResult Skills()
+        public async Task<IActionResult> Salutation()
         {
-            return View("Index", new CrudModel { Url = "constants/skill", Title = "Skills" });
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var salutation = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSalutation(true);
+            return View("Index", new CrudModel { Url = "constants/salutation", Title = "Salutation", lookUpList = salutation, ActionName = "Salutation" });
+        }
+
+        public async Task<IActionResult> SecularStudyLevel()
+        {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var secularStudyLevel = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetHighestLevelOfStudy(true);
+            return View("Index", new CrudModel { Url = "constants/secular-study-level", Title = "Secular Study Level", lookUpList = secularStudyLevel, ActionName = "SecularStudyLevel" });
+        }
+
+        public async Task<IActionResult> Skills()
+        {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var skills = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetSkills(true);
+            return View("Index", new CrudModel { Url = "constants/skill", Title = "Skills", lookUpList = skills, ActionName = "Skills" });
+        }
+
+        public async Task<IActionResult> Position()
+        {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var positions = await new RestfulClient(_logger,
+            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositions(true);
+            return View("Index", new CrudModel { Url = "position", Title = "Position", lookUpList = positions, ActionName = "Position" });
         }
 
         public IActionResult Country()
@@ -151,7 +275,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCountry(model);
+                var success = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCountry(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -172,7 +296,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
 
         public async Task<IActionResult> City()
         {
-            ViewBag.CountryList = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
+            ViewBag.CountryList = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
             return View(new CityModel { Url = "constants/city", Title = "City" });
         }
 
@@ -181,7 +305,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCity(model);
+                var success = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewCity(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -197,7 +321,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
                 }
             }
 
-            ViewBag.CountryList = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
+            ViewBag.CountryList = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllCountries();
             return View("City", model);
         }
 
@@ -210,7 +334,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewJamatiTitle(model);
+                var success = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewJamatiTitle(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;
@@ -229,11 +353,6 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
             return View("JamatiTitle", model);
         }
 
-        public IActionResult Position()
-        {
-            return View("Index", new CrudModel { Url = "position", Title = "Position" });
-        }
-
         public IActionResult VoluntaryInstitution()
         {
             return View(new VoluntaryInstitutionModel { Url = "institution", Title = "Voluntary Institution" });
@@ -244,7 +363,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await new RestfulClient(_logger,HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewVoluntaryInstitution(model);
+                var success = await new RestfulClient(_logger, HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).AddNewVoluntaryInstitution(model);
                 if (success)
                 {
                     TempData["MessageType"] = MessageTypes.Success;

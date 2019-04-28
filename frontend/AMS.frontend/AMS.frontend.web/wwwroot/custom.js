@@ -2176,3 +2176,31 @@ function AddRemarks(url, appointmentPositionId, isRecommended, personId, priorit
         }
     });
 }
+
+function UpdateLookUpData(id, shortCode, name) {
+    $("#Id").val(id);
+    $("#Name").val(name).trigger('change');
+    $("#ShortCode").val(shortCode).trigger('change');
+
+    $("#AddButton").css('visibility', 'hidden');
+    $("#AddButton").css('display', 'none');
+    $("#UpdateButton").css('visibility', 'visible');
+    $("#UpdateButton").css('display', 'initial');
+
+    $("#ClearButton").css('visibility', 'visible');
+    $("#ClearButton").css('display', 'initial');
+}
+
+function ClearLookUpData() {
+    $("#Id").val(0);
+    $("#Name").val('');
+    $("#ShortCode").val('');
+
+    $("#UpdateButton").css('visibility', 'hidden');
+    $("#UpdateButton").css('display', 'none');
+    $("#AddButton").css('visibility', 'visible');
+    $("#AddButton").css('display', 'initial');
+
+    $("#ClearButton").css('visibility', 'hidden');
+    $("#ClearButton").css('display', 'none');
+}
