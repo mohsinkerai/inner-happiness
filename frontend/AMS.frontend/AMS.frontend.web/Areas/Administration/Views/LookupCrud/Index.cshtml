@@ -10,45 +10,109 @@
     <div class="col-lg-12">
         <!--begin::Portlet-->
         <div class="m-portlet">
-            @*<div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <span class="m-portlet__head-icon">
-                                <i class="la la-user-plus"></i>
-                            </span>
-                            <h3 class="m-portlet__head-text">
-                                Add Person
-                            </h3>
-                        </div>
-                    </div>
-                </div>*@
-            <!--begin::Form-->
-            <form id="mainForm" asp-area="@AreaNames.Administration" asp-controller="@ControllerNames.LookupCrud" asp-action="SaveData" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
-                <div class="m-portlet__body">
-                    <div class="form-group m-form__group row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <input type="hidden" asp-for="Url" />
-                                <input type="hidden" asp-for="Title" />
-                                <label asp-for="Name" class="control-label"></label><span class="required">*</span>
-                                <input type="text" asp-for="Name" class="form-control">
-                                <span asp-validation-for="Name" class="form-control-feedback"></span>
+            <div class="m-portlet__body  m-portlet__body--no-padding">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-lg-8">
+                        <div class="m-portlet__body">
+                            <div class="m-widget15">
+                                <div class="m-widget14__header">
+                                    <h4 class="m-widget14__title">
+                                        @Model.Title
+                                    </h4>
+                                    <span class="m-widget14__desc">
+                                        Click to update new List
+                                    </span>
+                                </div>
+                                <div class="m-widget15__items" style="margin-top:20px!important">
+                                    <div class="form-group m-form__group row align-items-start">
+                                        <div class="col-md-5">
+                                            <div class="m-input-icon m-input-icon--left">
+                                                <input type="text" class="form-control m-input" placeholder="Search within results" id="generalSearch">
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span>
+                                                        <i class="la la-search"></i>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="persons" class="table table-striped- table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th> Name </th>
+                                                <th> Short Code </th>
+                                                <th> Actions </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model?.lookUpList != null)
+                                            {
+                                                @foreach (var item in Model.lookUpList)
+                                                {
+                                                    <tr>
+                                                        <td> @item.Text</td>
+                                                        <td> @item.Value.Split('-')[1] </td>
+                                                        <td>
+                                                            <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit" onclick='return UpdateLookUpData("@item.Value.Split('-')[0]", "@item.Value.Split('-')[1]" , "@item.Text" );'>
+                                                                <i class="la la-edit"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
-                    <div class="m-form__actions m-form__actions--solid m--align-right">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-save"></i> Add
-                        </button>
-                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
-                            <i class="fa fa-close"></i> Cancel
-                        </a>
+                    <div class="col-lg-4" style="background-color:ghostwhite">
+                        <!--begin::Form-->
+                        <div class="m-portlet__body sticky-top" style="top:100px !important; z-index:auto">
+                            <div class="m-widget15">
+                                <div class="m-widget14__header">
+                                    <h4 class="m-widget14__title">
+                                        Add, Update
+                                    </h4>
+                                    <span class="m-widget14__desc">
+                                        Add or Update @Model.Title
+                                    </span>
+                                </div>
+                                <div class="m-widget15__items" style="margin-top:20px!important">
+                                    <form id="mainForm" asp-area="@AreaNames.Administration" asp-controller="@ControllerNames.LookupCrud" asp-action="SaveData" method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="Url" />
+                                            <input type="hidden" asp-for="Title" />
+                                            <input type="hidden" asp-for="ActionName" />
+                                            <input type="hidden" asp-for="Id" />
+                                            <label asp-for="Name" class="control-label"></label><span class="required">*</span>
+                                            <input type="text" asp-for="Name" class="form-control">
+                                            <span asp-validation-for="Name" class="form-control-feedback"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ShortCode" class="control-label"></label>
+                                            <input type="text" asp-for="ShortCode" class="form-control">
+                                            <span asp-validation-for="ShortCode" class="form-control-feedback"></span>
+                                        </div>
+
+                                        <button id="AddButton" class="btn btn-success" style="padding-left:20px; padding-right:20px" formaction="/Administration/LookupCrud/SaveData">Add</button>
+
+                                        <button id="UpdateButton" class="btn btn-success" style="padding-left:20px; padding-right:20px" formaction="/Administration/LookupCrud/UpdateData">Update</button>
+
+                                        <button id="ClearButton" class="btn btn-warning" onclick='return ClearLookUpData()'>Clear</button>
+
+                                        <a asp-area="@AreaNames.Operations" asp-controller="@ControllerNames.Persons" asp-action="@ActionNames.Index" class="btn default">
+                                            <i class="fa fa-close"></i> Cancel
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Form-->
                     </div>
                 </div>
-            </form>
-            <!--end::Form-->
+            </div>
         </div>
         <!--end::Portlet-->
     </div>
@@ -62,6 +126,21 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
             $("#menu-5").addClass("m-menu__item--open m-menu__item--expanded");
+
+            var x = document.getElementById("subHeader");
+            x.style.display = "none";
+
+            InitializeSearchPersonDataTable("persons");
+
+            $("#persons").css("min-height", "0px");
+
+            $("#UpdateButton").css('visibility', 'hidden');
+            $("#UpdateButton").css('display', 'none');
+
+            $("#ClearButton").css('visibility', 'hidden');
+            $("#ClearButton").css('display', 'none');
+
         });
     </script>
+
 }

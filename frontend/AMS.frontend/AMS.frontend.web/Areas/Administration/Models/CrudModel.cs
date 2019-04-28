@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,11 +26,25 @@ namespace AMS.frontend.web.Areas.Administration.Models
         [JsonProperty(PropertyName = "updatedBy")]
         public string UpdatedBy { get; set; }
 
+        [JsonProperty(PropertyName = "shortCode")]
+        public string ShortCode { get; set; }
+
         [JsonIgnore]
         public string Url { get; set; }
 
         [JsonIgnore]
+        public List<SelectListItem> lookUpList { get; set; }
+
+        public CrudModel()
+        {
+            lookUpList = new List<SelectListItem>();
+        }
+
+        [JsonIgnore]
         public string Title { get; set; }
+
+        [JsonIgnore]
+        public string ActionName { get; set; }
 
     }
 }
