@@ -1,53 +1,55 @@
 ﻿using AMS.frontend.web.Areas.Operations.Models;
-using AMS.frontend.web.Areas.Operations.Models.Persons;
+using AMS.frontend.web.Areas.Operations.Models.Nominations;
+using AMS.frontend.web.Areas.Operations.Models.Reports;
+using AMS.frontend.web.Extensions;
 using AMS.frontend.web.Helpers.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using AMS.frontend.web.Extensions;
-using Microsoft.Extensions.Logging;
-using AMS.frontend.web.Areas.Operations.Models.Nominations;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using AMS.frontend.web.Areas.Operations.Models.Reports;
 
 namespace AMS.frontend.web.Areas.Operations.Controllers
 {
     [Area(AreaNames.Operations)]
     public class ReportsController : BaseController
     {
+        #region Private Fields
+
         private readonly ILogger<ReportsController> _logger;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ReportsController(ILogger<ReportsController> logger)
         {
             _logger = logger;
         }
-        public async Task<IActionResult> Index()
-        {
-            ViewBag.MessageType = TempData["MessageType"];
-            ViewBag.Message = TempData["Message"];
 
-            var sessionInstituionList = new List<InstitutionModel>();
-            HttpContext.Session.Set("InstitutionList", sessionInstituionList);
-            return View();
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public async Task<List<SelectListItem>> GetChildInstitutions(string regionId, bool sortByCodeNc = false)
+        {
+            var list = await new RestfulClient(_logger,
+                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId, sortByCodeNc);
+
+            return list;
         }
 
-        public IActionResult ThreePlusOne(string insitutionId, int cycleId)
+        public async Task<List<SelectListItem>> GetLocalInstitutions(string level)
         {
-            using (var client = new WebClient())
-            {
-                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+            //level would serve as category
+            var list = await new RestfulClient(_logger,
+                HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
 
-                var stream = new MemoryStream(client.DownloadData(
-                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}&showremarks=false&pagenumber=1&membernominations=1&showrecommendation=true&officebearersonly=false"));
-
-                return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
-            }
+            return list;
         }
 
         public async Task<List<SelectListItem>> GetNationalInstitutions(string level)
@@ -59,17 +61,6 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return list;
         }
 
-
-        public async Task<List<SelectListItem>> GetLocalInstitutions(string level)
-        {
-            //level would serve as category
-            var list = await new RestfulClient(_logger,
-                HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetLocalInstitutions();
-
-            return list;
-        }
-
-
         public async Task<List<SelectListItem>> GetRegionalInstitutions(string level)
         {
             //level would serve as category
@@ -79,12 +70,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             return list;
         }
 
-        public async Task<List<SelectListItem>> GetChildInstitutions(string regionId, bool sortByCodeNc = false)
+        public async Task<IActionResult> Index()
         {
-            var list = await new RestfulClient(_logger,
-                        HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetAllLocal(regionId, sortByCodeNc);
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
 
-            return list;
+            var sessionInstituionList = new List<InstitutionModel>();
+            HttpContext.Session.Set("InstitutionList", sessionInstituionList);
+            return View();
         }
 
         [HttpPost]
@@ -93,9 +86,9 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             if (ModelState.IsValid)
             {
                 var institutions = string.Empty;
-                var includeMemberNominations = 0;
                 var pageNumber = model.PageNumber == null ? 0 : model.PageNumber.Value;
 
+                int includeMemberNominations;
                 switch (model.Layout)
                 {
                     case "ThreePlusOne":
@@ -110,22 +103,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             includeMemberNominations = 0;
                             break;
                         }
-                    case "Summary":
-                        {
-                            using (var client = new CustomWebClient())
-                            {
-                                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
-                                client.Timeout = 600 * 60 * 1000;
-
-                                var url =
-                                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Summary.docx";
-                                var stream = new MemoryStream(client.DownloadData(url));
-
-                                return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].docx");
-                            }
-                        }
                     case "Shortlist":
                         {
+                            institutions = await GetInstitutions(institutions);
+
                             if (model.Level == "National")
                             {
                                 using (var client = new CustomWebClient())
@@ -134,41 +115,35 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                     client.Timeout = 600 * 60 * 1000;
 
                                     var url =
-                                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Shortlist.docx";
+                                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Shortlist.{GetFileExtension(model.FileType)}?institutionid={institutions}&cycleid=19&pagenumber={pageNumber}";
+                                    _logger.LogInformation($"Generated URL for Report is : {url}");
                                     var stream = new MemoryStream(client.DownloadData(url));
 
-                                    return File(stream, "application/pdf",
-                                        $"{model.Layout}[{DateTime.Now.ToString()}].docx");
+                                    return File(stream, GetContentType(model.FileType), $"{model.Layout}[{DateTime.Now.ToString()}].{GetFileExtension(model.FileType)}");
                                 }
                             }
 
                             return NotSupportedReport();
                         }
+                    case "Summary":
+                        {
+                            using (var client = new CustomWebClient())
+                            {
+                                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                                client.Timeout = 600 * 60 * 1000;
+
+                                var url =
+                                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Council_Summary.{GetFileExtension(model.FileType)}";
+                                _logger.LogInformation($"Generated URL for Report is : {url}");
+                                var stream = new MemoryStream(client.DownloadData(url));
+
+                                return File(stream, GetContentType(model.FileType), $"{model.Layout}[{DateTime.Now.ToString()}].{GetFileExtension(model.FileType)}");
+                            }
+                        }
                     default:
                         {
                             return NotSupportedReport();
                         }
-                }
-
-                //var list = model.Level == "National" ? await GetNationalInstitutions() :
-                //    model.Level == "Regional" ? await GetRegionalInstitutions() :
-                //    model.Level == "Local" ? await GetChildInstitutions(model.Institution.Split("-")[0]) : null;
-
-                ////var sessionInstituionList = HttpContext.Session.Get<List<InstitutionModel>>("InstitutionList") ?? new List<InstitutionModel>();
-                //var institutions = (model.IncludeParent && model.Level == "Local") ? $"{model.Institution.Split("-")[0]}," : string.Empty;
-
-                //foreach (var item in list)
-                //{
-                //    //item.Id => this is sessionId.
-                //    //item.Name => this is intitution name with institution id like (2-AKEPB) so we have to split value.
-                //    //var institution = item.Name.Split("-")[0];
-                //    var institution = item.Value.Split("-")[0];
-                //    institutions += $"{institution},";
-                //}
-
-                if (!string.IsNullOrWhiteSpace(institutions))
-                {
-                    institutions = institutions.Substring(0, institutions.Length - 1);
                 }
 
                 using (var client = new CustomWebClient())
@@ -177,10 +152,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     client.Timeout = 600 * 60 * 1000;
 
                     var url =
-                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}&showrecommendation={model.Recommendation}&officebearersonly={model.OfficeBearersOnly}";
+                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.{GetFileExtension(model.FileType)}?institutionid={institutions}&cycleid=19&showremarks={model.Remarks}&pagenumber={pageNumber}&membernominations={includeMemberNominations}&showrecommendation={model.Recommendation}&officebearersonly={model.OfficeBearersOnly}";
+                    _logger.LogInformation($"Generated URL for Report is : {url}");
                     var stream = new MemoryStream(client.DownloadData(url));
 
-                    return File(stream, "application/pdf", $"{model.Layout}[{DateTime.Now.ToString()}].pdf");
+                    return File(stream, GetContentType(model.FileType), $"{model.Layout}[{DateTime.Now.ToString()}].{GetFileExtension(model.FileType)}");
                 }
             }
 
@@ -204,7 +180,14 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     }
                     else if (model.Category == "Council")
                     {
-                        institutions = $"{model.Institution},";
+                        if (string.IsNullOrWhiteSpace(model.Institution))
+                        {
+                            institutions = "8,16,15,2,6,7,";
+                        }
+                        else
+                        {
+                            institutions = $"{model.Institution},";
+                        }
                     }
                 }
                 else if (model.Level == "Regional")
@@ -288,6 +271,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     }
                 }
 
+                if (!string.IsNullOrWhiteSpace(institutions))
+                {
+                    institutions = institutions.Substring(0, institutions.Length - 1);
+                }
+
                 return institutions;
             }
 
@@ -301,12 +289,69 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
                 return RedirectToAction(ActionNames.Index);
             }
+
+            string GetFileExtension(string fileType)
+            {
+                switch (fileType)
+                {
+                    case "PDF":
+                        return "pdf";
+
+                    case "Excel":
+                        return "xlsx";
+
+                    case "Word":
+                        return "docx";
+
+                    default:
+                        return "pdf";
+                }
+            }
+
+            string GetContentType(string fileType)
+            {
+                switch (fileType)
+                {
+                    case "PDF":
+                        return "application/pdf";
+
+                    case "Excel":
+                        return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                    case "Word":
+                        return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+                    default:
+                        return "application/pdf";
+                }
+            }
         }
+
+        public IActionResult ThreePlusOne(string insitutionId, int cycleId)
+        {
+            using (var client = new WebClient())
+            {
+                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+
+                var stream = new MemoryStream(client.DownloadData(
+                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Three_Plus_One.pdf?institutionid={insitutionId}&cycleid={cycleId}&showremarks=false&pagenumber=1&membernominations=1&showrecommendation=true&officebearersonly=false"));
+
+                return File(stream, "application/pdf", $"Three-plus-one[{DateTime.Now.ToString()}].pdf");
+            }
+        }
+
+        #endregion Public Methods
     }
 
-    class CustomWebClient : WebClient
+    internal class CustomWebClient : WebClient
     {
+        #region Public Properties
+
         public int Timeout { get; set; }
+
+        #endregion Public Properties
+
+        #region Protected Methods
 
         protected override WebRequest GetWebRequest(Uri uri)
         {
@@ -315,5 +360,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
             ((HttpWebRequest)lWebRequest).ReadWriteTimeout = Timeout;
             return lWebRequest;
         }
+
+        #endregion Protected Methods
     }
 }

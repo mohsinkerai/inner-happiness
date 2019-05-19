@@ -47,8 +47,8 @@
                             <option></option>
                             <option value="ThreePlusOne">Three plus One</option>
                             <option value="Running">Running</option>
-                            <option value="Summary" class="summary">Summary</option>
                             <option value="Shortlist">Shortlist</option>
+                            <option value="Summary" class="summary">Summary</option>
                         </select>
                     </div>
                 </div>
@@ -63,7 +63,8 @@
                             <option class="grb" value="GRB">GRB</option>
                         </select>
                     </div>
-                </div><div class="col-lg-3">
+                </div>
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label asp-for="Institution" class="control-label"></label>
                         <select asp-for="Institution" class="form-control m-select2 institution initially-disabled" placeholder="Select an Institution">
@@ -77,6 +78,19 @@
                         <input asp-for="PageNumber" type="text" class="form-control page-number initially-disabled">
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label asp-for="FileType" class="control-label">File Type</label>
+                        <select asp-for="FileType" class="form-control m-select2 fileType initially-disabled" placeholder="Select a File Type">
+                            <option></option>
+                            <option value="PDF">PDF</option>
+                            <option value="Excel">Exel</option>
+                            <option value="Word">Word</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group row">
                 <div class="col-lg-2">
                     <div class="form-group">
                         <label asp-for="IncludeLocals" class="control-label"></label>
@@ -133,16 +147,16 @@
                     </div>
                 </div>
                 @*<div class="col-lg-2">
-            <div class="form-group">
-                <label asp-for="IncludeParent" class="control-label"></label>
-                <div class="m-checkbox-inline">
-                    <label class="m-checkbox">
-                        <input asp-for="IncludeParent" type="checkbox"> Include Parent
-                        <span></span>
-                    </label>
-                </div>
-            </div>
-        </div>*@
+                        <div class="form-group">
+                            <label asp-for="IncludeParent" class="control-label"></label>
+                            <div class="m-checkbox-inline">
+                                <label class="m-checkbox">
+                                    <input asp-for="IncludeParent" type="checkbox"> Include Parent
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>*@
             </div>
 
             <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
@@ -152,7 +166,6 @@
                     </button>
                 </div>
             </div>
-
         </form>
     </div>
 </div>
@@ -221,15 +234,31 @@
                     //}
                 });
 
+            $(".fileType")
+                .change(function () {
+                    var selectedPrimaryValue = $(this).val();
+                    if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
+                        $(".generate").prop("disabled", true);
+                    }
+                    else {
+                        $(".generate").prop("disabled", false);
+                    }
+                });
+
             $(".layout")
                 .change(function() {
                     var selectedPrimaryValue = $(this).val();
+                    $(".layout").val(selectedPrimaryValue);
                     if (selectedPrimaryValue === "" || selectedPrimaryValue === "0") {
                         $(".layout").val([]);
                         ClearSelections();
                         $(".layout").prop("disabled", false);
                     } else if (selectedPrimaryValue === "Summary") {
-                        $(".generate").prop("disabled", false);
+                        $(".fileType").prop("disabled", false);
+                    } else if (selectedPrimaryValue === "Shortlist")
+                    {
+                        EnableUtilityControls();
+                        $(".category").prop("disabled", false);
                     }
                     else {
                         $(".category").prop("disabled", false);
@@ -246,13 +275,8 @@
                         $(".category").prop("disabled", false);
                     } else {
                         if ($(".level").val() == "National") {
-                            if (selectedPrimaryValue === "CAB" ||
-                                selectedPrimaryValue === "GRB" ||
-                                selectedPrimaryValue === "ITREB" ||
-                                (selectedPrimaryValue === "Council" &&
-                                    ($(".layout").val() === "Summary" || $(".layout").val() === "Shortlist"))) {
-                                EnableUtilityControls();
-                            } else if (selectedPrimaryValue === "Council") {
+                            EnableUtilityControls();
+                            if (selectedPrimaryValue === "Council") {
                                 $(".institution").prop("disabled", false);
                                 LoadNationalInstitutions();
                             }
@@ -305,7 +329,7 @@
 
             function LoadNationalInstitutions() {
                 LoadDropDownViaAjax("institution",
-                    "@Url.Action(ActionNames.GetNationalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    "@Url.Action(ActionNames.GetNationalInstitutions, ControllerNames.Reports, new { area = AreaNames.Operations })",
                     $(".category").val(),
                     "",
                     "");
@@ -313,7 +337,7 @@
 
             function LoadRegionalInstitutions() {
                 LoadDropDownViaAjax("institution",
-                    "@Url.Action(ActionNames.GetRegionalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    "@Url.Action(ActionNames.GetRegionalInstitutions, ControllerNames.Reports, new { area = AreaNames.Operations })",
                     $(".category").val(),
                     "",
                     "");
@@ -321,7 +345,7 @@
 
             function LoadLocalInstitutions() {
                 LoadDropDownViaAjax("institution",
-                    "@Url.Action(ActionNames.GetLocalInstitutions, ControllerNames.Reports, new {area = AreaNames.Operations})",
+                    "@Url.Action(ActionNames.GetLocalInstitutions, ControllerNames.Reports, new { area = AreaNames.Operations })",
                     $(".category").val(),
                     "",
                     "");
@@ -339,7 +363,7 @@
                     //show local only and include local
                     $(".include-locals").prop("disabled", false);
                 }
-                $(".generate").prop("disabled", false);
+                $(".fileType").prop("disabled", false);
             }
 
             function ClearSelections() {
