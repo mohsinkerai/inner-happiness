@@ -281,23 +281,14 @@
                                 LoadNationalInstitutions();
                             }
                         } else if ($(".level").val() == "Regional") {
-                            if (selectedPrimaryValue === "Council" && $(".layout").val() === "Shortlist") {
-                                EnableUtilityControls();
-                            } else {
-                                $(".institution").prop("disabled", false);
-                                LoadRegionalInstitutions();
-                                EnableUtilityControls();
-                            }
+                            $(".institution").prop("disabled", false);
+                            LoadRegionalInstitutions();
+                            EnableUtilityControls();
                         } else if ($(".level").val() == "Local") {
-                            if (selectedPrimaryValue === "Council" && $(".layout").val() === "Shortlist") {
-                                EnableUtilityControls();
-                                $(".include-locals").prop("disabled", true);
-                            } else {
-                                $(".institution").prop("disabled", false);
-                                LoadLocalInstitutions();
-                                EnableUtilityControls();
-                                $(".include-locals").prop("disabled", true);
-                            }
+                            $(".institution").prop("disabled", false);
+                            LoadLocalInstitutions();
+                            EnableUtilityControls();
+                            $(".include-locals").prop("disabled", true);
                         }
                     }
                 });

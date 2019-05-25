@@ -107,23 +107,18 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         {
                             institutions = await GetInstitutions(institutions);
 
-                            if (model.Level == "National")
+                            using (var client = new CustomWebClient())
                             {
-                                using (var client = new CustomWebClient())
-                                {
-                                    client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
-                                    client.Timeout = 600 * 60 * 1000;
+                                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                                client.Timeout = 600 * 60 * 1000;
 
-                                    var url =
-                                        $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/National_Shortlist.{GetFileExtension(model.FileType)}?institutionid={institutions}&cycleid=19&pagenumber={pageNumber}";
-                                    _logger.LogInformation($"Generated URL for Report is : {url}");
-                                    var stream = new MemoryStream(client.DownloadData(url));
+                                var url =
+                                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/{GetShortlistReportName(model.Level)}.{GetFileExtension(model.FileType)}?institutionid={institutions}&cycleid=19&pagenumber={pageNumber}";
+                                _logger.LogInformation($"Generated URL for Report is : {url}");
+                                var stream = new MemoryStream(client.DownloadData(url));
 
-                                    return File(stream, GetContentType(model.FileType), $"{model.Layout}[{DateTime.Now.ToString()}].{GetFileExtension(model.FileType)}");
-                                }
+                                return File(stream, GetContentType(model.FileType), $"{model.Layout}[{DateTime.Now.ToString()}].{GetFileExtension(model.FileType)}");
                             }
-
-                            return NotSupportedReport();
                         }
                     case "Summary":
                         {
@@ -324,6 +319,11 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     default:
                         return "application/pdf";
                 }
+            }
+
+            string GetShortlistReportName(string level)
+            {
+                return level == "National" ? level : "Regional_Local_Shortlist";
             }
         }
 
