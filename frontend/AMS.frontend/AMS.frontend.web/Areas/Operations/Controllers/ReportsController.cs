@@ -323,7 +323,7 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             string GetShortlistReportName(string level)
             {
-                return level == "National" ? level : "Regional_Local_Shortlist";
+                return level == "National_Shortlist" ? level : "Regional_Local_Shortlist";
             }
         }
 
