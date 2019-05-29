@@ -120,6 +120,23 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 return File(stream, GetContentType(model.FileType), $"{model.Layout}[{DateTime.Now.ToString()}].{GetFileExtension(model.FileType)}");
                             }
                         }
+                    case "LocalShortlist":
+                        {
+                            institutions = await GetInstitutions(institutions);
+
+                            using (var client = new CustomWebClient())
+                            {
+                                client.Credentials = new NetworkCredential("jasperadmin", "jasperadmin");
+                                client.Timeout = 600 * 60 * 1000;
+
+                                var url =
+                                    $"http://localhost:8081/jasperserver/rest_v2/reports/reports/Appointment/Region_wise_Local_Shortlist.{GetFileExtension(model.FileType)}?institutionid={institutions}&cycleid=19&pagenumber={pageNumber}";
+                                _logger.LogInformation($"Generated URL for Report is : {url}");
+                                var stream = new MemoryStream(client.DownloadData(url));
+
+                                return File(stream, GetContentType(model.FileType), $"{model.Layout}[{DateTime.Now.ToString()}].{GetFileExtension(model.FileType)}");
+                            }
+                        }
                     case "Summary":
                         {
                             using (var client = new CustomWebClient())
@@ -189,17 +206,28 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                 {
                     if (!string.IsNullOrWhiteSpace(model.Institution))
                     {
-                        if (!model.LocalsOnly)
-                        {
-                            institutions = $"{model.Institution},";
-                        }
-
-                        if (model.IncludeLocals)
+                        if (model.Layout == "LocalShortlist")
                         {
                             var locals = await GetChildInstitutions(model.Institution);
                             foreach (var local in locals)
                             {
                                 institutions += $"{local.Value},";
+                            }
+                        }
+                        else
+                        {
+                            if (!model.LocalsOnly)
+                            {
+                                institutions = $"{model.Institution},";
+                            }
+
+                            if (model.IncludeLocals)
+                            {
+                                var locals = await GetChildInstitutions(model.Institution);
+                                foreach (var local in locals)
+                                {
+                                    institutions += $"{local.Value},";
+                                }
                             }
                         }
                     }
@@ -323,7 +351,28 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
 
             string GetShortlistReportName(string level)
             {
-                return level == "National_Shortlist" ? level : "Regional_Local_Shortlist";
+                if (level == "Regional" && model.Category == "CAB")
+                {
+                    return "Regional_CAB_Shortlist";
+                }
+                else if (level == "Regional" && model.Category == "ITREB")
+                {
+                    return "Regional_ITREB_Shortlist";
+                }
+                else if (level == "Local" && model.Category == "ITREB")
+                {
+                    return "Local_ITREB_Shortlist";
+                }
+                else if (level == "National")
+                {
+                    return "National_Shortlist";
+                }
+                else if (level == "Regional")
+                {
+                    return "Regional_Local_Shortlist";
+                }
+
+                return string.Empty;
             }
         }
 

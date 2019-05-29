@@ -48,6 +48,7 @@
                             <option value="ThreePlusOne">Three plus One</option>
                             <option value="Running">Running</option>
                             <option value="Shortlist">Shortlist</option>
+                            <option value="LocalShortlist" class="localshortlist">Local Shortlist</option>
                             <option value="Summary" class="summary">Summary</option>
                         </select>
                     </div>
@@ -187,6 +188,10 @@
                         ClearSelections();
                     } else {
                         $(".layout").prop("disabled", false);
+                        $(".localshortlist").prop("disabled", true);
+                        if (selectedPrimaryValue === "Regional") {
+                            $(".localshortlist").prop("disabled", false);
+                        }
                         if (selectedPrimaryValue !== "National") {
                             $(".summary").prop("disabled", true);
                             $(".grb").prop("disabled", true);
@@ -255,12 +260,13 @@
                         $(".layout").prop("disabled", false);
                     } else if (selectedPrimaryValue === "Summary") {
                         $(".fileType").prop("disabled", false);
-                    } else if (selectedPrimaryValue === "Shortlist")
-                    {
+                    } else if (selectedPrimaryValue === "Shortlist") {
                         EnableUtilityControls();
                         $(".category").prop("disabled", false);
-                    }
-                    else {
+                    } else if (selectedPrimaryValue === "LocalShortlist") {
+                        $(".cab").prop("disabled", true);
+                        $(".category").prop("disabled", false);
+                    } else {
                         $(".category").prop("disabled", false);
                     }
                 });
@@ -283,7 +289,9 @@
                         } else if ($(".level").val() == "Regional") {
                             $(".institution").prop("disabled", false);
                             LoadRegionalInstitutions();
-                            EnableUtilityControls();
+                            if ($(".layout").val() !== "LocalShortlist") {
+                                EnableUtilityControls();
+                            }
                         } else if ($(".level").val() == "Local") {
                             $(".institution").prop("disabled", false);
                             LoadLocalInstitutions();
@@ -350,7 +358,7 @@
                     $(".recommendations").prop("disabled", false);
                     $(".officebearersonly").prop("disabled", false);
                 }
-                if ($(".level").val() == "Regional" && ($(".category").val() !== "CAB")) {
+                if ($(".level").val() == "Regional" && ($(".category").val() !== "CAB" && $(".layout").val() !== "LocalShortlist")) {
                     //show local only and include local
                     $(".include-locals").prop("disabled", false);
                 }
