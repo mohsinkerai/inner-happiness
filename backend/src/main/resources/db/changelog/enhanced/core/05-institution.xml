@@ -87,4 +87,9 @@
       <where>lower(full_name) like '%itreb%'</where>
     </update>
   </changeSet>
+  <changeSet id="institution-11" author="mohsin.kerai">
+    <addColumn tableName="institution">
+      <column name="reporting_name" type="varchar(1000)" beforeColumn="created_on"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
