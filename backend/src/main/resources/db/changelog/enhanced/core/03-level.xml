@@ -65,4 +65,26 @@
       <column name="updated_by" type="varchar(255)" />
     </addColumn>
   </changeSet>
+
+  <changeSet id="level-04" author="mohsin.kerai">
+    <addColumn tableName="level">
+      <column name="population" type="int" defaultValueNumeric="0">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="level-05" author="mohsin.kerai">
+    <addColumn tableName="level">
+      <column name="households" type="int" defaultValueNumeric="0">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="level-06" author="mohsin.kerai">
+    <addColumn tableName="level">
+      <column name="jamatkhanas" type="int" defaultValueNumeric="0">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

@@ -197,6 +197,8 @@ public class AppointmentPositionFacade {
       .seatNo(oldAppointmentPosition.getSeatNo())
       .positionId(oldAppointmentPosition.getPositionId())
       .cycleId(oldAppointmentPosition.getCycleId())
+      .portfolioMember(oldAppointmentPosition.isPortfolioMember())
+      .exOfficioInstitutionId(oldAppointmentPosition.getExOfficioInstitutionId())
       .institutionId(oldAppointmentPosition.getInstitutionId())
       .rank(oldAppointmentPosition.getRank())
       .isActive(Boolean.TRUE)

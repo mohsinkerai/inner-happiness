@@ -272,5 +272,8 @@
       <!--<column name="nature_of_business_other" type="varchar(255)"></column>-->
     <!--</addColumn>-->
   <!--</changeSet>-->
+  <changeSet id="person-22" author="mohsin.kerai">
+    <sql>ALTER TABLE person ADD COLUMN full_name_generated varchar(255) GENERATED ALWAYS AS (CONCAT(COALESCE(first_name,''),' ',COALESCE(fathers_name,''), ' ', COALESCE(family_name,''))) STORED</sql>
+  </changeSet>
 
 </databaseChangeLog>

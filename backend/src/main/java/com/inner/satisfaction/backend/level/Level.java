@@ -20,6 +20,10 @@ public class Level extends BaseEntity {
   private String codeNc;
   private boolean isClosed;
 
+  private int population;
+  private int households;
+  private int jamatkhanas;
+
   private int levelTypeId;
 
   private Long levelParentId;

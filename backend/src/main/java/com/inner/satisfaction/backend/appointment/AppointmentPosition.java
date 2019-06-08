@@ -40,6 +40,8 @@ public class AppointmentPosition extends BaseEntity{
   // It is one way Created -> Appointed -> Retired
   private String state;
   private String positionType;
+  private Long exOfficioInstitutionId;
+  private boolean portfolioMember;
 
   @ManyToOne
   @JoinColumn(name = "company_id")

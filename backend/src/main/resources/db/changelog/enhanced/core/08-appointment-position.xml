@@ -111,4 +111,14 @@
   <changeSet id="appointment-position-12" author="mohsin.kerai">
     <sql>update appointment_position set company_id = 1</sql>
   </changeSet>
+  <changeSet id="appointment-position-13" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="portfolio_member" type="boolean" defaultValueBoolean="false" beforeColumn="created_on"></column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="appointment-position-14" author="mohsin.kerai">
+    <addColumn tableName="appointment_position">
+      <column name="ex_officio_institution_id" type="bigint" beforeColumn="created_on"></column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

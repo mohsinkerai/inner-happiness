@@ -133,6 +133,8 @@ public class CycleService extends BaseService<Cycle> {
       .seatNo(appointmentPosition.getSeatNo())
       .isMowlaAppointee(appointmentPosition.isMowlaAppointee())
       .nominationsRequired(appointmentPosition.getNominationsRequired())
+      .portfolioMember(appointmentPosition.isPortfolioMember())
+      .exOfficioInstitutionId(appointmentPosition.getExOfficioInstitutionId())
       .from(from)
       .rank(appointmentPosition.getRank())
       .state(AppointmentPositionState.CREATED)

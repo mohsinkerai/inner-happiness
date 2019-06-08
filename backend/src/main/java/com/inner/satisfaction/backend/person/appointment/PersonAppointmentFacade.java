@@ -6,6 +6,9 @@ import com.google.common.collect.ImmutableMap;
 import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionState;
+import com.inner.satisfaction.backend.authentication.token.AuthenticationToken;
+import com.inner.satisfaction.backend.company.Company;
+import com.inner.satisfaction.backend.company.CompanyService;
 import com.inner.satisfaction.backend.cycle.Cycle;
 import com.inner.satisfaction.backend.cycle.CycleService;
 import com.inner.satisfaction.backend.error.AmsException;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -41,6 +45,7 @@ public class PersonAppointmentFacade {
   private final PersonService personService;
   private final PersonAppointmentService personAppointmentService;
   private final AppointmentPositionService appointmentPositionService;
+  private final CompanyService companyService;
   private final ApplicationEventPublisher applicationEventPublisher;
 
   public PersonAppointmentFacade(
@@ -50,6 +55,7 @@ public class PersonAppointmentFacade {
     AppointmentPositionService appointmentPositionService,
     PersonAppointmentService personAppointmentService,
     PersonService personService,
+    CompanyService companyService,
     ApplicationEventPublisher applicationEventPublisher) {
     this.cycleService = cycleService;
     this.institutionService = institutionService;
@@ -57,11 +63,21 @@ public class PersonAppointmentFacade {
     this.appointmentPositionService = appointmentPositionService;
     this.personAppointmentService = personAppointmentService;
     this.personService = personService;
+    this.companyService = companyService;
     this.applicationEventPublisher = applicationEventPublisher;
   }
 
   public PersonAppointment save(PersonAppointment personAppointment) {
     performValidations(personAppointment);
+
+    if(personAppointment.getCompany() == null) {
+      AuthenticationToken authenticationToken = (AuthenticationToken) SecurityContextHolder.getContext()
+        .getAuthentication();
+      int companyId = authenticationToken.getCompanyId();
+      Company company = companyService.findOne((long) companyId);
+      personAppointment.setCompany(company);
+    }
+
     if (personAppointment.getId() != null) {
       performOnlyUpdateValidations(personAppointment);
       return updatePersonAppointment(personAppointment);
