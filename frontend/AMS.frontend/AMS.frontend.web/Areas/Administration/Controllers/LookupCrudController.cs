@@ -389,7 +389,7 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
             ViewBag.Message = TempData["Message"];
 
             var voluntaryInstitution = await new RestfulClient(_logger,
-            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetVoluntaryInstitution();
+            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetPositionInstitution();
 
             return View(new NewVoluntaryInstitutionModel {Title = "Voluntary Institution", lookUpList = voluntaryInstitution});
         }

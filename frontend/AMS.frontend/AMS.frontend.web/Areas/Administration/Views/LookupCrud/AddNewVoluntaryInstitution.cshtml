@@ -49,7 +49,7 @@
                                                 @foreach (var item in Model.lookUpList)
                                                 {
                                                     <tr>
-                                                        <td> @item.Text</td>
+                                                        <td> @item.Value.Split('-')[1]</td>
                                                         <td>
                                                             <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only" title="Edit">
                                                                 <i class="la la-edit"></i>
