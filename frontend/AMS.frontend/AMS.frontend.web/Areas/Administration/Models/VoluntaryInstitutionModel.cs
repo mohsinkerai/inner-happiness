@@ -12,7 +12,6 @@ namespace AMS.frontend.web.Areas.Administration.Models
     {
         [JsonProperty(PropertyName = "fullName")]
         [Required]
-
         public string FullName { get; set; }
 
         [JsonProperty(PropertyName = "levelId")]

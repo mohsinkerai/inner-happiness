@@ -382,5 +382,22 @@ namespace AMS.frontend.web.Areas.Administration.Controllers
             return View("VoluntaryInstitution", model);
         }
 
+
+        public async Task<IActionResult> AddNewVoluntaryInstitution(NewVoluntaryInstitutionModel model)
+        {
+            ViewBag.MessageType = TempData["MessageType"];
+            ViewBag.Message = TempData["Message"];
+
+            var voluntaryInstitution = await new RestfulClient(_logger,
+            HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse")?.Token).GetVoluntaryInstitution();
+
+            return View(new NewVoluntaryInstitutionModel {Title = "Voluntary Institution", lookUpList = voluntaryInstitution});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewInstitution(NewVoluntaryInstitutionModel model)
+        {
+            return RedirectToAction("AddNewVoluntaryInstitution");
+        }
     }
 }

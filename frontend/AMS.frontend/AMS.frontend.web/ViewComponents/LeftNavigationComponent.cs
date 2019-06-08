@@ -345,6 +345,16 @@ namespace AMS.frontend.web.ViewComponents
                                 Area = AreaNames.Administration,
                                 ImageClass = "flaticon-network"
                             },
+                            new MenuModel
+                            {
+                                MenuId = 30,
+                                Action = ActionNames.AddNewVoluntaryInstitution,
+                                Controller = ControllerNames.LookupCrud,
+                                SubMenu = null,
+                                Title = "New Institution",
+                                Area = AreaNames.Administration,
+                                ImageClass = "flaticon-network"
+                            },
                         },
                         Title = "Master Data",
                         Area = string.Empty,

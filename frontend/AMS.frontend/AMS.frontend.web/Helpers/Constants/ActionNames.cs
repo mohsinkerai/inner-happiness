@@ -61,6 +61,7 @@
         public const string GetNationalInstitutions = "GetNationalInstitutions";
         public const string InstitutionListAdd = "InstitutionListAdd";
         public const string FetchPersonThroughFormNumber = "FetchPersonThroughFormNumber";
+        public const string AddNewVoluntaryInstitution = "AddNewVoluntaryInstitution";
 
         #endregion Public Fields
     }
