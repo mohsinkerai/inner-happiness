@@ -8,13 +8,11 @@ import com.inner.satisfaction.backend.appointment.AppointmentPosition;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionService;
 import com.inner.satisfaction.backend.appointment.AppointmentPositionState;
 import com.inner.satisfaction.backend.base.BaseEntity;
-import com.inner.satisfaction.backend.person.appointment.PersonAppointment;
 import com.inner.satisfaction.backend.person.appointment.PersonAppointmentService;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -77,16 +75,19 @@ public class CycleFacade {
         .map(BaseEntity::getId)
         .collect(Collectors.toList());
 
-      // There are positions to work on
-      if (appointmentPositionIds.size() > 0) {
-        int recommendedPersons = personAppointmentService
-          .findRecommendedCountInAppointmentPositionIds(appointmentPositionIds);
+      List<CycleClosureResponseDto> positionsWithoutRecommendation = cycleService
+        .findPositionsWithoutOrWithExceededRecommendation(cycleId);
 
-        if (appointmentPositions.size() > recommendedPersons) {
-          throw new RuntimeException("Recommendations are less than positions");
-        }
-      } else {
-        throw new RuntimeException("Something is wrong, no appointment position in cycle");
+      if (positionsWithoutRecommendation.size() > 0) {
+        Optional<String> combinedPositionsWithoutRecommendation = positionsWithoutRecommendation
+          .stream()
+          .map(o -> o.getInstitution() + "-" + o.getPosition())
+          .reduce((s1, s2) -> s1 + " | " + s2);
+        String errorMessage = String
+          .format("There are %d positions without recommendations detailed positions are %s",
+            positionsWithoutRecommendation.size(), combinedPositionsWithoutRecommendation);
+
+        throw new RuntimeException(errorMessage);
       }
 
       appointmentPositionIds.stream().forEach((id) -> {

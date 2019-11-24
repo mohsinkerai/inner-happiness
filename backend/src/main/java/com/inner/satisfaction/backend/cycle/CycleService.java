@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-import javax.validation.constraints.AssertFalse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -27,6 +26,7 @@ public class CycleService extends BaseService<Cycle> {
 
   private final AppointmentPositionService appointmentPositionService;
   private final PersonAppointmentService personAppointmentService;
+  private final CycleRepository cycleRepository;
 
   protected CycleService(
     AppointmentPositionService appointmentPositionService,
@@ -34,6 +34,7 @@ public class CycleService extends BaseService<Cycle> {
     CycleValidation cycleValidation,
     PersonAppointmentService personAppointmentService) {
     super(baseRepository, cycleValidation);
+    this.cycleRepository = baseRepository;
     this.appointmentPositionService = appointmentPositionService;
     this.personAppointmentService = personAppointmentService;
   }
@@ -99,6 +100,10 @@ public class CycleService extends BaseService<Cycle> {
   @Transactional
   public void dismissCycle(long cycleId) {
     // Dismiss cycle
+  }
+
+  public List<CycleClosureResponseDto> findPositionsWithoutOrWithExceededRecommendation(long cycleId) {
+    return cycleRepository.findPositionsWithoutOrWithExceededRecommendation(cycleId);
   }
 
   /**
