@@ -201,6 +201,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                             institutions = $"{model.Institution},";
                         }
                     }
+                    else
+                    {
+                        institutions = "1,11,3,8,16,15,2,6,7,";
+                    }
                 }
                 else if (model.Level == "Regional")
                 {
@@ -257,6 +261,26 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                                 institutions += $"{region.Value},";
                             }
                         }
+                        else
+                        {
+                            var regions = await GetChildInstitutions("8", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+
+                            regions = await GetChildInstitutions("3", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+
+                            regions = await GetChildInstitutions("1", true);
+                            foreach (var region in regions)
+                            {
+                                institutions += $"{region.Value},";
+                            }
+                        }
                     }
                 }
                 else if (model.Level == "Local")
@@ -282,6 +306,28 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                         else if (model.Category == "ITREB")
                         {
                             var regions = await GetChildInstitutions("3", true);
+                            foreach (var region in regions)
+                            {
+                                var locals = await GetChildInstitutions(region.Value, true);
+                                foreach (var local in locals)
+                                {
+                                    institutions += $"{local.Value},";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var regions = await GetChildInstitutions("8", true);
+                            foreach (var region in regions)
+                            {
+                                var locals = await GetChildInstitutions(region.Value, true);
+                                foreach (var local in locals)
+                                {
+                                    institutions += $"{local.Value},";
+                                }
+                            }
+
+                            regions = await GetChildInstitutions("3", true);
                             foreach (var region in regions)
                             {
                                 var locals = await GetChildInstitutions(region.Value, true);
@@ -368,6 +414,10 @@ namespace AMS.frontend.web.Areas.Operations.Controllers
                     return "National_Shortlist";
                 }
                 else if (level == "Regional")
+                {
+                    return "Regional_Local_Shortlist";
+                }
+                else if (level == "Local")
                 {
                     return "Regional_Local_Shortlist";
                 }
