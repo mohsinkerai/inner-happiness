@@ -20,7 +20,7 @@ public interface CycleRepository extends BaseRepository<Cycle> {
     + " GROUP BY "
     + "  ap.id, p.name, i.name "
     + " HAVING "
-    + "  count( if(pa.is_recommended = TRUE, TRUE, NULL)) < 1 ";
+    + "  count( if(pa.is_recommended = TRUE, TRUE, NULL)) != 1 ";
 
   @Query(nativeQuery = true, value = findPositionsWithoutRecommendation)
   List<CycleClosureResponseDto> findPositionsWithoutOrWithExceededRecommendation(long cycleId);

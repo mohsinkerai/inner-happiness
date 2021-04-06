@@ -5,7 +5,7 @@ spring:
     db: inner_satisfaction
     host: localhost
     port: 3306
-    url: jdbc:mysql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.db}?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.db}?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password:
     driver-class-name: com.mysql.jdbc.Driver

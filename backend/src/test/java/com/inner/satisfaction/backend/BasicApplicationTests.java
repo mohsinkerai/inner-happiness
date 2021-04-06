@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.inner.satisfaction.backend.base.AbstractIntegrationTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BasicApplicationTests extends AbstractIntegrationTest {
 
