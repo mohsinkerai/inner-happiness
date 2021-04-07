@@ -22,6 +22,7 @@ public interface AppointmentPositionRepository extends BaseRepository<Appointmen
     + " LEFT OUTER JOIN (select * from person_appointment where is_recommended=true) pa "
     + "   ON pa.appointment_position_id = ap.id "
     + " WHERE ap.cycle_id = :cycleId "
+    + " AND ap.is_active = true"
     + " AND pa.appointment_position_id is null";
 
   List<AppointmentPosition> findByCycleIdAndInstitutionId(long cycleId, long institutionId);

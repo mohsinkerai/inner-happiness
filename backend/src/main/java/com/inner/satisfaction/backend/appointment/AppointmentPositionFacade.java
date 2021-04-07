@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import javax.transaction.Transactional;
+
 @Component
 public class AppointmentPositionFacade {
 
@@ -226,5 +228,14 @@ public class AppointmentPositionFacade {
     );
 
     return appointmentPosition;
+  }
+
+  @Transactional
+  public void closePosition(Long positionId) {
+    AppointmentPosition appointmentPosition = appointmentPositionService.findOne(positionId);
+    List<PersonAppointment> personAppointments = personAppointmentService.findByAppointmentPositionId(appointmentPosition.getId());
+    personAppointments.stream().map(personAppointment -> {personAppointment.setIsActive(false);return personAppointment;}).map(personAppointmentService::save);
+    appointmentPosition.setActive(false);
+    appointmentPositionService.save(appointmentPosition);
   }
 }

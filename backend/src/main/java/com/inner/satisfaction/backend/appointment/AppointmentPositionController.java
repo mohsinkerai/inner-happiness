@@ -79,6 +79,13 @@ public class AppointmentPositionController extends BaseController<AppointmentPos
     return appointmentPositionFacade.createMidtermPosition(requestDto);
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @RequestMapping(value = "/{positionId}", method = RequestMethod.DELETE)
+  public void closePosition(
+    @PathVariable Long positionId) {
+    appointmentPositionFacade.closePosition(positionId);
+  }
+
   @Override
   public AppointmentPosition save(@RequestBody AppointmentPosition appointmentPosition) {
     return appointmentPositionFacade.save(appointmentPosition);

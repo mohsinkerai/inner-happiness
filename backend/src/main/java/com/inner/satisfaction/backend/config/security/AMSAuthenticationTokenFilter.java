@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 @Component
-public class AMSAuthenticationTokenFilter extends GenericFilterBean {
+public class  AMSAuthenticationTokenFilter extends GenericFilterBean {
 
   private AuthenticationTokenService authenticationTokenService;
 
