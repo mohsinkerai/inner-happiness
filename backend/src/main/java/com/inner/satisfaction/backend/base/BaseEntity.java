@@ -31,11 +31,11 @@ public abstract class BaseEntity implements Serializable {
   @LastModifiedBy
   protected String updatedBy;
 
-//  @CreatedDate
-//  @Column(nullable = false, updatable = false)
-//  private Timestamp createdOn;
-//
-//  @LastModifiedDate
-//  @Column(nullable = false)
-//  private Timestamp updatedOn;
+  @CreatedDate
+  @Column(nullable = false, updatable = false)
+  private Timestamp createdOn;
+
+  @LastModifiedDate
+  @Column(nullable = false)
+  private Timestamp updatedOn;
 }
