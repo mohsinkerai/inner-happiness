@@ -9,7 +9,7 @@
   "author": "ali.ahad",
   "license": "ISC",
   "dependencies": {
-    "mssql": "^3.3.0",
+    "mssql": "^9.1.1",
     "mysql": "^2.15.0"
   }
 }
